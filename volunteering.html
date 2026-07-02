@@ -144,7 +144,7 @@ transition: ease 0.2s;
   }
 }
 </style>
-<style id="ff-preloader-fix">.overlay-loader-wrapper,.overlay-loader-wrapper-landing{display:none!important}.landing .nav-bar{opacity:1!important}</style></head><body><div class="page-wrapper"><div class="global-styles-embeds"><div class="base-styles w-embed"><style>
+<style id="ff-preloader-fix">.overlay-loader-wrapper,.overlay-loader-wrapper-landing{display:none!important}.landing .nav-bar{opacity:1!important}</style></head><body><div class="page-wrapper"><div id="ff-preloader"><img src="images/flashforward/flash-favicon.png" alt="Flash Forward"></div><style>#ff-preloader{position:fixed;inset:0;z-index:99999;display:flex;align-items:center;justify-content:center;background:#fff;transition:opacity .5s ease}#ff-preloader img{width:90px;height:auto;animation:ffpulse 1.1s ease-in-out infinite}@keyframes ffpulse{0%,100%{transform:scale(.9);opacity:.5}50%{transform:scale(1.1);opacity:1}}#ff-preloader.ff-hide{opacity:0;pointer-events:none}</style><script>(function(){var p=document.getElementById("ff-preloader");if(!p)return;var s=Date.now(),d=false;function hide(){if(d)return;d=true;p.classList.add("ff-hide");setTimeout(function(){if(p&&p.parentNode)p.parentNode.removeChild(p);},600);}function t(){setTimeout(hide,Math.max(0,1500-(Date.now()-s)));}if(document.readyState==="complete")t();else window.addEventListener("load",t);setTimeout(hide,4000);})();</script><div class="global-styles-embeds"><div class="base-styles w-embed"><style>
 body {
   --spacing--x-tiny: 4px;
   --spacing--tiny: clamp(0.25rem, 0.141rem + 0.466vw, 0.875rem);
