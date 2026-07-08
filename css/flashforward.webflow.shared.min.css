@@ -3,7 +3,7 @@ html{-webkit-text-size-adjust:100%;-ms-text-size-adjust:100%;font-family:sans-se
 .svg-logo{display:none!important}
 .nav-logo-link .w-embed,.nav-logo-link img{max-width:100%}
 .nav-logo-link.preloader.w--current{width:120px!important}
-.nav-logo-link.landing.w--current,.nav-logo-link.sub.w--current{width:46px!important}
+.nav-logo-link.landing.w--current,.nav-logo-link.sub.w--current{width:auto!important; min-width:64px;}
 
 
 .nav-logo-link.preloader img{animation:ffglow 1.5s ease-in-out infinite}
