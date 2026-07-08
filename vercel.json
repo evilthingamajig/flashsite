@@ -1,4 +1,5 @@
 {
   "buildCommand": "exit 0",
-  "outputDirectory": "."
+  "outputDirectory": ".",
+  "cleanUrls": true
 }
