@@ -1,5 +1,25 @@
 {
   "buildCommand": "exit 0",
   "outputDirectory": ".",
-  "cleanUrls": true
+  "cleanUrls": true,
+  "headers": [
+    {
+      "source": "/(.*\\.(png|jpg|jpeg|gif|webp|svg|ico|avif|mp4|webm|woff2?|otf|ttf|eot))",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=31536000, immutable"
+        }
+      ]
+    },
+    {
+      "source": "/(.*\\.(css|js))",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=31536000, immutable"
+        }
+      ]
+    }
+  ]
 }
