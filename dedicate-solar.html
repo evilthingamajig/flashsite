@@ -967,4 +967,4 @@ $("[data-lenis-toggle]").on("click", function () {
   var d = new Date(); 
   var n = d.getFullYear(); 
   $('.year').text(n);  
-</script></body></html>
+</script><script>document.addEventListener("DOMContentLoaded",function(){function pv(){document.querySelectorAll("video").forEach(function(v){try{v.muted=true;var p=v.play();if(p&&p.catch)p.catch(function(){});}catch(e){}});}pv();window.addEventListener("load",pv);document.querySelectorAll("video").forEach(function(v){v.addEventListener("canplay",function(){try{v.muted=true;var p=v.play();if(p&&p.catch)p.catch(function(){});}catch(e){}});v.addEventListener("loadeddata",function(){try{v.muted=true;v.play&&v.play().catch&&v.play().catch(function(){});}catch(e){}});});});</script></body></html>
