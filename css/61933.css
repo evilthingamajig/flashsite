@@ -1,1 +1,7 @@
 html.lenis { height: auto; } .lenis.lenis-smooth { scroll-behavior: auto; } .lenis.lenis-smooth [data-lenis-prevent] { overscroll-behavior: contain; } .lenis.lenis-stopped { overflow: hidden; } .nav-button-wrapper { transition: ease .2s; } .section-hero { position: relative; z-index: 5; } @media screen and (min-width: 992px) { .hide-nav-element { transform: translateY(-100px); } .scrolled .navbar-menu-wrapper { background-color: rgb(221 221 221 / 58%); } /* ///////// Unforgettable Adventures Section /////////*/ .adventures-title-container .image-1 { right: var(--spacing--small); } .adventures-title-container .image-2 { left: var(--spacing--small); } } .hero-sub-lines { padding: 10px 0; } .hero-overflow-hidden { margin: -20px 0; overflow: hidden; }
+/* Flashlight glow: nav logo lights up green on hover */
+.nav-bar .nav-logo-link img { transition: filter .4s cubic-bezier(.22, 1, .36, 1); }
+.nav-bar .nav-logo-link:hover img,
+.nav-bar .nav-logo-link:focus-visible img {
+  filter: brightness(1.08) drop-shadow(0 0 5px rgba(34, 197, 94, .8)) drop-shadow(0 0 14px rgba(34, 197, 94, .5)) drop-shadow(0 0 28px rgba(34, 197, 94, .3));
+}
