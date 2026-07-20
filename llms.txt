@@ -1,6 +1,6 @@
 # Flash Forward Foundation
 
-> Welcome to Flash Forward, a 100% volunteer-run, student-led, energy-poverty focused nonprofit dedicated to improving energy access in low and middle-income countries through innovative programs and global partnerships.
+> Welcome to Flash Forward, a 100% volunteer-run, energy-poverty focused nonprofit dedicated to improving energy access in low and middle-income countries through innovative programs and global partnerships.
 
 ## About Us
 Flash Forward Foundation works to provide sustainable energy solutions to communities facing energy poverty. We provide solar equipment, engage in community outreach, and run volunteer programs to bring light and power to those who need it most.
@@ -8,7 +8,7 @@ Flash Forward Foundation works to provide sustainable energy solutions to commun
 ## Important Links
 - [Home](https://www.flashforwardfoundation.org/): Overview of the organization.
 - [Mission](https://www.flashforwardfoundation.org/mission.html): Our goals and the problem we are solving.
-- [Our Team](https://www.flashforwardfoundation.org/our-team.html): Meet the student leaders and volunteers behind Flash Forward.
+- [Our Team](https://www.flashforwardfoundation.org/our-team.html): Meet the volunteers behind Flash Forward.
 - [Donate](https://www.flashforwardfoundation.org/donate.html): How to contribute financially.
 - [Donate Equipment](https://www.flashforwardfoundation.org/donate-equipment.html): How to donate solar equipment.
 - [Events](https://www.flashforwardfoundation.org/events.html): Upcoming events, fundraisers, and symposiums.
