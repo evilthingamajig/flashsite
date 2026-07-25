@@ -190,7 +190,13 @@ transition: ease 0.2s;
 .gfm-embed{display:block;width:100%;max-width:600px;margin:0 auto}
 .gfm-embed iframe{width:100%;border:0;display:block}
 </style><style>
-.hero-501c3-line{margin:14px 0 22px}
+.hero-501c3-line{margin:10px 0 0}
+/* .hero-button-wrapper ships with margin-top:48px; tighten it on the landing
+   hero so the CTAs sit closer to the heading block. */
+.hero-button-wrapper.landing{margin-top:24px}
+/* .hero-container.landing is align-items:flex-end, so the hero copy is anchored to
+   the bottom - raising the CTAs means growing the bottom padding, not the gaps. */
+.hero-container.landing{padding-bottom:clamp(110px, 18vh, 190px)}
 .hero-501c3-line .paragraph-small{color:#fff;opacity:.92;text-shadow:0 1px 3px rgba(0,0,0,.45)}
 </style></head><body class="landing"><div class="page-wrapper"><div id="ff-preloader"><img alt="Flash Forward" height="1024" src="images/flashforward/flash-favicon.webp" width="1024"loading="lazy"></div><style>#ff-preloader{position:fixed;inset:0;z-index:99999;display:flex;align-items:center;justify-content:center;background:#fff;transition:opacity .5s ease}#ff-preloader img{width:90px;height:auto;animation:ffpulse 1.1s ease-in-out infinite}@keyframes ffpulse{0%,100%{transform:scale(.9);opacity:.5}50%{transform:scale(1.1);opacity:1}}#ff-preloader.ff-hide{opacity:0;pointer-events:none}</style><script>(function(){var p=document.getElementById("ff-preloader");if(!p)return;var s=Date.now(),d=false;function hide(){if(d)return;d=true;p.classList.add("ff-hide");setTimeout(function(){if(p&&p.parentNode)p.parentNode.removeChild(p);},600);}function t(){setTimeout(hide,Math.max(0,1500-(Date.now()-s)));}if(document.readyState==="complete")t();else window.addEventListener("load",t);setTimeout(hide,4000);})();</script><div class="custom-css"><div class="global-styles-embeds"><div class="base-styles w-embed"><style>
 body {
