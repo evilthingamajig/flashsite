@@ -31,22 +31,10 @@
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://flashforwardfoundation.org/events</loc>
-    <lastmod>2026-07-09</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
     <loc>https://flashforwardfoundation.org/</loc>
     <lastmod>2026-07-09</lastmod>
     <changefreq>monthly</changefreq>
     <priority>1.0</priority>
-  </url>
-  <url>
-    <loc>https://flashforwardfoundation.org/inspiring-stories</loc>
-    <lastmod>2026-07-09</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
   </url>
   <url>
     <loc>https://flashforwardfoundation.org/mission</loc>
@@ -74,18 +62,6 @@
   </url>
   <url>
     <loc>https://flashforwardfoundation.org/terms-and-conditions</loc>
-    <lastmod>2026-07-09</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://flashforwardfoundation.org/testimonials</loc>
-    <lastmod>2026-07-09</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://flashforwardfoundation.org/volunteer-adventures</loc>
     <lastmod>2026-07-09</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
