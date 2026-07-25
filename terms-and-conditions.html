@@ -46,9 +46,11 @@
 
 .overlay-loader-wrapper,
  .overlay-loader-wrapper-landing {
-  display: block;
+  display: none;
    z-index: 15;
 }
+/* Curtain is removed by hero_animation-2.1.0.js, which only the landing page loads.
+   Without it the overlay never lifts, so it stays hidden on interior pages. */
 
 
 .announcement-wrapper {
