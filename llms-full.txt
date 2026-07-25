@@ -109,7 +109,6 @@ Provide Solar-Powered Light
 to End Energy Poverty
 with Flash Forward
 We're a nonprofit organization dedicated to bringing solar-powered light to children in off-grid communities across Ghana and beyond.
-Upcoming events
 Donate now
 Join us in our mission to conquer energy poverty by providing solar-powered flashlights to students in need.
 Our why and mission
@@ -130,12 +129,6 @@ Donate Equipment
 Learn more
 Volunteer
 Learn more
-Upcoming events
-Volunteer Adventures
-Fundraising Events
-See all events
-No upcoming adventures yet. Check back soon.
-No upcoming fundraising events yet. Check back soon.
 Partners
 Malaika
 Empowers girls and communities in the DR Congo through education, health, and clean water.
@@ -165,14 +158,6 @@ AI Sponsor
 OpenAI
 AI Sponsor
 Ready to help us on our mission?
-
-## inspiring-stories.html
-Contact us
-If you have any questions or need further assistance with your application, please do not hesitate to contact us at
-support@flashforward.org
-or call us at
-+1-800-123-4567.
-Together, we can spark change and improve energy access worldwide.
 
 ## mission.html
 Our mission
@@ -369,16 +354,6 @@ Contact Us
 If you have any questions about these Terms, please reach out to us at
 about@flashforwardfoundation.org
 .
-
-## testimonials.html
-No items found.
-Destinations
-No items found.
-
-## volunteer-adventures.html
-No items found.
-Destinations
-No items found.
 
 ## volunteering.html
 Join us in making a difference
