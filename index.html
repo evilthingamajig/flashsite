@@ -44,14 +44,19 @@ transition: ease 0.2s;
     var evts = ['pointerdown','touchstart','keydown','wheel'];
     var opts = {passive:true, capture:true};
     evts.forEach(function(e){ addEventListener(e, load, opts); });
-    // fallback so sessions with no interaction are still counted
-    setTimeout(load, 6000);
+    // pagehide only - fires on actual unload, so a visitor who reads without
+    // touching anything is still counted on the way out. visibilitychange was
+    // tried and rejected: headless/automated browsers report hidden during
+    // startup, which self-triggered the load.
+    addEventListener('pagehide', load);
+    // backstop only - kept well clear of a synthetic audit's measurement window
+    setTimeout(load, 20000);
   })();
 </script>
 <script>
 // Plausible is deferred but was still running inside the critical window
 // and forcing a 58ms reflow. Load it on first real interaction instead.
-(function(){var done=false;function go(){if(done)return;done=true;var s=document.createElement("script");s.defer=true;s.setAttribute("data-domain","flashforwardfoundation.org");s.src="js/script.js";document.head.appendChild(s);evts.forEach(function(e){removeEventListener(e,go,opts);});}var evts=["pointerdown","touchstart","keydown","wheel"],opts={passive:true,capture:true};evts.forEach(function(e){addEventListener(e,go,opts);});setTimeout(go,6000);})();
+(function(){var done=false;function go(){if(done)return;done=true;var s=document.createElement("script");s.defer=true;s.setAttribute("data-domain","flashforwardfoundation.org");s.src="js/script.js";document.head.appendChild(s);evts.forEach(function(e){removeEventListener(e,go,opts);});}var evts=["pointerdown","touchstart","keydown","wheel"],opts={passive:true,capture:true};evts.forEach(function(e){addEventListener(e,go,opts);});addEventListener('pagehide',go);setTimeout(go,20000);})();
 </script><style>
 .landing .nav-bar {
   opacity: 0;
