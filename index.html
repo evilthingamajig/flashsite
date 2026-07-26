@@ -1050,18 +1050,21 @@ document.addEventListener("DOMContentLoaded", function () {
   else arm();
 })();
 </script><script>
-// The GoFundMe embed is ~700KB and ~1.5s of main-thread work, so it is built on
-// approach rather than at load. The donate section sits far below the fold,
-// keeping all of that outside the FCP/LCP/TBT window.
+// The GoFundMe embed is ~700KB and ~1.5s of main-thread work. It is deferred
+// until (a) the visitor actually interacts and (b) the donate section is close.
+// The interaction gate matters: scripted scrolling satisfies an
+// IntersectionObserver on its own, so proximity alone pulled the whole embed
+// into the initial-load window.
 (function () {
   var el = document.querySelector('.gfm-embed[data-gfm-lazy]');
   if (!el) return;
-  var started = false;
+  var built = false, armed = false;
 
   function buildIframe() {
-    // embed.js only appends iframes from its own DOMContentLoaded handler, which
-    // has long since fired by the time we inject it - so build it here instead,
-    // matching the attributes and utm parameters embed.js uses.
+    if (built) return; built = true;
+    // embed.js only appends iframes from its own DOMContentLoaded handler, long
+    // since fired by now, so build it here with the same attributes and utm
+    // parameters it would have used.
     var url = new URL(el.getAttribute('data-url'));
     url.searchParams.set('utm_content', location.hostname || 'none');
     url.searchParams.set('utm_medium', 'referral');
@@ -1075,27 +1078,29 @@ document.addEventListener("DOMContentLoaded", function () {
     f.title = 'Donate to Flash Forward Foundation via GoFundMe';
     f.src = url.toString() + '#:~:tcm-regime=GDPR&tcm-prompt=Hidden';
     el.appendChild(f);
-  }
-
-  function start() {
-    if (started) return; started = true;
     // load embed.js purely for its resize-message listener, which registers
-    // immediately and keeps the iframe auto-sizing to its content
+    // immediately and keeps the iframe sized to its content
     var s = document.createElement('script');
     s.defer = true;
     s.src = 'https://www.gofundme.com/static/js/embed.js';
     document.body.appendChild(s);
-    buildIframe();
   }
 
   function arm() {
-    if (!('IntersectionObserver' in window)) { start(); return; }
+    if (armed) return; armed = true;
+    if (!('IntersectionObserver' in window)) { buildIframe(); return; }
     var io = new IntersectionObserver(function (es) {
-      if (es.some(function (e) { return e.isIntersecting; })) { io.disconnect(); start(); }
-    }, { rootMargin: '300px 0px' });
+      if (es.some(function (e) { return e.isIntersecting; })) { io.disconnect(); buildIframe(); }
+    }, { rootMargin: '400px 0px' });
     io.observe(el);
   }
-  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', arm);
-  else arm();
+
+  var evts = ['pointerdown', 'touchstart', 'keydown', 'wheel'];
+  var opts = { passive: true, capture: true };
+  function onFirstInput() {
+    evts.forEach(function (e) { removeEventListener(e, onFirstInput, opts); });
+    arm();
+  }
+  evts.forEach(function (e) { addEventListener(e, onFirstInput, opts); });
 })();
 </script></body></html>
