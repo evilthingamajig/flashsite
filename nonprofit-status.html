@@ -24,14 +24,30 @@ transition: ease 0.2s;
 
 </style>
 <link href="css/61933.css" rel="stylesheet"/>
-<!-- Google tag (gtag.js) -->
-<script async="" src="https://www.googletagmanager.com/gtag/js?id=G-38F7LJZ8ST"></script>
+<!-- Google tag (gtag.js) - loaded on first interaction to keep it out of the
+     critical path. gtag() calls queue into dataLayer immediately and replay in
+     order once the library arrives, so nothing is lost. -->
 <script>
   window.dataLayer = window.dataLayer || [];
   function gtag(){dataLayer.push(arguments);}
   gtag('js', new Date());
-
   gtag('config', 'G-38F7LJZ8ST');
+  (function(){
+    var loaded = false;
+    function load(){
+      if (loaded) return; loaded = true;
+      var s = document.createElement('script');
+      s.async = true;
+      s.src = 'https://www.googletagmanager.com/gtag/js?id=G-38F7LJZ8ST';
+      document.head.appendChild(s);
+      evts.forEach(function(e){ removeEventListener(e, load, opts); });
+    }
+    var evts = ['pointerdown','touchstart','keydown','wheel'];
+    var opts = {passive:true, capture:true};
+    evts.forEach(function(e){ addEventListener(e, load, opts); });
+    // fallback so sessions with no interaction are still counted
+    setTimeout(load, 6000);
+  })();
 </script>
 <script data-domain="flashforwardfoundation.org" defer="" src="js/script.js"></script><script type="application/ld+json">
 {
