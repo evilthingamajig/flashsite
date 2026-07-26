@@ -1010,4 +1010,15 @@ document.addEventListener("DOMContentLoaded", function () {
     if (p && p.catch) p.catch(function () {});
   });
 });
+</script><script>
+// GoFundMe injects its iframe at runtime, so the accessible name has to be
+// applied after the fact (Lighthouse: "frame elements do not have a title").
+document.addEventListener("DOMContentLoaded",function(){
+  var tries=0;
+  var t=setInterval(function(){
+    var f=document.querySelector(".gfm-embed iframe");
+    if(f&&!f.title){f.title="Donate to Flash Forward Foundation via GoFundMe";}
+    if((f&&f.title)||++tries>40)clearInterval(t);
+  },250);
+});
 </script></body></html>
