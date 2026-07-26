@@ -887,4 +887,47 @@ $("[data-lenis-toggle]").on("click", function () {
     var n = new Date().getFullYear();
     document.querySelectorAll('.year').forEach(function (el) { el.textContent = n; });
   });
+</script><script>
+// Conversion tracking for Google Ad Grants. Pageviews do not satisfy the
+// requirement; these are the discrete actions worth counting.
+//
+// Both analytics libraries are interaction-gated, so neither has necessarily
+// arrived when one of these fires. gtag() is defined synchronously and queues
+// into dataLayer; the stub below gives Plausible the same behaviour. Queued
+// events flush once the libraries load - and since every action tracked here is
+// itself an interaction, that load is already underway by the time it fires.
+(function () {
+  window.plausible = window.plausible || function () {
+    (window.plausible.q = window.plausible.q || []).push(arguments);
+  };
+
+  function track(name, params) {
+    try { gtag('event', name, params); } catch (e) {}
+    try { window.plausible(name, { props: params }); } catch (e) {}
+  }
+
+  // Fires before the POST to formsubmit.co navigates away. GA4 sends via
+  // sendBeacon, which survives the unload.
+  document.addEventListener('submit', function (e) {
+    var f = e.target;
+    if (!f || f.tagName !== 'FORM') return;
+    track('contact_submit', {
+      transport_type: 'beacon',
+      form_name: f.getAttribute('data-name') || f.getAttribute('name') || 'form',
+      page_path: location.pathname
+    });
+  }, true);
+
+  document.addEventListener('click', function (e) {
+    var a = e.target && e.target.closest ? e.target.closest('a[href]') : null;
+    if (!a) return;
+    var href = a.getAttribute('href') || '';
+    if (href.indexOf('gofundme.com') !== -1) {
+      // the strongest signal we can see: the visitor is leaving to give
+      track('donate_outbound', { transport_type: 'beacon', page_path: location.pathname });
+    } else if (/(^|\/)donate$/.test(href.split('?')[0].split('#')[0])) {
+      track('donate_click', { transport_type: 'beacon', page_path: location.pathname });
+    }
+  }, true);
+})();
 </script></body></html>

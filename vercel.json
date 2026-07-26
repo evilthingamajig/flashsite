@@ -4,17 +4,63 @@
   "buildCommand": "exit 0",
   "outputDirectory": ".",
   "cleanUrls": true,
+  "rewrites": [
+    {
+      "source": "/api/event",
+      "destination": "https://plausible.io/api/event"
+    }
+  ],
   "redirects": [
-    { "source": "/events", "destination": "/", "permanent": true },
-    { "source": "/events.html", "destination": "/", "permanent": true },
-    { "source": "/testimonials", "destination": "/", "permanent": true },
-    { "source": "/testimonials.html", "destination": "/", "permanent": true },
-    { "source": "/volunteer-adventures", "destination": "/volunteering", "permanent": true },
-    { "source": "/volunteer-adventures.html", "destination": "/volunteering", "permanent": true },
-    { "source": "/inspiring-stories", "destination": "/mission", "permanent": true },
-    { "source": "/inspiring-stories.html", "destination": "/mission", "permanent": true },
-    { "source": "/archived-members", "destination": "/our-team", "permanent": true },
-    { "source": "/archived-members.html", "destination": "/our-team", "permanent": true }
+    {
+      "source": "/events",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/events.html",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/testimonials",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/testimonials.html",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/volunteer-adventures",
+      "destination": "/volunteering",
+      "permanent": true
+    },
+    {
+      "source": "/volunteer-adventures.html",
+      "destination": "/volunteering",
+      "permanent": true
+    },
+    {
+      "source": "/inspiring-stories",
+      "destination": "/mission",
+      "permanent": true
+    },
+    {
+      "source": "/inspiring-stories.html",
+      "destination": "/mission",
+      "permanent": true
+    },
+    {
+      "source": "/archived-members",
+      "destination": "/our-team",
+      "permanent": true
+    },
+    {
+      "source": "/archived-members.html",
+      "destination": "/our-team",
+      "permanent": true
+    }
   ],
   "headers": [
     {
