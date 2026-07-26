@@ -32,4 +32,4 @@ Allow: /
 User-agent: FacebookBot
 Allow: /
 
-Sitemap: https://www.flashforwardfoundation.org/sitemap.xml
+Sitemap: https://flashforwardfoundation.org/sitemap.xml
