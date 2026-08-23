@@ -6,15 +6,15 @@
 Flash Forward Foundation works to provide sustainable energy solutions to communities facing energy poverty. We provide solar equipment, engage in community outreach, and run volunteer programs to bring light and power to those who need it most.
 
 ## Important Links
-- [Home](https://www.flashforwardfoundation.org/): Overview of the organization.
-- [Mission](https://www.flashforwardfoundation.org/mission.html): Our goals and the problem we are solving.
-- [Our Team](https://www.flashforwardfoundation.org/our-team.html): Meet the volunteers behind Flash Forward.
-- [Donate](https://www.flashforwardfoundation.org/donate.html): How to contribute financially.
-- [Donate Equipment](https://www.flashforwardfoundation.org/donate-equipment.html): How to donate solar equipment.
-- [Volunteering](https://www.flashforwardfoundation.org/volunteering.html): How to get involved and volunteer.
-- [Contact Us](https://www.flashforwardfoundation.org/contact-us.html): Get in touch with our team.
-- [Nonprofit Status](https://www.flashforwardfoundation.org/nonprofit-status.html): Information regarding our 501(c)(3) nonprofit status.
+- [Home](https://flashforwardfoundation.org/): Overview of the organization.
+- [Mission](https://flashforwardfoundation.org/mission): Our goals and the problem we are solving.
+- [Our Team](https://flashforwardfoundation.org/our-team): Meet the volunteers behind Flash Forward.
+- [Donate](https://flashforwardfoundation.org/donate): How to contribute financially.
+- [Donate Equipment](https://flashforwardfoundation.org/donate-equipment): How to donate solar equipment.
+- [Volunteering](https://flashforwardfoundation.org/volunteering): How to get involved and volunteer.
+- [Contact Us](https://flashforwardfoundation.org/contact-us): Get in touch with our team.
+- [Nonprofit Status](https://flashforwardfoundation.org/nonprofit-status): Information regarding our 501(c)(3) nonprofit status.
 
 ## Additional Information
-- [Terms and Conditions](https://www.flashforwardfoundation.org/terms-and-conditions.html)
-- [Privacy Policy](https://www.flashforwardfoundation.org/privacy-policy.html)
+- [Terms and Conditions](https://flashforwardfoundation.org/terms-and-conditions)
+- [Privacy Policy](https://flashforwardfoundation.org/privacy-policy)
