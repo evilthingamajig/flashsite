@@ -195,7 +195,18 @@ function validate(options = {}) {
   const errors = [];
   const warnings = [];
   const previewOverride = env.VERCEL_ENV === "preview" && env.ALLOW_INCOMPLETE_DONATE_PREVIEW === "1";
-  const hostedMockup = options.allowHostedMockup === true;
+  const hostedRequested = options.allowHostedMockup === true;
+  const body = stripIgnoredBlocks(bodyMarkup(html));
+  const visible = visibleBodyText(html);
+  const head = stripComments(html.match(/<head\b[^>]*>([\s\S]*?)<\/head\s*>/i)?.[1] || "");
+  const exactPendingMount = '<div class="donation-provider-mount" data-donation-provider="pending" role="region" aria-labelledby="sponsor-light-heading">';
+  const exactNoindex = '<meta content="noindex,follow" name="robots"/>';
+  const hostedMockup = hostedRequested && !expectedWidgetId && !expectedAccountId &&
+    body.split(exactPendingMount).length === 2 &&
+    html.split(exactNoindex).length === 2 &&
+    (body.match(/<givebutter-widget(?=[\s/>])/gi) || []).length === 0 &&
+    !/<script\b[^>]*src=["'][^"']*widgets\.givebutter\.com\/latest\.umd\.cjs/i.test(head) &&
+    visible.split("Online sponsorship checkout is not active yet.").length === 2;
 
   function incomplete(message) {
     if (hostedMockup) warnings.push(`AUTHORIZED HOSTED MOCKUP: ${message}`);
@@ -211,8 +222,6 @@ function validate(options = {}) {
     incomplete(`donate.html contains noindex in meta name=${name}`);
   }
 
-  const body = stripIgnoredBlocks(bodyMarkup(html));
-  const visible = visibleBodyText(html);
   const pendingAttribute = /(?:^|\s)(?:class|id|data-[\w:-]+)\s*=\s*(?:"[^"]*(?:pending|placeholder|staging)[^"]*"|'[^']*(?:pending|placeholder|staging)[^']*'|[^\s>]*(?:pending|placeholder|staging)[^\s>]*)/i;
   const pendingPatterns = [
     /data-donation-provider\s*=\s*["']pending["']/i,
@@ -232,7 +241,6 @@ function validate(options = {}) {
   if (!expectedAccountId) incomplete("EXPECTED_ACCOUNT_ID is blank/TODO");
   parseWidget(body, expectedWidgetId, incomplete, message => errors.push(message));
 
-  const head = stripComments(html.match(/<head\b[^>]*>([\s\S]*?)<\/head\s*>/i)?.[1] || "");
   const scripts = [...head.matchAll(/<script(?=[\s/>])[^>]*>/gi)].map(match => {
     const tag = match[0];
     const attrs = attrMap(tag);
