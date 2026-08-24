@@ -147,12 +147,24 @@ Rechargeable battery
 Illustrated assembly
 One light, assembled step by step.
 A schematic view of the components in one solar study light.
-013D-printed caseForms the enclosure.
-02600 mAh lithium batteryStores energy for the light.
-03Recharge moduleShown generically.
-04Wires and connectionsLinks the components.
-05LEDProvides the study light.
-065V solar panelCharges the light during the day.
+01
+3D-printed case
+Forms the enclosure.
+02
+600 mAh lithium battery
+Stores energy for the light.
+03
+Recharge module
+Shown generically.
+04
+Wires and connections
+Links the components.
+05
+LED
+Provides the study light.
+06
+5V solar panel
+Charges the light during the day.
 Illustrated assembly.
 Follow your sponsored light
 See when it is built, shipped, and placed with a student.
@@ -241,6 +253,39 @@ Aidan Graham
 Volunteer
 Sanjay Gopi
 Volunteer
+Romir Chekuri
+President
+Favorite
+Movie
+The Shawshank Redemption
+I lead the team with vision and direction, and I'm passionate about combining technology and social impact to create sustainable change.
+Sree Kokkonda
+Vice President
+Favorite
+Car
+Audi R8
+I bring a visionary perspective to the team, studying our organizational structure to uncover new pathways for how Flash Forward can grow and reach more students.
+Andy Zhang
+Treasurer
+I manage our budget, track donations, and ensure every dollar is spent wisely to support our mission. I also manage partnerships, distribution logistics, and impact measurement across our program regions.
+Tuck Rossmiller
+Chief Communications Officer
+Favorite
+Activity
+Golf
+I provide leadership for the Foundation's communications, brand strategy, public relations, and partnership development. I oversee executive messaging, media relations, digital strategy, and stakeholder engagement to elevate brand awareness and advance the Foundation's global mission.
+Aidan Graham
+Volunteer
+Favorite
+Space Telescope
+JWST
+I lead our volunteer team by onboarding new members, matching volunteers with roles that fit their interests and skills, and supporting them throughout their experience. I also coordinate volunteer activities, communication across teams, and volunteer engagement to help advance our mission.
+Sanjay Gopi
+Volunteer
+Favorite
+Movie
+Whiplash
+My name Is Sanjay Gopi I help distribute flashlights to communities in need and assist with production costs to support our nonprofit's mission. Outside of volunteering, I enjoy playing tennis.
 
 ## privacy-policy.html
 Privacy Policy | Flash Forward - Energy Poverty Nonprofit Foundation
