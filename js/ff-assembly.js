@@ -13,9 +13,10 @@
     if(!root||root.getAttribute('data-assembly-ready'))return;
     root.setAttribute('data-assembly-ready','true');
     var parts={};root.querySelectorAll('[data-part]').forEach(function(el){parts[el.getAttribute('data-part')]=el;});
-    var photoMap={'case-shell':['case-cad.webp',190,185,340,220],'battery':['rechargeable-battery.webp',265,255,165,76],'recharge-module':['recharge-module.webp',392,300,110,70],'led':['white-led.webp',335,365,52,52],'solar-panel':['solar-panel.webp',225,138,270,92]};
+    var photoMap={'case-shell':['case-cad.webp',190,185,340,220],'battery':['rechargeable-battery.webp',265,255,165,76],'recharge-module':['recharge-module.webp',392,300,110,70],'wires':['wires.webp',300,285,150,90],'led':['white-led.webp',335,365,52,52],'solar-panel':['solar-panel.webp',225,138,270,92]};
     Object.keys(photoMap).forEach(function(id){var host=parts[id],spec=photoMap[id];if(!host)return;Array.prototype.slice.call(host.children).forEach(function(child){if(['rect','path','circle'].indexOf(child.tagName.toLowerCase())>=0)child.remove();});var img=document.createElementNS('http://www.w3.org/2000/svg','image');img.setAttribute('href','images/flashforward/assembly/'+spec[0]);img.setAttribute('x',spec[1]);img.setAttribute('y',spec[2]);img.setAttribute('width',spec[3]);img.setAttribute('height',spec[4]);img.setAttribute('preserveAspectRatio','xMidYMid meet');img.setAttribute('class','ff-assembly-photo');img.setAttribute('alt','');host.insertBefore(img,host.firstChild);});
     var batteryLabel=root.querySelector('[data-step="battery"] strong');if(batteryLabel)batteryLabel.textContent='Rechargeable battery';
+    var desc=root.querySelector('#assembly-svg-desc');if(desc)desc.textContent='A 3D-printed case, rechargeable battery, recharge module, wires, LED, and 5V solar panel appear separately, then assemble into one schematic light.';
     var svgLabels=root.querySelectorAll('.ff-assembly-svg .svg-label,.ff-assembly-svg .svg-dark-label');
     var track=root.querySelector('.ff-assembly-stage-column');
     var steps=root.querySelectorAll('.ff-assembly-steps li'),status=root.querySelector('#assembly-status'),finished=root.querySelector('#assembly-finished');
@@ -30,7 +31,7 @@
         part.style.opacity=String(reveal);part.style.transform='translate('+((1-assemble)*item.offset[0])+'px,'+((1-assemble)*item.offset[1])+'px) rotateZ('+spin+'deg)';
         steps[index].removeAttribute('aria-current');
       });
-      var labelOpacity=clamp(1-(p-.55)/.35);svgLabels.forEach(function(label){label.style.opacity=String(labelOpacity)});
+      var labelOpacity=clamp(1-(p-.55)/.09);svgLabels.forEach(function(label){label.style.opacity=String(labelOpacity)});
       var active=0;sequence.forEach(function(item,index){if(p>=item.start)active=index;});steps[active].setAttribute('aria-current','step');
       status.textContent=p>=.9?'Finished schematic':p>=.55?'Exploded assembly hold':'Assembly step: '+sequence[active].label;
       finished.style.opacity=String(clamp((p-.9)/.1));finished.setAttribute('aria-hidden',p>=.9?'false':'true');
