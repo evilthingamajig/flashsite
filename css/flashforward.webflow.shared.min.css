@@ -9,3 +9,4 @@ html{-webkit-text-size-adjust:100%;-ms-text-size-adjust:100%;font-family:sans-se
 .nav-logo-link.preloader img{animation:ffglow 1.5s ease-in-out infinite}
 @keyframes ffglow{0%,100%{filter:drop-shadow(0 0 2px rgba(22,163,74,.4));opacity:.85}50%{filter:drop-shadow(0 0 14px rgba(22,163,74,.9));opacity:1}}
 /*FF-LOGO-SIZE*/.nav-logo-link.sub,.nav-logo-link.landing,.nav-logo-link.sub.w--current,.nav-logo-link.landing.w--current{width:auto!important}.nav-logo-link.sub img,.nav-logo-link.landing img{height:64px!important;width:auto!important;max-width:none!important;object-fit:contain!important}
+@media screen and (max-width:340px){.nav-button-wrapper{column-gap:.5rem}.nav-button-wrapper .nav-btn{white-space:nowrap;padding:.65rem .7em;font-size:12px}}
