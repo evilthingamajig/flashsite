@@ -18,7 +18,7 @@ const validWidget = `<!doctype html>
   ></script>
 </head><body>
   <givebutter-widget
-    frequency = "Monthly"
+    frequency = "monthly"
     amount = '5.17'
     id = 'widget-test-123'
   ></givebutter-widget>
@@ -56,13 +56,28 @@ assert.ok(productionOverride.errors.length > 0, "production must ignore preview 
 const valid = result(validWidget, { VERCEL_ENV: "production" }, ids);
 assert.deepEqual(valid.errors, [], "multiline/order-independent valid widget must pass");
 
+const duplicateWidget = validWidget.replace('id = \'widget-test-123\'', 'id = \'widget-test-123\' id = \'widget-other\'');
+const duplicateWidgetResult = result(duplicateWidget, { VERCEL_ENV: "production" }, ids);
+assert.ok(duplicateWidgetResult.errors.some(error => /givebutter-widget has duplicate attributes: id/i.test(error)), "duplicate widget id must fail");
+
+const duplicateScript = validWidget.replace(
+  "src='https://widgets.givebutter.com/latest.umd.cjs?acct=acct-test-456'",
+  "src='https://widgets.givebutter.com/latest.umd.cjs?acct=acct-test-456' src='https://widgets.givebutter.com/latest.umd.cjs?acct=other'"
+);
+const duplicateScriptResult = result(duplicateScript, { VERCEL_ENV: "production" }, ids);
+assert.ok(duplicateScriptResult.errors.some(error => /script tag has duplicate attributes: src/i.test(error)), "duplicate script src must fail");
+
+const duplicateMeta = validWidget.replace("<html><head>", '<html><head><meta name=robots name=googlebot content=none>');
+const duplicateMetaResult = result(duplicateMeta, { VERCEL_ENV: "production" }, ids);
+assert.ok(duplicateMetaResult.errors.some(error => /meta tag has duplicate attributes: name/i.test(error)), "duplicate meta name must fail");
+
 for (const amount of ["5.170", "05.17", "5.17e0"]) {
   const amountResult = result(validWidget.replace("5.17", amount), { VERCEL_ENV: "production" }, ids);
   assert.ok(amountResult.errors.some(error => /amount/i.test(error)), `amount ${amount} must fail`);
 }
 
-for (const frequency of ["month", "permonth", "everymonth"]) {
-  const frequencyResult = result(validWidget.replace("Monthly", frequency), { VERCEL_ENV: "production" }, ids);
+for (const frequency of ["Monthly", "month", "permonth", "everymonth"]) {
+  const frequencyResult = result(validWidget.replace("monthly", frequency), { VERCEL_ENV: "production" }, ids);
   assert.ok(frequencyResult.errors.some(error => /frequency/i.test(error)), `frequency ${frequency} must fail`);
 }
 
@@ -121,6 +136,11 @@ const secondRobot = validWidget.replace("<html><head>", '<html><head><meta name=
 const secondRobotResult = result(secondRobot, { VERCEL_ENV: "production" }, ids);
 assert.ok(secondRobotResult.errors.filter(error => /noindex in meta name=/i.test(error)).length === 2, "googlebot and bingbot noindex must fail");
 
+for (const name of ["robots", "googlebot", "bingbot"]) {
+  const noneResult = result(validWidget.replace("<html><head>", `<html><head><meta name=${name} content=none>`), { VERCEL_ENV: "production" }, ids);
+  assert.ok(noneResult.errors.some(error => /noindex in meta name=/i.test(error)), `${name}=none must fail`);
+}
+
 const unquotedStaging = validWidget.replace("<body>", "<body><div class=pending></div><div data-stage=placeholder></div>");
 const unquotedStagingResult = result(unquotedStaging, { VERCEL_ENV: "production" }, ids);
 assert.ok(unquotedStagingResult.errors.some(error => /pending\/staging/i.test(error)), "unquoted staging attributes must fail");
@@ -143,6 +163,20 @@ const donateConfig = result(validWidget, { VERCEL_ENV: "production" }, {
 });
 assert.ok(donateConfig.errors.some(error => /X-Robots-Tag noindex/i.test(error)), "donate X-Robots-Tag rule must fail");
 
+for (const source of ["/donate.html", "/donate(.*)", "/donate/:path*", "/donate/..."]) {
+  const routeConfig = result(validWidget, { VERCEL_ENV: "production" }, {
+    ...ids,
+    config: { headers: [{ source, headers: [{ key: "X-Robots-Tag", value: "noindex" }] }] }
+  });
+  assert.ok(routeConfig.errors.some(error => /X-Robots-Tag noindex/i.test(error)), `${source} X-Robots-Tag rule must fail`);
+}
+
+const equipmentConfig = result(validWidget, { VERCEL_ENV: "production" }, {
+  ...ids,
+  config: { headers: [{ source: "/donate-equipment", headers: [{ key: "X-Robots-Tag", value: "noindex" }] }] }
+});
+assert.equal(equipmentConfig.errors.filter(error => /X-Robots-Tag noindex/i.test(error)).length, 0, "donate-equipment X-Robots-Tag rule must not fail");
+
 const legacy = ["go", "fund", "me"].join("");
 const gfm = ["g", "fm"].join("");
 const dotted = ["go", "fund", ".", "me"].join("");
@@ -158,7 +192,11 @@ const fallbackHits = scanLegacySources(root, new Map([
 assert.equal(fallbackHits.length, 1, "authored fallback text inside technical widget tags must still be scanned");
 
 const deployedExtensions = [".html", ".css", ".js", ".mjs", ".cjs", ".json", ".xml", ".txt", ".svg", ".md", ".map", ".webmanifest", ".manifest"];
-const extensionSources = new Map(deployedExtensions.map(extension => [`public${extension}`, `provider ${legacy}`]));
-assert.equal(scanLegacySources(root, extensionSources).length, deployedExtensions.length, "every deployed text extension must be scanned");
+const scannedDirectories = ["work", "docs", "outputs", ".openai"];
+const extensionSources = new Map();
+for (const directory of scannedDirectories) {
+  for (const extension of deployedExtensions) extensionSources.set(`${directory}/public${extension}`, `provider ${legacy}`);
+}
+assert.equal(scanLegacySources(root, extensionSources).length, deployedExtensions.length * scannedDirectories.length, "every deployed text extension must be scanned in every deployable directory");
 
 console.log("verify-donate-launch self-tests passed");

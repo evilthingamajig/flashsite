@@ -13,7 +13,19 @@ const SOURCE_EXTENSIONS = new Set([
   ".html", ".css", ".js", ".mjs", ".cjs", ".json", ".xml", ".txt",
   ".svg", ".md", ".map", ".webmanifest", ".manifest"
 ]);
-const IGNORED_DIRS = new Set([".git", "node_modules", "work", "docs", "outputs", ".openai"]);
+const IGNORED_DIRS = new Set([".git", "node_modules"]);
+
+function duplicateAttributes(tag) {
+  const seen = new Set();
+  const duplicates = new Set();
+  const pattern = /(?:^|[\s<])([:\w-]+)(?:\s*=\s*(?:"[^"]*"|'[^']*'|[^\s"'=<>`]+))?/g;
+  for (const match of tag.matchAll(pattern)) {
+    const name = match[1].toLowerCase();
+    if (seen.has(name)) duplicates.add(name);
+    seen.add(name);
+  }
+  return [...duplicates];
+}
 
 function attrMap(tag) {
   const attrs = new Map();
@@ -49,13 +61,15 @@ function visibleBodyText(html) {
     .trim();
 }
 
-function noindexRobotNames(html) {
+function noindexRobotNames(html, reportDuplicate) {
   const names = new Set(["robots", "googlebot", "bingbot"]);
   const found = [];
   for (const match of html.matchAll(/<meta\b[^>]*>/gi)) {
+    const duplicates = duplicateAttributes(match[0]);
+    if (duplicates.length) reportDuplicate(`meta tag has duplicate attributes: ${duplicates.join(", ")}`);
     const attrs = attrMap(match[0]);
     const name = (attrs.get("name") || "").toLowerCase();
-    if (names.has(name) && /\bnoindex\b/i.test(attrs.get("content") || "")) found.push(name);
+    if (names.has(name) && /(?:^|[\s,;])(?:noindex|none)(?=$|[\s,;])/i.test(attrs.get("content") || "")) found.push(name);
   }
   return found;
 }
@@ -125,7 +139,8 @@ function configHasXRoboNoindex(config) {
   function appliesToDonateOrGlobal(source) {
     if (typeof source !== "string") return false;
     const normalized = source.replace(/\/$/, "");
-    return normalized === "/donate" || normalized === "/(.*)" || normalized === "/:path*";
+    if (["/donate", "/donate.html", "/donate(.*)", "/:path*", "/(.*)"].includes(normalized)) return true;
+    return /^\/donate\/.*$/.test(normalized);
   }
   function visit(value, sourceScope = "") {
     if (!value || typeof value !== "object") return false;
@@ -143,16 +158,18 @@ function configHasXRoboNoindex(config) {
 }
 
 function frequencyIsMonthly(value) {
-  return String(value || "").toLowerCase() === "monthly";
+  return String(value || "") === "monthly";
 }
 
-function parseWidget(markup, expectedWidgetId, report) {
+function parseWidget(markup, expectedWidgetId, report, reportDuplicate) {
   const open = [...markup.matchAll(/<givebutter-widget(?=[\s/>])([^>]*)>/gi)];
   const close = [...markup.matchAll(/<\/givebutter-widget(?=[\s>])\s*>/gi)];
   if (open.length !== 1 || close.length !== 1) {
     report(`Expected exactly one body <givebutter-widget> with closing tag; found ${open.length} opening and ${close.length} closing tags`);
     return;
   }
+  const duplicates = duplicateAttributes(open[0][0]);
+  if (duplicates.length) reportDuplicate(`givebutter-widget has duplicate attributes: ${duplicates.join(", ")}`);
   const attrs = attrMap(open[0][0]);
   if (!expectedWidgetId) {
     report("EXPECTED_WIDGET_ID is blank/TODO; insert the exact dashboard widget ID before production");
@@ -187,7 +204,7 @@ function validate(options = {}) {
     errors.push("vercel.json contains an X-Robots-Tag noindex directive");
   }
 
-  for (const name of noindexRobotNames(html)) {
+  for (const name of noindexRobotNames(html, message => errors.push(message))) {
     incomplete(`donate.html contains noindex in meta name=${name}`);
   }
 
@@ -210,12 +227,14 @@ function validate(options = {}) {
 
   if (!expectedWidgetId) incomplete("EXPECTED_WIDGET_ID is blank/TODO");
   if (!expectedAccountId) incomplete("EXPECTED_ACCOUNT_ID is blank/TODO");
-  parseWidget(body, expectedWidgetId, incomplete);
+  parseWidget(body, expectedWidgetId, incomplete, message => errors.push(message));
 
   const head = stripComments(html.match(/<head\b[^>]*>([\s\S]*?)<\/head\s*>/i)?.[1] || "");
   const scripts = [...head.matchAll(/<script(?=[\s/>])[^>]*>/gi)].map(match => {
     const tag = match[0];
     const attrs = attrMap(tag);
+    const duplicates = duplicateAttributes(tag);
+    if (duplicates.length) errors.push(`script tag has duplicate attributes: ${duplicates.join(", ")}`);
     const rawSrc = (attrs.get("src") || "").replace(/&amp;/gi, "&");
     let url = null;
     try {
