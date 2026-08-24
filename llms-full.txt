@@ -180,7 +180,7 @@ Flash Forward Foundation is an IRS-recognized 501(c)(3) nonprofit.
 
 ## mission.html
 Our Why and Mission | Flash Forward - Energy Poverty Nonprofit Foundation
-Expanding Energy Access Across the Globe
+Why reliable light matters after sunset
 Scroll down
 Our mission
 Flash Forward designs, builds, and distributes solar-powered lights for students living without reliable electricity.
@@ -236,56 +236,50 @@ IRS Publication 78 Listing
 Our first Form 990 covers fiscal year 2025 and will be posted here once filed.
 
 ## our-team.html
-Volunteers | Flash Forward - Energy Poverty Nonprofit Foundation
-The team behind
-FlashForward®
+Our Team | Flash Forward Foundation
+The team behind Flash Forward
 Executives
+Romir Chekuri
+President
+Favorite Movie
+The Shawshank Redemption
+I lead the team with vision and direction, and I'm passionate about combining technology and social impact to create sustainable change.
 Romir Chekuri
 President
 Sree Kokkonda
 Vice President
+Favorite Car
+Audi R8
+I bring a visionary perspective to the team, studying our organizational structure to uncover new pathways for how Flash Forward can grow and reach more students.
+Sree Kokkonda
+Vice President
 Andy Zhang
 Treasurer
+I manage the Foundation’s budget and donation records and support partnership and distribution planning.
+Andy Zhang
+Treasurer
+Tuck Rossmiller
+Chief Communications Officer
+Favorite Activity
+Golf
+I support the Foundation’s communications, public messaging, and partnership outreach.
 Tuck Rossmiller
 Chief Communications Officer
 Volunteers
 Aidan Graham
 Volunteer
-Sanjay Gopi
-Volunteer
-Romir Chekuri
-President
-Favorite
-Movie
-The Shawshank Redemption
-I lead the team with vision and direction, and I'm passionate about combining technology and social impact to create sustainable change.
-Sree Kokkonda
-Vice President
-Favorite
-Car
-Audi R8
-I bring a visionary perspective to the team, studying our organizational structure to uncover new pathways for how Flash Forward can grow and reach more students.
-Andy Zhang
-Treasurer
-I manage our budget, track donations, and ensure every dollar is spent wisely to support our mission. I also manage partnerships, distribution logistics, and impact measurement across our program regions.
-Tuck Rossmiller
-Chief Communications Officer
-Favorite
-Activity
-Golf
-I provide leadership for the Foundation's communications, brand strategy, public relations, and partnership development. I oversee executive messaging, media relations, digital strategy, and stakeholder engagement to elevate brand awareness and advance the Foundation's global mission.
-Aidan Graham
-Volunteer
-Favorite
-Space Telescope
+Favorite Space Telescope
 JWST
 I lead our volunteer team by onboarding new members, matching volunteers with roles that fit their interests and skills, and supporting them throughout their experience. I also coordinate volunteer activities, communication across teams, and volunteer engagement to help advance our mission.
+Aidan Graham
+Volunteer
 Sanjay Gopi
 Volunteer
-Favorite
-Movie
+Favorite Movie
 Whiplash
-My name Is Sanjay Gopi I help distribute flashlights to communities in need and assist with production costs to support our nonprofit's mission. Outside of volunteering, I enjoy playing tennis.
+I volunteer with Flash Forward and support light-building and distribution work. Outside of volunteering, I enjoy playing tennis.
+Sanjay Gopi
+Volunteer
 
 ## privacy-policy.html
 Privacy Policy | Flash Forward - Energy Poverty Nonprofit Foundation
@@ -324,7 +318,7 @@ Contact Us
 If you have questions about this Privacy Policy or how we handle your information, contact us at about@flashforwardfoundation.org.
 
 ## terms-and-conditions.html
-Terms and Condition | Flash Forward - Energy Poverty Nonprofit Foundation
+Terms and Conditions | Flash Forward Foundation
 Terms and Conditions
 These Terms of Service (“Terms”) are entered into between Flash Forward Foundation (“Flash Forward,” “we,” “us,” or “our”) and any person who accesses or uses our website (together, the “Service”). These Terms explain the rules for accessing and using flashforwardfoundation.org.
 Updated on August 23, 2026
@@ -333,7 +327,7 @@ about@flashforwardfoundation.org
 Address:
 Flash Forward Foundation
 Bellevue, Washington, United States
-These Terms of Service (the “Terms”) are a binding agreement between you and Flash Forward Foundation. By accessing or using our website in any way, you agree to these Terms. These Terms include the provisions in this document as well as those in our Privacy Policy.
+These Terms of Service (the “Terms”) are a binding agreement between you and Flash Forward Foundation. By accessing or using our website in any way, you agree to these Terms. These Terms include the provisions in this document as well as those in our Privacy Policy .
 Who We Are
 Flash Forward Foundation is a 501(c)(3) public charity (EIN 39-3605570) founded by students. We develop solar-powered study lights for students living without reliable electricity and coordinate volunteer-led design, assembly, fundraising, outreach, and delivery.
 Eligibility
@@ -395,7 +389,7 @@ Some opportunities may involve supporting a design, outreach, fundraising, or re
 04
 Find a workable commitment
 Time commitments vary by role. Tell us your availability so the team can share opportunities that may be a fit.
-Engineering & Manufacturing
+Engineering & Assembly
 Depending on current needs and experience, volunteers may help with CAD, 3D printing, soldering, assembly, testing, or design documentation for solar-powered lights.
 Outreach & Partnerships
 Volunteers may help research prospective companies, schools, sponsors, or nonprofit partners and support approved outreach.
