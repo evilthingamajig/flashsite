@@ -24,10 +24,10 @@ const validWidget = `<!doctype html>
 </body></html>`;
 
 const stagingWidget = `<!doctype html><html><head>
-<meta content="noindex,follow" name="robots">
+<meta content="noindex,follow" name="robots"/>
 </head><body>
-<div class="donation-provider-mount" data-donation-provider="pending">
-  Monthly sponsorship checkout is being prepared. No payment form is active on this page yet.
+<div class="donation-provider-mount" data-donation-provider="pending" role="region" aria-labelledby="sponsor-light-heading">
+  <p role="status">Online sponsorship checkout is not active yet.</p>
 </div>
 </body></html>`;
 
@@ -47,7 +47,7 @@ function fixtureRoot({ html = validWidget, config = cleanConfig, files = {} } = 
 
 function fixtureResult(options = {}) {
   const root = fixtureRoot(options);
-  return validate({ root, env: options.env || { VERCEL_ENV: "production" }, allowHostedMockup: options.allowHostedMockup === true, ...ids });
+  return validate({ root, env: options.env || { VERCEL_ENV: "production" }, allowHostedMockup: options.allowHostedMockup === true, ...ids, ...(options.ids || {}) });
 }
 
 try {
@@ -57,16 +57,25 @@ try {
   assert.ok(strictStaging.errors.some(error => /widget/i.test(error)), "strict staging: widget gate");
   assert.ok(strictStaging.errors.some(error => /library script/i.test(error)), "strict staging: library gate");
 
-  const hostedMockup = fixtureResult({ html: stagingWidget, env: { VERCEL_ENV: "production" }, allowHostedMockup: true });
+  const hostedMockup = fixtureResult({ html: stagingWidget, env: { VERCEL_ENV: "production" }, allowHostedMockup: true, ids: { expectedWidgetId: "", expectedAccountId: "" } });
   assert.equal(hostedMockup.errors.length, 0, "authorized hosted mockup must allow incomplete checkout");
   assert.ok(hostedMockup.warnings.length >= 4, "authorized hosted mockup must warn loudly");
   const hostedLegacy = fixtureResult({
     html: stagingWidget,
     env: { VERCEL_ENV: "production" },
     allowHostedMockup: true,
+    ids: { expectedWidgetId: "", expectedAccountId: "" },
     files: { "legacy.html": ["go", "fund", "me"].join("") }
   });
   assert.ok(hostedLegacy.errors.some(error => /Legacy donation provider/i.test(error)), "hosted mockup must not override legacy-provider errors");
+  const changedStatus = fixtureResult({ html: stagingWidget.replace("Online sponsorship checkout is not active yet.", "Checkout is unavailable in this preview."), allowHostedMockup: true, ids: { expectedWidgetId: "", expectedAccountId: "" } });
+  assert.ok(changedStatus.errors.length > 0, "changed hosted status must fail strict validation");
+  const removedNoindex = fixtureResult({ html: stagingWidget.replace('<meta content="noindex,follow" name="robots"/>', ""), allowHostedMockup: true, ids: { expectedWidgetId: "", expectedAccountId: "" } });
+  assert.ok(removedNoindex.errors.length > 0, "removed noindex must disable hosted override");
+  const widgetHybrid = fixtureResult({ html: stagingWidget.replace('</body>', '<givebutter-widget amount="5.17" frequency="monthly"></givebutter-widget></body>'), allowHostedMockup: true, ids: { expectedWidgetId: "", expectedAccountId: "" } });
+  assert.ok(widgetHybrid.errors.some(error => /exactly one body|widget/i.test(error)), "widget-bearing hybrid must fail");
+  const missingLibrary = fixtureResult({ html: validWidget.replace('<givebutter-widget', '<div class="donation-provider-mount" data-donation-provider="pending" role="region" aria-labelledby="sponsor-light-heading"><p role="status">Online sponsorship checkout is not active yet.</p></div><!--').replace('</givebutter-widget>', '--></givebutter-widget>'), allowHostedMockup: true, ids: { expectedWidgetId: "", expectedAccountId: "" } });
+  assert.ok(missingLibrary.errors.length > 0, "widget/library hybrid must fail");
 
   const previewStaging = fixtureResult({
     html: stagingWidget,
@@ -87,11 +96,15 @@ try {
   for (const amount of ["5.170", "05.17", "5.17e0"]) {
     const amountResult = fixtureResult({ html: validWidget.replace("5.17", amount) });
     assert.ok(amountResult.errors.some(error => /amount/i.test(error)), `amount ${amount} must fail`);
+    const hostedAmountResult = fixtureResult({ html: stagingWidget.replace("</body>", `<givebutter-widget amount="${amount}" frequency="monthly"></givebutter-widget></body>`), allowHostedMockup: true, ids: { expectedWidgetId: "", expectedAccountId: "" } });
+    assert.ok(hostedAmountResult.errors.some(error => /amount|exactly one body|widget/i.test(error)), `hosted amount ${amount} must fail`);
   }
 
   for (const frequency of ["Monthly", "month", "permonth", "everymonth"]) {
     const frequencyResult = fixtureResult({ html: validWidget.replace("monthly", frequency) });
     assert.ok(frequencyResult.errors.some(error => /frequency/i.test(error)), `frequency ${frequency} must fail`);
+    const hostedFrequencyResult = fixtureResult({ html: stagingWidget.replace("</body>", `<givebutter-widget amount="5.17" frequency="${frequency}"></givebutter-widget></body>`), allowHostedMockup: true, ids: { expectedWidgetId: "", expectedAccountId: "" } });
+    assert.ok(hostedFrequencyResult.errors.some(error => /frequency|exactly one body|widget/i.test(error)), `hosted frequency ${frequency} must fail`);
   }
 
   const duplicateWidget = validWidget.replace("id = 'widget-test-123'", "id = 'widget-test-123' id = 'widget-other'");
