@@ -47,7 +47,7 @@ function fixtureRoot({ html = validWidget, config = cleanConfig, files = {} } = 
 
 function fixtureResult(options = {}) {
   const root = fixtureRoot(options);
-  return validate({ root, env: options.env || { VERCEL_ENV: "production" }, ...ids });
+  return validate({ root, env: options.env || { VERCEL_ENV: "production" }, allowHostedMockup: options.allowHostedMockup === true, ...ids });
 }
 
 try {
@@ -56,6 +56,17 @@ try {
   assert.ok(strictStaging.errors.some(error => /pending|staging/i.test(error)), "strict staging: pending gate");
   assert.ok(strictStaging.errors.some(error => /widget/i.test(error)), "strict staging: widget gate");
   assert.ok(strictStaging.errors.some(error => /library script/i.test(error)), "strict staging: library gate");
+
+  const hostedMockup = fixtureResult({ html: stagingWidget, env: { VERCEL_ENV: "production" }, allowHostedMockup: true });
+  assert.equal(hostedMockup.errors.length, 0, "authorized hosted mockup must allow incomplete checkout");
+  assert.ok(hostedMockup.warnings.length >= 4, "authorized hosted mockup must warn loudly");
+  const hostedLegacy = fixtureResult({
+    html: stagingWidget,
+    env: { VERCEL_ENV: "production" },
+    allowHostedMockup: true,
+    files: { "legacy.html": ["go", "fund", "me"].join("") }
+  });
+  assert.ok(hostedLegacy.errors.some(error => /Legacy donation provider/i.test(error)), "hosted mockup must not override legacy-provider errors");
 
   const previewStaging = fixtureResult({
     html: stagingWidget,
