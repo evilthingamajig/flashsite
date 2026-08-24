@@ -199,13 +199,15 @@ function validate(options = {}) {
   const body = stripIgnoredBlocks(bodyMarkup(html));
   const visible = visibleBodyText(html);
   const head = stripComments(html.match(/<head\b[^>]*>([\s\S]*?)<\/head\s*>/i)?.[1] || "");
+  const strippedHtml = stripComments(html);
+  const allScriptTags = [...strippedHtml.matchAll(/<script(?=[\s/>])[^>]*>/gi)].map(match => match[0]);
   const headScriptTags = [...head.matchAll(/<script(?=[\s/>])[^>]*>/gi)].map(match => match[0]);
-  const hostedGivebutterScripts = headScriptTags.some(tag => {
+  const hostedGivebutterScripts = allScriptTags.some(tag => {
     const rawSrc = (attrMap(tag).get("src") || "").replace(/&amp;/gi, "&");
     if (!rawSrc) return false;
     try {
       const url = new URL(rawSrc, "https://flashforwardfoundation.org/");
-      return url.hostname === "widgets.givebutter.com" && url.username === "" && url.password === "";
+      return url.hostname === "widgets.givebutter.com";
     } catch {
       return false;
     }
