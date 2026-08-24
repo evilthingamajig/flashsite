@@ -146,12 +146,12 @@ Current build cost: $5.17
 Rechargeable battery
 Illustrated assembly
 One light, assembled step by step.
-A schematic view of the components in one solar study light.
+A component view of the parts in one solar study light.
 01
 3D-printed case
 Forms the enclosure.
 02
-600 mAh lithium battery
+Rechargeable battery
 Stores energy for the light.
 03
 Recharge module
