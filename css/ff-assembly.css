@@ -8,6 +8,6 @@
 .ff-assembly-steps{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);clip-path:inset(50%);white-space:nowrap}
 .ff-assembly-note{display:none}
 .ff-assembly-prototype .svg-label,.ff-assembly-prototype .svg-dark-label{display:none}
-.ff-assembly-finished-photo{position:absolute;width:min(82%,560px);height:auto;max-height:68vh;object-fit:cover;object-position:center;opacity:0;pointer-events:none;z-index:4;border-radius:12px}
+.ff-assembly-finished-photo{position:absolute;width:min(68%,430px);height:min(60vh,520px);object-fit:cover;object-position:center 78%;opacity:0;pointer-events:none;z-index:4;border-radius:12px}
 @media(max-width:767px){.ff-assembly-layout{display:flex;flex-direction:column;min-height:0;gap:0}.ff-assembly-stage-column{order:-1;min-height:190vh}.ff-assembly-stage{height:72svh;min-height:430px;margin-bottom:7vh}.ff-assembly-stage::before{inset:0}.ff-assembly-svg{max-height:none}.ff-assembly-copy{padding:0 0 48px}.ff-assembly-copy h2{font-size:clamp(1.8rem,9vw,3rem)}.ff-assembly-finished{display:none}}
 @media(prefers-reduced-motion:reduce){.ff-assembly-layout{min-height:auto}.ff-assembly-stage-column{min-height:auto}.ff-assembly-stage{position:relative;height:auto;min-height:0;margin:0;padding:20px 0}.ff-assembly-stage::before{inset:0}.ff-assembly-svg{max-height:none}.ff-assembly-prototype .assembly-part{will-change:auto}.ff-assembly-finished{display:none}}

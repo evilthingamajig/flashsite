@@ -39,7 +39,7 @@
         if(preload.decode)preload.decode().then(assign).catch(assign);
       });
       if(photoNodes.foreground)photoNodes.foreground.setAttribute('href','images/flashforward/assembly/case-cad.webp');
-      finishedPhoto.src='images/flashforward/flashfinishedworkshop.webp';
+      finishedPhoto.src='images/flashforward/flashlightinshippingcontainer.webp';
     }
     if(!track||!steps.length||!status||!finished)return;
     var reduced=window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches;
