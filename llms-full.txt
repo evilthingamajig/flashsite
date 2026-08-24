@@ -145,6 +145,14 @@ Current build cost: $5.17
 3D-printed enclosure
 5V solar panel
 Rechargeable battery
+Follow your sponsored light
+Receive individualized updates when your light is built, shipped, and placed with a student.
+Build
+Assembled in our student-led lab.
+Ship
+Sent through a distribution partner.
+Place
+Received by a student.
 Illustrated assembly
 One light, assembled step by step.
 See the case, battery, recharge module, wires, LED, and solar panel come together.
@@ -167,14 +175,6 @@ Provides the study light.
 5V solar panel
 Charges the light during the day.
 Representative component imagery; parts may vary by build.
-Follow your sponsored light
-Receive individualized updates when your light is built, shipped, and placed with a student.
-Build
-Assembled in our student-led lab.
-Ship
-Sent through a distribution partner.
-Place
-Received by a student.
 Students in off-grid communities
 Our partner network helps place solar-powered study lights with students who need reliable light after dark.
 
