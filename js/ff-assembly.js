@@ -5,7 +5,7 @@
     {id:'recharge-module',start:.18,label:'recharge module',offset:[-130,32],rotation:60},
     {id:'wires',start:.28,label:'wires and connections',offset:[-84,78],rotation:-45},
     {id:'led',start:.39,label:'LED',offset:[112,88],rotation:80},
-    {id:'solar-panel',start:.50,label:'5V solar panel',offset:[0,-138],rotation:-55}
+    {id:'solar-panel',start:.50,label:'5V solar panel',offset:[0,-138],rotation:-55,finalOffset:[0,75]}
   ];
   function clamp(value){return Math.max(0,Math.min(1,value));}
   function ease(value){return value<.5?2*value*value:1-Math.pow(-2*value+2,2)/2;}
@@ -47,7 +47,8 @@
       sequence.forEach(function(item,index){
         var reveal=index===0?1:(p>=.55?1:clamp((p-item.start)/.07)),part=parts[item.id];if(!part)return;
         var spin=(1-ease(reveal))*Math.min(Math.abs(item.rotation||0),item.id==='solar-panel'?40:item.id==='battery'?70:item.id==='recharge-module'?80:item.id==='led'?60:35)*(item.rotation<0?-1:1);
-        part.style.opacity=String(reveal);part.style.transform='translate('+((1-assemble)*item.offset[0])+'px,'+((1-assemble)*item.offset[1])+'px) rotateZ('+spin+'deg)';
+        var finalOffset=item.finalOffset||[0,0],tx=(1-assemble)*item.offset[0]+assemble*finalOffset[0],ty=(1-assemble)*item.offset[1]+assemble*finalOffset[1];
+        part.style.opacity=String(reveal);part.style.transform='translate('+tx+'px,'+ty+'px) rotateZ('+spin+'deg)';
         steps[index].removeAttribute('aria-current');
       });
       var foreground=root.querySelector('.ff-assembly-foreground');if(foreground)foreground.style.opacity=String(clamp((p-.70)/.18));
