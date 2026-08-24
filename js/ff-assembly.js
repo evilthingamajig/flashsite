@@ -15,4 +15,3 @@ if('IntersectionObserver' in window)new IntersectionObserver(function(es,o){if(e
 if(window.gsap&&window.ScrollTrigger){window.gsap.registerPlugin(window.ScrollTrigger);var proxy={p:0},tl=window.gsap.timeline({scrollTrigger:{trigger:track,start:'top top',end:'bottom bottom',scrub:.35,onUpdate:function(){render(proxy.p)}}});tl.to(proxy,{p:1,duration:1,ease:'none',onStart:load,onUpdate:function(){render(proxy.p)}});render(0);}else{function update(){var sectionTop=track.getBoundingClientRect().top+window.scrollY,span=Math.max(1,track.offsetHeight-window.innerHeight);render(clamp((window.scrollY-sectionTop)/span));}window.addEventListener('scroll',update,{passive:true});window.addEventListener('resize',update);update();}}
 if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',function(){init(document.querySelector('[data-assembly-sequence]'));},{once:true});else init(document.querySelector('[data-assembly-sequence]'));})();
 
-
