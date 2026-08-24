@@ -9,8 +9,10 @@ const EXPECTED_ACCOUNT_ID = "";
 const SELF = path.resolve(__filename);
 const TEST_SELF = path.resolve(__dirname, "verify-donate-launch.test.cjs");
 
-const SOURCE_EXTENSIONS = new Set([".html", ".css", ".js", ".mjs", ".json", ".xml"]);
-const PUBLIC_TEXT_FILES = new Set(["robots.txt", "llms.txt", "llms-full.txt"]);
+const SOURCE_EXTENSIONS = new Set([
+  ".html", ".css", ".js", ".mjs", ".cjs", ".json", ".xml", ".txt",
+  ".svg", ".md", ".map", ".webmanifest", ".manifest"
+]);
 const IGNORED_DIRS = new Set([".git", "node_modules", "work", "docs", "outputs", ".openai"]);
 
 function attrMap(tag) {
@@ -31,7 +33,7 @@ function stripComments(value) {
 
 function stripIgnoredBlocks(value) {
   return stripComments(value).replace(
-    /<(script|style|template|noscript)\b[^>]*>[\s\S]*?<\/\1\s*>/gi,
+    /<(script|style|template|noscript)(?=[\s/>])[^>]*>[\s\S]*?<\/\1\s*>/gi,
     ""
   );
 }
@@ -47,14 +49,15 @@ function visibleBodyText(html) {
     .trim();
 }
 
-function metaContent(html, name) {
+function noindexRobotNames(html) {
+  const names = new Set(["robots", "googlebot", "bingbot"]);
+  const found = [];
   for (const match of html.matchAll(/<meta\b[^>]*>/gi)) {
     const attrs = attrMap(match[0]);
-    if ((attrs.get("name") || "").toLowerCase() === name.toLowerCase()) {
-      return attrs.get("content") || "";
-    }
+    const name = (attrs.get("name") || "").toLowerCase();
+    if (names.has(name) && /\bnoindex\b/i.test(attrs.get("content") || "")) found.push(name);
   }
-  return "";
+  return found;
 }
 
 function walk(root) {
@@ -70,7 +73,7 @@ function walk(root) {
 
 function isPublicTextFile(file) {
   const ext = path.extname(file).toLowerCase();
-  return SOURCE_EXTENSIONS.has(ext) || PUBLIC_TEXT_FILES.has(path.basename(file).toLowerCase());
+  return SOURCE_EXTENSIONS.has(ext);
 }
 
 function buildLegacyTokens() {
@@ -78,14 +81,14 @@ function buildLegacyTokens() {
   return [
     chars([103, 111, 102, 117, 110, 100, 109, 101]),
     chars([103, 102, 109]),
-    chars([103, 105, 118, 101, 98, 117, 116, 116, 101, 114])
+    chars([103, 105, 118, 101, 98, 117, 116, 116, 101, 114]),
+    chars([103, 111, 102, 117, 110, 100, 46, 109, 101])
   ];
 }
 
 function removeTechnicalWidgetReferences(value) {
   return value
-    .replace(/<givebutter-widget\b[^>]*>[\s\S]*?<\/givebutter-widget\s*>/gi, "")
-    .replace(/\bgivebutter-widget\b/gi, "")
+    .replace(/<\/?givebutter-widget(?=[\s/>])[^>]*>/gi, "")
     .replace(/https:\/\/widgets\.givebutter\.com\/latest\.umd\.cjs(?:\?[^\s"'<>]*)?/gi, "");
 }
 
@@ -97,11 +100,13 @@ function scanLegacySources(root, suppliedSources) {
       .map(file => [file, fs.readFileSync(file, "utf8")])
   );
   const hits = [];
-  const [goFundMe, gfm, givebutter] = buildLegacyTokens();
+  const [goFundMe, gfm, givebutter, goFundDotMe] = buildLegacyTokens();
+  const escapeRegExp = value => value.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
   const patterns = [
-    [goFundMe, new RegExp(`\\b${goFundMe}\\b`, "i")],
-    [gfm, new RegExp(`\\b${gfm}\\b`, "i")],
-    [givebutter, new RegExp(`\\b${givebutter}\\b`, "i")]
+    [goFundMe, new RegExp(`\\b${escapeRegExp(goFundMe)}\\b`, "i")],
+    [gfm, new RegExp(`\\b${escapeRegExp(gfm)}\\b`, "i")],
+    [givebutter, new RegExp(`\\b${escapeRegExp(givebutter)}\\b`, "i")],
+    [goFundDotMe, new RegExp(`\\b${escapeRegExp(goFundDotMe)}\\b`, "i")]
   ];
   for (const [file, source] of sources) {
     const cleaned = removeTechnicalWidgetReferences(source);
@@ -117,33 +122,33 @@ function scanLegacySources(root, suppliedSources) {
 }
 
 function configHasXRoboNoindex(config) {
-  function visit(value, key = "") {
-    if (typeof value === "string") {
-      return key.toLowerCase() === "x-robots-tag" && /\bnoindex\b/i.test(value);
-    }
+  function appliesToDonateOrGlobal(source) {
+    if (typeof source !== "string") return false;
+    const normalized = source.replace(/\/$/, "");
+    return normalized === "/donate" || normalized === "/(.*)" || normalized === "/:path*";
+  }
+  function visit(value, sourceScope = "") {
     if (!value || typeof value !== "object") return false;
+    const nextSource = typeof value.source === "string" ? value.source : sourceScope;
     if (
       typeof value.key === "string" &&
       value.key.toLowerCase() === "x-robots-tag" &&
       typeof value.value === "string" &&
-      /\bnoindex\b/i.test(value.value)
+      /\bnoindex\b/i.test(value.value) &&
+      appliesToDonateOrGlobal(nextSource)
     ) return true;
-    return Object.entries(value).some(([childKey, childValue]) => visit(childValue, childKey));
+    return Object.values(value).some(childValue => visit(childValue, nextSource));
   }
   return visit(config);
 }
 
-function normalizeFrequency(value) {
-  return String(value || "").toLowerCase().replace(/[\s_-]+/g, "");
-}
-
 function frequencyIsMonthly(value) {
-  return new Set(["monthly", "month", "permonth", "everymonth"]).has(normalizeFrequency(value));
+  return String(value || "").toLowerCase() === "monthly";
 }
 
 function parseWidget(markup, expectedWidgetId, report) {
-  const open = [...markup.matchAll(/<givebutter-widget\b([^>]*)>/gi)];
-  const close = [...markup.matchAll(/<\/givebutter-widget\s*>/gi)];
+  const open = [...markup.matchAll(/<givebutter-widget(?=[\s/>])([^>]*)>/gi)];
+  const close = [...markup.matchAll(/<\/givebutter-widget(?=[\s>])\s*>/gi)];
   if (open.length !== 1 || close.length !== 1) {
     report(`Expected exactly one body <givebutter-widget> with closing tag; found ${open.length} opening and ${close.length} closing tags`);
     return;
@@ -154,8 +159,8 @@ function parseWidget(markup, expectedWidgetId, report) {
   } else if (attrs.get("id") !== expectedWidgetId) {
     report(`Widget id must equal EXPECTED_WIDGET_ID (${expectedWidgetId})`);
   }
-  if (!Object.prototype.hasOwnProperty.call(Object.fromEntries(attrs), "amount") || Number(attrs.get("amount")) !== 5.17) {
-    report("Widget amount must normalize exactly to 5.17");
+  if (attrs.get("amount") !== "5.17") {
+    report("Widget amount must be the literal 5.17");
   }
   if (!frequencyIsMonthly(attrs.get("frequency"))) {
     report("Widget frequency must normalize to monthly");
@@ -182,14 +187,17 @@ function validate(options = {}) {
     errors.push("vercel.json contains an X-Robots-Tag noindex directive");
   }
 
-  if (/\bnoindex\b/i.test(metaContent(html, "robots"))) {
-    incomplete("donate.html contains a noindex robots directive");
+  for (const name of noindexRobotNames(html)) {
+    incomplete(`donate.html contains noindex in meta name=${name}`);
   }
 
   const body = stripIgnoredBlocks(bodyMarkup(html));
   const visible = visibleBodyText(html);
+  const pendingAttribute = /(?:^|\s)(?:class|id|data-[\w:-]+)\s*=\s*(?:"[^"]*(?:pending|placeholder|staging)[^"]*"|'[^']*(?:pending|placeholder|staging)[^']*'|[^\s>]*(?:pending|placeholder|staging)[^\s>]*)/i;
   const pendingPatterns = [
     /data-donation-provider\s*=\s*["']pending["']/i,
+    /donation-provider-mount/i,
+    pendingAttribute,
     /no payment form is active/i,
     /(?:checkout|payment|sponsorship)[^.!?]{0,120}(?:pending|being prepared|coming soon|staging)/i,
     /(?:pending|staging|placeholder)[^.!?]{0,120}(?:checkout|payment|widget)/i
@@ -205,18 +213,27 @@ function validate(options = {}) {
   parseWidget(body, expectedWidgetId, incomplete);
 
   const head = stripComments(html.match(/<head\b[^>]*>([\s\S]*?)<\/head\s*>/i)?.[1] || "");
-  const scripts = [...head.matchAll(/<script\b[^>]*>/gi)].map(match => {
+  const scripts = [...head.matchAll(/<script(?=[\s/>])[^>]*>/gi)].map(match => {
     const tag = match[0];
     const attrs = attrMap(tag);
+    const rawSrc = (attrs.get("src") || "").replace(/&amp;/gi, "&");
     let url = null;
     try {
-      url = attrs.get("src") ? new URL(attrs.get("src").replace(/&amp;/gi, "&"), "https://flashforwardfoundation.org/") : null;
+      url = rawSrc ? new URL(rawSrc, "https://flashforwardfoundation.org/") : null;
     } catch {
       url = null;
     }
-    return { attrs, url };
+    return { attrs, rawSrc, url };
   });
-  const libraryScripts = scripts.filter(script => script.url?.protocol === "https:" && script.url.hostname === "widgets.givebutter.com" && script.url.pathname === "/latest.umd.cjs");
+  const libraryScripts = scripts.filter(script => {
+    if (!script.url) return false;
+    return script.url.protocol === "https:" &&
+      script.url.host === "widgets.givebutter.com" &&
+      script.url.username === "" &&
+      script.url.password === "" &&
+      script.url.pathname === "/latest.umd.cjs" &&
+      /^https:\/\/widgets\.givebutter\.com\/latest\.umd\.cjs(?:\?[^#]*)?$/i.test(script.rawSrc);
+  });
   if (libraryScripts.length !== 1) {
     incomplete(`Expected exactly one async HTTPS Givebutter library script at widgets.givebutter.com/latest.umd.cjs; found ${libraryScripts.length}`);
   } else {
