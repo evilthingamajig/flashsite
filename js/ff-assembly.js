@@ -13,7 +13,7 @@
     if(!root||root.getAttribute('data-assembly-ready'))return;
     root.setAttribute('data-assembly-ready','true');
     var parts={};root.querySelectorAll('[data-part]').forEach(function(el){parts[el.getAttribute('data-part')]=el;});
-    var photoMap={'battery':'rechargeable-battery.webp','recharge-module':'recharge-module.webp','led':'white-led.webp','solar-panel':'solar-panel.webp'};
+    var photoMap={'case-shell':'case-cad.webp','battery':'rechargeable-battery.webp','recharge-module':'recharge-module.webp','led':'white-led.webp','solar-panel':'solar-panel.webp'};
     Object.keys(photoMap).forEach(function(id){var host=parts[id];if(!host)return;var img=document.createElementNS('http://www.w3.org/2000/svg','image');img.setAttribute('href','images/flashforward/assembly/'+photoMap[id]);img.setAttribute('x','250');img.setAttribute('y','235');img.setAttribute('width','220');img.setAttribute('height','115');img.setAttribute('preserveAspectRatio','xMidYMid meet');img.setAttribute('class','ff-assembly-photo');img.setAttribute('alt','');host.appendChild(img);});
     var svgLabels=root.querySelectorAll('.ff-assembly-svg .svg-label,.ff-assembly-svg .svg-dark-label');
     var track=root.querySelector('.ff-assembly-stage-column');
