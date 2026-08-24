@@ -1,7 +1,7 @@
 {
   "framework": null,
   "installCommand": "exit 0",
-  "buildCommand": "exit 0",
+  "buildCommand": "node scripts/verify-donate-launch.cjs",
   "outputDirectory": ".",
   "cleanUrls": true,
   "rewrites": [
