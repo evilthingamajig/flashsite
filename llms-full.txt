@@ -191,7 +191,7 @@ futures
 No student should have to lose study time when the sun goes down. Flash Forward works to expand access to solar-powered study lights, one light at a time.
 Students without reliable electricity can have fewer dependable options for reading and studying after dark.
 Flash Forward designs rechargeable solar-powered lights to charge during the day and provide light after sunset without a grid connection.
-Our goal is to place practical light in studentsâ€™ hands so they have another option for studying after dark.
+Our goal is to place practical light in students’ hands so they have another option for studying after dark.
 A Case for Support
 The global energy-access challenge.
 Our timeline
@@ -327,7 +327,7 @@ about@flashforwardfoundation.org
 Address:
 Flash Forward Foundation
 Bellevue, Washington, United States
-These Terms of Service (the “Terms”) are a binding agreement between you and Flash Forward Foundation. By accessing or using our website in any way, you agree to these Terms. These Terms include the provisions in this document as well as those in our Privacy Policy .
+These Terms of Service (the “Terms”) are a binding agreement between you and Flash Forward Foundation. By accessing or using our website in any way, you agree to these Terms. These Terms include the provisions in this document as well as those in our Privacy Policy.
 Who We Are
 Flash Forward Foundation is a 501(c)(3) public charity (EIN 39-3605570) founded by students. We develop solar-powered study lights for students living without reliable electricity and coordinate volunteer-led design, assembly, fundraising, outreach, and delivery.
 Eligibility
