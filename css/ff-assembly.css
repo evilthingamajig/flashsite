@@ -19,3 +19,4 @@
 @media(max-width:699px){.ff-assembly-layout{display:flex;flex-direction:column}.ff-assembly-copy{order:-1;position:sticky;top:0;z-index:5;background:var(--base-color--white,#fff);padding:18px 0}.ff-assembly-stage-column{order:0}}
 @media(min-width:700px){.ff-assembly-layout{grid-template-columns:minmax(0,.62fr) minmax(430px,1fr)!important;grid-template-areas:"copy stage";align-items:start}.ff-assembly-copy{grid-area:copy;order:0!important}.ff-assembly-stage-column{grid-area:stage;order:0!important;min-height:230vh;width:100%}}
 .ff-assembly-finished-photo{width:min(82%,430px);height:auto;aspect-ratio:1;object-fit:contain;object-position:center}
+@media(max-width:699px){.ff-assembly-copy,.ff-assembly-stage{top:72px}.ff-assembly-stage{height:calc(72svh - 72px);min-height:368px}}
