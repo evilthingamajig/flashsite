@@ -62,7 +62,8 @@ try {
   assert.ok(hostedMockup.warnings.length >= 4, "authorized hosted mockup must warn loudly");
   for (const source of [
     '<script src = "https://widgets.givebutter.com/latest.umd.cjs"></script>',
-    '<script src="https://widgets.givebutter.com/alternate.js?acct=unexpected"></script>'
+    '<script src="https://widgets.givebutter.com/alternate.js?acct=unexpected"></script>',
+    '<script src="https://user:pass@widgets.givebutter.com/alternate.js"></script>'
   ]) {
     const hostedTechnicalScript = fixtureResult({
       html: stagingWidget.replace("</head>", `${source}</head>`),
@@ -71,6 +72,12 @@ try {
     });
     assert.ok(hostedTechnicalScript.errors.some(error => /library script|widget/i.test(error)), `hosted technical script ${source} must disable mockup override`);
   }
+  const hostedBodyScript = fixtureResult({
+    html: stagingWidget.replace("</body>", '<script src="https://widgets.givebutter.com/body-loader.js"></script></body>'),
+    allowHostedMockup: true,
+    ids: { expectedWidgetId: "", expectedAccountId: "" }
+  });
+  assert.ok(hostedBodyScript.errors.some(error => /library script|widget/i.test(error)), "body Givebutter script must disable mockup override");
   const hostedLegacy = fixtureResult({
     html: stagingWidget,
     env: { VERCEL_ENV: "production" },
