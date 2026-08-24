@@ -19,6 +19,7 @@
     var batteryLabel=root.querySelector('[data-step="battery"] strong');if(batteryLabel)batteryLabel.textContent='Rechargeable battery';
     var desc=root.querySelector('#assembly-svg-desc');if(desc)desc.textContent='A 3D-printed case, rechargeable battery, recharge module, wires, LED, and 5V solar panel appear separately, then assemble into one finished light.';
     var svgLabels=root.querySelectorAll('.ff-assembly-svg .svg-label,.ff-assembly-svg .svg-dark-label');
+    var svg=root.querySelector('.ff-assembly-svg'),mobileZoom=(window.matchMedia&&window.matchMedia('(max-width: 767px)').matches) ? .35 : .12;
     var track=root.querySelector('.ff-assembly-stage-column');
     var steps=root.querySelectorAll('.ff-assembly-steps li'),status=root.querySelector('#assembly-status'),finished=root.querySelector('#assembly-finished');
     var note=root.querySelector('.ff-assembly-note');if(note)note.textContent='Representative component imagery; parts may vary by build.';
@@ -39,6 +40,7 @@
     var reduced=window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     function render(progress){
       var p=clamp(progress),assemble=ease(clamp((p-.65)/.25));
+      if(svg)svg.style.transform='scale('+(1+mobileZoom*assemble)+')';
       sequence.forEach(function(item,index){
         var reveal=index===0?1:(p>=.55?1:clamp((p-item.start)/.07)),part=parts[item.id];if(!part)return;
         var spin=(1-ease(reveal))*Math.min(Math.abs(item.rotation||0),item.id==='solar-panel'?40:item.id==='battery'?70:item.id==='recharge-module'?80:item.id==='led'?60:35)*(item.rotation<0?-1:1);
