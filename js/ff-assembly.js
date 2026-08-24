@@ -1,11 +1,11 @@
 (function(){
   var sequence=[
-    {id:'case-shell',start:0,label:'3D-printed case',offset:[0,0]},
-    {id:'battery',start:.08,label:'Rechargeable battery',offset:[145,-80],rotation:-80},
-    {id:'recharge-module',start:.18,label:'recharge module',offset:[-130,32],rotation:60},
-    {id:'wires',start:.28,label:'wires and connections',offset:[-84,78],rotation:-45},
-    {id:'led',start:.39,label:'LED',offset:[112,88],rotation:80},
-    {id:'solar-panel',start:.50,label:'5V solar panel',offset:[0,-138],rotation:-55,finalOffset:[0,75]}
+    {id:'case-shell',start:0,label:'3D-printed case',sentence:'The CAD enclosure gives the light its durable form.',offset:[0,0]},
+    {id:'battery',start:.08,label:'Rechargeable battery',sentence:'Stores energy for study after sunset.',offset:[145,-80],rotation:-65},
+    {id:'recharge-module',start:.18,label:'Recharge module',sentence:'Regulates solar charging for the battery.',offset:[-130,32],rotation:65},
+    {id:'wires',start:.28,label:'Wires and connections',sentence:'Links the charging and lighting components.',offset:[-84,78],rotation:-30},
+    {id:'led',start:.39,label:'LED',sentence:'Provides the focused study light.',offset:[112,88],rotation:50},
+    {id:'solar-panel',start:.50,label:'5V solar panel',sentence:'Collects daylight to recharge the light.',offset:[0,-138],rotation:-38,finalOffset:[0,75]}
   ];
   function clamp(value){return Math.max(0,Math.min(1,value));}
   function ease(value){return value<.5?2*value*value:1-Math.pow(-2*value+2,2)/2;}
@@ -25,6 +25,7 @@
     var track=isMobile?root.querySelector('.ff-assembly-stage-column'):root.querySelector('.ff-assembly-layout');
     var steps=root.querySelectorAll('.ff-assembly-steps li'),status=root.querySelector('#assembly-status'),finished=root.querySelector('#assembly-finished');
     var note=root.querySelector('.ff-assembly-note');if(note)note.textContent='Representative component imagery; parts may vary by build.';
+    var finishedPhoto=document.createElement('img');finishedPhoto.className='ff-assembly-finished-photo';finishedPhoto.alt='';finishedPhoto.width=1068;finishedPhoto.height=801;finishedPhoto.loading='lazy';root.querySelector('.ff-assembly-stage').appendChild(finishedPhoto);
     var photosLoaded=false;
     function loadPhotos(){
       if(photosLoaded)return;
@@ -38,23 +39,28 @@
         if(preload.decode)preload.decode().then(assign).catch(assign);
       });
       if(photoNodes.foreground)photoNodes.foreground.setAttribute('href','images/flashforward/assembly/case-cad.webp');
+      finishedPhoto.src='images/flashforward/flashfinishedworkshop.webp';
     }
     if(!track||!steps.length||!status||!finished)return;
     var reduced=window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     function render(progress){
       var p=clamp(progress),assemble=ease(clamp((p-.65)/.25));
       if(svg)svg.style.transform='scale('+(1+mobileZoom*assemble)+')';
+      var active=0;sequence.forEach(function(item,index){if(p>=item.start)active=index;});
       sequence.forEach(function(item,index){
         var reveal=index===0?1:(p>=.55?1:clamp((p-item.start)/.07)),part=parts[item.id];if(!part)return;
+        if(p<.55){if(index===active)reveal=Math.max(reveal,.72);else if(index===active-1)reveal=1-reveal;else reveal=0;}
         var spin=(1-ease(reveal))*Math.min(Math.abs(item.rotation||0),item.id==='solar-panel'?40:item.id==='battery'?70:item.id==='recharge-module'?80:item.id==='led'?60:35)*(item.rotation<0?-1:1);
         var finalOffset=item.finalOffset||[0,0],tx=(1-assemble)*item.offset[0]+assemble*finalOffset[0],ty=(1-assemble)*item.offset[1]+assemble*finalOffset[1];
         part.style.opacity=String(reveal);part.style.transform='translate('+tx+'px,'+ty+'px) rotateZ('+spin+'deg)';
         steps[index].removeAttribute('aria-current');
       });
       var foreground=root.querySelector('.ff-assembly-foreground');if(foreground)foreground.style.opacity=String(clamp((p-.70)/.18));
+      finishedPhoto.style.opacity=String(clamp((p-.90)/.08));
       var labelOpacity=clamp(1-(p-.55)/.09);svgLabels.forEach(function(label){label.style.opacity=String(labelOpacity)});
-      var active=0;sequence.forEach(function(item,index){if(p>=item.start)active=index;});steps[active].setAttribute('aria-current','step');
-      status.textContent=p>=.9?'Finished light':p>=.55?'Exploded assembly hold':'Assembly step: '+sequence[active].label;
+      steps.forEach(function(step){step.removeAttribute('aria-current')});steps[active].setAttribute('aria-current','step');
+      var heading=root.querySelector('#assembly-heading'),description=root.querySelector('.ff-assembly-description');if(heading)heading.textContent=p>=.9?'Finished solar study light':p>=.55?'One light, assembled step by step.':sequence[active].label;if(description)description.textContent=p>=.9?'Built for a student to keep studying after sunset.':p>=.55?'The components seat inside the CAD enclosure as one working light.':sequence[active].sentence;
+      status.textContent=p>=.9?'Finished light':p>=.55?'Assembly complete':'Assembly step: '+sequence[active].label;
       finished.style.opacity=String(clamp((p-.9)/.1));finished.setAttribute('aria-hidden',p>=.9?'false':'true');
     }
     if(reduced){root.setAttribute('data-motion','reduced');loadPhotos();render(1);return;}
