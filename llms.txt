@@ -1,20 +1,27 @@
 # Flash Forward Foundation
 
-> Welcome to Flash Forward, a 100% volunteer-run, energy-poverty focused nonprofit dedicated to improving energy access in low and middle-income countries through innovative programs and global partnerships.
+> Flash Forward Foundation is a student-founded, IRS-recognized 501(c)(3) public charity developing solar-powered study lights for students living without reliable electricity.
 
 ## About Us
-Flash Forward Foundation works to provide sustainable energy solutions to communities facing energy poverty. We provide solar equipment, engage in community outreach, and run volunteer programs to bring light and power to those who need it most.
+
+Flash Forward designs, builds, and distributes solar-powered study lights through volunteer-led work. The Sponsor a Light Program invites monthly sponsorship of one light and describes following it from build to placement. The current build cost is $5.17 per light; shipping and distribution are funded separately.
+
+Dedication requests are handled first through the contact form. The team confirms availability and next steps before a dedication proceeds.
 
 ## Important Links
-- [Home](https://flashforwardfoundation.org/): Overview of the organization.
-- [Mission](https://flashforwardfoundation.org/mission): Our goals and the problem we are solving.
-- [Our Team](https://flashforwardfoundation.org/our-team): Meet the volunteers behind Flash Forward.
-- [Donate](https://flashforwardfoundation.org/donate): How to contribute financially.
-- [Donate Equipment](https://flashforwardfoundation.org/donate-equipment): How to donate solar equipment.
-- [Volunteering](https://flashforwardfoundation.org/volunteering): How to get involved and volunteer.
-- [Contact Us](https://flashforwardfoundation.org/contact-us): Get in touch with our team.
-- [Nonprofit Status](https://flashforwardfoundation.org/nonprofit-status): Information regarding our 501(c)(3) nonprofit status.
+
+- [Home](https://flashforwardfoundation.org/): The Sponsor a Light Program and current build-cost explanation.
+- [Mission](https://flashforwardfoundation.org/mission): The organization’s mission and energy-access context.
+- [Our Team](https://flashforwardfoundation.org/our-team): Meet the people behind Flash Forward.
+- [Donate](https://flashforwardfoundation.org/donate): Current information about monthly light sponsorship.
+- [Dedicate a Solar Light](https://flashforwardfoundation.org/dedicate-solar): Request a dedication in someone’s honor or memory.
+- [Donate Equipment](https://flashforwardfoundation.org/donate-equipment): Ask about suitable maker and electronics equipment.
+- [Volunteering](https://flashforwardfoundation.org/volunteering): See current volunteer opportunities.
+- [Ask for Help](https://flashforwardfoundation.org/ask-for-help): Request support or equipment guidance.
+- [Contact Us](https://flashforwardfoundation.org/contact-us): Get in touch with the team.
+- [Nonprofit Status](https://flashforwardfoundation.org/nonprofit-status): View 501(c)(3) information.
 
 ## Additional Information
+
 - [Terms and Conditions](https://flashforwardfoundation.org/terms-and-conditions)
 - [Privacy Policy](https://flashforwardfoundation.org/privacy-policy)
