@@ -125,10 +125,12 @@ Oops! Something went wrong while submitting the form.
 ## donate.html
 Sponsor a Solar Study Light | Flash Forward - Energy Poverty Nonprofit Foundation
 The Sponsor a Light Program
-Sponsor one solar study light each month for a student without reliable electricity, then follow it from build to placement.
-$5.17 is the current build cost for one light; shipping and distribution are funded separately.
-Sponsor a light monthly
-Monthly sponsorship checkout is being prepared. No payment form is active on this page yet.
+Sponsor one solar study light each month for a student without reliable electricity.
+$5.17 is the current cost to build one light; shipping and distribution are funded separately.
+Receive individualized updates when your light is built, shipped, and placed.
+Sponsor one light — $5.17/month
+Checkout is unavailable in this preview.
+Flash Forward Foundation is an IRS-recognized 501(c)(3). Recurring gifts can be edited or canceled through the link in any donation receipt.
 See how a light is built
 
 ## index.html
