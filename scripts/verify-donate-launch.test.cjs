@@ -60,6 +60,17 @@ try {
   const hostedMockup = fixtureResult({ html: stagingWidget, env: { VERCEL_ENV: "production" }, allowHostedMockup: true, ids: { expectedWidgetId: "", expectedAccountId: "" } });
   assert.equal(hostedMockup.errors.length, 0, "authorized hosted mockup must allow incomplete checkout");
   assert.ok(hostedMockup.warnings.length >= 4, "authorized hosted mockup must warn loudly");
+  for (const source of [
+    '<script src = "https://widgets.givebutter.com/latest.umd.cjs"></script>',
+    '<script src="https://widgets.givebutter.com/alternate.js?acct=unexpected"></script>'
+  ]) {
+    const hostedTechnicalScript = fixtureResult({
+      html: stagingWidget.replace("</head>", `${source}</head>`),
+      allowHostedMockup: true,
+      ids: { expectedWidgetId: "", expectedAccountId: "" }
+    });
+    assert.ok(hostedTechnicalScript.errors.some(error => /library script|widget/i.test(error)), `hosted technical script ${source} must disable mockup override`);
+  }
   const hostedLegacy = fixtureResult({
     html: stagingWidget,
     env: { VERCEL_ENV: "production" },
