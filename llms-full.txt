@@ -160,23 +160,20 @@ Place
 Received by a student.
 Illustrated assembly
 One light, assembled step by step.
-See the case, battery, recharge module, wires, LED, and solar panel come together.
+See the enclosure, battery, recharge module, two LEDs, and solar panel come together.
 01
-3D-printed case
-Forms the enclosure.
+3D-printed enclosure
+Protects every component.
 02
 Rechargeable battery
-Stores energy for the light.
+Stores power collected during the day.
 03
 Recharge module
 Shown generically.
 04
-Wires and connections
-Links the components.
+Two LEDs
+Provides focused study light.
 05
-LED
-Provides the study light.
-06
 5V solar panel
 Charges the light during the day.
 Representative component imagery; parts may vary by build.
