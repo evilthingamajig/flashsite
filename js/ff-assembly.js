@@ -13,8 +13,9 @@
     if(!root||root.getAttribute('data-assembly-ready'))return;
     root.setAttribute('data-assembly-ready','true');
     var parts={};root.querySelectorAll('[data-part]').forEach(function(el){parts[el.getAttribute('data-part')]=el;});
-    var photoMap={'case-shell':'case-cad.webp','battery':'rechargeable-battery.webp','recharge-module':'recharge-module.webp','led':'white-led.webp','solar-panel':'solar-panel.webp'};
-    Object.keys(photoMap).forEach(function(id){var host=parts[id];if(!host)return;var img=document.createElementNS('http://www.w3.org/2000/svg','image');img.setAttribute('href','images/flashforward/assembly/'+photoMap[id]);img.setAttribute('x','250');img.setAttribute('y','235');img.setAttribute('width','220');img.setAttribute('height','115');img.setAttribute('preserveAspectRatio','xMidYMid meet');img.setAttribute('class','ff-assembly-photo');img.setAttribute('alt','');host.appendChild(img);});
+    var photoMap={'case-shell':['case-cad.webp',190,185,340,220],'battery':['rechargeable-battery.webp',265,255,165,76],'recharge-module':['recharge-module.webp',392,300,110,70],'led':['white-led.webp',335,365,52,52],'solar-panel':['solar-panel.webp',225,138,270,92]};
+    Object.keys(photoMap).forEach(function(id){var host=parts[id],spec=photoMap[id];if(!host)return;Array.prototype.slice.call(host.children).forEach(function(child){if(['rect','path','circle'].indexOf(child.tagName.toLowerCase())>=0)child.remove();});var img=document.createElementNS('http://www.w3.org/2000/svg','image');img.setAttribute('href','images/flashforward/assembly/'+spec[0]);img.setAttribute('x',spec[1]);img.setAttribute('y',spec[2]);img.setAttribute('width',spec[3]);img.setAttribute('height',spec[4]);img.setAttribute('preserveAspectRatio','xMidYMid meet');img.setAttribute('class','ff-assembly-photo');img.setAttribute('alt','');host.insertBefore(img,host.firstChild);});
+    var batteryLabel=root.querySelector('[data-step="battery"] strong');if(batteryLabel)batteryLabel.textContent='Rechargeable battery';
     var svgLabels=root.querySelectorAll('.ff-assembly-svg .svg-label,.ff-assembly-svg .svg-dark-label');
     var track=root.querySelector('.ff-assembly-stage-column');
     var steps=root.querySelectorAll('.ff-assembly-steps li'),status=root.querySelector('#assembly-status'),finished=root.querySelector('#assembly-finished');
@@ -25,7 +26,7 @@
       var p=clamp(progress),assemble=ease(clamp((p-.65)/.25));
       sequence.forEach(function(item,index){
         var reveal=index===0?1:(p>=.55?1:clamp((p-item.start)/.07)),part=parts[item.id];if(!part)return;
-        var spin=ease(reveal)*item.rotation*(1-assemble);
+        var spin=(1-ease(reveal))*Math.min(Math.abs(item.rotation||0),item.id==='solar-panel'?40:item.id==='battery'?70:item.id==='recharge-module'?80:item.id==='led'?60:35)*(item.rotation<0?-1:1);
         part.style.opacity=String(reveal);part.style.transform='translate('+((1-assemble)*item.offset[0])+'px,'+((1-assemble)*item.offset[1])+'px) rotateZ('+spin+'deg)';
         steps[index].removeAttribute('aria-current');
       });
