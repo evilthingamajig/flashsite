@@ -147,6 +147,9 @@ Current build cost: $5.17
 3D-printed enclosure
 5V solar panel
 Rechargeable battery
+Recharge module
+Wires and connections
+LED
 Follow your sponsored light
 Receive individualized updates when your light is built, shipped, and placed with a student.
 Build
