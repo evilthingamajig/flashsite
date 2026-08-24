@@ -1,75 +1,99 @@
 ## ask-for-help.html
-Join the society
-At Flash Forward, we believe that everyone deserves access to quality energy access, regardless of where they live. If your community or organization is in need of solar energy equipment, training, or other resources to improve energy poverty treatment, we're here to help.
-How we can assist?
+Ask for Help | Flash Forward - Energy Poverty Nonprofit Foundation
+Ask for Help
+Request support
+If your community or organization is seeking solar-powered study lights or related training for students living without reliable electricity, tell us what you need and how it could help students study after dark.
+How can we assist?
 01
-Equipment Donations
-We provide state-of-the-art solar energy equipment to communities and organizations in underdeveloped areas. Our goal is to ensure that you have the tools needed to deliver effective energy access.
+Equipment Requests
+Tell us what solar-light equipment your organization needs, who it would support, and how it would be used.
 02
-Training and Education
-We offer comprehensive training programs for volunteer engineers, including engineers, solar energy specialists, and volunteer engineers. Our training covers the latest techniques and best practices in energy access.
+Training Requests
+Describe the practical training your volunteers need to assemble, use, or distribute solar-powered lights.
 03
-Maintenance and Support
-Beyond just providing equipment, we ensure that you have the support necessary to maintain and operate it effectively. Our team is available for ongoing assistance and troubleshooting.
+Equipment Questions
+Share questions about intended equipment use so our team can assess what guidance may be available.
 04
-Advocacy and Partnership
-We work closely with local governments, health organizations, and other NGOs to advocate for better energy access infrastructure and policies. We also facilitate partnerships to enhance the overall impact of our efforts.
+Community and Partner Context
+Tell us about your community, existing partners, and local energy-access needs so our team can assess possible next steps.
 How to Request Assistance
 To request help, please follow these simple steps:
 Complete our application form with details about your community or organization, the type of assistance you need, and how it will benefit your recipients.
+Full name
+Email Address
+Phone number
+What is this about?
+Ask For Help
+General Inquiry
+Message
 Thank you!
 Your submission has been received!
 Oops! Something went wrong while submitting the form.
 
 ## contact-us.html
+Contact us | Flash Forward - Energy Poverty Nonprofit Foundation
+Contact us
 Got any questions?
 Our team is here to address your inquiries, provide additional information, and assist you.
+Get in Touch
+Email: contact@flashforwardfoundation.org
+Phone number: 425-499-0414
+Location: Bellevue, WA
+EIN: 39-3605570
+Full name
+Email Address
+Phone number
+What is this about?
+General Inquiry
+Ask For Help
+Equipment Donation
+Volunteer
+Newsletter
+Message
 Thank you!
 Your submission has been received!
 Oops! Something went wrong while submitting the form.
 
 ## dedicate-solar.html
-A solar light is more than a gift. It’s hope you can hold. Dedicate one in someone’s name, and a student living without electricity receives the light they need to keep learning after dark.
-Dedicate a light
-Dedicate a solar flashlight in honor or memory of someone, and light the way for a student living without power.
-Every light we send carries a name. When you dedicate a flashlight in honor or memory of someone, that light travels to a student who studies by candlelight or in the dark, turning your tribute into hours of learning, safety, and possibility.
-Join Our Solar Light Campaign
-Dedicate a solar light in honor or memory of someone who matters to you, and send real, lasting light to a student who needs it.
-‍
-Spark Package
-: A personalized certificate in your honoree’s name, plus one solar flashlight delivered to a student living in energy poverty.
-‍
-Beacon Package
-: A framed certificate in your honoree’s name, plus a batch of solar flashlights delivered to students in an off-grid community, with photos of your impact once they arrive.
-All donations are tax-deductible and go toward providing solar flashlights to communities without electricity.
-‍
-Dedicate a light today and spread hope.
+Request a Solar-Light Dedication | Flash Forward Foundation
+Request a Solar-Light Dedication
+A solar light can be more than a gift. Request a dedication in someone's name and, once our team confirms it, that request can support a student living without reliable electricity as they learn after dark.
+Request a dedication
+Request a solar-light dedication in honor or memory of someone, and help support a student living without reliable electricity.
+Tell us who you would like to recognize. Our team will confirm whether a dedication is available, what recognition can be offered, and the next steps before you proceed. Confirmed dedication requests support Flash Forward's work to provide solar-powered lights to students living without reliable electricity.
+Lights in the right hands
+Donations and confirmed dedication requests support Flash Forward's work to build and distribute solar-powered lights for students living without reliable electricity.
+Support the program
+A donation supports Flash Forward's solar-light work. To request a named dedication, contact our team before donating.
+Donate
 
 ## donate-equipment.html
+Donate Equipment | Flash Forward - Energy Poverty Nonprofit Foundation
+Donate Equipment
 Why Donate Equipment?
-Flash Forward's equipment donation program is a vital part of our mission to support underserved communities. When you donate maker and electronics gear, you hand our volunteer engineers the tools they need to build more solar flashlights and get them into the hands of students living without reliable power. Here’s why your equipment donation matters:
+Accepted maker and electronics equipment can give volunteers practical tools for solar-light assembly and testing. Here are some ways suitable equipment may support the mission:
 01
-Direct Impact on Production
-Your donation of manufacturing tools and components directly enables our volunteer engineers to produce high-quality solar flashlights at scale, accelerating our ability to distribute light to those in need.
+Support Volunteer Assembly
+Accepted tools and components can support volunteer-led assembly and testing of solar-powered lights for students living without reliable electricity.
 02
-Sustainable Energy Independence
-By supplying equipment like 3D printers and soldering stations, you help us build a strong, self-sustaining manufacturing pipeline that ensures long-term support for communities facing energy poverty.
+Strengthen Workshop Capacity
+Equipment such as 3D printers and soldering stations can expand the tools available to volunteers building and improving solar-powered lights.
 03
-Give Gear a Second Life
-Have a 3D printer, soldering iron, or box of components gathering dust? Donating used-but-working gear keeps it out of a landfill and puts it straight to work building lights for students who need them.
+Give Suitable Gear a Second Life
+Offering used-but-working gear for review may give suitable equipment a second life in the workshop.
 04
-Tax Deductible
-Your equipment donation is fully tax-deductible, offering you financial benefits while making a profound impact on energy delivery in underserved regions.
-How Your Donation Helps
-Your equipment donation drives our mission forward in several crucial ways:
-More Lights, Made Faster
-Tools like 3D printers and soldering stations let our volunteer engineers build solar flashlights at scale, so more students get light sooner.
-Hands-On Volunteer Training
-Real equipment gives our volunteers a place to learn CAD, 3D printing, and soldering, building practical engineering skills while they build lights.
-A Self-Sustaining Workshop
-Every donated tool strengthens our workshop, so we can keep producing and improving flashlights for the long haul without buying everything new.
-Types of Equipment Needed
-We can put a wide range of maker, electronics, and prototyping gear to good use, including but not limited to:
+Tax Considerations
+Equipment donations may be tax-deductible to the extent allowed by law. Donors should consult a qualified tax adviser about eligibility and valuation.
+How Accepted Equipment Can Help
+Suitable equipment may support the work in several practical ways:
+Support Light Assembly
+Suitable tools can help volunteers assemble and test solar-powered lights more efficiently.
+Support Hands-On Learning
+When used in approved volunteer activities, equipment can support practical experience with CAD, 3D printing, soldering, and assembly.
+Reduce Equipment Purchases
+Accepted tools and components may reduce the need to purchase certain workshop equipment for volunteer builds.
+Equipment We Can Review
+Ask our team whether we can currently accept any of the following. Do not ship or drop off items until acceptance is confirmed:
 3D Printers & Filament
 Soldering Irons & Stations
 Solar Panels & Cells
@@ -78,57 +102,93 @@ LEDs, Wiring & Electronic Components
 Multimeters & Hand Tools
 Laptops for CAD & Design
 How to Donate
-Donating equipment is easy and impactful.
-Follow these steps to make a difference:
-Contact Us
-Reach out to our team to discuss the equipment you wish to donate.
-Arrange Pickup or Drop-off
-We’ll coordinate with you to pick up or receive the equipment.
-Receive Recognition and Tax Benefits
-Your donation will be acknowledged on our website and annual reports, and you’ll receive the necessary documentation for tax purposes.
-Join Us Today
-By donating equipment, you’re not just giving tools. You’re helping put light in the hands of students who study in the dark. Every tool helps us build more solar flashlights and reach more communities living in energy poverty.
-‍
-Join us in this mission.
-Contact Us
-to learn more about donating equipment and start making a difference today.
+Contact us before shipping or dropping off equipment. Our team can review the item, its condition, quantity, location, and whether it fits current workshop needs.
+Contact us
+Use the form below to describe the equipment, its condition, quantity, and your location.
+Confirm Acceptance and Delivery
+Please do not ship or drop off equipment until our team confirms whether it can be accepted and discusses delivery options.
+Tax Records
+If an equipment donation is accepted, ask what written acknowledgment the Foundation can provide. Donors are responsible for valuation and tax reporting.
+Offer Equipment for Review
+Suitable tools and components can support volunteers building solar-powered lights for students living without reliable electricity. Use the form to tell us what you would like to donate. Our team will review the details and follow up about whether the equipment fits current needs.
+Full name
+Email Address
+Phone number
+What is this about?
+Equipment Donation
+General Inquiry
+Message
 Thank you!
 Your submission has been received!
 Oops! Something went wrong while submitting the form.
 
 ## donate.html
-Make a Difference Today
-Your donation to Flash Forward directly supports underserved communities with the vital energy poverty and solar lighting equipment they need to save lives. Every contribution, no matter the size, helps provide essential tools and training for volunteer engineers, ensuring better recipient care and improved health outcomes.
-Your financial contribution helps us build, deliver, and maintain the solar-powered lights we send to students living without reliable electricity. Every dollar you give is a step toward a brighter future for the kids who receive them.
-Together, we can make a tangible difference.
-Donate now
-and join us in Flash Forward.
+Sponsor a Solar Study Light | Flash Forward - Energy Poverty Nonprofit Foundation
+The Sponsor a Light Program
+Sponsor one solar study light each month for a student without reliable electricity, then follow it from build to placement.
+$5.17 is the current build cost for one light; shipping and distribution are funded separately.
+Sponsor a light monthly
+Monthly sponsorship checkout is being prepared. No payment form is active on this page yet.
+See how a light is built
 
 ## index.html
-Provide Solar-Powered Light
-to End Energy Poverty
-with Flash Forward
-We're a nonprofit organization dedicated to bringing solar-powered light to children in off-grid communities across Ghana and beyond.
-Donate now
-Join us in our mission to conquer energy poverty by providing solar-powered flashlights to students in need.
-Our why and mission
-Our story
-Flash Forward illuminates education for students living in energy poverty. We design, build, and distribute solar-powered flashlights so children can keep studying after dark.
-What started as a small student project has grown into a nonprofit empowering the next generation to create meaningful change.
-Thousands of students
-Have received solar-powered flashlights to study safely after dark, thanks to our partners, donors, and volunteers.
-Join our Society
-Support students in energy poverty where it's needed most.
-Support students in energy poverty. Donate now to provide them with safe and reliable solar-powered light.
-Make a difference.
-Fight energy
-poverty with us
-There are four main ways to help us on our mission. You can volunteer with us, attend our events to show your support, donate to help us improve energy access or volunteer.
-By participating in our initiatives and contributing financially, you play a crucial role in expanding access to clean, reliable light. Your involvement and generosity make a significant difference in the lives of those affected by energy poverty.
-Donate Equipment
-Learn more
-Volunteer
-Learn more
+Flash Forward - Energy Poverty Nonprofit Foundation
+The Sponsor a Light Program
+Keep study time going after sunset.
+Sponsor one solar study light each month for a student without reliable electricity, then follow it from build to placement.
+$5.17 is the current build cost for one light; shipping and distribution are funded separately.
+Sponsor a Light — $5.17/month
+See What $5.17 Builds
+What $5.17 builds
+Current build cost: $5.17
+3D-printed enclosure
+5V solar panel
+Rechargeable battery
+Illustrated assembly
+One light, assembled step by step.
+A schematic view of the components in one solar study light.
+013D-printed caseForms the enclosure.
+02600 mAh lithium batteryStores energy for the light.
+03Recharge moduleShown generically.
+04Wires and connectionsLinks the components.
+05LEDProvides the study light.
+065V solar panelCharges the light during the day.
+Illustrated assembly.
+Follow your sponsored light
+See when it is built, shipped, and placed with a student.
+Build
+Assembled in our student-led lab.
+Ship
+Sent through a distribution partner.
+Place
+Received by a student.
+Students in off-grid communities
+Our partner network helps place solar-powered study lights with students who need reliable light after dark.
+Flash Forward Foundation is an IRS-recognized 501(c)(3) nonprofit.
+
+## mission.html
+Our Why and Mission | Flash Forward - Energy Poverty Nonprofit Foundation
+Expanding Energy Access Across the Globe
+Scroll down
+Our mission
+Flash Forward designs, builds, and distributes solar-powered lights for students living without reliable electricity.
+We are a volunteer-led, IRS-recognized 501(c)(3) public charity.
+Flash Forward began as a student project and grew into a nonprofit focused on helping students keep studying after dark. Our work is carried forward by volunteers, partners, and donors.
+Brighter
+futures
+No student should have to lose study time when the sun goes down. Flash Forward works to expand access to solar-powered study lights, one light at a time.
+Students without reliable electricity can have fewer dependable options for reading and studying after dark.
+Flash Forward designs rechargeable solar-powered lights to charge during the day and provide light after sunset without a grid connection.
+Our goal is to place practical light in studentsâ€™ hands so they have another option for studying after dark.
+A Case for Support
+The global energy-access challenge.
+Our timeline
+2024
+Flash Forward Foundation was founded by students and began developing a solar-powered light.
+2025
+The IRS recognized Flash Forward Foundation as a 501(c)(3) public charity, effective August 5, 2025.
+2026
+Flash Forward continues its volunteer-led work to build and distribute solar-powered lights for students living without reliable electricity.
 Partners
 Malaika
 Empowers girls and communities in the DR Congo through education, health, and clean water.
@@ -142,54 +202,11 @@ BSREA Bangladesh
 Bangladesh’s leading sustainable & renewable energy association, driving clean-energy access.
 Brighten Haiti
 Brings solar power to schools, hospitals, and families across Haiti via Solar4Schools.
-Sponsor-a-Light Project
-Follow your sponsored light on its journey to a student in an off-grid community.
-Get started
-Our Sponsors
-The companies and technology partners powering our mission.
-Microsoft
-Corporate Sponsor
-Google
-Corporate Sponsor
-Starbucks
-Corporate Sponsor
-Anthropic
-AI Sponsor
-OpenAI
-AI Sponsor
-Ready to help us on our mission?
-
-## mission.html
-Our mission
-Flash Forward's mission is to improve energy access, specifically energy poverty relief, around the globe.
-Flash Forward provided solar-powered flashlights, training and education to developing countries. We are a 100% volunteer-run, energy-poverty focused nonprofit 501(c)(3) organization.
-Brighter
-futures
-No student should have to stop learning when the sun goes down. Flash Forward is changing the landscape of energy access in developing countries, one solar-powered flashlight at a time.
-Our latest achievements
-More than 700 million people around the world still live without reliable access to electricity. For students in these communities, learning stops when the sun goes down, leaving only a few daylight hours to study and no safe way to read after dark.
-Flash Forward is changing that with durable, solar-powered flashlights. Each light charges during the day and shines for hours at night, so students can keep learning after sunset, with no grid connection, no disposable batteries, and no ongoing cost.
-By putting reliable light directly into students’ hands, we help replace unsafe kerosene lamps and candles and give every recipient more time to learn, work, and build a brighter future.
-A Case for Support
-See where we've helped.
-USA (Bellevue, WA)
-2017
-Fundraising Event
-Haiti
-Ghana
-DR Congo
-India
-Bangladesh
-Our timeline
-2024
-Flash Forward Foundation was founded by students, developed its first solar-powered flashlight prototype, built its team, established its mission, and began outreach to potential nonprofit partners.
-2025
-Flash Forward Foundation became an IRS-recognized 501(c)(3) public charity, refined its flashlight design, built partnerships with organizations in multiple countries, launched volunteer programs and workshops, and completed its first international flashlight shipments.
-2026
-Flash Forward Foundation expanded its global partnerships, continued distributing solar-powered flashlights to students without reliable electricity, grew its volunteer network, pursued nonprofit technology programs and grants, and scaled its organizational infrastructure for larger international impact.
 
 ## nonprofit-status.html
-Flash Forward Foundation is recognized by the IRS as a 501(c)(3) public charity. Below are our legal and tax-exempt details, along with our official IRS documentation. Donations to Flash Forward Foundation are tax-deductible.
+Nonprofit Status | Flash Forward - Energy Poverty Nonprofit Foundation
+Nonprofit Status
+Flash Forward Foundation is recognized by the IRS as a 501(c)(3) public charity. Below are our legal and tax-exempt details, along with our official IRS documentation. Donations to Flash Forward Foundation are tax-deductible to the extent allowed by law.
 Legal Name
 Flash Forward Foundation
 EIN
@@ -207,66 +224,33 @@ IRS Publication 78 Listing
 Our first Form 990 covers fiscal year 2025 and will be posted here once filed.
 
 ## our-team.html
+Volunteers | Flash Forward - Energy Poverty Nonprofit Foundation
+The team behind
+FlashForward®
 Executives
 Romir Chekuri
 President
-Favorite Movie
-The Shawshank Redemption
-I lead the team with vision and direction, and I'm passionate about combining technology and social impact to create sustainable change.
-Romir Chekuri
-President
-Sree Kokkonda
-Vice President
-Favorite Car
-Audi R8
-I bring a visionary perspective to the team, studying our organizational structure to uncover new pathways for how Flash Forward can grow and reach more students.
 Sree Kokkonda
 Vice President
 Andy Zhang
 Treasurer
-I manage our budget, track donations, and ensure every dollar is spent wisely to support our mission. I also manage partnerships, distribution logistics, and impact measurement across our program regions.
-Andy Zhang
-Treasurer
-Tuck Rossmiller
-Chief Communications Officer
-Favorite Activity
-Golf
-I provide leadership for the Foundation's communications, brand strategy, public relations, and partnership development. I oversee executive messaging, media relations, digital strategy, and stakeholder engagement to elevate brand awareness and advance the Foundation's global mission.
 Tuck Rossmiller
 Chief Communications Officer
 Volunteers
 Aidan Graham
 Volunteer
-Favorite Space Telescope
-JWST
-I lead our volunteer team by onboarding new members, matching volunteers with roles that fit their interests and skills, and supporting them throughout their experience. I also coordinate volunteer activities, communication across teams, and volunteer engagement to help advance our mission.
-Aidan Graham
-Volunteer
-Venkata Anirudh Devireddy
-Volunteer
-Favorite Hike
-North Cascades
-My name is Venkata Anirudh, and my favorite place to hike is the North Cascades. I’ve always enjoyed building, tinkering, and figuring out how things work, which is why I find volunteering with Flash Forward Foundation so exciting. Being able to use creativity and hands-on problem solving to make a real difference in students' lives is incredibly rewarding. I’m grateful to be part of a team that combines engineering, innovation, and service to help bring light and opportunity to communities around the world.
-Venkata Anirudh Devireddy
-Volunteer
-Sanjay Gopi
-Volunteer
-Favorite Movie
-Whiplash
-My name Is Sanjay Gopi I help distribute flashlights to communities in need and assist with production costs to support our nonprofit's mission. Outside of volunteering, I enjoy playing tennis.
 Sanjay Gopi
 Volunteer
 
 ## privacy-policy.html
+Privacy Policy | Flash Forward - Energy Poverty Nonprofit Foundation
+Privacy Policy
 This page explains how Flash Forward Foundation collects, uses, and protects information from visitors to our website, flashforwardfoundation.org.
-Updated on July 1, 2026
-At Flash Forward Foundation, we take your privacy seriously. Please read this Privacy Policy to learn how we handle your personal information.
-By using or accessing our website in any manner, you acknowledge that you accept the practices described below.
-Your use of the Flash Forward Foundation website is also subject to our
-Terms of Service
-, which incorporates this Privacy Policy by reference.
+Updated on August 23, 2026
+At Flash Forward Foundation, we take your privacy seriously. Please read this Privacy Policy to learn how we handle your personal information. By using or accessing our website in any manner, you acknowledge that you accept the practices described below.
+Your use of the Flash Forward Foundation website is also subject to our Terms of Service, which incorporates this Privacy Policy by reference.
 Information We Collect
-We collect information you choose to give us, such as your name, email address, phone number, and message when you fill out a form to volunteer, ask for help, donate equipment, or contact us. If you make a donation, our donation platform, GoFundMe, collects your payment and billing information directly — we do not receive or store your card details.
+We collect information you choose to provide, such as your name, email address, phone number, and message when you submit a form. When you donate, a third-party donation service collects and processes the payment and billing information needed to complete the transaction and may provide us with donation records, such as your name, contact information, donation amount, and transaction status. Flash Forward Foundation does not directly collect or store full payment-card details.
 How We Use Your Information
 We use the information you provide to respond to your message, process volunteer applications, coordinate equipment donations, keep you updated about our programs, and operate, protect, and improve our website and mission. We do not sell your personal information.
 How We Share Your Information
@@ -274,9 +258,9 @@ We may share your information with service providers who help us operate our web
 Data Retention
 We retain personal information for as long as reasonably necessary to fulfill the purposes described in this Policy, comply with our legal and tax obligations as a nonprofit organization, resolve disputes, and enforce our agreements.
 Forms & Third-Party Processors
-Contact and volunteer forms on our website are processed by FormSubmit, a third-party service that securely delivers form submissions to our team’s inbox. Donations are processed by GoFundMe. Each of these services has its own privacy policy governing how it handles your data in transit.
+Contact and volunteer forms are delivered through FormSubmit, a third-party form service. Donations are processed by a third-party donation service. These providers handle information under their own privacy notices and security practices. An embedded donation checkout may also use cookies or similar technologies as described in the donation service’s privacy notice.
 Analytics & Cookies
-We use analytics tools, including Google Analytics and similar services, to understand how visitors use our website so we can improve it. These tools may use cookies or similar technologies to collect information such as pages visited and general location. You can control cookies through your browser settings.
+We use Google Analytics, a web analytics service provided by Google, to understand how visitors use our website so we can improve it. Google Analytics uses cookies and similar technologies to collect information such as pages visited, approximate location, device and browser type, and how you arrived at our site; this information is aggregated and is not used to personally identify you. You can control cookies through your browser settings, and you can opt out of Google Analytics across all websites using Google’s browser add-on at tools.google.com/dlpage/gaoptout. For more information, see Google’s Privacy Policy at policies.google.com/privacy.
 International Users
 Flash Forward Foundation is based in the United States, and any information you provide will be processed and stored in the United States. If you access our website from outside the United States, you consent to the transfer of your information to the United States, which may have data protection laws different from those in your country.
 Do Not Track
@@ -292,29 +276,27 @@ While we take reasonable steps to protect your information, to the fullest exten
 Changes to This Policy
 We may update this Privacy Policy from time to time as our website and programs grow. Any changes are effective as soon as we post the updated Policy on this page, and your continued use of our website after a change means you accept the updated Policy.
 Contact Us
-If you have questions about this Privacy Policy or how we handle your information, contact us at
-about@flashforwardfoundation.org
-.
+If you have questions about this Privacy Policy or how we handle your information, contact us at about@flashforwardfoundation.org.
 
 ## terms-and-conditions.html
+Terms and Condition | Flash Forward - Energy Poverty Nonprofit Foundation
+Terms and Conditions
 These Terms of Service (“Terms”) are entered into between Flash Forward Foundation (“Flash Forward,” “we,” “us,” or “our”) and any person who accesses or uses our website (together, the “Service”). These Terms explain the rules for accessing and using flashforwardfoundation.org.
-Updated on July 1, 2026
+Updated on August 23, 2026
 Welcome to the Flash Forward Foundation website. Please read on to learn the rules and guidelines that govern your use of our website. If you have any questions, comments, or concerns about these Terms or our website, please contact us at:
 about@flashforwardfoundation.org
 Address:
 Flash Forward Foundation
 Bellevue, Washington, United States
-These Terms of Service (the “Terms”) are a binding agreement between you and Flash Forward Foundation. By accessing or using our website in any way, you agree to these Terms. These Terms include the provisions in this document as well as those in our
-Privacy Policy
-.
+These Terms of Service (the “Terms”) are a binding agreement between you and Flash Forward Foundation. By accessing or using our website in any way, you agree to these Terms. These Terms include the provisions in this document as well as those in our Privacy Policy.
 Who We Are
-Flash Forward Foundation is a 501(c)(3) public charity (EIN 39-3605570) founded by students to help end energy poverty. We design, build, and distribute solar-powered flashlights to students living without reliable access to electricity, and we recruit volunteers to help us design, manufacture, fundraise, and ship lights around the world.
+Flash Forward Foundation is a 501(c)(3) public charity (EIN 39-3605570) founded by students. We develop solar-powered study lights for students living without reliable electricity and coordinate volunteer-led design, assembly, fundraising, outreach, and delivery.
 Eligibility
 You must be at least 13 years old to use our website or submit a form. If you are under 18, you may only use our website and submit forms with the involvement or consent of a parent or guardian. By using our website, you represent that you meet these requirements.
 Using Our Website
-You may use our website to learn about our mission, dedicate a solar light, donate equipment or funds, apply to volunteer, or contact our team. You agree to use our website only for lawful purposes and in a way that does not infringe the rights of, restrict, or inhibit anyone else’s use of the site.
+You may use our website to learn about our mission, request a solar-light dedication, donate equipment or funds, apply to volunteer, or contact our team. You agree to use our website only for lawful purposes and in a way that does not infringe the rights of, restrict, or inhibit anyone else’s use of the site.
 Donations
-Donations made through our website are processed by our third-party donation platform, GoFundMe, and are subject to GoFundMe’s own terms and privacy practices in addition to these Terms. Flash Forward Foundation is recognized by the IRS as a 501(c)(3) public charity, and donations are tax-deductible to the extent allowed by law. We are not responsible for errors, delays, or issues caused by third-party payment processors.
+Donations made through our website are processed by a third-party donation service and are also subject to that service’s terms and privacy notice. If you choose a recurring donation, it continues at the amount and interval shown at checkout until you cancel it. You can manage or cancel it using the link in a donation receipt or the options made available by the donation service. Flash Forward Foundation is recognized by the IRS as a 501(c)(3) public charity. Donations are tax-deductible to the extent allowed by law. We do not control the availability or operation of third-party services.
 Volunteer Applications & Contact Forms
 When you submit a form on our website — for example, to volunteer, ask for help, donate equipment, or contact us — the information you provide (such as your name, email address, phone number, and message) is sent directly to our team so we can respond to you. Submitting a form does not guarantee a volunteer position, a response time, or any particular outcome.
 Volunteering & In-Person Activities
@@ -339,54 +321,56 @@ We may suspend or terminate your access to our website or your participation as 
 Force Majeure
 We will not be liable for any delay or failure to perform resulting from causes outside our reasonable control, including natural disasters, acts of government, labor disputes, internet or utility failures, or disruptions to shipping and supply chains.
 Dispute Resolution
-If a dispute arises out of or relates to these Terms or our website, we encourage you to first contact us at
-about@flashforwardfoundation.org
-so we can try to resolve it informally. Any dispute that cannot be resolved informally will be subject to the exclusive jurisdiction of the state and federal courts located in Washington State, and you consent to personal jurisdiction there.
+If a dispute arises out of or relates to these Terms or our website, we encourage you to first contact us at about@flashforwardfoundation.org so we can try to resolve it informally. Any dispute that cannot be resolved informally will be subject to the exclusive jurisdiction of the state and federal courts located in Washington State, and you consent to personal jurisdiction there.
 Changes to These Terms
 We may update these Terms from time to time as our website and programs grow. Continued use of our website after any changes means you accept the updated Terms.
 Governing Law
 These Terms are governed by the laws of the State of Washington, without regard to its conflict of law principles.
 Severability, Entire Agreement & No Waiver
-If any provision of these Terms is found unenforceable, the remaining provisions will remain in full force and effect. These Terms, together with our
-Privacy Policy
-, are the entire agreement between you and Flash Forward Foundation regarding your use of our website, and supersede any prior agreements. Our failure to enforce any provision of these Terms is not a waiver of our right to do so later.
+If any provision of these Terms is found unenforceable, the remaining provisions will remain in full force and effect. These Terms, together with our Privacy Policy, are the entire agreement between you and Flash Forward Foundation regarding your use of our website, and supersede any prior agreements. Our failure to enforce any provision of these Terms is not a waiver of our right to do so later.
 Contact Us
-If you have any questions about these Terms, please reach out to us at
-about@flashforwardfoundation.org
-.
+If you have any questions about these Terms, please reach out to us at about@flashforwardfoundation.org.
 
 ## volunteering.html
-Join us in making a difference
-Flash Forward is on a mission to improve energy access in underserved regions around the world. We believe that by providing equipment, training, and advocacy, we can make a significant impact in the fight against energy poverty. Your volunteer efforts can help us achieve this mission and bring hope to those in need.
+Volunteering | Flash Forward - Energy Poverty Nonprofit Foundation
+Volunteer
+Help build and deliver solar-powered lights
+Flash Forward relies on volunteers to build and deliver solar-powered lights for students living without reliable electricity. Depending on current needs, volunteers may support workshops, outreach, fundraising, or other practical work that keeps the program moving.
 Join our Discord
-Why volunteer with FlashForward?
+Why volunteer with Flash Forward?
 01
-Real, shipped impact
-Every light you build or fund goes to a student who has been studying in the dark. You can watch the number of lights we have shipped climb.
+Support a student-focused program
+Volunteer work can support the design, assembly, fundraising, and distribution efforts behind solar-powered lights for students living without reliable electricity.
 02
-Learn on real hardware
-Pick up CAD, 3D printing, and soldering next to engineers and other volunteers, on actual flashlights instead of slides.
+Build practical experience
+Depending on the role and current workshop activity, volunteers may gain hands-on experience with CAD, 3D printing, soldering, testing, or assembly.
 03
-Own your project
-Take a design, a campaign, or a grant from start to finish, with your name on the result.
+Contribute to a defined task
+Some opportunities may involve supporting a design, outreach, fundraising, or research task from planning through completion.
 04
-Set your own pace
-Give an hour a week or lead a whole track. We train you either way, and you decide how much to take on.
+Find a workable commitment
+Time commitments vary by role. Tell us your availability so the team can share opportunities that may be a fit.
 Engineering & Manufacturing
-Design our flashlights in CAD, then print, solder, and assemble them in the makerspace. Every version should come out cheaper and brighter than the last, and you help get it there. Sketch a single part or own a full redesign; we will teach you the tools either way.
+Depending on current needs and experience, volunteers may help with CAD, 3D printing, soldering, assembly, testing, or design documentation for solar-powered lights.
 Outreach & Partnerships
-Find the companies, schools, and sponsors who can fund lights or help us ship them further. You pick who to contact and how much to take on, from a few warm intros to a full partnership pipeline.
+Volunteers may help research prospective companies, schools, sponsors, or nonprofit partners and support approved outreach.
 Social Media & Marketing
-Make the reels, write the posts, and tell the story behind each light. Bring your own ideas to Instagram and wherever else our audience hangs out. A one-off video counts as much as a full campaign.
+Volunteers may help create approved photos, videos, posts, or campaign materials that explain the work behind each light.
 Fundraising
-Raise the money that pays for lights. That might be federal grant applications, a bake sale, or something nobody has tried yet. You choose which ones to chase.
+Volunteers may support grant research, community fundraisers, donor outreach, or other approved fundraising work.
 Volunteer Recruitment
-Grow the team. Bring in new volunteers online, on campus, or around town, however you like meeting people. Want to run recruitment your own way? It is yours.
+Volunteers may help welcome new participants, share current opportunities, and support recruitment through approved community or online channels.
 STEM Education
-Teach kids near you about engineering and renewable energy through hands-on flashlight builds. We hand you the lesson materials and the parts; you decide when and where to run a session.
-Ready to get involved?
-Ready to make a difference? Join our community of dedicated volunteers and help us bring hope to those battling energy poverty. Whether you’re a volunteer engineer or someone with a passion for making a difference, there’s a place for you at Flash Forward.
+When supervised programs are available, volunteers may help with hands-on activities about engineering, renewable energy, and solar-powered lights.
+Tell us how you would like to help
+Tell us your interests, relevant experience, availability, and location. Our team can share current opportunities in workshops, outreach, fundraising, communications, recruitment, or other light-building work.
+Full name
+Email Address
+Phone number
+What is this about?
+Volunteer
+General Inquiry
+Message
 Thank you!
 Your submission has been received!
 Oops! Something went wrong while submitting the form.
-
