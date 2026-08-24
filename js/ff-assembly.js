@@ -13,9 +13,11 @@
     if(!root||root.getAttribute('data-assembly-ready'))return;
     root.setAttribute('data-assembly-ready','true');
     var parts={};root.querySelectorAll('[data-part]').forEach(function(el){parts[el.getAttribute('data-part')]=el;});
-    var photoMap={'case-shell':['case-cad.webp',190,185,340,220],'battery':['rechargeable-battery.webp',265,255,165,76],'recharge-module':['recharge-module.webp',392,300,110,70],'led':['white-led.webp',335,365,52,52],'solar-panel':['solar-panel.webp',225,138,270,92]};
+    var photoMap={'case-shell':['case-cad.webp',190,185,340,220],'battery':['rechargeable-battery.webp',265,255,165,76],'recharge-module':['recharge-module.webp',392,300,110,70],'led':['white-led.webp',335,350,52,52],'solar-panel':['solar-panel.webp',225,138,270,92]};
     var photoNodes={};
     Object.keys(photoMap).forEach(function(id){var host=parts[id],spec=photoMap[id];if(!host)return;Array.prototype.slice.call(host.children).forEach(function(child){if(['rect','path','circle'].indexOf(child.tagName.toLowerCase())>=0)child.remove();});var img=document.createElementNS('http://www.w3.org/2000/svg','image');img.setAttribute('x',spec[1]);img.setAttribute('y',spec[2]);img.setAttribute('width',spec[3]);img.setAttribute('height',spec[4]);img.setAttribute('preserveAspectRatio','xMidYMid meet');img.setAttribute('class','ff-assembly-photo');img.setAttribute('alt','');host.insertBefore(img,host.firstChild);photoNodes[id]=img;});
+    var svgRoot=root.querySelector('.ff-assembly-svg'),clip=document.createElementNS('http://www.w3.org/2000/svg','clipPath'),poly=document.createElementNS('http://www.w3.org/2000/svg','polygon');clip.setAttribute('id','assembly-front-rim');poly.setAttribute('points','190,309 334,363 530,309 530,405 190,405');clip.appendChild(poly);var defs=document.createElementNS('http://www.w3.org/2000/svg','defs');defs.appendChild(clip);if(svgRoot)svgRoot.insertBefore(defs,svgRoot.firstChild);var rim=document.createElementNS('http://www.w3.org/2000/svg','g'), rimImage=document.createElementNS('http://www.w3.org/2000/svg','image');
+    rim.setAttribute('class','ff-assembly-foreground');rim.setAttribute('aria-hidden','true');rimImage.setAttribute('x','190');rimImage.setAttribute('y','185');rimImage.setAttribute('width','340');rimImage.setAttribute('height','220');rimImage.setAttribute('preserveAspectRatio','xMidYMid meet');rimImage.setAttribute('class','ff-assembly-photo');rimImage.setAttribute('clip-path','url(#assembly-front-rim)');rim.appendChild(rimImage);var panelHost=parts['solar-panel'];if(panelHost&&panelHost.parentNode)panelHost.parentNode.insertBefore(rim,panelHost);photoNodes['foreground']=rimImage;
     var batteryLabel=root.querySelector('[data-step="battery"] strong');if(batteryLabel)batteryLabel.textContent='Rechargeable battery';
     var desc=root.querySelector('#assembly-svg-desc');if(desc)desc.textContent='A 3D-printed case, rechargeable battery, recharge module, wires, LED, and 5V solar panel appear separately, then assemble into one finished light.';
     var svgLabels=root.querySelectorAll('.ff-assembly-svg .svg-label,.ff-assembly-svg .svg-dark-label');
@@ -35,6 +37,7 @@
         preload.onload=assign;preload.onerror=assign;preload.src=src;
         if(preload.decode)preload.decode().then(assign).catch(assign);
       });
+      if(photoNodes.foreground)photoNodes.foreground.setAttribute('href','images/flashforward/assembly/case-cad.webp');
     }
     if(!track||!steps.length||!status||!finished)return;
     var reduced=window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -47,6 +50,7 @@
         part.style.opacity=String(reveal);part.style.transform='translate('+((1-assemble)*item.offset[0])+'px,'+((1-assemble)*item.offset[1])+'px) rotateZ('+spin+'deg)';
         steps[index].removeAttribute('aria-current');
       });
+      var foreground=root.querySelector('.ff-assembly-foreground');if(foreground)foreground.style.opacity=String(clamp((p-.70)/.18));
       var labelOpacity=clamp(1-(p-.55)/.09);svgLabels.forEach(function(label){label.style.opacity=String(labelOpacity)});
       var active=0;sequence.forEach(function(item,index){if(p>=item.start)active=index;});steps[active].setAttribute('aria-current','step');
       status.textContent=p>=.9?'Finished light':p>=.55?'Exploded assembly hold':'Assembly step: '+sequence[active].label;
