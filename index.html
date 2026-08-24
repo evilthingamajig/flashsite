@@ -835,6 +835,12 @@ background-color:#000;
 .map-dotted-wrapper {
   clip-path: circle(0%);
 }
+
+@media (prefers-reduced-motion: reduce) {
+  .map-dotted-wrapper {
+    clip-path: circle(100%);
+  }
+}
 </style></div><div class="buttons-styles w-embed"><style>
 .button-01 {
   border-radius:100px;
