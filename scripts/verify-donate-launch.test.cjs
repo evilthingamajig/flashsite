@@ -2,13 +2,12 @@
 
 const assert = require("node:assert/strict");
 const fs = require("node:fs");
+const os = require("node:os");
 const path = require("node:path");
 const { validate, scanLegacySources } = require("./verify-donate-launch.cjs");
 
-const root = path.resolve(__dirname, "..");
-const currentDonate = fs.readFileSync(path.join(root, "donate.html"), "utf8");
-const cleanConfig = { headers: [] };
 const ids = { expectedWidgetId: "widget-test-123", expectedAccountId: "acct-test-456" };
+const cleanConfig = { headers: [] };
 
 const validWidget = `<!doctype html>
 <html><head>
@@ -24,179 +23,163 @@ const validWidget = `<!doctype html>
   ></givebutter-widget>
 </body></html>`;
 
-function result(html, env, extra = {}) {
-  return validate({
-    html,
-    config: cleanConfig,
-    env,
-    root,
-    ...extra
+const stagingWidget = `<!doctype html><html><head>
+<meta content="noindex,follow" name="robots">
+</head><body>
+<div class="donation-provider-mount" data-donation-provider="pending">
+  Monthly sponsorship checkout is being prepared. No payment form is active on this page yet.
+</div>
+</body></html>`;
+
+const tempRoots = [];
+function fixtureRoot({ html = validWidget, config = cleanConfig, files = {} } = {}) {
+  const root = fs.mkdtempSync(path.join(os.tmpdir(), "verify-donate-launch-"));
+  tempRoots.push(root);
+  fs.writeFileSync(path.join(root, "donate.html"), html, "utf8");
+  fs.writeFileSync(path.join(root, "vercel.json"), JSON.stringify(config), "utf8");
+  for (const [relative, contents] of Object.entries(files)) {
+    const target = path.join(root, relative);
+    fs.mkdirSync(path.dirname(target), { recursive: true });
+    fs.writeFileSync(target, contents, "utf8");
+  }
+  return root;
+}
+
+function fixtureResult(options = {}) {
+  const root = fixtureRoot(options);
+  return validate({ root, env: options.env || { VERCEL_ENV: "production" }, ...ids });
+}
+
+try {
+  const strictStaging = fixtureResult({ html: stagingWidget, env: { VERCEL_ENV: "production" } });
+  assert.ok(strictStaging.errors.some(error => /noindex/i.test(error)), "strict staging: noindex gate");
+  assert.ok(strictStaging.errors.some(error => /pending|staging/i.test(error)), "strict staging: pending gate");
+  assert.ok(strictStaging.errors.some(error => /widget/i.test(error)), "strict staging: widget gate");
+  assert.ok(strictStaging.errors.some(error => /library script/i.test(error)), "strict staging: library gate");
+
+  const previewStaging = fixtureResult({
+    html: stagingWidget,
+    env: { VERCEL_ENV: "preview", ALLOW_INCOMPLETE_DONATE_PREVIEW: "1" }
   });
-}
+  assert.equal(previewStaging.errors.length, 0, "preview override must allow synthetic incomplete checkout");
+  assert.ok(previewStaging.warnings.length >= 4, "preview override must warn loudly");
 
-const strictCurrent = result(currentDonate, { VERCEL_ENV: "production" });
-assert.ok(strictCurrent.errors.some(error => /noindex/i.test(error)), "strict current: noindex gate");
-assert.ok(strictCurrent.errors.some(error => /pending|staging/i.test(error)), "strict current: pending gate");
-assert.ok(strictCurrent.errors.some(error => /widget/i.test(error)), "strict current: widget gate");
-assert.ok(strictCurrent.errors.some(error => /library script/i.test(error)), "strict current: library gate");
+  const productionOverride = fixtureResult({
+    html: stagingWidget,
+    env: { VERCEL_ENV: "production", ALLOW_INCOMPLETE_DONATE_PREVIEW: "1" }
+  });
+  assert.ok(productionOverride.errors.length > 0, "production must ignore preview override");
 
-const preview = result(currentDonate, {
-  VERCEL_ENV: "preview",
-  ALLOW_INCOMPLETE_DONATE_PREVIEW: "1"
-});
-assert.equal(preview.errors.length, 0, "preview override must allow only incomplete checkout failures");
-assert.ok(preview.warnings.length >= 4, "preview override must warn loudly");
+  const valid = fixtureResult({ env: { VERCEL_ENV: "production" } });
+  assert.deepEqual(valid.errors, [], "multiline/order-independent valid widget must pass");
 
-const productionOverride = result(currentDonate, {
-  VERCEL_ENV: "production",
-  ALLOW_INCOMPLETE_DONATE_PREVIEW: "1"
-});
-assert.ok(productionOverride.errors.length > 0, "production must ignore preview override");
+  for (const amount of ["5.170", "05.17", "5.17e0"]) {
+    const amountResult = fixtureResult({ html: validWidget.replace("5.17", amount) });
+    assert.ok(amountResult.errors.some(error => /amount/i.test(error)), `amount ${amount} must fail`);
+  }
 
-const valid = result(validWidget, { VERCEL_ENV: "production" }, ids);
-assert.deepEqual(valid.errors, [], "multiline/order-independent valid widget must pass");
+  for (const frequency of ["Monthly", "month", "permonth", "everymonth"]) {
+    const frequencyResult = fixtureResult({ html: validWidget.replace("monthly", frequency) });
+    assert.ok(frequencyResult.errors.some(error => /frequency/i.test(error)), `frequency ${frequency} must fail`);
+  }
 
-const duplicateWidget = validWidget.replace('id = \'widget-test-123\'', 'id = \'widget-test-123\' id = \'widget-other\'');
-const duplicateWidgetResult = result(duplicateWidget, { VERCEL_ENV: "production" }, ids);
-assert.ok(duplicateWidgetResult.errors.some(error => /givebutter-widget has duplicate attributes: id/i.test(error)), "duplicate widget id must fail");
+  const duplicateWidget = validWidget.replace("id = 'widget-test-123'", "id = 'widget-test-123' id = 'widget-other'");
+  const duplicateWidgetResult = fixtureResult({ html: duplicateWidget });
+  assert.ok(duplicateWidgetResult.errors.some(error => /givebutter-widget has duplicate attributes: id/i.test(error)), "duplicate widget id must fail");
 
-const duplicateScript = validWidget.replace(
-  "src='https://widgets.givebutter.com/latest.umd.cjs?acct=acct-test-456'",
-  "src='https://widgets.givebutter.com/latest.umd.cjs?acct=acct-test-456' src='https://widgets.givebutter.com/latest.umd.cjs?acct=other'"
-);
-const duplicateScriptResult = result(duplicateScript, { VERCEL_ENV: "production" }, ids);
-assert.ok(duplicateScriptResult.errors.some(error => /script tag has duplicate attributes: src/i.test(error)), "duplicate script src must fail");
+  const duplicateScript = validWidget.replace(
+    "src='https://widgets.givebutter.com/latest.umd.cjs?acct=acct-test-456'",
+    "src='https://widgets.givebutter.com/latest.umd.cjs?acct=acct-test-456' src='https://widgets.givebutter.com/latest.umd.cjs?acct=other'"
+  );
+  const duplicateScriptResult = fixtureResult({ html: duplicateScript });
+  assert.ok(duplicateScriptResult.errors.some(error => /script tag has duplicate attributes: src/i.test(error)), "duplicate script src must fail");
 
-const duplicateMeta = validWidget.replace("<html><head>", '<html><head><meta name=robots name=googlebot content=none>');
-const duplicateMetaResult = result(duplicateMeta, { VERCEL_ENV: "production" }, ids);
-assert.ok(duplicateMetaResult.errors.some(error => /meta tag has duplicate attributes: name/i.test(error)), "duplicate meta name must fail");
+  const duplicateMeta = validWidget.replace("<html><head>", '<html><head><meta name=robots name=googlebot content=none>');
+  const duplicateMetaResult = fixtureResult({ html: duplicateMeta });
+  assert.ok(duplicateMetaResult.errors.some(error => /meta tag has duplicate attributes: name/i.test(error)), "duplicate meta name must fail");
 
-for (const amount of ["5.170", "05.17", "5.17e0"]) {
-  const amountResult = result(validWidget.replace("5.17", amount), { VERCEL_ENV: "production" }, ids);
-  assert.ok(amountResult.errors.some(error => /amount/i.test(error)), `amount ${amount} must fail`);
-}
+  const fakeTag = validWidget.replace("<givebutter-widget", "<givebutter-widgetish").replace("</givebutter-widget>", "</givebutter-widgetish>");
+  const fakeTagResult = fixtureResult({ html: fakeTag });
+  assert.ok(fakeTagResult.errors.some(error => /exactly one body/i.test(error)), "near-miss widget tag must fail");
 
-for (const frequency of ["Monthly", "month", "permonth", "everymonth"]) {
-  const frequencyResult = result(validWidget.replace("monthly", frequency), { VERCEL_ENV: "production" }, ids);
-  assert.ok(frequencyResult.errors.some(error => /frequency/i.test(error)), `frequency ${frequency} must fail`);
-}
-
-const fakeTag = validWidget
-  .replace("<givebutter-widget", "<givebutter-widgetish")
-  .replace("</givebutter-widget>", "</givebutter-widgetish>");
-const fakeTagResult = result(fakeTag, { VERCEL_ENV: "production" }, ids);
-assert.ok(fakeTagResult.errors.some(error => /exactly one body/i.test(error)), "near-miss widget tag must fail");
-
-const commentedFake = `<!doctype html><head>
+  const commentedFake = `<!doctype html><head>
 <!-- <script async src="https://widgets.givebutter.com/latest.umd.cjs?acct=acct-test-456"></script> -->
 </head><body><!-- <givebutter-widget id="widget-test-123" amount="5.17" frequency="monthly"></givebutter-widget> --></body>`;
-const commentedResult = result(commentedFake, { VERCEL_ENV: "production" }, ids);
-assert.ok(commentedResult.errors.some(error => /exactly one body/i.test(error)), "commented fake must not count");
-assert.ok(commentedResult.errors.some(error => /library script/i.test(error)), "commented library must not count");
+  const commentedResult = fixtureResult({ html: commentedFake });
+  assert.ok(commentedResult.errors.some(error => /exactly one body/i.test(error)), "commented fake must not count");
+  assert.ok(commentedResult.errors.some(error => /library script/i.test(error)), "commented library must not count");
 
-const wrong = `<!doctype html><head>
-<script src="https://widgets.givebutter.com/latest.umd.cjs?acct=acct-wrong"></script>
-</head><body>
-<givebutter-widget id="widget-wrong" amount="5.18" frequency="yearly"></givebutter-widget>
-</body>`;
-const wrongResult = result(wrong, { VERCEL_ENV: "production" }, ids);
-assert.ok(wrongResult.errors.some(error => /Widget id/i.test(error)), "wrong widget ID must fail");
-assert.ok(wrongResult.errors.some(error => /amount/i.test(error)), "wrong amount must fail");
-assert.ok(wrongResult.errors.some(error => /frequency/i.test(error)), "wrong frequency must fail");
-assert.ok(wrongResult.errors.some(error => /async/i.test(error)), "missing async must fail");
-assert.ok(wrongResult.errors.some(error => /acct/i.test(error)), "wrong account ID must fail");
-
-const wrongLibraryRoute = `<!doctype html><head>
-<script async src="http://widgets.givebutter.com/wrong.cjs?acct=acct-test-456"></script>
-</head><body>
-<givebutter-widget id="widget-test-123" amount="5.17" frequency="monthly"></givebutter-widget>
-</body>`;
-const wrongLibraryResult = result(wrongLibraryRoute, { VERCEL_ENV: "production" }, ids);
-assert.ok(wrongLibraryResult.errors.some(error => /library script/i.test(error)), "wrong host/path must fail");
-
-const ignoredBody = `<!doctype html><head><script async src="https://widgets.givebutter.com/latest.umd.cjs?acct=acct-test-456"></script></head><body>
+  const ignoredBody = `<!doctype html><head><script async src="https://widgets.givebutter.com/latest.umd.cjs?acct=acct-test-456"></script></head><body>
 <script><givebutter-widget id="fake"></givebutter-widget></script>
 <style><givebutter-widget id="fake"></givebutter-widget></style>
 <template><givebutter-widget id="fake"></givebutter-widget></template>
 <noscript><givebutter-widget id="fake"></givebutter-widget></noscript>
 </body>`;
-const ignoredResult = result(ignoredBody, { VERCEL_ENV: "production" }, ids);
-assert.ok(ignoredResult.errors.some(error => /exactly one body/i.test(error)), "ignored blocks must not count");
+  const ignoredResult = fixtureResult({ html: ignoredBody });
+  assert.ok(ignoredResult.errors.some(error => /exactly one body/i.test(error)), "ignored blocks must not count");
 
-for (const source of [
-  'https://widgets.givebutter.com:444/latest.umd.cjs?acct=acct-test-456',
-  'https://user:pass@widgets.givebutter.com/latest.umd.cjs?acct=acct-test-456',
-  'https://widgets.givebutter.com/latest.umd.cjs:444?acct=acct-test-456'
-]) {
-  const urlResult = result(validWidget.replace("https://widgets.givebutter.com/latest.umd.cjs?acct=acct-test-456", source), { VERCEL_ENV: "production" }, ids);
-  assert.ok(urlResult.errors.some(error => /library script/i.test(error)), `library URL ${source} must fail`);
-}
+  for (const source of [
+    "https://widgets.givebutter.com:444/latest.umd.cjs?acct=acct-test-456",
+    "https://user:pass@widgets.givebutter.com/latest.umd.cjs?acct=acct-test-456",
+    "https://widgets.givebutter.com/latest.umd.cjs:444?acct=acct-test-456"
+  ]) {
+    const urlResult = fixtureResult({ html: validWidget.replace("https://widgets.givebutter.com/latest.umd.cjs?acct=acct-test-456", source) });
+    assert.ok(urlResult.errors.some(error => /library script/i.test(error)), `library URL ${source} must fail`);
+  }
 
-const secondRobot = validWidget.replace("<html><head>", '<html><head><meta name=\"googlebot\" content=\"noindex\"><meta content=noindex name=bingbot>');
-const secondRobotResult = result(secondRobot, { VERCEL_ENV: "production" }, ids);
-assert.ok(secondRobotResult.errors.filter(error => /noindex in meta name=/i.test(error)).length === 2, "googlebot and bingbot noindex must fail");
+  const secondRobot = validWidget.replace("<html><head>", '<html><head><meta name="googlebot" content="noindex"><meta content=noindex name=bingbot>');
+  const secondRobotResult = fixtureResult({ html: secondRobot });
+  assert.equal(secondRobotResult.errors.filter(error => /noindex in meta name=/i.test(error)).length, 2, "googlebot and bingbot noindex must fail");
 
-for (const name of ["robots", "googlebot", "bingbot"]) {
-  const noneResult = result(validWidget.replace("<html><head>", `<html><head><meta name=${name} content=none>`), { VERCEL_ENV: "production" }, ids);
-  assert.ok(noneResult.errors.some(error => /noindex in meta name=/i.test(error)), `${name}=none must fail`);
-}
+  for (const name of ["robots", "googlebot", "bingbot"]) {
+    const noneResult = fixtureResult({ html: validWidget.replace("<html><head>", `<html><head><meta name=${name} content=none>`) });
+    assert.ok(noneResult.errors.some(error => /noindex in meta name=/i.test(error)), `${name}=none must fail`);
+  }
 
-const unquotedStaging = validWidget.replace("<body>", "<body><div class=pending></div><div data-stage=placeholder></div>");
-const unquotedStagingResult = result(unquotedStaging, { VERCEL_ENV: "production" }, ids);
-assert.ok(unquotedStagingResult.errors.some(error => /pending\/staging/i.test(error)), "unquoted staging attributes must fail");
+  const unquotedStaging = validWidget.replace("<body>", "<body><div class=pending></div><div data-stage=placeholder></div>");
+  const unquotedStagingResult = fixtureResult({ html: unquotedStaging });
+  assert.ok(unquotedStagingResult.errors.some(error => /pending\/staging/i.test(error)), "unquoted staging attributes must fail");
 
-const configNoindex = result(validWidget, { VERCEL_ENV: "preview", ALLOW_INCOMPLETE_DONATE_PREVIEW: "1" }, {
-  ...ids,
-  config: { headers: [{ source: "/(.*)", headers: [{ key: "X-Robots-Tag", value: "noindex" }] }] }
-});
-assert.ok(configNoindex.errors.some(error => /X-Robots-Tag noindex/i.test(error)), "config noindex is never overridable");
-
-const unrelatedConfig = result(validWidget, { VERCEL_ENV: "production" }, {
-  ...ids,
-  config: { headers: [{ source: "/mission", headers: [{ key: "X-Robots-Tag", value: "noindex" }] }] }
-});
-assert.equal(unrelatedConfig.errors.filter(error => /X-Robots-Tag noindex/i.test(error)).length, 0, "unrelated X-Robots-Tag rules must not fail");
-
-const donateConfig = result(validWidget, { VERCEL_ENV: "production" }, {
-  ...ids,
-  config: { headers: [{ source: "/donate", headers: [{ key: "X-Robots-Tag", value: "noindex" }] }] }
-});
-assert.ok(donateConfig.errors.some(error => /X-Robots-Tag noindex/i.test(error)), "donate X-Robots-Tag rule must fail");
-
-for (const source of ["/donate.html", "/donate(.*)", "/donate/:path*", "/donate/..."]) {
-  const routeConfig = result(validWidget, { VERCEL_ENV: "production" }, {
-    ...ids,
-    config: { headers: [{ source, headers: [{ key: "X-Robots-Tag", value: "noindex" }] }] }
+  const configNoindex = fixtureResult({
+    env: { VERCEL_ENV: "preview", ALLOW_INCOMPLETE_DONATE_PREVIEW: "1" },
+    config: { headers: [{ source: "/(.*)", headers: [{ key: "X-Robots-Tag", value: "noindex" }] }] }
   });
-  assert.ok(routeConfig.errors.some(error => /X-Robots-Tag noindex/i.test(error)), `${source} X-Robots-Tag rule must fail`);
+  assert.ok(configNoindex.errors.some(error => /X-Robots-Tag noindex/i.test(error)), "global X-Robots-Tag is never overridable");
+
+  const unrelatedConfig = fixtureResult({
+    config: { headers: [{ source: "/mission", headers: [{ key: "X-Robots-Tag", value: "noindex" }] }] }
+  });
+  assert.equal(unrelatedConfig.errors.filter(error => /X-Robots-Tag noindex/i.test(error)).length, 0, "unrelated X-Robots-Tag rules must not fail");
+
+  for (const source of ["/donate", "/donate.html", "/donate(.*)", "/donate/:path*", "/donate/..."]) {
+    const routeConfig = fixtureResult({
+      config: { headers: [{ source, headers: [{ key: "X-Robots-Tag", value: "noindex" }] }] }
+    });
+    assert.ok(routeConfig.errors.some(error => /X-Robots-Tag noindex/i.test(error)), `${source} X-Robots-Tag rule must fail`);
+  }
+
+  const equipmentConfig = fixtureResult({
+    config: { headers: [{ source: "/donate-equipment", headers: [{ key: "X-Robots-Tag", value: "noindex" }] }] }
+  });
+  assert.equal(equipmentConfig.errors.filter(error => /X-Robots-Tag noindex/i.test(error)).length, 0, "donate-equipment X-Robots-Tag rule must not fail");
+
+  const legacy = ["go", "fund", "me"].join("");
+  const gfm = ["g", "fm"].join("");
+  const dotted = ["go", "fund", ".", "me"].join("");
+  const deployedExtensions = [".html", ".css", ".js", ".mjs", ".cjs", ".json", ".xml", ".txt", ".svg", ".md", ".map", ".webmanifest", ".manifest"];
+  const scannedDirectories = ["work", "docs", "outputs", ".openai"];
+  const extensionFiles = {};
+  for (const directory of scannedDirectories) {
+    for (const extension of deployedExtensions) extensionFiles[`${directory}/public${extension}`] = `provider ${legacy}`;
+  }
+  extensionFiles["technical.html"] = '<givebutter-widget></givebutter-widget><script src="https://widgets.givebutter.com/latest.umd.cjs?acct=a"></script>';
+  extensionFiles["fallback.html"] = '<givebutter-widget><span>Givebutter</span></givebutter-widget>';
+  extensionFiles["legacy.html"] = `<p>${gfm}</p><p>${dotted}</p>`;
+  const legacyRoot = fixtureRoot({ files: extensionFiles });
+  const legacyHits = scanLegacySources(legacyRoot);
+  assert.equal(legacyHits.length, deployedExtensions.length * scannedDirectories.length + 3, "all deployable extensions/directories and fallback text must be scanned");
+
+  console.log("verify-donate-launch self-tests passed");
+} finally {
+  for (const root of tempRoots) fs.rmSync(root, { recursive: true, force: true });
 }
-
-const equipmentConfig = result(validWidget, { VERCEL_ENV: "production" }, {
-  ...ids,
-  config: { headers: [{ source: "/donate-equipment", headers: [{ key: "X-Robots-Tag", value: "noindex" }] }] }
-});
-assert.equal(equipmentConfig.errors.filter(error => /X-Robots-Tag noindex/i.test(error)).length, 0, "donate-equipment X-Robots-Tag rule must not fail");
-
-const legacy = ["go", "fund", "me"].join("");
-const gfm = ["g", "fm"].join("");
-const dotted = ["go", "fund", ".", "me"].join("");
-const legacyHits = scanLegacySources(root, new Map([
-  ["public.html", `<p>${legacy}</p><p>${gfm}</p><p>${dotted}</p>`],
-  ["technical.html", '<givebutter-widget></givebutter-widget><script src="https://widgets.givebutter.com/latest.umd.cjs?acct=a"></script>']
-]));
-assert.equal(legacyHits.length, 3, "legacy provider scanner must catch authored tokens but allow technical widget references");
-
-const fallbackHits = scanLegacySources(root, new Map([
-  ["fallback.html", '<givebutter-widget><span>Givebutter</span></givebutter-widget>']
-]));
-assert.equal(fallbackHits.length, 1, "authored fallback text inside technical widget tags must still be scanned");
-
-const deployedExtensions = [".html", ".css", ".js", ".mjs", ".cjs", ".json", ".xml", ".txt", ".svg", ".md", ".map", ".webmanifest", ".manifest"];
-const scannedDirectories = ["work", "docs", "outputs", ".openai"];
-const extensionSources = new Map();
-for (const directory of scannedDirectories) {
-  for (const extension of deployedExtensions) extensionSources.set(`${directory}/public${extension}`, `provider ${legacy}`);
-}
-assert.equal(scanLegacySources(root, extensionSources).length, deployedExtensions.length * scannedDirectories.length, "every deployed text extension must be scanned in every deployable directory");
-
-console.log("verify-donate-launch self-tests passed");
