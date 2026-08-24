@@ -14,8 +14,9 @@
     root.setAttribute('data-assembly-ready','true');
     var parts={};root.querySelectorAll('[data-part]').forEach(function(el){parts[el.getAttribute('data-part')]=el;});
     var svgLabels=root.querySelectorAll('.ff-assembly-svg .svg-label,.ff-assembly-svg .svg-dark-label');
+    var track=root.querySelector('.ff-assembly-stage-column');
     var steps=root.querySelectorAll('.ff-assembly-steps li'),status=root.querySelector('#assembly-status'),finished=root.querySelector('#assembly-finished');
-    if(!steps.length||!status||!finished)return;
+    if(!track||!steps.length||!status||!finished)return;
     var reduced=window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     function render(progress){
       var p=clamp(progress),assemble=ease(clamp((p-.65)/.25));
@@ -32,10 +33,10 @@
     if(reduced){root.setAttribute('data-motion','reduced');render(1);return;}
     if(window.gsap&&window.ScrollTrigger){
       window.gsap.registerPlugin(window.ScrollTrigger);
-      window.ScrollTrigger.create({trigger:root,start:'top top',end:'bottom bottom',scrub:true,onUpdate:function(self){render(self.progress)},onRefresh:function(self){render(self.progress)}});
+      window.ScrollTrigger.create({trigger:track,start:'top top',end:'bottom bottom',scrub:true,onUpdate:function(self){render(self.progress)},onRefresh:function(self){render(self.progress)}});
       render(0);
     }else{
-      function update(){var rect=root.getBoundingClientRect(),span=Math.max(1,root.offsetHeight-window.innerHeight);render(clamp(-rect.top/span));}
+      function update(){var rect=track.getBoundingClientRect(),span=Math.max(1,track.offsetHeight-window.innerHeight);render(clamp(-rect.top/span));}
       window.addEventListener('scroll',update,{passive:true});window.addEventListener('resize',update);update();
     }
   }
