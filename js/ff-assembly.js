@@ -49,7 +49,10 @@
       var active=0;sequence.forEach(function(item,index){if(p>=item.start)active=index;});
       sequence.forEach(function(item,index){
         var reveal=index===0?1:(p>=.55?1:clamp((p-item.start)/.07)),part=parts[item.id];if(!part)return;
-        if(p<.55){if(index===active)reveal=Math.max(reveal,.72);else if(index===active-1)reveal=1-reveal;else reveal=0;}
+        if(p<.55){
+          if(active===0){reveal=index===0?1:0;}
+          else {var handoff=clamp((p-sequence[active].start)/.07);if(index===active)reveal=.55+.45*handoff;else if(index===active-1)reveal=.45*(1-handoff);else reveal=0;}
+        }
         var spin=(1-ease(reveal))*Math.min(Math.abs(item.rotation||0),item.id==='solar-panel'?40:item.id==='battery'?70:item.id==='recharge-module'?80:item.id==='led'?60:35)*(item.rotation<0?-1:1);
         var finalOffset=item.finalOffset||[0,0],tx=(1-assemble)*item.offset[0]+assemble*finalOffset[0],ty=(1-assemble)*item.offset[1]+assemble*finalOffset[1];
         part.style.opacity=String(reveal);part.style.transform='translate('+tx+'px,'+ty+'px) rotateZ('+spin+'deg)';
