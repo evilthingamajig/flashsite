@@ -14,3 +14,5 @@
 @media(max-width:767px) and (prefers-reduced-motion:no-preference){.ff-assembly-stage-column{min-height:240vh}}
 @media(prefers-reduced-motion:reduce){.ff-assembly-layout{display:grid;min-height:230vh}.ff-assembly-stage-column{min-height:230vh}.ff-assembly-stage{position:sticky;height:100svh;min-height:540px;margin:0;padding:0}}
 @media(max-width:767px) and (prefers-reduced-motion:reduce){.ff-assembly-layout{display:flex;min-height:0}.ff-assembly-stage-column{min-height:220vh}.ff-assembly-stage{height:72svh;min-height:430px;margin-bottom:7vh}}
+@media(min-width:700px){.ff-assembly-layout{display:grid;grid-template-columns:minmax(230px,.72fr) minmax(0,1.28fr);min-height:230vh}.ff-assembly-copy{position:sticky;top:0;align-self:start;min-height:100svh;display:flex;flex-direction:column;justify-content:center}.ff-assembly-stage-column{min-height:230vh}}
+@media(max-width:699px){.ff-assembly-layout{display:flex;flex-direction:column}.ff-assembly-copy{order:-1;position:sticky;top:0;z-index:5;background:var(--base-color--white,#fff);padding:18px 0}.ff-assembly-stage-column{order:0}}
