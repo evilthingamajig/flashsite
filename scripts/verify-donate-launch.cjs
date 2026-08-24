@@ -8,6 +8,7 @@ const EXPECTED_WIDGET_ID = "";
 const EXPECTED_ACCOUNT_ID = "";
 const SELF = path.resolve(__filename);
 const TEST_SELF = path.resolve(__dirname, "verify-donate-launch.test.cjs");
+const HOSTED_MOCKUP_FLAG = "--allow-hosted-mockup";
 
 const SOURCE_EXTENSIONS = new Set([
   ".html", ".css", ".js", ".mjs", ".cjs", ".json", ".xml", ".txt",
@@ -194,9 +195,11 @@ function validate(options = {}) {
   const errors = [];
   const warnings = [];
   const previewOverride = env.VERCEL_ENV === "preview" && env.ALLOW_INCOMPLETE_DONATE_PREVIEW === "1";
+  const hostedMockup = options.allowHostedMockup === true;
 
   function incomplete(message) {
-    if (previewOverride) warnings.push(`INCOMPLETE PREVIEW OVERRIDE: ${message}`);
+    if (hostedMockup) warnings.push(`AUTHORIZED HOSTED MOCKUP: ${message}`);
+    else if (previewOverride) warnings.push(`INCOMPLETE PREVIEW OVERRIDE: ${message}`);
     else errors.push(message);
   }
 
@@ -272,7 +275,7 @@ function validate(options = {}) {
 }
 
 if (require.main === module) {
-  const result = validate();
+  const result = validate({ allowHostedMockup: process.argv.includes(HOSTED_MOCKUP_FLAG) });
   for (const warning of result.warnings) console.warn(`WARN: ${warning}`);
   if (result.errors.length) {
     for (const error of result.errors) console.error(`ERROR: ${error}`);

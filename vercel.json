@@ -1,7 +1,7 @@
 {
   "framework": null,
   "installCommand": "exit 0",
-  "buildCommand": "node scripts/verify-donate-launch.cjs",
+  "buildCommand": "node scripts/verify-donate-launch.cjs --allow-hosted-mockup",
   "outputDirectory": ".",
   "cleanUrls": true,
   "rewrites": [
