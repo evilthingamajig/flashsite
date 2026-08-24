@@ -199,13 +199,24 @@ function validate(options = {}) {
   const body = stripIgnoredBlocks(bodyMarkup(html));
   const visible = visibleBodyText(html);
   const head = stripComments(html.match(/<head\b[^>]*>([\s\S]*?)<\/head\s*>/i)?.[1] || "");
+  const headScriptTags = [...head.matchAll(/<script(?=[\s/>])[^>]*>/gi)].map(match => match[0]);
+  const hostedGivebutterScripts = headScriptTags.some(tag => {
+    const rawSrc = (attrMap(tag).get("src") || "").replace(/&amp;/gi, "&");
+    if (!rawSrc) return false;
+    try {
+      const url = new URL(rawSrc, "https://flashforwardfoundation.org/");
+      return url.hostname === "widgets.givebutter.com" && url.username === "" && url.password === "";
+    } catch {
+      return false;
+    }
+  });
   const exactPendingMount = '<div class="donation-provider-mount" data-donation-provider="pending" role="region" aria-labelledby="sponsor-light-heading">';
   const exactNoindex = '<meta content="noindex,follow" name="robots"/>';
   const hostedMockup = hostedRequested && !expectedWidgetId && !expectedAccountId &&
     body.split(exactPendingMount).length === 2 &&
     html.split(exactNoindex).length === 2 &&
     (body.match(/<givebutter-widget(?=[\s/>])/gi) || []).length === 0 &&
-    !/<script\b[^>]*src=["'][^"']*widgets\.givebutter\.com\/latest\.umd\.cjs/i.test(head) &&
+    !hostedGivebutterScripts &&
     visible.split("Online sponsorship checkout is not active yet.").length === 2;
 
   function incomplete(message) {
@@ -241,8 +252,7 @@ function validate(options = {}) {
   if (!expectedAccountId) incomplete("EXPECTED_ACCOUNT_ID is blank/TODO");
   parseWidget(body, expectedWidgetId, incomplete, message => errors.push(message));
 
-  const scripts = [...head.matchAll(/<script(?=[\s/>])[^>]*>/gi)].map(match => {
-    const tag = match[0];
+  const scripts = headScriptTags.map(tag => {
     const attrs = attrMap(tag);
     const duplicates = duplicateAttributes(tag);
     if (duplicates.length) errors.push(`script tag has duplicate attributes: ${duplicates.join(", ")}`);
