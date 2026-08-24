@@ -18,3 +18,4 @@
 @media(min-width:700px){.ff-assembly-layout{display:grid;grid-template-columns:minmax(0,.58fr) minmax(0,1.42fr);min-height:230vh}.ff-assembly-copy{position:sticky;top:0;align-self:start;min-height:100svh;display:flex;flex-direction:column;justify-content:center}.ff-assembly-stage-column{min-height:230vh}}
 @media(max-width:699px){.ff-assembly-layout{display:flex;flex-direction:column}.ff-assembly-copy{order:-1;position:sticky;top:0;z-index:5;background:var(--base-color--white,#fff);padding:18px 0}.ff-assembly-stage-column{order:0}}
 @media(min-width:700px){.ff-assembly-layout{grid-template-columns:minmax(0,.62fr) minmax(430px,1fr)!important;grid-template-areas:"copy stage";align-items:start}.ff-assembly-copy{grid-area:copy;order:0!important}.ff-assembly-stage-column{grid-area:stage;order:0!important;min-height:230vh;width:100%}}
+.ff-assembly-finished-photo{width:min(82%,430px);height:auto;aspect-ratio:1;object-fit:contain;object-position:center}
