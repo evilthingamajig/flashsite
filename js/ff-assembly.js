@@ -21,8 +21,8 @@
     var batteryLabel=root.querySelector('[data-step="battery"] strong');if(batteryLabel)batteryLabel.textContent='Rechargeable battery';
     var desc=root.querySelector('#assembly-svg-desc');if(desc)desc.textContent='A 3D-printed case, rechargeable battery, recharge module, wires, LED, and 5V solar panel appear separately, then assemble into one finished light.';
     var svgLabels=root.querySelectorAll('.ff-assembly-svg .svg-label,.ff-assembly-svg .svg-dark-label');
-    var svg=root.querySelector('.ff-assembly-svg'),mobileZoom=(window.matchMedia&&window.matchMedia('(max-width: 767px)').matches) ? .35 : .12;
-    var track=root.querySelector('.ff-assembly-stage-column');
+    var svg=root.querySelector('.ff-assembly-svg'),isMobile=window.matchMedia&&window.matchMedia('(max-width: 767px)').matches,mobileZoom=isMobile ? .35 : .12;
+    var track=isMobile?root.querySelector('.ff-assembly-stage-column'):root.querySelector('.ff-assembly-layout');
     var steps=root.querySelectorAll('.ff-assembly-steps li'),status=root.querySelector('#assembly-status'),finished=root.querySelector('#assembly-finished');
     var note=root.querySelector('.ff-assembly-note');if(note)note.textContent='Representative component imagery; parts may vary by build.';
     var photosLoaded=false;
