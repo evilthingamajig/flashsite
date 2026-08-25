@@ -1,5 +1,5 @@
 {
-  "when": "checkpoint-pass6e",
+  "when": "checkpoint-pass6f",
   "results": [
     {
       "name": "reassembly overlap <=20%",
@@ -550,6 +550,11 @@
       "detail": "alpha=0.485"
     },
     {
+      "name": "[desktop-1440x900] tableau copy hidden after two RAF",
+      "ok": true,
+      "detail": "visibility={\"solar\":\"hidden\",\"battery\":\"hidden\",\"module\":\"hidden\",\"leds\":\"hidden\",\"switch\":\"hidden\",\"enclosure\":\"hidden\"} opacity={\"solar\":0,\"battery\":0,\"module\":0,\"leds\":0,\"switch\":0,\"enclosure\":0}"
+    },
+    {
       "name": "[desktop-1440x900] exploded tableau exposes interior tray",
       "ok": true
     },
@@ -566,12 +571,12 @@
     {
       "name": "[desktop-1440x900] exploded tableau meets viewport scale",
       "ok": true,
-      "detail": "588x567"
+      "detail": "605x559"
     },
     {
-      "name": "[desktop-1440x900] tableau enclosure anchor remains substantive",
+      "name": "[desktop-1440x900] tableau enclosure anchor fills 32-40vw",
       "ok": true,
-      "detail": "353px"
+      "detail": "461px"
     },
     {
       "name": "[desktop-1440x900] reassembly exposes interior tray",
@@ -588,7 +593,7 @@
       "detail": "721x670"
     },
     {
-      "name": "[desktop-1440x900] reassembly enclosure anchor remains substantive",
+      "name": "[desktop-1440x900] reassembly enclosure anchor fills 32-40vw",
       "ok": true,
       "detail": "508px"
     },
@@ -600,7 +605,7 @@
     {
       "name": "[desktop-1440x900] solo-to-tableau camera distance is continuous",
       "ok": true,
-      "detail": "1.01x"
+      "detail": "1.07x"
     },
     {
       "name": "[desktop-1440x900] solo-to-tableau camera center is continuous",
@@ -610,7 +615,7 @@
     {
       "name": "[desktop-1440x900] solo-to-tableau projected scale is continuous",
       "ok": true,
-      "detail": "1.02x"
+      "detail": "1.04x"
     },
     {
       "name": "[desktop-1440x900] final camera fit angle is continuous",
@@ -651,6 +656,11 @@
       "name": "[desktop-1440x900] final phase timing is viewport-calibrated",
       "ok": true,
       "detail": "56.0vh hold/84.0vh push"
+    },
+    {
+      "name": "[desktop-1440x900] insertion cadence is viewport-calibrated",
+      "ok": true,
+      "detail": "98.0vh/part"
     },
     {
       "name": "[desktop-1440x900] enclosure closure rotation is continuous",
@@ -1251,6 +1261,11 @@
       "detail": "alpha=0.482"
     },
     {
+      "name": "[mobile-390x844] tableau copy hidden after two RAF",
+      "ok": true,
+      "detail": "visibility={\"solar\":\"hidden\",\"battery\":\"hidden\",\"module\":\"hidden\",\"leds\":\"hidden\",\"switch\":\"hidden\",\"enclosure\":\"hidden\"} opacity={\"solar\":0,\"battery\":0,\"module\":0,\"leds\":0,\"switch\":0,\"enclosure\":0}"
+    },
+    {
       "name": "[mobile-390x844] exploded tableau exposes interior tray",
       "ok": true
     },
@@ -1267,7 +1282,7 @@
     {
       "name": "[mobile-390x844] exploded tableau meets viewport scale",
       "ok": true,
-      "detail": "277x439"
+      "detail": "304x439"
     },
     {
       "name": "[mobile-390x844] reassembly exposes interior tray",
@@ -1291,7 +1306,7 @@
     {
       "name": "[mobile-390x844] solo-to-tableau camera distance is continuous",
       "ok": true,
-      "detail": "1.06x"
+      "detail": "1.10x"
     },
     {
       "name": "[mobile-390x844] solo-to-tableau camera center is continuous",
@@ -1301,7 +1316,7 @@
     {
       "name": "[mobile-390x844] solo-to-tableau projected scale is continuous",
       "ok": true,
-      "detail": "1.08x"
+      "detail": "1.05x"
     },
     {
       "name": "[mobile-390x844] final camera fit angle is continuous",
@@ -1342,6 +1357,11 @@
       "name": "[mobile-390x844] final phase timing is viewport-calibrated",
       "ok": true,
       "detail": "52.0vh hold/78.0vh push"
+    },
+    {
+      "name": "[mobile-390x844] insertion cadence is viewport-calibrated",
+      "ok": true,
+      "detail": "91.0vh/part"
     },
     {
       "name": "[mobile-390x844] enclosure closure rotation is continuous",
@@ -1489,6 +1509,6 @@
       "detail": ""
     }
   ],
-  "passed": 302,
+  "passed": 306,
   "failed": 0
 }
