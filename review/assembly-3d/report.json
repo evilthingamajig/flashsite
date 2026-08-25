@@ -1,5 +1,5 @@
 {
-  "when": "checkpoint-pass10b",
+  "when": "checkpoint-pass10c",
   "results": [
     {
       "name": "reassembly overlap <=20%",
@@ -7,9 +7,9 @@
       "detail": "0.0% overlap"
     },
     {
-      "name": "pass10b checkpoint/cache token",
+      "name": "pass10c checkpoint/cache token",
       "ok": true,
-      "detail": "pass10b/pass10b"
+      "detail": "pass10c/pass10c"
     },
     {
       "name": "glb exists",
@@ -101,6 +101,21 @@
       "name": "pass10b LED geometry continuity gate",
       "ok": true,
       "detail": "{\"source\":\"KiCad LED_D5.0mm_Clear\",\"lensExtensionMm\":3.4,\"pairSpacingMm\":16,\"clearMaterial\":\"ClearLed\",\"internalMaterial\":\"LedDie/LedAnvil\",\"domeFrontLocalMm\":-3.4,\"leadInnerLocalMm\":0,\"flangeOverlapMm\":0.05,\"exteriorClearComponents\":2,\"clearBoundsMm\":[{\"lo\":[-10.003462451696397,-3.4,-0.24000000357627868],\"hi\":[-6.475462436676025,0,0.24000000357627868]},{\"lo\":[5.996537548303604,-3.4,-0.24000000357627868],\"hi\":[9.524537563323975,0,0.24000000357627868]}],\"leadBoundsMm\":[{\"lo\":[-11.2394624710083,0,-3.4799612045288084],\"hi\":[-4.7605375289917,10.32000045776367,3.4799612045288084]},{\"lo\":[4.7605375289917,0,-3.4799612045288084],\"hi\":[11.2394624710083,10.32000045776367,3.4799612045288084]}]}"
+    },
+    {
+      "name": "pass10c LED front-plane fit",
+      "ok": true,
+      "detail": "{\"enclosureOuterFrontY\":-42.25,\"seatY\":-42.25,\"flangeWorldY\":-42.25,\"domeFrontWorldY\":-45.65,\"domeProtrusionMm\":3.4,\"flangePlaneDeltaMm\":0,\"leadStartWorldY\":-42.25,\"leadWorldYMax\":-31.93,\"pairCentersMm\":[-8,8],\"exteriorClearComponents\":2,\"pixelGate\":{\"desktop\":{\"minWidth\":22,\"minHeight\":18,\"centerSeparation\":35},\"mobile\":{\"minWidth\":14,\"minHeight\":11}}}"
+    },
+    {
+      "name": "pass10c LED leads remain inward",
+      "ok": true,
+      "detail": "{\"start\":-42.25,\"max\":-31.93}"
+    },
+    {
+      "name": "pass10c LED projected pixel gate",
+      "ok": true,
+      "detail": "{\"desktop\":{\"minWidth\":22,\"minHeight\":18,\"centerSeparation\":35},\"mobile\":{\"minWidth\":14,\"minHeight\":11}}"
     },
     {
       "name": "pass10b 503040 battery spec/proportions",
@@ -395,22 +410,22 @@
     {
       "name": "[desktop-1440x900] explosion closed hold is rendered",
       "ok": true,
-      "detail": "493x596"
+      "detail": "485x597"
     },
     {
       "name": "[desktop-1440x900] explosion lid lift is rendered",
       "ok": true,
-      "detail": "530x553"
+      "detail": "530x559"
     },
     {
       "name": "[desktop-1440x900] explosion internal separation is rendered",
       "ok": true,
-      "detail": "526x528"
+      "detail": "526x533"
     },
     {
       "name": "[desktop-1440x900] explosion exploded hold is rendered",
       "ok": true,
-      "detail": "528x531"
+      "detail": "528x535"
     },
     {
       "name": "[desktop-1440x900] explosion lid lifts before internals",
@@ -599,7 +614,7 @@
     {
       "name": "[desktop-1440x900] final composition meets viewport scale",
       "ok": true,
-      "detail": "547x586"
+      "detail": "548x596"
     },
     {
       "name": "[desktop-1440x900] exploded tableau has no active copy",
@@ -633,12 +648,12 @@
     {
       "name": "[desktop-1440x900] exploded tableau meets viewport scale",
       "ok": true,
-      "detail": "584x564"
+      "detail": "581x565"
     },
     {
       "name": "[desktop-1440x900] tableau enclosure anchor fills 32-40vw",
       "ok": true,
-      "detail": "480px"
+      "detail": "477px"
     },
     {
       "name": "[desktop-1440x900] reassembly exposes interior tray",
@@ -677,7 +692,7 @@
     {
       "name": "[desktop-1440x900] solo-to-tableau projected scale is continuous",
       "ok": true,
-      "detail": "1.04x"
+      "detail": "1.03x"
     },
     {
       "name": "[desktop-1440x900] final camera fit angle is continuous",
@@ -1046,22 +1061,22 @@
     {
       "name": "[mobile-390x844] explosion closed hold is rendered",
       "ok": true,
-      "detail": "280x352"
+      "detail": "275x352"
     },
     {
       "name": "[mobile-390x844] explosion lid lift is rendered",
       "ok": true,
-      "detail": "287x306"
+      "detail": "287x310"
     },
     {
       "name": "[mobile-390x844] explosion internal separation is rendered",
       "ok": true,
-      "detail": "287x292"
+      "detail": "287x295"
     },
     {
       "name": "[mobile-390x844] explosion exploded hold is rendered",
       "ok": true,
-      "detail": "287x292"
+      "detail": "287x294"
     },
     {
       "name": "[mobile-390x844] explosion lid lifts before internals",
@@ -1255,7 +1270,7 @@
     {
       "name": "[mobile-390x844] final composition meets mobile viewport scale",
       "ok": true,
-      "detail": "297x329"
+      "detail": "298x334"
     },
     {
       "name": "[mobile-390x844] exploded tableau has no active copy",
@@ -1284,7 +1299,7 @@
     {
       "name": "[mobile-390x844] tableau stays within central assembly radius",
       "ok": true,
-      "detail": "0.111m"
+      "detail": "0.112m"
     },
     {
       "name": "[mobile-390x844] exploded tableau meets viewport scale",
@@ -1516,6 +1531,6 @@
       "detail": ""
     }
   ],
-  "passed": 309,
+  "passed": 312,
   "failed": 0
 }

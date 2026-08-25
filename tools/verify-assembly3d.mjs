@@ -31,7 +31,7 @@ function staticChecks() {
   check('reassembly overlap <=20%', overlap <= RE_W * 0.20, `${(overlap / RE_W * 100).toFixed(1)}% overlap`);
   const glbPath = join(ROOT, 'assets', '3d', 'flashlight-assembly.glb');
   const manifest = JSON.parse(readFileSync(join(ROOT, 'assets', '3d', 'assembly-manifest.json'), 'utf8'));
-  check('pass10b checkpoint/cache token', manifest.checkpoint === 'pass10b' && manifest.cacheToken === 'pass10b', `${manifest.checkpoint}/${manifest.cacheToken}`);
+  check('pass10c checkpoint/cache token', manifest.checkpoint === 'pass10c' && manifest.cacheToken === 'pass10c', `${manifest.checkpoint}/${manifest.cacheToken}`);
   check('glb exists', existsSync(glbPath));
   const bytes = statSync(glbPath).size;
   check('glb <= 2 MB', bytes <= 2 * 1024 * 1024, bytes + ' bytes');
@@ -88,6 +88,10 @@ function staticChecks() {
   check('pass10 authored SS12D00 switch gate', switchVisible.family === 'SS12D00-style authored' && switchVisible.pins === 3 && switchVisible.ladderOverlay === false && switchVisible.sourceRendered === false && switchVisible.boundsMm?.length <= 9.8 && switchVisible.fitScale?.[0] === 1.04, JSON.stringify(switchVisible));
   const ledOptics = manifest.parts.ledOptics || {};
   check('pass10b LED geometry continuity gate', ledOptics.lensExtensionMm >= 3 && ledOptics.lensExtensionMm <= 4 && ledOptics.clearMaterial === 'ClearLed' && ledOptics.domeFrontLocalMm <= -3 && ledOptics.leadInnerLocalMm >= 0 && ledOptics.flangeOverlapMm > 0 && ledOptics.exteriorClearComponents === 2, JSON.stringify(ledOptics));
+  const ledWorldFit = manifest.parts.ledWorldFit || {};
+  check('pass10c LED front-plane fit', ledWorldFit.seatY === -42.25 && ledWorldFit.flangePlaneDeltaMm <= 0.25 && ledWorldFit.domeProtrusionMm >= 3.4 && ledWorldFit.domeProtrusionMm <= 4.25 && ledWorldFit.exteriorClearComponents === 2 && ledWorldFit.pairCentersMm?.[0] === -8 && ledWorldFit.pairCentersMm?.[1] === 8, JSON.stringify(ledWorldFit));
+  check('pass10c LED leads remain inward', ledWorldFit.leadStartWorldY >= ledWorldFit.enclosureOuterFrontY && ledWorldFit.leadWorldYMax > ledWorldFit.leadStartWorldY, JSON.stringify({ start: ledWorldFit.leadStartWorldY, max: ledWorldFit.leadWorldYMax }));
+  check('pass10c LED projected pixel gate', ledWorldFit.pixelGate?.desktop?.minWidth >= 22 && ledWorldFit.pixelGate.desktop.minHeight >= 18 && ledWorldFit.pixelGate.desktop.centerSeparation >= 35 && ledWorldFit.pixelGate.mobile.minWidth >= 14 && ledWorldFit.pixelGate.mobile.minHeight >= 11, JSON.stringify(ledWorldFit.pixelGate));
   const batterySpec = manifest.parts.batterySpec || {};
   check('pass10b 503040 battery spec/proportions', JSON.stringify(batterySpec.nominalMm) === JSON.stringify([5, 30, 40]) && JSON.stringify(batterySpec.finalEnvelopeMm) === JSON.stringify([5, 26, 40]) && Math.abs(batterySpec.fitScale?.[1] - (26 / 30)) < 1e-6, JSON.stringify(batterySpec));
   const solarSpec = manifest.parts.solarSpec || {};
@@ -594,7 +598,7 @@ staticChecks();
 await browserPass();
 
 writeFileSync(join(OUT, 'report.json'), JSON.stringify({
-  when: 'checkpoint-pass10b',
+  when: 'checkpoint-pass10c',
   results,
   passed: results.filter((r) => r.ok).length,
   failed: results.filter((r) => !r.ok).length,

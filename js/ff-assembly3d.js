@@ -1,7 +1,7 @@
 import * as THREE from 'three';
 import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
 
-const CACHE_TOKEN = 'pass10b';
+const CACHE_TOKEN = 'pass10c';
 const GLB_URL = `assets/3d/flashlight-assembly.glb?rev=${CACHE_TOKEN}`;
 const MM = 0.001;
 const DPR_CAP = 1.75;
