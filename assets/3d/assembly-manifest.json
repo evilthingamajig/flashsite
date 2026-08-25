@@ -1,0 +1,246 @@
+{
+  "generator": "flashsite build-assembly-glb 1.0.0",
+  "sources": {
+    "enclosure": {
+      "file": "source-assets/stl/enclosure.stl",
+      "sha256": "7b5a478c8db8f40998c2ccd46595b760ef7ef3c9c845e52032a44e2046fa9849"
+    },
+    "switch": {
+      "file": "source-assets/stl/switch.stl",
+      "sha256": "a95ce9b836c5d39e68c84119dea6642ef09986266935cb6007acfc6cbb802932"
+    }
+  },
+  "parts": {
+    "enclosure": {
+      "stlTriangles": 1561,
+      "degenerateDropped": 0,
+      "duplicateFacesDropped": 0,
+      "verticesWelded": 3901,
+      "trianglesKept": 1561
+    },
+    "switch": {
+      "stlTriangles": 56,
+      "degenerateDropped": 0,
+      "duplicateFacesDropped": 0,
+      "verticesWelded": 138,
+      "trianglesKept": 56
+    },
+    "summary": {
+      "enclosure": {
+        "triangles": 1561,
+        "seatMm": [
+          0,
+          0,
+          0
+        ],
+        "localBoundsMm": {
+          "lo": [
+            -42,
+            -42,
+            -5.75
+          ],
+          "hi": [
+            42,
+            42,
+            7.75
+          ]
+        },
+        "worldBoundsMm": {
+          "lo": [
+            -42,
+            -42,
+            -5.75
+          ],
+          "hi": [
+            42,
+            42,
+            7.75
+          ]
+        }
+      },
+      "switch": {
+        "triangles": 56,
+        "seatMm": [
+          0,
+          0,
+          0
+        ],
+        "localBoundsMm": {
+          "lo": [
+            -29.961,
+            37.199,
+            -4.658
+          ],
+          "hi": [
+            18.854,
+            45.17,
+            5.771
+          ]
+        },
+        "worldBoundsMm": {
+          "lo": [
+            -29.961,
+            37.199,
+            -4.658
+          ],
+          "hi": [
+            18.854,
+            45.17,
+            5.771
+          ]
+        }
+      },
+      "solar_lid": {
+        "triangles": 12,
+        "seatMm": [
+          0,
+          0,
+          9
+        ],
+        "localBoundsMm": {
+          "lo": [
+            -40,
+            -40,
+            -1.25
+          ],
+          "hi": [
+            40,
+            40,
+            1.25
+          ]
+        },
+        "worldBoundsMm": {
+          "lo": [
+            -40,
+            -40,
+            7.75
+          ],
+          "hi": [
+            40,
+            40,
+            10.25
+          ]
+        }
+      },
+      "battery": {
+        "triangles": 12,
+        "seatMm": [
+          0,
+          -20,
+          -1.75
+        ],
+        "localBoundsMm": {
+          "lo": [
+            -21,
+            -15,
+            -2.5
+          ],
+          "hi": [
+            21,
+            15,
+            2.5
+          ]
+        },
+        "worldBoundsMm": {
+          "lo": [
+            -21,
+            -35,
+            -4.25
+          ],
+          "hi": [
+            21,
+            -5,
+            0.75
+          ]
+        }
+      },
+      "charge_module": {
+        "triangles": 12,
+        "seatMm": [
+          0,
+          8,
+          -1.45
+        ],
+        "localBoundsMm": {
+          "lo": [
+            -13.15,
+            -8.55,
+            -2.8
+          ],
+          "hi": [
+            13.15,
+            8.55,
+            2.8
+          ]
+        },
+        "worldBoundsMm": {
+          "lo": [
+            -13.15,
+            -0.55,
+            -4.25
+          ],
+          "hi": [
+            13.15,
+            16.55,
+            1.35
+          ]
+        }
+      },
+      "led_pair": {
+        "triangles": 96,
+        "seatMm": [
+          0,
+          -40.5,
+          1
+        ],
+        "localBoundsMm": {
+          "lo": [
+            -9.5,
+            -1.5,
+            -3
+          ],
+          "hi": [
+            9.5,
+            1.5,
+            3
+          ]
+        },
+        "worldBoundsMm": {
+          "lo": [
+            -9.5,
+            -42,
+            -2
+          ],
+          "hi": [
+            9.5,
+            -39,
+            4
+          ]
+        }
+      }
+    }
+  },
+  "seating": {
+    "skinToleranceMm": 0.02,
+    "boundingBoxIntersections": [
+      [
+        "enclosure",
+        "switch"
+      ],
+      [
+        "enclosure",
+        "led_pair"
+      ]
+    ],
+    "note": "Pairs listed are designed contacts only: led_pair pierces the solid -Y wall by intent (no LED holes); everything else verified penetration-free."
+  },
+  "totals": {
+    "triangles": 1749,
+    "bytes": 140532,
+    "parts": 6
+  },
+  "limits": {
+    "maxTriangles": 5000,
+    "maxBytes": 256000
+  }
+}
