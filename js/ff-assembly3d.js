@@ -133,9 +133,13 @@ function init(section) {
     const props = {
       enclosure: { color: 0x202a25, roughness: 0.72, metalness: 0.02 },
       solar_lid: { color: 0x0b2332, roughness: 0.42, metalness: 0.28 },
-      battery: { color: 0xaeb9b4, roughness: 0.46, metalness: 0.08 },
-      charge_module: { color: 0x126047, roughness: 0.55, metalness: 0.1 },
-      led_pair: { color: 0xbbe6ed, roughness: 0.12, metalness: 0, transparent: true, opacity: 0.46 },
+      // The three procedural parts below are rendered from their authored
+      // runtime detail meshes. Keep the manifest geometry in the hierarchy
+      // for seated bounds checks, but do not let its block proxy compete with
+      // the product-readable pouch/PCB/LED construction.
+      battery: { color: 0xaeb9b4, roughness: 0.46, metalness: 0.08, transparent: true, opacity: 0 },
+      charge_module: { color: 0x126047, roughness: 0.55, metalness: 0.1, transparent: true, opacity: 0 },
+      led_pair: { color: 0xbbe6ed, roughness: 0.12, metalness: 0, transparent: true, opacity: 0 },
       switch: { color: 0x202824, roughness: 0.58, metalness: 0.03 },
     }[id];
     const material = new THREE.MeshStandardMaterial({ ...props, envMapIntensity: 0.35 });
@@ -157,6 +161,15 @@ function init(section) {
       material.depthWrite = false;
       return material;
     };
+    const solid = (color, roughness = 0.52, metalness = 0.05) => {
+      const material = new THREE.MeshStandardMaterial({ color, roughness, metalness, envMapIntensity: 0.35 });
+      material.userData.baseOpacity = 1;
+      material.userData.baseTransparent = false;
+      material.userData.baseDepthWrite = true;
+      material.transparent = false;
+      material.depthWrite = true;
+      return material;
+    };
     const detail = (geo, material, position) => {
       const m = new THREE.Mesh(geo, material);
       // Authoring dimensions below are millimetres; the GLB scene is metres.
@@ -174,72 +187,107 @@ function init(section) {
       detail(new THREE.BoxGeometry(81.5, 1.2, 0.32), matte(0x0a1111, 0.62, 0.04), [0, -40, 0.05]);
       detail(new THREE.BoxGeometry(81.5, 1.2, 0.32), matte(0x0a1111, 0.62, 0.04), [0, 40, 0.05]);
     } else if (id === 'battery') {
-      const pouch = matte(0xc8d0cb, 0.48, 0.04);
+      // A 600mAh LiPo is a thin foil pouch, not a framed rectangular slab.
+      // Keep the broad face softly rounded and make the z-depth visibly
+      // shallow; the foil seams and crimped amber tab provide scale cues.
+      const pouch = solid(0xc1cbc6, 0.42, 0.12);
       const roundedPouch = () => {
-        const s = new THREE.Shape(); const w = 20.5, h = 14.3, r = 3.2;
+        const s = new THREE.Shape(); const w = 20.5, h = 14.3, r = 3.0;
         s.moveTo(-w + r, -h); s.lineTo(w - r, -h); s.quadraticCurveTo(w, -h, w, -h + r);
         s.lineTo(w, h - r); s.quadraticCurveTo(w, h, w - r, h); s.lineTo(-w + r, h);
         s.quadraticCurveTo(-w, h, -w, h - r); s.lineTo(-w, -h + r); s.quadraticCurveTo(-w, -h, -w + r, -h);
-        const g = new THREE.ExtrudeGeometry(s, { depth: 0.22, bevelEnabled: true, bevelSegments: 3, bevelSize: 0.8, bevelThickness: 0.06 });
-        g.translate(0, 0, -0.17); return g;
+        const g = new THREE.ExtrudeGeometry(s, { depth: 2.15, bevelEnabled: true, bevelSegments: 4, bevelSize: 0.65, bevelThickness: 0.08 });
+        g.translate(0, 0, -1.075); return g;
       };
-      detail(roundedPouch(), pouch, [0, 0, 2.58]);
-      detail(roundedPouch(), pouch, [0, 0, -2.58]);
-      const amber = matte(0xd58b2b, 0.42, 0.16);
-      detail(new THREE.BoxGeometry(34, 2.2, 5.2), amber, [0, 14.4, 2.82]);
-      detail(new THREE.BoxGeometry(4.4, 0.9, 5.25), matte(0xe0a13a, 0.32, 0.2), [-13, 15.2, 2.84]);
-      detail(new THREE.BoxGeometry(4.4, 0.9, 5.25), matte(0xe0a13a, 0.32, 0.2), [13, 15.2, 2.84]);
-      const blackLead = matte(0x161c19, 0.48, 0.02);
-      const redLead = matte(0x8f1717, 0.5, 0.02);
-      detail(new THREE.CylinderGeometry(0.55, 0.55, 6, 12), blackLead, [-10, 18.0, 2.8]);
-      detail(new THREE.CylinderGeometry(0.52, 0.52, 6, 12), redLead, [10, 18.0, 2.8]);
-    } else if (id === 'charge_module') {
-      const chip = matte(0x111715, 0.3, 0.22);
-      for (const z of [-3.35, 3.35]) {
-        detail(new THREE.BoxGeometry(5.2, 4.2, 1.1), chip, [-5, -1, z]);
-        detail(new THREE.BoxGeometry(4.1, 3.1, 1.1), chip, [4.5, 3.2, z]);
+      detail(roundedPouch(), pouch, [0, 0, 0]);
+      const foil = solid(0xd6ddda, 0.3, 0.22);
+      for (const z of [-1.12, 1.12]) {
+        const faceZ = z + Math.sign(z) * 0.045;
+        detail(new THREE.BoxGeometry(34, 0.16, 0.05), foil, [0, -9.8, faceZ]);
+        detail(new THREE.BoxGeometry(30, 0.13, 0.05), foil, [0, 8.6, faceZ]);
+        detail(new THREE.BoxGeometry(0.13, 22, 0.05), solid(0xb6c2bc, 0.38, 0.16), [-16.8, 0, faceZ]);
+        detail(new THREE.BoxGeometry(0.13, 22, 0.05), solid(0xb6c2bc, 0.38, 0.16), [16.8, 0, faceZ]);
+        detail(new THREE.BoxGeometry(0.08, 17, 0.035), solid(0xaebbb4, 0.46, 0.1), [-4.5, -0.5, faceZ]);
       }
-      const pad = matte(0xd19d48, 0.28, 0.58);
-      for (const z of [-3.0, 3.0]) for (let i = -4; i <= 4; i += 2) detail(new THREE.BoxGeometry(0.8, 1.5, 0.18), pad, [i, -6.2, z]);
-      detail(new THREE.BoxGeometry(5.6, 4.2, 2.2), matte(0xaab4ad, 0.28, 0.66), [0, 9.2, 0]);
-      detail(new THREE.BoxGeometry(3.5, 2.1, 2.35), matte(0x101613, 0.38, 0.15), [0, 9.9, 0]);
-      const trace = matte(0x2c9a6c, 0.4, 0.12);
-      for (const x of [-8, 0, 8]) detail(new THREE.BoxGeometry(0.7, 11, 0.12), trace, [x, 0.4, -2.87]);
-      for (const y of [-2, 3, 8]) detail(new THREE.BoxGeometry(15, 0.55, 0.12), trace, [0, y, 2.87]);
+      const amber = solid(0xd78c2d, 0.4, 0.22);
+      detail(new THREE.BoxGeometry(31, 1.7, 2.35), amber, [0, 14.85, 0.35]);
+      detail(new THREE.BoxGeometry(5.2, 1.0, 2.5), solid(0xf0ad42, 0.32, 0.28), [-10, 15.7, 0.44]);
+      detail(new THREE.BoxGeometry(5.2, 1.0, 2.5), solid(0xf0ad42, 0.32, 0.28), [10, 15.7, 0.44]);
+      const blackLead = solid(0x171d1a, 0.46, 0.02);
+      const redLead = solid(0x9c2524, 0.46, 0.02);
+      detail(new THREE.CylinderGeometry(0.48, 0.48, 5.0, 12), blackLead, [-10, 18.0, 0.45]);
+      detail(new THREE.CylinderGeometry(0.46, 0.46, 5.0, 12), redLead, [10, 18.0, 0.45]);
+      detail(new THREE.CylinderGeometry(0.68, 0.68, 0.7, 12), blackLead, [-10, 16.55, 0.45]);
+      detail(new THREE.CylinderGeometry(0.66, 0.66, 0.7, 12), redLead, [10, 16.55, 0.45]);
+    } else if (id === 'charge_module') {
+      // TP4056-style board: a slim green PCB with low SMD relief and a
+      // proportionate metal USB charging port on the +Y edge.
+      const pcb = solid(0x14634a, 0.62, 0.04);
+      detail(new THREE.BoxGeometry(26.0, 17.0, 0.38), pcb, [0, 0, 0]);
+      const edge = solid(0x23815d, 0.52, 0.05);
+      for (const z of [-0.25, 0.25]) {
+        detail(new THREE.BoxGeometry(24.8, 0.18, 0.08), edge, [0, -8.25, z]);
+        detail(new THREE.BoxGeometry(24.8, 0.18, 0.08), edge, [0, 8.25, z]);
+        detail(new THREE.BoxGeometry(0.18, 16.4, 0.08), edge, [-12.6, 0, z]);
+        detail(new THREE.BoxGeometry(0.18, 16.4, 0.08), edge, [12.6, 0, z]);
+      }
+      const chip = solid(0x111916, 0.32, 0.18);
+      const chipSmall = solid(0x1d2521, 0.34, 0.1);
+      const pad = solid(0xd19d48, 0.3, 0.62);
+      const trace = solid(0x39a46f, 0.46, 0.08);
+      // The module is spun through the inspection turn, so populate both PCB
+      // faces. Only the camera-facing face contributes visually at a time;
+      // this keeps the board readable without changing the chapter yaw.
+      for (const z of [-0.22, 0.22]) {
+        const outward = z;
+        const sign = Math.sign(outward);
+        detail(new THREE.BoxGeometry(5.0, 4.0, 1.05), chip, [-5.8, -1.8, outward + sign * 0.34]);
+        detail(new THREE.BoxGeometry(4.1, 3.1, 1.0), chip, [4.5, 3.6, outward + sign * 0.33]);
+        detail(new THREE.BoxGeometry(2.1, 1.8, 0.88), chipSmall, [4.4, -3.7, outward + sign * 0.30]);
+        for (let i = -4; i <= 4; i += 2) detail(new THREE.BoxGeometry(0.85, 1.5, 0.12), pad, [i, -6.25, outward + sign * 0.11]);
+        for (let i = -4; i <= 4; i += 2) detail(new THREE.BoxGeometry(0.85, 1.5, 0.12), pad, [i, 6.15, outward + sign * 0.11]);
+        for (const x of [-8, 0, 8]) detail(new THREE.BoxGeometry(0.55, 10.4, 0.08), trace, [x, 0.0, outward + sign * 0.07]);
+        for (const y of [-2.0, 2.7, 7.0]) detail(new THREE.BoxGeometry(14.0, 0.42, 0.08), trace, [0, y, outward + sign * 0.07]);
+      }
+      const portShell = solid(0xb4bcb6, 0.27, 0.72);
+      detail(new THREE.BoxGeometry(8.2, 3.0, 1.3), portShell, [0, 9.15, 0]);
+      detail(new THREE.BoxGeometry(4.8, 0.18, 0.85), solid(0x101613, 0.42, 0.1), [0, 10.7, 0]);
+      detail(new THREE.BoxGeometry(4.8, 1.35, 0.12), solid(0x101613, 0.42, 0.1), [0, 9.2, 0.70]);
+      detail(new THREE.BoxGeometry(4.8, 1.35, 0.12), solid(0x101613, 0.42, 0.1), [0, 9.2, -0.70]);
     } else if (id === 'led_pair') {
-      const shell = new THREE.MeshPhysicalMaterial({ color: 0xdff8fb, emissive: 0xb9ffff, emissiveIntensity: 1.8, roughness: 0.08, transparent: true, opacity: 0.72, transmission: 0.16, thickness: 0.35 });
-      const core = new THREE.MeshStandardMaterial({ color: 0xffffff, emissive: 0xffffff, emissiveIntensity: 4.2, roughness: 0.12 });
-      // A solid, emissive lens makes the rounded LED end legible even when
-      // the translucent barrel is viewed nearly end-on in the solo chapter.
-      const domeMat = new THREE.MeshStandardMaterial({ color: 0x9deaf0, emissive: 0x55dce7, emissiveIntensity: 2.8, roughness: 0.16, metalness: 0.02 });
+      const shell = new THREE.MeshPhysicalMaterial({ color: 0xdff8fb, emissive: 0x8aeef2, emissiveIntensity: 1.2, roughness: 0.12, transparent: true, opacity: 0.60, transmission: 0.2, thickness: 0.3 });
+      // One hemispherical emitting dome, one short cylindrical body, and two
+      // rear leads per through-hole LED. No second lens or centre pin.
+      const domeMat = new THREE.MeshStandardMaterial({ color: 0x9deaf0, emissive: 0x55dce7, emissiveIntensity: 2.5, roughness: 0.16, metalness: 0.02 });
       domeMat.userData.baseOpacity = 1;
       domeMat.userData.baseTransparent = false;
       domeMat.userData.baseDepthWrite = true;
-      const leadMat = matte(0x8f9893, 0.34, 0.45);
-      shell.userData.baseOpacity = 0.72;
+      shell.userData.baseOpacity = 0.60;
       shell.userData.baseTransparent = true;
       shell.userData.baseDepthWrite = false;
       shell.depthWrite = false;
-      core.userData.baseOpacity = 1;
-      core.userData.baseTransparent = true;
-      core.userData.baseDepthWrite = false;
-      core.transparent = true;
-      core.depthWrite = false;
+      const leadMat = solid(0x8f9893, 0.34, 0.45);
       [-8, 8].forEach((x) => {
-        const front = detail(new THREE.SphereGeometry(2.2, 24, 16, 0, Math.PI * 2, 0, Math.PI / 2), domeMat, [x, -4.65, 0]);
+        detail(new THREE.CylinderGeometry(2.02, 2.02, 5.6, 24), shell, [x, 0, 0]);
+        const front = detail(new THREE.SphereGeometry(2.2, 24, 16, 0, Math.PI * 2, 0, Math.PI / 2), domeMat, [x, -2.8, 0]);
         front.rotation.x = Math.PI;
-        detail(new THREE.SphereGeometry(0.95, 16, 10), core, [x, -5.85, 0]);
-        detail(new THREE.CylinderGeometry(0.45, 0.45, 2.8, 10), leadMat, [x, -4.0, 0]);
-        // Each through-hole LED has one emitting dome and two short rear
-        // leads, rather than a second lens at the back of the barrel.
-        detail(new THREE.CylinderGeometry(0.42, 0.42, 3.6, 10), leadMat, [x - 1.15, 5.1, 0]);
-        detail(new THREE.CylinderGeometry(0.42, 0.42, 3.6, 10), leadMat, [x + 1.15, 5.1, 0]);
+        detail(new THREE.CylinderGeometry(0.42, 0.42, 3.6, 10), leadMat, [x - 1.15, 4.35, 0]);
+        detail(new THREE.CylinderGeometry(0.42, 0.42, 3.6, 10), leadMat, [x + 1.15, 4.35, 0]);
       });
     } else if (id === 'switch') {
-      const body = matte(0x26342d, 0.52, 0.08);
-      const actuator = matte(0xb6c4bb, 0.34, 0.18);
-      detail(new THREE.BoxGeometry(22, 9, 3.6), body, [-5, 41.3, 3.7]);
-      detail(new THREE.BoxGeometry(9, 4.8, 3.8), actuator, [-1, 41.3, 6.6]);
+      // Retain the STL silhouette underneath, then articulate it with a
+      // dark body/rim and a clearly separated light actuator/fill.
+      const body = solid(0x3f5d4d, 0.48, 0.08);
+      const rim = solid(0x12221a, 0.38, 0.22);
+      const actuator = solid(0xd0ddd4, 0.28, 0.22);
+      detail(new THREE.BoxGeometry(28, 8.4, 2.8), body, [-5, 41.3, 0.8]);
+      detail(new THREE.BoxGeometry(13.0, 6.4, 1.0), rim, [-1.0, 41.3, 2.55]);
+      detail(new THREE.BoxGeometry(9.2, 4.6, 3.8), actuator, [-1.0, 41.3, 5.0]);
+      detail(new THREE.BoxGeometry(5.8, 2.2, 0.18), solid(0xdce8df, 0.27, 0.12), [-1.0, 41.3, 6.95]);
+      detail(new THREE.BoxGeometry(28, 8.4, 2.8), body, [-5, 41.3, -0.8]);
+      detail(new THREE.BoxGeometry(13.0, 6.4, 1.0), rim, [-1.0, 41.3, -2.55]);
+      detail(new THREE.BoxGeometry(9.2, 4.6, 3.8), actuator, [-1.0, 41.3, -5.0]);
+      detail(new THREE.BoxGeometry(5.8, 2.2, 0.18), solid(0xdce8df, 0.27, 0.12), [-1.0, 41.3, -6.95]);
     } else if (id === 'enclosure') {
       const layer = matte(0x26302a, 0.88, 0.01);
       for (let i = 0; i < 8; i++) detail(new THREE.BoxGeometry(81, 0.24, 0.16), layer, [0, -42.08, -4.8 + i * 1.55]);
@@ -451,6 +499,13 @@ function init(section) {
       // preserve the mobile safety edge without materially shrinking the solo.
       dist *= 1.035;
     }
+    if (!pane.mobile && blend.id === 'led_pair' && blend.w > 0.5) {
+      // The explicit lens and rear leads extend the desktop three-quarter
+      // bounds slightly beyond the manifest cylinder. Give that wider
+      // silhouette a small desktop-only fit allowance; mobile keeps its
+      // existing viewport scale target.
+      dist *= 1.08;
+    }
     if (p < T_INTRO_END) center.y += pane.mobile ? 0.012 : 0.025;
     const chapterEnd = T_CH_START + CHAPTERS.length * CH_W;
     const compositionMode = p >= chapterEnd && p <= 0.94;
@@ -459,8 +514,8 @@ function init(section) {
       // editorial-pane solos. Refit against the full viewport so the closed
       // product and the spread assembly read at the requested scale.
       const finalMode = p >= T_FINAL;
-      const targetW = sticky.clientWidth * (finalMode ? 0.46 : (pane.mobile ? 0.82 : 0.68));
-      const targetH = sticky.clientHeight * (finalMode ? 0.60 : (pane.mobile ? 0.56 : 0.60));
+      const targetW = sticky.clientWidth * (finalMode ? (pane.mobile ? 0.76 : 0.46) : (pane.mobile ? 0.82 : 0.68));
+      const targetH = sticky.clientHeight * (finalMode ? (pane.mobile ? 0.52 : 0.60) : (pane.mobile ? 0.56 : 0.60));
       const compositionBox = boxForSubject('all', boxA);
       center = compositionBox.getCenter(centerV);
       // Use a damped solve. A hard clamp of the raw ratio can overshoot when

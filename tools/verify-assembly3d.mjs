@@ -306,6 +306,9 @@ async function browserPass() {
     if (!vp.mobile && finalState?.allSil) {
       check(`[${vp.label}] final composition meets viewport scale`, finalState.allSil.w >= vp.w * 0.36 && finalState.allSil.w <= vp.w * 0.52 && finalState.allSil.h >= vp.h * 0.48 && finalState.allSil.h <= vp.h * 0.70, `${finalState.allSil.w.toFixed(0)}x${finalState.allSil.h.toFixed(0)}`);
     }
+    if (vp.mobile && finalState?.allSil) {
+      check(`[${vp.label}] final composition meets mobile viewport scale`, finalState.allSil.w >= vp.w * 0.70 && finalState.allSil.w <= vp.w * 0.84 && finalState.allSil.h <= vp.h * 0.64, `${finalState.allSil.w.toFixed(0)}x${finalState.allSil.h.toFixed(0)}`);
+    }
 
     await goto(0.02); await settle(cdp);
     await cdp.screenshot(join(OUT, vp.label + '-intro.png'));
@@ -410,7 +413,7 @@ staticChecks();
 await browserPass();
 
 writeFileSync(join(OUT, 'report.json'), JSON.stringify({
-  when: 'checkpoint-pass5a',
+  when: 'checkpoint-pass5b',
   results,
   passed: results.filter((r) => r.ok).length,
   failed: results.filter((r) => !r.ok).length,
