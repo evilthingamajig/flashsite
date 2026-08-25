@@ -20,12 +20,12 @@ const REASSEMBLY_ORDER = ['enclosure', 'switch', 'led_pair', 'charge_module', 'b
 const T_INTRO_END = 0.075;
 const T_EXPLODE = [0.075, 0.125];
 const T_CH_START = 0.125;
-const CH_W = 0.108;
+const CH_W = 0.102;
 // Leave a dedicated exploded-tableau beat after the final solo chapter. The
 // slightly tighter reassembly cadence keeps the finished state before p=1.
-const T_RE_START = 0.82;
-const RE_SPACING = 0.025;
-const RE_W = 0.05;
+const T_RE_START = 0.78;
+const RE_SPACING = 0.035;
+const RE_W = 0.043;
 const T_FINAL = Math.max(0.955, T_RE_START + 5 * RE_SPACING + RE_W);
 
 const clamp01 = (v) => Math.max(0, Math.min(1, v));
@@ -427,17 +427,16 @@ function init(section) {
     if (i < 0) return { id: null, w: 0 };
     const c = CHAPTERS[i];
     const t = chapterT(p, i);
-    const ENTER = 0.34;
-    // Keep the active component framed through the last inspection beat. The
-    // copy remains active while the surrounding assembly fades back in, so a
-    // late chapter sample never collapses to a tiny interpolation between the
-    // solo and full-assembly camera distances.
-    const EXIT = 0.86;
-    let w = 0;
-    if (t < ENTER) w = smooth(t / ENTER);
-    else if (t > EXIT) w = 1 - smooth((t - EXIT) / (1 - EXIT));
-    else w = 1;
-    return { id: c.id, w };
+    // Keep the active component framed through the complete chapter. At a
+    // chapter boundary, hand off directly from the previous solo to the next
+    // solo; never fall back through an empty all-parts composition.
+    const handoff = smooth(t / 0.24);
+    return {
+      id: c.id,
+      w: handoff,
+      prevId: i > 0 ? CHAPTERS[i - 1].id : null,
+      handoff,
+    };
   }
 
   function boxForSubject(sub, out) {
@@ -469,7 +468,14 @@ function init(section) {
       dist = dAll;
     } else {
       dPart = solveDistance(boxForSubject(blend.id, boxB), azim, elev, pane);
-      if (blend.w >= 1) {
+      if (blend.prevId && blend.handoff < 1) {
+        const prevBox = boxForSubject(blend.prevId, boxA);
+        const prevCenter = prevBox.getCenter(new THREE.Vector3());
+        const nextCenter = boxB.getCenter(new THREE.Vector3());
+        const prevDist = solveDistance(prevBox, azim, elev, pane);
+        center = prevCenter.lerp(nextCenter, blend.handoff);
+        dist = lerp(prevDist, dPart, blend.handoff);
+      } else if (blend.w >= 1) {
         center = boxB.getCenter(centerV);
         dist = dPart;
       } else {
@@ -514,8 +520,11 @@ function init(section) {
       // editorial-pane solos. Refit against the full viewport so the closed
       // product and the spread assembly read at the requested scale.
       const finalBridgeT = smooth((p - (T_FINAL - 0.025)) / 0.040);
-      const tableauW = pane.mobile ? 0.82 : 0.68;
-      const tableauH = pane.mobile ? 0.56 : 0.65;
+      // Hold the exploded tableau fit through its dedicated beat; switch to
+      // the tighter, taller insertion fit only after the first settle.
+      const reassemblyView = p >= T_RE_START + 0.04;
+      const tableauW = pane.mobile ? 0.82 : (reassemblyView ? 0.78 : 0.68);
+      const tableauH = pane.mobile ? 0.56 : (reassemblyView ? 0.74 : 0.65);
       const finalW = pane.mobile ? 0.76 : 0.46;
       const finalH = pane.mobile ? 0.52 : 0.60;
       const targetW = sticky.clientWidth * lerp(tableauW, finalW, finalBridgeT);
@@ -648,6 +657,43 @@ function init(section) {
         y += c.inspect[1] * MM * liftAmt;
         z += c.inspect[2] * MM * liftAmt;
       }
+      // During a chapter handoff, return the previous solo to its neutral
+      // exploded slot while the next solo enters. This keeps one coherent
+      // adjacent-part transition instead of collapsing through all parts.
+      if (chIdx === i + 1) {
+        const tNext = chapterT(p, chIdx);
+        const previousOut = 1 - smooth(tNext / 0.24);
+        if (previousOut > 0) {
+          x += c.inspect[0] * MM * previousOut;
+          y += c.inspect[1] * MM * previousOut;
+          z += c.inspect[2] * MM * previousOut;
+          yaw = ((c.turn * previousOut) * Math.PI) / 180;
+        }
+      }
+      // Reassembly rotation belongs to the active insertion only. Parts that
+      // have already seated are stable at identity; parts waiting their turn
+      // retain their exploded inspection orientation.
+      if (p >= T_RE_START && c.id !== 'enclosure') {
+        const reIdx = REASSEMBLY_ORDER.indexOf(c.id);
+        const beatStart = T_RE_START + reIdx * RE_SPACING;
+        const local = smooth((p - beatStart) / RE_W);
+        // Complete the visible turn early in the beat, before the slight
+        // position overlap with the next insertion, then hold it stationary.
+        const turnLocal = smooth((p - beatStart) / Math.max(0.001, RE_SPACING * 0.45));
+        if (local > 0 && local < 1) {
+          yaw = lerp(c.turn, 360, turnLocal) * Math.PI / 180;
+        } else if (p >= beatStart + RE_W) {
+          yaw = 0;
+        } else {
+          yaw = c.turn * Math.PI / 180;
+        }
+      }
+      if (p >= T_RE_START && c.id === 'enclosure') {
+        // The enclosure is the stationary base for every insertion beat. Only
+        // after the final part seats does it turn back to the closed exterior.
+        const close = smooth((p - T_FINAL) / Math.max(0.001, 1 - T_FINAL));
+        yaw = lerp(40, 360, close) * Math.PI / 180;
+      }
       if (c.id === 'enclosure' && p >= tableauStart && p < T_RE_START) {
         // Carry the final enclosure inspection offset across the short
         // chapter/tableau bridge instead of snapping back to its seat.
@@ -755,18 +801,24 @@ function init(section) {
     const i = chapterAt(p);
     if (i < 0) return null;
     const t = chapterT(p, i);
-    return t >= 0.26 && t <= 0.85 ? CHAPTERS[i].key : null;
+    if (i > 0 && t < 0.18) return CHAPTERS[i - 1].key;
+    return t <= 0.85 ? CHAPTERS[i].key : null;
   }
 
   const SUN_OFF = new THREE.Vector3(0.3, 0.9, 0.4);
   function applyDim(p) {
     const blend = chapterBlend(p);
-    const activeId = blend.id && blend.w > 0 ? blend.id : null;
+    const activeId = blend.id || null;
     const exteriorOnly = p < T_EXPLODE[0] || p >= T_FINAL;
     const exteriorParts = new Set(['enclosure', 'solar_lid', 'led_pair', 'switch']);
     CHAPTERS.forEach((c) => {
       const hiddenInterior = exteriorOnly && !exteriorParts.has(c.id);
-      const dim = hiddenInterior ? 0 : (c.id === activeId ? 1 : (blend.id ? Math.max(0, 1 - blend.w * 4) : 1));
+      let dim = hiddenInterior ? 0 : 1;
+      if (!hiddenInterior && blend.id) {
+        if (c.id === activeId) dim = Math.max(0.14, blend.handoff || blend.w);
+        else if (c.id === blend.prevId && blend.handoff < 1) dim = Math.max(0, 1 - blend.handoff);
+        else dim = 0;
+      }
       groups[c.id].visible = dim > 0.001 || c.id === activeId;
       groups[c.id].traverse((o) => {
         if (o.isMesh) {
@@ -808,10 +860,21 @@ function init(section) {
     const chapterIndex = chapterAt(p);
     CHAPTERS.forEach((c, i) => {
       const el = callouts[c.key];
-      const t = chapterIndex === i ? chapterT(p, i) : (chapterIndex < i ? 0 : 1);
-      const fadeIn = smooth(t / 0.26);
-      const fadeOut = smooth((1 - t) / 0.14);
-      const alpha = chapterIndex === i && t >= 0.26 && t <= 0.90 ? Math.min(fadeIn, fadeOut) : 0;
+      let alpha = 0;
+      if (chapterIndex === i) {
+        const t = chapterT(p, i);
+        if (i === 0) alpha = 1;
+        else {
+          // Keep the previous label readable until the new one is ready,
+          // then hand off through a low-alpha seam so copy never disappears
+          // and two labels are never simultaneously prominent.
+          alpha = t < 0.18 ? 0.06 : Math.max(0.06, smooth((t - 0.18) / 0.16));
+        }
+      } else if (chapterIndex === i + 1) {
+        const t = chapterT(p, chapterIndex);
+        alpha = Math.max(0, 1 - smooth(t / 0.18));
+      }
+      if (chapterIndex === i && chapterT(p, i) > 0.88) alpha = Math.max(0.06, 1 - smooth((chapterT(p, i) - 0.88) / 0.12));
       el.style.opacity = alpha.toFixed(3);
       el.classList.toggle('is-active', alpha > 0.32);
     });

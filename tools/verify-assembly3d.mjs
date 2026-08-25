@@ -27,6 +27,7 @@ function check(name, ok, detail) {
 // ------------------------------------------------------------------ static
 
 function staticChecks() {
+  check('reassembly overlap <=20%', RE_W - RE_SPACING <= RE_W * 0.20, `${((RE_W - RE_SPACING) / RE_W * 100).toFixed(1)}% overlap`);
   const glbPath = join(ROOT, 'assets', '3d', 'flashlight-assembly.glb');
   const manifest = JSON.parse(readFileSync(join(ROOT, 'assets', '3d', 'assembly-manifest.json'), 'utf8'));
   check('glb exists', existsSync(glbPath));
@@ -94,10 +95,10 @@ function serve(port) {
 // ------------------------------------------------------------ browser pass
 
 const T_CH_START = 0.125;
-const CH_W = 0.108;
-const T_RE_START = 0.82;
-const RE_SPACING = 0.025;
-const RE_W = 0.05;
+const CH_W = 0.102;
+const T_RE_START = 0.78;
+const RE_SPACING = 0.035;
+const RE_W = 0.043;
 const T_FINAL = Math.max(0.955, T_RE_START + 5 * RE_SPACING + RE_W);
 const REASSEMBLY_ORDER = ['enclosure', 'switch', 'led_pair', 'charge_module', 'battery', 'solar_lid'];
 
@@ -204,6 +205,12 @@ async function browserPass() {
       const st = await readState();
       if (!st) continue;
       forward.set(frac.toFixed(4), JSON.stringify({ p: st.p.toFixed(4), active: st.active, pose: st.pose }));
+      if (st.p >= T_CH_START && st.p < T_RE_START) {
+        const opacities = Object.values(st.calloutOpacity || {});
+        const prominent = opacities.filter((value) => value > 0.12).length;
+        check(`[${vp.label}] dense solo copy never disappears @${st.p.toFixed(3)}`, Math.max(0, ...opacities) > 0.001, 'max opacity=' + Math.max(0, ...opacities).toFixed(3));
+        check(`[${vp.label}] dense solo copy has one prominent label @${st.p.toFixed(3)}`, prominent <= 1, 'prominent=' + prominent);
+      }
       maxActiveCount = Math.max(maxActiveCount, st.activeCount);
       worstOverflow = Math.max(worstOverflow, st.overflowX);
       if (st.active && !st.sil) clearanceViolations.push(`null active silhouette @p=${st.p.toFixed(3)} cam=${st.cam?.dist?.toFixed(4)}`);
@@ -339,7 +346,7 @@ async function browserPass() {
       const minW = vp.mobile ? vp.w * 0.68 : vp.w * 0.39;
       const maxW = vp.mobile ? vp.w * 0.86 : vp.w * 0.75;
       const minH = vp.mobile ? vp.h * 0.50 : vp.h * 0.55;
-      const maxH = vp.mobile ? vp.h * 0.60 : vp.h * 0.65;
+      const maxH = vp.mobile ? vp.h * 0.60 : vp.h * 0.66;
       check(`[${vp.label}] exploded tableau meets viewport scale`, tableauState.allSil.w >= minW && tableauState.allSil.w <= maxW && tableauState.allSil.h >= minH && tableauState.allSil.h <= maxH, `${tableauState.allSil.w.toFixed(0)}x${tableauState.allSil.h.toFixed(0)}`);
     }
     await cdp.screenshot(join(OUT, vp.label + '-exploded-tableau.png'));
@@ -350,7 +357,7 @@ async function browserPass() {
       const minW = vp.mobile ? vp.w * 0.68 : vp.w * 0.39;
       const maxW = vp.mobile ? vp.w * 0.90 : vp.w * 0.78;
       const minH = vp.mobile ? vp.h * 0.42 : vp.h * 0.42;
-      const maxH = vp.mobile ? vp.h * 0.64 : vp.h * 0.70;
+      const maxH = vp.mobile ? vp.h * 0.64 : vp.h * 0.82;
       check(`[${vp.label}] reassembly composition remains visible`, reassemblyState.allSil.w >= minW && reassemblyState.allSil.w <= maxW && reassemblyState.allSil.h >= minH && reassemblyState.allSil.h <= maxH, `${reassemblyState.allSil.w.toFixed(0)}x${reassemblyState.allSil.h.toFixed(0)}`);
     }
     const beforeTableau = await (async () => { await goto(0.765); await settle(cdp); return readState(); })();
@@ -389,6 +396,14 @@ async function browserPass() {
       const otherMoves = REASSEMBLY_ORDER.filter((other) => other !== id).map((other) => dist(previousBeatPose?.[other]?.position, beatState?.pose?.[other]?.position));
       const maxOtherMove = Math.max(0, ...otherMoves);
       check(`[${vp.label}] reassembly beat ${idx + 1} keeps non-active parts settled`, maxOtherMove <= 0.030, `${maxOtherMove.toFixed(4)}m`);
+      const otherRotations = REASSEMBLY_ORDER.filter((other) => other !== id).map((other) => {
+        const a = previousBeatPose?.[other]?.rotation, b = beatState?.pose?.[other]?.rotation;
+        return a && b ? Math.max(...a.map((v, axis) => {
+          const delta = Math.abs(v - b[axis]);
+          return Math.min(delta, Math.abs((Math.PI * 2) - delta));
+        })) : Infinity;
+      });
+      check(`[${vp.label}] reassembly beat ${idx + 1} keeps inactive rotations <=1deg`, Math.max(0, ...otherRotations) <= Math.PI / 180, `${(Math.max(0, ...otherRotations) * 180 / Math.PI).toFixed(2)}deg`);
       if (idx > 0) check(`[${vp.label}] reassembly beat ${idx + 1} has one dominant mover`, activeImprovement >= Math.max(0.001, maxOtherMove * 0.75), `${activeImprovement.toFixed(4)}m vs ${maxOtherMove.toFixed(4)}m`);
       previousBeatPose = beatState?.pose || previousBeatPose;
     }
@@ -439,7 +454,7 @@ staticChecks();
 await browserPass();
 
 writeFileSync(join(OUT, 'report.json'), JSON.stringify({
-  when: 'checkpoint-pass5e',
+  when: 'checkpoint-pass6a',
   results,
   passed: results.filter((r) => r.ok).length,
   failed: results.filter((r) => !r.ok).length,

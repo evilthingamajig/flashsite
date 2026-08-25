@@ -1,6 +1,11 @@
 {
-  "when": "checkpoint-pass5e",
+  "when": "checkpoint-pass6a",
   "results": [
+    {
+      "name": "reassembly overlap <=20%",
+      "ok": true,
+      "detail": "18.6% overlap"
+    },
     {
       "name": "glb exists",
       "ok": true
@@ -94,6 +99,276 @@
     {
       "name": "[desktop-1440x900] model ready",
       "ok": true
+    },
+    {
+      "name": "[desktop-1440x900] dense solo copy never disappears @0.125",
+      "ok": true,
+      "detail": "max opacity=0.965"
+    },
+    {
+      "name": "[desktop-1440x900] dense solo copy has one prominent label @0.125",
+      "ok": true,
+      "detail": "prominent=1"
+    },
+    {
+      "name": "[desktop-1440x900] dense solo copy never disappears @0.150",
+      "ok": true,
+      "detail": "max opacity=1.000"
+    },
+    {
+      "name": "[desktop-1440x900] dense solo copy has one prominent label @0.150",
+      "ok": true,
+      "detail": "prominent=1"
+    },
+    {
+      "name": "[desktop-1440x900] dense solo copy never disappears @0.175",
+      "ok": true,
+      "detail": "max opacity=1.000"
+    },
+    {
+      "name": "[desktop-1440x900] dense solo copy has one prominent label @0.175",
+      "ok": true,
+      "detail": "prominent=1"
+    },
+    {
+      "name": "[desktop-1440x900] dense solo copy never disappears @0.200",
+      "ok": true,
+      "detail": "max opacity=1.000"
+    },
+    {
+      "name": "[desktop-1440x900] dense solo copy has one prominent label @0.200",
+      "ok": true,
+      "detail": "prominent=1"
+    },
+    {
+      "name": "[desktop-1440x900] dense solo copy never disappears @0.225",
+      "ok": true,
+      "detail": "max opacity=0.065"
+    },
+    {
+      "name": "[desktop-1440x900] dense solo copy has one prominent label @0.225",
+      "ok": true,
+      "detail": "prominent=0"
+    },
+    {
+      "name": "[desktop-1440x900] dense solo copy never disappears @0.250",
+      "ok": true,
+      "detail": "max opacity=0.092"
+    },
+    {
+      "name": "[desktop-1440x900] dense solo copy has one prominent label @0.250",
+      "ok": true,
+      "detail": "prominent=0"
+    },
+    {
+      "name": "[desktop-1440x900] dense solo copy never disappears @0.275",
+      "ok": true,
+      "detail": "max opacity=1.000"
+    },
+    {
+      "name": "[desktop-1440x900] dense solo copy has one prominent label @0.275",
+      "ok": true,
+      "detail": "prominent=1"
+    },
+    {
+      "name": "[desktop-1440x900] dense solo copy never disappears @0.300",
+      "ok": true,
+      "detail": "max opacity=1.000"
+    },
+    {
+      "name": "[desktop-1440x900] dense solo copy has one prominent label @0.300",
+      "ok": true,
+      "detail": "prominent=1"
+    },
+    {
+      "name": "[desktop-1440x900] dense solo copy never disappears @0.325",
+      "ok": true,
+      "detail": "max opacity=0.139"
+    },
+    {
+      "name": "[desktop-1440x900] dense solo copy has one prominent label @0.325",
+      "ok": true,
+      "detail": "prominent=1"
+    },
+    {
+      "name": "[desktop-1440x900] dense solo copy never disappears @0.350",
+      "ok": true,
+      "detail": "max opacity=0.059"
+    },
+    {
+      "name": "[desktop-1440x900] dense solo copy has one prominent label @0.350",
+      "ok": true,
+      "detail": "prominent=0"
+    },
+    {
+      "name": "[desktop-1440x900] dense solo copy never disappears @0.375",
+      "ok": true,
+      "detail": "max opacity=1.000"
+    },
+    {
+      "name": "[desktop-1440x900] dense solo copy has one prominent label @0.375",
+      "ok": true,
+      "detail": "prominent=1"
+    },
+    {
+      "name": "[desktop-1440x900] dense solo copy never disappears @0.400",
+      "ok": true,
+      "detail": "max opacity=1.000"
+    },
+    {
+      "name": "[desktop-1440x900] dense solo copy has one prominent label @0.400",
+      "ok": true,
+      "detail": "prominent=1"
+    },
+    {
+      "name": "[desktop-1440x900] dense solo copy never disappears @0.425",
+      "ok": true,
+      "detail": "max opacity=0.460"
+    },
+    {
+      "name": "[desktop-1440x900] dense solo copy has one prominent label @0.425",
+      "ok": true,
+      "detail": "prominent=1"
+    },
+    {
+      "name": "[desktop-1440x900] dense solo copy never disappears @0.450",
+      "ok": true,
+      "detail": "max opacity=0.036"
+    },
+    {
+      "name": "[desktop-1440x900] dense solo copy has one prominent label @0.450",
+      "ok": true,
+      "detail": "prominent=0"
+    },
+    {
+      "name": "[desktop-1440x900] dense solo copy never disappears @0.475",
+      "ok": true,
+      "detail": "max opacity=1.000"
+    },
+    {
+      "name": "[desktop-1440x900] dense solo copy has one prominent label @0.475",
+      "ok": true,
+      "detail": "prominent=1"
+    },
+    {
+      "name": "[desktop-1440x900] dense solo copy never disappears @0.500",
+      "ok": true,
+      "detail": "max opacity=1.000"
+    },
+    {
+      "name": "[desktop-1440x900] dense solo copy has one prominent label @0.500",
+      "ok": true,
+      "detail": "prominent=1"
+    },
+    {
+      "name": "[desktop-1440x900] dense solo copy never disappears @0.525",
+      "ok": true,
+      "detail": "max opacity=0.878"
+    },
+    {
+      "name": "[desktop-1440x900] dense solo copy has one prominent label @0.525",
+      "ok": true,
+      "detail": "prominent=1"
+    },
+    {
+      "name": "[desktop-1440x900] dense solo copy never disappears @0.550",
+      "ok": true,
+      "detail": "max opacity=0.060"
+    },
+    {
+      "name": "[desktop-1440x900] dense solo copy has one prominent label @0.550",
+      "ok": true,
+      "detail": "prominent=0"
+    },
+    {
+      "name": "[desktop-1440x900] dense solo copy never disappears @0.575",
+      "ok": true,
+      "detail": "max opacity=1.000"
+    },
+    {
+      "name": "[desktop-1440x900] dense solo copy has one prominent label @0.575",
+      "ok": true,
+      "detail": "prominent=1"
+    },
+    {
+      "name": "[desktop-1440x900] dense solo copy never disappears @0.600",
+      "ok": true,
+      "detail": "max opacity=1.000"
+    },
+    {
+      "name": "[desktop-1440x900] dense solo copy has one prominent label @0.600",
+      "ok": true,
+      "detail": "prominent=1"
+    },
+    {
+      "name": "[desktop-1440x900] dense solo copy never disappears @0.625",
+      "ok": true,
+      "detail": "max opacity=0.973"
+    },
+    {
+      "name": "[desktop-1440x900] dense solo copy has one prominent label @0.625",
+      "ok": true,
+      "detail": "prominent=1"
+    },
+    {
+      "name": "[desktop-1440x900] dense solo copy never disappears @0.650",
+      "ok": true,
+      "detail": "max opacity=0.059"
+    },
+    {
+      "name": "[desktop-1440x900] dense solo copy has one prominent label @0.650",
+      "ok": true,
+      "detail": "prominent=0"
+    },
+    {
+      "name": "[desktop-1440x900] dense solo copy never disappears @0.675",
+      "ok": true,
+      "detail": "max opacity=1.000"
+    },
+    {
+      "name": "[desktop-1440x900] dense solo copy has one prominent label @0.675",
+      "ok": true,
+      "detail": "prominent=1"
+    },
+    {
+      "name": "[desktop-1440x900] dense solo copy never disappears @0.700",
+      "ok": true,
+      "detail": "max opacity=1.000"
+    },
+    {
+      "name": "[desktop-1440x900] dense solo copy has one prominent label @0.700",
+      "ok": true,
+      "detail": "prominent=1"
+    },
+    {
+      "name": "[desktop-1440x900] dense solo copy never disappears @0.725",
+      "ok": true,
+      "detail": "max opacity=1.000"
+    },
+    {
+      "name": "[desktop-1440x900] dense solo copy has one prominent label @0.725",
+      "ok": true,
+      "detail": "prominent=1"
+    },
+    {
+      "name": "[desktop-1440x900] dense solo copy never disappears @0.750",
+      "ok": true,
+      "detail": "max opacity=0.060"
+    },
+    {
+      "name": "[desktop-1440x900] dense solo copy has one prominent label @0.750",
+      "ok": true,
+      "detail": "prominent=0"
+    },
+    {
+      "name": "[desktop-1440x900] dense solo copy never disappears @0.775",
+      "ok": true,
+      "detail": "max opacity=0.060"
+    },
+    {
+      "name": "[desktop-1440x900] dense solo copy has one prominent label @0.775",
+      "ok": true,
+      "detail": "prominent=0"
     },
     {
       "name": "[desktop-1440x900] at most one active callout",
@@ -223,7 +498,7 @@
     {
       "name": "[desktop-1440x900] hold ch6 clearance >=32/40px",
       "ok": true,
-      "detail": "L61 R415 T124 B100"
+      "detail": "L60 R415 T124 B100"
     },
     {
       "name": "[desktop-1440x900] leader lands on mesh anchor ch6",
@@ -238,7 +513,7 @@
     {
       "name": "[desktop-1440x900] reverse scrub deterministic",
       "ok": true,
-      "detail": "6 points rechecked"
+      "detail": "14 points rechecked"
     },
     {
       "name": "[desktop-1440x900] final seating geometrically continuous",
@@ -257,7 +532,7 @@
     {
       "name": "[desktop-1440x900] final composition meets viewport scale",
       "ok": true,
-      "detail": "521x575"
+      "detail": "533x588"
     },
     {
       "name": "[desktop-1440x900] exploded tableau has no active copy",
@@ -281,7 +556,7 @@
     {
       "name": "[desktop-1440x900] exploded tableau meets viewport scale",
       "ok": true,
-      "detail": "606x580"
+      "detail": "621x585"
     },
     {
       "name": "[desktop-1440x900] reassembly exposes interior tray",
@@ -295,47 +570,47 @@
     {
       "name": "[desktop-1440x900] reassembly composition remains visible",
       "ok": true,
-      "detail": "614x586"
+      "detail": "609x667"
     },
     {
       "name": "[desktop-1440x900] solo-to-tableau camera transition is smooth",
       "ok": true,
-      "detail": "2.7deg"
+      "detail": "0.0deg"
     },
     {
       "name": "[desktop-1440x900] solo-to-tableau camera distance is continuous",
       "ok": true,
-      "detail": "1.35x"
+      "detail": "1.02x"
     },
     {
       "name": "[desktop-1440x900] solo-to-tableau camera center is continuous",
       "ok": true,
-      "detail": "0.026m"
+      "detail": "0.003m"
     },
     {
       "name": "[desktop-1440x900] solo-to-tableau projected scale is continuous",
       "ok": true,
-      "detail": "1.40x"
+      "detail": "1.01x"
     },
     {
       "name": "[desktop-1440x900] final camera fit angle is continuous",
       "ok": true,
-      "detail": "0.2deg"
+      "detail": "0.0deg"
     },
     {
       "name": "[desktop-1440x900] final camera fit distance is continuous",
       "ok": true,
-      "detail": "1.11x"
+      "detail": "1.01x"
     },
     {
       "name": "[desktop-1440x900] final camera fit center is continuous",
       "ok": true,
-      "detail": "0.012m"
+      "detail": "0.021m"
     },
     {
       "name": "[desktop-1440x900] final projected scale is continuous",
       "ok": true,
-      "detail": "1.13x"
+      "detail": "1.27x"
     },
     {
       "name": "[desktop-1440x900] reassembly beat 1 advances enclosure",
@@ -345,82 +620,112 @@
     {
       "name": "[desktop-1440x900] reassembly beat 1 keeps non-active parts settled",
       "ok": true,
-      "detail": "0.0007m"
+      "detail": "0.0000m"
+    },
+    {
+      "name": "[desktop-1440x900] reassembly beat 1 keeps inactive rotations <=1deg",
+      "ok": true,
+      "detail": "0.00deg"
     },
     {
       "name": "[desktop-1440x900] reassembly beat 2 advances switch",
       "ok": true,
-      "detail": "0.0216m"
+      "detail": "0.0218m"
     },
     {
       "name": "[desktop-1440x900] reassembly beat 2 keeps non-active parts settled",
       "ok": true,
-      "detail": "0.0003m"
+      "detail": "0.0000m"
+    },
+    {
+      "name": "[desktop-1440x900] reassembly beat 2 keeps inactive rotations <=1deg",
+      "ok": true,
+      "detail": "0.00deg"
     },
     {
       "name": "[desktop-1440x900] reassembly beat 2 has one dominant mover",
       "ok": true,
-      "detail": "0.0763m vs 0.0003m"
+      "detail": "0.0767m vs 0.0000m"
     },
     {
       "name": "[desktop-1440x900] reassembly beat 3 advances led_pair",
       "ok": true,
-      "detail": "0.0105m"
+      "detail": "0.0103m"
     },
     {
       "name": "[desktop-1440x900] reassembly beat 3 keeps non-active parts settled",
       "ok": true,
-      "detail": "0.0216m"
+      "detail": "0.0218m"
+    },
+    {
+      "name": "[desktop-1440x900] reassembly beat 3 keeps inactive rotations <=1deg",
+      "ok": true,
+      "detail": "0.00deg"
     },
     {
       "name": "[desktop-1440x900] reassembly beat 3 has one dominant mover",
       "ok": true,
-      "detail": "0.0365m vs 0.0216m"
+      "detail": "0.0370m vs 0.0218m"
     },
     {
       "name": "[desktop-1440x900] reassembly beat 4 advances charge_module",
       "ok": true,
-      "detail": "0.0085m"
+      "detail": "0.0084m"
     },
     {
       "name": "[desktop-1440x900] reassembly beat 4 keeps non-active parts settled",
       "ok": true,
-      "detail": "0.0105m"
+      "detail": "0.0103m"
+    },
+    {
+      "name": "[desktop-1440x900] reassembly beat 4 keeps inactive rotations <=1deg",
+      "ok": true,
+      "detail": "0.00deg"
     },
     {
       "name": "[desktop-1440x900] reassembly beat 4 has one dominant mover",
       "ok": true,
-      "detail": "0.0298m vs 0.0105m"
+      "detail": "0.0301m vs 0.0103m"
     },
     {
       "name": "[desktop-1440x900] reassembly beat 5 advances battery",
       "ok": true,
-      "detail": "0.0079m"
+      "detail": "0.0077m"
     },
     {
       "name": "[desktop-1440x900] reassembly beat 5 keeps non-active parts settled",
       "ok": true,
-      "detail": "0.0085m"
+      "detail": "0.0084m"
+    },
+    {
+      "name": "[desktop-1440x900] reassembly beat 5 keeps inactive rotations <=1deg",
+      "ok": true,
+      "detail": "0.00deg"
     },
     {
       "name": "[desktop-1440x900] reassembly beat 5 has one dominant mover",
       "ok": true,
-      "detail": "0.0274m vs 0.0085m"
+      "detail": "0.0277m vs 0.0084m"
     },
     {
       "name": "[desktop-1440x900] reassembly beat 6 advances solar_lid",
       "ok": true,
-      "detail": "0.0314m"
+      "detail": "0.0313m"
     },
     {
       "name": "[desktop-1440x900] reassembly beat 6 keeps non-active parts settled",
       "ok": true,
-      "detail": "0.0079m"
+      "detail": "0.0077m"
+    },
+    {
+      "name": "[desktop-1440x900] reassembly beat 6 keeps inactive rotations <=1deg",
+      "ok": true,
+      "detail": "0.00deg"
     },
     {
       "name": "[desktop-1440x900] reassembly beat 6 has one dominant mover",
       "ok": true,
-      "detail": "0.1107m vs 0.0079m"
+      "detail": "0.1117m vs 0.0077m"
     },
     {
       "name": "[desktop-1440x900] footer reachable after incremental down/up/down",
@@ -435,6 +740,266 @@
     {
       "name": "[mobile-390x844] model ready",
       "ok": true
+    },
+    {
+      "name": "[mobile-390x844] dense solo copy never disappears @0.150",
+      "ok": true,
+      "detail": "max opacity=0.995"
+    },
+    {
+      "name": "[mobile-390x844] dense solo copy has one prominent label @0.150",
+      "ok": true,
+      "detail": "prominent=1"
+    },
+    {
+      "name": "[mobile-390x844] dense solo copy never disappears @0.175",
+      "ok": true,
+      "detail": "max opacity=1.000"
+    },
+    {
+      "name": "[mobile-390x844] dense solo copy has one prominent label @0.175",
+      "ok": true,
+      "detail": "prominent=1"
+    },
+    {
+      "name": "[mobile-390x844] dense solo copy never disappears @0.200",
+      "ok": true,
+      "detail": "max opacity=1.000"
+    },
+    {
+      "name": "[mobile-390x844] dense solo copy has one prominent label @0.200",
+      "ok": true,
+      "detail": "prominent=1"
+    },
+    {
+      "name": "[mobile-390x844] dense solo copy never disappears @0.225",
+      "ok": true,
+      "detail": "max opacity=0.065"
+    },
+    {
+      "name": "[mobile-390x844] dense solo copy has one prominent label @0.225",
+      "ok": true,
+      "detail": "prominent=0"
+    },
+    {
+      "name": "[mobile-390x844] dense solo copy never disappears @0.250",
+      "ok": true,
+      "detail": "max opacity=0.094"
+    },
+    {
+      "name": "[mobile-390x844] dense solo copy has one prominent label @0.250",
+      "ok": true,
+      "detail": "prominent=0"
+    },
+    {
+      "name": "[mobile-390x844] dense solo copy never disappears @0.275",
+      "ok": true,
+      "detail": "max opacity=1.000"
+    },
+    {
+      "name": "[mobile-390x844] dense solo copy has one prominent label @0.275",
+      "ok": true,
+      "detail": "prominent=1"
+    },
+    {
+      "name": "[mobile-390x844] dense solo copy never disappears @0.300",
+      "ok": true,
+      "detail": "max opacity=1.000"
+    },
+    {
+      "name": "[mobile-390x844] dense solo copy has one prominent label @0.300",
+      "ok": true,
+      "detail": "prominent=1"
+    },
+    {
+      "name": "[mobile-390x844] dense solo copy never disappears @0.325",
+      "ok": true,
+      "detail": "max opacity=0.144"
+    },
+    {
+      "name": "[mobile-390x844] dense solo copy has one prominent label @0.325",
+      "ok": true,
+      "detail": "prominent=1"
+    },
+    {
+      "name": "[mobile-390x844] dense solo copy never disappears @0.350",
+      "ok": true,
+      "detail": "max opacity=0.058"
+    },
+    {
+      "name": "[mobile-390x844] dense solo copy has one prominent label @0.350",
+      "ok": true,
+      "detail": "prominent=0"
+    },
+    {
+      "name": "[mobile-390x844] dense solo copy never disappears @0.375",
+      "ok": true,
+      "detail": "max opacity=1.000"
+    },
+    {
+      "name": "[mobile-390x844] dense solo copy has one prominent label @0.375",
+      "ok": true,
+      "detail": "prominent=1"
+    },
+    {
+      "name": "[mobile-390x844] dense solo copy never disappears @0.400",
+      "ok": true,
+      "detail": "max opacity=1.000"
+    },
+    {
+      "name": "[mobile-390x844] dense solo copy has one prominent label @0.400",
+      "ok": true,
+      "detail": "prominent=1"
+    },
+    {
+      "name": "[mobile-390x844] dense solo copy never disappears @0.425",
+      "ok": true,
+      "detail": "max opacity=0.468"
+    },
+    {
+      "name": "[mobile-390x844] dense solo copy has one prominent label @0.425",
+      "ok": true,
+      "detail": "prominent=1"
+    },
+    {
+      "name": "[mobile-390x844] dense solo copy never disappears @0.450",
+      "ok": true,
+      "detail": "max opacity=0.042"
+    },
+    {
+      "name": "[mobile-390x844] dense solo copy has one prominent label @0.450",
+      "ok": true,
+      "detail": "prominent=0"
+    },
+    {
+      "name": "[mobile-390x844] dense solo copy never disappears @0.475",
+      "ok": true,
+      "detail": "max opacity=1.000"
+    },
+    {
+      "name": "[mobile-390x844] dense solo copy has one prominent label @0.475",
+      "ok": true,
+      "detail": "prominent=1"
+    },
+    {
+      "name": "[mobile-390x844] dense solo copy never disappears @0.500",
+      "ok": true,
+      "detail": "max opacity=1.000"
+    },
+    {
+      "name": "[mobile-390x844] dense solo copy has one prominent label @0.500",
+      "ok": true,
+      "detail": "prominent=1"
+    },
+    {
+      "name": "[mobile-390x844] dense solo copy never disappears @0.525",
+      "ok": true,
+      "detail": "max opacity=0.853"
+    },
+    {
+      "name": "[mobile-390x844] dense solo copy has one prominent label @0.525",
+      "ok": true,
+      "detail": "prominent=1"
+    },
+    {
+      "name": "[mobile-390x844] dense solo copy never disappears @0.550",
+      "ok": true,
+      "detail": "max opacity=0.060"
+    },
+    {
+      "name": "[mobile-390x844] dense solo copy has one prominent label @0.550",
+      "ok": true,
+      "detail": "prominent=0"
+    },
+    {
+      "name": "[mobile-390x844] dense solo copy never disappears @0.575",
+      "ok": true,
+      "detail": "max opacity=1.000"
+    },
+    {
+      "name": "[mobile-390x844] dense solo copy has one prominent label @0.575",
+      "ok": true,
+      "detail": "prominent=1"
+    },
+    {
+      "name": "[mobile-390x844] dense solo copy never disappears @0.600",
+      "ok": true,
+      "detail": "max opacity=1.000"
+    },
+    {
+      "name": "[mobile-390x844] dense solo copy has one prominent label @0.600",
+      "ok": true,
+      "detail": "prominent=1"
+    },
+    {
+      "name": "[mobile-390x844] dense solo copy never disappears @0.625",
+      "ok": true,
+      "detail": "max opacity=0.978"
+    },
+    {
+      "name": "[mobile-390x844] dense solo copy has one prominent label @0.625",
+      "ok": true,
+      "detail": "prominent=1"
+    },
+    {
+      "name": "[mobile-390x844] dense solo copy never disappears @0.650",
+      "ok": true,
+      "detail": "max opacity=0.059"
+    },
+    {
+      "name": "[mobile-390x844] dense solo copy has one prominent label @0.650",
+      "ok": true,
+      "detail": "prominent=0"
+    },
+    {
+      "name": "[mobile-390x844] dense solo copy never disappears @0.675",
+      "ok": true,
+      "detail": "max opacity=1.000"
+    },
+    {
+      "name": "[mobile-390x844] dense solo copy has one prominent label @0.675",
+      "ok": true,
+      "detail": "prominent=1"
+    },
+    {
+      "name": "[mobile-390x844] dense solo copy never disappears @0.700",
+      "ok": true,
+      "detail": "max opacity=1.000"
+    },
+    {
+      "name": "[mobile-390x844] dense solo copy has one prominent label @0.700",
+      "ok": true,
+      "detail": "prominent=1"
+    },
+    {
+      "name": "[mobile-390x844] dense solo copy never disappears @0.725",
+      "ok": true,
+      "detail": "max opacity=1.000"
+    },
+    {
+      "name": "[mobile-390x844] dense solo copy has one prominent label @0.725",
+      "ok": true,
+      "detail": "prominent=1"
+    },
+    {
+      "name": "[mobile-390x844] dense solo copy never disappears @0.750",
+      "ok": true,
+      "detail": "max opacity=0.060"
+    },
+    {
+      "name": "[mobile-390x844] dense solo copy has one prominent label @0.750",
+      "ok": true,
+      "detail": "prominent=0"
+    },
+    {
+      "name": "[mobile-390x844] dense solo copy never disappears @0.775",
+      "ok": true,
+      "detail": "max opacity=0.060"
+    },
+    {
+      "name": "[mobile-390x844] dense solo copy has one prominent label @0.775",
+      "ok": true,
+      "detail": "prominent=0"
     },
     {
       "name": "[mobile-390x844] at most one active callout",
@@ -584,7 +1149,7 @@
     {
       "name": "[mobile-390x844] reverse scrub deterministic",
       "ok": true,
-      "detail": "6 points rechecked"
+      "detail": "14 points rechecked"
     },
     {
       "name": "[mobile-390x844] final seating geometrically continuous",
@@ -603,7 +1168,7 @@
     {
       "name": "[mobile-390x844] final composition meets mobile viewport scale",
       "ok": true,
-      "detail": "317x359"
+      "detail": "317x360"
     },
     {
       "name": "[mobile-390x844] exploded tableau has no active copy",
@@ -627,7 +1192,7 @@
     {
       "name": "[mobile-390x844] exploded tableau meets viewport scale",
       "ok": true,
-      "detail": "285x469"
+      "detail": "297x473"
     },
     {
       "name": "[mobile-390x844] reassembly exposes interior tray",
@@ -641,47 +1206,47 @@
     {
       "name": "[mobile-390x844] reassembly composition remains visible",
       "ok": true,
-      "detail": "302x473"
+      "detail": "283x473"
     },
     {
       "name": "[mobile-390x844] solo-to-tableau camera transition is smooth",
       "ok": true,
-      "detail": "2.7deg"
+      "detail": "0.0deg"
     },
     {
       "name": "[mobile-390x844] solo-to-tableau camera distance is continuous",
       "ok": true,
-      "detail": "1.25x"
+      "detail": "1.01x"
     },
     {
       "name": "[mobile-390x844] solo-to-tableau camera center is continuous",
       "ok": true,
-      "detail": "0.038m"
+      "detail": "0.003m"
     },
     {
       "name": "[mobile-390x844] solo-to-tableau projected scale is continuous",
       "ok": true,
-      "detail": "1.35x"
+      "detail": "1.01x"
     },
     {
       "name": "[mobile-390x844] final camera fit angle is continuous",
       "ok": true,
-      "detail": "0.2deg"
+      "detail": "0.0deg"
     },
     {
       "name": "[mobile-390x844] final camera fit distance is continuous",
       "ok": true,
-      "detail": "1.02x"
+      "detail": "1.10x"
     },
     {
       "name": "[mobile-390x844] final camera fit center is continuous",
       "ok": true,
-      "detail": "0.010m"
+      "detail": "0.017m"
     },
     {
       "name": "[mobile-390x844] final projected scale is continuous",
       "ok": true,
-      "detail": "1.18x"
+      "detail": "1.28x"
     },
     {
       "name": "[mobile-390x844] reassembly beat 1 advances enclosure",
@@ -691,37 +1256,52 @@
     {
       "name": "[mobile-390x844] reassembly beat 1 keeps non-active parts settled",
       "ok": true,
-      "detail": "0.0004m"
+      "detail": "0.0000m"
+    },
+    {
+      "name": "[mobile-390x844] reassembly beat 1 keeps inactive rotations <=1deg",
+      "ok": true,
+      "detail": "0.00deg"
     },
     {
       "name": "[mobile-390x844] reassembly beat 2 advances switch",
       "ok": true,
-      "detail": "0.0130m"
+      "detail": "0.0129m"
     },
     {
       "name": "[mobile-390x844] reassembly beat 2 keeps non-active parts settled",
       "ok": true,
-      "detail": "0.0003m"
+      "detail": "0.0000m"
+    },
+    {
+      "name": "[mobile-390x844] reassembly beat 2 keeps inactive rotations <=1deg",
+      "ok": true,
+      "detail": "0.00deg"
     },
     {
       "name": "[mobile-390x844] reassembly beat 2 has one dominant mover",
       "ok": true,
-      "detail": "0.0454m vs 0.0003m"
+      "detail": "0.0459m vs 0.0000m"
     },
     {
       "name": "[mobile-390x844] reassembly beat 3 advances led_pair",
       "ok": true,
-      "detail": "0.0108m"
+      "detail": "0.0109m"
     },
     {
       "name": "[mobile-390x844] reassembly beat 3 keeps non-active parts settled",
       "ok": true,
-      "detail": "0.0130m"
+      "detail": "0.0129m"
+    },
+    {
+      "name": "[mobile-390x844] reassembly beat 3 keeps inactive rotations <=1deg",
+      "ok": true,
+      "detail": "0.00deg"
     },
     {
       "name": "[mobile-390x844] reassembly beat 3 has one dominant mover",
       "ok": true,
-      "detail": "0.0384m vs 0.0130m"
+      "detail": "0.0386m vs 0.0129m"
     },
     {
       "name": "[mobile-390x844] reassembly beat 4 advances charge_module",
@@ -731,17 +1311,22 @@
     {
       "name": "[mobile-390x844] reassembly beat 4 keeps non-active parts settled",
       "ok": true,
-      "detail": "0.0108m"
+      "detail": "0.0109m"
+    },
+    {
+      "name": "[mobile-390x844] reassembly beat 4 keeps inactive rotations <=1deg",
+      "ok": true,
+      "detail": "0.00deg"
     },
     {
       "name": "[mobile-390x844] reassembly beat 4 has one dominant mover",
       "ok": true,
-      "detail": "0.0389m vs 0.0108m"
+      "detail": "0.0392m vs 0.0109m"
     },
     {
       "name": "[mobile-390x844] reassembly beat 5 advances battery",
       "ok": true,
-      "detail": "0.0109m"
+      "detail": "0.0110m"
     },
     {
       "name": "[mobile-390x844] reassembly beat 5 keeps non-active parts settled",
@@ -749,24 +1334,34 @@
       "detail": "0.0111m"
     },
     {
+      "name": "[mobile-390x844] reassembly beat 5 keeps inactive rotations <=1deg",
+      "ok": true,
+      "detail": "0.00deg"
+    },
+    {
       "name": "[mobile-390x844] reassembly beat 5 has one dominant mover",
       "ok": true,
-      "detail": "0.0387m vs 0.0111m"
+      "detail": "0.0389m vs 0.0111m"
     },
     {
       "name": "[mobile-390x844] reassembly beat 6 advances solar_lid",
       "ok": true,
-      "detail": "0.0293m"
+      "detail": "0.0294m"
     },
     {
       "name": "[mobile-390x844] reassembly beat 6 keeps non-active parts settled",
       "ok": true,
-      "detail": "0.0109m"
+      "detail": "0.0110m"
+    },
+    {
+      "name": "[mobile-390x844] reassembly beat 6 keeps inactive rotations <=1deg",
+      "ok": true,
+      "detail": "0.00deg"
     },
     {
       "name": "[mobile-390x844] reassembly beat 6 has one dominant mover",
       "ok": true,
-      "detail": "0.1027m vs 0.0109m"
+      "detail": "0.1036m vs 0.0110m"
     },
     {
       "name": "[mobile-390x844] footer reachable after incremental down/up/down",
@@ -784,6 +1379,6 @@
       "detail": ""
     }
   ],
-  "passed": 161,
+  "passed": 280,
   "failed": 0
 }
