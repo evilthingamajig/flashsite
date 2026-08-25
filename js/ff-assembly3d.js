@@ -110,12 +110,15 @@ function init(section) {
     return;
   }
   renderer.outputColorSpace = THREE.SRGBColorSpace;
+  renderer.toneMapping = THREE.ACESFilmicToneMapping;
+  renderer.toneMappingExposure = 1.08;
+  renderer.physicallyCorrectLights = true;
   const scene = new THREE.Scene();
   const camera = new THREE.PerspectiveCamera(FOV, 1, 0.005, 6);
-  scene.add(new THREE.HemisphereLight(0xffffff, 0x33443a, 1.65));
+  scene.add(new THREE.HemisphereLight(0xffffff, 0x18201c, 1.35));
   const sun = new THREE.DirectionalLight(0xffffff, 2.0);
   scene.add(sun);
-  const fill = new THREE.PointLight(0xc5e7d8, 0.8, 2.4);
+  const fill = new THREE.PointLight(0xdce8f4, 0.34, 2.4);
   fill.position.set(-0.35, -0.55, 0.6);
   scene.add(fill);
 
@@ -196,7 +199,7 @@ function init(section) {
       // A 600mAh LiPo is a thin foil pouch, not a framed rectangular slab.
       // Keep the broad face softly rounded and make the z-depth visibly
       // shallow; the foil seams and crimped amber tab provide scale cues.
-      const pouch = solid(0xc1cbc6, 0.42, 0.12);
+      const pouch = solid(0x9fa5a6, 0.34, 0.22);
       const roundedPouch = () => {
         const s = new THREE.Shape(); const w = 20.5, h = 14.3, r = 3.0;
         s.moveTo(-w + r, -h); s.lineTo(w - r, -h); s.quadraticCurveTo(w, -h, w, -h + r);
@@ -206,7 +209,7 @@ function init(section) {
         g.translate(0, 0, -1.075); return g;
       };
       detail(roundedPouch(), pouch, [0, 0, 0]);
-      const foil = solid(0xd6ddda, 0.3, 0.22);
+      const foil = solid(0xc4c9c9, 0.28, 0.28);
       for (const z of [-1.12, 1.12]) {
         const faceZ = z + Math.sign(z) * 0.045;
         detail(new THREE.BoxGeometry(34, 0.16, 0.05), foil, [0, -9.8, faceZ]);
@@ -221,15 +224,18 @@ function init(section) {
       detail(new THREE.BoxGeometry(5.2, 1.0, 2.5), solid(0xf0ad42, 0.32, 0.28), [10, 15.7, 0.44]);
       const blackLead = solid(0x171d1a, 0.46, 0.02);
       const redLead = solid(0x9c2524, 0.46, 0.02);
-      detail(new THREE.CylinderGeometry(0.48, 0.48, 5.0, 12), blackLead, [-10, 18.0, 0.45]);
-      detail(new THREE.CylinderGeometry(0.46, 0.46, 5.0, 12), redLead, [10, 18.0, 0.45]);
+      const blackStub = detail(new THREE.CylinderGeometry(0.48, 0.48, 4.2, 12), blackLead, [-10, 17.0, 0.45]);
+      blackStub.rotation.z = -0.28;
+      const redStub = detail(new THREE.CylinderGeometry(0.46, 0.46, 4.2, 12), redLead, [10, 17.0, 0.45]);
+      redStub.rotation.z = 0.28;
       detail(new THREE.CylinderGeometry(0.68, 0.68, 0.7, 12), blackLead, [-10, 16.55, 0.45]);
       detail(new THREE.CylinderGeometry(0.66, 0.66, 0.7, 12), redLead, [10, 16.55, 0.45]);
     } else if (id === 'charge_module') {
       // TP4056-style board: a slim green PCB with low SMD relief and a
       // proportionate metal USB charging port on the +Y edge.
       const pcb = solid(0x14634a, 0.62, 0.04);
-      detail(new THREE.BoxGeometry(26.0, 17.0, 0.38), pcb, [0, 0, 0]);
+      const boardShape = new THREE.Shape(); boardShape.moveTo(-12.8, -8.5); boardShape.lineTo(12.8, -8.5); boardShape.lineTo(13, 8.0); boardShape.quadraticCurveTo(12.5, 8.5, 12, 8.5); boardShape.lineTo(-12.8, 8.5); boardShape.closePath();
+      detail(new THREE.ExtrudeGeometry(boardShape, { depth: 0.38, bevelEnabled: true, bevelSegments: 2, bevelSize: 0.35, bevelThickness: 0.08 }), pcb, [0, 0, -0.19]);
       const edge = solid(0x23815d, 0.52, 0.05);
       for (const z of [-0.25, 0.25]) {
         detail(new THREE.BoxGeometry(24.8, 0.18, 0.08), edge, [0, -8.25, z]);
@@ -261,10 +267,10 @@ function init(section) {
       detail(new THREE.BoxGeometry(4.8, 1.35, 0.12), solid(0x101613, 0.42, 0.1), [0, 9.2, 0.70]);
       detail(new THREE.BoxGeometry(4.8, 1.35, 0.12), solid(0x101613, 0.42, 0.1), [0, 9.2, -0.70]);
     } else if (id === 'led_pair') {
-      const shell = new THREE.MeshPhysicalMaterial({ color: 0xdff8fb, emissive: 0x8aeef2, emissiveIntensity: 1.2, roughness: 0.12, transparent: true, opacity: 0.60, transmission: 0.2, thickness: 0.3 });
+      const shell = new THREE.MeshPhysicalMaterial({ color: 0xdff8fb, emissive: 0x8aeef2, emissiveIntensity: 0.32, roughness: 0.16, transparent: true, opacity: 0.52, transmission: 0.72, ior: 1.49, thickness: 0.55 });
       // One hemispherical emitting dome, one short cylindrical body, and two
       // rear leads per through-hole LED. No second lens or centre pin.
-      const domeMat = new THREE.MeshStandardMaterial({ color: 0x9deaf0, emissive: 0x55dce7, emissiveIntensity: 2.5, roughness: 0.16, metalness: 0.02 });
+      const domeMat = new THREE.MeshPhysicalMaterial({ color: 0x9deaf0, emissive: 0x55dce7, emissiveIntensity: 0.65, roughness: 0.18, metalness: 0.02, transmission: 0.18, ior: 1.49 });
       domeMat.userData.baseOpacity = 1;
       domeMat.userData.baseTransparent = false;
       domeMat.userData.baseDepthWrite = true;
@@ -286,13 +292,13 @@ function init(section) {
       const body = solid(0x3f5d4d, 0.48, 0.08);
       const rim = solid(0x12221a, 0.38, 0.22);
       const actuator = solid(0xd0ddd4, 0.28, 0.22);
-      detail(new THREE.BoxGeometry(28, 8.4, 2.8), body, [-5, 41.3, 0.8]);
+      detail(new THREE.BoxGeometry(22, 6.4, 2.2), body, [-5, 41.3, 0.8]);
       detail(new THREE.BoxGeometry(13.0, 6.4, 1.0), rim, [-1.0, 41.3, 2.55]);
-      detail(new THREE.BoxGeometry(9.2, 4.6, 3.8), actuator, [-1.0, 41.3, 5.0]);
+      detail(new THREE.BoxGeometry(7.2, 3.8, 2.8), actuator, [-1.0, 41.3, 5.0]);
       detail(new THREE.BoxGeometry(5.8, 2.2, 0.18), solid(0xdce8df, 0.27, 0.12), [-1.0, 41.3, 6.95]);
-      detail(new THREE.BoxGeometry(28, 8.4, 2.8), body, [-5, 41.3, -0.8]);
+      detail(new THREE.BoxGeometry(22, 6.4, 2.2), body, [-5, 41.3, -0.8]);
       detail(new THREE.BoxGeometry(13.0, 6.4, 1.0), rim, [-1.0, 41.3, -2.55]);
-      detail(new THREE.BoxGeometry(9.2, 4.6, 3.8), actuator, [-1.0, 41.3, -5.0]);
+      detail(new THREE.BoxGeometry(7.2, 3.8, 2.8), actuator, [-1.0, 41.3, -5.0]);
       detail(new THREE.BoxGeometry(5.8, 2.2, 0.18), solid(0xdce8df, 0.27, 0.12), [-1.0, 41.3, -6.95]);
     } else if (id === 'enclosure') {
       const layer = matte(0x26302a, 0.88, 0.01);
@@ -964,6 +970,7 @@ function init(section) {
       finalBox: (() => { const r = finalMark.getBoundingClientRect(), s = sticky.getBoundingClientRect(); return { x: r.left - s.left, y: r.top - s.top, w: r.width, h: r.height }; })(),
       markerActive,
       closedGeometry,
+      renderMetrics: { triangles: renderer.info.render.triangles, drawCalls: renderer.info.render.calls },
       calloutBox: activeKey ? (() => { const r = callouts[activeKey].getBoundingClientRect(), s = sticky.getBoundingClientRect(); return { x: r.left - s.left, y: r.top - s.top, w: r.width, h: r.height }; })() : null,
       pose: Object.fromEntries(PART_IDS.map((id) => [id, {
         position: groups[id].position.toArray().map((v) => +v.toFixed(6)),
