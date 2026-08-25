@@ -3,6 +3,10 @@ var ROOT='images/flashforward/assembly/cinematic-v3/';
 var parts={enclosure:ROOT+'enclosure-front.webp',lid:ROOT+'solar-lid-front.webp',battery:ROOT+'battery-front.webp',module:ROOT+'module-front.webp',leds:ROOT+'led-pair-front.webp'};
 var copy={solar:['01 / DAYLIGHT IN','5V solar panel','Captures daylight to recharge the light.'],battery:['02 / POWER HELD','Rechargeable battery','Stores energy for study after dark.'],module:['03 / CHARGE CONTROLLED','Recharge module','Manages safe charging from the panel.'],leds:['04 / LIGHT OUT','Two LEDs','Turn stored energy into focused study light.'],enclosure:['05 / BUILT TO PROTECT','3D-printed enclosure','Shields every component.']};
 var fan={enclosure:[-26,-14,-20,-5,2],lid:[30,-22,-10,8,-5],battery:[24,19,18,7,-7],module:[-25,15,12,-8,6],leds:[0,24,20,12,-3]};
+var seated={enclosure:{x:0,y:4,z:34,scale:1,rx:0,ry:0,rz:0,size:84,order:6},lid:{x:0,y:-13,z:108,scale:1,rx:0,ry:0,rz:0,size:74,order:10},battery:{x:-8,y:-6,z:38,scale:.36,rx:0,ry:0,rz:3,size:84,order:7},module:{x:11,y:-5,z:40,scale:.28,rx:0,ry:0,rz:-2,size:84,order:7},leds:{x:0,y:13,z:86,scale:.25,rx:0,ry:0,rz:0,size:84,order:9}};
+var turns={lid:-92,battery:108,module:-76,leds:118,enclosure:-68};
+var soloStarts={lid:.31,battery:.45,module:.59,leds:.73,enclosure:.83};
+var leader={solar:{length:20,y:54,angle:-8},battery:{length:18,y:46,angle:9},module:{length:19,y:47,angle:-7},leds:{length:16,y:54,angle:12},enclosure:{length:21,y:42,angle:-11}};
 function clamp(v){return Math.max(0,Math.min(1,v));}
 function smooth(v){v=clamp(v);return v*v*(3-2*v);}
 function lerp(a,b,t){return a+(b-a)*t;}
@@ -12,25 +16,26 @@ function init(section){
  var stage=section.querySelector('.ff-assembly-stage'),anchor=section.querySelector('[data-piece="anchor"]'),copyWrap=section.querySelector('.ff-assembly-copy'),intro=section.querySelector('.ff-assembly-intro-copy'),finalCopy=section.querySelector('.ff-assembly-final-copy'),callouts={},layers={};
  ['solar','battery','module','leds','enclosure'].forEach(function(id){callouts[id]=section.querySelector('[data-callout="'+id+'"]');});
  ['enclosure','lid','battery','module','leds'].forEach(function(id){layers[id]=section.querySelector('[data-piece="'+id+'"]');});
- function setPiece(el,opacity,x,y,z,scale,rx,ry,rz,size,blur){if(!el)return;el.style.opacity=String(clamp(opacity));el.style.width=size+'vw';el.style.filter=blur?'blur('+blur+'px)':'';el.style.transform='translate3d(calc(-50% + '+x+'vw),calc(-50% + '+y+'vh),'+z+'px) rotateX('+rx+'deg) rotateY('+ry+'deg) rotateZ('+rz+'deg) scale('+scale+')';}
- function phase(p,start,end){return smooth((p-start)/.035)*(1-smooth((p-end)/.035));}
+ function setPiece(el,opacity,x,y,z,scale,rx,ry,rz,size,blur,order){if(!el)return;el.style.opacity=String(clamp(opacity));el.style.width=size+'vw';el.style.zIndex=String(order||2);el.style.filter=blur?'blur('+blur+'px)':'';el.style.transform='translate3d(calc(-50% + '+x+'vw),calc(-50% + '+y+'vh),'+z+'px) rotateX('+rx+'deg) rotateY('+ry+'deg) rotateZ('+rz+'deg) scale('+scale+')';}
+ function phase(p,start,end){return smooth((p-start)/.025)*(1-smooth((p-end)/.025));}
  function render(progress){
   var p=clamp(progress),mobile=window.innerWidth<700,baseSize=mobile?102:82,boost=mobile?1.15:1;
-  var impact=smooth(p/.13),explode=smooth((p-.09)/.16),explodeOut=1-smooth((p-.28)/.075),solar=phase(p,.25,.40),battery=phase(p,.38,.53),module=phase(p,.51,.66),leds=phase(p,.64,.79),enclosure=phase(p,.77,.91),reassemble=smooth((p-.90)/.09),finish=smooth((p-.975)/.025);
-  setPiece(anchor,Math.max(0,1-explode)*(1-finish)+finish,0,0,0,lerp(1,1.08,impact),0,0,lerp(0,-7,impact),baseSize,0);
-  Object.keys(layers).forEach(function(id){var f=fan[id],solo=0,soloX=0,soloY=0,soloRz=0,soloRx=0,soloRy=0,size=baseSize;
-   if(id==='lid'){solo=solar;soloX=lerp(f[0],14,solar);soloY=lerp(f[1],-2,solar);soloRz=lerp(0,-5,solar);soloRx=lerp(0,-9,solar);soloRy=lerp(0,10,solar);size=mobile?118:94;}
-   if(id==='battery'){solo=battery;soloX=lerp(f[0],-14,battery);soloY=lerp(f[1],1,battery);soloRz=lerp(0,-7,battery);soloRx=lerp(0,-8,battery);soloRy=lerp(0,12,battery);size=mobile?110:88;}
-   if(id==='module'){solo=module;soloX=lerp(f[0],14,module);soloY=lerp(f[1],0,module);soloRz=lerp(0,5,module);soloRx=lerp(0,8,module);soloRy=lerp(0,-12,module);size=mobile?108:84;}
-   if(id==='leds'){solo=leds;soloX=lerp(f[0],-14,leds);soloY=lerp(f[1],0,leds);soloRz=lerp(0,-5,leds);soloRx=lerp(0,-7,leds);soloRy=lerp(0,11,leds);size=mobile?108:78;}
-   if(id==='enclosure'){solo=enclosure;soloX=lerp(f[0],14,enclosure);soloY=lerp(f[1],3,enclosure);soloRz=lerp(0,-4,enclosure);soloRx=lerp(0,-7,enclosure);soloRy=lerp(0,6,enclosure);size=mobile?112:90;}
-   var explosionOpacity=explode*explodeOut*(1-solo*.93)*(1-reassemble*.95),assembledOpacity=reassemble*(1-finish),x=solo?soloX:lerp(lerp(0,f[0],explode),0,reassemble),y=solo?soloY:lerp(lerp(0,f[1],explode),0,reassemble),rz=solo?soloRz:lerp(lerp(0,f[4],explode),0,reassemble),rx=solo?soloRx:lerp(lerp(0,f[3],explode),0,reassemble),ry=solo?soloRy:lerp(lerp(0,f[2],explode),0,reassemble),opacity=Math.max(explosionOpacity,solo*(1-reassemble),assembledOpacity),spin=solo?lerp(0,id==='leds'?360:24,solo):lerp(0,8,explode);
-   setPiece(layers[id],opacity,x,y,solo?80:0,solo?boost:1,rx,ry,rz+spin,size,solo<.08?1.5:0);
+  var impact=smooth(p/.16),explode=smooth((p-.09)/.16),explodeOut=1-smooth((p-.255)/.05),solar=phase(p,.31,.45),battery=phase(p,.45,.59),module=phase(p,.59,.73),leds=phase(p,.73,.83),enclosure=phase(p,.83,.92),reassemble=smooth((p-.94)/.055),finish=smooth((p-.985)/.015);
+  var introProgress=smooth(p/.14),anchorSize=lerp(mobile?68:66,baseSize,introProgress),anchorY=lerp(22,0,introProgress);
+  setPiece(anchor,Math.max(0,1-explode)*(1-finish)+finish,0,anchorY,0,lerp(.92,1.08,impact),0,0,lerp(0,-7,impact),anchorSize,0,12);
+  Object.keys(layers).forEach(function(id){var f=fan[id],target=seated[id],solo=0,soloX=0,soloY=0,soloRz=0,soloRx=0,soloRy=0,size=baseSize,turnProgress=smooth((p-(soloStarts[id]||.25))/.13);
+   if(id==='lid'){solo=solar;soloX=lerp(f[0],14,solar);soloY=lerp(f[1],-2,solar);soloRz=lerp(0,-18,solar);soloRx=lerp(0,-42,solar);soloRy=lerp(0,68,solar);size=mobile?118:94;}
+   if(id==='battery'){solo=battery;soloX=lerp(f[0],-14,battery);soloY=lerp(f[1],1,battery);soloRz=lerp(0,-18,battery);soloRx=lerp(0,34,battery);soloRy=lerp(0,-72,battery);size=mobile?110:88;}
+   if(id==='module'){solo=module;soloX=lerp(f[0],14,module);soloY=lerp(f[1],0,module);soloRz=lerp(0,14,module);soloRx=lerp(0,-38,module);soloRy=lerp(0,78,module);size=mobile?108:84;}
+   if(id==='leds'){solo=leds;soloX=lerp(f[0],-14,leds);soloY=lerp(f[1],0,leds);soloRz=lerp(0,-10,leds);soloRx=lerp(0,30,leds);soloRy=lerp(0,76,leds);size=mobile?108:78;}
+   if(id==='enclosure'){solo=enclosure;soloX=lerp(f[0],14,enclosure);soloY=lerp(f[1],3,enclosure);soloRz=lerp(0,-14,enclosure);soloRx=lerp(0,-34,enclosure);soloRy=lerp(0,-66,enclosure);size=mobile?112:90;}
+   var soloSpin=turns[id]?turns[id]*turnProgress:0,explosionOpacity=explode*explodeOut*(1-solo*.96)*(1-reassemble*.98),assembledOpacity=reassemble*(1-finish),fanX=lerp(0,f[0],explode),fanY=lerp(0,f[1],explode),fanRz=lerp(0,f[4],explode)+soloSpin,fanRx=lerp(0,f[3],explode),fanRy=lerp(0,f[2],explode),x=solo?soloX:lerp(fanX,target.x,reassemble),y=solo?soloY:lerp(fanY,target.y,reassemble),rz=solo?soloRz+soloSpin:lerp(fanRz,target.rz,reassemble),rx=solo?soloRx:lerp(fanRx,target.rx,reassemble),ry=solo?soloRy:lerp(fanRy,target.ry,reassemble),scale=solo?boost:lerp(1,target.scale,reassemble),opacity=Math.max(explosionOpacity,solo*(1-reassemble),assembledOpacity),depth=solo?80:lerp(0,target.z,reassemble),pieceSize=solo?size:lerp(size,target.size,reassemble),order=solo?2:target.order;
+   setPiece(layers[id],opacity,x,y,depth,scale,rx,ry,rz,pieceSize,solo<.08?1.5:0,order);
   });
-  if(finish)Object.keys(layers).forEach(function(id){setPiece(layers[id],0,0,0,0,1,0,0,0,baseSize,0);});
-  var active=p<.26?null:p<.39?'solar':p<.52?'battery':p<.65?'module':p<.78?'leds':p<.89?'enclosure':null;
-  intro.classList.toggle('is-hidden',p>.2);finalCopy.classList.toggle('is-active',p>.975);copyWrap.classList.toggle('is-finished',p>.975);
-  ['solar','battery','module','leds','enclosure'].forEach(function(id,i){var c=callouts[id];c.classList.toggle('is-active',active===id);c.classList.toggle('is-right',i%2===1);});
+  if(finish)Object.keys(layers).forEach(function(id){setPiece(layers[id],0,seated[id].x,seated[id].y,seated[id].z,seated[id].scale,seated[id].rx,seated[id].ry,seated[id].rz,seated[id].size,0,seated[id].order);});
+  var active=p<.31?null:p<.45?'solar':p<.49?null:p<.59?'battery':p<.63?null:p<.73?'module':p<.77?null:p<.83?'leds':p<.86?null:p<.92?'enclosure':null;
+  intro.classList.toggle('is-hidden',p>.15);finalCopy.classList.remove('is-active');copyWrap.classList.toggle('is-finished',p>.985);
+  ['solar','battery','module','leds','enclosure'].forEach(function(id,i){var c=callouts[id],guide=leader[id],right=i%2===1;c.classList.toggle('is-active',active===id);c.classList.toggle('is-right',right);c.style.setProperty('--leader-length',(mobile?Math.max(22,guide.length*1.4):guide.length)+'vw');c.style.setProperty('--leader-y',guide.y+'%');c.style.setProperty('--leader-angle',(right?-guide.angle:guide.angle)+'deg');});
  }
  var timeline=null,proxy={p:0},ticking=false,scrollHandler,resizeHandler,cleanupDone=false;
  function cleanup(){if(cleanupDone)return;cleanupDone=true;if(timeline){if(timeline.scrollTrigger)timeline.scrollTrigger.kill();timeline.kill();timeline=null;}if(scrollHandler)window.removeEventListener('scroll',scrollHandler);if(resizeHandler)window.removeEventListener('resize',resizeHandler);}

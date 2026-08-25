@@ -16,8 +16,8 @@
 .ff-assembly-callout.is-active{opacity:1;transform:translateY(-50%) translateX(0)}
 .ff-assembly-callout h3{margin:0 0 12px;font-size:clamp(2rem,4.2vw,4.7rem);font-weight:400;line-height:.96;letter-spacing:-.04em}
 .ff-assembly-callout>p:last-child{max-width:16rem;margin:0;font-size:clamp(1rem,1.45vw,1.35rem);line-height:1.22}
-.ff-assembly-leader{position:absolute;top:50%;left:calc(100% + 18px);width:clamp(90px,16vw,260px);height:1px;background:#0b7f47;transform-origin:left center;transform:rotate(-10deg);opacity:.95}
-.ff-assembly-callout.is-right .ff-assembly-leader{left:auto;right:calc(100% + 18px);transform-origin:right center;transform:rotate(10deg);background:#151b17}
+.ff-assembly-leader{position:absolute;top:var(--leader-y,50%);left:calc(100% + 18px);width:var(--leader-length,16vw);height:1px;background:#0b7f47;transform-origin:left center;transform:rotate(var(--leader-angle,-10deg));opacity:.95}
+.ff-assembly-callout.is-right .ff-assembly-leader{left:auto;right:calc(100% + 18px);transform-origin:right center;background:#151b17}
 .ff-assembly-final-copy{display:none}
 .ff-assembly-final-copy.is-active{display:none}
 .ff-assembly-final-copy h3{margin:0;font-size:clamp(2.5rem,6vw,6rem);font-weight:400;line-height:.95;letter-spacing:-.05em}
@@ -32,8 +32,8 @@
  .ff-assembly-callout.is-active{transform:translateY(0)}
  .ff-assembly-callout h3{font-size:clamp(2rem,10vw,3.2rem)}
  .ff-assembly-callout>p:last-child{max-width:22rem;margin:0 auto;font-size:1rem}
- .ff-assembly-leader,.ff-assembly-callout.is-right .ff-assembly-leader{top:auto;bottom:calc(100% + 16px);left:50%;right:auto;width:30vw;transform-origin:left center;transform:rotate(-22deg);background:#0b7f47}
- .ff-assembly-callout.is-right .ff-assembly-leader{transform-origin:left center;transform:rotate(22deg)}
+ .ff-assembly-leader,.ff-assembly-callout.is-right .ff-assembly-leader{top:auto;bottom:calc(100% + 16px);left:50%;right:auto;width:var(--leader-length,30vw);transform-origin:left center;transform:rotate(var(--leader-angle,-22deg));background:#0b7f47}
+ .ff-assembly-callout.is-right .ff-assembly-leader{transform-origin:left center}
  .ff-assembly-final-copy h3{font-size:clamp(2.6rem,13vw,4.2rem)}
 }
 @media(prefers-reduced-motion:reduce){.ff-assembly-stage{scroll-behavior:auto}.ff-assembly-piece{will-change:auto}}
