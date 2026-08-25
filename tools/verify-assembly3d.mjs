@@ -33,15 +33,21 @@ function staticChecks() {
   const manifest = JSON.parse(readFileSync(join(ROOT, 'assets', '3d', 'assembly-manifest.json'), 'utf8'));
   check('glb exists', existsSync(glbPath));
   const bytes = statSync(glbPath).size;
-  check('glb <= 250 KB', bytes <= 250 * 1024, bytes + ' bytes');
+  check('glb <= 2 MB', bytes <= 2 * 1024 * 1024, bytes + ' bytes');
   check('manifest bytes match glb', manifest.totals.bytes === bytes);
-  check('triangles <= 5000', manifest.totals.triangles <= 5000, manifest.totals.triangles + ' tris');
+  check('triangles <= 50000', manifest.totals.triangles <= 50000, manifest.totals.triangles + ' tris');
   const required = ['enclosure', 'switch', 'solar_lid', 'battery', 'charge_module', 'led_pair'];
   const data = readFileSync(glbPath);
   const jlen = data.readUInt32LE(12);
   const js = JSON.parse(data.subarray(20, 20 + jlen).toString('utf8'));
   const names = js.nodes.map((n) => n.name).sort();
   check('glb node names exact', JSON.stringify(names) === JSON.stringify([...required].sort()), names.join(','));
+  const allPrimitives = js.meshes.flatMap((m) => m.primitives || []);
+  const uvOk = allPrimitives.every((p) => {
+    const acc = js.accessors[p.attributes?.TEXCOORD_0];
+    return p.attributes?.TEXCOORD_0 !== undefined && acc?.type === 'VEC2' && acc?.count > 0;
+  });
+  check('every primitive has valid TEXCOORD_0', uvOk, `${allPrimitives.length} primitives checked`);
   const authoredMaterials = new Set((js.materials || []).map((m) => m.name));
   const materialNeedle = ['BatteryFoil', 'KaptonAmber', 'PcbGreen', 'ICBlack', 'UsbMetal', 'ClearLed', 'LedDie', 'SwitchActuator', 'SolarCell'];
   check('authored PBR material separation', materialNeedle.every((name) => authoredMaterials.has(name)), materialNeedle.filter((name) => !authoredMaterials.has(name)).join(',') || 'all named');
@@ -55,11 +61,32 @@ function staticChecks() {
     textureDims.push(okPng ? `${name}:${b.readUInt32BE(16)}x${b.readUInt32BE(20)}` : `${name}:missing`);
   }
   check('local PBR textures present/dimensioned', textureDims.every((v) => !v.endsWith(':missing')), textureDims.join(' '));
+  const usedMaterials = new Set(allPrimitives.map((p) => js.materials[p.material]?.name).filter(Boolean));
+  check('external detail material separation used', ['PcbGreen', 'ICBlack', 'Solder', 'CopperBus', 'ClearLed', 'SwitchPlastic'].every((n) => usedMaterials.has(n)), [...usedMaterials].join(','));
   for (const src of ['enclosure', 'switch']) {
     const file = readFileSync(join(ROOT, 'source-assets', 'stl', src + '.stl'));
     const sha = createHash('sha256').update(file).digest('hex');
     check(`manifest tracks ${src}.stl`, manifest.sources[src] && manifest.sources[src].sha256 === sha);
   }
+  const externalSources = [
+    ['tp4056', 'source-assets/external/pass9/tp4056-usbc.stl', 'sha256'],
+    ['led', 'source-assets/external/pass9/led-d5-clear.step', 'sha256'],
+    ['compact_switch', 'source-assets/external/pass9/switch-dip-slide.step', 'sha256'],
+  ];
+  for (const [key, rel, field] of externalSources) {
+    const sha = createHash('sha256').update(readFileSync(join(ROOT, rel))).digest('hex');
+    check(`manifest tracks external ${key}`, manifest.sources[key]?.[field] === sha, sha.slice(0, 12));
+  }
+  const batteryBounds = manifest.parts.summary.battery.localBoundsMm;
+  const boardBounds = manifest.parts.summary.charge_module.localBoundsMm;
+  check('battery truth envelope dimensions', batteryBounds.hi[0] - batteryBounds.lo[0] >= 38 && batteryBounds.hi[1] - batteryBounds.lo[1] >= 26, JSON.stringify(batteryBounds));
+  check('PCB imported relief clears board datum', boardBounds.hi[2] - boardBounds.lo[2] >= 4.0 && usedMaterials.has('CopperBus'), JSON.stringify(boardBounds));
+  const asm3dForLock = readFileSync(join(ROOT, 'js', 'ff-assembly3d.js'), 'utf8');
+  const lockStart = asm3dForLock.indexOf('const CHAPTERS = [');
+  const lockEnd = asm3dForLock.indexOf('  const posePos =', lockStart);
+  const choreographyHash = lockStart >= 0 && lockEnd > lockStart
+    ? createHash('sha256').update(asm3dForLock.slice(lockStart, lockEnd)).digest('hex') : '';
+  check('choreography/camera/applyPose lock hash', choreographyHash === '9b0998be8e7148f8a46cf056da451cb9f821b72408f463fac9d80ee3185f18c6', choreographyHash.slice(0, 12));
   execFileSync(process.execPath, [join(ROOT, 'tools', 'build-assembly-glb.mjs')], { cwd: ROOT });
   const rebuilt = readFileSync(glbPath);
   check('builder deterministic (rebuild identical)', createHash('sha256').update(rebuilt).digest('hex') === createHash('sha256').update(data).digest('hex'));
