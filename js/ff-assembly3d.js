@@ -8,11 +8,11 @@ const FOV = 34;
 
 const PART_IDS = ['enclosure', 'switch', 'solar_lid', 'battery', 'charge_module', 'led_pair'];
 const CHAPTERS = [
-  { id: 'solar_lid', key: 'solar', num: '01 / DAYLIGHT IN', title: '5V solar panel', body: 'Captures daylight to recharge the light.', turn: 200, slot: [0, 0, 52], inspect: [0, 4, 74], anchor: [-34, 0, 1.25] },
-  { id: 'battery', key: 'battery', num: '02 / POWER HELD', title: 'Rechargeable battery', body: 'Stores energy for study after dark.', turn: 185, slot: [-16, -2, 30], inspect: [-16, -2, 46], anchor: [18, 0, 0] },
-  { id: 'charge_module', key: 'module', num: '03 / CHARGE CONTROLLED', title: 'Recharge module', body: 'Manages safe charging from the panel.', turn: 175, slot: [16, -2, 30], inspect: [0, 0, 46], anchor: [-10, 0, 2.8] },
-  { id: 'led_pair', key: 'leds', num: '04 / LIGHT OUT', title: 'Two LEDs', body: 'Turn stored energy into focused study light.', turn: 205, slot: [0, -30, 10], inspect: [0, -54, 26], anchor: [8, -4.5, 0] },
-  { id: 'switch', key: 'switch', num: '05 / SWITCHED BY HAND', title: 'Slide switch', body: 'Completes the circuit so study light flows.', turn: 190, slot: [0, 44, 12], inspect: [0, 64, 26], anchor: [-24, 41, 3] },
+  { id: 'solar_lid', key: 'solar', num: '01 / DAYLIGHT IN', title: '5V solar panel', body: 'Captures daylight to recharge the light.', turn: 200, slot: [-110, 0, 55], inspect: [0, 4, 74], anchor: [-34, 0, 1.25] },
+  { id: 'battery', key: 'battery', num: '02 / POWER HELD', title: 'Rechargeable battery', body: 'Stores energy for study after dark.', turn: 185, slot: [-40, -4, 22], inspect: [-16, -2, 46], anchor: [18, 0, 0] },
+  { id: 'charge_module', key: 'module', num: '03 / CHARGE CONTROLLED', title: 'Recharge module', body: 'Manages safe charging from the panel.', turn: 175, slot: [30, -2, 38], inspect: [0, 0, 46], anchor: [-10, 0, 2.8] },
+  { id: 'led_pair', key: 'leds', num: '04 / LIGHT OUT', title: 'Two LEDs', body: 'Turn stored energy into focused study light.', turn: 205, slot: [95, -38, 15], inspect: [0, -54, 26], anchor: [8, -4.5, 0] },
+  { id: 'switch', key: 'switch', num: '05 / SWITCHED BY HAND', title: 'Slide switch', body: 'Completes the circuit so study light flows.', turn: 190, slot: [125, 35, 18], inspect: [0, 64, 26], anchor: [-24, 41, 3] },
   { id: 'enclosure', key: 'enclosure', num: '06 / BUILT TO PROTECT', title: '3D-printed enclosure', body: 'Shields every component.', turn: 210, slot: [0, 0, 0], inspect: [0, -6, 36], anchor: [38, -36, 1] },
 ];
 const REASSEMBLY_ORDER = ['enclosure', 'switch', 'led_pair', 'charge_module', 'battery', 'solar_lid'];
@@ -21,9 +21,11 @@ const T_INTRO_END = 0.075;
 const T_EXPLODE = [0.075, 0.125];
 const T_CH_START = 0.125;
 const CH_W = 0.108;
-const T_RE_START = 0.80;
-const RE_SPACING = 0.022;
-const RE_W = 0.082;
+// Leave a dedicated exploded-tableau beat after the final solo chapter. The
+// slightly tighter reassembly cadence keeps the finished state before p=1.
+const T_RE_START = 0.82;
+const RE_SPACING = 0.018;
+const RE_W = 0.07;
 const T_FINAL = Math.max(0.955, T_RE_START + 5 * RE_SPACING + RE_W);
 
 const clamp01 = (v) => Math.max(0, Math.min(1, v));
@@ -68,7 +70,7 @@ function init(section) {
   for (let i = 0; i < CHAPTERS.length; i++) {
     const c = CHAPTERS[i];
     html +=
-      '<article class="ff-asm3d-callout' + (i % 2 === 1 ? ' is-right' : '') + '" data-callout="' + c.key + '">' +
+      '<article class="ff-asm3d-callout' + (i % 2 === 1 ? ' is-right' : '') + (c.key === 'enclosure' ? ' is-enclosure' : '') + '" data-callout="' + c.key + '">' +
       '<p class="ff-assembly-eyebrow">' + c.num + '</p><h3>' + c.title + '</h3><p>' + c.body + '</p></article>';
   }
   html +=
@@ -104,9 +106,12 @@ function init(section) {
   renderer.outputColorSpace = THREE.SRGBColorSpace;
   const scene = new THREE.Scene();
   const camera = new THREE.PerspectiveCamera(FOV, 1, 0.005, 6);
-  scene.add(new THREE.HemisphereLight(0xffffff, 0x33443a, 1.25));
-  const sun = new THREE.DirectionalLight(0xffffff, 1.7);
+  scene.add(new THREE.HemisphereLight(0xffffff, 0x33443a, 1.65));
+  const sun = new THREE.DirectionalLight(0xffffff, 2.0);
   scene.add(sun);
+  const fill = new THREE.PointLight(0xc5e7d8, 0.8, 2.4);
+  fill.position.set(-0.35, -0.55, 0.6);
+  scene.add(fill);
 
   const groups = {};
   const meshNodes = {};
@@ -126,7 +131,7 @@ function init(section) {
 
   function materialFor(id) {
     const props = {
-      enclosure: { color: 0x151b18, roughness: 0.8, metalness: 0.02 },
+      enclosure: { color: 0x202a25, roughness: 0.72, metalness: 0.02 },
       solar_lid: { color: 0x0b2332, roughness: 0.42, metalness: 0.28 },
       battery: { color: 0xaeb9b4, roughness: 0.46, metalness: 0.08 },
       charge_module: { color: 0x126047, roughness: 0.55, metalness: 0.1 },
@@ -135,6 +140,10 @@ function init(section) {
     }[id];
     const material = new THREE.MeshStandardMaterial({ ...props, envMapIntensity: 0.35 });
     material.userData.baseOpacity = props.opacity ?? 1;
+    material.userData.baseTransparent = props.transparent ?? false;
+    material.userData.baseDepthWrite = true;
+    material.transparent = material.userData.baseTransparent;
+    material.depthWrite = true;
     return material;
   }
 
@@ -142,6 +151,10 @@ function init(section) {
     const matte = (color, roughness = 0.52, metalness = 0.05) => {
       const material = new THREE.MeshStandardMaterial({ color, roughness, metalness });
       material.userData.baseOpacity = 1;
+      material.userData.baseTransparent = true;
+      material.userData.baseDepthWrite = false;
+      material.transparent = true;
+      material.depthWrite = false;
       return material;
     };
     const detail = (geo, material, position) => {
@@ -161,15 +174,24 @@ function init(section) {
       detail(new THREE.BoxGeometry(81.5, 1.2, 0.32), matte(0x0a1111, 0.62, 0.04), [0, -40, 0.05]);
       detail(new THREE.BoxGeometry(81.5, 1.2, 0.32), matte(0x0a1111, 0.62, 0.04), [0, 40, 0.05]);
     } else if (id === 'battery') {
-      const pouch = matte(0xc8d0cb, 0.42, 0.04);
-      detail(new THREE.BoxGeometry(38, 26, 0.26), pouch, [0, 0, 2.58]);
-      detail(new THREE.BoxGeometry(38, 26, 0.26), pouch, [0, 0, -2.58]);
+      const pouch = matte(0xc8d0cb, 0.48, 0.04);
+      const roundedPouch = () => {
+        const s = new THREE.Shape(); const w = 19, h = 13, r = 2.6;
+        s.moveTo(-w + r, -h); s.lineTo(w - r, -h); s.quadraticCurveTo(w, -h, w, -h + r);
+        s.lineTo(w, h - r); s.quadraticCurveTo(w, h, w - r, h); s.lineTo(-w + r, h);
+        s.quadraticCurveTo(-w, h, -w, h - r); s.lineTo(-w, -h + r); s.quadraticCurveTo(-w, -h, -w + r, -h);
+        const g = new THREE.ExtrudeGeometry(s, { depth: 0.34, bevelEnabled: true, bevelSegments: 2, bevelSize: 0.7, bevelThickness: 0.08 });
+        g.translate(0, 0, -0.17); return g;
+      };
+      detail(roundedPouch(), pouch, [0, 0, 2.58]);
+      detail(roundedPouch(), pouch, [0, 0, -2.58]);
       const tape = matte(0xb45c1f, 0.46, 0.08);
       detail(new THREE.BoxGeometry(1.6, 30.6, 5.2), tape, [-21.1, 0, 0]);
       detail(new THREE.BoxGeometry(1.6, 30.6, 5.2), tape, [21.1, 0, 0]);
       const lead = matte(0x161c19, 0.48, 0.02);
       detail(new THREE.CylinderGeometry(0.7, 0.7, 7, 12), lead, [-18, -17.5, 2.8]).rotation.z = Math.PI / 2;
       detail(new THREE.CylinderGeometry(0.65, 0.65, 7, 12), matte(0x8f1717, 0.5, 0.02), [18, -17.5, 2.8]).rotation.z = Math.PI / 2;
+      detail(new THREE.BoxGeometry(6.5, 2.8, 0.5), matte(0xd59a35, 0.35, 0.18), [0, -14.1, 2.82]);
     } else if (id === 'charge_module') {
       const chip = matte(0x111715, 0.3, 0.22);
       for (const z of [-3.35, 3.35]) {
@@ -178,19 +200,49 @@ function init(section) {
       }
       const pad = matte(0xd19d48, 0.28, 0.58);
       for (const z of [-3.0, 3.0]) for (let i = -4; i <= 4; i += 2) detail(new THREE.BoxGeometry(0.8, 1.5, 0.18), pad, [i, -6.2, z]);
-      detail(new THREE.BoxGeometry(4.6, 3.6, 2.1), matte(0x151d1a, 0.36, 0.18), [0, 9.2, 0]);
+      detail(new THREE.BoxGeometry(5.6, 4.2, 2.2), matte(0xaab4ad, 0.28, 0.66), [0, 9.2, 0]);
+      detail(new THREE.BoxGeometry(3.5, 2.1, 2.35), matte(0x101613, 0.38, 0.15), [0, 9.9, 0]);
+      const trace = matte(0x2c9a6c, 0.4, 0.12);
+      for (const x of [-8, 0, 8]) detail(new THREE.BoxGeometry(0.7, 11, 0.12), trace, [x, 0.4, -2.87]);
+      for (const y of [-2, 3, 8]) detail(new THREE.BoxGeometry(15, 0.55, 0.12), trace, [0, y, 2.87]);
     } else if (id === 'led_pair') {
-      const glow = new THREE.MeshStandardMaterial({ color: 0xffffff, emissive: 0xf8fff9, emissiveIntensity: 2.2, roughness: 0.15 });
+      const shell = new THREE.MeshPhysicalMaterial({ color: 0xdff8fb, emissive: 0xb9ffff, emissiveIntensity: 1.8, roughness: 0.08, transparent: true, opacity: 0.72, transmission: 0.16, thickness: 0.35 });
+      const core = new THREE.MeshStandardMaterial({ color: 0xffffff, emissive: 0xffffff, emissiveIntensity: 4.2, roughness: 0.12 });
+      // A solid, emissive lens makes the rounded LED end legible even when
+      // the translucent barrel is viewed nearly end-on in the solo chapter.
+      const domeMat = new THREE.MeshStandardMaterial({ color: 0x9deaf0, emissive: 0x55dce7, emissiveIntensity: 2.8, roughness: 0.16, metalness: 0.02 });
+      domeMat.userData.baseOpacity = 1;
+      domeMat.userData.baseTransparent = false;
+      domeMat.userData.baseDepthWrite = true;
+      const leadMat = matte(0x8f9893, 0.34, 0.45);
+      shell.userData.baseOpacity = 0.72;
+      shell.userData.baseTransparent = true;
+      shell.userData.baseDepthWrite = false;
+      shell.depthWrite = false;
+      core.userData.baseOpacity = 1;
+      core.userData.baseTransparent = true;
+      core.userData.baseDepthWrite = false;
+      core.transparent = true;
+      core.depthWrite = false;
       [-8, 8].forEach((x) => {
-        const front = detail(new THREE.SphereGeometry(2.3, 18, 12, 0, Math.PI * 2, 0, Math.PI / 2), glow, [x, -4.5, 0]);
+        const front = detail(new THREE.SphereGeometry(2.2, 24, 16, 0, Math.PI * 2, 0, Math.PI / 2), domeMat, [x, -4.65, 0]);
         front.rotation.x = Math.PI;
-        detail(new THREE.SphereGeometry(2.3, 18, 12, 0, Math.PI * 2, 0, Math.PI / 2), glow, [x, 4.5, 0]);
+        detail(new THREE.SphereGeometry(0.95, 16, 10), core, [x, -5.85, 0]);
+        detail(new THREE.CylinderGeometry(0.45, 0.45, 2.8, 10), leadMat, [x, -4.0, 0]);
+        detail(new THREE.SphereGeometry(2.2, 24, 16, 0, Math.PI * 2, 0, Math.PI / 2), domeMat, [x, 4.65, 0]);
+        detail(new THREE.SphereGeometry(0.95, 16, 10), core, [x, 5.85, 0]);
+        detail(new THREE.CylinderGeometry(0.45, 0.45, 2.8, 10), leadMat, [x, 4.0, 0]);
       });
     } else if (id === 'switch') {
       detail(new THREE.BoxGeometry(10, 5, 3.3), matte(0x080c0a, 0.66, 0.02), [-5, 41.3, 3.5]);
     } else if (id === 'enclosure') {
       const layer = matte(0x26302a, 0.88, 0.01);
       for (let i = 0; i < 8; i++) detail(new THREE.BoxGeometry(81, 0.24, 0.16), layer, [0, -42.08, -4.8 + i * 1.55]);
+      const rim = matte(0x39483f, 0.64, 0.02);
+      detail(new THREE.BoxGeometry(82.5, 1.1, 0.42), rim, [0, -41.7, 6.8]);
+      detail(new THREE.BoxGeometry(82.5, 1.1, 0.42), rim, [0, 41.7, 6.8]);
+      detail(new THREE.BoxGeometry(1.1, 81, 0.42), rim, [-41.7, 0, 6.8]);
+      detail(new THREE.BoxGeometry(1.1, 81, 0.42), rim, [41.7, 0, 6.8]);
     }
   }
 
@@ -248,6 +300,10 @@ function init(section) {
   }
 
   const tmpBox = new THREE.Box3();
+  // Keep the per-part query box separate from the destination accumulator.
+  // Reusing tmpBox for both causes Box3.union() to union an object with
+  // itself, leaving an "all" bounds query equal to the final part visited.
+  const partBox = new THREE.Box3();
   const tmpSphere = new THREE.Sphere();
   const V = new THREE.Vector3();
 
@@ -259,14 +315,16 @@ function init(section) {
       const cRect = Object.values(callouts)[0].getBoundingClientRect();
       const sRect = sticky.getBoundingClientRect();
       const gutter = Math.max(0, cRect.width) + (cRect.left - sRect.left) + 24;
-      return { x: gutter, y: 84, w: Math.max(80, w - 2 * gutter), h: Math.max(120, h - 148), mobile };
+      // Copy occupies the editorial gutter on one side; the viewport to its
+      // right is the actual model stage. Do not halve that stage again.
+      return { x: Math.max(24, gutter - 28), y: 64, w: Math.max(180, w - gutter - 44), h: Math.max(120, h - 96), mobile };
     }
     let dock = 190;
     for (const k in callouts) {
       const r = callouts[k].getBoundingClientRect();
       if (r.height > 0) dock = Math.max(dock, r.height + 32);
     }
-    return { x: 16, y: 72, w: Math.max(80, w - 32), h: Math.max(120, h - 72 - dock), mobile };
+    return { x: 24, y: 72, w: Math.max(80, w - 48), h: Math.max(120, h - 72 - dock), mobile };
   }
 
   const ANGLE_KEYS = [
@@ -274,11 +332,13 @@ function init(section) {
     { at: T_EXPLODE[1], azim: 30, elev: -12 },
     ...CHAPTERS.map((c, i) => ({ at: T_CH_START + (i + 0.69) * CH_W, azim: 24 + i * 13, elev: 8 })),
     { at: T_RE_START + 0.04, azim: 30, elev: -10 },
-    { at: 0.99, azim: 30, elev: -28 },
+    { at: 0.99, azim: 20, elev: -24 },
   ];
 
   function viewAngles(p) {
     const ks = ANGLE_KEYS;
+    const chapterEnd = T_CH_START + CHAPTERS.length * CH_W;
+    if (p >= chapterEnd && p < T_RE_START) return { azim: 28, elev: -12 };
     if (p <= ks[0].at) return { azim: ks[0].azim, elev: ks[0].elev };
     for (let i = 0; i < ks.length - 1; i++) {
       if (p >= ks[i].at && p <= ks[i + 1].at) {
@@ -303,7 +363,7 @@ function init(section) {
     // copy remains active while the surrounding assembly fades back in, so a
     // late chapter sample never collapses to a tiny interpolation between the
     // solo and full-assembly camera distances.
-    const EXIT = 0.95;
+    const EXIT = 0.86;
     let w = 0;
     if (t < ENTER) w = smooth(t / ENTER);
     else if (t > EXIT) w = 1 - smooth((t - EXIT) / (1 - EXIT));
@@ -314,7 +374,7 @@ function init(section) {
   function boxForSubject(sub, out) {
     out.makeEmpty();
     if (sub === 'all') {
-      for (const id in groups) if (groups[id].visible) out.union(worldBox(id, tmpBox));
+      for (const id in groups) if (groups[id].visible) out.union(worldBox(id, partBox));
     } else {
       out.union(worldBox(sub, tmpBox));
     }
@@ -352,6 +412,40 @@ function init(section) {
       const right = new THREE.Vector3(Math.cos(azim), 0, -Math.sin(azim));
       center.addScaledVector(right, 0.001);
     }
+    if (pane.mobile && blend.id === 'led_pair' && blend.w > 0.5) {
+      // The protruding domes add a few pixels beyond the authored barrel;
+      // preserve the mobile safety edge without materially shrinking the solo.
+      dist *= 1.035;
+    }
+    if (p < T_INTRO_END) center.y += pane.mobile ? 0.012 : 0.025;
+    const chapterEnd = T_CH_START + CHAPTERS.length * CH_W;
+    const tableauMode = p >= chapterEnd && p < T_RE_START;
+    if (!pane.mobile && (tableauMode || !blend.id || blend.w <= 0) && (p >= chapterEnd && p <= 0.94 || p >= T_FINAL)) {
+      // Tableau, reassembly and final are viewport compositions rather than
+      // editorial-pane solos. Refit against the full viewport so the closed
+      // product and the spread assembly read at the requested scale.
+      const finalMode = p >= T_FINAL;
+      const targetW = sticky.clientWidth * (finalMode ? 0.46 : 0.58);
+      const targetH = sticky.clientHeight * (finalMode ? 0.60 : 0.64);
+      const compositionBox = boxForSubject('all', boxA);
+      center = compositionBox.getCenter(centerV);
+      // Use a damped solve. A hard clamp of the raw ratio can overshoot when
+      // the projected box changes abruptly with a three-quarter view (most
+      // noticeably on the spread tableau), leaving the composition smaller
+      // than the viewport target after the final iteration.
+      for (let iter = 0; iter < 24; iter++) {
+        const bb = projectedPixelBBox(compositionBox, center, dist, azim, elev, pane);
+        const wPx = bb.maxX - bb.minX;
+        const hPx = bb.maxY - bb.minY;
+        const scale = Math.max(wPx / Math.max(1, targetW), hPx / Math.max(1, targetH));
+        if (Math.abs(scale - 1) < 0.01) break;
+        dist *= Math.min(1.10, Math.max(0.90, scale));
+      }
+      // The finished exterior has a compact depth box, so the pane fit is
+      // height-dominated. Bring it a little closer to the viewport target
+      // while retaining the safe margin around the final marker.
+      if (finalMode) dist *= 0.88;
+    }
     return { center, dist };
   }
 
@@ -385,8 +479,8 @@ function init(section) {
     // copy-clearance constraint only; it must not make the active component
     // tiny merely because editorial copy occupies one side.
     const cfg = pane.mobile
-      ? { targetW: sticky.clientWidth * 0.80, targetH: sticky.clientHeight * 0.54, maxW: sticky.clientWidth * 0.86, maxH: sticky.clientHeight * 0.60, clearX: 16, clearY: 16 }
-      : { targetW: sticky.clientWidth * 0.56, targetH: sticky.clientHeight * 0.52, maxW: sticky.clientWidth * 0.66, maxH: sticky.clientHeight * 0.65, clearX: 32, clearY: 40 };
+      ? { targetW: sticky.clientWidth * 0.80, targetH: sticky.clientHeight * 0.54, maxW: sticky.clientWidth * 0.86, maxH: sticky.clientHeight * 0.60, clearX: 20, clearY: 20 }
+      : { targetW: sticky.clientWidth * 0.56, targetH: sticky.clientHeight * 0.72, maxW: sticky.clientWidth * 0.66, maxH: sticky.clientHeight * 0.72, clearX: 36, clearY: 40 };
     const sph = box.getBoundingSphere(tmpSphere);
     const c = tmpSphere.center;
     const targetFrac = pane.mobile ? 0.54 : 0.52;
@@ -410,8 +504,8 @@ function init(section) {
       }
       if (wPx > cfg.maxW) scale = Math.max(scale, wPx / cfg.maxW);
       if (hPx > cfg.maxH) scale = Math.max(scale, hPx / cfg.maxH);
-      const paneMaxFrac = pane.mobile ? 0.84 : 0.68;
-      scale = Math.max(scale, wPx / Math.max(1, pane.w * paneMaxFrac), hPx / Math.max(1, pane.h * (pane.mobile ? 0.60 : 0.68)));
+      const paneMaxFrac = pane.mobile ? 0.84 : 0.72;
+      scale = Math.max(scale, wPx / Math.max(1, pane.w * paneMaxFrac), hPx / Math.max(1, pane.h * (pane.mobile ? 0.60 : 0.72)));
       if (Math.abs(scale - 1) < 0.0015) break;
       d *= Math.min(1.35, Math.max(0.75, scale));
     }
@@ -432,28 +526,31 @@ function init(section) {
       let y = c.slot[1] * MM * ex * reassemblyK(p, c.id);
       let z = c.slot[2] * MM * ex * reassemblyK(p, c.id);
       let yaw = 0;
+      const reassemblyProgress = smooth((p - T_RE_START) / Math.max(0.001, T_FINAL - T_RE_START));
+      const hasCompletedSolo = chIdx > i || (chIdx === i && chapterT(p, i) >= 0.72) || p >= T_RE_START;
+      if (hasCompletedSolo) {
+        // Finish the inspection around the product's useful face and carry
+        // the remaining turn gradually through the tableau and reassembly.
+        yaw = ((c.turn + (360 - c.turn) * reassemblyProgress) * Math.PI) / 180;
+      }
       if (i === chIdx) {
         const t = chapterT(p, i);
         const liftIn = smooth(t / 0.22);
         const liftOut = smooth((t - 0.78) / 0.22);
         const liftAmt = liftIn - liftOut;
-        // A solo turn only advances: it reaches the showcase angle, then
-        // continues forward to a full 360° identity before the tableau.
-        const turnUp = smooth(t / 0.84);
-        const finish = smooth((t - 0.84) / 0.16);
-        yaw = ((c.turn * turnUp + (360 - c.turn) * finish) * Math.PI) / 180;
+        // Advance slowly to the readable three-quarter face, then preserve
+        // that orientation instead of rushing a final 150° in the last beat.
+        const turnUp = smooth(t / 0.72);
+        yaw = ((c.turn * turnUp + (t >= 0.72 ? (360 - c.turn) * reassemblyProgress : 0)) * Math.PI) / 180;
         x += c.inspect[0] * MM * liftAmt;
         y += c.inspect[1] * MM * liftAmt;
         z += c.inspect[2] * MM * liftAmt;
       }
       g.position.set(seats[c.id].x + x, seats[c.id].y + y, seats[c.id].z + z);
       g.rotation.set(0, yaw, 0, 'YXZ');
-      // Keep the inactive assembly from becoming a giant, cropped ghost under
-      // solo copy. It is cleanly hidden once the active chapter settles; the
-      // short blend-in/out keeps the tableau coherent at chapter boundaries.
-      const chapterPhase = chIdx >= 0 ? chapterT(p, chIdx) : 0;
-      const soloSettled = chIdx >= 0 && chapterPhase > 0.44 && chapterPhase < 0.95;
-      g.visible = !soloSettled || c.id === soloId;
+      // Keep every component in the scene so transitions remain scroll-linked;
+      // applyDim controls the readable emphasis without a visibility snap.
+      g.visible = true;
       g.updateMatrixWorld(true);
     });
   }
@@ -546,19 +643,28 @@ function init(section) {
     const i = chapterAt(p);
     if (i < 0) return null;
     const t = chapterT(p, i);
-    return t >= 0.26 && t <= 0.94 ? CHAPTERS[i].key : null;
+    return t >= 0.26 && t <= 0.85 ? CHAPTERS[i].key : null;
   }
 
   const SUN_OFF = new THREE.Vector3(0.3, 0.9, 0.4);
   function applyDim(p) {
     const blend = chapterBlend(p);
     const activeId = blend.id && blend.w > 0 ? blend.id : null;
+    const exteriorOnly = p < T_EXPLODE[0] || p >= T_FINAL;
+    const exteriorParts = new Set(['enclosure', 'solar_lid', 'led_pair', 'switch']);
     CHAPTERS.forEach((c) => {
-      const dim = c.id === activeId ? 1 : 1 - 0.75 * blend.w;
+      const hiddenInterior = exteriorOnly && !exteriorParts.has(c.id);
+      const dim = hiddenInterior ? 0 : (c.id === activeId ? 1 : (blend.id ? Math.max(0, 1 - blend.w * 4) : 1));
+      groups[c.id].visible = dim > 0.001 || c.id === activeId;
       groups[c.id].traverse((o) => {
         if (o.isMesh) {
           const mats = Array.isArray(o.material) ? o.material : [o.material];
-          mats.forEach((m) => { m.opacity = (m.userData.baseOpacity ?? 1) * dim; });
+          mats.forEach((m) => {
+            m.opacity = (m.userData.baseOpacity ?? 1) * dim;
+            const fading = dim < 0.999;
+            m.transparent = fading || (m.userData.baseTransparent ?? false);
+            m.depthWrite = fading ? false : (m.userData.baseDepthWrite ?? true);
+          });
         }
       });
     });
@@ -587,7 +693,16 @@ function init(section) {
     sun.position.copy(camera.position).add(SUN_OFF.clone().multiplyScalar(dist));
     renderer.render(scene, camera);
     const activeKey = activeCalloutKey(p);
-    for (const k in callouts) callouts[k].classList.toggle('is-active', k === activeKey);
+    const chapterIndex = chapterAt(p);
+    CHAPTERS.forEach((c, i) => {
+      const el = callouts[c.key];
+      const t = chapterIndex === i ? chapterT(p, i) : (chapterIndex < i ? 0 : 1);
+      const fadeIn = smooth(t / 0.26);
+      const fadeOut = smooth((1 - t) / 0.14);
+      const alpha = chapterIndex === i && t >= 0.26 && t <= 0.90 ? Math.min(fadeIn, fadeOut) : 0;
+      el.style.opacity = alpha.toFixed(3);
+      el.classList.toggle('is-active', alpha > 0.32);
+    });
     introCopy.classList.toggle('is-hidden', p > 0.085);
     finalMark.classList.toggle('is-active', p >= 0.985);
     updateLeaders(activeKey);
@@ -600,6 +715,7 @@ function init(section) {
       allSilhouette: silhouettePx('all'),
       introBox: (() => { const r = introCopy.getBoundingClientRect(), s = sticky.getBoundingClientRect(); return { x: r.left - s.left, y: r.top - s.top, w: r.width, h: r.height }; })(),
       finalBox: (() => { const r = finalMark.getBoundingClientRect(), s = sticky.getBoundingClientRect(); return { x: r.left - s.left, y: r.top - s.top, w: r.width, h: r.height }; })(),
+      calloutBox: activeKey ? (() => { const r = callouts[activeKey].getBoundingClientRect(), s = sticky.getBoundingClientRect(); return { x: r.left - s.left, y: r.top - s.top, w: r.width, h: r.height }; })() : null,
       pose: Object.fromEntries(PART_IDS.map((id) => [id, {
         position: groups[id].position.toArray().map((v) => +v.toFixed(6)),
         rotation: groups[id].rotation.toArray().slice(0, 3).map((v) => +v.toFixed(5)),
@@ -688,7 +804,7 @@ function init(section) {
   window.addEventListener('pagehide', cleanup, { once: true });
 
   window.__ffasm3d = {
-    version: 'pass3',
+    version: 'pass4',
     get ready() { return ready; },
     progress: () => lastProgress,
     cam: () => ({ pos: camera.position.toArray(), dist: lastView ? lastView.dist : null, center: lastView ? lastView.center.toArray() : null }),

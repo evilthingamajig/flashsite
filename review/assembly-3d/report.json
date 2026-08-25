@@ -1,5 +1,5 @@
 {
-  "when": "checkpoint-pass3",
+  "when": "checkpoint-pass4",
   "results": [
     {
       "name": "glb exists",
@@ -112,14 +112,14 @@
       "detail": ""
     },
     {
-      "name": "[desktop-1440x900] hold ch1 silhouette fills 58-68% of pane",
+      "name": "[desktop-1440x900] hold ch1 silhouette fills 58-74% of pane",
       "ok": true,
-      "detail": "fill 0.680"
+      "detail": "fill 0.679"
     },
     {
       "name": "[desktop-1440x900] hold ch1 clearance >=32/40px",
       "ok": true,
-      "detail": "L85 R80 T191 B188"
+      "detail": "L35 R393 T133 B124"
     },
     {
       "name": "[desktop-1440x900] leader lands on mesh anchor ch1",
@@ -129,17 +129,17 @@
     {
       "name": "[desktop-1440x900] leader route stays outside silhouette ch1",
       "ok": true,
-      "detail": "route 533,452 sil 547,275,351,373"
+      "detail": "route 456,451 sil 470,197,505,546"
     },
     {
-      "name": "[desktop-1440x900] hold ch2 silhouette fills 58-68% of pane",
+      "name": "[desktop-1440x900] hold ch2 silhouette fills 58-74% of pane",
       "ok": true,
-      "detail": "fill 0.681"
+      "detail": "fill 0.624"
     },
     {
       "name": "[desktop-1440x900] hold ch2 clearance >=32/40px",
       "ok": true,
-      "detail": "L93 R71 T213 B206"
+      "detail": "L35 R353 T166 B137"
     },
     {
       "name": "[desktop-1440x900] leader lands on mesh anchor ch2",
@@ -149,17 +149,17 @@
     {
       "name": "[desktop-1440x900] leader route stays outside silhouette ch2",
       "ok": true,
-      "detail": "route 920,426 sil 556,297,351,333"
+      "detail": "route 1029,417 sil 470,230,545,501"
     },
     {
-      "name": "[desktop-1440x900] hold ch3 silhouette fills 58-68% of pane",
+      "name": "[desktop-1440x900] hold ch3 silhouette fills 58-74% of pane",
       "ok": true,
-      "detail": "fill 0.680"
+      "detail": "fill 0.691"
     },
     {
       "name": "[desktop-1440x900] hold ch3 clearance >=32/40px",
       "ok": true,
-      "detail": "L94 R71 T222 B206"
+      "detail": "L35 R333 T153 B96"
     },
     {
       "name": "[desktop-1440x900] leader lands on mesh anchor ch3",
@@ -169,17 +169,17 @@
     {
       "name": "[desktop-1440x900] leader route stays outside silhouette ch3",
       "ok": true,
-      "detail": "route 543,483 sil 557,306,350,324"
+      "detail": "route 456,507 sil 470,217,565,556"
     },
     {
-      "name": "[desktop-1440x900] hold ch4 silhouette fills 58-68% of pane",
+      "name": "[desktop-1440x900] hold ch4 silhouette fills 58-74% of pane",
       "ok": true,
-      "detail": "fill 0.680"
+      "detail": "fill 0.605"
     },
     {
       "name": "[desktop-1440x900] hold ch4 clearance >=32/40px",
       "ok": true,
-      "detail": "L96 R68 T236 B217"
+      "detail": "L35 R333 T197 B136"
     },
     {
       "name": "[desktop-1440x900] leader lands on mesh anchor ch4",
@@ -189,17 +189,17 @@
     {
       "name": "[desktop-1440x900] leader route stays outside silhouette ch4",
       "ok": true,
-      "detail": "route 923,511 sil 559,320,350,299"
+      "detail": "route 1049,542 sil 470,261,565,470"
     },
     {
-      "name": "[desktop-1440x900] hold ch5 silhouette fills 58-68% of pane",
+      "name": "[desktop-1440x900] hold ch5 silhouette fills 58-74% of pane",
       "ok": true,
-      "detail": "fill 0.680"
+      "detail": "fill 0.721"
     },
     {
       "name": "[desktop-1440x900] hold ch5 clearance >=32/40px",
       "ok": true,
-      "detail": "L116 R49 T288 B265"
+      "detail": "L50 R211 T272 B182"
     },
     {
       "name": "[desktop-1440x900] leader lands on mesh anchor ch5",
@@ -209,17 +209,17 @@
     {
       "name": "[desktop-1440x900] leader route stays outside silhouette ch5",
       "ok": true,
-      "detail": "route 564,486 sil 578,372,350,199"
+      "detail": "route 470,511 sil 484,336,673,350"
     },
     {
-      "name": "[desktop-1440x900] hold ch6 silhouette fills 58-68% of pane",
+      "name": "[desktop-1440x900] hold ch6 silhouette fills 58-74% of pane",
       "ok": true,
-      "detail": "fill 0.622"
+      "detail": "fill 0.721"
     },
     {
       "name": "[desktop-1440x900] hold ch6 clearance >=32/40px",
       "ok": true,
-      "detail": "L124 R116 T159 B125"
+      "detail": "L99 R452 T127 B97"
     },
     {
       "name": "[desktop-1440x900] leader lands on mesh anchor ch6",
@@ -229,7 +229,7 @@
     {
       "name": "[desktop-1440x900] leader route stays outside silhouette ch6",
       "ok": true,
-      "detail": "route 876,583 sil 586,243,275,468"
+      "detail": "route 930,608 sil 533,191,382,580"
     },
     {
       "name": "[desktop-1440x900] reverse scrub deterministic",
@@ -249,6 +249,21 @@
       "name": "[desktop-1440x900] final marker clears finished product",
       "ok": true,
       "detail": "final bbox overlap=false"
+    },
+    {
+      "name": "[desktop-1440x900] final composition meets viewport scale",
+      "ok": true,
+      "detail": "551x614"
+    },
+    {
+      "name": "[desktop-1440x900] exploded tableau has no active copy",
+      "ok": true,
+      "detail": "active=none"
+    },
+    {
+      "name": "[desktop-1440x900] exploded tableau meets viewport scale",
+      "ok": true,
+      "detail": "838x555"
     },
     {
       "name": "[desktop-1440x900] footer reachable after incremental down/up/down",
@@ -287,7 +302,7 @@
     {
       "name": "[mobile-390x844] hold ch1 within 70-86vw/60svh",
       "ok": true,
-      "detail": "300x320"
+      "detail": "287x306"
     },
     {
       "name": "[mobile-390x844] hold ch1 clearance >=16px",
@@ -302,17 +317,17 @@
     {
       "name": "[mobile-390x844] leader route stays outside silhouette ch1",
       "ok": true,
-      "detail": "route 319,605 sil 47,271,300,320"
+      "detail": "route 313,598 sil 52,278,287,306"
     },
     {
       "name": "[mobile-390x844] hold ch2 within 70-86vw/60svh",
       "ok": true,
-      "detail": "301x286"
+      "detail": "287x263"
     },
     {
       "name": "[mobile-390x844] hold ch2 clearance >=16px",
       "ok": true,
-      "detail": "20"
+      "detail": "21"
     },
     {
       "name": "[mobile-390x844] leader lands on mesh anchor ch2",
@@ -322,17 +337,17 @@
     {
       "name": "[mobile-390x844] leader route stays outside silhouette ch2",
       "ok": true,
-      "detail": "route 89,590 sil 53,289,301,286"
+      "detail": "route 93,577 sil 58,300,287,263"
     },
     {
       "name": "[mobile-390x844] hold ch3 within 70-86vw/60svh",
       "ok": true,
-      "detail": "301x278"
+      "detail": "285x274"
     },
     {
       "name": "[mobile-390x844] hold ch3 clearance >=16px",
       "ok": true,
-      "detail": "19"
+      "detail": "20"
     },
     {
       "name": "[mobile-390x844] leader lands on mesh anchor ch3",
@@ -342,17 +357,17 @@
     {
       "name": "[mobile-390x844] leader route stays outside silhouette ch3",
       "ok": true,
-      "detail": "route 291,590 sil 54,297,301,278"
+      "detail": "route 294,587 sil 61,298,285,274"
     },
     {
       "name": "[mobile-390x844] hold ch4 within 70-86vw/60svh",
       "ok": true,
-      "detail": "301x256"
+      "detail": "275x227"
     },
     {
       "name": "[mobile-390x844] hold ch4 clearance >=16px",
       "ok": true,
-      "detail": "18"
+      "detail": "25"
     },
     {
       "name": "[mobile-390x844] leader lands on mesh anchor ch4",
@@ -362,17 +377,17 @@
     {
       "name": "[mobile-390x844] leader route stays outside silhouette ch4",
       "ok": true,
-      "detail": "route 112,579 sil 56,309,301,256"
+      "detail": "route 116,561 sil 66,321,275,227"
     },
     {
       "name": "[mobile-390x844] hold ch5 within 70-86vw/60svh",
       "ok": true,
-      "detail": "289x166"
+      "detail": "273x140"
     },
     {
       "name": "[mobile-390x844] hold ch5 clearance >=16px",
       "ok": true,
-      "detail": "21"
+      "detail": "24"
     },
     {
       "name": "[mobile-390x844] leader lands on mesh anchor ch5",
@@ -382,17 +397,22 @@
     {
       "name": "[mobile-390x844] leader route stays outside silhouette ch5",
       "ok": true,
-      "detail": "route 286,535 sil 64,355,289,166"
+      "detail": "route 282,518 sil 69,364,273,140"
     },
     {
       "name": "[mobile-390x844] hold ch6 within 70-86vw/60svh",
       "ok": true,
-      "detail": "200x349"
+      "detail": "222x349"
     },
     {
       "name": "[mobile-390x844] hold ch6 clearance >=16px",
       "ok": true,
-      "detail": "41"
+      "detail": "42"
+    },
+    {
+      "name": "[mobile-390x844] enclosure copy clears silhouette by 24px",
+      "ok": true,
+      "detail": "49px"
     },
     {
       "name": "[mobile-390x844] leader lands on mesh anchor ch6",
@@ -402,7 +422,7 @@
     {
       "name": "[mobile-390x844] leader route stays outside silhouette ch6",
       "ok": true,
-      "detail": "route 139,627 sil 98,264,200,349"
+      "detail": "route 130,626 sil 86,263,222,349"
     },
     {
       "name": "[mobile-390x844] reverse scrub deterministic",
@@ -424,6 +444,11 @@
       "detail": "final bbox overlap=false"
     },
     {
+      "name": "[mobile-390x844] exploded tableau has no active copy",
+      "ok": true,
+      "detail": "active=none"
+    },
+    {
       "name": "[mobile-390x844] footer reachable after incremental down/up/down",
       "ok": true,
       "detail": "first=true second=true top -38 vs vh 844"
@@ -439,6 +464,6 @@
       "detail": ""
     }
   ],
-  "passed": 91,
+  "passed": 96,
   "failed": 0
 }

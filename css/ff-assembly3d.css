@@ -16,12 +16,12 @@
 .ff-asm3d-intro-copy h2{margin:0 0 10px;font-size:clamp(2.2rem,5vw,5.2rem);font-weight:400;line-height:.98;letter-spacing:-.04em}
 .ff-asm3d-intro-copy>p:last-child{margin:0;font-size:clamp(1rem,1.5vw,1.25rem)}
 .ff-assembly-eyebrow{margin:0 0 14px;color:var(--primary-color--primary-color-dark,#15803d);font-size:11px;line-height:1.1;letter-spacing:.16em;text-transform:uppercase}
-.ff-asm3d-callout{position:absolute;top:50%;left:6%;width:min(26vw,22rem);max-width:calc(50vw - 4rem);opacity:0;transform:translateY(-50%);pointer-events:none;transition:none}
-.ff-asm3d-callout.is-right{left:auto;right:6%}
+.ff-asm3d-callout{position:absolute;top:50%;left:6%;width:min(26vw,22rem);max-width:calc(50vw - 4rem);opacity:0;transform:translateY(-50%);pointer-events:none;transition:opacity .24s ease}
+.ff-asm3d-callout.is-right{left:auto;right:4%}
 .ff-asm3d-callout.is-active{opacity:1}
 .ff-asm3d-callout h3{margin:0 0 12px;font-size:clamp(2rem,4.2vw,4.7rem);font-weight:400;line-height:.96;letter-spacing:-.04em}
 .ff-asm3d-callout>p:last-child{max-width:16rem;margin:0;font-size:clamp(1rem,1.45vw,1.35rem);line-height:1.22}
-.ff-asm3d-final-mark{position:absolute;left:50%;top:clamp(112px,15vh,160px);transform:translateX(-50%);text-align:center;display:block;opacity:0;transition:opacity .18s ease}
+.ff-asm3d-final-mark{position:absolute;left:50%;top:clamp(88px,10vh,112px);transform:translateX(-50%);text-align:center;display:block;opacity:0;transition:opacity .18s ease}
 .ff-asm3d-final-mark.is-active{opacity:1}
 .ff-asm3d-final-mark .ff-assembly-eyebrow{margin:0;font-size:clamp(12px,1.2vw,16px)}
 @media(max-width:699px){
@@ -30,6 +30,7 @@
  .ff-asm3d-intro-copy{top:4.5%;width:88vw}
  .ff-asm3d-intro-copy h2{font-size:clamp(2.2rem,11vw,3.8rem)}
  .ff-asm3d-callout,.ff-asm3d-callout.is-right{top:auto;bottom:18svh;left:16px;right:16px;width:min(78vw,20rem);max-width:none;text-align:left;background:transparent;border:0;border-radius:0;padding:0;transform:translateY(0)}
+ .ff-asm3d-callout.is-enclosure{bottom:6svh}
  .ff-asm3d-callout.is-right{left:auto;right:16px;text-align:right}
  .ff-asm3d-callout h3{font-size:clamp(2rem,10vw,3.2rem)}
  .ff-asm3d-callout>p:last-child{max-width:18rem;margin:0;font-size:1rem}
