@@ -16,7 +16,7 @@ def noise(size, base, spread):
     return im
 
 def save_base():
-    im = noise(128, (105, 115, 112), 7)
+    im = noise(128, (148, 154, 151), 2)
     d = ImageDraw.Draw(im)
     d.rounded_rectangle((12, 12, 116, 116), radius=12, outline=(185, 190, 188), width=2)
     d.line((20, 82, 108, 82), fill=(150, 158, 154), width=2)
@@ -24,14 +24,14 @@ def save_base():
     im.save(ROOT / "battery_basecolor.png", optimize=True)
 
 def save_rough():
-    im = noise(64, (105, 105, 105), 12)
+    im = noise(64, (132, 132, 132), 3)
     im.save(ROOT / "battery_roughness.png", optimize=True)
 
 def save_normal():
     im = Image.new("RGB", (64, 64), (128, 128, 255))
     d = ImageDraw.Draw(im)
     for p in range(8, 64, 16):
-        d.line((p, 0, p, 64), fill=(136, 124, 247), width=1)
+        d.line((p, 0, p, 64), fill=(132, 127, 250), width=1)
     im.save(ROOT / "electronics_normal.png", optimize=True)
 
 def save_board():

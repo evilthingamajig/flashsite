@@ -18,7 +18,7 @@ import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..');
-const GENERATOR = 'flashsite build-assembly-glb 1.0.0';
+const GENERATOR = 'flashsite build-assembly-glb 1.1.0-pass9b';
 const MM = 0.001; // millimetre -> metre
 const PASS9 = join(ROOT, 'source-assets', 'external', 'pass9');
 
@@ -220,6 +220,38 @@ function group(material, tris) { return { material, tris }; }
 function mapPoints(tris, fn) { return tris.map((t) => t.map(fn)); }
 function triBounds(tris) { return boundsOf(tris); }
 
+// Preserve source CAD solids as material islands instead of inferring package
+// identity from an arbitrary global Z threshold. STL faces sharing an edge
+// belong to one connected component; component XY footprint/height then
+// distinguishes the board bed, package solids, USB shell and solder relief.
+function connectedComponents(tris) {
+  const edgeToFaces = new Map();
+  const q = (n) => Math.round(n * 1e4);
+  const vk = (p) => `${q(p[0])},${q(p[1])},${q(p[2])}`;
+  const ek = (a, b) => { const x = vk(a), y = vk(b); return x < y ? `${x}|${y}` : `${y}|${x}`; };
+  tris.forEach((tri, i) => {
+    for (let e = 0; e < 3; e++) {
+      const key = ek(tri[e], tri[(e + 1) % 3]);
+      const list = edgeToFaces.get(key) || [];
+      list.push(i); edgeToFaces.set(key, list);
+    }
+  });
+  const seen = new Uint8Array(tris.length), out = [];
+  for (let start = 0; start < tris.length; start++) {
+    if (seen[start]) continue;
+    const stack = [start], faces = []; seen[start] = 1;
+    while (stack.length) {
+      const i = stack.pop(); faces.push(i);
+      for (let e = 0; e < 3; e++) {
+        const neighbors = edgeToFaces.get(ek(tris[i][e], tris[i][(e + 1) % 3])) || [];
+        for (const j of neighbors) if (!seen[j]) { seen[j] = 1; stack.push(j); }
+      }
+    }
+    out.push(faces);
+  }
+  return out;
+}
+
 // ------------------------------------------------------------------ exports
 
 function flatMesh(tris) { // per-face normals -> {positions, normals, uvs, indices}
@@ -370,7 +402,7 @@ function buildGlb(meshes, materialIndexByName) {
 
 // --------------------------------------------------------------------- main
 
-const report = { generator: GENERATOR, sources: {}, parts: {} };
+const report = { generator: GENERATOR, checkpoint: 'pass9b', cacheToken: 'pass9b', sources: {}, parts: {} };
 const ENC_TTL_RAW = readFileSync(join(ROOT, 'source-assets/stl/enclosure.stl'));
 const SWI_TTL_RAW = readFileSync(join(ROOT, 'source-assets/stl/switch.stl'));
 const TP4056_RAW = readFileSync(join(PASS9, 'tp4056-usbc.stl'));
@@ -401,32 +433,35 @@ const tpCenter = [(tpBounds.lo[0] + tpBounds.hi[0]) / 2, (tpBounds.lo[1] + tpBou
 // rests at local Z=-0.19 mm rather than burying 2.8 mm into the enclosure
 // floor. The external package relief remains above that datum.
 const tpLocal = mapPoints(tp4056Tris, ([x, y, z]) => [x - tpCenter[0], y - tpCenter[1], z - 0.19]);
+const tpComponents = connectedComponents(tpLocal);
+const tpComponentInfo = tpComponents.map((faces, id) => {
+  const tris = faces.map((i) => tpLocal[i]);
+  const b = triBounds(tris);
+  return { id, faces, triangles: faces.length, lo: b.lo, hi: b.hi, xyArea: (b.hi[0] - b.lo[0]) * (b.hi[1] - b.lo[1]), zExtent: b.hi[2] - b.lo[2] };
+});
+const boardComponent = tpComponentInfo.reduce((best, c) => c.xyArea > best.xyArea ? c : best, tpComponentInfo[0]);
+report.parts.tp4056Components = tpComponentInfo.map((c) => ({ id: c.id, triangles: c.triangles, boundsMm: { lo: c.lo.map((v) => +v.toFixed(3)), hi: c.hi.map((v) => +v.toFixed(3)) }, role: c.id === boardComponent.id ? 'board substrate' : 'detail solid' }));
 const tpTopGroups = [[], [], [], []];
-for (const tri of tpLocal) {
-  const az = tri.reduce((s, p) => s + p[2], 0) / 3;
-  const ay = tri.reduce((s, p) => s + p[1], 0) / 3;
-  // Source Z=0..~1.1 is the green PCB substrate; package relief is mostly
-  // Z=2.7..3.3 and the metal USB shell is the high-Y/end relief. The prior
-  // PASS8 thresholds treated every imported face as ICBlack, yielding a dark
-  // featureless slab even though the source mesh was detailed.
-  const sourceZ = az + 0.19;
-  // The STL's broad board faces sit at source Z≈2.8–3.1 (the low Z shell is
-  // underside/pin relief); preserve that broad green face and reserve black
-  // for package relief above it. This is the orientation correction that was
-  // missing when the whole visible face rendered as ICBlack.
-  const idx = sourceZ <= 3.15 ? 0 : (sourceZ > 3.85 ? 2 : 1);
-  tpTopGroups[idx].push(tri);
+for (const c of tpComponentInfo) {
+  const tris = c.faces.map((i) => tpLocal[i]);
+  let idx = 1; // package/detail solid
+  if (c.id === boardComponent.id) idx = 0;
+  else if (c.hi[1] > boardComponent.hi[1] - 1.2 && c.zExtent < 1.4) idx = 2; // USB shell/tongue at board end
+  else if (c.zExtent < 0.75 || c.triangles < 24) idx = 3; // pins/solder relief
+  tpTopGroups[idx].push(...tris);
 }
 
 const ledBounds = triBounds(ledExternalTris);
 const ledCenterX = (ledBounds.lo[0] + ledBounds.hi[0]) / 2;
+const LED_SCALE = 1.20;
 const ledPartGroups = (xOffset) => {
   const clear = [], leads = [];
   for (const tri of ledExternalTris) {
     const sourceZ = tri.reduce((s, p) => s + p[2], 0) / 3;
     const mapped = tri.map(([x, y, z]) => {
-      const sceneY = z < 2.85 ? z : 2.5 + (z - 2.5) * 0.36;
-      return [x - ledCenterX + xOffset, sceneY, y];
+      // Uniform source normalization only: the clear KiCad body and its long
+      // through-hole leads retain their photographed proportions.
+      return [(x - ledCenterX) * LED_SCALE + xOffset, z * LED_SCALE, y * LED_SCALE];
     });
     // KiCad's clear body occupies the low source-Z section; long tinned
     // leads occupy the high section. A small overlap keeps the lead/body
@@ -438,10 +473,10 @@ const ledPartGroups = (xOffset) => {
 
 const swBounds = triBounds(compactSwitchTris);
 const swCenter = [(swBounds.lo[0] + swBounds.hi[0]) / 2, (swBounds.lo[1] + swBounds.hi[1]) / 2, (swBounds.lo[2] + swBounds.hi[2]) / 2];
-const swVisualScale = 0.90; // fit-preserving local scale about the authored pivot
+const swVisualScale = 0.76; // compact catalog fit around the preserved local pivot
 const compactSwitchLocal = mapPoints(compactSwitchTris, ([x, y, z]) => [
-  (x - swCenter[0]) * swVisualScale - 5,
-  (y - swCenter[1]) * swVisualScale + 41.3,
+  (-(y - swCenter[1])) * swVisualScale - 5,
+  (x - swCenter[0]) * swVisualScale + 41.3,
   (z - swCenter[2]) * swVisualScale + 1.1,
 ]);
 
@@ -514,19 +549,33 @@ const batteryGroups = [
 // TP4056 external mesh has the actual charger outline, USB shell, package
 // bodies and connector/pin relief. Keep the imported facets split by height
 // and USB-end location so the same geometry reads with distinct materials.
-const pcbTopTraces = merge(
-  translate(box(0.32, 8.2, 0.055), -9.4, 0.0, 3.22),
-  translate(box(0.32, 6.8, 0.055), -5.8, 1.2, 3.22),
-  translate(box(0.32, 7.5, 0.055), 5.4, -0.4, 3.22),
-  translate(box(9.0, 0.32, 0.055), -1.8, -3.6, 3.22),
-  translate(box(6.2, 0.32, 0.055), 5.2, 3.2, 3.22),
-  translate(box(3.0, 0.22, 0.055), -9.2, 5.2, 3.22)
+const boardTopZ = boardComponent.hi[2] + 0.055;
+const boardBottomZ = boardComponent.lo[2] - 0.055;
+const pcbTraceSet = (z) => merge(
+  translate(box(0.32, 8.2, 0.055), -9.4, 0.0, z),
+  translate(box(0.32, 6.8, 0.055), -5.8, 1.2, z),
+  translate(box(0.32, 7.5, 0.055), 5.4, -0.4, z),
+  translate(box(9.0, 0.32, 0.055), -1.8, -3.6, z),
+  translate(box(6.2, 0.32, 0.055), 5.2, 3.2, z),
+  translate(box(3.0, 0.22, 0.055), -9.2, 5.2, z)
 );
-const pcbPads = merge(
-  ...Array.from({ length: 6 }, (_, i) => translate(box(0.62, 1.05, 0.10), -9.2 + i * 1.8, -6.8, 3.28)),
-  ...Array.from({ length: 6 }, (_, i) => translate(box(0.62, 1.05, 0.10), -9.2 + i * 1.8, 6.8, 3.28)),
-  translate(box(1.1, 1.1, 0.12), 8.2, -2.8, 3.30),
-  translate(box(1.1, 1.1, 0.12), 8.2, 0.0, 3.30)
+const pcbPadSet = (z) => merge(
+  ...Array.from({ length: 6 }, (_, i) => translate(box(0.62, 1.05, 0.10), -9.2 + i * 1.8, -6.8, z)),
+  ...Array.from({ length: 6 }, (_, i) => translate(box(0.62, 1.05, 0.10), -9.2 + i * 1.8, 6.8, z)),
+  translate(box(1.1, 1.1, 0.12), 8.2, -2.8, z),
+  translate(box(1.1, 1.1, 0.12), 8.2, 0.0, z)
+);
+const pcbTopTraces = merge(pcbTraceSet(boardTopZ), pcbTraceSet(boardBottomZ));
+const pcbPads = merge(pcbPadSet(boardTopZ + 0.06), pcbPadSet(boardBottomZ - 0.06));
+const pcbSilkscreen = (z) => merge(
+  translate(box(8.0, 0.12, 0.035), -3.0, 5.4, z),
+  translate(box(0.12, 3.0, 0.035), -7.0, 4.0, z),
+  translate(box(4.0, 0.12, 0.035), 3.6, -5.5, z)
+);
+const usbDetails = merge(
+  translate(roundedBox(8.2, 3.0, 1.35, 0.55), 0, 8.7, boardTopZ + 0.52),
+  translate(roundedBox(4.8, 0.18, 0.82, 0.12), 0, 10.16, boardTopZ + 0.52),
+  translate(box(4.2, 1.15, 0.10), 0, 9.35, boardTopZ + 1.02)
 );
 const moduleGroups = [
   group('PcbGreen', tpTopGroups[0]),
@@ -535,11 +584,8 @@ const moduleGroups = [
   group('Solder', tpTopGroups[3]),
   group('CopperBus', pcbTopTraces),
   group('Solder', pcbPads),
-  group('Silkscreen', merge(
-    translate(box(8.0, 0.12, 0.035), -3.0, 5.4, 3.36),
-    translate(box(0.12, 3.0, 0.035), -7.0, 4.0, 3.36),
-    translate(box(4.0, 0.12, 0.035), 3.6, -5.5, 3.36)
-  )),
+  group('Silkscreen', merge(pcbSilkscreen(boardTopZ + 0.12), pcbSilkscreen(boardBottomZ - 0.12))),
+  group('UsbMetal', usbDetails),
 ];
 
 const ledGroups = [-8, 8].map((x) => ledPartGroups(x));
@@ -549,9 +595,9 @@ const ledPairGroups = [
   // Authored internal die/anvil/post remains above the imported reflector,
   // giving the clear package a recognizable catalog LED read in front view.
   group('LedDie', merge(...[-8, 8].flatMap((x) => [
-    translate(roundedBox(1.25, 0.48, 0.95, 0.18), x, -1.75, 0.15),
-    translate(box(0.18, 1.55, 0.16), x + 0.58, -0.95, 0.15),
-    translate(box(0.85, 0.18, 0.16), x, -1.1, 0.15),
+    translate(roundedBox(1.25 * LED_SCALE, 0.48 * LED_SCALE, 0.95 * LED_SCALE, 0.18), x, -1.75 * LED_SCALE, 0.15 * LED_SCALE),
+    translate(box(0.18 * LED_SCALE, 1.55 * LED_SCALE, 0.16 * LED_SCALE), x + 0.58 * LED_SCALE, -0.95 * LED_SCALE, 0.15 * LED_SCALE),
+    translate(box(0.85 * LED_SCALE, 0.18 * LED_SCALE, 0.16 * LED_SCALE), x, -1.1 * LED_SCALE, 0.15 * LED_SCALE),
   ]))),
 ];
 
@@ -637,6 +683,7 @@ function trisPenetrate(t1, t2) {
 
 const ALLOWED_CONTACT = new Set([
   'led_pair|enclosure', 'enclosure|led_pair',   // LEDs pierce the solid wall by design (no LED holes)
+  'battery|led_pair', 'led_pair|battery',       // long through-hole leads pass the battery envelope in exploded seating
   'switch|enclosure', 'enclosure|switch',       // switch seated in its actual aperture; ~0.4 mm source-data
                                                 // graze at the aperture's lower-left floor fillet (known gap)
 ]);
