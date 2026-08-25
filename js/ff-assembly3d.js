@@ -1,7 +1,8 @@
 import * as THREE from 'three';
 import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
 
-const GLB_URL = 'assets/3d/flashlight-assembly.glb';
+const CACHE_TOKEN = 'pass9b';
+const GLB_URL = `assets/3d/flashlight-assembly.glb?rev=${CACHE_TOKEN}`;
 const MM = 0.001;
 const DPR_CAP = 1.75;
 const FOV = 34;
@@ -353,12 +354,12 @@ function init(section) {
   const authoredTextureLoader = new THREE.TextureLoader();
   function hydrateAuthoredTextures(rootNode) {
     const maps = {
-      BatterySilver: 'assets/3d/textures/battery_basecolor.png',
-      PcbGreen: 'assets/3d/textures/tp4056_basecolor.png',
+      BatterySilver: `assets/3d/textures/battery_basecolor.png?rev=${CACHE_TOKEN}`,
+      PcbGreen: `assets/3d/textures/tp4056_basecolor.png?rev=${CACHE_TOKEN}`,
     };
-    const normal = authoredTextureLoader.load('assets/3d/textures/electronics_normal.png', () => requestRender(true));
+    const normal = authoredTextureLoader.load(`assets/3d/textures/electronics_normal.png?rev=${CACHE_TOKEN}`, () => requestRender(true));
     normal.colorSpace = THREE.NoColorSpace;
-    const ao = authoredTextureLoader.load('assets/3d/textures/electronics_ao.png', () => requestRender(true));
+    const ao = authoredTextureLoader.load(`assets/3d/textures/electronics_ao.png?rev=${CACHE_TOKEN}`, () => requestRender(true));
     ao.colorSpace = THREE.NoColorSpace;
     rootNode.traverse((o) => {
       if (!o.isMesh) return;
@@ -368,13 +369,20 @@ function init(section) {
           const tex = authoredTextureLoader.load(maps[m.name], () => requestRender(true));
           tex.colorSpace = THREE.SRGBColorSpace;
           tex.anisotropy = renderer.capabilities.getMaxAnisotropy();
+          if (m.name === 'BatterySilver') {
+            // The authored foil print is right-reading in its source image;
+            // flip only U so mesh/tabs/pivots remain untouched.
+            tex.wrapS = THREE.RepeatWrapping;
+            tex.repeat.x = -1;
+            tex.offset.x = 1;
+          }
           m.map = tex;
           m.needsUpdate = true;
         }
         if (m.name === 'BatterySilver' || m.name === 'PcbGreen') {
           m.normalMap = normal;
           m.aoMap = ao;
-          m.normalScale?.set(0.22, 0.22);
+          m.normalScale?.set(m.name === 'BatterySilver' ? 0.07 : 0.13, m.name === 'BatterySilver' ? 0.07 : 0.13);
           m.needsUpdate = true;
         }
       });
@@ -570,24 +578,30 @@ function init(section) {
       }
     }
     if (pane.mobile && blend.id === 'switch' && blend.w > 0.5) {
-      // The switch is a shallow, wide part. Give it the same visual weight as
-      // the other mobile solos, then bias it a few pixels away from the left
-      // editorial copy while preserving the pane's 16px safety edge.
-      dist *= 0.95;
+      // Keep the official imported body at source scale. A small distance
+      // allowance and explicit rightward center bias preserve the 16px mobile
+      // editorial edge without the old crop-inducing closer bias.
+      dist *= 1.03;
       const right = new THREE.Vector3(Math.cos(azim), 0, -Math.sin(azim));
-      center.addScaledVector(right, 0.001);
-    }
-    if (pane.mobile && blend.id === 'led_pair' && blend.w > 0.5) {
-      // The protruding domes add a few pixels beyond the authored barrel;
-      // preserve the mobile safety edge without materially shrinking the solo.
-      dist *= 1.035;
-    }
-    if (!pane.mobile && blend.id === 'led_pair' && blend.w > 0.5) {
-      // The explicit lens and rear leads extend the desktop three-quarter
-      // bounds slightly beyond the manifest cylinder. Give that wider
-      // silhouette a small desktop-only fit allowance; mobile keeps its
-      // existing viewport scale target.
-      dist *= 1.08;
+      const switchBox = boxForSubject('switch', boxA);
+      const base = projectedPixelBBox(switchBox, center, dist, azim, elev, pane);
+      const shifted = projectedPixelBBox(switchBox, switchCenterProbe(center, right, 0.001), dist, azim, elev, pane);
+      const baseMid = (base.minX + base.maxX) * 0.5;
+      const shiftedMid = (shifted.minX + shifted.maxX) * 0.5;
+      const slope = (shiftedMid - baseMid) / 0.001;
+      if (Math.abs(slope) > 1) center.addScaledVector(right, ((pane.x + pane.w * 0.5) - baseMid) / slope);
+    } else if (!pane.mobile && blend.id === 'switch' && blend.w > 0.5) {
+      // The imported switch exposes its actuator/contacts at this approved
+      // angle; keep a measured desktop safety margin around the body.
+      dist *= 1.03;
+      const right = new THREE.Vector3(Math.cos(azim), 0, -Math.sin(azim));
+      const switchBox = boxForSubject('switch', boxA);
+      const base = projectedPixelBBox(switchBox, center, dist, azim, elev, pane);
+      const shifted = projectedPixelBBox(switchBox, switchCenterProbe(center, right, 0.001), dist, azim, elev, pane);
+      const baseMid = (base.minX + base.maxX) * 0.5;
+      const shiftedMid = (shifted.minX + shifted.maxX) * 0.5;
+      const slope = (shiftedMid - baseMid) / 0.001;
+      if (Math.abs(slope) > 1) center.addScaledVector(right, ((pane.x + pane.w * 0.5) - baseMid) / slope);
     }
     if (p < T_INTRO_END) center.y += pane.mobile ? 0.012 : 0.025;
     const chapterEnd = T_CH_START + CHAPTERS.length * CH_W;
@@ -660,6 +674,9 @@ function init(section) {
 
   const fitCam = new THREE.PerspectiveCamera(FOV, 1, 0.005, 6);
   const projPt = new THREE.Vector3();
+  function switchCenterProbe(center, right, amount) {
+    return center.clone().addScaledVector(right, amount);
+  }
   function projectedPixelBBox(box, center, dist, azim, elev, pane) {
     const ce = Math.cos(elev);
     fitCam.aspect = sticky.clientWidth / Math.max(1, sticky.clientHeight);

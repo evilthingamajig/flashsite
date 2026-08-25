@@ -31,6 +31,7 @@ function staticChecks() {
   check('reassembly overlap <=20%', overlap <= RE_W * 0.20, `${(overlap / RE_W * 100).toFixed(1)}% overlap`);
   const glbPath = join(ROOT, 'assets', '3d', 'flashlight-assembly.glb');
   const manifest = JSON.parse(readFileSync(join(ROOT, 'assets', '3d', 'assembly-manifest.json'), 'utf8'));
+  check('pass9b checkpoint/cache token', manifest.checkpoint === 'pass9b' && manifest.cacheToken === 'pass9b', `${manifest.checkpoint}/${manifest.cacheToken}`);
   check('glb exists', existsSync(glbPath));
   const bytes = statSync(glbPath).size;
   check('glb <= 2 MB', bytes <= 2 * 1024 * 1024, bytes + ' bytes');
@@ -83,10 +84,12 @@ function staticChecks() {
   check('PCB imported relief clears board datum', boardBounds.hi[2] - boardBounds.lo[2] >= 4.0 && usedMaterials.has('CopperBus'), JSON.stringify(boardBounds));
   const asm3dForLock = readFileSync(join(ROOT, 'js', 'ff-assembly3d.js'), 'utf8');
   const lockStart = asm3dForLock.indexOf('const CHAPTERS = [');
-  const lockEnd = asm3dForLock.indexOf('  const posePos =', lockStart);
-  const choreographyHash = lockStart >= 0 && lockEnd > lockStart
-    ? createHash('sha256').update(asm3dForLock.slice(lockStart, lockEnd)).digest('hex') : '';
-  check('choreography/camera/applyPose lock hash', choreographyHash === '9b0998be8e7148f8a46cf056da451cb9f821b72408f463fac9d80ee3185f18c6', choreographyHash.slice(0, 12));
+  const chapterLockEnd = asm3dForLock.indexOf('const T_HERO_START', lockStart);
+  const poseStart = asm3dForLock.indexOf('  function applyPose(p)', chapterLockEnd);
+  const poseEnd = asm3dForLock.indexOf('  let lastProgress', poseStart);
+  const choreographyHash = lockStart >= 0 && chapterLockEnd > lockStart && poseStart > chapterLockEnd && poseEnd > poseStart
+    ? createHash('sha256').update(asm3dForLock.slice(lockStart, chapterLockEnd) + asm3dForLock.slice(poseStart, poseEnd)).digest('hex') : '';
+  check('choreography/applyPose lock hash', choreographyHash === 'cebe12c62dae2ba0c29a8ad18c8ef5caaaab3a60c17c231db976a72b4ac182fc', choreographyHash.slice(0, 12));
   execFileSync(process.execPath, [join(ROOT, 'tools', 'build-assembly-glb.mjs')], { cwd: ROOT });
   const rebuilt = readFileSync(glbPath);
   check('builder deterministic (rebuild identical)', createHash('sha256').update(rebuilt).digest('hex') === createHash('sha256').update(data).digest('hex'));
@@ -102,6 +105,9 @@ function staticChecks() {
   const asm3d = readFileSync(join(ROOT, 'js', 'ff-assembly3d.js'), 'utf8');
   check('cavity floor is zero-thickness visual surface', /new THREE\.PlaneGeometry\(75, 75\)/.test(asm3d) && /visualOnly\s*=\s*true/.test(asm3d) && !/new THREE\.BoxGeometry\(75, 75,/.test(asm3d));
   check('no CDN references in runtime', !/https?:\/\//.test(asm3d.replace(/\/\/[^\n]*|\/\*[\s\S]*?\*\//g, '')));
+  check('pass9b LED uniform normalization', !/sceneY\s*=|\* 0\.36/.test(readFileSync(join(ROOT, 'tools', 'build-assembly-glb.mjs'), 'utf8')));
+  check('pass9b battery U flip and restrained normal', /RepeatWrapping/.test(asm3d) && /repeat\.x\s*=\s*-1/.test(asm3d) && /BatterySilver.*?\? 0\.07/.test(asm3d));
+  check('pass9b switch fit removes crop bias', !/blend\.id === 'switch'[\s\S]{0,240}dist \*= 0\.95/.test(asm3d) && /blend\.id === 'switch'[\s\S]{0,240}dist \*= 1\.03/.test(asm3d) && /switchCenterProbe/.test(asm3d));
   check('DPR cap present', /DPR_CAP\s*=\s*1\.75/.test(asm3d));
   check('ACES neutral renderer configured', /ACESFilmicToneMapping/.test(asm3d) && /toneMappingExposure = 1\.08/.test(asm3d) && /physicallyCorrectLights = true/.test(asm3d));
   check('runtime render metrics instrumented', /renderMetrics: \{ triangles: renderer\.info\.render\.triangles, drawCalls: renderer\.info\.render\.calls \}/.test(asm3d));
@@ -575,7 +581,7 @@ staticChecks();
 await browserPass();
 
 writeFileSync(join(OUT, 'report.json'), JSON.stringify({
-  when: 'checkpoint-pass7b',
+  when: 'checkpoint-pass9b',
   results,
   passed: results.filter((r) => r.ok).length,
   failed: results.filter((r) => !r.ok).length,
