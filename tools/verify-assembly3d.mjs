@@ -153,7 +153,8 @@ async function browserPass() {
     const geo = await cdp.evaluate(`(() => {
       const s = document.getElementById('assembly-sequence');
       const r = s.getBoundingClientRect();
-      return { top: r.top + window.scrollY, span: Math.max(1, r.height - window.innerHeight), docH: document.documentElement.scrollHeight };
+      const shell = s.querySelector('.ff-asm3d-shell');
+      return { top: r.top + window.scrollY, span: Math.max(1, r.height - window.innerHeight), shellCssH: parseFloat(getComputedStyle(shell).height), docH: document.documentElement.scrollHeight };
     })()`);
 
     async function goto(frac) {
@@ -193,6 +194,7 @@ async function browserPass() {
           pose: F.pose,
           activeCount: document.querySelectorAll('.ff-asm3d-callout.is-active').length,
           calloutOpacity: Object.fromEntries([...document.querySelectorAll('.ff-asm3d-callout')].map((el) => [el.dataset.callout, parseFloat(getComputedStyle(el).opacity)])),
+          calloutVisibility: Object.fromEntries([...document.querySelectorAll('.ff-asm3d-callout')].map((el) => [el.dataset.callout, getComputedStyle(el).visibility])),
           overflowX: Math.max(doc.scrollWidth, document.body.scrollWidth) - doc.clientWidth,
           navHidden: document.body.classList.contains('ff-assembly-active'),
         });
@@ -365,13 +367,17 @@ async function browserPass() {
     await goto(0.86); await settle(cdp);
     await cdp.screenshot(join(OUT, vp.label + '-reassemble.png'));
       await goto(T_RE_START - 0.002); await settle(cdp);
-    const tableauState = await readState();
+    let tableauState = await readState();
     const tableauCopyGone = tableauState?.calloutOpacity && Object.values(tableauState.calloutOpacity).every((value) => value <= 0.001);
     check(`[${vp.label}] exploded tableau has no active copy`, !tableauState?.active && tableauState?.activeCount === 0 && tableauCopyGone, `active=${tableauState?.active || 'none'}`);
     const finalSoloEnd = T_CH_START + CH_W * 6;
     const labelFade = await (async () => { await goto(finalSoloEnd + 0.002); await settle(cdp); return readState(); })();
     const fadeAlpha = labelFade?.calloutOpacity?.enclosure ?? 0;
     check(`[${vp.label}] final solo label crossfades into tableau`, fadeAlpha > 0.05 && fadeAlpha < 0.95, `alpha=${fadeAlpha.toFixed(3)}`);
+    await goto(T_RE_START - 0.002); await settle(cdp);
+    tableauState = await readState();
+    const cleanVisibility = tableauState?.calloutOpacity && tableauState?.calloutVisibility && Object.values(tableauState.calloutOpacity).every((value) => value <= 0.001) && Object.values(tableauState.calloutVisibility).every((value) => value === 'hidden');
+    check(`[${vp.label}] tableau copy hidden after two RAF`, cleanVisibility === true, `visibility=${JSON.stringify(tableauState?.calloutVisibility)} opacity=${JSON.stringify(tableauState?.calloutOpacity)}`);
     check(`[${vp.label}] exploded tableau exposes interior tray`, tableauState?.trayVisible === true);
     check(`[${vp.label}] cavity floor is visual-only and non-colliding`, tableauState?.cavityFloor?.visible === true && tableauState.cavityFloor.visualOnly === true && tableauState.cavityFloor.thicknessMm === 0 && tableauState.cavityFloor.zMm >= tableauState.cavityFloor.seatBottomMm, `${tableauState?.cavityFloor?.thicknessMm ?? 'missing'}mm`);
     if (tableauState?.pose) {
@@ -388,7 +394,7 @@ async function browserPass() {
       const minH = vp.mobile ? vp.h * 0.50 : vp.h * 0.55;
       const maxH = vp.mobile ? vp.h * 0.68 : vp.h * 0.80;
       check(`[${vp.label}] exploded tableau meets viewport scale`, tableauState.allSil.w >= minW && tableauState.allSil.w <= maxW && tableauState.allSil.h >= minH && tableauState.allSil.h <= maxH, `${tableauState.allSil.w.toFixed(0)}x${tableauState.allSil.h.toFixed(0)}`);
-      if (!vp.mobile) check(`[${vp.label}] tableau enclosure anchor remains substantive`, tableauState.enclosureSil?.w >= vp.w * 0.20 && tableauState.enclosureSil?.w <= vp.w * 0.45, `${tableauState.enclosureSil?.w?.toFixed(0) || 0}px`);
+      if (!vp.mobile) check(`[${vp.label}] tableau enclosure anchor fills 32-40vw`, tableauState.enclosureSil?.w >= vp.w * 0.32 && tableauState.enclosureSil?.w <= vp.w * 0.40, `${tableauState.enclosureSil?.w?.toFixed(0) || 0}px`);
     }
     await cdp.screenshot(join(OUT, vp.label + '-exploded-tableau.png'));
     const reassemblyState = await (async () => { await goto(0.86); await settle(cdp); return readState(); })();
@@ -400,7 +406,7 @@ async function browserPass() {
       const minH = vp.mobile ? vp.h * 0.42 : vp.h * 0.42;
       const maxH = vp.mobile ? vp.h * 0.64 : vp.h * 0.82;
       check(`[${vp.label}] reassembly composition remains visible`, reassemblyState.allSil.w >= minW && reassemblyState.allSil.w <= maxW && reassemblyState.allSil.h >= minH && reassemblyState.allSil.h <= maxH, `${reassemblyState.allSil.w.toFixed(0)}x${reassemblyState.allSil.h.toFixed(0)}`);
-      if (!vp.mobile) check(`[${vp.label}] reassembly enclosure anchor remains substantive`, reassemblyState.enclosureSil?.w >= vp.w * 0.24 && reassemblyState.enclosureSil?.w <= vp.w * 0.45, `${reassemblyState.enclosureSil?.w?.toFixed(0) || 0}px`);
+      if (!vp.mobile) check(`[${vp.label}] reassembly enclosure anchor fills 32-40vw`, reassemblyState.enclosureSil?.w >= vp.w * 0.32 && reassemblyState.enclosureSil?.w <= vp.w * 0.40, `${reassemblyState.enclosureSil?.w?.toFixed(0) || 0}px`);
     }
     const beforeTableau = await (async () => { await goto(T_RE_START - 0.005); await settle(cdp); return readState(); })();
     const afterTableau = await (async () => { await goto(T_RE_START + 0.005); await settle(cdp); return readState(); })();
@@ -428,7 +434,12 @@ async function browserPass() {
     check(`[${vp.label}] final bridge completes before end`, bridgeDone?.allSil && bridgeDone.cam?.dist > 0, 'bridge settled');
     const heroBridge = await (async () => { await goto(T_HERO_START + 0.007); await settle(cdp); return readState(); })();
     check(`[${vp.label}] final camera push occurs after closed hold`, heroBridge?.closedGeometry === true, `closed=${heroBridge?.closedGeometry}`);
-    check(`[${vp.label}] final phase timing is viewport-calibrated`, (T_HERO_START - T_CLOSED_HOLD) * (vp.mobile ? 2600 : 2800) >= 12 && (T_MARKER - T_HERO_START) * (vp.mobile ? 2600 : 2800) >= 19, `${((T_HERO_START - T_CLOSED_HOLD) * (vp.mobile ? 2600 : 2800)).toFixed(1)}vh hold/${((T_MARKER - T_HERO_START) * (vp.mobile ? 2600 : 2800)).toFixed(1)}vh push`);
+    const effectiveShellVh = geo.shellCssH / vp.h;
+    const holdVh = (T_HERO_START - T_CLOSED_HOLD) * effectiveShellVh * 100;
+    const pushVh = (T_MARKER - T_HERO_START) * effectiveShellVh * 100;
+    const beatVh = RE_SPACING * effectiveShellVh * 100;
+    check(`[${vp.label}] final phase timing is viewport-calibrated`, holdVh >= 50 && holdVh <= 75 && pushVh >= 75 && pushVh <= 100, `${holdVh.toFixed(1)}vh hold/${pushVh.toFixed(1)}vh push`);
+    check(`[${vp.label}] insertion cadence is viewport-calibrated`, beatVh >= 75 && beatVh <= 100, `${beatVh.toFixed(1)}vh/part`);
     const closureSamples = [];
     for (const sampleP of [0.86, 0.90, 0.912, 0.922, T_FINAL - 0.002, 0.999]) {
       await goto(sampleP); await settle(cdp);
@@ -517,7 +528,7 @@ staticChecks();
 await browserPass();
 
 writeFileSync(join(OUT, 'report.json'), JSON.stringify({
-  when: 'checkpoint-pass6e',
+  when: 'checkpoint-pass6f',
   results,
   passed: results.filter((r) => r.ok).length,
   failed: results.filter((r) => !r.ok).length,

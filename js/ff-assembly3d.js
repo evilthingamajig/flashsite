@@ -737,7 +737,13 @@ function init(section) {
       // Give the true enclosure rim/cavity enough visual weight in the
       // all-parts tableau. Solo and closed-product scales remain unchanged.
       const tableauScale = 1.35;
-      g.scale.setScalar(c.id === 'enclosure' && p >= tableauStart && p < 0.91 ? tableauScale : 1);
+      if (c.id === 'enclosure' && p >= tableauStart && p < 0.91) {
+        // Widen the inspection rim in screen space while preserving its
+        // cavity depth/height and the authored insertion seats.
+        g.scale.set(p < T_RE_START ? 1.93 : tableauScale, tableauScale, tableauScale);
+      } else {
+        g.scale.setScalar(1);
+      }
       // Keep every component in the scene so transitions remain scroll-linked;
       // applyDim controls the readable emphasis without a visibility snap.
       g.visible = true;
