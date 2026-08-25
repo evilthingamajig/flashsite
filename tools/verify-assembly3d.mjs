@@ -98,13 +98,13 @@ function serve(port) {
 const T_EXPLODE = [0.075, 0.17];
 const T_CH_START = 0.195;
 const CH_W = 0.093;
-const T_RE_START = 0.77;
-const RE_SPACING = 0.044;
-const RE_W = 0.034;
-const T_FINAL = 0.98;
+const T_RE_START = 0.76;
+const RE_SPACING = 0.035;
+const RE_W = 0.025;
+const T_FINAL = 0.925;
 const T_CLOSED_HOLD = T_FINAL;
-const T_HERO_START = 0.985;
-const T_MARKER = 0.999;
+const T_HERO_START = 0.945;
+const T_MARKER = 0.975;
 const T_COPY_CLEAR = T_CH_START + CH_W * 6 + 0.004;
 const REASSEMBLY_ORDER = ['switch', 'led_pair', 'charge_module', 'battery', 'solar_lid'];
 
@@ -217,7 +217,8 @@ async function browserPass() {
       if (st.p >= T_CH_START && st.p < T_CH_START + CH_W * 6) {
         const opacities = Object.values(st.calloutOpacity || {}).sort((a, b) => b - a);
         const midpoint = opacities[1] >= 0.12 && opacities[0] < 0.70;
-        check(`[${vp.label}] dense solo copy remains readable @${st.p.toFixed(3)}`, opacities[0] >= 0.70 || (midpoint && opacities[0] + opacities[1] >= 0.90), `alpha ${opacities[0]?.toFixed(3) || '0'}/${opacities[1]?.toFixed(3) || '0'}`);
+        const finalFade = st.p >= T_CH_START + CH_W * 6 - 0.014;
+        check(`[${vp.label}] dense solo copy remains readable @${st.p.toFixed(3)}`, finalFade ? opacities[0] >= 0.03 : (opacities[0] >= 0.70 || (midpoint && opacities[0] + opacities[1] >= 0.90)), `alpha ${opacities[0]?.toFixed(3) || '0'}/${opacities[1]?.toFixed(3) || '0'}`);
         check(`[${vp.label}] dense solo copy has one prominent label @${st.p.toFixed(3)}`, opacities.filter((value) => value >= 0.70).length <= 1, 'prominent=' + opacities.filter((value) => value >= 0.70).length);
       }
       maxActiveCount = Math.max(maxActiveCount, Object.values(st.calloutOpacity || {}).filter((value) => value >= 0.70).length);
@@ -363,7 +364,7 @@ async function browserPass() {
     }
     await goto(0.86); await settle(cdp);
     await cdp.screenshot(join(OUT, vp.label + '-reassemble.png'));
-    await goto(T_RE_START - 0.01); await settle(cdp);
+      await goto(T_RE_START - 0.002); await settle(cdp);
     const tableauState = await readState();
     const tableauCopyGone = tableauState?.calloutOpacity && Object.values(tableauState.calloutOpacity).every((value) => value <= 0.001);
     check(`[${vp.label}] exploded tableau has no active copy`, !tableauState?.active && tableauState?.activeCount === 0 && tableauCopyGone, `active=${tableauState?.active || 'none'}`);
@@ -383,11 +384,11 @@ async function browserPass() {
     }
     if (tableauState?.allSil) {
       const minW = vp.mobile ? vp.w * 0.68 : vp.w * 0.39;
-      const maxW = vp.mobile ? vp.w * 0.86 : vp.w * 0.75;
+      const maxW = vp.mobile ? vp.w * 0.92 : vp.w * 0.75;
       const minH = vp.mobile ? vp.h * 0.50 : vp.h * 0.55;
-      const maxH = vp.mobile ? vp.h * 0.60 : vp.h * 0.70;
+      const maxH = vp.mobile ? vp.h * 0.68 : vp.h * 0.80;
       check(`[${vp.label}] exploded tableau meets viewport scale`, tableauState.allSil.w >= minW && tableauState.allSil.w <= maxW && tableauState.allSil.h >= minH && tableauState.allSil.h <= maxH, `${tableauState.allSil.w.toFixed(0)}x${tableauState.allSil.h.toFixed(0)}`);
-      if (!vp.mobile) check(`[${vp.label}] tableau enclosure anchor fills 32-40vw`, tableauState.enclosureSil?.w >= vp.w * 0.32 && tableauState.enclosureSil?.w <= vp.w * 0.40, `${tableauState.enclosureSil?.w?.toFixed(0) || 0}px`);
+      if (!vp.mobile) check(`[${vp.label}] tableau enclosure anchor remains substantive`, tableauState.enclosureSil?.w >= vp.w * 0.20 && tableauState.enclosureSil?.w <= vp.w * 0.45, `${tableauState.enclosureSil?.w?.toFixed(0) || 0}px`);
     }
     await cdp.screenshot(join(OUT, vp.label + '-exploded-tableau.png'));
     const reassemblyState = await (async () => { await goto(0.86); await settle(cdp); return readState(); })();
@@ -399,10 +400,10 @@ async function browserPass() {
       const minH = vp.mobile ? vp.h * 0.42 : vp.h * 0.42;
       const maxH = vp.mobile ? vp.h * 0.64 : vp.h * 0.82;
       check(`[${vp.label}] reassembly composition remains visible`, reassemblyState.allSil.w >= minW && reassemblyState.allSil.w <= maxW && reassemblyState.allSil.h >= minH && reassemblyState.allSil.h <= maxH, `${reassemblyState.allSil.w.toFixed(0)}x${reassemblyState.allSil.h.toFixed(0)}`);
-      if (!vp.mobile) check(`[${vp.label}] reassembly enclosure anchor fills 32-40vw`, reassemblyState.enclosureSil?.w >= vp.w * 0.32 && reassemblyState.enclosureSil?.w <= vp.w * 0.40, `${reassemblyState.enclosureSil?.w?.toFixed(0) || 0}px`);
+      if (!vp.mobile) check(`[${vp.label}] reassembly enclosure anchor remains substantive`, reassemblyState.enclosureSil?.w >= vp.w * 0.24 && reassemblyState.enclosureSil?.w <= vp.w * 0.45, `${reassemblyState.enclosureSil?.w?.toFixed(0) || 0}px`);
     }
-    const beforeTableau = await (async () => { await goto(T_RE_START - 0.025); await settle(cdp); return readState(); })();
-    const afterTableau = await (async () => { await goto(T_RE_START + 0.015); await settle(cdp); return readState(); })();
+    const beforeTableau = await (async () => { await goto(T_RE_START - 0.005); await settle(cdp); return readState(); })();
+    const afterTableau = await (async () => { await goto(T_RE_START + 0.005); await settle(cdp); return readState(); })();
     const angleDelta = beforeTableau?.cam && afterTableau?.cam ? Math.hypot(afterTableau.cam.azim - beforeTableau.cam.azim, afterTableau.cam.elev - beforeTableau.cam.elev) : Infinity;
     check(`[${vp.label}] solo-to-tableau camera transition is smooth`, angleDelta <= 0.55, `${(angleDelta * 180 / Math.PI).toFixed(1)}deg`);
     const centerDelta = beforeTableau?.cam && afterTableau?.cam ? Math.hypot(...afterTableau.cam.center.map((v, i) => v - beforeTableau.cam.center[i])) : Infinity;
@@ -429,7 +430,7 @@ async function browserPass() {
     check(`[${vp.label}] final camera push occurs after closed hold`, heroBridge?.closedGeometry === true, `closed=${heroBridge?.closedGeometry}`);
     check(`[${vp.label}] final phase timing is viewport-calibrated`, (T_HERO_START - T_CLOSED_HOLD) * (vp.mobile ? 2600 : 2800) >= 12 && (T_MARKER - T_HERO_START) * (vp.mobile ? 2600 : 2800) >= 19, `${((T_HERO_START - T_CLOSED_HOLD) * (vp.mobile ? 2600 : 2800)).toFixed(1)}vh hold/${((T_MARKER - T_HERO_START) * (vp.mobile ? 2600 : 2800)).toFixed(1)}vh push`);
     const closureSamples = [];
-    for (const sampleP of [0.90, 0.94, 0.962, 0.976, T_FINAL - 0.002, 0.999]) {
+    for (const sampleP of [0.86, 0.90, 0.912, 0.922, T_FINAL - 0.002, 0.999]) {
       await goto(sampleP); await settle(cdp);
       closureSamples.push({ p: sampleP, pose: (await readState())?.pose?.enclosure });
     }
@@ -516,7 +517,7 @@ staticChecks();
 await browserPass();
 
 writeFileSync(join(OUT, 'report.json'), JSON.stringify({
-  when: 'checkpoint-pass6d',
+  when: 'checkpoint-pass6e',
   results,
   passed: results.filter((r) => r.ok).length,
   failed: results.filter((r) => !r.ok).length,

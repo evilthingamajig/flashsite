@@ -23,13 +23,13 @@ const T_CH_START = 0.195;
 const CH_W = 0.093;
 // Leave a dedicated exploded-tableau beat after the final solo chapter. The
 // slightly tighter reassembly cadence keeps the finished state before p=1.
-const T_RE_START = 0.77;
-const RE_SPACING = 0.044;
-const RE_W = 0.034;
-const T_FINAL = 0.98;
+const T_RE_START = 0.76;
+const RE_SPACING = 0.035;
+const RE_W = 0.025;
+const T_FINAL = 0.925;
 const T_CLOSED_HOLD = T_FINAL;
-const T_HERO_START = 0.985;
-const T_MARKER = 0.999;
+const T_HERO_START = 0.945;
+const T_MARKER = 0.975;
 const T_COPY_CLEAR = T_CH_START + CHAPTERS.length * CH_W + 0.004;
 
 const clamp01 = (v) => Math.max(0, Math.min(1, v));
@@ -721,7 +721,7 @@ function init(section) {
         // every insertion beat, and the closed hero. This makes the base
         // genuinely stationary; the lid itself supplies the final exterior
         // read without a late enclosure rotation.
-        const closure = smooth((p - 0.962) / 0.018);
+        const closure = smooth((p - 0.91) / 0.015);
         yaw = lerp(40, 0, closure) * Math.PI / 180;
       }
       if (c.id === 'enclosure' && p >= tableauStart && p < T_RE_START) {
@@ -736,8 +736,8 @@ function init(section) {
       g.rotation.set(0, yaw, 0, 'YXZ');
       // Give the true enclosure rim/cavity enough visual weight in the
       // all-parts tableau. Solo and closed-product scales remain unchanged.
-      const tableauScale = p < T_RE_START ? 1.88 : 1.73;
-      g.scale.setScalar(c.id === 'enclosure' && p >= tableauStart && p < 0.96 ? tableauScale : 1);
+      const tableauScale = 1.35;
+      g.scale.setScalar(c.id === 'enclosure' && p >= tableauStart && p < 0.91 ? tableauScale : 1);
       // Keep every component in the scene so transitions remain scroll-linked;
       // applyDim controls the readable emphasis without a visibility snap.
       g.visible = true;
@@ -750,6 +750,21 @@ function init(section) {
   let dirty = true;
   let inView = false;
   let docHidden = document.hidden;
+
+  function authoritativeSeatedPose() {
+    if (!ready || !manifestBounds) return false;
+    return PART_IDS.every((id) => {
+      const g = groups[id];
+      if (!g) return false;
+      const m = new THREE.Matrix4().extractRotation(g.matrixWorld);
+      const posOk = g.getWorldPosition(V).distanceTo(seats[id]) < 1e-6;
+      const rotOk = Math.abs(m.elements[0] - 1) < 1e-6 && Math.abs(m.elements[5] - 1) < 1e-6 && Math.abs(m.elements[10] - 1) < 1e-6;
+      const b = new THREE.Box3().setFromObject(meshNodes[id]);
+      const eb = manifestBounds[id]?.worldBoundsMm;
+      const boundsOk = eb && b.min.distanceTo(new THREE.Vector3(...eb.lo.map((v) => v * MM))) < 1e-5 && b.max.distanceTo(new THREE.Vector3(...eb.hi.map((v) => v * MM))) < 1e-5;
+      return posOk && rotOk && boundsOk;
+    });
+  }
 
   function currentProgress() {
     const rect = section.getBoundingClientRect();
@@ -901,7 +916,7 @@ function init(section) {
       let alpha = 0;
       if (chapterIndex === i) {
         const t = chapterT(p, i);
-        alpha = i === 0 ? 1 : smooth(t / 0.18);
+        alpha = i === CHAPTERS.length - 1 && t > 0.85 ? 1 - smooth((t - 0.85) / 0.15) : (i === 0 ? 1 : smooth(t / 0.18));
       } else if (chapterIndex === i + 1) {
         const t = chapterT(p, chapterIndex);
         alpha = 1 - smooth(t / 0.18);
@@ -917,13 +932,7 @@ function init(section) {
       el.classList.toggle('is-active', alpha > 0.32);
     });
     introCopy.classList.toggle('is-hidden', p > 0.085);
-    const closedGeometry = PART_IDS.every((id) => {
-      const g = groups[id];
-      if (!g) return false;
-      const posOk = g.getWorldPosition(V).distanceTo(seats[id]) < 1e-5;
-      const m = new THREE.Matrix4().extractRotation(g.matrixWorld);
-      return posOk && Math.abs(m.elements[0] - 1) < 1e-5 && Math.abs(m.elements[5] - 1) < 1e-5 && Math.abs(m.elements[10] - 1) < 1e-5;
-    });
+    const closedGeometry = authoritativeSeatedPose();
     const markerActive = p >= T_MARKER && closedGeometry;
     finalMark.classList.toggle('is-active', markerActive);
     updateLeaders(activeKey);
@@ -1055,15 +1064,7 @@ function init(section) {
       const missing = PART_IDS.filter((id) => !groups[id]);
       if (missing.length) return false;
       applyPose(1);
-      return PART_IDS.every((id) => {
-        const m = new THREE.Matrix4().extractRotation(groups[id].matrixWorld);
-        const posOk = groups[id].getWorldPosition(V).distanceTo(seats[id]) < 1e-6;
-        const rotOk = Math.abs(m.elements[0] - 1) < 1e-6 && Math.abs(m.elements[5] - 1) < 1e-6 && Math.abs(m.elements[10] - 1) < 1e-6;
-        const b = new THREE.Box3().setFromObject(meshNodes[id]);
-        const eb = manifestBounds[id]?.worldBoundsMm;
-        const boundsOk = eb && b.min.distanceTo(new THREE.Vector3(...eb.lo.map((v) => v * MM))) < 1e-5 && b.max.distanceTo(new THREE.Vector3(...eb.hi.map((v) => v * MM))) < 1e-5;
-        return posOk && rotOk && boundsOk;
-      });
+      return authoritativeSeatedPose();
     },
     parts: () => Object.keys(groups),
   };
