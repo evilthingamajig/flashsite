@@ -96,12 +96,12 @@ function serve(port) {
 // ------------------------------------------------------------ browser pass
 
 const T_EXPLODE = [0.075, 0.17];
-const T_CH_START = 0.18;
+const T_CH_START = 0.195;
 const CH_W = 0.093;
 const T_RE_START = 0.77;
 const RE_SPACING = 0.044;
 const RE_W = 0.034;
-const T_FINAL = 0.985;
+const T_FINAL = 0.98;
 const REASSEMBLY_ORDER = ['switch', 'led_pair', 'charge_module', 'battery', 'solar_lid'];
 
 async function settle(cdp) {
@@ -174,6 +174,7 @@ async function browserPass() {
           pane: F.pane,
           sil: F.silhouette,
           allSil: F.allSilhouette,
+          enclosureSil: F.enclosureSilhouette,
           trayVisible: F.trayVisible,
           cavityFloor: F.cavityFloor,
           introBox: F.introBox,
@@ -352,10 +353,14 @@ async function browserPass() {
     }
     await goto(0.86); await settle(cdp);
     await cdp.screenshot(join(OUT, vp.label + '-reassemble.png'));
-      await goto(T_RE_START - 0.01); await settle(cdp);
+    await goto(T_RE_START - 0.01); await settle(cdp);
     const tableauState = await readState();
     const tableauCopyGone = tableauState?.calloutOpacity && Object.values(tableauState.calloutOpacity).every((value) => value <= 0.001);
     check(`[${vp.label}] exploded tableau has no active copy`, !tableauState?.active && tableauState?.activeCount === 0 && tableauCopyGone, `active=${tableauState?.active || 'none'}`);
+    const finalSoloEnd = T_CH_START + CH_W * 6;
+    const labelFade = await (async () => { await goto(finalSoloEnd + 0.002); await settle(cdp); return readState(); })();
+    const fadeAlpha = labelFade?.calloutOpacity?.enclosure ?? 0;
+    check(`[${vp.label}] final solo label crossfades into tableau`, fadeAlpha > 0.05 && fadeAlpha < 0.95, `alpha=${fadeAlpha.toFixed(3)}`);
     check(`[${vp.label}] exploded tableau exposes interior tray`, tableauState?.trayVisible === true);
     check(`[${vp.label}] cavity floor is visual-only and non-colliding`, tableauState?.cavityFloor?.visible === true && tableauState.cavityFloor.visualOnly === true && tableauState.cavityFloor.thicknessMm === 0 && tableauState.cavityFloor.zMm >= tableauState.cavityFloor.seatBottomMm, `${tableauState?.cavityFloor?.thicknessMm ?? 'missing'}mm`);
     if (tableauState?.pose) {
@@ -372,6 +377,7 @@ async function browserPass() {
       const minH = vp.mobile ? vp.h * 0.50 : vp.h * 0.55;
       const maxH = vp.mobile ? vp.h * 0.60 : vp.h * 0.70;
       check(`[${vp.label}] exploded tableau meets viewport scale`, tableauState.allSil.w >= minW && tableauState.allSil.w <= maxW && tableauState.allSil.h >= minH && tableauState.allSil.h <= maxH, `${tableauState.allSil.w.toFixed(0)}x${tableauState.allSil.h.toFixed(0)}`);
+      if (!vp.mobile) check(`[${vp.label}] tableau enclosure anchor fills 32-40vw`, tableauState.enclosureSil?.w >= vp.w * 0.32 && tableauState.enclosureSil?.w <= vp.w * 0.40, `${tableauState.enclosureSil?.w?.toFixed(0) || 0}px`);
     }
     await cdp.screenshot(join(OUT, vp.label + '-exploded-tableau.png'));
     const reassemblyState = await (async () => { await goto(0.86); await settle(cdp); return readState(); })();
@@ -383,6 +389,7 @@ async function browserPass() {
       const minH = vp.mobile ? vp.h * 0.42 : vp.h * 0.42;
       const maxH = vp.mobile ? vp.h * 0.64 : vp.h * 0.82;
       check(`[${vp.label}] reassembly composition remains visible`, reassemblyState.allSil.w >= minW && reassemblyState.allSil.w <= maxW && reassemblyState.allSil.h >= minH && reassemblyState.allSil.h <= maxH, `${reassemblyState.allSil.w.toFixed(0)}x${reassemblyState.allSil.h.toFixed(0)}`);
+      if (!vp.mobile) check(`[${vp.label}] reassembly enclosure anchor fills 32-40vw`, reassemblyState.enclosureSil?.w >= vp.w * 0.32 && reassemblyState.enclosureSil?.w <= vp.w * 0.40, `${reassemblyState.enclosureSil?.w?.toFixed(0) || 0}px`);
     }
     const beforeTableau = await (async () => { await goto(T_RE_START - 0.025); await settle(cdp); return readState(); })();
     const afterTableau = await (async () => { await goto(T_RE_START + 0.015); await settle(cdp); return readState(); })();
@@ -408,11 +415,20 @@ async function browserPass() {
     const bridgeDone = await (async () => { await goto(Math.min(0.999, T_FINAL + 0.022)); await settle(cdp); return readState(); })();
     check(`[${vp.label}] closed hold precedes final push`, closedHold?.active === null && closedHold?.allSil, 'closed product hold');
     check(`[${vp.label}] final bridge completes before end`, bridgeDone?.allSil && bridgeDone.cam?.dist > 0, 'bridge settled');
+    const closureSamples = [];
+    for (const sampleP of [0.90, 0.94, 0.962, 0.976, T_FINAL - 0.002, 0.999]) {
+      await goto(sampleP); await settle(cdp);
+      closureSamples.push({ p: sampleP, pose: (await readState())?.pose?.enclosure });
+    }
+    const closureRot = closureSamples.map((s) => s.pose?.rotation?.[1] ?? NaN);
+    const closureDeltas = closureRot.slice(1).map((v, i) => Math.abs(v - closureRot[i]));
+    check(`[${vp.label}] enclosure closure rotation is continuous`, closureDeltas.every((d) => Number.isFinite(d) && d < 1.8), closureDeltas.map((d) => d.toFixed(2)).join('/'));
+    check(`[${vp.label}] enclosure reaches final orientation before hero push`, Math.abs(closureRot[4] - closureRot[5]) < 0.12 && Math.abs(closureRot[3] - closureRot[4]) < 0.12, `${closureRot[3].toFixed(2)}→${closureRot[4].toFixed(2)}→${closureRot[5].toFixed(2)}`);
     const seatedPose = (await (async () => { await goto(1); await settle(cdp); return readState(); })())?.pose;
     const reassemblyBase = (await (async () => { await goto(T_RE_START); await settle(cdp); return readState(); })());
     let previousBeatPose = reassemblyBase?.pose || tableauState?.pose;
     for (let idx = 0; idx < REASSEMBLY_ORDER.length; idx++) {
-      const beatP = T_RE_START + idx * RE_SPACING + RE_W + 0.003;
+      const beatP = Math.min(T_RE_START + idx * RE_SPACING + RE_W + 0.003, T_FINAL - 0.02);
       await goto(beatP); await settle(cdp);
       const beatState = await readState();
       const id = REASSEMBLY_ORDER[idx];
@@ -487,7 +503,7 @@ staticChecks();
 await browserPass();
 
 writeFileSync(join(OUT, 'report.json'), JSON.stringify({
-  when: 'checkpoint-pass6b',
+  when: 'checkpoint-pass6c',
   results,
   passed: results.filter((r) => r.ok).length,
   failed: results.filter((r) => !r.ok).length,

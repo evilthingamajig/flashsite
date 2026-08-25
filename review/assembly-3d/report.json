@@ -1,5 +1,5 @@
 {
-  "when": "checkpoint-pass6b",
+  "when": "checkpoint-pass6c",
   "results": [
     {
       "name": "reassembly overlap <=20%",
@@ -133,7 +133,7 @@
     {
       "name": "[desktop-1440x900] dense solo copy remains readable @0.275",
       "ok": true,
-      "detail": "alpha 0.993/0.007"
+      "detail": "alpha 1.000/0.000"
     },
     {
       "name": "[desktop-1440x900] dense solo copy has one prominent label @0.275",
@@ -143,7 +143,7 @@
     {
       "name": "[desktop-1440x900] dense solo copy remains readable @0.300",
       "ok": true,
-      "detail": "alpha 1.000/0.000"
+      "detail": "alpha 0.909/0.091"
     },
     {
       "name": "[desktop-1440x900] dense solo copy has one prominent label @0.300",
@@ -173,12 +173,12 @@
     {
       "name": "[desktop-1440x900] dense solo copy remains readable @0.375",
       "ok": true,
-      "detail": "alpha 0.608/0.392"
+      "detail": "alpha 1.000/0.000"
     },
     {
       "name": "[desktop-1440x900] dense solo copy has one prominent label @0.375",
       "ok": true,
-      "detail": "prominent=0"
+      "detail": "prominent=1"
     },
     {
       "name": "[desktop-1440x900] dense solo copy remains readable @0.400",
@@ -213,7 +213,7 @@
     {
       "name": "[desktop-1440x900] dense solo copy remains readable @0.475",
       "ok": true,
-      "detail": "alpha 1.000/0.000"
+      "detail": "alpha 0.999/0.001"
     },
     {
       "name": "[desktop-1440x900] dense solo copy has one prominent label @0.475",
@@ -253,12 +253,12 @@
     {
       "name": "[desktop-1440x900] dense solo copy remains readable @0.575",
       "ok": true,
-      "detail": "alpha 1.000/0.000"
+      "detail": "alpha 0.560/0.440"
     },
     {
       "name": "[desktop-1440x900] dense solo copy has one prominent label @0.575",
       "ok": true,
-      "detail": "prominent=1"
+      "detail": "prominent=0"
     },
     {
       "name": "[desktop-1440x900] dense solo copy remains readable @0.600",
@@ -283,7 +283,7 @@
     {
       "name": "[desktop-1440x900] dense solo copy remains readable @0.650",
       "ok": true,
-      "detail": "alpha 0.893/0.107"
+      "detail": "alpha 1.000/0.000"
     },
     {
       "name": "[desktop-1440x900] dense solo copy has one prominent label @0.650",
@@ -293,7 +293,7 @@
     {
       "name": "[desktop-1440x900] dense solo copy remains readable @0.675",
       "ok": true,
-      "detail": "alpha 1.000/0.000"
+      "detail": "alpha 0.996/0.004"
     },
     {
       "name": "[desktop-1440x900] dense solo copy has one prominent label @0.675",
@@ -321,6 +321,16 @@
       "detail": "prominent=1"
     },
     {
+      "name": "[desktop-1440x900] dense solo copy remains readable @0.750",
+      "ok": true,
+      "detail": "alpha 1.000/0.000"
+    },
+    {
+      "name": "[desktop-1440x900] dense solo copy has one prominent label @0.750",
+      "ok": true,
+      "detail": "prominent=1"
+    },
+    {
       "name": "[desktop-1440x900] explosion closed hold is rendered",
       "ok": true,
       "detail": "482x596"
@@ -328,17 +338,17 @@
     {
       "name": "[desktop-1440x900] explosion lid lift is rendered",
       "ok": true,
-      "detail": "572x579"
+      "detail": "529x555"
     },
     {
       "name": "[desktop-1440x900] explosion internal separation is rendered",
       "ok": true,
-      "detail": "536x492"
+      "detail": "527x518"
     },
     {
       "name": "[desktop-1440x900] explosion exploded hold is rendered",
       "ok": true,
-      "detail": "541x472"
+      "detail": "536x503"
     },
     {
       "name": "[desktop-1440x900] explosion lid lifts before internals",
@@ -483,7 +493,7 @@
     {
       "name": "[desktop-1440x900] hold ch6 clearance >=32/40px",
       "ok": true,
-      "detail": "L60 R415 T124 B100"
+      "detail": "L61 R415 T124 B100"
     },
     {
       "name": "[desktop-1440x900] leader lands on mesh anchor ch6",
@@ -525,6 +535,11 @@
       "detail": "active=none"
     },
     {
+      "name": "[desktop-1440x900] final solo label crossfades into tableau",
+      "ok": true,
+      "detail": "alpha=0.485"
+    },
+    {
       "name": "[desktop-1440x900] exploded tableau exposes interior tray",
       "ok": true
     },
@@ -536,12 +551,17 @@
     {
       "name": "[desktop-1440x900] tableau stays within central assembly radius",
       "ok": true,
-      "detail": "0.134m"
+      "detail": "0.091m"
     },
     {
       "name": "[desktop-1440x900] exploded tableau meets viewport scale",
       "ok": true,
-      "detail": "613x582"
+      "detail": "595x566"
+    },
+    {
+      "name": "[desktop-1440x900] tableau enclosure anchor fills 32-40vw",
+      "ok": true,
+      "detail": "462px"
     },
     {
       "name": "[desktop-1440x900] reassembly exposes interior tray",
@@ -555,27 +575,32 @@
     {
       "name": "[desktop-1440x900] reassembly composition remains visible",
       "ok": true,
-      "detail": "730x669"
+      "detail": "706x669"
+    },
+    {
+      "name": "[desktop-1440x900] reassembly enclosure anchor fills 32-40vw",
+      "ok": true,
+      "detail": "575px"
     },
     {
       "name": "[desktop-1440x900] solo-to-tableau camera transition is smooth",
       "ok": true,
-      "detail": "0.0deg"
+      "detail": "4.2deg"
     },
     {
       "name": "[desktop-1440x900] solo-to-tableau camera distance is continuous",
       "ok": true,
-      "detail": "1.03x"
+      "detail": "1.30x"
     },
     {
       "name": "[desktop-1440x900] solo-to-tableau camera center is continuous",
       "ok": true,
-      "detail": "0.030m"
+      "detail": "0.023m"
     },
     {
       "name": "[desktop-1440x900] solo-to-tableau projected scale is continuous",
       "ok": true,
-      "detail": "1.04x"
+      "detail": "1.28x"
     },
     {
       "name": "[desktop-1440x900] final camera fit angle is continuous",
@@ -585,7 +610,7 @@
     {
       "name": "[desktop-1440x900] final camera fit distance is continuous",
       "ok": true,
-      "detail": "1.00x"
+      "detail": "1.01x"
     },
     {
       "name": "[desktop-1440x900] final camera fit center is continuous",
@@ -595,7 +620,7 @@
     {
       "name": "[desktop-1440x900] final projected scale is continuous",
       "ok": true,
-      "detail": "1.07x"
+      "detail": "1.01x"
     },
     {
       "name": "[desktop-1440x900] closed hold precedes final push",
@@ -606,6 +631,16 @@
       "name": "[desktop-1440x900] final bridge completes before end",
       "ok": true,
       "detail": "bridge settled"
+    },
+    {
+      "name": "[desktop-1440x900] enclosure closure rotation is continuous",
+      "ok": true,
+      "detail": "0.00/0.00/0.67/0.03/0.00"
+    },
+    {
+      "name": "[desktop-1440x900] enclosure reaches final orientation before hero push",
+      "ok": true,
+      "detail": "0.03→0.00→0.00"
     },
     {
       "name": "[desktop-1440x900] reassembly beat 1 advances switch",
@@ -645,7 +680,7 @@
     {
       "name": "[desktop-1440x900] reassembly beat 2 has one dominant mover",
       "ok": true,
-      "detail": "0.0472m vs 0.0000m"
+      "detail": "0.0341m vs 0.0000m"
     },
     {
       "name": "[desktop-1440x900] reassembly beat 2 keeps enclosure stationary",
@@ -670,7 +705,7 @@
     {
       "name": "[desktop-1440x900] reassembly beat 3 has one dominant mover",
       "ok": true,
-      "detail": "0.0385m vs 0.0000m"
+      "detail": "0.0276m vs 0.0000m"
     },
     {
       "name": "[desktop-1440x900] reassembly beat 3 keeps enclosure stationary",
@@ -695,7 +730,7 @@
     {
       "name": "[desktop-1440x900] reassembly beat 4 has one dominant mover",
       "ok": true,
-      "detail": "0.0355m vs 0.0000m"
+      "detail": "0.0257m vs 0.0000m"
     },
     {
       "name": "[desktop-1440x900] reassembly beat 4 keeps enclosure stationary",
@@ -705,7 +740,7 @@
     {
       "name": "[desktop-1440x900] reassembly beat 5 advances solar_lid",
       "ok": true,
-      "detail": "0.0000m"
+      "detail": "0.0693m"
     },
     {
       "name": "[desktop-1440x900] reassembly beat 5 keeps non-active parts settled",
@@ -720,7 +755,7 @@
     {
       "name": "[desktop-1440x900] reassembly beat 5 has one dominant mover",
       "ok": true,
-      "detail": "0.1430m vs 0.0000m"
+      "detail": "0.0269m vs 0.0000m"
     },
     {
       "name": "[desktop-1440x900] reassembly beat 5 keeps enclosure stationary",
@@ -774,7 +809,7 @@
     {
       "name": "[mobile-390x844] dense solo copy remains readable @0.275",
       "ok": true,
-      "detail": "alpha 0.993/0.007"
+      "detail": "alpha 1.000/0.000"
     },
     {
       "name": "[mobile-390x844] dense solo copy has one prominent label @0.275",
@@ -784,7 +819,7 @@
     {
       "name": "[mobile-390x844] dense solo copy remains readable @0.300",
       "ok": true,
-      "detail": "alpha 1.000/0.000"
+      "detail": "alpha 0.909/0.091"
     },
     {
       "name": "[mobile-390x844] dense solo copy has one prominent label @0.300",
@@ -814,12 +849,12 @@
     {
       "name": "[mobile-390x844] dense solo copy remains readable @0.375",
       "ok": true,
-      "detail": "alpha 0.608/0.392"
+      "detail": "alpha 1.000/0.000"
     },
     {
       "name": "[mobile-390x844] dense solo copy has one prominent label @0.375",
       "ok": true,
-      "detail": "prominent=0"
+      "detail": "prominent=1"
     },
     {
       "name": "[mobile-390x844] dense solo copy remains readable @0.400",
@@ -854,7 +889,7 @@
     {
       "name": "[mobile-390x844] dense solo copy remains readable @0.475",
       "ok": true,
-      "detail": "alpha 1.000/0.000"
+      "detail": "alpha 0.999/0.001"
     },
     {
       "name": "[mobile-390x844] dense solo copy has one prominent label @0.475",
@@ -894,12 +929,12 @@
     {
       "name": "[mobile-390x844] dense solo copy remains readable @0.575",
       "ok": true,
-      "detail": "alpha 1.000/0.000"
+      "detail": "alpha 0.560/0.440"
     },
     {
       "name": "[mobile-390x844] dense solo copy has one prominent label @0.575",
       "ok": true,
-      "detail": "prominent=1"
+      "detail": "prominent=0"
     },
     {
       "name": "[mobile-390x844] dense solo copy remains readable @0.600",
@@ -924,7 +959,7 @@
     {
       "name": "[mobile-390x844] dense solo copy remains readable @0.650",
       "ok": true,
-      "detail": "alpha 0.893/0.107"
+      "detail": "alpha 1.000/0.000"
     },
     {
       "name": "[mobile-390x844] dense solo copy has one prominent label @0.650",
@@ -934,7 +969,7 @@
     {
       "name": "[mobile-390x844] dense solo copy remains readable @0.675",
       "ok": true,
-      "detail": "alpha 1.000/0.000"
+      "detail": "alpha 0.996/0.004"
     },
     {
       "name": "[mobile-390x844] dense solo copy has one prominent label @0.675",
@@ -962,6 +997,16 @@
       "detail": "prominent=1"
     },
     {
+      "name": "[mobile-390x844] dense solo copy remains readable @0.750",
+      "ok": true,
+      "detail": "alpha 1.000/0.000"
+    },
+    {
+      "name": "[mobile-390x844] dense solo copy has one prominent label @0.750",
+      "ok": true,
+      "detail": "prominent=1"
+    },
+    {
       "name": "[mobile-390x844] explosion closed hold is rendered",
       "ok": true,
       "detail": "274x352"
@@ -969,17 +1014,17 @@
     {
       "name": "[mobile-390x844] explosion lid lift is rendered",
       "ok": true,
-      "detail": "287x298"
+      "detail": "287x308"
     },
     {
       "name": "[mobile-390x844] explosion internal separation is rendered",
       "ok": true,
-      "detail": "287x266"
+      "detail": "287x285"
     },
     {
       "name": "[mobile-390x844] explosion exploded hold is rendered",
       "ok": true,
-      "detail": "287x253"
+      "detail": "287x272"
     },
     {
       "name": "[mobile-390x844] explosion lid lifts before internals",
@@ -1171,6 +1216,11 @@
       "detail": "active=none"
     },
     {
+      "name": "[mobile-390x844] final solo label crossfades into tableau",
+      "ok": true,
+      "detail": "alpha=0.482"
+    },
+    {
       "name": "[mobile-390x844] exploded tableau exposes interior tray",
       "ok": true
     },
@@ -1187,7 +1237,7 @@
     {
       "name": "[mobile-390x844] exploded tableau meets viewport scale",
       "ok": true,
-      "detail": "289x465"
+      "detail": "284x443"
     },
     {
       "name": "[mobile-390x844] reassembly exposes interior tray",
@@ -1201,27 +1251,27 @@
     {
       "name": "[mobile-390x844] reassembly composition remains visible",
       "ok": true,
-      "detail": "285x473"
+      "detail": "298x473"
     },
     {
       "name": "[mobile-390x844] solo-to-tableau camera transition is smooth",
       "ok": true,
-      "detail": "0.0deg"
+      "detail": "4.2deg"
     },
     {
       "name": "[mobile-390x844] solo-to-tableau camera distance is continuous",
       "ok": true,
-      "detail": "1.06x"
+      "detail": "1.34x"
     },
     {
       "name": "[mobile-390x844] solo-to-tableau camera center is continuous",
       "ok": true,
-      "detail": "0.026m"
+      "detail": "0.022m"
     },
     {
       "name": "[mobile-390x844] solo-to-tableau projected scale is continuous",
       "ok": true,
-      "detail": "1.08x"
+      "detail": "1.22x"
     },
     {
       "name": "[mobile-390x844] final camera fit angle is continuous",
@@ -1231,7 +1281,7 @@
     {
       "name": "[mobile-390x844] final camera fit distance is continuous",
       "ok": true,
-      "detail": "1.01x"
+      "detail": "1.00x"
     },
     {
       "name": "[mobile-390x844] final camera fit center is continuous",
@@ -1241,7 +1291,7 @@
     {
       "name": "[mobile-390x844] final projected scale is continuous",
       "ok": true,
-      "detail": "1.07x"
+      "detail": "1.00x"
     },
     {
       "name": "[mobile-390x844] closed hold precedes final push",
@@ -1252,6 +1302,16 @@
       "name": "[mobile-390x844] final bridge completes before end",
       "ok": true,
       "detail": "bridge settled"
+    },
+    {
+      "name": "[mobile-390x844] enclosure closure rotation is continuous",
+      "ok": true,
+      "detail": "0.00/0.00/0.67/0.03/0.00"
+    },
+    {
+      "name": "[mobile-390x844] enclosure reaches final orientation before hero push",
+      "ok": true,
+      "detail": "0.03→0.00→0.00"
     },
     {
       "name": "[mobile-390x844] reassembly beat 1 advances switch",
@@ -1351,7 +1411,7 @@
     {
       "name": "[mobile-390x844] reassembly beat 5 advances solar_lid",
       "ok": true,
-      "detail": "0.0000m"
+      "detail": "0.0958m"
     },
     {
       "name": "[mobile-390x844] reassembly beat 5 keeps non-active parts settled",
@@ -1366,7 +1426,7 @@
     {
       "name": "[mobile-390x844] reassembly beat 5 has one dominant mover",
       "ok": true,
-      "detail": "0.1330m vs 0.0000m"
+      "detail": "0.0371m vs 0.0000m"
     },
     {
       "name": "[mobile-390x844] reassembly beat 5 keeps enclosure stationary",
@@ -1389,6 +1449,6 @@
       "detail": ""
     }
   ],
-  "passed": 282,
+  "passed": 294,
   "failed": 0
 }
