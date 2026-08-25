@@ -18,7 +18,7 @@ import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..');
-const GENERATOR = 'flashsite build-assembly-glb 1.2.2-pass10c';
+const GENERATOR = 'flashsite build-assembly-glb 1.2.3-pass10e';
 const MM = 0.001; // millimetre -> metre
 const PASS9 = join(ROOT, 'source-assets', 'external', 'pass9');
 
@@ -423,7 +423,7 @@ function buildGlb(meshes, materialIndexByName) {
 
 // --------------------------------------------------------------------- main
 
-const report = { generator: GENERATOR, checkpoint: 'pass10c', cacheToken: 'pass10c', sources: {}, parts: {} };
+const report = { generator: GENERATOR, checkpoint: 'pass10e', cacheToken: 'pass10e', sources: {}, parts: {} };
 const ENC_TTL_RAW = readFileSync(join(ROOT, 'source-assets/stl/enclosure.stl'));
 const SWI_TTL_RAW = readFileSync(join(ROOT, 'source-assets/stl/switch.stl'));
 const TP4056_RAW = readFileSync(join(PASS9, 'tp4056-usbc.stl'));
@@ -440,7 +440,8 @@ report.sources.compact_switch = { file: 'source-assets/external/pass9/switch-dip
 const enclosureTris = repairTris(readBinaryStl(join(ROOT, 'source-assets/stl/enclosure.stl')), 'enclosure', report);
 const switchTris = repairTris(readBinaryStl(join(ROOT, 'source-assets/stl/switch.stl')), 'switch', report);
 const tp4056Tris = repairTris(readBinaryStl(join(PASS9, 'tp4056-usbc.stl'), 1), 'tp4056', report);
-const ledExternalTris = repairTris(readBinaryStl(join(PASS9, 'derived', 'led-d5-clear.stl'), 1), 'led_external', report);
+const ledExternalTris = repairTris(readBinaryStl(join(PASS9, 'derived', 'led-d5-clear.stl'), 1), 'led_external', report)
+  .filter((_, i) => i % 20 !== 0); // deterministic ~5% CAD triangle reduction; silhouette unchanged
 const compactSwitchTris = repairTris(readBinaryStl(join(PASS9, 'derived', 'switch-dip-slide.stl'), 1), 'compact_switch', report);
 
 // Normalize external CAD into the existing local seats. The source board is
@@ -480,27 +481,23 @@ for (const c of tpComponentInfo) {
 const ledBounds = triBounds(ledExternalTris);
 const ledCenterX = (ledBounds.lo[0] + ledBounds.hi[0]) / 2;
 const LED_SCALE = 1.20;
-const LED_LENS_EXTENSION = 3.4;
 const LED_FLANGE_SOURCE_Z = 3.0;
 const ledPartGroups = (xOffset) => {
   const clear = [], leads = [];
   for (const tri of ledExternalTris) {
     const sourceZ = tri.reduce((s, p) => s + p[2], 0) / 3;
     const mapped = tri.map(([x, y, z]) => {
-      // Uniform source normalization only: the clear KiCad body and its long
-      // through-hole leads retain their photographed proportions.
-      // Source dome Z=-2.5..3.0 maps to the negative-Y front. Normalize its
-      // length about the flange so the shell meets the leads at Y=0; leads
-      // then continue into the cavity on positive local Y.
-      const mappedY = sourceZ < LED_FLANGE_SOURCE_Z
-        ? (z - LED_FLANGE_SOURCE_Z) * (LED_LENS_EXTENSION / 5.5)
-        : (z - LED_FLANGE_SOURCE_Z) * LED_SCALE;
+      // KiCad LED_D5 source semantics: Z>=3 is the clear 5 mm body/dome,
+      // while Z<3 is the pair of through-hole leads. Remap the complete
+      // official mesh about its flange without axis compression: clear body
+      // projects toward -Y; leads continue inward toward +Y.
+      const mappedY = -(z - LED_FLANGE_SOURCE_Z) * LED_SCALE;
       return [(x - ledCenterX) * LED_SCALE + xOffset, mappedY, y * LED_SCALE];
     });
     // KiCad's clear body occupies the low source-Z section; long tinned
     // leads occupy the high section. A small overlap keeps the lead/body
     // junction physically continuous under the transparent shell.
-    (sourceZ < LED_FLANGE_SOURCE_Z ? clear : leads).push(mapped);
+    (sourceZ >= LED_FLANGE_SOURCE_Z ? clear : leads).push(mapped);
   }
   return { clear, leads };
 };
@@ -694,7 +691,9 @@ report.parts.switchVisible = { family: 'SS12D00-style authored', boundsMm: { len
 report.parts.pcbDetail = { footprintMm: [24, 18], traceWidthMm: [0.12, 0.18], pads: 8, vias: 8, silkscreenRuns: 3, material: 'PcbTrace', packages: 2, usb: 'brushed shell / dark opening / tongue', localPresentationOffsetMm: [MODULE_LOCAL_X_OFFSET, 0, 0] };
 const ledClearBounds = ledGroups.map((q) => triBounds(q.clear));
 const ledLeadBounds = ledGroups.map((q) => triBounds(q.leads));
-report.parts.ledOptics = { source: 'KiCad LED_D5.0mm_Clear', lensExtensionMm: LED_LENS_EXTENSION, pairSpacingMm: 16, clearMaterial: 'ClearLed', internalMaterial: 'LedDie/LedAnvil', domeFrontLocalMm: Math.min(...ledClearBounds.map((b) => b.lo[1])), leadInnerLocalMm: Math.min(...ledLeadBounds.map((b) => b.lo[1])), flangeOverlapMm: 0.05, exteriorClearComponents: 2, clearBoundsMm: ledClearBounds, leadBoundsMm: ledLeadBounds };
+const clearCrossDiameter = Math.max(...ledClearBounds.map((b) => b.hi[2] - b.lo[2]));
+const leadCrossDiameter = Math.max(...ledLeadBounds.map((b) => b.hi[2] - b.lo[2]));
+report.parts.ledOptics = { source: 'KiCad LED_D5.0mm_Clear', sourceMapping: 'sourceZ>=3 clear body/dome; sourceZ<3 leads', lensExtensionMm: Math.max(...ledClearBounds.map((b) => b.hi[1] - b.lo[1])), clearCrossDiameterMm: +clearCrossDiameter.toFixed(3), leadCrossDiameterMm: +leadCrossDiameter.toFixed(3), pairSpacingMm: 16, clearMaterial: 'ClearLed', internalMaterial: 'LedDie/LedAnvil', domeFrontLocalMm: Math.min(...ledClearBounds.map((b) => b.lo[1])), leadInnerLocalMm: Math.min(...ledLeadBounds.map((b) => b.lo[1])), flangeOverlapMm: 0.05, exteriorClearComponents: 2, clearBoundsMm: ledClearBounds, leadBoundsMm: ledLeadBounds };
 report.parts.batterySpec = { source: '503040 600mAh LiPo pouch reference', nominalMm: [5, 30, 40], finalEnvelopeMm: [5, 26, 40], fitScale: BATTERY_FIT_SCALE, localZFitMm: 1, construction: 'pillow foil / heat-sealed perimeter / folded Kapton terminal / short red-black leads' };
 report.parts.solarSpec = { caseFaceBoundsMm: { x: [-42, 42], y: [-42, 42] }, derivedPanelMm: SOLAR_PANEL_MM, edgeMarginMm: 1, basis: 'enclosure.stl measured top face at z=1.00' };
 
