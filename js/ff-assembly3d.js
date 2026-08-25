@@ -15,18 +15,18 @@ const CHAPTERS = [
   { id: 'switch', key: 'switch', num: '05 / SWITCHED BY HAND', title: 'Slide switch', body: 'Completes the circuit so study light flows.', turn: 190, slot: [90, 36, 18], mobileSlot: [40, 40, 16], inspect: [0, 64, 26], anchor: [-24, 41, 3] },
   { id: 'enclosure', key: 'enclosure', num: '06 / BUILT TO PROTECT', title: '3D-printed enclosure', body: 'Shields every component.', turn: 40, slot: [0, 0, 0], mobileSlot: [0, 0, 0], inspect: [0, -6, 36], anchor: [38, -36, 1] },
 ];
-const REASSEMBLY_ORDER = ['enclosure', 'switch', 'led_pair', 'charge_module', 'battery', 'solar_lid'];
+const REASSEMBLY_ORDER = ['switch', 'led_pair', 'charge_module', 'battery', 'solar_lid'];
 
 const T_INTRO_END = 0.075;
-const T_EXPLODE = [0.075, 0.125];
-const T_CH_START = 0.125;
-const CH_W = 0.102;
+const T_EXPLODE = [0.075, 0.17];
+const T_CH_START = 0.18;
+const CH_W = 0.093;
 // Leave a dedicated exploded-tableau beat after the final solo chapter. The
 // slightly tighter reassembly cadence keeps the finished state before p=1.
-const T_RE_START = 0.78;
-const RE_SPACING = 0.035;
-const RE_W = 0.043;
-const T_FINAL = Math.max(0.955, T_RE_START + 5 * RE_SPACING + RE_W);
+const T_RE_START = 0.77;
+const RE_SPACING = 0.044;
+const RE_W = 0.034;
+const T_FINAL = 0.985;
 
 const clamp01 = (v) => Math.max(0, Math.min(1, v));
 const easeInOutCubic = (t) => (t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2);
@@ -36,7 +36,8 @@ const lerp = (a, b, t) => a + (b - a) * t;
 function ramp(p, a, b) { return smooth((p - a) / (b - a)); }
 
 function chapterAt(p) {
-  if (p < T_CH_START || p >= T_RE_START) return -1;
+  const chapterEnd = T_CH_START + CHAPTERS.length * CH_W;
+  if (p < T_CH_START || p >= Math.min(T_RE_START, chapterEnd)) return -1;
   return Math.min(CHAPTERS.length - 1, Math.floor((p - T_CH_START) / CH_W));
 }
 function chapterT(p, i) {
@@ -93,6 +94,7 @@ function init(section) {
   const leadersSvg = shell.querySelector('.ff-asm3d-leaders');
   const callouts = {};
   CHAPTERS.forEach((c) => { callouts[c.key] = shell.querySelector('[data-callout="' + c.key + '"]'); });
+  CHAPTERS.forEach((c) => { callouts[c.key].style.transition = 'none'; });
 
   let renderer = null;
   let disposed = false;
@@ -519,14 +521,16 @@ function init(section) {
       // Tableau, reassembly and final are viewport compositions rather than
       // editorial-pane solos. Refit against the full viewport so the closed
       // product and the spread assembly read at the requested scale.
-      const finalBridgeT = smooth((p - (T_FINAL - 0.025)) / 0.040);
+      // Start the final fit well before the lid's last settle so the compact
+      // closed bounds do not create a late distance snap.
+      const finalBridgeT = smooth((p - (T_FINAL - 0.025)) / 0.030);
       // Hold the exploded tableau fit through its dedicated beat; switch to
       // the tighter, taller insertion fit only after the first settle.
       const reassemblyView = p >= T_RE_START + 0.04;
       const tableauW = pane.mobile ? 0.82 : (reassemblyView ? 0.78 : 0.68);
       const tableauH = pane.mobile ? 0.56 : (reassemblyView ? 0.74 : 0.65);
-      const finalW = pane.mobile ? 0.76 : 0.46;
-      const finalH = pane.mobile ? 0.52 : 0.60;
+      const finalW = pane.mobile ? 0.82 : 0.68;
+      const finalH = pane.mobile ? 0.56 : 0.78;
       const targetW = sticky.clientWidth * lerp(tableauW, finalW, finalBridgeT);
       const targetH = sticky.clientHeight * lerp(tableauH, finalH, finalBridgeT);
       // Use a visibility-independent box for the bridge. During the last
@@ -547,10 +551,25 @@ function init(section) {
         if (Math.abs(scale - 1) < 0.01) break;
         compositionDist *= Math.min(1.10, Math.max(0.90, scale));
       }
+      // Once the final push begins, lock the distance to the authored
+      // enclosure footprint so the moving solar lid cannot change the fit
+      // scalar between the penultimate and closed samples.
+      if (finalBridgeT > 0) {
+        const enclosureBox = boxForSubject('enclosure', boxB);
+        const solarBox = boxForSubject('solar_lid', boxB);
+        const solarSize = solarBox.getSize(new THREE.Vector3());
+        const enclosureCenter = enclosureBox.getCenter(new THREE.Vector3());
+        const finalFitBox = new THREE.Box3(
+          enclosureCenter.clone().sub(solarSize.clone().multiplyScalar(0.5)),
+          enclosureCenter.clone().add(solarSize.clone().multiplyScalar(0.5))
+        ).union(enclosureBox);
+        const finalBaseDist = solveDistance(finalFitBox, azim, elev, pane) * 1.06;
+        compositionDist = lerp(compositionDist, finalBaseDist, finalBridgeT);
+      }
       // The finished exterior has a compact depth box, so the pane fit is
       // height-dominated. Bring it a little closer to the viewport target
       // while retaining the safe margin around the final marker.
-      compositionDist *= lerp(1, 0.94, finalBridgeT);
+      compositionDist *= lerp(1, 0.97, finalBridgeT);
       center.lerp(compositionCenter, compositionBlend);
       dist = lerp(dist, compositionDist, compositionBlend);
     }
@@ -633,9 +652,14 @@ function init(section) {
       const g = groups[c.id];
       if (!g) return;
       const slot = mobileTableau ? (c.mobileSlot || c.slot) : c.slot;
-      let x = slot[0] * MM * ex * reassemblyK(p, c.id);
-      let y = slot[1] * MM * ex * reassemblyK(p, c.id);
-      let z = slot[2] * MM * ex * reassemblyK(p, c.id);
+      // Open in two readable stages: lift the lid first, then separate the
+      // internal parts along their insertion axes before the tableau hold.
+      const lidExplosion = ramp(p, T_EXPLODE[0], T_EXPLODE[0] + 0.035);
+      const internalsExplosion = ramp(p, T_EXPLODE[0] + 0.035, T_EXPLODE[1]);
+      const stagedExplosion = c.id === 'solar_lid' ? lidExplosion : internalsExplosion;
+      let x = slot[0] * MM * stagedExplosion * reassemblyK(p, c.id);
+      let y = slot[1] * MM * stagedExplosion * reassemblyK(p, c.id);
+      let z = slot[2] * MM * stagedExplosion * reassemblyK(p, c.id);
       let yaw = 0;
       const reassemblyProgress = smooth((p - T_RE_START) / Math.max(0.001, T_FINAL - T_RE_START));
       const hasCompletedSolo = chIdx > i || (chIdx === i && chapterT(p, i) >= 0.72) || p >= tableauStart;
@@ -801,7 +825,7 @@ function init(section) {
     const i = chapterAt(p);
     if (i < 0) return null;
     const t = chapterT(p, i);
-    if (i > 0 && t < 0.18) return CHAPTERS[i - 1].key;
+    if (i > 0 && t < 0.09) return CHAPTERS[i - 1].key;
     return t <= 0.85 ? CHAPTERS[i].key : null;
   }
 
@@ -863,18 +887,11 @@ function init(section) {
       let alpha = 0;
       if (chapterIndex === i) {
         const t = chapterT(p, i);
-        if (i === 0) alpha = 1;
-        else {
-          // Keep the previous label readable until the new one is ready,
-          // then hand off through a low-alpha seam so copy never disappears
-          // and two labels are never simultaneously prominent.
-          alpha = t < 0.18 ? 0.06 : Math.max(0.06, smooth((t - 0.18) / 0.16));
-        }
+        alpha = i === 0 ? 1 : smooth(t / 0.18);
       } else if (chapterIndex === i + 1) {
         const t = chapterT(p, chapterIndex);
-        alpha = Math.max(0, 1 - smooth(t / 0.18));
+        alpha = 1 - smooth(t / 0.18);
       }
-      if (chapterIndex === i && chapterT(p, i) > 0.88) alpha = Math.max(0.06, 1 - smooth((chapterT(p, i) - 0.88) / 0.12));
       el.style.opacity = alpha.toFixed(3);
       el.classList.toggle('is-active', alpha > 0.32);
     });

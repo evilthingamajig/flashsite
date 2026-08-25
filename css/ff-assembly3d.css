@@ -1,4 +1,4 @@
-.ff-asm3d-shell{position:relative;width:100%;height:1040vh;min-height:7200px}
+.ff-asm3d-shell{position:relative;width:100%;height:2800vh;min-height:21000px}
 .ff-asm3d .ff-assembly-runtime,.ff-asm3d [data-piece]{display:none!important}
 .ff-asm3d-sticky{position:-webkit-sticky;position:sticky;top:0;height:100svh;min-height:600px;overflow:hidden;background:#fff;isolation:isolate}
 .ff-asm3d-canvas{position:absolute;inset:0;width:100%;height:100%;display:block}
@@ -25,7 +25,7 @@
 .ff-asm3d-final-mark.is-active{opacity:1}
 .ff-asm3d-final-mark .ff-assembly-eyebrow{margin:0;font-size:clamp(12px,1.2vw,16px)}
 @media(max-width:699px){
- .ff-asm3d-shell{height:960vh;min-height:6400px}
+ .ff-asm3d-shell{height:2600vh;min-height:19000px}
  .ff-asm3d-sticky{height:100svh;min-height:560px}
  .ff-asm3d-intro-copy{top:4.5%;width:88vw}
  .ff-asm3d-intro-copy h2{font-size:clamp(2.2rem,11vw,3.8rem)}

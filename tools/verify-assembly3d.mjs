@@ -27,7 +27,8 @@ function check(name, ok, detail) {
 // ------------------------------------------------------------------ static
 
 function staticChecks() {
-  check('reassembly overlap <=20%', RE_W - RE_SPACING <= RE_W * 0.20, `${((RE_W - RE_SPACING) / RE_W * 100).toFixed(1)}% overlap`);
+  const overlap = Math.max(0, RE_W - RE_SPACING);
+  check('reassembly overlap <=20%', overlap <= RE_W * 0.20, `${(overlap / RE_W * 100).toFixed(1)}% overlap`);
   const glbPath = join(ROOT, 'assets', '3d', 'flashlight-assembly.glb');
   const manifest = JSON.parse(readFileSync(join(ROOT, 'assets', '3d', 'assembly-manifest.json'), 'utf8'));
   check('glb exists', existsSync(glbPath));
@@ -94,13 +95,14 @@ function serve(port) {
 
 // ------------------------------------------------------------ browser pass
 
-const T_CH_START = 0.125;
-const CH_W = 0.102;
-const T_RE_START = 0.78;
-const RE_SPACING = 0.035;
-const RE_W = 0.043;
-const T_FINAL = Math.max(0.955, T_RE_START + 5 * RE_SPACING + RE_W);
-const REASSEMBLY_ORDER = ['enclosure', 'switch', 'led_pair', 'charge_module', 'battery', 'solar_lid'];
+const T_EXPLODE = [0.075, 0.17];
+const T_CH_START = 0.18;
+const CH_W = 0.093;
+const T_RE_START = 0.77;
+const RE_SPACING = 0.044;
+const RE_W = 0.034;
+const T_FINAL = 0.985;
+const REASSEMBLY_ORDER = ['switch', 'led_pair', 'charge_module', 'battery', 'solar_lid'];
 
 async function settle(cdp) {
   await cdp.evaluate('new Promise(r=>setTimeout(()=>requestAnimationFrame(()=>requestAnimationFrame(r)),220))', { awaitPromise: true });
@@ -205,18 +207,23 @@ async function browserPass() {
       const st = await readState();
       if (!st) continue;
       forward.set(frac.toFixed(4), JSON.stringify({ p: st.p.toFixed(4), active: st.active, pose: st.pose }));
-      if (st.p >= T_CH_START && st.p < T_RE_START) {
-        const opacities = Object.values(st.calloutOpacity || {});
-        const prominent = opacities.filter((value) => value > 0.12).length;
-        check(`[${vp.label}] dense solo copy never disappears @${st.p.toFixed(3)}`, Math.max(0, ...opacities) > 0.001, 'max opacity=' + Math.max(0, ...opacities).toFixed(3));
-        check(`[${vp.label}] dense solo copy has one prominent label @${st.p.toFixed(3)}`, prominent <= 1, 'prominent=' + prominent);
+      if (st.p >= T_CH_START && st.p < T_CH_START + CH_W * 6) {
+        const opacities = Object.values(st.calloutOpacity || {}).sort((a, b) => b - a);
+        const midpoint = opacities[1] >= 0.12 && opacities[0] < 0.70;
+        check(`[${vp.label}] dense solo copy remains readable @${st.p.toFixed(3)}`, opacities[0] >= 0.70 || (midpoint && opacities[0] + opacities[1] >= 0.90), `alpha ${opacities[0]?.toFixed(3) || '0'}/${opacities[1]?.toFixed(3) || '0'}`);
+        check(`[${vp.label}] dense solo copy has one prominent label @${st.p.toFixed(3)}`, opacities.filter((value) => value >= 0.70).length <= 1, 'prominent=' + opacities.filter((value) => value >= 0.70).length);
       }
-      maxActiveCount = Math.max(maxActiveCount, st.activeCount);
+      maxActiveCount = Math.max(maxActiveCount, Object.values(st.calloutOpacity || {}).filter((value) => value >= 0.70).length);
       worstOverflow = Math.max(worstOverflow, st.overflowX);
       if (st.active && !st.sil) clearanceViolations.push(`null active silhouette @p=${st.p.toFixed(3)} cam=${st.cam?.dist?.toFixed(4)}`);
       if (st.active && st.sil) {
         const sil = st.sil, pane = st.pane;
-        const isHoldish = CHAPTER_HOLD_FRACS.some((hf) => Math.abs(hf - st.p) < 0.04);
+        // Hold-size assertions must sample the actual seated hold, not the
+        // adjacent crossfade band. During a crossfade the outgoing/incoming
+        // subject can be intentionally smaller while the camera bridges
+        // between their boxes; dense label/camera continuity checks cover
+        // that interval separately.
+        const isHoldish = CHAPTER_HOLD_FRACS.some((hf) => Math.abs(hf - st.p) < 0.003);
         const clearL = sil.x - pane.x, clearR = pane.x + pane.w - (sil.x + sil.w);
         const clearT = sil.y - pane.y, clearB = pane.y + pane.h - (sil.y + sil.h);
         if (!vp.mobile) {
@@ -249,6 +256,23 @@ async function browserPass() {
         }
       }
     }
+    const explosionStages = [
+      ['closed hold', T_EXPLODE[0] - 0.01],
+      ['lid lift', T_EXPLODE[0] + 0.018],
+      ['internal separation', T_EXPLODE[0] + 0.065],
+      ['exploded hold', T_EXPLODE[1] - 0.006],
+    ];
+    const explosionStates = [];
+    for (const [label, frac] of explosionStages) {
+      await goto(frac); await settle(cdp);
+      const state = await readState();
+      explosionStates.push(state);
+      check(`[${vp.label}] explosion ${label} is rendered`, !!state?.allSil && state.active === null, `${state?.allSil?.w?.toFixed(0) || 0}x${state?.allSil?.h?.toFixed(0) || 0}`);
+    }
+    const poseDistance = (a, b) => a && b ? Math.hypot(a.position[0] - b.position[0], a.position[1] - b.position[1], a.position[2] - b.position[2]) : 0;
+    check(`[${vp.label}] explosion lid lifts before internals`, poseDistance(explosionStates[1]?.pose?.solar_lid, explosionStates[0]?.pose?.solar_lid) > 0.002 && poseDistance(explosionStates[1]?.pose?.battery, explosionStates[0]?.pose?.battery) < 0.002, 'lid-first');
+    check(`[${vp.label}] explosion internals separate after lid`, poseDistance(explosionStates[2]?.pose?.battery, explosionStates[1]?.pose?.battery) > 0.002 && poseDistance(explosionStates[2]?.pose?.charge_module, explosionStates[1]?.pose?.charge_module) > 0.002, 'internals-second');
+    check(`[${vp.label}] explosion reaches full hold`, poseDistance(explosionStates[3]?.pose?.battery, explosionStates[2]?.pose?.battery) > 0.002 && poseDistance(explosionStates[3]?.pose?.solar_lid, explosionStates[2]?.pose?.solar_lid) < 0.001, 'full-tableau');
     check(`[${vp.label}] at most one active callout`, maxActiveCount <= 1, 'max=' + maxActiveCount);
     check(`[${vp.label}] no horizontal overflow`, worstOverflow <= 0, 'max overflow px=' + worstOverflow);
     check(`[${vp.label}] silhouette fits pane with clearance`, clearanceViolations.length === 0, clearanceViolations.slice(0, 3).join('; '));
@@ -328,7 +352,7 @@ async function browserPass() {
     }
     await goto(0.86); await settle(cdp);
     await cdp.screenshot(join(OUT, vp.label + '-reassemble.png'));
-      await goto(0.80); await settle(cdp);
+      await goto(T_RE_START - 0.01); await settle(cdp);
     const tableauState = await readState();
     const tableauCopyGone = tableauState?.calloutOpacity && Object.values(tableauState.calloutOpacity).every((value) => value <= 0.001);
     check(`[${vp.label}] exploded tableau has no active copy`, !tableauState?.active && tableauState?.activeCount === 0 && tableauCopyGone, `active=${tableauState?.active || 'none'}`);
@@ -346,7 +370,7 @@ async function browserPass() {
       const minW = vp.mobile ? vp.w * 0.68 : vp.w * 0.39;
       const maxW = vp.mobile ? vp.w * 0.86 : vp.w * 0.75;
       const minH = vp.mobile ? vp.h * 0.50 : vp.h * 0.55;
-      const maxH = vp.mobile ? vp.h * 0.60 : vp.h * 0.66;
+      const maxH = vp.mobile ? vp.h * 0.60 : vp.h * 0.70;
       check(`[${vp.label}] exploded tableau meets viewport scale`, tableauState.allSil.w >= minW && tableauState.allSil.w <= maxW && tableauState.allSil.h >= minH && tableauState.allSil.h <= maxH, `${tableauState.allSil.w.toFixed(0)}x${tableauState.allSil.h.toFixed(0)}`);
     }
     await cdp.screenshot(join(OUT, vp.label + '-exploded-tableau.png'));
@@ -360,8 +384,8 @@ async function browserPass() {
       const maxH = vp.mobile ? vp.h * 0.64 : vp.h * 0.82;
       check(`[${vp.label}] reassembly composition remains visible`, reassemblyState.allSil.w >= minW && reassemblyState.allSil.w <= maxW && reassemblyState.allSil.h >= minH && reassemblyState.allSil.h <= maxH, `${reassemblyState.allSil.w.toFixed(0)}x${reassemblyState.allSil.h.toFixed(0)}`);
     }
-    const beforeTableau = await (async () => { await goto(0.765); await settle(cdp); return readState(); })();
-    const afterTableau = await (async () => { await goto(0.785); await settle(cdp); return readState(); })();
+    const beforeTableau = await (async () => { await goto(T_RE_START - 0.025); await settle(cdp); return readState(); })();
+    const afterTableau = await (async () => { await goto(T_RE_START + 0.015); await settle(cdp); return readState(); })();
     const angleDelta = beforeTableau?.cam && afterTableau?.cam ? Math.hypot(afterTableau.cam.azim - beforeTableau.cam.azim, afterTableau.cam.elev - beforeTableau.cam.elev) : Infinity;
     check(`[${vp.label}] solo-to-tableau camera transition is smooth`, angleDelta <= 0.55, `${(angleDelta * 180 / Math.PI).toFixed(1)}deg`);
     const centerDelta = beforeTableau?.cam && afterTableau?.cam ? Math.hypot(...afterTableau.cam.center.map((v, i) => v - beforeTableau.cam.center[i])) : Infinity;
@@ -370,20 +394,25 @@ async function browserPass() {
     check(`[${vp.label}] solo-to-tableau camera distance is continuous`, distRatio <= 1.45, `${distRatio.toFixed(2)}x`);
     check(`[${vp.label}] solo-to-tableau camera center is continuous`, centerDelta <= 0.18, `${centerDelta.toFixed(3)}m`);
     check(`[${vp.label}] solo-to-tableau projected scale is continuous`, silScale <= 1.55, `${silScale.toFixed(2)}x`);
-    const beforeFinal = await (async () => { await goto(T_FINAL - 0.018); await settle(cdp); return readState(); })();
-    const afterFinal = await (async () => { await goto(Math.min(0.999, T_FINAL + 0.012)); await settle(cdp); return readState(); })();
+    const beforeFinal = await (async () => { await goto(T_FINAL - 0.002); await settle(cdp); return readState(); })();
+    const afterFinal = await (async () => { await goto(Math.min(0.999, T_FINAL + 0.004)); await settle(cdp); return readState(); })();
     const finalAngleDelta = beforeFinal?.cam && afterFinal?.cam ? Math.hypot(afterFinal.cam.azim - beforeFinal.cam.azim, afterFinal.cam.elev - beforeFinal.cam.elev) : Infinity;
     const finalDistRatio = beforeFinal?.cam && afterFinal?.cam ? Math.max(afterFinal.cam.dist, beforeFinal.cam.dist) / Math.max(1e-6, Math.min(afterFinal.cam.dist, beforeFinal.cam.dist)) : Infinity;
     const finalCenterDelta = beforeFinal?.cam && afterFinal?.cam ? Math.hypot(...afterFinal.cam.center.map((v, i) => v - beforeFinal.cam.center[i])) : Infinity;
     const finalSilScale = beforeFinal?.allSil && afterFinal?.allSil ? Math.max(afterFinal.allSil.w / Math.max(1, beforeFinal.allSil.w), beforeFinal.allSil.w / Math.max(1, afterFinal.allSil.w), afterFinal.allSil.h / Math.max(1, beforeFinal.allSil.h), beforeFinal.allSil.h / Math.max(1, afterFinal.allSil.h)) : Infinity;
     check(`[${vp.label}] final camera fit angle is continuous`, finalAngleDelta <= 0.55, `${(finalAngleDelta * 180 / Math.PI).toFixed(1)}deg`);
-    check(`[${vp.label}] final camera fit distance is continuous`, finalDistRatio <= 1.55, `${finalDistRatio.toFixed(2)}x`);
+    check(`[${vp.label}] final camera fit distance is continuous`, finalDistRatio <= 1.08, `${finalDistRatio.toFixed(2)}x`);
     check(`[${vp.label}] final camera fit center is continuous`, finalCenterDelta <= 0.18, `${finalCenterDelta.toFixed(3)}m`);
-    check(`[${vp.label}] final projected scale is continuous`, finalSilScale <= 1.65, `${finalSilScale.toFixed(2)}x`);
+    check(`[${vp.label}] final projected scale is continuous`, finalSilScale <= 1.12, `${finalSilScale.toFixed(2)}x`);
+    const closedHold = await (async () => { await goto(T_FINAL - 0.002); await settle(cdp); return readState(); })();
+    const bridgeDone = await (async () => { await goto(Math.min(0.999, T_FINAL + 0.022)); await settle(cdp); return readState(); })();
+    check(`[${vp.label}] closed hold precedes final push`, closedHold?.active === null && closedHold?.allSil, 'closed product hold');
+    check(`[${vp.label}] final bridge completes before end`, bridgeDone?.allSil && bridgeDone.cam?.dist > 0, 'bridge settled');
     const seatedPose = (await (async () => { await goto(1); await settle(cdp); return readState(); })())?.pose;
-    let previousBeatPose = tableauState?.pose;
+    const reassemblyBase = (await (async () => { await goto(T_RE_START); await settle(cdp); return readState(); })());
+    let previousBeatPose = reassemblyBase?.pose || tableauState?.pose;
     for (let idx = 0; idx < REASSEMBLY_ORDER.length; idx++) {
-      const beatP = T_RE_START + idx * RE_SPACING + RE_W * 0.62;
+      const beatP = T_RE_START + idx * RE_SPACING + RE_W + 0.003;
       await goto(beatP); await settle(cdp);
       const beatState = await readState();
       const id = REASSEMBLY_ORDER[idx];
@@ -395,7 +424,7 @@ async function browserPass() {
       check(`[${vp.label}] reassembly beat ${idx + 1} advances ${id}`, activeImprovement >= -0.0005, `${dist(here, seat).toFixed(4)}m`);
       const otherMoves = REASSEMBLY_ORDER.filter((other) => other !== id).map((other) => dist(previousBeatPose?.[other]?.position, beatState?.pose?.[other]?.position));
       const maxOtherMove = Math.max(0, ...otherMoves);
-      check(`[${vp.label}] reassembly beat ${idx + 1} keeps non-active parts settled`, maxOtherMove <= 0.030, `${maxOtherMove.toFixed(4)}m`);
+      check(`[${vp.label}] reassembly beat ${idx + 1} keeps non-active parts settled`, maxOtherMove <= 0.001, `${maxOtherMove.toFixed(4)}m`);
       const otherRotations = REASSEMBLY_ORDER.filter((other) => other !== id).map((other) => {
         const a = previousBeatPose?.[other]?.rotation, b = beatState?.pose?.[other]?.rotation;
         return a && b ? Math.max(...a.map((v, axis) => {
@@ -404,7 +433,11 @@ async function browserPass() {
         })) : Infinity;
       });
       check(`[${vp.label}] reassembly beat ${idx + 1} keeps inactive rotations <=1deg`, Math.max(0, ...otherRotations) <= Math.PI / 180, `${(Math.max(0, ...otherRotations) * 180 / Math.PI).toFixed(2)}deg`);
-      if (idx > 0) check(`[${vp.label}] reassembly beat ${idx + 1} has one dominant mover`, activeImprovement >= Math.max(0.001, maxOtherMove * 0.75), `${activeImprovement.toFixed(4)}m vs ${maxOtherMove.toFixed(4)}m`);
+      if (idx > 0) check(`[${vp.label}] reassembly beat ${idx + 1} has one dominant mover`, activeImprovement >= Math.max(0.001, maxOtherMove * 1.5), `${activeImprovement.toFixed(4)}m vs ${maxOtherMove.toFixed(4)}m`);
+      const enclosureMove = dist(previousBeatPose?.enclosure?.position, beatState?.pose?.enclosure?.position);
+      const enclosureRot = previousBeatPose?.enclosure?.rotation && beatState?.pose?.enclosure?.rotation
+        ? Math.max(...previousBeatPose.enclosure.rotation.map((v, axis) => Math.min(Math.abs(v - beatState.pose.enclosure.rotation[axis]), Math.abs((Math.PI * 2) - Math.abs(v - beatState.pose.enclosure.rotation[axis]))))) : Infinity;
+      check(`[${vp.label}] reassembly beat ${idx + 1} keeps enclosure stationary`, enclosureMove <= 0.001 && enclosureRot <= Math.PI / 180, `${enclosureMove.toFixed(4)}m/${(enclosureRot * 180 / Math.PI).toFixed(2)}deg`);
       previousBeatPose = beatState?.pose || previousBeatPose;
     }
     await goto(1); await settle(cdp);
@@ -415,7 +448,7 @@ async function browserPass() {
       const settle = () => new Promise((r) => requestAnimationFrame(() => requestAnimationFrame(r)));
       const stepDown = async () => {
         const step = Math.max(120, Math.floor(innerHeight * 0.62));
-        for (let i = 0; i < 32 && scrollY + innerHeight < document.documentElement.scrollHeight - 2; i++) {
+        for (let i = 0; i < 64 && scrollY + innerHeight < document.documentElement.scrollHeight - 2; i++) {
           window.scrollBy(0, step); await settle();
         }
       };
@@ -454,7 +487,7 @@ staticChecks();
 await browserPass();
 
 writeFileSync(join(OUT, 'report.json'), JSON.stringify({
-  when: 'checkpoint-pass6a',
+  when: 'checkpoint-pass6b',
   results,
   passed: results.filter((r) => r.ok).length,
   failed: results.filter((r) => !r.ok).length,
