@@ -8,12 +8,12 @@ const FOV = 34;
 
 const PART_IDS = ['enclosure', 'switch', 'solar_lid', 'battery', 'charge_module', 'led_pair'];
 const CHAPTERS = [
-  { id: 'solar_lid', key: 'solar', num: '01 / DAYLIGHT IN', title: '5V solar panel', body: 'Captures daylight to recharge the light.', turn: 200, slot: [0, 0, 52], inspect: [0, 4, 74], anchor: [30, -30, 1.25] },
-  { id: 'battery', key: 'battery', num: '02 / POWER HELD', title: 'Rechargeable battery', body: 'Stores energy for study after dark.', turn: 185, slot: [-16, -2, 30], inspect: [-16, -2, 46], anchor: [-21, -15, 2.5] },
-  { id: 'charge_module', key: 'module', num: '03 / CHARGE CONTROLLED', title: 'Recharge module', body: 'Manages safe charging from the panel.', turn: 175, slot: [16, -2, 30], inspect: [16, -2, 46], anchor: [13.2, -8.6, 2.8] },
-  { id: 'led_pair', key: 'leds', num: '04 / LIGHT OUT', title: 'Two LEDs', body: 'Turn stored energy into focused study light.', turn: 205, slot: [0, -30, 10], inspect: [0, -54, 26], anchor: [9.5, -40.5, 1] },
-  { id: 'switch', key: 'switch', num: '05 / SWITCHED BY HAND', title: 'Slide switch', body: 'Completes the circuit so study light flows.', turn: 190, slot: [0, 44, 12], inspect: [0, 64, 26], anchor: [19, 41, 5] },
-  { id: 'enclosure', key: 'enclosure', num: '06 / BUILT TO PROTECT', title: '3D-printed enclosure', body: 'Shields every component.', turn: 210, slot: [0, 0, 0], inspect: [0, -6, 36], anchor: [42, -42, 7.75] },
+  { id: 'solar_lid', key: 'solar', num: '01 / DAYLIGHT IN', title: '5V solar panel', body: 'Captures daylight to recharge the light.', turn: 200, slot: [0, 0, 52], inspect: [0, 4, 74], anchor: [0, 0, 1.25] },
+  { id: 'battery', key: 'battery', num: '02 / POWER HELD', title: 'Rechargeable battery', body: 'Stores energy for study after dark.', turn: 185, slot: [-16, -2, 30], inspect: [-16, -2, 46], anchor: [0, 0, 0] },
+  { id: 'charge_module', key: 'module', num: '03 / CHARGE CONTROLLED', title: 'Recharge module', body: 'Manages safe charging from the panel.', turn: 175, slot: [16, -2, 30], inspect: [0, 0, 46], anchor: [0, 0, 2.8] },
+  { id: 'led_pair', key: 'leds', num: '04 / LIGHT OUT', title: 'Two LEDs', body: 'Turn stored energy into focused study light.', turn: 205, slot: [0, -30, 10], inspect: [0, -54, 26], anchor: [0, -2, 0] },
+  { id: 'switch', key: 'switch', num: '05 / SWITCHED BY HAND', title: 'Slide switch', body: 'Completes the circuit so study light flows.', turn: 190, slot: [0, 44, 12], inspect: [0, 64, 26], anchor: [0, 41, 3] },
+  { id: 'enclosure', key: 'enclosure', num: '06 / BUILT TO PROTECT', title: '3D-printed enclosure', body: 'Shields every component.', turn: 210, slot: [0, 0, 0], inspect: [0, -6, 36], anchor: [30, -30, 1] },
 ];
 const REASSEMBLY_ORDER = ['enclosure', 'switch', 'led_pair', 'charge_module', 'battery', 'solar_lid'];
 
@@ -93,10 +93,12 @@ function init(section) {
   CHAPTERS.forEach((c) => { callouts[c.key] = shell.querySelector('[data-callout="' + c.key + '"]'); });
 
   let renderer = null;
+  let disposed = false;
   try {
     renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: true, powerPreference: 'low-power' });
   } catch (e) {
-    loadingEl.remove();
+    loadingEl.classList.add('is-error');
+    loadingEl.textContent = '3D preview unavailable — the accessible parts list remains below.';
     return;
   }
   renderer.outputColorSpace = THREE.SRGBColorSpace;
@@ -108,44 +110,133 @@ function init(section) {
 
   const groups = {};
   const localBoxes = {};
+  const meshNodes = {};
   const seats = {};
   let root = null;
   let ready = false;
+  // Expose a stable diagnostic surface before deferred loading begins. This
+  // keeps automated and assistive checks from racing the near-viewport fetch.
+  window.__ffasm3d = { version: 'pass2', get ready() { return ready; }, progress: () => lastProgress, frame: () => frameStats, activeCallout: () => (frameStats ? frameStats.activeCallout : null), parts: () => Object.keys(groups) };
 
-  new GLTFLoader().load(GLB_URL, (gltf) => {
+  function showLoadError(err) {
+    ready = false;
+    loadingEl.classList.add('is-error');
+    loadingEl.textContent = '3D preview unavailable — the accessible parts list remains below.';
+    section.classList.add('ff-asm3d-load-error');
+    if (err) console.warn('Assembly 3D load failed', err);
+  }
+
+  function materialFor(id) {
+    const props = {
+      enclosure: { color: 0x151b18, roughness: 0.8, metalness: 0.02 },
+      solar_lid: { color: 0x0b2332, roughness: 0.42, metalness: 0.28 },
+      battery: { color: 0xb8c0bc, roughness: 0.35, metalness: 0.52 },
+      charge_module: { color: 0x126047, roughness: 0.55, metalness: 0.1 },
+      led_pair: { color: 0xbbe6ed, roughness: 0.12, metalness: 0, transparent: true, opacity: 0.46 },
+      switch: { color: 0x202824, roughness: 0.58, metalness: 0.03 },
+    }[id];
+    return new THREE.MeshStandardMaterial({ ...props, envMapIntensity: 0.35 });
+  }
+
+  function addProductDetails(id, holder) {
+    const matte = (color, roughness = 0.52, metalness = 0.05) => new THREE.MeshStandardMaterial({ color, roughness, metalness });
+    const detail = (geo, material, position) => {
+      const m = new THREE.Mesh(geo, material);
+      // Authoring dimensions below are millimetres; the GLB scene is metres.
+      m.scale.setScalar(MM);
+      m.position.set(...position.map((v) => v * MM));
+      holder.add(m);
+      return m;
+    };
+    if (id === 'solar_lid') {
+      const gridMat = matte(0x06131b, 0.34, 0.2);
+      for (const z of [-1.29, 1.29]) {
+        for (let i = -4; i <= 4; i++) detail(new THREE.BoxGeometry(0.45, 78, 0.08), gridMat, [i * 8.6, 0, z]);
+        for (let i = -4; i <= 4; i++) detail(new THREE.BoxGeometry(78, 0.45, 0.08), gridMat, [0, i * 8.6, z]);
+      }
+      detail(new THREE.BoxGeometry(81.5, 1.2, 0.32), matte(0x0a1111, 0.62, 0.04), [0, -40, 0.05]);
+      detail(new THREE.BoxGeometry(81.5, 1.2, 0.32), matte(0x0a1111, 0.62, 0.04), [0, 40, 0.05]);
+    } else if (id === 'battery') {
+      const tape = matte(0xb45c1f, 0.46, 0.08);
+      detail(new THREE.BoxGeometry(1.6, 30.6, 5.2), tape, [-21.1, 0, 0]);
+      detail(new THREE.BoxGeometry(1.6, 30.6, 5.2), tape, [21.1, 0, 0]);
+      const lead = matte(0x161c19, 0.48, 0.02);
+      detail(new THREE.CylinderGeometry(0.7, 0.7, 7, 12), lead, [-18, -17.5, 2.8]).rotation.z = Math.PI / 2;
+      detail(new THREE.CylinderGeometry(0.65, 0.65, 7, 12), matte(0x8f1717, 0.5, 0.02), [18, -17.5, 2.8]).rotation.z = Math.PI / 2;
+    } else if (id === 'charge_module') {
+      const chip = matte(0x111715, 0.3, 0.22);
+      for (const z of [-3.35, 3.35]) {
+        detail(new THREE.BoxGeometry(5.2, 4.2, 1.1), chip, [-5, -1, z]);
+        detail(new THREE.BoxGeometry(4.1, 3.1, 1.1), chip, [4.5, 3.2, z]);
+      }
+      const pad = matte(0xd19d48, 0.28, 0.58);
+      for (const z of [-3.0, 3.0]) for (let i = -4; i <= 4; i += 2) detail(new THREE.BoxGeometry(0.8, 1.5, 0.18), pad, [i, -6.2, z]);
+      detail(new THREE.BoxGeometry(4.6, 3.6, 2.1), matte(0x151d1a, 0.36, 0.18), [0, 9.2, 0]);
+    } else if (id === 'led_pair') {
+      const glow = new THREE.MeshStandardMaterial({ color: 0xffffff, emissive: 0xf8fff9, emissiveIntensity: 2.2, roughness: 0.15 });
+      [-8, 8].forEach((x) => {
+        const front = detail(new THREE.SphereGeometry(2.3, 18, 12, 0, Math.PI * 2, 0, Math.PI / 2), glow, [x, -4.5, 0]);
+        front.rotation.x = Math.PI;
+        detail(new THREE.SphereGeometry(2.3, 18, 12, 0, Math.PI * 2, 0, Math.PI / 2), glow, [x, 4.5, 0]);
+      });
+    } else if (id === 'switch') {
+      detail(new THREE.BoxGeometry(10, 5, 3.3), matte(0x080c0a, 0.66, 0.02), [-5, 41.3, 3.5]);
+    }
+  }
+
+  function loadModel() {
+    if (disposed || root || section.classList.contains('ff-asm3d-load-error')) return;
+    loadingEl.classList.remove('is-idle');
+    new GLTFLoader().load(GLB_URL, (gltf) => {
+      if (disposed) return;
     root = gltf.scene;
     scene.add(root);
     const byName = {};
     root.traverse((o) => { if (o.name && PART_IDS.indexOf(o.name) >= 0) byName[o.name] = o; });
     CHAPTERS.forEach((c) => {
       const node = byName[c.id];
+      if (!node) return;
+      const originalPos = node.position.clone();
+      const originalQuat = node.quaternion.clone();
+      const originalScale = node.scale.clone();
       const pivot = new THREE.Group();
       root.add(pivot);
+      pivot.position.copy(originalPos);
+      pivot.quaternion.copy(originalQuat);
+      pivot.scale.copy(originalScale);
       const holder = new THREE.Group();
       pivot.add(holder);
       holder.add(node);
+      node.position.set(0, 0, 0);
+      node.quaternion.identity();
+      node.scale.set(1, 1, 1);
+      // Bounds are geometry-local, while the seat remains the authored GLB
+      // translation. This prevents recentering from cancelling the seat.
       node.traverse((o) => {
         if (o.isMesh) {
-          o.material = o.material.clone();
+          o.material = materialFor(c.id);
           o.material.transparent = true;
         }
       });
       node.updateMatrixWorld(true);
       const box = new THREE.Box3().setFromObject(node);
-      const center = box.getCenter(new THREE.Vector3());
-      holder.position.copy(center).negate();
+      addProductDetails(c.id, holder);
       groups[c.id] = pivot;
       localBoxes[c.id] = box;
-      seats[c.id] = pivot.position.clone();
+      meshNodes[c.id] = node;
+      seats[c.id] = originalPos.clone();
     });
+    if (PART_IDS.some((id) => !groups[id])) { showLoadError(new Error('GLB is missing a required named part')); return; }
     ready = true;
     loadingEl.classList.add('is-done');
     requestRender(true);
-  });
+    }, undefined, showLoadError);
+  }
 
   function worldBox(id, out) {
-    out.copy(localBoxes[id]).applyMatrix4(groups[id].matrixWorld);
-    return out;
+    // Recompute from the final hierarchy/pose so leader and camera bounds are
+    // always the geometry actually submitted to the renderer.
+    return out.copy(new THREE.Box3().setFromObject(groups[id]));
   }
 
   const tmpBox = new THREE.Box3();
@@ -171,11 +262,11 @@ function init(section) {
   }
 
   const ANGLE_KEYS = [
-    { at: 0.02, azim: 28, elev: 14 },
-    { at: T_EXPLODE[1], azim: 30, elev: 18 },
-    ...CHAPTERS.map((c, i) => ({ at: T_CH_START + (i + 0.69) * CH_W, azim: 24 + i * 13, elev: 15 })),
-    { at: T_RE_START + 0.04, azim: 30, elev: 18 },
-    { at: 0.99, azim: 26, elev: 13 },
+    { at: 0.02, azim: 34, elev: -28 },
+    { at: T_EXPLODE[1], azim: 30, elev: -12 },
+    ...CHAPTERS.map((c, i) => ({ at: T_CH_START + (i + 0.69) * CH_W, azim: 24 + i * 13, elev: 8 })),
+    { at: T_RE_START + 0.04, azim: 30, elev: -10 },
+    { at: 0.99, azim: 30, elev: -28 },
   ];
 
   function viewAngles(p) {
@@ -211,7 +302,7 @@ function init(section) {
   function boxForSubject(sub, out) {
     out.makeEmpty();
     if (sub === 'all') {
-      for (const id in groups) out.union(worldBox(id, tmpBox));
+      for (const id in groups) if (groups[id].visible) out.union(worldBox(id, tmpBox));
     } else {
       out.union(worldBox(sub, tmpBox));
     }
@@ -305,6 +396,7 @@ function init(section) {
   function applyPose(p) {
     const ex = explodeK(p);
     const chIdx = chapterAt(p);
+    const soloId = chIdx >= 0 ? CHAPTERS[chIdx].id : null;
     CHAPTERS.forEach((c, i) => {
       const g = groups[c.id];
       if (!g) return;
@@ -326,6 +418,12 @@ function init(section) {
       }
       g.position.set(seats[c.id].x + x, seats[c.id].y + y, seats[c.id].z + z);
       g.rotation.set(0, yaw, 0, 'YXZ');
+      // Keep the inactive assembly from becoming a giant, cropped ghost under
+      // solo copy. It is cleanly hidden once the active chapter settles; the
+      // short blend-in/out keeps the tableau coherent at chapter boundaries.
+      const chapterPhase = chIdx >= 0 ? chapterT(p, chIdx) : 0;
+      const soloSettled = chIdx >= 0 && chapterPhase > 0.44 && chapterPhase < 0.86;
+      g.visible = !soloSettled || c.id === soloId;
       g.updateMatrixWorld(true);
     });
   }
@@ -483,7 +581,7 @@ function init(section) {
         lastProgress = p;
         resizeIfNeeded();
         renderFrame();
-        document.body.classList.toggle('ff-assembly-active', p > 0.001 && p < 0.999);
+        document.body.classList.toggle('ff-assembly-active', p > 0.001 && p <= 1);
       }
     });
   }
@@ -499,17 +597,38 @@ function init(section) {
 
   const io = new IntersectionObserver((entries) => {
     inView = entries[0].isIntersecting;
-    if (inView) requestRender(true);
+    if (inView) { loadModel(); requestRender(true); }
   }, { rootMargin: '25% 0%' });
   io.observe(section);
+  if (!('IntersectionObserver' in window)) { inView = true; loadModel(); }
 
-  document.addEventListener('visibilitychange', () => {
+  const onScroll = () => requestRender(false);
+  const onResize = () => requestRender(true);
+  const onVisibility = () => {
     docHidden = document.hidden;
     if (!docHidden) requestRender(true);
-  });
-
-  window.addEventListener('scroll', () => requestRender(false), { passive: true });
-  window.addEventListener('resize', () => requestRender(true));
+  };
+  const cleanup = () => {
+    if (disposed) return;
+    disposed = true;
+    io.disconnect();
+    document.removeEventListener('visibilitychange', onVisibility);
+    window.removeEventListener('scroll', onScroll);
+    window.removeEventListener('resize', onResize);
+    Object.values(groups).forEach((g) => g.traverse((o) => {
+      if (!o.isMesh) return;
+      if (o.geometry && o.geometry.dispose) o.geometry.dispose();
+      if (o.material) {
+        const mats = Array.isArray(o.material) ? o.material : [o.material];
+        mats.forEach((m) => m.dispose && m.dispose());
+      }
+    }));
+    if (renderer) { renderer.dispose(); renderer.forceContextLoss?.(); }
+  };
+  window.addEventListener('scroll', onScroll, { passive: true });
+  window.addEventListener('resize', onResize);
+  document.addEventListener('visibilitychange', onVisibility);
+  window.addEventListener('pagehide', cleanup, { once: true });
 
   window.__ffasm3d = {
     version: 'proto-1',
@@ -523,11 +642,22 @@ function init(section) {
       const missing = PART_IDS.filter((id) => !groups[id]);
       if (missing.length) return false;
       applyPose(1);
+      const expected = {
+        enclosure: [[-42, -42, -5.75], [42, 42, 7.75]],
+        switch: [[-29.961, 37.199, -4.658], [18.854, 45.17, 5.771]],
+        solar_lid: [[-40, -40, 7.75], [40, 40, 10.25]],
+        battery: [[-21, -35, -4.25], [21, -5, 0.75]],
+        charge_module: [[-13.15, -0.55, -4.25], [13.15, 16.55, 1.35]],
+        led_pair: [[-10.1, -45, -1.1], [10.1, -36, 3.1]],
+      };
       return PART_IDS.every((id) => {
         const m = new THREE.Matrix4().extractRotation(groups[id].matrixWorld);
         const posOk = groups[id].getWorldPosition(V).distanceTo(seats[id]) < 1e-6;
         const rotOk = Math.abs(m.elements[0] - 1) < 1e-6 && Math.abs(m.elements[5] - 1) < 1e-6 && Math.abs(m.elements[10] - 1) < 1e-6;
-        return posOk && rotOk;
+        const b = new THREE.Box3().setFromObject(meshNodes[id]);
+        const eb = expected[id];
+        const boundsOk = eb && b.min.distanceTo(new THREE.Vector3(...eb[0].map((v) => v * MM))) < 1e-5 && b.max.distanceTo(new THREE.Vector3(...eb[1].map((v) => v * MM))) < 1e-5;
+        return posOk && rotOk && boundsOk;
       });
     },
     parts: () => Object.keys(groups),

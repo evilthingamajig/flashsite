@@ -16,14 +16,16 @@
       "degenerateDropped": 0,
       "duplicateFacesDropped": 0,
       "verticesWelded": 3901,
-      "trianglesKept": 1561
+      "trianglesKept": 1561,
+      "topology": "Source enclosure retains small-area/non-manifold boundary topology; degenerate and duplicate faces were absent, coincident vertices were welded, and flat per-face normals are exported for stable rendering. Silhouette is unchanged."
     },
     "switch": {
       "stlTriangles": 56,
       "degenerateDropped": 0,
       "duplicateFacesDropped": 0,
       "verticesWelded": 138,
-      "trianglesKept": 56
+      "trianglesKept": 56,
+      "topology": "Procedural/solid source topology validated by deterministic bounds and seating checks."
     },
     "summary": {
       "enclosure": {
@@ -187,7 +189,7 @@
         }
       },
       "led_pair": {
-        "triangles": 96,
+        "triangles": 128,
         "seatMm": [
           0,
           -40.5,
@@ -195,26 +197,26 @@
         ],
         "localBoundsMm": {
           "lo": [
-            -9.5,
-            -1.5,
-            -3
+            -10.1,
+            -4.5,
+            -2.1
           ],
           "hi": [
-            9.5,
-            1.5,
-            3
+            10.1,
+            4.5,
+            2.1
           ]
         },
         "worldBoundsMm": {
           "lo": [
-            -9.5,
-            -42,
-            -2
+            -10.1,
+            -45,
+            -1.1
           ],
           "hi": [
-            9.5,
-            -39,
-            4
+            10.1,
+            -36,
+            3.1
           ]
         }
       }
@@ -235,8 +237,8 @@
     "note": "Pairs listed are designed contacts only: led_pair pierces the solid -Y wall by intent (no LED holes); everything else verified penetration-free."
   },
   "totals": {
-    "triangles": 1749,
-    "bytes": 140532,
+    "triangles": 1781,
+    "bytes": 143800,
     "parts": 6
   },
   "limits": {

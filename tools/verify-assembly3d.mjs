@@ -272,15 +272,25 @@ async function browserPass() {
     await goto(1); await settle(cdp);
     await cdp.screenshot(join(OUT, vp.label + '-final.png'));
 
-    const footer = await cdp.evaluate(`(() => {
+    const footer = await cdp.evaluate(`(async () => {
       const f = document.querySelector('.section-footer');
-      window.scrollTo(0, document.documentElement.scrollHeight);
-      return new Promise((r) => requestAnimationFrame(() => requestAnimationFrame(() => {
-        const fr = f.getBoundingClientRect();
-        r({ top: fr.top, vh: window.innerHeight, reachable: fr.top < window.innerHeight && fr.bottom > 0 });
-      })));
+      const settle = () => new Promise((r) => requestAnimationFrame(() => requestAnimationFrame(r)));
+      const stepDown = async () => {
+        const step = Math.max(120, Math.floor(innerHeight * 0.62));
+        for (let i = 0; i < 32 && scrollY + innerHeight < document.documentElement.scrollHeight - 2; i++) {
+          window.scrollBy(0, step); await settle();
+        }
+      };
+      window.scrollTo(0, 0); await settle();
+      await stepDown();
+      const first = f.getBoundingClientRect();
+      const firstReachable = first.top < innerHeight && first.bottom > 0;
+      window.scrollBy(0, -Math.min(240, Math.floor(innerHeight * 0.28))); await settle();
+      await stepDown();
+      const second = f.getBoundingClientRect();
+      return { top: second.top, vh: innerHeight, reachable: firstReachable && second.top < innerHeight && second.bottom > 0, firstReachable, secondReachable: second.top < innerHeight && second.bottom > 0 };
     })()`, { awaitPromise: true });
-    check(`[${vp.label}] footer reachable in one descent`, footer.reachable, `footer top ${footer.top.toFixed(0)} vs vh ${footer.vh}`);
+    check(`[${vp.label}] footer reachable after incremental down/up/down`, footer.reachable, `first=${footer.firstReachable} second=${footer.secondReachable} top ${footer.top.toFixed(0)} vs vh ${footer.vh}`);
 
     const realErrors = errors.filter((e) => !/favicon/i.test(e));
     check(`[${vp.label}] zero console errors`, realErrors.length === 0, realErrors.slice(0, 3).join(' | '));

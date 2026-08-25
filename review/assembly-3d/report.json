@@ -8,7 +8,7 @@
     {
       "name": "glb <= 250 KB",
       "ok": true,
-      "detail": "140532 bytes"
+      "detail": "143800 bytes"
     },
     {
       "name": "manifest bytes match glb",
@@ -17,7 +17,7 @@
     {
       "name": "triangles <= 5000",
       "ok": true,
-      "detail": "1749 tris"
+      "detail": "1781 tris"
     },
     {
       "name": "glb node names exact",
@@ -105,12 +105,12 @@
     {
       "name": "[desktop-1440x900] hold ch1 silhouette fills 58-68% of pane",
       "ok": true,
-      "detail": "fill 0.630"
+      "detail": "fill 0.627"
     },
     {
       "name": "[desktop-1440x900] hold ch1 clearance >=32/40px",
       "ok": true,
-      "detail": "L96 R94 T195 B199"
+      "detail": "L97 R95 T204 B203"
     },
     {
       "name": "[desktop-1440x900] leader lands on mesh anchor ch1",
@@ -120,12 +120,12 @@
     {
       "name": "[desktop-1440x900] hold ch2 silhouette fills 58-68% of pane",
       "ok": true,
-      "detail": "fill 0.629"
+      "detail": "fill 0.627"
     },
     {
       "name": "[desktop-1440x900] hold ch2 clearance >=32/40px",
       "ok": true,
-      "detail": "L104 R87 T224 B224"
+      "detail": "L104 R88 T230 B227"
     },
     {
       "name": "[desktop-1440x900] leader lands on mesh anchor ch2",
@@ -140,7 +140,7 @@
     {
       "name": "[desktop-1440x900] hold ch3 clearance >=32/40px",
       "ok": true,
-      "detail": "L107 R84 T222 B212"
+      "detail": "L106 R85 T228 B216"
     },
     {
       "name": "[desktop-1440x900] leader lands on mesh anchor ch3",
@@ -155,7 +155,7 @@
     {
       "name": "[desktop-1440x900] hold ch4 clearance >=32/40px",
       "ok": true,
-      "detail": "L105 R86 T304 B307"
+      "detail": "L106 R84 T250 B239"
     },
     {
       "name": "[desktop-1440x900] leader lands on mesh anchor ch4",
@@ -170,7 +170,7 @@
     {
       "name": "[desktop-1440x900] hold ch5 clearance >=32/40px",
       "ok": true,
-      "detail": "L120 R71 T271 B251"
+      "detail": "L120 R70 T299 B289"
     },
     {
       "name": "[desktop-1440x900] leader lands on mesh anchor ch5",
@@ -180,12 +180,12 @@
     {
       "name": "[desktop-1440x900] hold ch6 silhouette fills 58-68% of pane",
       "ok": true,
-      "detail": "fill 0.630"
+      "detail": "fill 0.633"
     },
     {
       "name": "[desktop-1440x900] hold ch6 clearance >=32/40px",
       "ok": true,
-      "detail": "L115 R108 T150 B128"
+      "detail": "L104 R97 T155 B121"
     },
     {
       "name": "[desktop-1440x900] leader lands on mesh anchor ch6",
@@ -202,9 +202,9 @@
       "ok": true
     },
     {
-      "name": "[desktop-1440x900] footer reachable in one descent",
+      "name": "[desktop-1440x900] footer reachable after incremental down/up/down",
       "ok": true,
-      "detail": "footer top 328 vs vh 900"
+      "detail": "first=true second=true top 328 vs vh 900"
     },
     {
       "name": "[desktop-1440x900] zero console errors",
@@ -233,7 +233,7 @@
     {
       "name": "[mobile-390x844] hold ch1 within 86vw/46svh",
       "ok": true,
-      "detail": "157x175"
+      "detail": "157x168"
     },
     {
       "name": "[mobile-390x844] hold ch1 clearance >=16px",
@@ -248,12 +248,12 @@
     {
       "name": "[mobile-390x844] hold ch2 within 86vw/46svh",
       "ok": true,
-      "detail": "157x149"
+      "detail": "157x144"
     },
     {
       "name": "[mobile-390x844] hold ch2 clearance >=16px",
       "ok": true,
-      "detail": "99"
+      "detail": "98"
     },
     {
       "name": "[mobile-390x844] leader lands on mesh anchor ch2",
@@ -263,12 +263,12 @@
     {
       "name": "[mobile-390x844] hold ch3 within 86vw/46svh",
       "ok": true,
-      "detail": "157x155"
+      "detail": "157x150"
     },
     {
       "name": "[mobile-390x844] hold ch3 clearance >=16px",
       "ok": true,
-      "detail": "97"
+      "detail": "98"
     },
     {
       "name": "[mobile-390x844] leader lands on mesh anchor ch3",
@@ -278,7 +278,7 @@
     {
       "name": "[mobile-390x844] hold ch4 within 86vw/46svh",
       "ok": true,
-      "detail": "157x68"
+      "detail": "157x127"
     },
     {
       "name": "[mobile-390x844] hold ch4 clearance >=16px",
@@ -293,12 +293,12 @@
     {
       "name": "[mobile-390x844] hold ch5 within 86vw/46svh",
       "ok": true,
-      "detail": "157x110"
+      "detail": "157x79"
     },
     {
       "name": "[mobile-390x844] hold ch5 clearance >=16px",
       "ok": true,
-      "detail": "95"
+      "detail": "94"
     },
     {
       "name": "[mobile-390x844] leader lands on mesh anchor ch5",
@@ -308,12 +308,12 @@
     {
       "name": "[mobile-390x844] hold ch6 within 86vw/46svh",
       "ok": true,
-      "detail": "146x253"
+      "detail": "158x254"
     },
     {
       "name": "[mobile-390x844] hold ch6 clearance >=16px",
       "ok": true,
-      "detail": "93"
+      "detail": "97"
     },
     {
       "name": "[mobile-390x844] leader lands on mesh anchor ch6",
@@ -330,9 +330,9 @@
       "ok": true
     },
     {
-      "name": "[mobile-390x844] footer reachable in one descent",
+      "name": "[mobile-390x844] footer reachable after incremental down/up/down",
       "ok": true,
-      "detail": "footer top -38 vs vh 844"
+      "detail": "first=true second=true top -38 vs vh 844"
     },
     {
       "name": "[mobile-390x844] zero console errors",
