@@ -1,5 +1,5 @@
 {
-  "when": "checkpoint-pass5b",
+  "when": "checkpoint-pass5c",
   "results": [
     {
       "name": "glb exists",
@@ -214,12 +214,12 @@
     {
       "name": "[desktop-1440x900] hold ch6 silhouette fills 58-74% of pane",
       "ok": true,
-      "detail": "fill 0.720"
+      "detail": "fill 0.721"
     },
     {
       "name": "[desktop-1440x900] hold ch6 clearance >=32/40px",
       "ok": true,
-      "detail": "L73 R423 T140 B85"
+      "detail": "L61 R415 T124 B100"
     },
     {
       "name": "[desktop-1440x900] leader lands on mesh anchor ch6",
@@ -229,7 +229,7 @@
     {
       "name": "[desktop-1440x900] leader route stays outside silhouette ch6",
       "ok": true,
-      "detail": "route 959,572 sil 507,204,438,579"
+      "detail": "route 967,709 sil 495,188,458,579"
     },
     {
       "name": "[desktop-1440x900] reverse scrub deterministic",
@@ -253,7 +253,7 @@
     {
       "name": "[desktop-1440x900] final composition meets viewport scale",
       "ok": true,
-      "detail": "708x553"
+      "detail": "520x574"
     },
     {
       "name": "[desktop-1440x900] exploded tableau has no active copy",
@@ -267,12 +267,12 @@
     {
       "name": "[desktop-1440x900] tableau stays within central assembly radius",
       "ok": true,
-      "detail": "0.128m"
+      "detail": "0.134m"
     },
     {
       "name": "[desktop-1440x900] exploded tableau meets viewport scale",
       "ok": true,
-      "detail": "580x541"
+      "detail": "606x580"
     },
     {
       "name": "[desktop-1440x900] reassembly exposes interior tray",
@@ -281,7 +281,7 @@
     {
       "name": "[desktop-1440x900] reassembly composition remains visible",
       "ok": true,
-      "detail": "574x541"
+      "detail": "614x586"
     },
     {
       "name": "[desktop-1440x900] solo-to-tableau camera transition is smooth",
@@ -289,34 +289,104 @@
       "detail": "2.7deg"
     },
     {
+      "name": "[desktop-1440x900] solo-to-tableau camera distance is continuous",
+      "ok": true,
+      "detail": "1.35x"
+    },
+    {
+      "name": "[desktop-1440x900] solo-to-tableau camera center is continuous",
+      "ok": true,
+      "detail": "0.026m"
+    },
+    {
+      "name": "[desktop-1440x900] solo-to-tableau projected scale is continuous",
+      "ok": true,
+      "detail": "1.40x"
+    },
+    {
       "name": "[desktop-1440x900] reassembly beat 1 advances enclosure",
       "ok": true,
       "detail": "0.0000m"
     },
     {
+      "name": "[desktop-1440x900] reassembly beat 1 keeps non-active parts settled",
+      "ok": true,
+      "detail": "0.0007m"
+    },
+    {
       "name": "[desktop-1440x900] reassembly beat 2 advances switch",
       "ok": true,
-      "detail": "0.0241m"
+      "detail": "0.0216m"
+    },
+    {
+      "name": "[desktop-1440x900] reassembly beat 2 keeps non-active parts settled",
+      "ok": true,
+      "detail": "0.0003m"
+    },
+    {
+      "name": "[desktop-1440x900] reassembly beat 2 has one dominant mover",
+      "ok": true,
+      "detail": "0.0763m vs 0.0003m"
     },
     {
       "name": "[desktop-1440x900] reassembly beat 3 advances led_pair",
       "ok": true,
-      "detail": "0.0165m"
+      "detail": "0.0105m"
+    },
+    {
+      "name": "[desktop-1440x900] reassembly beat 3 keeps non-active parts settled",
+      "ok": true,
+      "detail": "0.0216m"
+    },
+    {
+      "name": "[desktop-1440x900] reassembly beat 3 has one dominant mover",
+      "ok": true,
+      "detail": "0.0365m vs 0.0216m"
     },
     {
       "name": "[desktop-1440x900] reassembly beat 4 advances charge_module",
       "ok": true,
-      "detail": "0.0110m"
+      "detail": "0.0085m"
+    },
+    {
+      "name": "[desktop-1440x900] reassembly beat 4 keeps non-active parts settled",
+      "ok": true,
+      "detail": "0.0105m"
+    },
+    {
+      "name": "[desktop-1440x900] reassembly beat 4 has one dominant mover",
+      "ok": true,
+      "detail": "0.0298m vs 0.0105m"
     },
     {
       "name": "[desktop-1440x900] reassembly beat 5 advances battery",
       "ok": true,
-      "detail": "0.0261m"
+      "detail": "0.0079m"
+    },
+    {
+      "name": "[desktop-1440x900] reassembly beat 5 keeps non-active parts settled",
+      "ok": true,
+      "detail": "0.0085m"
+    },
+    {
+      "name": "[desktop-1440x900] reassembly beat 5 has one dominant mover",
+      "ok": true,
+      "detail": "0.0274m vs 0.0085m"
     },
     {
       "name": "[desktop-1440x900] reassembly beat 6 advances solar_lid",
       "ok": true,
-      "detail": "0.0278m"
+      "detail": "0.0314m"
+    },
+    {
+      "name": "[desktop-1440x900] reassembly beat 6 keeps non-active parts settled",
+      "ok": true,
+      "detail": "0.0079m"
+    },
+    {
+      "name": "[desktop-1440x900] reassembly beat 6 has one dominant mover",
+      "ok": true,
+      "detail": "0.1107m vs 0.0079m"
     },
     {
       "name": "[desktop-1440x900] footer reachable after incremental down/up/down",
@@ -455,17 +525,17 @@
     {
       "name": "[mobile-390x844] hold ch6 within 70-86vw/60svh",
       "ok": true,
-      "detail": "252x349"
+      "detail": "268x349"
     },
     {
       "name": "[mobile-390x844] hold ch6 clearance >=16px",
       "ok": true,
-      "detail": "37"
+      "detail": "35"
     },
     {
       "name": "[mobile-390x844] enclosure copy clears silhouette by 24px",
       "ok": true,
-      "detail": "43px"
+      "detail": "50px"
     },
     {
       "name": "[mobile-390x844] leader lands on mesh anchor ch6",
@@ -475,7 +545,7 @@
     {
       "name": "[mobile-390x844] leader route stays outside silhouette ch6",
       "ok": true,
-      "detail": "route 165,631 sil 73,268,252,349"
+      "detail": "route 293,625 sil 64,262,268,349"
     },
     {
       "name": "[mobile-390x844] reverse scrub deterministic",
@@ -499,7 +569,7 @@
     {
       "name": "[mobile-390x844] final composition meets mobile viewport scale",
       "ok": true,
-      "detail": "316x256"
+      "detail": "317x359"
     },
     {
       "name": "[mobile-390x844] exploded tableau has no active copy",
@@ -513,12 +583,12 @@
     {
       "name": "[mobile-390x844] tableau stays within central assembly radius",
       "ok": true,
-      "detail": "0.110m"
+      "detail": "0.111m"
     },
     {
       "name": "[mobile-390x844] exploded tableau meets viewport scale",
       "ok": true,
-      "detail": "315x473"
+      "detail": "285x469"
     },
     {
       "name": "[mobile-390x844] reassembly exposes interior tray",
@@ -527,7 +597,7 @@
     {
       "name": "[mobile-390x844] reassembly composition remains visible",
       "ok": true,
-      "detail": "318x473"
+      "detail": "302x473"
     },
     {
       "name": "[mobile-390x844] solo-to-tableau camera transition is smooth",
@@ -535,34 +605,104 @@
       "detail": "2.7deg"
     },
     {
+      "name": "[mobile-390x844] solo-to-tableau camera distance is continuous",
+      "ok": true,
+      "detail": "1.25x"
+    },
+    {
+      "name": "[mobile-390x844] solo-to-tableau camera center is continuous",
+      "ok": true,
+      "detail": "0.038m"
+    },
+    {
+      "name": "[mobile-390x844] solo-to-tableau projected scale is continuous",
+      "ok": true,
+      "detail": "1.35x"
+    },
+    {
       "name": "[mobile-390x844] reassembly beat 1 advances enclosure",
       "ok": true,
       "detail": "0.0000m"
     },
     {
+      "name": "[mobile-390x844] reassembly beat 1 keeps non-active parts settled",
+      "ok": true,
+      "detail": "0.0004m"
+    },
+    {
       "name": "[mobile-390x844] reassembly beat 2 advances switch",
       "ok": true,
-      "detail": "0.0167m"
+      "detail": "0.0130m"
+    },
+    {
+      "name": "[mobile-390x844] reassembly beat 2 keeps non-active parts settled",
+      "ok": true,
+      "detail": "0.0003m"
+    },
+    {
+      "name": "[mobile-390x844] reassembly beat 2 has one dominant mover",
+      "ok": true,
+      "detail": "0.0454m vs 0.0003m"
     },
     {
       "name": "[mobile-390x844] reassembly beat 3 advances led_pair",
       "ok": true,
-      "detail": "0.0137m"
+      "detail": "0.0108m"
+    },
+    {
+      "name": "[mobile-390x844] reassembly beat 3 keeps non-active parts settled",
+      "ok": true,
+      "detail": "0.0130m"
+    },
+    {
+      "name": "[mobile-390x844] reassembly beat 3 has one dominant mover",
+      "ok": true,
+      "detail": "0.0384m vs 0.0130m"
     },
     {
       "name": "[mobile-390x844] reassembly beat 4 advances charge_module",
       "ok": true,
-      "detail": "0.0153m"
+      "detail": "0.0111m"
+    },
+    {
+      "name": "[mobile-390x844] reassembly beat 4 keeps non-active parts settled",
+      "ok": true,
+      "detail": "0.0108m"
+    },
+    {
+      "name": "[mobile-390x844] reassembly beat 4 has one dominant mover",
+      "ok": true,
+      "detail": "0.0389m vs 0.0108m"
     },
     {
       "name": "[mobile-390x844] reassembly beat 5 advances battery",
       "ok": true,
-      "detail": "0.0156m"
+      "detail": "0.0109m"
+    },
+    {
+      "name": "[mobile-390x844] reassembly beat 5 keeps non-active parts settled",
+      "ok": true,
+      "detail": "0.0111m"
+    },
+    {
+      "name": "[mobile-390x844] reassembly beat 5 has one dominant mover",
+      "ok": true,
+      "detail": "0.0387m vs 0.0111m"
     },
     {
       "name": "[mobile-390x844] reassembly beat 6 advances solar_lid",
       "ok": true,
       "detail": "0.0293m"
+    },
+    {
+      "name": "[mobile-390x844] reassembly beat 6 keeps non-active parts settled",
+      "ok": true,
+      "detail": "0.0109m"
+    },
+    {
+      "name": "[mobile-390x844] reassembly beat 6 has one dominant mover",
+      "ok": true,
+      "detail": "0.1027m vs 0.0109m"
     },
     {
       "name": "[mobile-390x844] footer reachable after incremental down/up/down",
@@ -580,6 +720,6 @@
       "detail": ""
     }
   ],
-  "passed": 120,
+  "passed": 148,
   "failed": 0
 }
