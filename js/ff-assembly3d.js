@@ -1,7 +1,7 @@
 import * as THREE from 'three';
 import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
 
-const CACHE_TOKEN = 'pass10';
+const CACHE_TOKEN = 'pass10b';
 const GLB_URL = `assets/3d/flashlight-assembly.glb?rev=${CACHE_TOKEN}`;
 const MM = 0.001;
 const DPR_CAP = 1.75;
@@ -322,10 +322,19 @@ function init(section) {
           m.map = tex;
           m.needsUpdate = true;
         }
-        if (m.name === 'BatterySilver' || m.name === 'PcbGreen') {
+        if (m.name === 'PcbGreen') {
           m.normalMap = normal;
           m.aoMap = ao;
-          m.normalScale?.set(m.name === 'BatterySilver' ? 0.07 : 0.13, m.name === 'BatterySilver' ? 0.07 : 0.13);
+          m.normalScale?.set(0.13, 0.13);
+          m.needsUpdate = true;
+        } else if (m.name === 'BatterySilver') {
+          m.normalMap = null;
+          m.aoMap = ao;
+          m.normalScale?.set(1, 1);
+          m.metalness = 0.52;
+          m.roughness = 0.24;
+          m.transparent = false;
+          m.opacity = 1;
           m.needsUpdate = true;
         }
       });
@@ -374,15 +383,15 @@ function init(section) {
               // transmissive optical plastic. A single clear mesh plus dark
               // internal anvil gives an edge/rim read without a bloom blob.
               const lens = new THREE.MeshPhysicalMaterial({
-                name: 'ClearLed', color: 0x2f8f9b, roughness: 0.045,
+                name: 'ClearLed', color: 0x2f8f9b, roughness: 0.035,
                 metalness: 0.0, transmission: 0.88, ior: 1.49,
-                thickness: 0.28, transparent: true, opacity: 0.20,
+                thickness: 0.28, transparent: true, opacity: 0.16,
                 depthWrite: false, side: THREE.DoubleSide,
                 envMapIntensity: 0.72,
               });
               if ('attenuationColor' in lens) lens.attenuationColor.setHex(0x398f99);
               if ('attenuationDistance' in lens) lens.attenuationDistance = 1.4;
-              lens.userData.baseOpacity = 0.20;
+              lens.userData.baseOpacity = 0.16;
               lens.userData.baseTransparent = true;
               lens.userData.baseDepthWrite = false;
               o.material = lens;

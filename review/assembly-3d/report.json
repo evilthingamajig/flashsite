@@ -1,5 +1,5 @@
 {
-  "when": "checkpoint-pass10",
+  "when": "checkpoint-pass10b",
   "results": [
     {
       "name": "reassembly overlap <=20%",
@@ -7,9 +7,9 @@
       "detail": "0.0% overlap"
     },
     {
-      "name": "pass10 checkpoint/cache token",
+      "name": "pass10b checkpoint/cache token",
       "ok": true,
-      "detail": "pass10/pass10"
+      "detail": "pass10b/pass10b"
     },
     {
       "name": "glb exists",
@@ -18,7 +18,7 @@
     {
       "name": "glb <= 2 MB",
       "ok": true,
-      "detail": "1307288 bytes"
+      "detail": "1307280 bytes"
     },
     {
       "name": "manifest bytes match glb",
@@ -47,7 +47,7 @@
     {
       "name": "local PBR textures present/dimensioned",
       "ok": true,
-      "detail": "battery_basecolor.png:128x128 battery_roughness.png:64x64 electronics_normal.png:64x64 electronics_ao.png:64x64 tp4056_basecolor.png:256x256"
+      "detail": "battery_basecolor.png:512x512 battery_roughness.png:64x64 electronics_normal.png:64x64 electronics_ao.png:64x64 tp4056_basecolor.png:256x256"
     },
     {
       "name": "external detail material separation used",
@@ -80,7 +80,7 @@
     {
       "name": "battery truth envelope dimensions",
       "ok": true,
-      "detail": "{\"lo\":[-19.7,-12.805,-1.5],\"hi\":[19.7,16.553,3.5]}"
+      "detail": "{\"lo\":[-19.7,-12.805,-1.5],\"hi\":[19.7,15.34,4.36]}"
     },
     {
       "name": "PCB imported relief clears board datum",
@@ -98,12 +98,12 @@
       "detail": "{\"family\":\"SS12D00-style authored\",\"boundsMm\":{\"length\":9.67,\"width\":5.51,\"height\":4.15},\"pins\":3,\"ladderOverlay\":false,\"sourceRendered\":false,\"fitScale\":[1.04,1.02,1]}"
     },
     {
-      "name": "pass10 LED lens extension gate",
+      "name": "pass10b LED geometry continuity gate",
       "ok": true,
-      "detail": "{\"source\":\"KiCad LED_D5.0mm_Clear\",\"lensExtensionMm\":3.4,\"pairSpacingMm\":16,\"clearMaterial\":\"ClearLed\",\"internalMaterial\":\"LedDie/LedAnvil\",\"domeFrontLocalMm\":3.4,\"leadInnerLocalMm\":-3.4}"
+      "detail": "{\"source\":\"KiCad LED_D5.0mm_Clear\",\"lensExtensionMm\":3.4,\"pairSpacingMm\":16,\"clearMaterial\":\"ClearLed\",\"internalMaterial\":\"LedDie/LedAnvil\",\"domeFrontLocalMm\":-3.4,\"leadInnerLocalMm\":0,\"flangeOverlapMm\":0.05,\"exteriorClearComponents\":2,\"clearBoundsMm\":[{\"lo\":[-10.003462451696397,-3.4,-0.24000000357627868],\"hi\":[-6.475462436676025,0,0.24000000357627868]},{\"lo\":[5.996537548303604,-3.4,-0.24000000357627868],\"hi\":[9.524537563323975,0,0.24000000357627868]}],\"leadBoundsMm\":[{\"lo\":[-11.2394624710083,0,-3.4799612045288084],\"hi\":[-4.7605375289917,10.32000045776367,3.4799612045288084]},{\"lo\":[4.7605375289917,0,-3.4799612045288084],\"hi\":[11.2394624710083,10.32000045776367,3.4799612045288084]}]}"
     },
     {
-      "name": "pass10 503040 battery spec/proportions",
+      "name": "pass10b 503040 battery spec/proportions",
       "ok": true,
       "detail": "{\"source\":\"503040 600mAh LiPo pouch reference\",\"nominalMm\":[5,30,40],\"finalEnvelopeMm\":[5,26,40],\"fitScale\":[1,0.8666666666666667,1],\"localZFitMm\":1,\"construction\":\"pillow foil / heat-sealed perimeter / folded Kapton terminal / short red-black leads\"}"
     },
@@ -113,9 +113,9 @@
       "detail": "{\"caseFaceBoundsMm\":{\"x\":[-42,42],\"y\":[-42,42]},\"derivedPanelMm\":[82,82],\"edgeMarginMm\":1,\"basis\":\"enclosure.stl measured top face at z=1.00\"}"
     },
     {
-      "name": "pass10 battery print texture hash",
+      "name": "pass10b battery print texture hash",
       "ok": true,
-      "detail": "a14340658dbb8d12"
+      "detail": "c068ff30d28be3e5"
     },
     {
       "name": "choreography/applyPose lock hash",
@@ -163,7 +163,7 @@
       "ok": true
     },
     {
-      "name": "pass10 battery U flip and restrained normal",
+      "name": "pass10b battery opaque foil/no normal map",
       "ok": true
     },
     {
@@ -395,22 +395,22 @@
     {
       "name": "[desktop-1440x900] explosion closed hold is rendered",
       "ok": true,
-      "detail": "452x597"
+      "detail": "493x596"
     },
     {
       "name": "[desktop-1440x900] explosion lid lift is rendered",
       "ok": true,
-      "detail": "521x579"
+      "detail": "530x553"
     },
     {
       "name": "[desktop-1440x900] explosion internal separation is rendered",
       "ok": true,
-      "detail": "525x559"
+      "detail": "526x528"
     },
     {
       "name": "[desktop-1440x900] explosion exploded hold is rendered",
       "ok": true,
-      "detail": "528x559"
+      "detail": "528x531"
     },
     {
       "name": "[desktop-1440x900] explosion lid lifts before internals",
@@ -470,12 +470,12 @@
     {
       "name": "[desktop-1440x900] hold ch2 silhouette fills 58-74% of pane",
       "ok": true,
-      "detail": "fill 0.614"
+      "detail": "fill 0.587"
     },
     {
       "name": "[desktop-1440x900] hold ch2 clearance >=32/40px",
       "ok": true,
-      "detail": "L35 R351 T170 B141"
+      "detail": "L35 R352 T181 B151"
     },
     {
       "name": "[desktop-1440x900] leader lands on mesh anchor ch2",
@@ -485,7 +485,7 @@
     {
       "name": "[desktop-1440x900] leader route stays outside silhouette ch2",
       "ok": true,
-      "detail": "route 1031,257 sil 470,234,547,493"
+      "detail": "route 1030,250 sil 470,245,547,472"
     },
     {
       "name": "[desktop-1440x900] hold ch3 silhouette fills 58-74% of pane",
@@ -510,12 +510,12 @@
     {
       "name": "[desktop-1440x900] hold ch4 silhouette fills 58-74% of pane",
       "ok": true,
-      "detail": "fill 0.687"
+      "detail": "fill 0.597"
     },
     {
       "name": "[desktop-1440x900] hold ch4 clearance >=32/40px",
       "ok": true,
-      "detail": "L35 R341 T156 B95"
+      "detail": "L36 R341 T225 B179"
     },
     {
       "name": "[desktop-1440x900] leader lands on mesh anchor ch4",
@@ -525,7 +525,7 @@
     {
       "name": "[desktop-1440x900] leader route stays outside silhouette ch4",
       "ok": true,
-      "detail": "route 1041,417 sil 470,220,557,552"
+      "detail": "route 1041,562 sil 470,289,557,400"
     },
     {
       "name": "[desktop-1440x900] hold ch5 silhouette fills 58-74% of pane",
@@ -599,7 +599,7 @@
     {
       "name": "[desktop-1440x900] final composition meets viewport scale",
       "ok": true,
-      "detail": "552x644"
+      "detail": "547x586"
     },
     {
       "name": "[desktop-1440x900] exploded tableau has no active copy",
@@ -633,12 +633,12 @@
     {
       "name": "[desktop-1440x900] exploded tableau meets viewport scale",
       "ok": true,
-      "detail": "565x569"
+      "detail": "584x564"
     },
     {
       "name": "[desktop-1440x900] tableau enclosure anchor fills 32-40vw",
       "ok": true,
-      "detail": "464px"
+      "detail": "480px"
     },
     {
       "name": "[desktop-1440x900] reassembly exposes interior tray",
@@ -667,7 +667,7 @@
     {
       "name": "[desktop-1440x900] solo-to-tableau camera distance is continuous",
       "ok": true,
-      "detail": "1.06x"
+      "detail": "1.07x"
     },
     {
       "name": "[desktop-1440x900] solo-to-tableau camera center is continuous",
@@ -677,7 +677,7 @@
     {
       "name": "[desktop-1440x900] solo-to-tableau projected scale is continuous",
       "ok": true,
-      "detail": "1.03x"
+      "detail": "1.04x"
     },
     {
       "name": "[desktop-1440x900] final camera fit angle is continuous",
@@ -1046,22 +1046,22 @@
     {
       "name": "[mobile-390x844] explosion closed hold is rendered",
       "ok": true,
-      "detail": "257x353"
+      "detail": "280x352"
     },
     {
       "name": "[mobile-390x844] explosion lid lift is rendered",
       "ok": true,
-      "detail": "287x327"
+      "detail": "287x306"
     },
     {
       "name": "[mobile-390x844] explosion internal separation is rendered",
       "ok": true,
-      "detail": "287x309"
+      "detail": "287x292"
     },
     {
       "name": "[mobile-390x844] explosion exploded hold is rendered",
       "ok": true,
-      "detail": "287x308"
+      "detail": "287x292"
     },
     {
       "name": "[mobile-390x844] explosion lid lifts before internals",
@@ -1121,12 +1121,12 @@
     {
       "name": "[mobile-390x844] hold ch2 within 70-86vw/60svh",
       "ok": true,
-      "detail": "287x258"
+      "detail": "287x249"
     },
     {
       "name": "[mobile-390x844] hold ch2 clearance >=16px",
       "ok": true,
-      "detail": "20"
+      "detail": "21"
     },
     {
       "name": "[mobile-390x844] leader lands on mesh anchor ch2",
@@ -1136,7 +1136,7 @@
     {
       "name": "[mobile-390x844] leader route stays outside silhouette ch2",
       "ok": true,
-      "detail": "route 131,575 sil 58,302,287,258"
+      "detail": "route 131,570 sil 58,307,287,249"
     },
     {
       "name": "[mobile-390x844] hold ch3 within 70-86vw/60svh",
@@ -1161,7 +1161,7 @@
     {
       "name": "[mobile-390x844] hold ch4 within 70-86vw/60svh",
       "ok": true,
-      "detail": "286x278"
+      "detail": "286x203"
     },
     {
       "name": "[mobile-390x844] hold ch4 clearance >=16px",
@@ -1176,7 +1176,7 @@
     {
       "name": "[mobile-390x844] leader route stays outside silhouette ch4",
       "ok": true,
-      "detail": "route 126,589 sil 60,297,286,278"
+      "detail": "route 126,548 sil 60,331,286,203"
     },
     {
       "name": "[mobile-390x844] hold ch5 within 70-86vw/60svh",
@@ -1255,7 +1255,7 @@
     {
       "name": "[mobile-390x844] final composition meets mobile viewport scale",
       "ok": true,
-      "detail": "299x361"
+      "detail": "297x329"
     },
     {
       "name": "[mobile-390x844] exploded tableau has no active copy",

@@ -16,16 +16,17 @@ def noise(size, base, spread):
     return im
 
 def save_base():
-    im = noise(128, (190, 197, 194), 1)
+    im = noise(512, (188, 195, 192), 1)
     d = ImageDraw.Draw(im)
-    font = ImageFont.load_default(size=6)
+    font = ImageFont.load_default(size=22)
     # Broad anodized-foil reflection bands, then a crisp heat-seal perimeter.
-    d.polygon([(0, 8), (128, 0), (128, 18), (0, 30)], fill=(216, 221, 219))
-    d.polygon([(0, 92), (128, 78), (128, 104), (0, 116)], fill=(171, 181, 178))
-    d.rounded_rectangle((8, 8, 120, 120), radius=15, outline=(118, 128, 125), width=2)
-    d.rounded_rectangle((11, 11, 117, 117), radius=13, outline=(226, 230, 228), width=1)
-    d.text((42, 47), "Li-ion", font=font, fill=(38, 47, 44))
-    d.text((31, 68), "3.7V 600mAh", font=font, fill=(42, 50, 47))
+    d.polygon([(0, 32), (512, 0), (512, 74), (0, 126)], fill=(216, 221, 219))
+    d.polygon([(0, 368), (512, 312), (512, 420), (0, 470)], fill=(171, 181, 178))
+    d.rounded_rectangle((32, 32, 480, 480), radius=58, outline=(118, 128, 125), width=6)
+    d.rounded_rectangle((44, 44, 468, 468), radius=52, outline=(226, 230, 228), width=3)
+    d.text((166, 178), "Li-ion", font=font, fill=(38, 47, 44))
+    d.text((124, 266), "3.7V 600mAh", font=font, fill=(42, 50, 47))
+    d.text((168, 316), "503040", font=font, fill=(54, 62, 59))
     im.save(ROOT / "battery_basecolor.png", optimize=True)
 
 def save_rough():
