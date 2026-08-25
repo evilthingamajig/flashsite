@@ -113,14 +113,38 @@ function init(section) {
   renderer.toneMapping = THREE.ACESFilmicToneMapping;
   renderer.toneMappingExposure = 1.08;
   renderer.physicallyCorrectLights = true;
+  renderer.shadowMap.enabled = true;
+  renderer.shadowMap.type = THREE.PCFSoftShadowMap;
   const scene = new THREE.Scene();
   const camera = new THREE.PerspectiveCamera(FOV, 1, 0.005, 6);
-  scene.add(new THREE.HemisphereLight(0xffffff, 0x18201c, 1.35));
+  const studioFaces = [];
+  if (typeof document !== 'undefined') {
+    for (let i = 0; i < 6; i++) {
+      const c = document.createElement('canvas'); c.width = 32; c.height = 32;
+      const ctx = c.getContext('2d');
+      const g = ctx.createLinearGradient(0, 0, 32, 32);
+      g.addColorStop(0, i === 2 ? '#ffffff' : '#dfe6e2');
+      g.addColorStop(1, i === 3 ? '#aebbb4' : '#f7faf8');
+      ctx.fillStyle = g; ctx.fillRect(0, 0, 32, 32);
+      studioFaces.push(c);
+    }
+    const env = new THREE.CubeTexture(studioFaces);
+    env.colorSpace = THREE.SRGBColorSpace;
+    env.needsUpdate = true;
+    scene.environment = env;
+  }
+  scene.add(new THREE.HemisphereLight(0xffffff, 0x18201c, 1.15));
   const sun = new THREE.DirectionalLight(0xffffff, 2.0);
+  sun.castShadow = true;
+  sun.shadow.mapSize.set(1024, 1024);
+  sun.shadow.bias = -0.0002;
   scene.add(sun);
-  const fill = new THREE.PointLight(0xdce8f4, 0.34, 2.4);
+  const fill = new THREE.PointLight(0xdce8f4, 0.48, 2.4);
   fill.position.set(-0.35, -0.55, 0.6);
   scene.add(fill);
+  const rim = new THREE.DirectionalLight(0xc7e6d6, 0.72);
+  rim.position.set(-0.6, 0.45, -0.8);
+  scene.add(rim);
 
   const groups = {};
   const meshNodes = {};
@@ -326,13 +350,45 @@ function init(section) {
     }
   }
 
+  const authoredTextureLoader = new THREE.TextureLoader();
+  function hydrateAuthoredTextures(rootNode) {
+    const maps = {
+      BatterySilver: 'assets/3d/textures/battery_basecolor.png',
+      PcbGreen: 'assets/3d/textures/tp4056_basecolor.png',
+    };
+    const normal = authoredTextureLoader.load('assets/3d/textures/electronics_normal.png', () => requestRender(true));
+    normal.colorSpace = THREE.NoColorSpace;
+    const ao = authoredTextureLoader.load('assets/3d/textures/electronics_ao.png', () => requestRender(true));
+    ao.colorSpace = THREE.NoColorSpace;
+    rootNode.traverse((o) => {
+      if (!o.isMesh) return;
+      const mats = Array.isArray(o.material) ? o.material : [o.material];
+      mats.forEach((m) => {
+        if (maps[m.name]) {
+          const tex = authoredTextureLoader.load(maps[m.name], () => requestRender(true));
+          tex.colorSpace = THREE.SRGBColorSpace;
+          tex.anisotropy = renderer.capabilities.getMaxAnisotropy();
+          m.map = tex;
+          m.needsUpdate = true;
+        }
+        if (m.name === 'BatterySilver' || m.name === 'PcbGreen') {
+          m.normalMap = normal;
+          m.aoMap = ao;
+          m.normalScale?.set(0.22, 0.22);
+          m.needsUpdate = true;
+        }
+      });
+    });
+  }
+
   function loadModel() {
     if (disposed || root || section.classList.contains('ff-asm3d-load-error')) return;
     loadingEl.classList.remove('is-idle');
     new GLTFLoader().load(GLB_URL, (gltf) => {
       if (disposed) return;
-    root = gltf.scene;
+      root = gltf.scene;
     scene.add(root);
+    hydrateAuthoredTextures(root);
     const byName = {};
     root.traverse((o) => { if (o.name && PART_IDS.indexOf(o.name) >= 0) byName[o.name] = o; });
     CHAPTERS.forEach((c) => {
@@ -356,12 +412,28 @@ function init(section) {
       // translation. This prevents recentering from cancelling the seat.
       node.traverse((o) => {
         if (o.isMesh) {
-          o.material = materialFor(c.id);
-          o.material.transparent = true;
+          const mats = Array.isArray(o.material) ? o.material : [o.material];
+          mats.forEach((m) => {
+            m.userData.baseOpacity = m.opacity ?? 1;
+            m.userData.baseTransparent = m.transparent ?? false;
+            m.userData.baseDepthWrite = m.depthWrite ?? true;
+            m.envMapIntensity = Math.max(0.55, m.envMapIntensity ?? 0.75);
+            if (m.name === 'ClearLed') {
+              m.transparent = true;
+              m.opacity = 0.82;
+              m.userData.baseOpacity = 0.82;
+              m.depthWrite = false;
+              m.roughness = 0.12;
+              m.color?.setHex(0x2aaebd);
+              m.emissive?.setHex(0x0b4e5a);
+              if ('emissiveIntensity' in m) m.emissiveIntensity = 0.18;
+            }
+          });
+          o.castShadow = true;
+          o.receiveShadow = true;
         }
       });
       node.updateMatrixWorld(true);
-      addProductDetails(c.id, holder);
       groups[c.id] = pivot;
       meshNodes[c.id] = node;
       seats[c.id] = originalPos.clone();

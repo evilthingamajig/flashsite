@@ -148,6 +148,8 @@
 
 !/assets/3d/flashlight-assembly.glb
 !/assets/3d/assembly-manifest.json
+!/assets/3d/textures/
+!/assets/3d/textures/*.png
 !/css/ff-assembly3d.css
 !/docs/assembly-3d.md
 !/js/ff-assembly3d.js
@@ -159,5 +161,6 @@
 !/source-assets/stl/enclosure.stl
 !/source-assets/stl/switch.stl
 !/tools/build-assembly-glb.mjs
+!/tools/build-pbr-textures.py
 !/tools/cdp.mjs
 !/tools/verify-assembly3d.mjs
