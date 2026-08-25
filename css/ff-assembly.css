@@ -5,11 +5,10 @@
 .ff-assembly-visual{position:absolute;inset:0;width:100%;height:100%;perspective:1500px;transform-style:preserve-3d;pointer-events:none}
 .ff-assembly-composition{position:absolute;left:50%;top:47%;width:min(84vw,980px);height:min(84vw,980px);transform:translate(-50%,-50%);transform-style:preserve-3d;pointer-events:none}
 .ff-assembly-piece{position:absolute;top:50%;left:50%;width:100%;height:100%;max-width:none;display:block;object-fit:contain;transform-origin:center;transform-style:preserve-3d;will-change:transform,opacity,filter;pointer-events:none}
-.ff-assembly-interior{position:absolute;inset:0;z-index:20;overflow:visible;clip-path:polygon(14% 42%,77% 31%,87% 46%,18% 58%)}
+.ff-assembly-interior{position:absolute;inset:0;z-index:20;overflow:visible;clip-path:polygon(10% 27%,84% 19%,94% 47%,11% 60%);transform:translateZ(20px)}
 .ff-assembly-interior .ff-assembly-piece{z-index:20}
 .ff-assembly-enclosure{z-index:10}
 .ff-assembly-front-wall{z-index:30;clip-path:polygon(0 55%,100% 43%,100% 100%,0 100%)}
-.ff-assembly-front-strip{z-index:45;clip-path:polygon(0 52%,100% 52%,100% 100%,0 100%)}
 .ff-assembly-final-anchor{z-index:60}
 .ff-assembly-copy{position:absolute;z-index:80;inset:0;pointer-events:none}
 .ff-assembly-intro-copy{position:absolute;left:50%;top:9%;width:min(34rem,80vw);text-align:center;transform:translateX(-50%);transition:opacity .2s ease}
@@ -28,7 +27,7 @@
 .ff-assembly-final-mark.is-active{display:block}
 .ff-assembly-final-mark .ff-assembly-eyebrow{margin:0;font-size:clamp(12px,1.2vw,16px)}
 .ff-assembly-accessible{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
-.ff-assembly-active .nav-bar{opacity:0!important;visibility:hidden!important;pointer-events:none!important}
+.ff-assembly-active .nav-bar{display:none!important;opacity:0!important;visibility:hidden!important;pointer-events:none!important}
 @media(max-width:699px){
  .ff-assembly-shell{height:860vh;min-height:5400px}
  .ff-assembly-stage{height:100svh;min-height:600px}
