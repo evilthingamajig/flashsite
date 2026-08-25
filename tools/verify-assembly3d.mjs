@@ -63,6 +63,9 @@ function staticChecks() {
   check('cavity floor is zero-thickness visual surface', /new THREE\.PlaneGeometry\(75, 75\)/.test(asm3d) && /visualOnly\s*=\s*true/.test(asm3d) && !/new THREE\.BoxGeometry\(75, 75,/.test(asm3d));
   check('no CDN references in runtime', !/https?:\/\//.test(asm3d.replace(/\/\/[^\n]*|\/\*[\s\S]*?\*\//g, '')));
   check('DPR cap present', /DPR_CAP\s*=\s*1\.75/.test(asm3d));
+  check('component material realism markers present', /MeshPhysicalMaterial/.test(asm3d) && /transmission/.test(asm3d) && /amber/.test(asm3d) && /redLead/.test(asm3d) && /portShell/.test(asm3d) && /actuator/.test(asm3d));
+  check('component geometry proportions authored', /roundedPouch/.test(asm3d) && /SphereGeometry\(2\.2/.test(asm3d) && /CylinderGeometry\(2\.02/.test(asm3d) && /BoxGeometry\(26\.0, 17\.0, 0\.38/.test(asm3d));
+  check('choreography constants frozen for 7A', /T_RE_START = 0\.76/.test(asm3d) && /RE_SPACING = 0\.035/.test(asm3d) && /RE_W = 0\.025/.test(asm3d) && /T_FINAL = 0\.925/.test(asm3d));
   const pngRuntime = readFileSync(join(ROOT, 'js', 'ff-assembly.js'), 'utf8');
   check('PNG assembly guarded in 3d mode', pngRuntime.includes("classList.contains('ff-asm3d')"));
   const protectedFiles = ['donate.html', 'vercel.json', 'PROJECT-NOTES.md'];
@@ -528,7 +531,7 @@ staticChecks();
 await browserPass();
 
 writeFileSync(join(OUT, 'report.json'), JSON.stringify({
-  when: 'checkpoint-pass6f',
+  when: 'checkpoint-pass7a',
   results,
   passed: results.filter((r) => r.ok).length,
   failed: results.filter((r) => !r.ok).length,

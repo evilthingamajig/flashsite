@@ -1,5 +1,5 @@
 {
-  "when": "checkpoint-pass6f",
+  "when": "checkpoint-pass7a",
   "results": [
     {
       "name": "reassembly overlap <=20%",
@@ -75,6 +75,18 @@
     },
     {
       "name": "DPR cap present",
+      "ok": true
+    },
+    {
+      "name": "component material realism markers present",
+      "ok": true
+    },
+    {
+      "name": "component geometry proportions authored",
+      "ok": true
+    },
+    {
+      "name": "choreography constants frozen for 7A",
       "ok": true
     },
     {
@@ -423,7 +435,7 @@
     {
       "name": "[desktop-1440x900] leader route stays outside silhouette ch2",
       "ok": true,
-      "detail": "route 1032,467 sil 470,198,548,561"
+      "detail": "route 1032,280 sil 470,198,548,561"
     },
     {
       "name": "[desktop-1440x900] hold ch3 silhouette fills 58-74% of pane",
@@ -463,7 +475,7 @@
     {
       "name": "[desktop-1440x900] leader route stays outside silhouette ch4",
       "ok": true,
-      "detail": "route 1053,557 sil 467,288,572,407"
+      "detail": "route 1053,516 sil 467,288,572,407"
     },
     {
       "name": "[desktop-1440x900] hold ch5 silhouette fills 58-74% of pane",
@@ -483,7 +495,7 @@
     {
       "name": "[desktop-1440x900] leader route stays outside silhouette ch5",
       "ok": true,
-      "detail": "route 470,514 sil 484,333,673,360"
+      "detail": "route 470,440 sil 484,333,673,360"
     },
     {
       "name": "[desktop-1440x900] hold ch6 silhouette fills 58-74% of pane",
@@ -503,7 +515,7 @@
     {
       "name": "[desktop-1440x900] leader route stays outside silhouette ch6",
       "ok": true,
-      "detail": "route 967,709 sil 495,188,458,579"
+      "detail": "route 967,745 sil 495,188,458,579"
     },
     {
       "name": "[desktop-1440x900] reverse scrub deterministic",
@@ -1129,7 +1141,7 @@
     {
       "name": "[mobile-390x844] leader route stays outside silhouette ch2",
       "ok": true,
-      "detail": "route 90,591 sil 58,288,287,289"
+      "detail": "route 139,591 sil 58,288,287,289"
     },
     {
       "name": "[mobile-390x844] hold ch3 within 70-86vw/60svh",
@@ -1189,7 +1201,7 @@
     {
       "name": "[mobile-390x844] leader route stays outside silhouette ch5",
       "ok": true,
-      "detail": "route 282,520 sil 68,362,274,144"
+      "detail": "route 205,520 sil 68,362,274,144"
     },
     {
       "name": "[mobile-390x844] hold ch6 within 70-86vw/60svh",
@@ -1214,7 +1226,7 @@
     {
       "name": "[mobile-390x844] leader route stays outside silhouette ch6",
       "ok": true,
-      "detail": "route 293,625 sil 64,262,268,349"
+      "detail": "route 285,625 sil 64,262,268,349"
     },
     {
       "name": "[mobile-390x844] reverse scrub deterministic",
@@ -1509,6 +1521,6 @@
       "detail": ""
     }
   ],
-  "passed": 306,
+  "passed": 309,
   "failed": 0
 }
