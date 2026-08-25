@@ -234,7 +234,7 @@
     {
       "name": "[desktop-1440x900] reverse scrub deterministic",
       "ok": true,
-      "detail": "6 points rechecked"
+      "detail": "14 points rechecked"
     },
     {
       "name": "[desktop-1440x900] final seating geometrically continuous",
@@ -480,7 +480,7 @@
     {
       "name": "[mobile-390x844] reverse scrub deterministic",
       "ok": true,
-      "detail": "6 points rechecked"
+      "detail": "14 points rechecked"
     },
     {
       "name": "[mobile-390x844] final seating geometrically continuous",
