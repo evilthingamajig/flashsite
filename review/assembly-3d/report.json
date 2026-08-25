@@ -1,5 +1,5 @@
 {
-  "when": "checkpoint-pass5d",
+  "when": "checkpoint-pass5e",
   "results": [
     {
       "name": "glb exists",
@@ -238,7 +238,7 @@
     {
       "name": "[desktop-1440x900] reverse scrub deterministic",
       "ok": true,
-      "detail": "14 points rechecked"
+      "detail": "6 points rechecked"
     },
     {
       "name": "[desktop-1440x900] final seating geometrically continuous",
@@ -257,7 +257,7 @@
     {
       "name": "[desktop-1440x900] final composition meets viewport scale",
       "ok": true,
-      "detail": "520x574"
+      "detail": "521x575"
     },
     {
       "name": "[desktop-1440x900] exploded tableau has no active copy",
@@ -316,6 +316,26 @@
       "name": "[desktop-1440x900] solo-to-tableau projected scale is continuous",
       "ok": true,
       "detail": "1.40x"
+    },
+    {
+      "name": "[desktop-1440x900] final camera fit angle is continuous",
+      "ok": true,
+      "detail": "0.2deg"
+    },
+    {
+      "name": "[desktop-1440x900] final camera fit distance is continuous",
+      "ok": true,
+      "detail": "1.11x"
+    },
+    {
+      "name": "[desktop-1440x900] final camera fit center is continuous",
+      "ok": true,
+      "detail": "0.012m"
+    },
+    {
+      "name": "[desktop-1440x900] final projected scale is continuous",
+      "ok": true,
+      "detail": "1.13x"
     },
     {
       "name": "[desktop-1440x900] reassembly beat 1 advances enclosure",
@@ -564,7 +584,7 @@
     {
       "name": "[mobile-390x844] reverse scrub deterministic",
       "ok": true,
-      "detail": "14 points rechecked"
+      "detail": "6 points rechecked"
     },
     {
       "name": "[mobile-390x844] final seating geometrically continuous",
@@ -642,6 +662,26 @@
       "name": "[mobile-390x844] solo-to-tableau projected scale is continuous",
       "ok": true,
       "detail": "1.35x"
+    },
+    {
+      "name": "[mobile-390x844] final camera fit angle is continuous",
+      "ok": true,
+      "detail": "0.2deg"
+    },
+    {
+      "name": "[mobile-390x844] final camera fit distance is continuous",
+      "ok": true,
+      "detail": "1.02x"
+    },
+    {
+      "name": "[mobile-390x844] final camera fit center is continuous",
+      "ok": true,
+      "detail": "0.010m"
+    },
+    {
+      "name": "[mobile-390x844] final projected scale is continuous",
+      "ok": true,
+      "detail": "1.18x"
     },
     {
       "name": "[mobile-390x844] reassembly beat 1 advances enclosure",
@@ -744,6 +784,6 @@
       "detail": ""
     }
   ],
-  "passed": 153,
+  "passed": 161,
   "failed": 0
 }

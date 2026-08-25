@@ -300,7 +300,14 @@ function init(section) {
       // floor and corner ribs provide the real seat/aperture depth. Keep only
       // the subtle FDM layer/rim cues above; synthetic tray slabs and beige
       // seat rectangles would float outside that authored cavity.
-      const cavityFloor = matte(0x344239, 0.82, 0.01);
+      const cavityFloor = new THREE.MeshStandardMaterial({
+        color: 0x344239, roughness: 0.82, metalness: 0.01,
+        transparent: false, opacity: 1, depthWrite: true,
+        polygonOffset: true, polygonOffsetFactor: -1, polygonOffsetUnits: -1,
+      });
+      cavityFloor.userData.baseOpacity = 1;
+      cavityFloor.userData.baseTransparent = false;
+      cavityFloor.userData.baseDepthWrite = true;
       const floorSurface = detail(new THREE.PlaneGeometry(75, 75), cavityFloor, [0, 0, -4.249]);
       floorSurface.userData.visualOnly = true;
       floorSurface.userData.cavityFloor = true;
@@ -506,9 +513,13 @@ function init(section) {
       // Tableau, reassembly and final are viewport compositions rather than
       // editorial-pane solos. Refit against the full viewport so the closed
       // product and the spread assembly read at the requested scale.
-      const finalMode = p >= T_FINAL;
-      const targetW = sticky.clientWidth * (finalMode ? (pane.mobile ? 0.76 : 0.46) : (pane.mobile ? 0.82 : 0.68));
-      const targetH = sticky.clientHeight * (finalMode ? (pane.mobile ? 0.52 : 0.60) : (pane.mobile ? 0.56 : 0.65));
+      const finalBridgeT = smooth((p - (T_FINAL - 0.025)) / 0.040);
+      const tableauW = pane.mobile ? 0.82 : 0.68;
+      const tableauH = pane.mobile ? 0.56 : 0.65;
+      const finalW = pane.mobile ? 0.76 : 0.46;
+      const finalH = pane.mobile ? 0.52 : 0.60;
+      const targetW = sticky.clientWidth * lerp(tableauW, finalW, finalBridgeT);
+      const targetH = sticky.clientHeight * lerp(tableauH, finalH, finalBridgeT);
       // Use a visibility-independent box for the bridge. During the last
       // solo, dimmed parts are hidden, but the target tableau must remain the
       // same fixed full-assembly composition on both sides of chapterEnd.
@@ -530,7 +541,7 @@ function init(section) {
       // The finished exterior has a compact depth box, so the pane fit is
       // height-dominated. Bring it a little closer to the viewport target
       // while retaining the safe margin around the final marker.
-      if (finalMode) compositionDist *= 0.94;
+      compositionDist *= lerp(1, 0.94, finalBridgeT);
       center.lerp(compositionCenter, compositionBlend);
       dist = lerp(dist, compositionDist, compositionBlend);
     }
