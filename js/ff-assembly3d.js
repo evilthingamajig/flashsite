@@ -8,25 +8,25 @@ const FOV = 34;
 
 const PART_IDS = ['enclosure', 'switch', 'solar_lid', 'battery', 'charge_module', 'led_pair'];
 const CHAPTERS = [
-  { id: 'solar_lid', key: 'solar', num: '01 / DAYLIGHT IN', title: '5V solar panel', body: 'Captures daylight to recharge the light.', turn: 200, slot: [-120, 70, 34], mobileSlot: [0, 130, 28], inspect: [0, 4, 74], anchor: [-34, 0, 1.25] },
-  { id: 'battery', key: 'battery', num: '02 / POWER HELD', title: 'Rechargeable battery', body: 'Stores energy for study after dark.', turn: 185, slot: [-26, -10, 22], mobileSlot: [-42, -18, 20], inspect: [-16, -2, 46], anchor: [18, 0, 0] },
-  { id: 'charge_module', key: 'module', num: '03 / CHARGE CONTROLLED', title: 'Recharge module', body: 'Manages safe charging from the panel.', turn: 175, slot: [30, 12, 21], mobileSlot: [44, -14, 20], inspect: [0, 0, 46], anchor: [-10, 0, 2.8] },
-  { id: 'led_pair', key: 'leds', num: '04 / LIGHT OUT', title: 'Two LEDs', body: 'Turn stored energy into focused study light.', turn: 205, slot: [-12, -42, 18], mobileSlot: [-30, 36, 16], inspect: [0, -54, 26], anchor: [8, -4.5, 0] },
-  { id: 'switch', key: 'switch', num: '05 / SWITCHED BY HAND', title: 'Slide switch', body: 'Completes the circuit so study light flows.', turn: 190, slot: [90, 36, 18], mobileSlot: [40, 40, 16], inspect: [0, 64, 26], anchor: [-24, 41, 3] },
+  { id: 'solar_lid', key: 'solar', num: '01 / DAYLIGHT IN', title: '5V solar panel', body: 'Captures daylight to recharge the light.', turn: 200, slot: [-80, 46, 27], mobileSlot: [0, 130, 28], inspect: [0, 4, 74], anchor: [-34, 0, 1.25] },
+  { id: 'battery', key: 'battery', num: '02 / POWER HELD', title: 'Rechargeable battery', body: 'Stores energy for study after dark.', turn: 185, slot: [-18, -7, 17], mobileSlot: [-42, -18, 20], inspect: [-16, -2, 46], anchor: [18, 0, 0] },
+  { id: 'charge_module', key: 'module', num: '03 / CHARGE CONTROLLED', title: 'Recharge module', body: 'Manages safe charging from the panel.', turn: 175, slot: [21, 8, 16], mobileSlot: [44, -14, 20], inspect: [0, 0, 46], anchor: [-10, 0, 2.8] },
+  { id: 'led_pair', key: 'leds', num: '04 / LIGHT OUT', title: 'Two LEDs', body: 'Turn stored energy into focused study light.', turn: 205, slot: [-8, -30, 14], mobileSlot: [-30, 36, 16], inspect: [0, -54, 26], anchor: [8, -4.5, 0] },
+  { id: 'switch', key: 'switch', num: '05 / SWITCHED BY HAND', title: 'Slide switch', body: 'Completes the circuit so study light flows.', turn: 190, slot: [60, 25, 14], mobileSlot: [40, 40, 16], inspect: [0, 64, 26], anchor: [-24, 41, 3] },
   { id: 'enclosure', key: 'enclosure', num: '06 / BUILT TO PROTECT', title: '3D-printed enclosure', body: 'Shields every component.', turn: 40, slot: [0, 0, 0], mobileSlot: [0, 0, 0], inspect: [0, -6, 36], anchor: [38, -36, 1] },
 ];
 const REASSEMBLY_ORDER = ['switch', 'led_pair', 'charge_module', 'battery', 'solar_lid'];
 
 const T_INTRO_END = 0.075;
 const T_EXPLODE = [0.075, 0.17];
-const T_CH_START = 0.18;
+const T_CH_START = 0.195;
 const CH_W = 0.093;
 // Leave a dedicated exploded-tableau beat after the final solo chapter. The
 // slightly tighter reassembly cadence keeps the finished state before p=1.
 const T_RE_START = 0.77;
 const RE_SPACING = 0.044;
 const RE_W = 0.034;
-const T_FINAL = 0.985;
+const T_FINAL = 0.98;
 
 const clamp01 = (v) => Math.max(0, Math.min(1, v));
 const easeInOutCubic = (t) => (t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2);
@@ -527,7 +527,7 @@ function init(section) {
       // Hold the exploded tableau fit through its dedicated beat; switch to
       // the tighter, taller insertion fit only after the first settle.
       const reassemblyView = p >= T_RE_START + 0.04;
-      const tableauW = pane.mobile ? 0.82 : (reassemblyView ? 0.78 : 0.68);
+      const tableauW = pane.mobile ? 0.84 : (reassemblyView ? 0.78 : 0.68);
       const tableauH = pane.mobile ? 0.56 : (reassemblyView ? 0.74 : 0.65);
       const finalW = pane.mobile ? 0.82 : 0.68;
       const finalH = pane.mobile ? 0.56 : 0.78;
@@ -713,10 +713,12 @@ function init(section) {
         }
       }
       if (p >= T_RE_START && c.id === 'enclosure') {
-        // The enclosure is the stationary base for every insertion beat. Only
-        // after the final part seats does it turn back to the closed exterior.
-        const close = smooth((p - T_FINAL) / Math.max(0.001, 1 - T_FINAL));
-        yaw = lerp(40, 360, close) * Math.PI / 180;
+        // A deliberate cavity-facing orientation is held through tableau,
+        // every insertion beat, and the closed hero. This makes the base
+        // genuinely stationary; the lid itself supplies the final exterior
+        // read without a late enclosure rotation.
+        const closure = smooth((p - 0.962) / 0.018);
+        yaw = lerp(40, 0, closure) * Math.PI / 180;
       }
       if (c.id === 'enclosure' && p >= tableauStart && p < T_RE_START) {
         // Carry the final enclosure inspection offset across the short
@@ -728,6 +730,10 @@ function init(section) {
       }
       g.position.set(seats[c.id].x + x, seats[c.id].y + y, seats[c.id].z + z);
       g.rotation.set(0, yaw, 0, 'YXZ');
+      // Give the true enclosure rim/cavity enough visual weight in the
+      // all-parts tableau. Solo and closed-product scales remain unchanged.
+      const tableauScale = p < T_RE_START ? 1.88 : 1.73;
+      g.scale.setScalar(c.id === 'enclosure' && p >= tableauStart && p < 0.96 ? tableauScale : 1);
       // Keep every component in the scene so transitions remain scroll-linked;
       // applyDim controls the readable emphasis without a visibility snap.
       g.visible = true;
@@ -823,6 +829,10 @@ function init(section) {
 
   function activeCalloutKey(p) {
     const i = chapterAt(p);
+    const chapterEnd = T_CH_START + CHAPTERS.length * CH_W;
+    // Keep the final solo label alive for a short, real crossfade as the
+    // inspection ends and the copy clears for the exploded tableau.
+    if (i < 0 && p >= chapterEnd && p < chapterEnd + 0.004) return CHAPTERS[CHAPTERS.length - 1].key;
     if (i < 0) return null;
     const t = chapterT(p, i);
     if (i > 0 && t < 0.09) return CHAPTERS[i - 1].key;
@@ -891,12 +901,19 @@ function init(section) {
       } else if (chapterIndex === i + 1) {
         const t = chapterT(p, chapterIndex);
         alpha = 1 - smooth(t / 0.18);
+      } else if (i === CHAPTERS.length - 1 && p >= T_CH_START + CHAPTERS.length * CH_W) {
+        const chapterEnd = T_CH_START + CHAPTERS.length * CH_W;
+        alpha = 1 - smooth((p - chapterEnd) / 0.004);
       }
       el.style.opacity = alpha.toFixed(3);
+      // Opacity can lag a compositor screenshot by one frame during the
+      // tableau handoff; visibility makes the no-copy tableau state
+      // deterministic without changing the continuous fade itself.
+      el.style.visibility = alpha > 0.001 ? 'visible' : 'hidden';
       el.classList.toggle('is-active', alpha > 0.32);
     });
     introCopy.classList.toggle('is-hidden', p > 0.085);
-    finalMark.classList.toggle('is-active', p >= 0.985);
+    finalMark.classList.toggle('is-active', p >= T_FINAL);
     updateLeaders(activeKey);
     frameStats = {
       progress: p,
@@ -905,6 +922,7 @@ function init(section) {
       pane: { x: pane.x, y: pane.y, w: pane.w, h: pane.h },
       silhouette: activeKey ? silhouettePx(keyToId(activeKey)) : null,
       allSilhouette: silhouettePx('all'),
+      enclosureSilhouette: silhouettePx('enclosure'),
       // The visible enclosure mesh itself is the cavity sentinel; no extra
       // overlay is substituted for the authored floor/walls.
       trayVisible: p >= T_EXPLODE[1] && p < T_FINAL && !!groups.enclosure?.visible,
