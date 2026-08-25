@@ -1,5 +1,5 @@
 {
-  "when": "checkpoint-pass6c",
+  "when": "checkpoint-pass6d",
   "results": [
     {
       "name": "reassembly overlap <=20%",
@@ -515,6 +515,16 @@
       "ok": true
     },
     {
+      "name": "[desktop-1440x900] marker hidden through hold/push",
+      "ok": true,
+      "detail": "marker=false closed=true"
+    },
+    {
+      "name": "[desktop-1440x900] marker state-gated after push",
+      "ok": true,
+      "detail": "marker=true closed=true"
+    },
+    {
       "name": "[desktop-1440x900] intro text clears finished product",
       "ok": true,
       "detail": "subtitle/hero bbox overlap=false"
@@ -610,7 +620,7 @@
     {
       "name": "[desktop-1440x900] final camera fit distance is continuous",
       "ok": true,
-      "detail": "1.01x"
+      "detail": "1.00x"
     },
     {
       "name": "[desktop-1440x900] final camera fit center is continuous",
@@ -620,7 +630,7 @@
     {
       "name": "[desktop-1440x900] final projected scale is continuous",
       "ok": true,
-      "detail": "1.01x"
+      "detail": "1.00x"
     },
     {
       "name": "[desktop-1440x900] closed hold precedes final push",
@@ -631,6 +641,16 @@
       "name": "[desktop-1440x900] final bridge completes before end",
       "ok": true,
       "detail": "bridge settled"
+    },
+    {
+      "name": "[desktop-1440x900] final camera push occurs after closed hold",
+      "ok": true,
+      "detail": "closed=true"
+    },
+    {
+      "name": "[desktop-1440x900] final phase timing is viewport-calibrated",
+      "ok": true,
+      "detail": "14.0vh hold/39.2vh push"
     },
     {
       "name": "[desktop-1440x900] enclosure closure rotation is continuous",
@@ -1196,6 +1216,16 @@
       "ok": true
     },
     {
+      "name": "[mobile-390x844] marker hidden through hold/push",
+      "ok": true,
+      "detail": "marker=false closed=true"
+    },
+    {
+      "name": "[mobile-390x844] marker state-gated after push",
+      "ok": true,
+      "detail": "marker=true closed=true"
+    },
+    {
       "name": "[mobile-390x844] intro text clears finished product",
       "ok": true,
       "detail": "subtitle/hero bbox overlap=false"
@@ -1302,6 +1332,16 @@
       "name": "[mobile-390x844] final bridge completes before end",
       "ok": true,
       "detail": "bridge settled"
+    },
+    {
+      "name": "[mobile-390x844] final camera push occurs after closed hold",
+      "ok": true,
+      "detail": "closed=true"
+    },
+    {
+      "name": "[mobile-390x844] final phase timing is viewport-calibrated",
+      "ok": true,
+      "detail": "13.0vh hold/36.4vh push"
     },
     {
       "name": "[mobile-390x844] enclosure closure rotation is continuous",
@@ -1449,6 +1489,6 @@
       "detail": ""
     }
   ],
-  "passed": 294,
+  "passed": 302,
   "failed": 0
 }

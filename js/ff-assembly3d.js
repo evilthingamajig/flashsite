@@ -27,6 +27,10 @@ const T_RE_START = 0.77;
 const RE_SPACING = 0.044;
 const RE_W = 0.034;
 const T_FINAL = 0.98;
+const T_CLOSED_HOLD = T_FINAL;
+const T_HERO_START = 0.985;
+const T_MARKER = 0.999;
+const T_COPY_CLEAR = T_CH_START + CHAPTERS.length * CH_W + 0.004;
 
 const clamp01 = (v) => Math.max(0, Math.min(1, v));
 const easeInOutCubic = (t) => (t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2);
@@ -523,7 +527,7 @@ function init(section) {
       // product and the spread assembly read at the requested scale.
       // Start the final fit well before the lid's last settle so the compact
       // closed bounds do not create a late distance snap.
-      const finalBridgeT = smooth((p - (T_FINAL - 0.025)) / 0.030);
+      const finalBridgeT = smooth((p - T_HERO_START) / Math.max(0.001, T_MARKER - T_HERO_START));
       // Hold the exploded tableau fit through its dedicated beat; switch to
       // the tighter, taller insertion fit only after the first settle.
       const reassemblyView = p >= T_RE_START + 0.04;
@@ -832,7 +836,7 @@ function init(section) {
     const chapterEnd = T_CH_START + CHAPTERS.length * CH_W;
     // Keep the final solo label alive for a short, real crossfade as the
     // inspection ends and the copy clears for the exploded tableau.
-    if (i < 0 && p >= chapterEnd && p < chapterEnd + 0.004) return CHAPTERS[CHAPTERS.length - 1].key;
+    if (i < 0 && p >= chapterEnd && p < T_COPY_CLEAR) return CHAPTERS[CHAPTERS.length - 1].key;
     if (i < 0) return null;
     const t = chapterT(p, i);
     if (i > 0 && t < 0.09) return CHAPTERS[i - 1].key;
@@ -903,7 +907,7 @@ function init(section) {
         alpha = 1 - smooth(t / 0.18);
       } else if (i === CHAPTERS.length - 1 && p >= T_CH_START + CHAPTERS.length * CH_W) {
         const chapterEnd = T_CH_START + CHAPTERS.length * CH_W;
-        alpha = 1 - smooth((p - chapterEnd) / 0.004);
+        alpha = 1 - smooth((p - chapterEnd) / Math.max(0.001, T_COPY_CLEAR - chapterEnd));
       }
       el.style.opacity = alpha.toFixed(3);
       // Opacity can lag a compositor screenshot by one frame during the
@@ -913,7 +917,15 @@ function init(section) {
       el.classList.toggle('is-active', alpha > 0.32);
     });
     introCopy.classList.toggle('is-hidden', p > 0.085);
-    finalMark.classList.toggle('is-active', p >= T_FINAL);
+    const closedGeometry = PART_IDS.every((id) => {
+      const g = groups[id];
+      if (!g) return false;
+      const posOk = g.getWorldPosition(V).distanceTo(seats[id]) < 1e-5;
+      const m = new THREE.Matrix4().extractRotation(g.matrixWorld);
+      return posOk && Math.abs(m.elements[0] - 1) < 1e-5 && Math.abs(m.elements[5] - 1) < 1e-5 && Math.abs(m.elements[10] - 1) < 1e-5;
+    });
+    const markerActive = p >= T_MARKER && closedGeometry;
+    finalMark.classList.toggle('is-active', markerActive);
     updateLeaders(activeKey);
     frameStats = {
       progress: p,
@@ -935,6 +947,8 @@ function init(section) {
       },
       introBox: (() => { const r = introCopy.getBoundingClientRect(), s = sticky.getBoundingClientRect(); return { x: r.left - s.left, y: r.top - s.top, w: r.width, h: r.height }; })(),
       finalBox: (() => { const r = finalMark.getBoundingClientRect(), s = sticky.getBoundingClientRect(); return { x: r.left - s.left, y: r.top - s.top, w: r.width, h: r.height }; })(),
+      markerActive,
+      closedGeometry,
       calloutBox: activeKey ? (() => { const r = callouts[activeKey].getBoundingClientRect(), s = sticky.getBoundingClientRect(); return { x: r.left - s.left, y: r.top - s.top, w: r.width, h: r.height }; })() : null,
       pose: Object.fromEntries(PART_IDS.map((id) => [id, {
         position: groups[id].position.toArray().map((v) => +v.toFixed(6)),
