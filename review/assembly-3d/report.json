@@ -1,5 +1,5 @@
 {
-  "when": "checkpoint-pass5c",
+  "when": "checkpoint-pass5d",
   "results": [
     {
       "name": "glb exists",
@@ -58,6 +58,10 @@
     },
     {
       "name": "vendored file js/vendor/three/addons/utils/BufferGeometryUtils.js",
+      "ok": true
+    },
+    {
+      "name": "cavity floor is zero-thickness visual surface",
       "ok": true
     },
     {
@@ -265,6 +269,11 @@
       "ok": true
     },
     {
+      "name": "[desktop-1440x900] cavity floor is visual-only and non-colliding",
+      "ok": true,
+      "detail": "0mm"
+    },
+    {
       "name": "[desktop-1440x900] tableau stays within central assembly radius",
       "ok": true,
       "detail": "0.134m"
@@ -277,6 +286,11 @@
     {
       "name": "[desktop-1440x900] reassembly exposes interior tray",
       "ok": true
+    },
+    {
+      "name": "[desktop-1440x900] reassembly cavity floor remains non-colliding",
+      "ok": true,
+      "detail": "0mm"
     },
     {
       "name": "[desktop-1440x900] reassembly composition remains visible",
@@ -581,6 +595,11 @@
       "ok": true
     },
     {
+      "name": "[mobile-390x844] cavity floor is visual-only and non-colliding",
+      "ok": true,
+      "detail": "0mm"
+    },
+    {
       "name": "[mobile-390x844] tableau stays within central assembly radius",
       "ok": true,
       "detail": "0.111m"
@@ -593,6 +612,11 @@
     {
       "name": "[mobile-390x844] reassembly exposes interior tray",
       "ok": true
+    },
+    {
+      "name": "[mobile-390x844] reassembly cavity floor remains non-colliding",
+      "ok": true,
+      "detail": "0mm"
     },
     {
       "name": "[mobile-390x844] reassembly composition remains visible",
@@ -720,6 +744,6 @@
       "detail": ""
     }
   ],
-  "passed": 148,
+  "passed": 153,
   "failed": 0
 }
