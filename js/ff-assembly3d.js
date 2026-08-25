@@ -1,7 +1,7 @@
 import * as THREE from 'three';
 import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
 
-const CACHE_TOKEN = 'pass9b';
+const CACHE_TOKEN = 'pass10';
 const GLB_URL = `assets/3d/flashlight-assembly.glb?rev=${CACHE_TOKEN}`;
 const MM = 0.001;
 const DPR_CAP = 1.75;
@@ -256,75 +256,18 @@ function init(section) {
       detail(new THREE.CylinderGeometry(0.68, 0.68, 0.7, 12), blackLead, [-10, 16.55, 0.45]);
       detail(new THREE.CylinderGeometry(0.66, 0.66, 0.7, 12), redLead, [10, 16.55, 0.45]);
     } else if (id === 'charge_module') {
-      // TP4056-style board: a slim green PCB with low SMD relief and a
-      // proportionate metal USB charging port on the +Y edge.
-      const pcb = solid(0x14634a, 0.62, 0.04);
-      const boardShape = new THREE.Shape(); boardShape.moveTo(-12.8, -8.5); boardShape.lineTo(12.8, -8.5); boardShape.lineTo(13, 8.0); boardShape.quadraticCurveTo(12.5, 8.5, 12, 8.5); boardShape.lineTo(-12.8, 8.5); boardShape.closePath();
-      detail(new THREE.ExtrudeGeometry(boardShape, { depth: 0.38, bevelEnabled: true, bevelSegments: 2, bevelSize: 0.35, bevelThickness: 0.08 }), pcb, [0, 0, -0.19]);
-      const edge = solid(0x23815d, 0.52, 0.05);
-      for (const z of [-0.25, 0.25]) {
-        detail(new THREE.BoxGeometry(24.8, 0.18, 0.08), edge, [0, -8.25, z]);
-        detail(new THREE.BoxGeometry(24.8, 0.18, 0.08), edge, [0, 8.25, z]);
-        detail(new THREE.BoxGeometry(0.18, 16.4, 0.08), edge, [-12.6, 0, z]);
-        detail(new THREE.BoxGeometry(0.18, 16.4, 0.08), edge, [12.6, 0, z]);
-      }
-      const chip = solid(0x111916, 0.32, 0.18);
-      const chipSmall = solid(0x1d2521, 0.34, 0.1);
-      const pad = solid(0xd19d48, 0.3, 0.62);
-      const trace = solid(0x39a46f, 0.46, 0.08);
-      // The module is spun through the inspection turn, so populate both PCB
-      // faces. Only the camera-facing face contributes visually at a time;
-      // this keeps the board readable without changing the chapter yaw.
-      for (const z of [-0.22, 0.22]) {
-        const outward = z;
-        const sign = Math.sign(outward);
-        detail(new THREE.BoxGeometry(5.0, 4.0, 1.05), chip, [-5.8, -1.8, outward + sign * 0.34]);
-        detail(new THREE.BoxGeometry(4.1, 3.1, 1.0), chip, [4.5, 3.6, outward + sign * 0.33]);
-        detail(new THREE.BoxGeometry(2.1, 1.8, 0.88), chipSmall, [4.4, -3.7, outward + sign * 0.30]);
-        for (let i = -4; i <= 4; i += 2) detail(new THREE.BoxGeometry(0.85, 1.5, 0.12), pad, [i, -6.25, outward + sign * 0.11]);
-        for (let i = -4; i <= 4; i += 2) detail(new THREE.BoxGeometry(0.85, 1.5, 0.12), pad, [i, 6.15, outward + sign * 0.11]);
-        for (const x of [-8, 0, 8]) detail(new THREE.BoxGeometry(0.55, 10.4, 0.08), trace, [x, 0.0, outward + sign * 0.07]);
-        for (const y of [-2.0, 2.7, 7.0]) detail(new THREE.BoxGeometry(14.0, 0.42, 0.08), trace, [0, y, outward + sign * 0.07]);
-      }
-      const portShell = solid(0xb4bcb6, 0.27, 0.72);
-      detail(new THREE.BoxGeometry(8.2, 3.0, 1.3), portShell, [0, 9.15, 0]);
-      detail(new THREE.BoxGeometry(4.8, 0.18, 0.85), solid(0x101613, 0.42, 0.1), [0, 10.7, 0]);
-      detail(new THREE.BoxGeometry(4.8, 1.35, 0.12), solid(0x101613, 0.42, 0.1), [0, 9.2, 0.70]);
-      detail(new THREE.BoxGeometry(4.8, 1.35, 0.12), solid(0x101613, 0.42, 0.1), [0, 9.2, -0.70]);
+      // The GLB is the single source of visible PCB detail. Keeping this
+      // branch empty avoids a second oversized runtime board/rail overlay and
+      // preserves the imported 24x18 mm underside through every stage.
     } else if (id === 'led_pair') {
-      const shell = new THREE.MeshPhysicalMaterial({ color: 0xdff8fb, emissive: 0x8aeef2, emissiveIntensity: 0.32, roughness: 0.16, transparent: true, opacity: 0.52, transmission: 0.72, ior: 1.49, thickness: 0.55 });
-      // One hemispherical emitting dome, one short cylindrical body, and two
-      // rear leads per through-hole LED. No second lens or centre pin.
-      const domeMat = new THREE.MeshPhysicalMaterial({ color: 0x9deaf0, emissive: 0x55dce7, emissiveIntensity: 0.65, roughness: 0.18, metalness: 0.02, transmission: 0.18, ior: 1.49 });
-      domeMat.userData.baseOpacity = 1;
-      domeMat.userData.baseTransparent = false;
-      domeMat.userData.baseDepthWrite = true;
-      shell.userData.baseOpacity = 0.60;
-      shell.userData.baseTransparent = true;
-      shell.userData.baseDepthWrite = false;
-      shell.depthWrite = false;
-      const leadMat = solid(0x8f9893, 0.34, 0.45);
-      [-8, 8].forEach((x) => {
-        detail(new THREE.CylinderGeometry(2.02, 2.02, 5.6, 24), shell, [x, 0, 0]);
-        const front = detail(new THREE.SphereGeometry(2.2, 24, 16, 0, Math.PI * 2, 0, Math.PI / 2), domeMat, [x, -2.8, 0]);
-        front.rotation.x = Math.PI;
-        detail(new THREE.CylinderGeometry(0.42, 0.42, 3.6, 10), leadMat, [x - 1.15, 4.35, 0]);
-        detail(new THREE.CylinderGeometry(0.42, 0.42, 3.6, 10), leadMat, [x + 1.15, 4.35, 0]);
-      });
+      // The authored GLB carries the official clear D5 lens, extended optical
+      // body, dark anvil/post, and unequal tinned leads. Do not layer a second
+      // procedural shell over it: duplicate transparent domes create the
+      // washed-out white blob this chapter is explicitly guarding against.
     } else if (id === 'switch') {
-      // Retain the STL silhouette underneath, then articulate it with a
-      // dark body/rim and a clearly separated light actuator/fill.
-      const body = solid(0x3f5d4d, 0.48, 0.08);
-      const rim = solid(0x12221a, 0.38, 0.22);
-      const actuator = solid(0xd0ddd4, 0.28, 0.22);
-      detail(new THREE.BoxGeometry(22, 6.4, 2.2), body, [-5, 41.3, 0.8]);
-      detail(new THREE.BoxGeometry(13.0, 6.4, 1.0), rim, [-1.0, 41.3, 2.55]);
-      detail(new THREE.BoxGeometry(7.2, 3.8, 2.8), actuator, [-1.0, 41.3, 5.0]);
-      detail(new THREE.BoxGeometry(5.8, 2.2, 0.18), solid(0xdce8df, 0.27, 0.12), [-1.0, 41.3, 6.95]);
-      detail(new THREE.BoxGeometry(22, 6.4, 2.2), body, [-5, 41.3, -0.8]);
-      detail(new THREE.BoxGeometry(13.0, 6.4, 1.0), rim, [-1.0, 41.3, -2.55]);
-      detail(new THREE.BoxGeometry(7.2, 3.8, 2.8), actuator, [-1.0, 41.3, -5.0]);
-      detail(new THREE.BoxGeometry(5.8, 2.2, 0.18), solid(0xdce8df, 0.27, 0.12), [-1.0, 41.3, -6.95]);
+      // The GLB contains the compact SS12D00-style authored switch. The old
+      // runtime overlays were ladder-like fit proxies and are intentionally
+      // removed so the visible mesh stays one coherent product.
     } else if (id === 'enclosure') {
       const layer = matte(0x26302a, 0.88, 0.01);
       for (let i = 0; i < 8; i++) detail(new THREE.BoxGeometry(81, 0.24, 0.16), layer, [0, -42.08, -4.8 + i * 1.55]);
@@ -427,14 +370,36 @@ function init(section) {
             m.userData.baseDepthWrite = m.depthWrite ?? true;
             m.envMapIntensity = Math.max(0.55, m.envMapIntensity ?? 0.75);
             if (m.name === 'ClearLed') {
-              m.transparent = true;
-              m.opacity = 0.82;
-              m.userData.baseOpacity = 0.82;
-              m.depthWrite = false;
-              m.roughness = 0.12;
-              m.color?.setHex(0x2aaebd);
-              m.emissive?.setHex(0x0b4e5a);
+              // Replace the GLB's plain alpha material with a physically
+              // transmissive optical plastic. A single clear mesh plus dark
+              // internal anvil gives an edge/rim read without a bloom blob.
+              const lens = new THREE.MeshPhysicalMaterial({
+                name: 'ClearLed', color: 0x2f8f9b, roughness: 0.045,
+                metalness: 0.0, transmission: 0.88, ior: 1.49,
+                thickness: 0.28, transparent: true, opacity: 0.20,
+                depthWrite: false, side: THREE.DoubleSide,
+                envMapIntensity: 0.72,
+              });
+              if ('attenuationColor' in lens) lens.attenuationColor.setHex(0x398f99);
+              if ('attenuationDistance' in lens) lens.attenuationDistance = 1.4;
+              lens.userData.baseOpacity = 0.20;
+              lens.userData.baseTransparent = true;
+              lens.userData.baseDepthWrite = false;
+              o.material = lens;
+            } else if (m.name === 'LedDie') {
+              m.color?.setHex(0x9beaf0);
+              m.emissive?.setHex(0x4ecbd2);
               if ('emissiveIntensity' in m) m.emissiveIntensity = 0.18;
+            } else if (m.name === 'LedAnvil') {
+              m.color?.setHex(0x192321);
+              m.metalness = 0.62;
+              m.roughness = 0.22;
+            } else if (m.name === 'BatterySilver') {
+              // Keep the 503040 pouch opaque and foil-like: low normal relief
+              // plus high-metal silver prevents a frosted plastic block read.
+              m.color?.setHex(0xb8c2bf);
+              m.metalness = 0.82;
+              m.roughness = 0.28;
             }
           });
           o.castShadow = true;
@@ -581,7 +546,11 @@ function init(section) {
       // Keep the official imported body at source scale. A small distance
       // allowance and explicit rightward center bias preserve the 16px mobile
       // editorial edge without the old crop-inducing closer bias.
-      dist *= 1.03;
+      // Mobile's narrow inspection pane needs the authored switch to occupy
+      // the same deliberate catalog width as the other solo components. This
+      // local fit is switch/mobile-only; no seat, pivot, chapter timing, or
+      // global camera choreography is changed.
+      dist *= 0.99;
       const right = new THREE.Vector3(Math.cos(azim), 0, -Math.sin(azim));
       const switchBox = boxForSubject('switch', boxA);
       const base = projectedPixelBBox(switchBox, center, dist, azim, elev, pane);

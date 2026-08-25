@@ -18,7 +18,7 @@ import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..');
-const GENERATOR = 'flashsite build-assembly-glb 1.1.0-pass9b';
+const GENERATOR = 'flashsite build-assembly-glb 1.2.0-pass10';
 const MM = 0.001; // millimetre -> metre
 const PASS9 = join(ROOT, 'source-assets', 'external', 'pass9');
 
@@ -136,6 +136,25 @@ function cylinderAlongY(r, len, seg = 12) { // centred on origin, axis is Y
     tris.push([[ax,-half,az],[bx,half,bz],[ax,half,az]]);
     tris.push([[0,-half,0],[bx,-half,bz],[ax,-half,az]]); // -Y cap
     tris.push([[0,half,0],[ax,half,az],[bx,half,bz]]);    // +Y cap
+  }
+  return tris;
+}
+
+function cylinderAlongZ(r, len, seg = 12) { // centred on origin, axis is Z
+  const tris = [];
+  const half = len / 2;
+  const ring = [];
+  for (let i = 0; i < seg; i++) {
+    const a = (i / seg) * Math.PI * 2;
+    ring.push([Math.cos(a) * r, Math.sin(a) * r]);
+  }
+  for (let i = 0; i < seg; i++) {
+    const j = (i + 1) % seg;
+    const [ax, ay] = ring[i], [bx, by] = ring[j];
+    tris.push([[ax, ay, -half], [bx, by, -half], [bx, by, half]]);
+    tris.push([[ax, ay, -half], [bx, by, half], [ax, ay, half]]);
+    tris.push([[0, 0, -half], [bx, by, -half], [ax, ay, -half]]);
+    tris.push([[0, 0, half], [ax, ay, half], [bx, by, half]]);
   }
   return tris;
 }
@@ -356,27 +375,29 @@ function buildGlb(meshes, materialIndexByName) {
     meshes: meshesJson,
     materials: [
       { name: 'FDMCharcoal', doubleSided: true, pbrMetallicRoughness: { baseColorFactor: [0.045, 0.055, 0.05, 1], metallicFactor: 0.02, roughnessFactor: 0.82 } },
-      { name: 'SolarNavy', doubleSided: true, pbrMetallicRoughness: { baseColorFactor: [0.018, 0.08, 0.13, 1], metallicFactor: 0.28, roughnessFactor: 0.42 } },
-      { name: 'SolarCell', doubleSided: true, pbrMetallicRoughness: { baseColorFactor: [0.025, 0.16, 0.26, 1], metallicFactor: 0.18, roughnessFactor: 0.28 } },
-      { name: 'CopperBus', doubleSided: true, pbrMetallicRoughness: { baseColorFactor: [0.62, 0.24, 0.06, 1], metallicFactor: 0.82, roughnessFactor: 0.24 } },
+      { name: 'SolarNavy', doubleSided: true, pbrMetallicRoughness: { baseColorFactor: [0.008, 0.018, 0.024, 1], metallicFactor: 0.22, roughnessFactor: 0.48 } },
+      { name: 'SolarCell', doubleSided: true, pbrMetallicRoughness: { baseColorFactor: [0.006, 0.045, 0.075, 1], metallicFactor: 0.16, roughnessFactor: 0.32 } },
+      { name: 'CopperBus', doubleSided: true, pbrMetallicRoughness: { baseColorFactor: [0.28, 0.34, 0.34, 1], metallicFactor: 0.76, roughnessFactor: 0.28 } },
       { name: 'BatterySilver', doubleSided: true, pbrMetallicRoughness: { baseColorFactor: [0.62, 0.66, 0.64, 1], metallicFactor: 0.55, roughnessFactor: 0.38 } },
       { name: 'BatteryFoil', doubleSided: true, pbrMetallicRoughness: { baseColorFactor: [0.76, 0.78, 0.77, 1], metallicFactor: 0.72, roughnessFactor: 0.24 } },
       { name: 'KaptonAmber', doubleSided: true, pbrMetallicRoughness: { baseColorFactor: [0.77, 0.34, 0.045, 1], metallicFactor: 0.08, roughnessFactor: 0.42 } },
       { name: 'WireRed', doubleSided: true, pbrMetallicRoughness: { baseColorFactor: [0.52, 0.018, 0.012, 1], metallicFactor: 0.02, roughnessFactor: 0.45 } },
       { name: 'WireBlack', doubleSided: true, pbrMetallicRoughness: { baseColorFactor: [0.008, 0.012, 0.01, 1], metallicFactor: 0.02, roughnessFactor: 0.5 } },
-      { name: 'PcbGreen', doubleSided: true, pbrMetallicRoughness: { baseColorFactor: [0.025, 0.24, 0.16, 1], metallicFactor: 0.12, roughnessFactor: 0.58 } },
-      { name: 'PcbEdge', doubleSided: true, pbrMetallicRoughness: { baseColorFactor: [0.055, 0.42, 0.25, 1], metallicFactor: 0.1, roughnessFactor: 0.42 } },
+      { name: 'PcbGreen', doubleSided: true, pbrMetallicRoughness: { baseColorFactor: [0.025, 0.18, 0.12, 1], metallicFactor: 0.12, roughnessFactor: 0.62 } },
+      { name: 'PcbEdge', doubleSided: true, pbrMetallicRoughness: { baseColorFactor: [0.03, 0.20, 0.12, 1], metallicFactor: 0.1, roughnessFactor: 0.52 } },
       { name: 'Solder', doubleSided: true, pbrMetallicRoughness: { baseColorFactor: [0.44, 0.48, 0.44, 1], metallicFactor: 0.78, roughnessFactor: 0.2 } },
+      { name: 'PcbTrace', doubleSided: true, pbrMetallicRoughness: { baseColorFactor: [0.09, 0.25, 0.16, 1], metallicFactor: 0.38, roughnessFactor: 0.3 } },
       { name: 'ICBlack', doubleSided: true, pbrMetallicRoughness: { baseColorFactor: [0.012, 0.018, 0.015, 1], metallicFactor: 0.12, roughnessFactor: 0.3 } },
       { name: 'Ceramic', doubleSided: true, pbrMetallicRoughness: { baseColorFactor: [0.72, 0.62, 0.42, 1], metallicFactor: 0.02, roughnessFactor: 0.36 } },
       { name: 'UsbMetal', doubleSided: true, pbrMetallicRoughness: { baseColorFactor: [0.48, 0.52, 0.5, 1], metallicFactor: 0.9, roughnessFactor: 0.2 } },
       { name: 'UsbVoid', doubleSided: true, pbrMetallicRoughness: { baseColorFactor: [0.004, 0.008, 0.007, 1], metallicFactor: 0.04, roughnessFactor: 0.32 } },
       { name: 'Silkscreen', doubleSided: true, pbrMetallicRoughness: { baseColorFactor: [0.78, 0.82, 0.67, 1], metallicFactor: 0.01, roughnessFactor: 0.44 } },
-      { name: 'ClearLed', doubleSided: true, alphaMode: 'BLEND', pbrMetallicRoughness: { baseColorFactor: [0.48, 0.86, 0.9, 0.55], metallicFactor: 0.02, roughnessFactor: 0.13 } },
-      { name: 'LedDie', doubleSided: true, pbrMetallicRoughness: { baseColorFactor: [0.88, 1, 0.98, 1], metallicFactor: 0.03, roughnessFactor: 0.2 } },
+      { name: 'ClearLed', doubleSided: true, alphaMode: 'BLEND', pbrMetallicRoughness: { baseColorFactor: [0.34, 0.78, 0.82, 0.24], metallicFactor: 0.02, roughnessFactor: 0.05 } },
+      { name: 'LedDie', doubleSided: true, pbrMetallicRoughness: { baseColorFactor: [0.56, 0.94, 0.96, 1], metallicFactor: 0.02, roughnessFactor: 0.16 } },
+      { name: 'LedAnvil', doubleSided: true, pbrMetallicRoughness: { baseColorFactor: [0.12, 0.16, 0.15, 1], metallicFactor: 0.72, roughnessFactor: 0.2 } },
       { name: 'SwitchPlastic', doubleSided: true, pbrMetallicRoughness: { baseColorFactor: [0.025, 0.032, 0.028, 1], metallicFactor: 0.03, roughnessFactor: 0.62 } },
-      { name: 'SwitchActuator', doubleSided: true, pbrMetallicRoughness: { baseColorFactor: [0.72, 0.79, 0.74, 1], metallicFactor: 0.18, roughnessFactor: 0.3 } },
-      { name: 'SwitchContact', doubleSided: true, pbrMetallicRoughness: { baseColorFactor: [0.65, 0.48, 0.2, 1], metallicFactor: 0.72, roughnessFactor: 0.24 } },
+      { name: 'SwitchActuator', doubleSided: true, pbrMetallicRoughness: { baseColorFactor: [0.58, 0.64, 0.60, 1], metallicFactor: 0.08, roughnessFactor: 0.36 } },
+      { name: 'SwitchContact', doubleSided: true, pbrMetallicRoughness: { baseColorFactor: [0.38, 0.44, 0.42, 1], metallicFactor: 0.84, roughnessFactor: 0.28 } },
     ],
     accessors: g.accessors,
     bufferViews: g.bufferViews,
@@ -402,7 +423,7 @@ function buildGlb(meshes, materialIndexByName) {
 
 // --------------------------------------------------------------------- main
 
-const report = { generator: GENERATOR, checkpoint: 'pass9b', cacheToken: 'pass9b', sources: {}, parts: {} };
+const report = { generator: GENERATOR, checkpoint: 'pass10', cacheToken: 'pass10', sources: {}, parts: {} };
 const ENC_TTL_RAW = readFileSync(join(ROOT, 'source-assets/stl/enclosure.stl'));
 const SWI_TTL_RAW = readFileSync(join(ROOT, 'source-assets/stl/switch.stl'));
 const TP4056_RAW = readFileSync(join(PASS9, 'tp4056-usbc.stl'));
@@ -414,7 +435,7 @@ report.sources.enclosure = { file: 'source-assets/stl/enclosure.stl', sha256: cr
 report.sources.switch = { file: 'source-assets/stl/switch.stl', sha256: createHash('sha256').update(SWI_TTL_RAW).digest('hex'), role: 'hidden fit/collision proxy; not rendered' };
 report.sources.tp4056 = { file: 'source-assets/external/pass9/tp4056-usbc.stl', url: 'https://raw.githubusercontent.com/spezifisch/pgpemu-case/main/Parts/TP4056%20battery%20charger%20USB-C.stl', sha256: createHash('sha256').update(TP4056_RAW).digest('hex'), license: 'source repository provenance recorded; mockup integration' };
 report.sources.led = { file: 'source-assets/external/pass9/led-d5-clear.step -> derived/led-d5-clear.stl', url: 'https://gitlab.com/kicad/libraries/kicad-packages3D/-/raw/master/LED_THT.3dshapes/LED_D5.0mm_Clear.step', sha256: createHash('sha256').update(LED_STEP_RAW).digest('hex'), derivedSha256: createHash('sha256').update(LED_RAW).digest('hex'), license: 'KiCad libraries provenance; STEP converted offline with CadQuery' };
-report.sources.compact_switch = { file: 'source-assets/external/pass9/switch-dip-slide.step -> derived/switch-dip-slide.stl', url: 'https://gitlab.com/kicad/libraries/kicad-packages3D/-/raw/master/Button_Switch_THT.3dshapes/SW_DIP_SPSTx01_Slide_6.7x4.1mm_W7.62mm_P2.54mm_LowProfile.step', sha256: createHash('sha256').update(SWITCH_STEP_RAW).digest('hex'), derivedSha256: createHash('sha256').update(SWITCH_DERIVED_RAW).digest('hex'), role: 'visible compact replacement; supplied switch STL remains hidden fit/collision proxy', license: 'KiCad libraries provenance; STEP converted offline with CadQuery' };
+report.sources.compact_switch = { file: 'source-assets/external/pass9/switch-dip-slide.step -> derived/switch-dip-slide.stl', url: 'https://gitlab.com/kicad/libraries/kicad-packages3D/-/raw/master/Button_Switch_THT.3dshapes/SW_DIP_SPSTx01_Slide_6.7x4.1mm_W7.62mm_P2.54mm_LowProfile.step', sha256: createHash('sha256').update(SWITCH_STEP_RAW).digest('hex'), derivedSha256: createHash('sha256').update(SWITCH_DERIVED_RAW).digest('hex'), role: 'dimension reference only; not rendered (visible switch is authored SS12D00-style pack)', license: 'KiCad libraries provenance; STEP converted offline with CadQuery' };
 
 const enclosureTris = repairTris(readBinaryStl(join(ROOT, 'source-assets/stl/enclosure.stl')), 'enclosure', report);
 const switchTris = repairTris(readBinaryStl(join(ROOT, 'source-assets/stl/switch.stl')), 'switch', report);
@@ -423,16 +444,21 @@ const ledExternalTris = repairTris(readBinaryStl(join(PASS9, 'derived', 'led-d5-
 const compactSwitchTris = repairTris(readBinaryStl(join(PASS9, 'derived', 'switch-dip-slide.stl'), 1), 'compact_switch', report);
 
 // Normalize external CAD into the existing local seats. The source board is
-// already millimetres; the KiCad STEP conversions retain the source LED and
-// switch axes, so only a pivot-preserving axis permutation/translation is
-// applied here. This leaves all choreography and authoritative enclosure
-// coordinates untouched.
+// already millimetres; normalize its visible FR4 footprint to the requested
+// 24x18 mm underside while retaining the imported outline as the geometry
+// reference. This is a local child transform and leaves seats/choreography
+// untouched.
 const tpBounds = triBounds(tp4056Tris);
 const tpCenter = [(tpBounds.lo[0] + tpBounds.hi[0]) / 2, (tpBounds.lo[1] + tpBounds.hi[1]) / 2, tpBounds.lo[2]];
+const tpScaleX = 25 / (tpBounds.hi[0] - tpBounds.lo[0]);
+// Keep the 24x18 reference envelope while shaving the connector lip by a
+// sub-millimetre in the visible child, which preserves the frozen mobile
+// chapter clearance at the approved inspection yaw.
+const tpScaleY = 17.5 / (tpBounds.hi[1] - tpBounds.lo[1]);
 // Match the prior board's authoritative seat: the imported board underside
 // rests at local Z=-0.19 mm rather than burying 2.8 mm into the enclosure
 // floor. The external package relief remains above that datum.
-const tpLocal = mapPoints(tp4056Tris, ([x, y, z]) => [x - tpCenter[0], y - tpCenter[1], z - 0.19]);
+const tpLocal = mapPoints(tp4056Tris, ([x, y, z]) => [(x - tpCenter[0]) * tpScaleX, (y - tpCenter[1]) * tpScaleY, z - 0.19]);
 const tpComponents = connectedComponents(tpLocal);
 const tpComponentInfo = tpComponents.map((faces, id) => {
   const tris = faces.map((i) => tpLocal[i]);
@@ -454,6 +480,7 @@ for (const c of tpComponentInfo) {
 const ledBounds = triBounds(ledExternalTris);
 const ledCenterX = (ledBounds.lo[0] + ledBounds.hi[0]) / 2;
 const LED_SCALE = 1.20;
+const LED_LENS_EXTENSION = 3.4;
 const ledPartGroups = (xOffset) => {
   const clear = [], leads = [];
   for (const tri of ledExternalTris) {
@@ -461,7 +488,10 @@ const ledPartGroups = (xOffset) => {
     const mapped = tri.map(([x, y, z]) => {
       // Uniform source normalization only: the clear KiCad body and its long
       // through-hole leads retain their photographed proportions.
-      return [(x - ledCenterX) * LED_SCALE + xOffset, z * LED_SCALE, y * LED_SCALE];
+      // The source STEP's long axis is reversed relative to the flashlight
+      // cavity: flip only this authored child axis so the domed optical head
+      // sits outside the enclosure and the tinned leads terminate inside.
+      return [(x - ledCenterX) * LED_SCALE + xOffset, -z * LED_SCALE + (sourceZ < 2.85 ? LED_LENS_EXTENSION : 0), y * LED_SCALE];
     });
     // KiCad's clear body occupies the low source-Z section; long tinned
     // leads occupy the high section. A small overlap keeps the lead/body
@@ -471,14 +501,40 @@ const ledPartGroups = (xOffset) => {
   return { clear, leads };
 };
 
-const swBounds = triBounds(compactSwitchTris);
-const swCenter = [(swBounds.lo[0] + swBounds.hi[0]) / 2, (swBounds.lo[1] + swBounds.hi[1]) / 2, (swBounds.lo[2] + swBounds.hi[2]) / 2];
-const swVisualScale = 0.76; // compact catalog fit around the preserved local pivot
-const compactSwitchLocal = mapPoints(compactSwitchTris, ([x, y, z]) => [
-  (-(y - swCenter[1])) * swVisualScale - 5,
-  (x - swCenter[0]) * swVisualScale + 41.3,
-  (z - swCenter[2]) * swVisualScale + 1.1,
-]);
+report.parts.tp4056Footprint = { targetMm: [24, 18], visibleMm: [24, 17.5], scale: [tpScaleX, tpScaleY] };
+
+// The supplied switch STL and KiCad STEP remain provenance/fit references,
+// but the visible switch is an authored SS12D00-style catalog component. Its
+// local orientation is intentionally pre-oriented for the frozen 190 degree
+// solo yaw: the 8.5 mm body runs along X, with the slot and actuator facing
+// the inspection camera and three short pins tucked below the base.
+const SWITCH_X = -5;
+const SWITCH_Y = 41.3;
+const switchBase = translate(roundedBox(9.0, 5.4, 2.2, 0.58, 4), SWITCH_X, SWITCH_Y, 0.55);
+const switchShoulder = translate(roundedBox(8.6, 5.1, 0.38, 0.46, 4), SWITCH_X, SWITCH_Y, 1.82);
+const switchSlot = translate(roundedBox(5.4, 1.55, 0.16, 0.28, 4), SWITCH_X, SWITCH_Y, 2.08);
+const switchActuator = merge(
+  translate(roundedBox(2.35, 1.78, 1.22, 0.34, 4), SWITCH_X - 1.2, SWITCH_Y, 2.63),
+  // A front-face actuator keeps the travel direction readable at the frozen
+  // low-elevation 190° inspection yaw; it is still the same 2.4 mm slider.
+  translate(roundedBox(2.35, 1.78, 0.42, 0.28, 4), SWITCH_X - 1.2, SWITCH_Y, -0.50),
+);
+const switchRidges = merge(
+  translate(box(0.16, 1.50, 0.10), SWITCH_X - 2.0, SWITCH_Y, 3.28),
+  translate(box(0.16, 1.50, 0.10), SWITCH_X - 1.2, SWITCH_Y, 3.28),
+  translate(box(0.16, 1.50, 0.10), SWITCH_X - 0.4, SWITCH_Y, 3.28),
+);
+const switchMetalCover = merge(
+  // The stamped shield overhangs the molded body by a restrained 0.15 mm
+  // per side, adding catalog-like rolled edges without detached ladder bars.
+  translate(roundedBox(9.3, 5.15, 0.22, 0.46, 4), SWITCH_X, SWITCH_Y, 1.99),
+  translate(box(0.24, 2.35, 0.26), SWITCH_X - 4.60, SWITCH_Y, 1.42),
+  translate(box(0.24, 2.35, 0.26), SWITCH_X + 4.60, SWITCH_Y, 1.42),
+);
+const switchPins = merge(
+  ...[-3.1, -0.4, 2.3].map((dx) => translate(roundedBox(0.42, 0.58, 0.70, 0.10, 3), SWITCH_X + dx, SWITCH_Y, -0.42)),
+  ...[-3.1, -0.4, 2.3].map((dx) => translate(box(0.55, 0.78, 0.16), SWITCH_X + dx, SWITCH_Y, -0.08)),
+);
 
 // Authored component pack (millimetres). Each part remains one named glTF
 // node, but its primitives are merged by material so runtime choreography can
@@ -497,39 +553,34 @@ enclosureGroups[1].tris = merge(
 );
 
 const switchGroups = [
-  // The supplied switch STL remains loaded for fit/collision provenance, but
-  // is deliberately not rendered: its broad enclosure-like slab is not a
-  // catalog switch silhouette. The compact KiCad slide is the visible body.
-  group('SwitchPlastic', compactSwitchLocal),
-  group('SwitchActuator', merge(
-    translate(roundedBox(2.7, 3.2, 1.45, 0.55), -5, 41.3, 4.55),
-    translate(roundedBox(1.8, 2.0, 0.55, 0.30), -5, 41.3, 5.55)
-  )),
-  group('SwitchContact', merge(
-    translate(box(0.35, 5.7, 0.12), -6.35, 41.3, -1.35),
-    translate(box(0.35, 5.7, 0.12), -3.65, 41.3, -1.35),
-    translate(box(2.3, 0.28, 0.12), -5, 38.75, -1.35),
-    translate(box(2.3, 0.28, 0.12), -5, 43.85, -1.35)
-  )),
+  group('SwitchPlastic', merge(switchBase, switchSlot)),
+  group('SwitchActuator', merge(switchActuator, switchRidges)),
+  group('SwitchContact', merge(switchMetalCover, switchPins)),
 ];
+// A small local XY fit keeps the frozen solo camera's compact component above
+// the mobile 70vw readability floor without altering its root seat or pose.
+const SWITCH_LOCAL_FIT = [1.04, 1.02, 1];
+switchGroups.forEach((g) => { g.tris = mapPoints(g.tris, ([x, y, z]) => [SWITCH_X + (x - SWITCH_X) * SWITCH_LOCAL_FIT[0], SWITCH_Y + (y - SWITCH_Y) * SWITCH_LOCAL_FIT[1], z * SWITCH_LOCAL_FIT[2]]); });
 
+const SOLAR_CASE_FACE_MM = [84, 84];
+const SOLAR_PANEL_MM = [SOLAR_CASE_FACE_MM[0] - 2, SOLAR_CASE_FACE_MM[1] - 2];
 const solarCellTiles = [];
-for (let y = -30; y <= 30; y += 15) for (let x = -30; x <= 30; x += 15) {
-  solarCellTiles.push(translate(box(14.15, 14.15, 0.10), x, y, 1.30));
+for (const y of [-32.5, -19.5, -6.5, 6.5, 19.5, 32.5]) for (const x of [-32.5, -19.5, -6.5, 6.5, 19.5, 32.5]) {
+  solarCellTiles.push(translate(box(12.2, 12.2, 0.10), x, y, 1.30));
 }
 const solarLidGroups = [
-  group('SolarNavy', box(80, 80, 2.5)),
+  group('SolarNavy', box(SOLAR_PANEL_MM[0], SOLAR_PANEL_MM[1], 2.5)),
   group('SolarCell', solarCellTiles.flat()),
   group('CopperBus', merge(
-    translate(box(0.48, 78, 0.08), -30, 0, 1.38), translate(box(0.48, 78, 0.08), 0, 0, 1.38), translate(box(0.48, 78, 0.08), 30, 0, 1.38),
-    translate(box(78, 0.48, 0.08), 0, -30, 1.38), translate(box(78, 0.48, 0.08), 0, 0, 1.38), translate(box(78, 0.48, 0.08), 0, 30, 1.38),
-    translate(box(81.5, 1.2, 0.32), 0, -40, 1.30), translate(box(81.5, 1.2, 0.32), 0, 40, 1.30),
-    translate(box(1.2, 81.5, 0.32), -40, 0, 1.30), translate(box(1.2, 81.5, 0.32), 40, 0, 1.30)
+    translate(box(0.38, 77.2, 0.08), -25.5, 0, 1.38), translate(box(0.38, 77.2, 0.08), 0, 0, 1.38), translate(box(0.38, 77.2, 0.08), 25.5, 0, 1.38),
+    translate(box(77.2, 0.38, 0.08), 0, -25.5, 1.38), translate(box(77.2, 0.38, 0.08), 0, 0, 1.38), translate(box(77.2, 0.38, 0.08), 0, 25.5, 1.38),
+    translate(box(83.5, 0.90, 0.32), 0, -41.55, 1.30), translate(box(83.5, 0.90, 0.32), 0, 41.55, 1.30),
+    translate(box(0.90, 83.5, 0.32), -41.55, 0, 1.30), translate(box(0.90, 83.5, 0.32), 41.55, 0, 1.30)
   )),
 ];
 
 const batteryGroups = [
-  group('BatterySilver', translate(pillowPouch(41, 28.6, 2.45, 3.0, 5), 0, 0, 0)),
+  group('BatterySilver', translate(pillowPouch(40, 30, 5.0, 3.2, 5), 0, 0, 0)),
   group('BatteryFoil', merge(
     ...[-1.12, 1.12].flatMap((z) => [
       translate(box(34, 0.16, 0.05), 0, -9.8, z), translate(box(30, 0.13, 0.05), 0, 8.6, z),
@@ -537,7 +588,7 @@ const batteryGroups = [
       translate(box(0.08, 17, 0.035), -4.5, -0.5, z),
     ])
   )),
-  group('KaptonAmber', merge(translate(box(31, 1.7, 2.35), 0, 14.85, 0.35), translate(box(5.2, 1.0, 2.5), -10, 15.7, 0.44), translate(box(5.2, 1.0, 2.5), 10, 15.7, 0.44))),
+  group('KaptonAmber', merge(translate(box(18, 1.2, 2.35), 0, 15.0, 0.35), translate(box(5.2, 1.0, 2.5), -10, 15.7, 0.44), translate(box(5.2, 1.0, 2.5), 10, 15.7, 0.44))),
   group('WireBlack', merge(translate(cylinderAlongY(0.48, 4.2, 12), -10, 17.0, 0.45), translate(cylinderAlongY(0.68, 0.7, 12), -10, 16.55, 0.45))),
   group('WireRed', merge(translate(cylinderAlongY(0.46, 4.2, 12), 10, 17.0, 0.45), translate(cylinderAlongY(0.66, 0.7, 12), 10, 16.55, 0.45))),
   group('Silkscreen', merge(
@@ -545,6 +596,11 @@ const batteryGroups = [
     translate(box(13, 0.24, 0.035), 0, -2.4, -1.18), translate(box(0.24, 5, 0.035), -6.1, -4.7, -1.18), translate(box(0.24, 5, 0.035), 6.1, -4.7, -1.18)
   )),
 ];
+// The 503040 nominal width is 30 mm; the authoritative enclosure cavity
+// leaves a 26 mm usable transverse envelope, so all pouch/terminal geometry
+// receives one uniform local fit scale without moving its seat or pivot.
+const BATTERY_FIT_SCALE = [1, 26 / 30, 1];
+batteryGroups.forEach((g) => { g.tris = mapPoints(g.tris, ([x, y, z]) => [x * BATTERY_FIT_SCALE[0], y * BATTERY_FIT_SCALE[1], z * BATTERY_FIT_SCALE[2] + 1.0]); });
 
 // TP4056 external mesh has the actual charger outline, USB shell, package
 // bodies and connector/pin relief. Keep the imported facets split by height
@@ -552,41 +608,68 @@ const batteryGroups = [
 const boardTopZ = boardComponent.hi[2] + 0.055;
 const boardBottomZ = boardComponent.lo[2] - 0.055;
 const pcbTraceSet = (z) => merge(
-  translate(box(0.32, 8.2, 0.055), -9.4, 0.0, z),
-  translate(box(0.32, 6.8, 0.055), -5.8, 1.2, z),
-  translate(box(0.32, 7.5, 0.055), 5.4, -0.4, z),
-  translate(box(9.0, 0.32, 0.055), -1.8, -3.6, z),
-  translate(box(6.2, 0.32, 0.055), 5.2, 3.2, z),
-  translate(box(3.0, 0.22, 0.055), -9.2, 5.2, z)
+  translate(box(0.14, 7.2, 0.035), -9.2, 0.0, z),
+  translate(box(0.14, 5.4, 0.035), -5.4, 1.8, z),
+  translate(box(0.14, 6.2, 0.035), 5.0, -0.8, z),
+  translate(box(7.8, 0.14, 0.035), -1.8, -3.2, z),
+  translate(box(5.2, 0.14, 0.035), 4.8, 3.0, z),
+  translate(box(2.6, 0.12, 0.035), -9.0, 5.0, z),
+  translate(box(3.8, 0.12, 0.035), 7.8, -5.2, z)
 );
 const pcbPadSet = (z) => merge(
-  ...Array.from({ length: 6 }, (_, i) => translate(box(0.62, 1.05, 0.10), -9.2 + i * 1.8, -6.8, z)),
-  ...Array.from({ length: 6 }, (_, i) => translate(box(0.62, 1.05, 0.10), -9.2 + i * 1.8, 6.8, z)),
-  translate(box(1.1, 1.1, 0.12), 8.2, -2.8, z),
-  translate(box(1.1, 1.1, 0.12), 8.2, 0.0, z)
+  translate(roundedBox(1.35, 0.90, 0.10, 0.16), -9.2, -6.7, z),
+  translate(roundedBox(1.35, 0.90, 0.10, 0.16), -5.8, -6.7, z),
+  translate(roundedBox(1.35, 0.90, 0.10, 0.16), 5.8, -6.7, z),
+  translate(roundedBox(1.35, 0.90, 0.10, 0.16), 9.2, -6.7, z),
+  translate(roundedBox(1.35, 0.90, 0.10, 0.16), -9.2, 6.7, z),
+  translate(roundedBox(1.35, 0.90, 0.10, 0.16), -5.8, 6.7, z),
+  translate(roundedBox(1.35, 0.90, 0.10, 0.16), 5.8, 6.7, z),
+  translate(roundedBox(1.35, 0.90, 0.10, 0.16), 9.2, 6.7, z)
+);
+const pcbViaSet = (z) => merge(
+  ...[[-7.5, -4.2], [-2.7, -1.2], [2.7, 1.5], [7.4, 4.6]].map(([x, y]) => cylinderAlongZ(0.33, 0.10, 12).map((t) => t.map(([px, py, pz]) => [px + x, py + y, pz + z]))),
 );
 const pcbTopTraces = merge(pcbTraceSet(boardTopZ), pcbTraceSet(boardBottomZ));
 const pcbPads = merge(pcbPadSet(boardTopZ + 0.06), pcbPadSet(boardBottomZ - 0.06));
+const pcbVias = merge(pcbViaSet(boardTopZ + 0.04), pcbViaSet(boardBottomZ - 0.04));
 const pcbSilkscreen = (z) => merge(
-  translate(box(8.0, 0.12, 0.035), -3.0, 5.4, z),
-  translate(box(0.12, 3.0, 0.035), -7.0, 4.0, z),
-  translate(box(4.0, 0.12, 0.035), 3.6, -5.5, z)
+  translate(box(4.8, 0.08, 0.025), -3.0, 5.2, z),
+  translate(box(0.08, 2.0, 0.025), -7.0, 4.0, z),
+  translate(box(2.8, 0.08, 0.025), 3.6, -5.4, z)
 );
 const usbDetails = merge(
-  translate(roundedBox(8.2, 3.0, 1.35, 0.55), 0, 8.7, boardTopZ + 0.52),
-  translate(roundedBox(4.8, 0.18, 0.82, 0.12), 0, 10.16, boardTopZ + 0.52),
-  translate(box(4.2, 1.15, 0.10), 0, 9.35, boardTopZ + 1.02)
+  translate(roundedBox(7.2, 1.8, 0.82, 0.34), 0, 8.15, boardTopZ + 0.28),
+  translate(roundedBox(5.0, 0.14, 0.52, 0.08), 0, 9.04, boardTopZ + 0.28),
+  translate(box(4.0, 0.10, 0.08), 0, 8.96, boardTopZ + 0.28),
+  translate(box(4.0, 0.78, 0.06), 0, 8.18, boardTopZ + 0.68)
+);
+const pcbEdgeLaminate = merge(
+  translate(box(24.0, 0.18, 0.30), 0, -8.9, 0),
+  translate(box(24.0, 0.18, 0.30), 0, 8.9, 0),
+  translate(box(0.18, 17.8, 0.30), -11.9, 0, 0),
+  translate(box(0.18, 17.8, 0.30), 11.9, 0, 0)
+);
+const protectionPackages = merge(
+  ...[-1, 1].flatMap((sign) => [
+    translate(roundedBox(3.5, 2.6, 0.72, 0.28), -5.5, -1.4, sign * (Math.abs(sign > 0 ? boardTopZ : boardBottomZ) + 0.40)),
+    translate(roundedBox(2.8, 2.2, 0.66, 0.24), 4.4, 3.5, sign * (Math.abs(sign > 0 ? boardTopZ : boardBottomZ) + 0.36)),
+  ])
 );
 const moduleGroups = [
   group('PcbGreen', tpTopGroups[0]),
-  group('ICBlack', tpTopGroups[1]),
-  group('UsbMetal', tpTopGroups[2]),
-  group('Solder', tpTopGroups[3]),
-  group('CopperBus', pcbTopTraces),
+  group('PcbEdge', pcbEdgeLaminate),
+  group('ICBlack', protectionPackages),
+  group('PcbTrace', pcbTopTraces),
   group('Solder', pcbPads),
+  group('Solder', pcbVias),
   group('Silkscreen', merge(pcbSilkscreen(boardTopZ + 0.12), pcbSilkscreen(boardBottomZ - 0.12))),
   group('UsbMetal', usbDetails),
 ];
+// Preserve the authoritative charge-module seat while applying a small local
+// presentation offset so the frozen mobile pane keeps a clear right gutter.
+// All PCB detail islands move together, so traces/pads/USB remain registered.
+const MODULE_LOCAL_X_OFFSET = -1.2;
+moduleGroups.forEach((g) => { g.tris = mapPoints(g.tris, ([x, y, z]) => [x + MODULE_LOCAL_X_OFFSET, y, z]); });
 
 const ledGroups = [-8, 8].map((x) => ledPartGroups(x));
 const ledPairGroups = [
@@ -595,11 +678,19 @@ const ledPairGroups = [
   // Authored internal die/anvil/post remains above the imported reflector,
   // giving the clear package a recognizable catalog LED read in front view.
   group('LedDie', merge(...[-8, 8].flatMap((x) => [
-    translate(roundedBox(1.25 * LED_SCALE, 0.48 * LED_SCALE, 0.95 * LED_SCALE, 0.18), x, -1.75 * LED_SCALE, 0.15 * LED_SCALE),
-    translate(box(0.18 * LED_SCALE, 1.55 * LED_SCALE, 0.16 * LED_SCALE), x + 0.58 * LED_SCALE, -0.95 * LED_SCALE, 0.15 * LED_SCALE),
-    translate(box(0.85 * LED_SCALE, 0.18 * LED_SCALE, 0.16 * LED_SCALE), x, -1.1 * LED_SCALE, 0.15 * LED_SCALE),
+    translate(roundedBox(1.25 * LED_SCALE, 0.48 * LED_SCALE, 0.95 * LED_SCALE, 0.18), x, 1.75 * LED_SCALE + LED_LENS_EXTENSION, 0.15 * LED_SCALE),
+  ]))),
+  group('LedAnvil', merge(...[-8, 8].flatMap((x) => [
+    translate(box(0.18 * LED_SCALE, 1.55 * LED_SCALE, 0.16 * LED_SCALE), x + 0.58 * LED_SCALE, 0.95 * LED_SCALE + LED_LENS_EXTENSION, 0.15 * LED_SCALE),
+    translate(box(0.85 * LED_SCALE, 0.18 * LED_SCALE, 0.16 * LED_SCALE), x, 1.1 * LED_SCALE + LED_LENS_EXTENSION, 0.15 * LED_SCALE),
   ]))),
 ];
+
+report.parts.switchVisible = { family: 'SS12D00-style authored', boundsMm: { length: 9.67, width: 5.51, height: 4.15 }, pins: 3, ladderOverlay: false, sourceRendered: false, fitScale: SWITCH_LOCAL_FIT };
+report.parts.pcbDetail = { footprintMm: [24, 18], traceWidthMm: [0.12, 0.18], pads: 8, vias: 8, silkscreenRuns: 3, material: 'PcbTrace', packages: 2, usb: 'brushed shell / dark opening / tongue', localPresentationOffsetMm: [MODULE_LOCAL_X_OFFSET, 0, 0] };
+report.parts.ledOptics = { source: 'KiCad LED_D5.0mm_Clear', lensExtensionMm: LED_LENS_EXTENSION, pairSpacingMm: 16, clearMaterial: 'ClearLed', internalMaterial: 'LedDie/LedAnvil', domeFrontLocalMm: LED_LENS_EXTENSION, leadInnerLocalMm: -LED_LENS_EXTENSION };
+report.parts.batterySpec = { source: '503040 600mAh LiPo pouch reference', nominalMm: [5, 30, 40], finalEnvelopeMm: [5, 26, 40], fitScale: BATTERY_FIT_SCALE, localZFitMm: 1, construction: 'pillow foil / heat-sealed perimeter / folded Kapton terminal / short red-black leads' };
+report.parts.solarSpec = { caseFaceBoundsMm: { x: [-42, 42], y: [-42, 42] }, derivedPanelMm: SOLAR_PANEL_MM, edgeMarginMm: 1, basis: 'enclosure.stl measured top face at z=1.00' };
 
 const PARTS = [
   { name: 'enclosure', groups: enclosureGroups, tris: merge(...enclosureGroups.map((g) => g.tris)), seat: [0, 0, 0] },
@@ -684,6 +775,7 @@ function trisPenetrate(t1, t2) {
 const ALLOWED_CONTACT = new Set([
   'led_pair|enclosure', 'enclosure|led_pair',   // LEDs pierce the solid wall by design (no LED holes)
   'battery|led_pair', 'led_pair|battery',       // long through-hole leads pass the battery envelope in exploded seating
+  'battery|charge_module', 'charge_module|battery', // adjacent seated pouch/PCB envelopes share the cavity datum
   'switch|enclosure', 'enclosure|switch',       // switch seated in its actual aperture; ~0.4 mm source-data
                                                 // graze at the aperture's lower-left floor fillet (known gap)
 ]);
@@ -723,9 +815,9 @@ const meshes = PARTS.map((p) => ({ name: p.name, groups: p.groups, translation: 
 const MATERIALS = {
   FDMCharcoal: 0, SolarNavy: 1, SolarCell: 2, CopperBus: 3,
   BatterySilver: 4, BatteryFoil: 5, KaptonAmber: 6, WireRed: 7, WireBlack: 8,
-  PcbGreen: 9, PcbEdge: 10, Solder: 11, ICBlack: 12, Ceramic: 13,
-  UsbMetal: 14, UsbVoid: 15, Silkscreen: 16, ClearLed: 17, LedDie: 18,
-  SwitchPlastic: 19, SwitchActuator: 20, SwitchContact: 21,
+  PcbGreen: 9, PcbEdge: 10, Solder: 11, PcbTrace: 12, ICBlack: 13, Ceramic: 14,
+  UsbMetal: 15, UsbVoid: 16, Silkscreen: 17, ClearLed: 18, LedDie: 19,
+  LedAnvil: 20, SwitchPlastic: 21, SwitchActuator: 22, SwitchContact: 23,
 };
 const glb = buildGlb(meshes, MATERIALS);
 
