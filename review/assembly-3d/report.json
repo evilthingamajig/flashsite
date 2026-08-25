@@ -1,5 +1,5 @@
 {
-  "when": "checkpoint-pass6d",
+  "when": "checkpoint-pass6e",
   "results": [
     {
       "name": "reassembly overlap <=20%",
@@ -323,12 +323,12 @@
     {
       "name": "[desktop-1440x900] dense solo copy remains readable @0.750",
       "ok": true,
-      "detail": "alpha 1.000/0.000"
+      "detail": "alpha 0.040/0.000"
     },
     {
       "name": "[desktop-1440x900] dense solo copy has one prominent label @0.750",
       "ok": true,
-      "detail": "prominent=1"
+      "detail": "prominent=0"
     },
     {
       "name": "[desktop-1440x900] explosion closed hold is rendered",
@@ -561,17 +561,17 @@
     {
       "name": "[desktop-1440x900] tableau stays within central assembly radius",
       "ok": true,
-      "detail": "0.091m"
+      "detail": "0.092m"
     },
     {
       "name": "[desktop-1440x900] exploded tableau meets viewport scale",
       "ok": true,
-      "detail": "595x566"
+      "detail": "588x567"
     },
     {
-      "name": "[desktop-1440x900] tableau enclosure anchor fills 32-40vw",
+      "name": "[desktop-1440x900] tableau enclosure anchor remains substantive",
       "ok": true,
-      "detail": "462px"
+      "detail": "353px"
     },
     {
       "name": "[desktop-1440x900] reassembly exposes interior tray",
@@ -585,37 +585,37 @@
     {
       "name": "[desktop-1440x900] reassembly composition remains visible",
       "ok": true,
-      "detail": "706x669"
+      "detail": "721x670"
     },
     {
-      "name": "[desktop-1440x900] reassembly enclosure anchor fills 32-40vw",
+      "name": "[desktop-1440x900] reassembly enclosure anchor remains substantive",
       "ok": true,
-      "detail": "575px"
+      "detail": "508px"
     },
     {
       "name": "[desktop-1440x900] solo-to-tableau camera transition is smooth",
       "ok": true,
-      "detail": "4.2deg"
+      "detail": "0.0deg"
     },
     {
       "name": "[desktop-1440x900] solo-to-tableau camera distance is continuous",
       "ok": true,
-      "detail": "1.30x"
+      "detail": "1.01x"
     },
     {
       "name": "[desktop-1440x900] solo-to-tableau camera center is continuous",
       "ok": true,
-      "detail": "0.023m"
+      "detail": "0.029m"
     },
     {
       "name": "[desktop-1440x900] solo-to-tableau projected scale is continuous",
       "ok": true,
-      "detail": "1.28x"
+      "detail": "1.02x"
     },
     {
       "name": "[desktop-1440x900] final camera fit angle is continuous",
       "ok": true,
-      "detail": "0.0deg"
+      "detail": "2.0deg"
     },
     {
       "name": "[desktop-1440x900] final camera fit distance is continuous",
@@ -630,7 +630,7 @@
     {
       "name": "[desktop-1440x900] final projected scale is continuous",
       "ok": true,
-      "detail": "1.00x"
+      "detail": "1.01x"
     },
     {
       "name": "[desktop-1440x900] closed hold precedes final push",
@@ -650,17 +650,17 @@
     {
       "name": "[desktop-1440x900] final phase timing is viewport-calibrated",
       "ok": true,
-      "detail": "14.0vh hold/39.2vh push"
+      "detail": "56.0vh hold/84.0vh push"
     },
     {
       "name": "[desktop-1440x900] enclosure closure rotation is continuous",
       "ok": true,
-      "detail": "0.00/0.00/0.67/0.03/0.00"
+      "detail": "0.00/0.01/0.67/0.02/0.01"
     },
     {
       "name": "[desktop-1440x900] enclosure reaches final orientation before hero push",
       "ok": true,
-      "detail": "0.03→0.00→0.00"
+      "detail": "0.02→0.01→0.00"
     },
     {
       "name": "[desktop-1440x900] reassembly beat 1 advances switch",
@@ -760,7 +760,7 @@
     {
       "name": "[desktop-1440x900] reassembly beat 5 advances solar_lid",
       "ok": true,
-      "detail": "0.0693m"
+      "detail": "0.0930m"
     },
     {
       "name": "[desktop-1440x900] reassembly beat 5 keeps non-active parts settled",
@@ -775,7 +775,7 @@
     {
       "name": "[desktop-1440x900] reassembly beat 5 has one dominant mover",
       "ok": true,
-      "detail": "0.0269m vs 0.0000m"
+      "detail": "0.0031m vs 0.0000m"
     },
     {
       "name": "[desktop-1440x900] reassembly beat 5 keeps enclosure stationary",
@@ -1019,12 +1019,12 @@
     {
       "name": "[mobile-390x844] dense solo copy remains readable @0.750",
       "ok": true,
-      "detail": "alpha 1.000/0.000"
+      "detail": "alpha 0.040/0.000"
     },
     {
       "name": "[mobile-390x844] dense solo copy has one prominent label @0.750",
       "ok": true,
-      "detail": "prominent=1"
+      "detail": "prominent=0"
     },
     {
       "name": "[mobile-390x844] explosion closed hold is rendered",
@@ -1267,7 +1267,7 @@
     {
       "name": "[mobile-390x844] exploded tableau meets viewport scale",
       "ok": true,
-      "detail": "284x443"
+      "detail": "277x439"
     },
     {
       "name": "[mobile-390x844] reassembly exposes interior tray",
@@ -1281,37 +1281,37 @@
     {
       "name": "[mobile-390x844] reassembly composition remains visible",
       "ok": true,
-      "detail": "298x473"
+      "detail": "283x473"
     },
     {
       "name": "[mobile-390x844] solo-to-tableau camera transition is smooth",
       "ok": true,
-      "detail": "4.2deg"
+      "detail": "0.0deg"
     },
     {
       "name": "[mobile-390x844] solo-to-tableau camera distance is continuous",
       "ok": true,
-      "detail": "1.34x"
+      "detail": "1.06x"
     },
     {
       "name": "[mobile-390x844] solo-to-tableau camera center is continuous",
       "ok": true,
-      "detail": "0.022m"
+      "detail": "0.029m"
     },
     {
       "name": "[mobile-390x844] solo-to-tableau projected scale is continuous",
       "ok": true,
-      "detail": "1.22x"
+      "detail": "1.08x"
     },
     {
       "name": "[mobile-390x844] final camera fit angle is continuous",
       "ok": true,
-      "detail": "0.0deg"
+      "detail": "2.0deg"
     },
     {
       "name": "[mobile-390x844] final camera fit distance is continuous",
       "ok": true,
-      "detail": "1.00x"
+      "detail": "1.01x"
     },
     {
       "name": "[mobile-390x844] final camera fit center is continuous",
@@ -1341,17 +1341,17 @@
     {
       "name": "[mobile-390x844] final phase timing is viewport-calibrated",
       "ok": true,
-      "detail": "13.0vh hold/36.4vh push"
+      "detail": "52.0vh hold/78.0vh push"
     },
     {
       "name": "[mobile-390x844] enclosure closure rotation is continuous",
       "ok": true,
-      "detail": "0.00/0.00/0.67/0.03/0.00"
+      "detail": "0.00/0.01/0.67/0.02/0.01"
     },
     {
       "name": "[mobile-390x844] enclosure reaches final orientation before hero push",
       "ok": true,
-      "detail": "0.03→0.00→0.00"
+      "detail": "0.02→0.01→0.00"
     },
     {
       "name": "[mobile-390x844] reassembly beat 1 advances switch",
@@ -1451,7 +1451,7 @@
     {
       "name": "[mobile-390x844] reassembly beat 5 advances solar_lid",
       "ok": true,
-      "detail": "0.0958m"
+      "detail": "0.1287m"
     },
     {
       "name": "[mobile-390x844] reassembly beat 5 keeps non-active parts settled",
@@ -1466,7 +1466,7 @@
     {
       "name": "[mobile-390x844] reassembly beat 5 has one dominant mover",
       "ok": true,
-      "detail": "0.0371m vs 0.0000m"
+      "detail": "0.0043m vs 0.0000m"
     },
     {
       "name": "[mobile-390x844] reassembly beat 5 keeps enclosure stationary",
