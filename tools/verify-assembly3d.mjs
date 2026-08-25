@@ -98,6 +98,7 @@ const CH_W = 0.108;
 const T_RE_START = 0.82;
 const RE_SPACING = 0.025;
 const RE_W = 0.05;
+const T_FINAL = Math.max(0.955, T_RE_START + 5 * RE_SPACING + RE_W);
 const REASSEMBLY_ORDER = ['enclosure', 'switch', 'led_pair', 'charge_module', 'battery', 'solar_lid'];
 
 async function settle(cdp) {
@@ -362,6 +363,16 @@ async function browserPass() {
     check(`[${vp.label}] solo-to-tableau camera distance is continuous`, distRatio <= 1.45, `${distRatio.toFixed(2)}x`);
     check(`[${vp.label}] solo-to-tableau camera center is continuous`, centerDelta <= 0.18, `${centerDelta.toFixed(3)}m`);
     check(`[${vp.label}] solo-to-tableau projected scale is continuous`, silScale <= 1.55, `${silScale.toFixed(2)}x`);
+    const beforeFinal = await (async () => { await goto(T_FINAL - 0.018); await settle(cdp); return readState(); })();
+    const afterFinal = await (async () => { await goto(Math.min(0.999, T_FINAL + 0.012)); await settle(cdp); return readState(); })();
+    const finalAngleDelta = beforeFinal?.cam && afterFinal?.cam ? Math.hypot(afterFinal.cam.azim - beforeFinal.cam.azim, afterFinal.cam.elev - beforeFinal.cam.elev) : Infinity;
+    const finalDistRatio = beforeFinal?.cam && afterFinal?.cam ? Math.max(afterFinal.cam.dist, beforeFinal.cam.dist) / Math.max(1e-6, Math.min(afterFinal.cam.dist, beforeFinal.cam.dist)) : Infinity;
+    const finalCenterDelta = beforeFinal?.cam && afterFinal?.cam ? Math.hypot(...afterFinal.cam.center.map((v, i) => v - beforeFinal.cam.center[i])) : Infinity;
+    const finalSilScale = beforeFinal?.allSil && afterFinal?.allSil ? Math.max(afterFinal.allSil.w / Math.max(1, beforeFinal.allSil.w), beforeFinal.allSil.w / Math.max(1, afterFinal.allSil.w), afterFinal.allSil.h / Math.max(1, beforeFinal.allSil.h), beforeFinal.allSil.h / Math.max(1, afterFinal.allSil.h)) : Infinity;
+    check(`[${vp.label}] final camera fit angle is continuous`, finalAngleDelta <= 0.55, `${(finalAngleDelta * 180 / Math.PI).toFixed(1)}deg`);
+    check(`[${vp.label}] final camera fit distance is continuous`, finalDistRatio <= 1.55, `${finalDistRatio.toFixed(2)}x`);
+    check(`[${vp.label}] final camera fit center is continuous`, finalCenterDelta <= 0.18, `${finalCenterDelta.toFixed(3)}m`);
+    check(`[${vp.label}] final projected scale is continuous`, finalSilScale <= 1.65, `${finalSilScale.toFixed(2)}x`);
     const seatedPose = (await (async () => { await goto(1); await settle(cdp); return readState(); })())?.pose;
     let previousBeatPose = tableauState?.pose;
     for (let idx = 0; idx < REASSEMBLY_ORDER.length; idx++) {
@@ -428,7 +439,7 @@ staticChecks();
 await browserPass();
 
 writeFileSync(join(OUT, 'report.json'), JSON.stringify({
-  when: 'checkpoint-pass5d',
+  when: 'checkpoint-pass5e',
   results,
   passed: results.filter((r) => r.ok).length,
   failed: results.filter((r) => !r.ok).length,
