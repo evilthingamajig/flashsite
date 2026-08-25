@@ -15,8 +15,8 @@
 .ff-assembly-chapter.is-active{display:block}
 .ff-assembly-chapter h3{margin:0 0 10px;font-size:clamp(1.5rem,2.5vw,2.5rem);font-weight:400;line-height:1.05}
 .ff-assembly-chapter p{margin:0;font-size:clamp(1rem,1.4vw,1.25rem);line-height:1.3}
-.ff-assembly-final-copy{display:none;max-width:18rem;gap:10px;pointer-events:auto}
-.ff-assembly-final-copy.is-active{display:grid}
+.ff-assembly-final-copy{display:grid;max-width:18rem;gap:10px;opacity:0;transform:translateY(10px);visibility:hidden;pointer-events:none;transition:opacity .28s ease,transform .28s ease,visibility 0s linear .28s}
+.ff-assembly-final-copy.is-active{opacity:1;transform:none;visibility:visible;pointer-events:auto;transition-delay:0s}
 .ff-assembly-final-copy p{margin:0;font-size:clamp(1rem,1.4vw,1.25rem);line-height:1.25}
 .ff-assembly-final-copy .button-base{justify-self:start}
 .ff-assembly-accessible{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
