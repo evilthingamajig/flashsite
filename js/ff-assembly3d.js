@@ -301,7 +301,9 @@ function init(section) {
       // the subtle FDM layer/rim cues above; synthetic tray slabs and beige
       // seat rectangles would float outside that authored cavity.
       const cavityFloor = matte(0x344239, 0.82, 0.01);
-      detail(new THREE.BoxGeometry(75, 75, 0.45), cavityFloor, [0, 0, -4.02]);
+      const floorSurface = detail(new THREE.PlaneGeometry(75, 75), cavityFloor, [0, 0, -4.249]);
+      floorSurface.userData.visualOnly = true;
+      floorSurface.userData.cavityFloor = true;
     }
   }
 
@@ -815,6 +817,13 @@ function init(section) {
       // The visible enclosure mesh itself is the cavity sentinel; no extra
       // overlay is substituted for the authored floor/walls.
       trayVisible: p >= T_EXPLODE[1] && p < T_FINAL && !!groups.enclosure?.visible,
+      cavityFloor: {
+        visible: p >= T_EXPLODE[1] && p < T_FINAL && !!groups.enclosure?.visible,
+        visualOnly: true,
+        thicknessMm: 0,
+        zMm: -4.249,
+        seatBottomMm: -4.25,
+      },
       introBox: (() => { const r = introCopy.getBoundingClientRect(), s = sticky.getBoundingClientRect(); return { x: r.left - s.left, y: r.top - s.top, w: r.width, h: r.height }; })(),
       finalBox: (() => { const r = finalMark.getBoundingClientRect(), s = sticky.getBoundingClientRect(); return { x: r.left - s.left, y: r.top - s.top, w: r.width, h: r.height }; })(),
       calloutBox: activeKey ? (() => { const r = callouts[activeKey].getBoundingClientRect(), s = sticky.getBoundingClientRect(); return { x: r.left - s.left, y: r.top - s.top, w: r.width, h: r.height }; })() : null,

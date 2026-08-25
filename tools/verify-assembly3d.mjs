@@ -58,6 +58,7 @@ function staticChecks() {
     check('vendored file ' + f, existsSync(join(ROOT, f)));
   }
   const asm3d = readFileSync(join(ROOT, 'js', 'ff-assembly3d.js'), 'utf8');
+  check('cavity floor is zero-thickness visual surface', /new THREE\.PlaneGeometry\(75, 75\)/.test(asm3d) && /visualOnly\s*=\s*true/.test(asm3d) && !/new THREE\.BoxGeometry\(75, 75,/.test(asm3d));
   check('no CDN references in runtime', !/https?:\/\//.test(asm3d.replace(/\/\/[^\n]*|\/\*[\s\S]*?\*\//g, '')));
   check('DPR cap present', /DPR_CAP\s*=\s*1\.75/.test(asm3d));
   const pngRuntime = readFileSync(join(ROOT, 'js', 'ff-assembly.js'), 'utf8');
@@ -170,6 +171,7 @@ async function browserPass() {
           sil: F.silhouette,
           allSil: F.allSilhouette,
           trayVisible: F.trayVisible,
+          cavityFloor: F.cavityFloor,
           introBox: F.introBox,
           finalBox: F.finalBox,
           calloutBox: F.calloutBox,
@@ -323,6 +325,7 @@ async function browserPass() {
     const tableauCopyGone = tableauState?.calloutOpacity && Object.values(tableauState.calloutOpacity).every((value) => value <= 0.001);
     check(`[${vp.label}] exploded tableau has no active copy`, !tableauState?.active && tableauState?.activeCount === 0 && tableauCopyGone, `active=${tableauState?.active || 'none'}`);
     check(`[${vp.label}] exploded tableau exposes interior tray`, tableauState?.trayVisible === true);
+    check(`[${vp.label}] cavity floor is visual-only and non-colliding`, tableauState?.cavityFloor?.visible === true && tableauState.cavityFloor.visualOnly === true && tableauState.cavityFloor.thicknessMm === 0 && tableauState.cavityFloor.zMm >= tableauState.cavityFloor.seatBottomMm, `${tableauState?.cavityFloor?.thicknessMm ?? 'missing'}mm`);
     if (tableauState?.pose) {
       const pts = Object.values(tableauState.pose).map((p) => p.position);
       const cx = pts.reduce((s, p) => s + p[0], 0) / pts.length;
@@ -341,6 +344,7 @@ async function browserPass() {
     await cdp.screenshot(join(OUT, vp.label + '-exploded-tableau.png'));
     const reassemblyState = await (async () => { await goto(0.86); await settle(cdp); return readState(); })();
     check(`[${vp.label}] reassembly exposes interior tray`, reassemblyState?.trayVisible === true);
+    check(`[${vp.label}] reassembly cavity floor remains non-colliding`, reassemblyState?.cavityFloor?.visible === true && reassemblyState.cavityFloor.visualOnly === true && reassemblyState.cavityFloor.thicknessMm === 0 && reassemblyState.cavityFloor.zMm >= reassemblyState.cavityFloor.seatBottomMm, `${reassemblyState?.cavityFloor?.thicknessMm ?? 'missing'}mm`);
     if (reassemblyState?.allSil) {
       const minW = vp.mobile ? vp.w * 0.68 : vp.w * 0.39;
       const maxW = vp.mobile ? vp.w * 0.90 : vp.w * 0.78;
@@ -424,7 +428,7 @@ staticChecks();
 await browserPass();
 
 writeFileSync(join(OUT, 'report.json'), JSON.stringify({
-  when: 'checkpoint-pass5c',
+  when: 'checkpoint-pass5d',
   results,
   passed: results.filter((r) => r.ok).length,
   failed: results.filter((r) => !r.ok).length,
