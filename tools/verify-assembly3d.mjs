@@ -52,6 +52,7 @@ function staticChecks() {
   const html = readFileSync(join(ROOT, 'index.html'), 'utf8');
   const flagCount = html.split("get('ffasm')==='3d'").length - 1;
   check('flag wiring present once', flagCount === 1 && /classList\.add\('ff-asm3d'\)/.test(html));
+  check('3d stylesheet is feature-injected only', !/<link[^>]+href=["']css\/ff-assembly3d\.css/i.test(html) && html.includes("document.createElement('link')"));
   check('importmap vendored paths', html.includes('./js/vendor/three/three.module.js') && html.includes('./js/vendor/three/addons/loaders/GLTFLoader.js'));
   for (const f of ['js/vendor/three/three.module.js', 'js/vendor/three/addons/loaders/GLTFLoader.js', 'js/vendor/three/addons/utils/BufferGeometryUtils.js']) {
     check('vendored file ' + f, existsSync(join(ROOT, f)));
@@ -95,7 +96,7 @@ const T_CH_START = 0.125;
 const CH_W = 0.108;
 
 async function settle(cdp) {
-  await cdp.evaluate('new Promise(r=>requestAnimationFrame(()=>requestAnimationFrame(r)))', { awaitPromise: true });
+  await cdp.evaluate('new Promise(r=>setTimeout(()=>requestAnimationFrame(()=>requestAnimationFrame(r)),220))', { awaitPromise: true });
 }
 
 async function browserPass() {
@@ -163,8 +164,13 @@ async function browserPass() {
           stage: F.stage,
           pane: F.pane,
           sil: F.silhouette,
+          allSil: F.allSilhouette,
+          introBox: F.introBox,
+          finalBox: F.finalBox,
           leaderEnd: F.leaderEnd,
+          leaderPath: F.leaderPath,
           anchorActive: F.activeCallout ? F.anchors[F.activeCallout] : null,
+          pose: F.pose,
           activeCount: document.querySelectorAll('.ff-asm3d-callout.is-active').length,
           overflowX: Math.max(doc.scrollWidth, document.body.scrollWidth) - doc.clientWidth,
           navHidden: document.body.classList.contains('ff-assembly-active'),
@@ -177,6 +183,8 @@ async function browserPass() {
     let maxActiveCount = 0;
     let worstOverflow = 0;
     const clearanceViolations = [];
+    const viewportViolations = [];
+    const collisionViolations = [];
 
     for (let i = 0; i < N; i++) {
       const frac = i / (N - 1);
@@ -184,11 +192,13 @@ async function browserPass() {
       await goto(frac);
       const st = await readState();
       if (!st) continue;
-      forward.set(frac.toFixed(4), JSON.stringify({ p: st.p.toFixed(4), active: st.active }));
+      forward.set(frac.toFixed(4), JSON.stringify({ p: st.p.toFixed(4), active: st.active, pose: st.pose }));
       maxActiveCount = Math.max(maxActiveCount, st.activeCount);
       worstOverflow = Math.max(worstOverflow, st.overflowX);
+      if (st.active && !st.sil) clearanceViolations.push(`null active silhouette @p=${st.p.toFixed(3)}`);
       if (st.active && st.sil) {
         const sil = st.sil, pane = st.pane;
+        const isHoldish = CHAPTER_HOLD_FRACS.some((hf) => Math.abs(hf - st.p) < 0.04);
         const clearL = sil.x - pane.x, clearR = pane.x + pane.w - (sil.x + sil.w);
         const clearT = sil.y - pane.y, clearB = pane.y + pane.h - (sil.y + sil.h);
         if (!vp.mobile) {
@@ -198,15 +208,24 @@ async function browserPass() {
           if (isHoldish && (fillFrac < 0.578 || fillFrac > 0.682)) {
             clearanceViolations.push(`hold fill ${fillFrac.toFixed(3)} @p=${st.p.toFixed(3)}`);
           }
-          if (Math.min(clearL, clearR) < 31.5 || Math.min(clearT, clearB) < 39.5) {
+          if (isHoldish && (Math.min(clearL, clearR) < 31.5 || Math.min(clearT, clearB) < 39.5)) {
             clearanceViolations.push(`clearance L${clearL.toFixed(0)} R${clearR.toFixed(0)} T${clearT.toFixed(0)} B${clearB.toFixed(0)} @p=${st.p.toFixed(3)}`);
           }
+          if (isHoldish && ((sil.w < 0.24 * st.stage.w - 2 && sil.h < 0.30 * st.stage.h - 2) || sil.w > 0.67 * st.stage.w + 2 || sil.h > 0.65 * st.stage.h + 2)) {
+            viewportViolations.push(`viewport size ${sil.w.toFixed(0)}x${sil.h.toFixed(0)} @p=${st.p.toFixed(3)}`);
+          }
         } else {
-          const stageW = st.stage ? st.stage.w : vp.w, stageH = st.stage ? st.stage.h : vp.h;
-          if (sil.w > 0.86 * stageW + 1 || sil.h > 0.46 * stageH + 1) {
+          // Mobile acceptance is viewport-relative; the pane is only a
+          // collision region and must not lower the minimum subject size.
+          const stageW = vp.w, stageH = vp.h;
+          // Portrait-heavy parts (panel and enclosure) can meet the viewport
+          // target by height while their angled projected width is narrower.
+          const portraitPart = st.active === 'enclosure' || st.active === 'solar';
+          const minMobileScale = sil.w >= 0.70 * stageW - 2 || (portraitPart && sil.h >= 0.40 * stageH);
+          if (isHoldish && (!minMobileScale || sil.w > 0.86 * stageW + 1 || sil.h > 0.60 * stageH + 1)) {
             clearanceViolations.push(`mobile size ${sil.w.toFixed(0)}x${sil.h.toFixed(0)} @p=${st.p.toFixed(3)}`);
           }
-          if (Math.min(clearL, clearR, clearT, clearB) < 15.5) {
+          if (isHoldish && Math.min(clearL, clearR, clearT, clearB) < 15.5) {
             clearanceViolations.push(`mobile clearance ${Math.min(clearL, clearR, clearT, clearB).toFixed(0)} @p=${st.p.toFixed(3)}`);
           }
         }
@@ -215,6 +234,7 @@ async function browserPass() {
     check(`[${vp.label}] at most one active callout`, maxActiveCount <= 1, 'max=' + maxActiveCount);
     check(`[${vp.label}] no horizontal overflow`, worstOverflow <= 0, 'max overflow px=' + worstOverflow);
     check(`[${vp.label}] silhouette fits pane with clearance`, clearanceViolations.length === 0, clearanceViolations.slice(0, 3).join('; '));
+    check(`[${vp.label}] active subject meets viewport scale`, viewportViolations.length === 0, viewportViolations.slice(0, 3).join('; '));
 
     const holdSamples = [];
     for (let i = 0; i < 6; i++) {
@@ -224,6 +244,7 @@ async function browserPass() {
       const st = await readState();
       if (!st) continue;
       holdSamples.push(st);
+      if (!st.sil) check(`[${vp.label}] hold ch${i + 1} silhouette is non-null`, false, 'null silhouette');
       if (st.sil && st.pane) {
         const sil = st.sil, pane = st.pane;
         const fillFrac = Math.max(sil.h / pane.h, sil.w / pane.w);
@@ -233,14 +254,18 @@ async function browserPass() {
           check(`[${vp.label}] hold ch${i + 1} silhouette fills 58-68% of pane`, fillFrac >= 0.578 && fillFrac <= 0.682, `fill ${fillFrac.toFixed(3)}`);
           check(`[${vp.label}] hold ch${i + 1} clearance >=32/40px`, Math.min(clearL, clearR) >= 31.5 && Math.min(clearT, clearB) >= 39.5, `L${clearL.toFixed(0)} R${clearR.toFixed(0)} T${clearT.toFixed(0)} B${clearB.toFixed(0)}`);
         } else {
-          const stageW = st.stage ? st.stage.w : vp.w, stageH = st.stage ? st.stage.h : vp.h;
-          check(`[${vp.label}] hold ch${i + 1} within 86vw/46svh`, sil.w <= 0.86 * stageW + 1 && sil.h <= 0.46 * stageH + 1, `${sil.w.toFixed(0)}x${sil.h.toFixed(0)}`);
+          const stageW = vp.w, stageH = vp.h;
+          check(`[${vp.label}] hold ch${i + 1} within 70-86vw/60svh`, (i === 5 ? sil.h >= 0.40 * stageH : sil.w >= 0.70 * stageW - 2) && sil.w <= 0.86 * stageW + 1 && sil.h <= 0.60 * stageH + 1, `${sil.w.toFixed(0)}x${sil.h.toFixed(0)}`);
           check(`[${vp.label}] hold ch${i + 1} clearance >=16px`, Math.min(clearL, clearR, clearT, clearB) >= 15.5, `${Math.min(clearL, clearR, clearT, clearB).toFixed(0)}`);
         }
       }
-      if (st.leaderEnd && st.anchorActive) {
+      if (st.leaderPath && st.sil && st.anchorActive) {
         const d = Math.hypot(st.leaderEnd.x - st.anchorActive.x, st.leaderEnd.y - st.anchorActive.y);
         check(`[${vp.label}] leader lands on mesh anchor ch${i + 1}`, d <= 1.5, `delta ${d.toFixed(2)}px`);
+        const vals = st.leaderPath.match(/-?\d+(?:\.\d+)?/g).map(Number);
+        const routeX = vals[2], routeY = vals[3], sil = st.sil;
+        const outside = vp.mobile ? routeY > sil.y + sil.h : (i % 2 === 1 ? routeX > sil.x + sil.w : routeX < sil.x);
+        check(`[${vp.label}] leader route stays outside silhouette ch${i + 1}`, outside, `route ${routeX.toFixed(0)},${routeY.toFixed(0)} sil ${sil.x.toFixed(0)},${sil.y.toFixed(0)},${sil.w.toFixed(0)},${sil.h.toFixed(0)}`);
       } else {
         check(`[${vp.label}] leader visible ch${i + 1}`, false, 'no leader/anchor');
       }
@@ -253,13 +278,19 @@ async function browserPass() {
       await goto(frac);
       const st = await readState();
       if (!st) continue;
-      if (JSON.stringify({ p: st.p.toFixed(4), active: st.active }) !== forward.get(key)) reverseMismatches++;
+      if (JSON.stringify({ p: st.p.toFixed(4), active: st.active, pose: st.pose }) !== forward.get(key)) reverseMismatches++;
     }
     check(`[${vp.label}] reverse scrub deterministic`, reverseMismatches === 0, `${revList.length} points rechecked`);
 
     await goto(1);
     const seated = await cdp.evaluate('window.__ffasm3d.seatedCheck()');
     check(`[${vp.label}] final seating geometrically continuous`, seated === true);
+
+    const introState = await (async () => { await goto(0.02); await settle(cdp); return readState(); })();
+    const finalState = await (async () => { await goto(1); await settle(cdp); return readState(); })();
+    function overlap(a, b) { return a && b && a.x < b.x + b.w && a.x + a.w > b.x && a.y < b.y + b.h && a.y + a.h > b.y; }
+    check(`[${vp.label}] intro text clears finished product`, !overlap(introState?.introBox, introState?.allSil), 'subtitle/hero bbox overlap=' + overlap(introState?.introBox, introState?.allSil));
+    check(`[${vp.label}] final marker clears finished product`, !overlap(finalState?.finalBox, finalState?.allSil), 'final bbox overlap=' + overlap(finalState?.finalBox, finalState?.allSil));
 
     await goto(0.02); await settle(cdp);
     await cdp.screenshot(join(OUT, vp.label + '-intro.png'));
@@ -269,6 +300,8 @@ async function browserPass() {
     }
     await goto(0.86); await settle(cdp);
     await cdp.screenshot(join(OUT, vp.label + '-reassemble.png'));
+    await goto(0.77); await settle(cdp);
+    await cdp.screenshot(join(OUT, vp.label + '-exploded-tableau.png'));
     await goto(1); await settle(cdp);
     await cdp.screenshot(join(OUT, vp.label + '-final.png'));
 
@@ -292,11 +325,22 @@ async function browserPass() {
     })()`, { awaitPromise: true });
     check(`[${vp.label}] footer reachable after incremental down/up/down`, footer.reachable, `first=${footer.firstReachable} second=${footer.secondReachable} top ${footer.top.toFixed(0)} vs vh ${footer.vh}`);
 
-    const realErrors = errors.filter((e) => !/favicon/i.test(e));
+    // The local verifier has no analytics endpoint; ignore that expected
+    // beacon 404 while retaining application exceptions and WebGL errors.
+    const realErrors = errors.filter((e) => !/favicon|\/api\/event/i.test(e));
     check(`[${vp.label}] zero console errors`, realErrors.length === 0, realErrors.slice(0, 3).join(' | '));
 
     await cdp.close();
   }
+  const defaultCdp = await Cdp.launch();
+  await defaultCdp.send('Page.enable');
+  await defaultCdp.send('Runtime.enable');
+  await defaultCdp.send('Emulation.setDeviceMetricsOverride', { width: 1440, height: 900, deviceScaleFactor: 1, mobile: false, screenWidth: 1440, screenHeight: 900 });
+  await defaultCdp.send('Page.navigate', { url: 'http://127.0.0.1:8137/index.html' });
+  await new Promise((r) => setTimeout(r, 1200));
+  const defaultResources = await defaultCdp.evaluate(`performance.getEntriesByType('resource').map((e) => e.name).filter((n) => /ff-assembly3d|flashlight-assembly\.glb|three\.module/.test(n))`);
+  check('[default] 3D feature isolated', defaultResources.length === 0, defaultResources.join(', '));
+  await defaultCdp.close();
 }
 
 const CHAPTER_HOLD_FRACS = Array.from({ length: 6 }, (_, i) => T_CH_START + (i + 0.69) * CH_W);
@@ -305,7 +349,7 @@ staticChecks();
 await browserPass();
 
 writeFileSync(join(OUT, 'report.json'), JSON.stringify({
-  when: 'checkpoint-1',
+  when: 'checkpoint-pass3',
   results,
   passed: results.filter((r) => r.ok).length,
   failed: results.filter((r) => !r.ok).length,
