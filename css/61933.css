@@ -8,17 +8,10 @@ html.lenis { height: auto; } .lenis.lenis-smooth { scroll-behavior: auto; } .len
 
 /* Sparse two-photo sponsor hero: keep the message in the image seam and let
    each photograph carry its own concise reason to care. */
-.hero-content-band .paragraph-large {
-  display: block !important;
+.hero-content-band .hero-bridge {
+  display: block;
   max-width: 32rem;
   margin: 0 auto 2rem !important;
-  color: transparent !important;
-  font-size: 0 !important;
-  line-height: 0 !important;
-}
-.hero-content-band .paragraph-large::before {
-  content: "One donation. Learning on both sides.";
-  display: block;
   color: #fff;
   font-family: Lausanne, Arial, sans-serif;
   font-size: clamp(1.15rem, 2.1vw, 1.65rem);
@@ -26,7 +19,6 @@ html.lenis { height: auto; } .lenis.lenis-smooth { scroll-behavior: auto; } .len
   line-height: 1.15;
   text-shadow: 0 2px 10px rgba(0, 0, 0, .45);
 }
-.hero-content-band .paragraph-small { display: none !important; }
 .hero-content-band .button-base.is-ghost { color: #fff !important; }
 .hero-paired-image-wrap figcaption {
   z-index: 3;
@@ -34,40 +26,35 @@ html.lenis { height: auto; } .lenis.lenis-smooth { scroll-behavior: auto; } .len
   flex-direction: column;
   gap: .3rem;
   max-width: min(24rem, 38vw);
-  font-size: 0 !important;
+  color: #fff;
   letter-spacing: 0;
   line-height: 1.1;
   text-shadow: 0 2px 12px rgba(0, 0, 0, .65);
 }
-.hero-paired-image-wrap figcaption::before,
-.hero-paired-image-wrap figcaption::after {
-  display: block;
-}
-.hero-paired-image-wrap figcaption::before {
+.hero-paired-image-wrap:first-child figcaption { left: clamp(1rem, 3vw, 3rem) !important; bottom: clamp(1rem, 4vw, 3rem) !important; }
+.hero-paired-image-wrap:nth-child(2) figcaption { left: auto !important; right: clamp(1rem, 3vw, 3rem) !important; bottom: clamp(1rem, 4vw, 3rem) !important; text-align: right; align-items: flex-end; }
+.hero-side-eyebrow,
+.hero-side-title { display: block; }
+.hero-side-eyebrow {
   color: rgba(255,255,255,.82);
-  content: "Recipient students";
   font-family: Lausanne, Arial, sans-serif;
   font-size: clamp(.65rem, .75vw, .8rem);
+  font-weight: 400;
   letter-spacing: .12em;
   line-height: 1.15;
   text-transform: uppercase;
 }
-.hero-paired-image-wrap figcaption::after {
+.hero-side-title {
   color: #fff;
-  content: "More usable study time after dark.";
   font-family: Lausanne, Arial, sans-serif;
   font-size: clamp(1rem, 1.55vw, 1.45rem);
+  font-weight: 400;
   line-height: 1.08;
 }
-.hero-paired-image-wrap:nth-child(2) figcaption::before { content: "Student interns"; }
-.hero-paired-image-wrap:nth-child(2) figcaption::after { content: "Engineering, fundraising, marketing, media, and operations—alongside professionals."; }
-.hero-paired-image-wrap:first-child figcaption { left: clamp(1rem, 3vw, 3rem) !important; bottom: clamp(1rem, 4vw, 3rem) !important; }
-.hero-paired-image-wrap:nth-child(2) figcaption { left: auto !important; right: clamp(1rem, 3vw, 3rem) !important; bottom: clamp(1rem, 4vw, 3rem) !important; text-align: right; align-items: flex-end; }
 @media (max-width: 699px) {
   /* Place the bridge at the photo seam so neither side statement competes
      with the title or CTA on a narrow screen. */
   .hero-content-band { inset: 44% 0 auto !important; }
-  .hero-content-band .paragraph-large { margin-bottom: 1.35rem !important; }
-  .hero-content-band .paragraph-large::before { font-size: clamp(1rem, 4.4vw, 1.25rem); }
+  .hero-content-band .hero-bridge { margin-bottom: 1.35rem !important; font-size: clamp(1rem, 4.4vw, 1.25rem); }
   .hero-paired-image-wrap figcaption { max-width: min(16rem, 68vw); bottom: 1rem; }
 }
