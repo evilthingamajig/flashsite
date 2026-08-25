@@ -18,7 +18,7 @@ import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..');
-const GENERATOR = 'flashsite build-assembly-glb 1.2.1-pass10b';
+const GENERATOR = 'flashsite build-assembly-glb 1.2.2-pass10c';
 const MM = 0.001; // millimetre -> metre
 const PASS9 = join(ROOT, 'source-assets', 'external', 'pass9');
 
@@ -423,7 +423,7 @@ function buildGlb(meshes, materialIndexByName) {
 
 // --------------------------------------------------------------------- main
 
-const report = { generator: GENERATOR, checkpoint: 'pass10b', cacheToken: 'pass10b', sources: {}, parts: {} };
+const report = { generator: GENERATOR, checkpoint: 'pass10c', cacheToken: 'pass10c', sources: {}, parts: {} };
 const ENC_TTL_RAW = readFileSync(join(ROOT, 'source-assets/stl/enclosure.stl'));
 const SWI_TTL_RAW = readFileSync(join(ROOT, 'source-assets/stl/switch.stl'));
 const TP4056_RAW = readFileSync(join(PASS9, 'tp4056-usbc.stl'));
@@ -704,7 +704,10 @@ const PARTS = [
   { name: 'solar_lid', groups: solarLidGroups, tris: merge(...solarLidGroups.map((g) => g.tris)), seat: [0, 0, 9.0] },
   { name: 'battery', groups: batteryGroups, tris: merge(...batteryGroups.map((g) => g.tris)), seat: [0, -20, -1.75] },
   { name: 'charge_module', groups: moduleGroups, tris: merge(...moduleGroups.map((g) => g.tris)), seat: [0, 8, -1.45] },
-  { name: 'led_pair', groups: ledPairGroups, tris: merge(...ledPairGroups.map((g) => g.tris)), seat: [0, -40.5, 1.0] },
+  // The enclosure's authoritative outer front plane is Y=-42.25 mm. The
+  // LED flange is local Y=0, so this seat makes it flush while the mapped
+  // optical dome projects outward and the leads run inward.
+  { name: 'led_pair', groups: ledPairGroups, tris: merge(...ledPairGroups.map((g) => g.tris)), seat: [0, -42.25, 1.0] },
 ];
 
 report.parts.summary = {};
@@ -720,6 +723,26 @@ for (const p of PARTS) {
     },
   };
 }
+
+const ledSummary = report.parts.summary.led_pair;
+const ledClearYs = ledPairGroups.filter((g) => g.material === 'ClearLed').flatMap((g) => g.tris.flatMap((t) => t.map((v) => v[1])));
+const ledLeadYs = ledPairGroups.filter((g) => g.material === 'Solder').flatMap((g) => g.tris.flatMap((t) => t.map((v) => v[1])));
+const ledClearFrontLocal = Math.min(...ledClearYs);
+const ledLeadInnerLocal = Math.min(...ledLeadYs);
+const LED_OUTER_FRONT_Y = -42.25;
+report.parts.ledWorldFit = {
+  enclosureOuterFrontY: LED_OUTER_FRONT_Y,
+  seatY: PARTS.find((p) => p.name === 'led_pair').seat[1],
+  flangeWorldY: PARTS.find((p) => p.name === 'led_pair').seat[1],
+  domeFrontWorldY: PARTS.find((p) => p.name === 'led_pair').seat[1] + ledClearFrontLocal,
+  domeProtrusionMm: +(LED_OUTER_FRONT_Y - (PARTS.find((p) => p.name === 'led_pair').seat[1] + ledClearFrontLocal)).toFixed(3),
+  flangePlaneDeltaMm: +(Math.abs(PARTS.find((p) => p.name === 'led_pair').seat[1] - LED_OUTER_FRONT_Y)).toFixed(3),
+  leadStartWorldY: PARTS.find((p) => p.name === 'led_pair').seat[1] + ledLeadInnerLocal,
+  leadWorldYMax: +(Math.max(...ledLeadYs) + PARTS.find((p) => p.name === 'led_pair').seat[1]).toFixed(3),
+  pairCentersMm: [-8, 8],
+  exteriorClearComponents: 2,
+  pixelGate: { desktop: { minWidth: 22, minHeight: 18, centerSeparation: 35 }, mobile: { minWidth: 14, minHeight: 11 } },
+};
 
 // Final-seating sanity: precise triangle-level interpenetration test between
 // every seated pair (Möller-style plane/interval SAT). Designed contact is

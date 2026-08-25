@@ -1,7 +1,7 @@
 {
-  "generator": "flashsite build-assembly-glb 1.2.1-pass10b",
-  "checkpoint": "pass10b",
-  "cacheToken": "pass10b",
+  "generator": "flashsite build-assembly-glb 1.2.2-pass10c",
+  "checkpoint": "pass10c",
+  "cacheToken": "pass10c",
   "sources": {
     "enclosure": {
       "file": "source-assets/stl/enclosure.stl",
@@ -445,7 +445,7 @@
         "triangles": 10092,
         "seatMm": [
           0,
-          -40.5,
+          -42.25,
           1
         ],
         "localBoundsMm": {
@@ -463,14 +463,40 @@
         "worldBoundsMm": {
           "lo": [
             -11.239,
-            -43.9,
+            -45.65,
             -2.48
           ],
           "hi": [
             11.239,
-            -30.18,
+            -31.93,
             4.48
           ]
+        }
+      }
+    },
+    "ledWorldFit": {
+      "enclosureOuterFrontY": -42.25,
+      "seatY": -42.25,
+      "flangeWorldY": -42.25,
+      "domeFrontWorldY": -45.65,
+      "domeProtrusionMm": 3.4,
+      "flangePlaneDeltaMm": 0,
+      "leadStartWorldY": -42.25,
+      "leadWorldYMax": -31.93,
+      "pairCentersMm": [
+        -8,
+        8
+      ],
+      "exteriorClearComponents": 2,
+      "pixelGate": {
+        "desktop": {
+          "minWidth": 22,
+          "minHeight": 18,
+          "centerSeparation": 35
+        },
+        "mobile": {
+          "minWidth": 14,
+          "minHeight": 11
         }
       }
     }
