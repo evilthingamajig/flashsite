@@ -102,6 +102,10 @@ const T_RE_START = 0.77;
 const RE_SPACING = 0.044;
 const RE_W = 0.034;
 const T_FINAL = 0.98;
+const T_CLOSED_HOLD = T_FINAL;
+const T_HERO_START = 0.985;
+const T_MARKER = 0.999;
+const T_COPY_CLEAR = T_CH_START + CH_W * 6 + 0.004;
 const REASSEMBLY_ORDER = ['switch', 'led_pair', 'charge_module', 'battery', 'solar_lid'];
 
 async function settle(cdp) {
@@ -179,6 +183,8 @@ async function browserPass() {
           cavityFloor: F.cavityFloor,
           introBox: F.introBox,
           finalBox: F.finalBox,
+          markerActive: F.markerActive,
+          closedGeometry: F.closedGeometry,
           calloutBox: F.calloutBox,
           cam: window.__ffasm3d.cam(),
           leaderEnd: F.leaderEnd,
@@ -335,6 +341,10 @@ async function browserPass() {
 
     const introState = await (async () => { await goto(0.02); await settle(cdp); return readState(); })();
     const finalState = await (async () => { await goto(1); await settle(cdp); return readState(); })();
+    const markerBefore = await (async () => { await goto(T_MARKER - 0.002); await settle(cdp); return readState(); })();
+    const markerAfter = finalState;
+    check(`[${vp.label}] marker hidden through hold/push`, markerBefore?.markerActive === false && markerBefore?.closedGeometry === true, `marker=${markerBefore?.markerActive} closed=${markerBefore?.closedGeometry}`);
+    check(`[${vp.label}] marker state-gated after push`, markerAfter?.markerActive === true && markerAfter?.closedGeometry === true, `marker=${markerAfter?.markerActive} closed=${markerAfter?.closedGeometry}`);
     function overlap(a, b) { return a && b && a.x < b.x + b.w && a.x + a.w > b.x && a.y < b.y + b.h && a.y + a.h > b.y; }
     check(`[${vp.label}] intro text clears finished product`, !overlap(introState?.introBox, introState?.allSil), 'subtitle/hero bbox overlap=' + overlap(introState?.introBox, introState?.allSil));
     check(`[${vp.label}] final marker clears finished product`, !overlap(finalState?.finalBox, finalState?.allSil), 'final bbox overlap=' + overlap(finalState?.finalBox, finalState?.allSil));
@@ -415,6 +425,9 @@ async function browserPass() {
     const bridgeDone = await (async () => { await goto(Math.min(0.999, T_FINAL + 0.022)); await settle(cdp); return readState(); })();
     check(`[${vp.label}] closed hold precedes final push`, closedHold?.active === null && closedHold?.allSil, 'closed product hold');
     check(`[${vp.label}] final bridge completes before end`, bridgeDone?.allSil && bridgeDone.cam?.dist > 0, 'bridge settled');
+    const heroBridge = await (async () => { await goto(T_HERO_START + 0.007); await settle(cdp); return readState(); })();
+    check(`[${vp.label}] final camera push occurs after closed hold`, heroBridge?.closedGeometry === true, `closed=${heroBridge?.closedGeometry}`);
+    check(`[${vp.label}] final phase timing is viewport-calibrated`, (T_HERO_START - T_CLOSED_HOLD) * (vp.mobile ? 2600 : 2800) >= 12 && (T_MARKER - T_HERO_START) * (vp.mobile ? 2600 : 2800) >= 19, `${((T_HERO_START - T_CLOSED_HOLD) * (vp.mobile ? 2600 : 2800)).toFixed(1)}vh hold/${((T_MARKER - T_HERO_START) * (vp.mobile ? 2600 : 2800)).toFixed(1)}vh push`);
     const closureSamples = [];
     for (const sampleP of [0.90, 0.94, 0.962, 0.976, T_FINAL - 0.002, 0.999]) {
       await goto(sampleP); await settle(cdp);
@@ -503,7 +516,7 @@ staticChecks();
 await browserPass();
 
 writeFileSync(join(OUT, 'report.json'), JSON.stringify({
-  when: 'checkpoint-pass6c',
+  when: 'checkpoint-pass6d',
   results,
   passed: results.filter((r) => r.ok).length,
   failed: results.filter((r) => !r.ok).length,
