@@ -2,8 +2,8 @@
 function init(section){
  if(!section||section.getAttribute('data-assembly-ready'))return;
  section.setAttribute('data-assembly-ready','true');
- var stage=section.querySelector('.ff-assembly-stage'),visual=section.querySelector('.ff-assembly-visual'),intro=section.querySelector('.ff-assembly-finished-intro'),body=section.querySelector('.ff-assembly-body'),master=section.querySelector('.ff-assembly-master'),lid=section.querySelector('.ff-assembly-lid'),finished=section.querySelector('.ff-assembly-final'),copy=section.querySelector('.ff-assembly-copy'),chapters=[].slice.call(section.querySelectorAll('.ff-assembly-chapter')),finalCopy=section.querySelector('.ff-assembly-final-copy');
- if(!stage||!visual||!intro||!body||!master||!lid||!finished||!copy)return;
+ var stage=section.querySelector('.ff-assembly-stage'),visual=section.querySelector('.ff-assembly-visual'),intro=section.querySelector('.ff-assembly-finished-intro'),body=section.querySelector('.ff-assembly-body'),lid=section.querySelector('.ff-assembly-lid'),finished=section.querySelector('.ff-assembly-final'),copy=section.querySelector('.ff-assembly-copy'),chapters=[].slice.call(section.querySelectorAll('.ff-assembly-chapter')),finalCopy=section.querySelector('.ff-assembly-final-copy');
+ if(!stage||!visual||!intro||!body||!lid||!finished||!copy)return;
  var layers={enclosure:section.querySelector('[data-assembly-layer="enclosure"]'),battery:section.querySelector('[data-assembly-layer="battery"]'),'recharge-module':section.querySelector('[data-assembly-layer="recharge-module"]'),'led-pair':section.querySelector('[data-assembly-layer="led-pair"]'),'solar-panel':section.querySelector('[data-assembly-layer="solar-panel"]')};
  var ids=['enclosure','battery','recharge-module','led-pair','solar-panel'];
  var offsets={enclosure:[-14,-22],battery:[42,34],'recharge-module':[-52,20],'led-pair':[54,-18],'solar-panel':[0,-48]};
@@ -14,17 +14,15 @@ function init(section){
  function chapterAt(p){var active=-1;starts.forEach(function(v,i){if(p>=v&&p<(.26+i*.10))active=i;});return active;}
  function render(p){
   p=clamp(p);if(reduced)p=1;
-  var explosion=clamp((p-.08)/.08),masterProgress=clamp((p-.64)/.08),swap=clamp((p-.72)/.03),lidTravel=clamp((p-.75)/.09),finishProgress=clamp((p-.84)/.06),final=p>=.90,finalCopyProgress=clamp((p-.88)/.04);
+  var explosion=clamp((p-.08)/.08),masterProgress=clamp((p-.64)/.08),lidTravel=clamp((p-.75)/.09),finishProgress=clamp((p-.84)/.06),finalCopyProgress=clamp((p-.88)/.04),compositionOpacity=masterProgress*(1-finishProgress);
   set(intro,p<.08?1:1-explosion,0,0,1,0);
   ids.forEach(function(id,i){var el=layers[id];if(!el)return;var start=starts[i],end=start+.10,fadeIn=clamp((p-(start-.025))/.025),fadeOut=clamp(((end+.025)-p)/.025),baseOpacity=p<.16?explosion:p<.66?Math.min(fadeIn,fadeOut):0,fan=clamp((p-.62)/.04),chapterOpacity=p>=.62?Math.max(baseOpacity,fan):baseOpacity,ex=offsets[id],assembled=1-masterProgress;set(el,chapterOpacity*(1-masterProgress),ex[0]*assembled,ex[1]*assembled,1,rotations[id]*assembled);});
-  set(master,masterProgress*(1-swap),0,0,1,0);
-  var replacementOpacity=(p<.75?swap:1)*(1-finishProgress);
-  set(body,replacementOpacity,0,0,1,0);
-  var travel=(visual.clientWidth||620)*.086;set(lid,replacementOpacity,0,travel*lidTravel,1,0);
+  set(body,compositionOpacity,0,0,1,0);
+  var travel=(visual.clientWidth||620)*.086;set(lid,compositionOpacity,0,travel*lidTravel,1,0);
   set(finished,finishProgress,0,0,1,0);
-  var active=chapterAt(p);chapters.forEach(function(ch,i){ch.classList.toggle('is-active',!final&&active===i);});
+  var active=chapterAt(p);chapters.forEach(function(ch,i){ch.classList.toggle('is-active',active===i);});
   if(finalCopy){finalCopy.classList.toggle('is-active',finalCopyProgress>0);finalCopy.style.setProperty('--assembly-final-progress',String(finalCopyProgress));}
-  if(copy)copy.classList.toggle('is-right',active%2===1&&!final);
+  if(copy)copy.classList.toggle('is-right',active%2===1);
  }
  function cleanup(){if(cleaned)return;cleaned=true;if(tl){if(tl.scrollTrigger)tl.scrollTrigger.kill();tl.kill();tl=null;}if(mm){mm.revert();mm=null;}if(scrollHandler)window.removeEventListener('scroll',scrollHandler);if(resizeHandler)window.removeEventListener('resize',resizeHandler);}
  render(reduced?1:0);window.addEventListener('pagehide',cleanup,{once:true});
