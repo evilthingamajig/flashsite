@@ -143,27 +143,86 @@ function translate(tris, dx, dy, dz) {
   return tris.map((t) => t.map(([x, y, z]) => [x + dx, y + dy, z + dz]));
 }
 
+function merge(...sets) { return sets.flat(); }
+
+function roundedRectPoints(w, d, r, seg = 3) {
+  const out = [];
+  const corners = [[w / 2 - r, d / 2 - r, 0], [-w / 2 + r, d / 2 - r, Math.PI / 2], [-w / 2 + r, -d / 2 + r, Math.PI], [w / 2 - r, -d / 2 + r, Math.PI * 1.5]];
+  for (const [cx, cy, start] of corners) for (let i = 0; i <= seg; i++) {
+    const a = start + (Math.PI / 2) * (i / seg);
+    out.push([cx + Math.cos(a) * r, cy + Math.sin(a) * r]);
+  }
+  return out;
+}
+
+function roundedBox(w, d, h, r = 1.2, seg = 3) {
+  const ring = roundedRectPoints(w, d, Math.min(r, w / 2 - 0.01, d / 2 - 0.01), seg);
+  const tris = [];
+  const z0 = -h / 2, z1 = h / 2;
+  for (let i = 0; i < ring.length; i++) {
+    const j = (i + 1) % ring.length;
+    tris.push([[0, 0, z0], [ring[i][0], ring[i][1], z0], [ring[j][0], ring[j][1], z0]]);
+    tris.push([[0, 0, z1], [ring[j][0], ring[j][1], z1], [ring[i][0], ring[i][1], z1]]);
+  }
+  for (let i = 0; i < ring.length; i++) {
+    const j = (i + 1) % ring.length;
+    tris.push([[ring[i][0], ring[i][1], z0], [ring[j][0], ring[j][1], z0], [ring[j][0], ring[j][1], z1]]);
+    tris.push([[ring[i][0], ring[i][1], z0], [ring[j][0], ring[j][1], z1], [ring[i][0], ring[i][1], z1]]);
+  }
+  return tris;
+}
+
+function hemisphereAlongY(r, cy, seg = 16, rings = 7) {
+  const tris = [];
+  const pole = [0, cy - r, 0];
+  for (let j = 0; j < rings; j++) {
+    const a0 = (j / rings) * Math.PI / 2;
+    const a1 = ((j + 1) / rings) * Math.PI / 2;
+    const y0 = cy - Math.cos(a0) * r, y1 = cy - Math.cos(a1) * r;
+    const q0 = Math.sin(a0) * r, q1 = Math.sin(a1) * r;
+    for (let i = 0; i < seg; i++) {
+      const t0 = (i / seg) * Math.PI * 2, t1 = ((i + 1) / seg) * Math.PI * 2;
+      const a = [Math.cos(t0) * q0, y0, Math.sin(t0) * q0];
+      const b = [Math.cos(t1) * q0, y0, Math.sin(t1) * q0];
+      const c = [Math.cos(t1) * q1, y1, Math.sin(t1) * q1];
+      const d = [Math.cos(t0) * q1, y1, Math.sin(t0) * q1];
+      if (j === 0) tris.push([pole, c, d]);
+      else { tris.push([a, b, c]); tris.push([a, c, d]); }
+    }
+  }
+  return tris;
+}
+
+function group(material, tris) { return { material, tris }; }
+
 // ------------------------------------------------------------------ exports
 
 function flatMesh(tris) { // per-face normals -> {positions, normals, indices}
   const positions = [];
   const normals = [];
   const indices = [];
-  let vi = 0;
+  const verts = new Map();
+  const q = (n) => Math.round(n * 1e5);
+  const add = (p, n) => {
+    const key = `${q(p[0])},${q(p[1])},${q(p[2])}|${q(n[0])},${q(n[1])},${q(n[2])}`;
+    const old = verts.get(key);
+    if (old !== undefined) return old;
+    const i = positions.length / 3;
+    positions.push(p[0] * MM, p[1] * MM, p[2] * MM);
+    normals.push(n[0], n[1], n[2]);
+    verts.set(key, i);
+    return i;
+  };
   for (const [a, b, c] of tris) {
     const ux = b[0]-a[0], uy = b[1]-a[1], uz = b[2]-a[2];
     const vx = c[0]-a[0], vy = c[1]-a[1], vz = c[2]-a[2];
     let nx = uy*vz-uz*vy, ny = uz*vx-ux*vz, nz = ux*vy-uy*vx;
     const l = Math.hypot(nx, ny, nz) || 1;
     nx/=l; ny/=l; nz/=l;
-    for (const p of [a, b, c]) {
-      positions.push(p[0]*MM, p[1]*MM, p[2]*MM);
-      normals.push(nx, ny, nz);
-    }
-    indices.push(vi, vi + 1, vi + 2);
-    vi += 3;
+    indices.push(add(a, [nx, ny, nz]), add(b, [nx, ny, nz]), add(c, [nx, ny, nz]));
   }
-  return { positions: new Float32Array(positions), normals: new Float32Array(normals), indices: new Uint16Array(indices) };
+  const IndexArray = positions.length / 3 < 65536 ? Uint16Array : Uint32Array;
+  return { positions: new Float32Array(positions), normals: new Float32Array(normals), indices: new IndexArray(indices) };
 }
 
 function boundsOf(tris) {
@@ -199,27 +258,29 @@ function buildGlb(meshes, materialIndexByName) {
   const g = new GlbBuilder();
   const meshesJson = [];
   for (const m of meshes) {
-    const posBV = g.addBufferView(m.positions, 34962);
-    const nrmBV = g.addBufferView(m.normals, 34962);
-    const idxBV = g.addBufferView(m.indices, 34963);
-    const min = [Infinity, Infinity, Infinity], max = [-Infinity, -Infinity, -Infinity];
-    for (let i = 0; i < m.positions.length; i += 3) {
-      for (let k = 0; k < 3; k++) {
-        const v = m.positions[i + k];
-        if (v < min[k]) min[k] = v;
-        if (v > max[k]) max[k] = v;
+    const primitives = [];
+    for (const p of (m.groups || [{ material: m.name, ...m }])) {
+      const fm = p.positions ? p : flatMesh(p.tris);
+      const posBV = g.addBufferView(fm.positions, 34962);
+      const nrmBV = g.addBufferView(fm.normals, 34962);
+      const idxBV = g.addBufferView(fm.indices, 34963);
+      const min = [Infinity, Infinity, Infinity], max = [-Infinity, -Infinity, -Infinity];
+      for (let i = 0; i < fm.positions.length; i += 3) {
+        for (let k = 0; k < 3; k++) {
+          const v = fm.positions[i + k];
+          if (v < min[k]) min[k] = v;
+          if (v > max[k]) max[k] = v;
+        }
       }
+      const posAcc = g.addAccessor(posBV, 5126, fm.positions.length / 3, 'VEC3', {
+        min: min.map((v) => +v.toFixed(6)),
+        max: max.map((v) => +v.toFixed(6)),
+      });
+      const nrmAcc = g.addAccessor(nrmBV, 5126, fm.normals.length / 3, 'VEC3');
+      const idxAcc = g.addAccessor(idxBV, fm.indices instanceof Uint32Array ? 5125 : 5123, fm.indices.length, 'SCALAR');
+      primitives.push({ attributes: { POSITION: posAcc, NORMAL: nrmAcc }, indices: idxAcc, material: materialIndexByName[p.material] ?? 0 });
     }
-    const posAcc = g.addAccessor(posBV, 5126, m.positions.length / 3, 'VEC3', {
-      min: min.map((v) => +v.toFixed(6)),
-      max: max.map((v) => +v.toFixed(6)),
-    });
-    const nrmAcc = g.addAccessor(nrmBV, 5126, m.normals.length / 3, 'VEC3');
-    const idxAcc = g.addAccessor(idxBV, 5123, m.indices.length, 'SCALAR');
-    meshesJson.push({
-      name: m.name,
-      primitives: [{ attributes: { POSITION: posAcc, NORMAL: nrmAcc }, indices: idxAcc, material: materialIndexByName[m.name] ?? 0 }],
-    });
+    meshesJson.push({ name: m.name, primitives });
   }
   const json = {
     asset: { version: '2.0', generator: GENERATOR },
@@ -230,10 +291,26 @@ function buildGlb(meshes, materialIndexByName) {
     materials: [
       { name: 'FDMCharcoal', doubleSided: true, pbrMetallicRoughness: { baseColorFactor: [0.045, 0.055, 0.05, 1], metallicFactor: 0.02, roughnessFactor: 0.82 } },
       { name: 'SolarNavy', doubleSided: true, pbrMetallicRoughness: { baseColorFactor: [0.018, 0.08, 0.13, 1], metallicFactor: 0.28, roughnessFactor: 0.42 } },
+      { name: 'SolarCell', doubleSided: true, pbrMetallicRoughness: { baseColorFactor: [0.025, 0.16, 0.26, 1], metallicFactor: 0.18, roughnessFactor: 0.28 } },
+      { name: 'CopperBus', doubleSided: true, pbrMetallicRoughness: { baseColorFactor: [0.62, 0.24, 0.06, 1], metallicFactor: 0.82, roughnessFactor: 0.24 } },
       { name: 'BatterySilver', doubleSided: true, pbrMetallicRoughness: { baseColorFactor: [0.62, 0.66, 0.64, 1], metallicFactor: 0.55, roughnessFactor: 0.38 } },
+      { name: 'BatteryFoil', doubleSided: true, pbrMetallicRoughness: { baseColorFactor: [0.76, 0.78, 0.77, 1], metallicFactor: 0.72, roughnessFactor: 0.24 } },
+      { name: 'KaptonAmber', doubleSided: true, pbrMetallicRoughness: { baseColorFactor: [0.77, 0.34, 0.045, 1], metallicFactor: 0.08, roughnessFactor: 0.42 } },
+      { name: 'WireRed', doubleSided: true, pbrMetallicRoughness: { baseColorFactor: [0.52, 0.018, 0.012, 1], metallicFactor: 0.02, roughnessFactor: 0.45 } },
+      { name: 'WireBlack', doubleSided: true, pbrMetallicRoughness: { baseColorFactor: [0.008, 0.012, 0.01, 1], metallicFactor: 0.02, roughnessFactor: 0.5 } },
       { name: 'PcbGreen', doubleSided: true, pbrMetallicRoughness: { baseColorFactor: [0.025, 0.24, 0.16, 1], metallicFactor: 0.12, roughnessFactor: 0.58 } },
-      { name: 'ClearLed', doubleSided: true, alphaMode: 'BLEND', pbrMetallicRoughness: { baseColorFactor: [0.7, 0.9, 0.95, 0.38], metallicFactor: 0.02, roughnessFactor: 0.15 } },
+      { name: 'PcbEdge', doubleSided: true, pbrMetallicRoughness: { baseColorFactor: [0.055, 0.42, 0.25, 1], metallicFactor: 0.1, roughnessFactor: 0.42 } },
+      { name: 'Solder', doubleSided: true, pbrMetallicRoughness: { baseColorFactor: [0.44, 0.48, 0.44, 1], metallicFactor: 0.78, roughnessFactor: 0.2 } },
+      { name: 'ICBlack', doubleSided: true, pbrMetallicRoughness: { baseColorFactor: [0.012, 0.018, 0.015, 1], metallicFactor: 0.12, roughnessFactor: 0.3 } },
+      { name: 'Ceramic', doubleSided: true, pbrMetallicRoughness: { baseColorFactor: [0.72, 0.62, 0.42, 1], metallicFactor: 0.02, roughnessFactor: 0.36 } },
+      { name: 'UsbMetal', doubleSided: true, pbrMetallicRoughness: { baseColorFactor: [0.48, 0.52, 0.5, 1], metallicFactor: 0.9, roughnessFactor: 0.2 } },
+      { name: 'UsbVoid', doubleSided: true, pbrMetallicRoughness: { baseColorFactor: [0.004, 0.008, 0.007, 1], metallicFactor: 0.04, roughnessFactor: 0.32 } },
+      { name: 'Silkscreen', doubleSided: true, pbrMetallicRoughness: { baseColorFactor: [0.78, 0.82, 0.67, 1], metallicFactor: 0.01, roughnessFactor: 0.44 } },
+      { name: 'ClearLed', doubleSided: true, alphaMode: 'BLEND', pbrMetallicRoughness: { baseColorFactor: [0.48, 0.86, 0.9, 0.55], metallicFactor: 0.02, roughnessFactor: 0.13 } },
+      { name: 'LedDie', doubleSided: true, pbrMetallicRoughness: { baseColorFactor: [0.88, 1, 0.98, 1], metallicFactor: 0.03, roughnessFactor: 0.2 } },
       { name: 'SwitchPlastic', doubleSided: true, pbrMetallicRoughness: { baseColorFactor: [0.025, 0.032, 0.028, 1], metallicFactor: 0.03, roughnessFactor: 0.62 } },
+      { name: 'SwitchActuator', doubleSided: true, pbrMetallicRoughness: { baseColorFactor: [0.72, 0.79, 0.74, 1], metallicFactor: 0.18, roughnessFactor: 0.3 } },
+      { name: 'SwitchContact', doubleSided: true, pbrMetallicRoughness: { baseColorFactor: [0.65, 0.48, 0.2, 1], metallicFactor: 0.72, roughnessFactor: 0.24 } },
     ],
     accessors: g.accessors,
     bufferViews: g.bufferViews,
@@ -268,28 +345,107 @@ report.sources.switch = { file: 'source-assets/stl/switch.stl', sha256: createHa
 const enclosureTris = repairTris(readBinaryStl(join(ROOT, 'source-assets/stl/enclosure.stl')), 'enclosure', report);
 const switchTris = repairTris(readBinaryStl(join(ROOT, 'source-assets/stl/switch.stl')), 'switch', report);
 
-// Procedural parts (millimetres, brief §Authoritative geometry):
-//  - solar_lid 80x80x2.5 centred over the rim (rim top z=7.75 -> lid spans 7.75..10.25)
-//  - silver LiPo 42x30x5 resting on the inner tray floor (floor top z=-4.25;
-//    the tray floor slab spans -5.75..-4.25). Interior scan shows corner ribs
-//    (x -37..-30 / 31..35.5, y -36.5..-27.9) and a +Y switch housing from
-//    y~29, so the battery sits centred at y=-20 to clear them all.
-//  - TP4056-style board 26.3x17.1x5.6 ahead of the battery at y=8.
-//  - two clear 3 mm LEDs through the -Y wall (opposite the switch aperture at +Y);
-//    walls span +-39..+-42, so a 6 mm LED centred at y=-40.5 pierces both faces
-const solarLidTris = box(80, 80, 2.5);
-const batteryTris = box(42, 30, 5);
-const moduleTris = box(26.3, 17.1, 5.6);
-const ledPairTris = translate(cylinderAlongY(2.1, 9, 16), -8, 0, 0)
-  .concat(translate(cylinderAlongY(2.1, 9, 16), 8, 0, 0));
+// Authored component pack (millimetres). Each part remains one named glTF
+// node, but its primitives are merged by material so runtime choreography can
+// animate the complete object without rebuilding detail meshes every frame.
+const enclosureGroups = [
+  group('FDMCharcoal', enclosureTris),
+  group('FDMCharcoal', [box(75, 0.24, 0.16), translate(box(75, 0.24, 0.16), 0, 0, 0)[0]].flat()),
+];
+// Keep enclosure helper geometry deliberately subtle; the source STL remains
+// the silhouette authority and supplies the real cavity/wall topology.
+enclosureGroups[1].tris = merge(
+  ...Array.from({ length: 8 }, (_, i) => translate(box(81, 0.24, 0.16), 0, -42.08, -4.8 + i * 1.55)),
+  translate(box(82.5, 1.1, 0.42), 0, -41.7, 6.8), translate(box(82.5, 1.1, 0.42), 0, 41.7, 6.8),
+  translate(box(1.1, 81, 0.42), -41.7, 0, 6.8), translate(box(1.1, 81, 0.42), 41.7, 0, 6.8),
+  translate(box(75, 75, 0.10), 0, 0, -4.20)
+);
+
+const switchGroups = [
+  group('SwitchPlastic', switchTris),
+  group('SwitchPlastic', translate(roundedBox(22, 6.4, 2.2, 1.1), -5, 41.3, 0.8)),
+  group('SwitchPlastic', translate(roundedBox(13, 6.4, 1.0, 1.0), -1, 41.3, 2.55)),
+  group('SwitchActuator', translate(roundedBox(7.2, 3.8, 2.8, 1.0), -1, 41.3, 5.0)),
+  group('SwitchContact', translate(box(5.8, 2.2, 0.18), -1, 41.3, 6.95)),
+];
+
+const solarCellTiles = [];
+for (let y = -30; y <= 30; y += 15) for (let x = -30; x <= 30; x += 15) {
+  solarCellTiles.push(translate(box(14.15, 14.15, 0.10), x, y, 1.30));
+}
+const solarLidGroups = [
+  group('SolarNavy', box(80, 80, 2.5)),
+  group('SolarCell', solarCellTiles.flat()),
+  group('CopperBus', merge(
+    translate(box(0.48, 78, 0.08), -30, 0, 1.38), translate(box(0.48, 78, 0.08), 0, 0, 1.38), translate(box(0.48, 78, 0.08), 30, 0, 1.38),
+    translate(box(78, 0.48, 0.08), 0, -30, 1.38), translate(box(78, 0.48, 0.08), 0, 0, 1.38), translate(box(78, 0.48, 0.08), 0, 30, 1.38),
+    translate(box(81.5, 1.2, 0.32), 0, -40, 1.30), translate(box(81.5, 1.2, 0.32), 0, 40, 1.30),
+    translate(box(1.2, 81.5, 0.32), -40, 0, 1.30), translate(box(1.2, 81.5, 0.32), 40, 0, 1.30)
+  )),
+];
+
+const batteryGroups = [
+  group('BatterySilver', translate(roundedBox(41, 28.6, 2.15, 3.0), 0, 0, 0)),
+  group('BatteryFoil', merge(
+    ...[-1.12, 1.12].flatMap((z) => [
+      translate(box(34, 0.16, 0.05), 0, -9.8, z), translate(box(30, 0.13, 0.05), 0, 8.6, z),
+      translate(box(0.13, 22, 0.05), -16.8, 0, z), translate(box(0.13, 22, 0.05), 16.8, 0, z),
+      translate(box(0.08, 17, 0.035), -4.5, -0.5, z),
+    ])
+  )),
+  group('KaptonAmber', merge(translate(box(31, 1.7, 2.35), 0, 14.85, 0.35), translate(box(5.2, 1.0, 2.5), -10, 15.7, 0.44), translate(box(5.2, 1.0, 2.5), 10, 15.7, 0.44))),
+  group('WireBlack', merge(translate(cylinderAlongY(0.48, 4.2, 12), -10, 17.0, 0.45), translate(cylinderAlongY(0.68, 0.7, 12), -10, 16.55, 0.45))),
+  group('WireRed', merge(translate(cylinderAlongY(0.46, 4.2, 12), 10, 17.0, 0.45), translate(cylinderAlongY(0.66, 0.7, 12), 10, 16.55, 0.45))),
+  group('Silkscreen', merge(
+    translate(box(13, 0.24, 0.035), 0, -2.4, 1.18), translate(box(0.24, 5, 0.035), -6.1, -4.7, 1.18), translate(box(0.24, 5, 0.035), 6.1, -4.7, 1.18),
+    translate(box(13, 0.24, 0.035), 0, -2.4, -1.18), translate(box(0.24, 5, 0.035), -6.1, -4.7, -1.18), translate(box(0.24, 5, 0.035), 6.1, -4.7, -1.18)
+  )),
+];
+
+const boardTop = [];
+const boardBottom = [];
+const chipBodies = [];
+const mirrorZ = (tris) => tris.map((t) => t.map(([x, y, z]) => [x, y, -z]));
+const chip = (x, y, w, d, h = 0.9) => {
+  const body = translate(roundedBox(w, d, h, 0.45), x, y, 0.55);
+  boardTop.push(...body); chipBodies.push(...body);
+  for (const sx of [-1, 1]) for (let i = -1; i <= 1; i++) boardTop.push(...translate(box(0.32, 0.58, 0.10), x + sx * (w / 2 + 0.30), y + i * 0.8, 0.58));
+};
+chip(-5.8, -1.8, 5.0, 4.0, 1.05); chip(4.5, 3.6, 4.1, 3.1, 1.0); chip(4.4, -3.7, 2.1, 1.8, 0.88);
+const boardDetails = merge(boardTop, mirrorZ(chipBodies));
+const boardTraces = merge(...[-8, 0, 8].map((x) => translate(box(0.55, 10.4, 0.08), x, 0, 0.12)), ...[-2, 2.7, 7].map((y) => translate(box(14, 0.42, 0.08), 0, y, 0.12)));
+const boardPads = merge(...Array.from({ length: 9 }, (_, i) => translate(box(0.85, 1.5, 0.12), -8 + i * 2, -6.25, 0.16)), ...Array.from({ length: 9 }, (_, i) => translate(box(0.85, 1.5, 0.12), -8 + i * 2, 6.15, 0.16)));
+const moduleGroups = [
+  group('PcbGreen', translate(roundedBox(26.3, 17.1, 0.38, 0.75), 0, 0, -0.19)),
+  group('PcbEdge', merge(translate(box(24.8, 0.18, 0.08), 0, -8.25, 0.25), translate(box(24.8, 0.18, 0.08), 0, 8.25, 0.25), translate(box(0.18, 16.4, 0.08), -12.6, 0, 0.25), translate(box(0.18, 16.4, 0.08), 12.6, 0, 0.25))),
+  group('ICBlack', boardDetails),
+  group('Solder', boardPads),
+  group('CopperBus', boardTraces),
+  group('UsbMetal', translate(roundedBox(8.2, 3.0, 1.3, 0.55), 0, 9.15, 0)),
+  group('UsbVoid', merge(translate(roundedBox(4.8, 0.18, 0.85, 0.12), 0, 10.7, 0), translate(box(4.8, 1.35, 0.12), 0, 9.2, 0.70), translate(box(4.8, 1.35, 0.12), 0, 9.2, -0.70))),
+  group('Silkscreen', merge(translate(box(8, 0.18, 0.035), -4, 5.0, 0.26), translate(box(0.18, 4, 0.035), -8, 3.2, 0.26), translate(box(6, 0.18, 0.035), 1, -6.9, 0.26), translate(box(0.18, 2.6, 0.035), 4, -5.6, 0.26))),
+];
+
+const ledGroups = [];
+const ledTris = (x) => ({
+  clear: merge(translate(cylinderAlongY(2.02, 5.6, 18), x, 0.2, 0), translate(hemisphereAlongY(2.2, -2.65, 18, 6), x, 0, 0)),
+  die: merge(translate(roundedBox(1.35, 0.45, 1.1, 0.16), x, -2.45, 0.2), translate(box(0.22, 2.0, 0.16), x + 0.65, -2.0, 0.2)),
+  leads: merge(translate(cylinderAlongY(0.42, 3.8, 10), x - 1.15, 4.35, 0), translate(cylinderAlongY(0.42, 3.8, 10), x + 1.15, 4.35, 0)),
+});
+for (const x of [-8, 8]) { const q = ledTris(x); ledGroups.push(q); }
+const ledPairGroups = [
+  group('ClearLed', merge(...ledGroups.map((q) => q.clear))),
+  group('LedDie', merge(...ledGroups.map((q) => q.die))),
+  group('Solder', merge(...ledGroups.map((q) => q.leads))),
+];
 
 const PARTS = [
-  { name: 'enclosure',     tris: enclosureTris, seat: [0, 0, 0] },
-  { name: 'switch',        tris: switchTris,    seat: [0, 0, 0] }, // already positioned in its aperture
-  { name: 'solar_lid',     tris: solarLidTris,  seat: [0, 0, 9.0] },
-  { name: 'battery',       tris: batteryTris,   seat: [0, -20, -1.75] },
-  { name: 'charge_module', tris: moduleTris,    seat: [0, 8, -1.45] },
-  { name: 'led_pair',      tris: ledPairTris,   seat: [0, -40.5, 1.0] },
+  { name: 'enclosure', groups: enclosureGroups, tris: merge(...enclosureGroups.map((g) => g.tris)), seat: [0, 0, 0] },
+  { name: 'switch', groups: switchGroups, tris: merge(...switchGroups.map((g) => g.tris)), seat: [0, 0, 0] },
+  { name: 'solar_lid', groups: solarLidGroups, tris: merge(...solarLidGroups.map((g) => g.tris)), seat: [0, 0, 9.0] },
+  { name: 'battery', groups: batteryGroups, tris: merge(...batteryGroups.map((g) => g.tris)), seat: [0, -20, -1.75] },
+  { name: 'charge_module', groups: moduleGroups, tris: merge(...moduleGroups.map((g) => g.tris)), seat: [0, 8, -1.45] },
+  { name: 'led_pair', groups: ledPairGroups, tris: merge(...ledPairGroups.map((g) => g.tris)), seat: [0, -40.5, 1.0] },
 ];
 
 report.parts.summary = {};
@@ -400,8 +556,14 @@ if (intersections.some(([a, b]) => !ALLOWED_CONTACT.has(a + '|' + b))) {
   throw new Error('Seated penetrations detected: ' + JSON.stringify(intersections));
 }
 
-const meshes = PARTS.map((p) => ({ name: p.name, ...flatMesh(p.tris), translation: p.seat.map((v) => v * MM) }));
-const MATERIALS = { enclosure: 0, switch: 5, solar_lid: 1, battery: 2, charge_module: 3, led_pair: 4 };
+const meshes = PARTS.map((p) => ({ name: p.name, groups: p.groups, translation: p.seat.map((v) => v * MM) }));
+const MATERIALS = {
+  FDMCharcoal: 0, SolarNavy: 1, SolarCell: 2, CopperBus: 3,
+  BatterySilver: 4, BatteryFoil: 5, KaptonAmber: 6, WireRed: 7, WireBlack: 8,
+  PcbGreen: 9, PcbEdge: 10, Solder: 11, ICBlack: 12, Ceramic: 13,
+  UsbMetal: 14, UsbVoid: 15, Silkscreen: 16, ClearLed: 17, LedDie: 18,
+  SwitchPlastic: 19, SwitchActuator: 20, SwitchContact: 21,
+};
 const glb = buildGlb(meshes, MATERIALS);
 
 const totalTris = PARTS.reduce((n, p) => n + p.tris.length, 0);

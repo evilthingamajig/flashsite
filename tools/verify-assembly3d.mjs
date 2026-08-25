@@ -42,6 +42,19 @@ function staticChecks() {
   const js = JSON.parse(data.subarray(20, 20 + jlen).toString('utf8'));
   const names = js.nodes.map((n) => n.name).sort();
   check('glb node names exact', JSON.stringify(names) === JSON.stringify([...required].sort()), names.join(','));
+  const authoredMaterials = new Set((js.materials || []).map((m) => m.name));
+  const materialNeedle = ['BatteryFoil', 'KaptonAmber', 'PcbGreen', 'ICBlack', 'UsbMetal', 'ClearLed', 'LedDie', 'SwitchActuator', 'SolarCell'];
+  check('authored PBR material separation', materialNeedle.every((name) => authoredMaterials.has(name)), materialNeedle.filter((name) => !authoredMaterials.has(name)).join(',') || 'all named');
+  const texDir = join(ROOT, 'assets', '3d', 'textures');
+  const textures = ['battery_basecolor.png', 'battery_roughness.png', 'electronics_normal.png', 'electronics_ao.png', 'tp4056_basecolor.png'];
+  const textureDims = [];
+  for (const name of textures) {
+    const p = join(texDir, name);
+    const b = existsSync(p) ? readFileSync(p) : null;
+    const okPng = b && b.length >= 24 && b.readUInt32BE(0) === 0x89504e47 && b.readUInt32BE(4) === 0x0d0a1a0a;
+    textureDims.push(okPng ? `${name}:${b.readUInt32BE(16)}x${b.readUInt32BE(20)}` : `${name}:missing`);
+  }
+  check('local PBR textures present/dimensioned', textureDims.every((v) => !v.endsWith(':missing')), textureDims.join(' '));
   for (const src of ['enclosure', 'switch']) {
     const file = readFileSync(join(ROOT, 'source-assets', 'stl', src + '.stl'));
     const sha = createHash('sha256').update(file).digest('hex');
