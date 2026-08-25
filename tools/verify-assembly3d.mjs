@@ -352,6 +352,12 @@ async function browserPass() {
     const afterTableau = await (async () => { await goto(0.785); await settle(cdp); return readState(); })();
     const angleDelta = beforeTableau?.cam && afterTableau?.cam ? Math.hypot(afterTableau.cam.azim - beforeTableau.cam.azim, afterTableau.cam.elev - beforeTableau.cam.elev) : Infinity;
     check(`[${vp.label}] solo-to-tableau camera transition is smooth`, angleDelta <= 0.55, `${(angleDelta * 180 / Math.PI).toFixed(1)}deg`);
+    const centerDelta = beforeTableau?.cam && afterTableau?.cam ? Math.hypot(...afterTableau.cam.center.map((v, i) => v - beforeTableau.cam.center[i])) : Infinity;
+    const distRatio = beforeTableau?.cam && afterTableau?.cam ? Math.max(afterTableau.cam.dist, beforeTableau.cam.dist) / Math.max(1e-6, Math.min(afterTableau.cam.dist, beforeTableau.cam.dist)) : Infinity;
+    const silScale = beforeTableau?.allSil && afterTableau?.allSil ? Math.max(afterTableau.allSil.w / Math.max(1, beforeTableau.allSil.w), beforeTableau.allSil.w / Math.max(1, afterTableau.allSil.w), afterTableau.allSil.h / Math.max(1, beforeTableau.allSil.h), beforeTableau.allSil.h / Math.max(1, afterTableau.allSil.h)) : Infinity;
+    check(`[${vp.label}] solo-to-tableau camera distance is continuous`, distRatio <= 1.45, `${distRatio.toFixed(2)}x`);
+    check(`[${vp.label}] solo-to-tableau camera center is continuous`, centerDelta <= 0.18, `${centerDelta.toFixed(3)}m`);
+    check(`[${vp.label}] solo-to-tableau projected scale is continuous`, silScale <= 1.55, `${silScale.toFixed(2)}x`);
     const seatedPose = (await (async () => { await goto(1); await settle(cdp); return readState(); })())?.pose;
     let previousBeatPose = tableauState?.pose;
     for (let idx = 0; idx < REASSEMBLY_ORDER.length; idx++) {
@@ -363,7 +369,12 @@ async function browserPass() {
       const prev = previousBeatPose?.[id]?.position;
       const seat = seatedPose?.[id]?.position;
       const dist = (a, b) => a && b ? Math.hypot(a[0] - b[0], a[1] - b[1], a[2] - b[2]) : Infinity;
-      check(`[${vp.label}] reassembly beat ${idx + 1} advances ${id}`, dist(here, seat) <= dist(prev, seat) + 0.0005, `${dist(here, seat).toFixed(4)}m`);
+      const activeImprovement = dist(prev, seat) - dist(here, seat);
+      check(`[${vp.label}] reassembly beat ${idx + 1} advances ${id}`, activeImprovement >= -0.0005, `${dist(here, seat).toFixed(4)}m`);
+      const otherMoves = REASSEMBLY_ORDER.filter((other) => other !== id).map((other) => dist(previousBeatPose?.[other]?.position, beatState?.pose?.[other]?.position));
+      const maxOtherMove = Math.max(0, ...otherMoves);
+      check(`[${vp.label}] reassembly beat ${idx + 1} keeps non-active parts settled`, maxOtherMove <= 0.030, `${maxOtherMove.toFixed(4)}m`);
+      if (idx > 0) check(`[${vp.label}] reassembly beat ${idx + 1} has one dominant mover`, activeImprovement >= Math.max(0.001, maxOtherMove * 0.75), `${activeImprovement.toFixed(4)}m vs ${maxOtherMove.toFixed(4)}m`);
       previousBeatPose = beatState?.pose || previousBeatPose;
     }
     await goto(1); await settle(cdp);
@@ -413,7 +424,7 @@ staticChecks();
 await browserPass();
 
 writeFileSync(join(OUT, 'report.json'), JSON.stringify({
-  when: 'checkpoint-pass5b',
+  when: 'checkpoint-pass5c',
   results,
   passed: results.filter((r) => r.ok).length,
   failed: results.filter((r) => !r.ok).length,
