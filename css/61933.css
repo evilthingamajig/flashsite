@@ -54,7 +54,11 @@ html.lenis { height: auto; } .lenis.lenis-smooth { scroll-behavior: auto; } .len
 @media (max-width: 699px) {
   /* Place the bridge at the photo seam so neither side statement competes
      with the title or CTA on a narrow screen. */
-  .hero-content-band { inset: 44% 0 auto !important; }
+  .hero-paired-field { grid-template-rows: 42% 58%; }
+  .hero-content-band { inset: 44% 0 auto !important; min-height: 232px; }
+  .hero-content-band .hero-heading { min-height: clamp(72px, 18.25vw, 76px); }
+  .hero-content-band .hero-bridge { min-height: clamp(20px, 5.05vw, 21px); }
+  .hero-content-band .hero-button-wrapper { min-height: 96px; }
   .hero-content-band .hero-bridge { margin-bottom: 1.35rem !important; font-size: clamp(1rem, 4.4vw, 1.25rem); }
   .hero-paired-image-wrap figcaption { max-width: min(16rem, 68vw); bottom: 1rem; }
 }
