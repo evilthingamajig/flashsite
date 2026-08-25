@@ -3,10 +3,16 @@
 .ff-assembly-shell{position:relative;width:100%;height:920vh;min-height:6200px}
 .ff-assembly-stage{position:relative;width:100%;height:100svh;min-height:640px;display:block;background:#fff;overflow:hidden;isolation:isolate}
 .ff-assembly-visual{position:absolute;inset:0;width:100%;height:100%;perspective:1500px;transform-style:preserve-3d;pointer-events:none}
-.ff-assembly-piece{position:absolute;z-index:2;top:50%;left:50%;max-width:none;height:auto;display:block;object-fit:contain;transform-origin:center;transform-style:preserve-3d;will-change:transform,opacity,filter;pointer-events:none}
-.ff-assembly-anchor{z-index:3}
-.ff-assembly-copy{position:absolute;z-index:8;inset:0;pointer-events:none}
-.ff-assembly-intro-copy{position:absolute;left:50%;top:12%;width:min(34rem,80vw);text-align:center;transform:translateX(-50%);transition:opacity .25s ease}
+.ff-assembly-composition{position:absolute;left:50%;top:47%;width:min(84vw,980px);height:min(84vw,980px);transform:translate(-50%,-50%);transform-style:preserve-3d;pointer-events:none}
+.ff-assembly-piece{position:absolute;top:50%;left:50%;width:100%;height:100%;max-width:none;display:block;object-fit:contain;transform-origin:center;transform-style:preserve-3d;will-change:transform,opacity,filter;pointer-events:none}
+.ff-assembly-interior{position:absolute;inset:0;z-index:20;overflow:visible;clip-path:polygon(14% 42%,77% 31%,87% 46%,18% 58%)}
+.ff-assembly-interior .ff-assembly-piece{z-index:20}
+.ff-assembly-enclosure{z-index:10}
+.ff-assembly-front-wall{z-index:30;clip-path:polygon(0 55%,100% 43%,100% 100%,0 100%)}
+.ff-assembly-front-strip{z-index:45;clip-path:polygon(0 52%,100% 52%,100% 100%,0 100%)}
+.ff-assembly-final-anchor{z-index:60}
+.ff-assembly-copy{position:absolute;z-index:80;inset:0;pointer-events:none}
+.ff-assembly-intro-copy{position:absolute;left:50%;top:9%;width:min(34rem,80vw);text-align:center;transform:translateX(-50%);transition:opacity .2s ease}
 .ff-assembly-intro-copy.is-hidden{opacity:0}
 .ff-assembly-intro-copy h2{margin:0 0 10px;font-size:clamp(2.2rem,5vw,5.2rem);font-weight:400;line-height:.98;letter-spacing:-.04em}
 .ff-assembly-intro-copy>p:last-child{margin:0;font-size:clamp(1rem,1.5vw,1.25rem)}
@@ -18,15 +24,16 @@
 .ff-assembly-callout>p:last-child{max-width:16rem;margin:0;font-size:clamp(1rem,1.45vw,1.35rem);line-height:1.22}
 .ff-assembly-leader{position:absolute;top:var(--leader-y,50%);left:calc(100% + 18px);width:var(--leader-length,16vw);height:1px;background:#0b7f47;transform-origin:left center;transform:rotate(var(--leader-angle,-10deg));opacity:.95}
 .ff-assembly-callout.is-right .ff-assembly-leader{left:auto;right:calc(100% + 18px);transform-origin:right center;background:#151b17}
-.ff-assembly-final-copy{display:none}
-.ff-assembly-final-copy.is-active{display:none}
-.ff-assembly-final-copy h3{margin:0;font-size:clamp(2.5rem,6vw,6rem);font-weight:400;line-height:.95;letter-spacing:-.05em}
-.ff-assembly-final-copy .button-base{pointer-events:auto}
+.ff-assembly-final-mark{position:absolute;left:50%;top:9%;display:none;transform:translateX(-50%);text-align:center}
+.ff-assembly-final-mark.is-active{display:block}
+.ff-assembly-final-mark .ff-assembly-eyebrow{margin:0;font-size:clamp(12px,1.2vw,16px)}
 .ff-assembly-accessible{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+.ff-assembly-active .nav-bar{opacity:0!important;visibility:hidden!important;pointer-events:none!important}
 @media(max-width:699px){
  .ff-assembly-shell{height:860vh;min-height:5400px}
  .ff-assembly-stage{height:100svh;min-height:600px}
- .ff-assembly-intro-copy{top:8%;width:88vw}
+ .ff-assembly-composition{top:42%;width:118vw;height:118vw}
+ .ff-assembly-intro-copy{top:7%;width:88vw}
  .ff-assembly-intro-copy h2{font-size:clamp(2.2rem,11vw,3.8rem)}
  .ff-assembly-callout,.ff-assembly-callout.is-right{top:auto;bottom:8%;left:5%;right:5%;width:90vw;text-align:center;transform:translateY(12px)}
  .ff-assembly-callout.is-active{transform:translateY(0)}
@@ -34,6 +41,6 @@
  .ff-assembly-callout>p:last-child{max-width:22rem;margin:0 auto;font-size:1rem}
  .ff-assembly-leader,.ff-assembly-callout.is-right .ff-assembly-leader{top:auto;bottom:calc(100% + 16px);left:50%;right:auto;width:var(--leader-length,30vw);transform-origin:left center;transform:rotate(var(--leader-angle,-22deg));background:#0b7f47}
  .ff-assembly-callout.is-right .ff-assembly-leader{transform-origin:left center}
- .ff-assembly-final-copy h3{font-size:clamp(2.6rem,13vw,4.2rem)}
+ .ff-assembly-final-mark{top:6%}
 }
 @media(prefers-reduced-motion:reduce){.ff-assembly-stage{scroll-behavior:auto}.ff-assembly-piece{will-change:auto}}
