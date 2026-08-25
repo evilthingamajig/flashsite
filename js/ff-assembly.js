@@ -1,33 +1,42 @@
 (function(){'use strict';
+var ROOT='images/flashforward/assembly/cinematic-v3/';
+var parts={enclosure:ROOT+'enclosure-front.webp',lid:ROOT+'solar-lid-front.webp',battery:ROOT+'battery-front.webp',module:ROOT+'module-front.webp',leds:ROOT+'led-pair-front.webp'};
+var copy={solar:['01 / DAYLIGHT IN','5V solar panel','Captures daylight to recharge the light.'],battery:['02 / POWER HELD','Rechargeable battery','Stores energy for study after dark.'],module:['03 / CHARGE CONTROLLED','Recharge module','Manages safe charging from the panel.'],leds:['04 / LIGHT OUT','Two LEDs','Turn stored energy into focused study light.'],enclosure:['05 / BUILT TO PROTECT','3D-printed enclosure','Shields every component.']};
+var fan={enclosure:[-26,-14,-20,-5,2],lid:[30,-22,-10,8,-5],battery:[24,19,18,7,-7],module:[-25,15,12,-8,6],leds:[0,24,20,12,-3]};
+function clamp(v){return Math.max(0,Math.min(1,v));}
+function smooth(v){v=clamp(v);return v*v*(3-2*v);}
+function lerp(a,b,t){return a+(b-a)*t;}
 function init(section){
- if(!section||section.getAttribute('data-assembly-ready'))return;
- section.setAttribute('data-assembly-ready','true');
- var stage=section.querySelector('.ff-assembly-stage'),visual=section.querySelector('.ff-assembly-visual'),intro=section.querySelector('.ff-assembly-finished-intro'),body=section.querySelector('.ff-assembly-body'),lid=section.querySelector('.ff-assembly-lid'),finished=section.querySelector('.ff-assembly-final'),copy=section.querySelector('.ff-assembly-copy'),chapters=[].slice.call(section.querySelectorAll('.ff-assembly-chapter')),finalCopy=section.querySelector('.ff-assembly-final-copy');
- if(!stage||!visual||!intro||!body||!lid||!finished||!copy)return;
- var layers={enclosure:section.querySelector('[data-assembly-layer="enclosure"]'),battery:section.querySelector('[data-assembly-layer="battery"]'),'recharge-module':section.querySelector('[data-assembly-layer="recharge-module"]'),'led-pair':section.querySelector('[data-assembly-layer="led-pair"]'),'solar-panel':section.querySelector('[data-assembly-layer="solar-panel"]')};
- var ids=['enclosure','battery','recharge-module','led-pair','solar-panel'];
- var offsets={enclosure:[-14,-22],battery:[42,34],'recharge-module':[-52,20],'led-pair':[54,-18],'solar-panel':[0,-48]};
- var rotations={enclosure:-3,battery:4,'recharge-module':-4,'led-pair':5,'solar-panel':-2};
- var starts=[.16,.26,.36,.46,.56],tl=null,cleaned=false,scrollHandler=null,resizeHandler=null;
- function clamp(v){return Math.max(0,Math.min(1,v));}
- function set(el,opacity,x,y,scale,rotation){if(!el)return;el.style.opacity=String(clamp(opacity));el.style.transform='translate3d('+x+'px,'+y+'px,0) scale('+scale+') rotateZ('+rotation+'deg)';}
- function chapterAt(p){var active=-1;starts.forEach(function(v,i){if(p>=v&&p<(.26+i*.10))active=i;});return active;}
- function render(p){
-  p=clamp(p);
-  var explosion=clamp((p-.08)/.08),masterProgress=clamp((p-.64)/.08),lidTravel=clamp((p-.75)/.09),finishProgress=clamp((p-.84)/.06),finalCopyProgress=clamp((p-.88)/.04),compositionOpacity=masterProgress*(1-finishProgress);
-  set(intro,p<.08?1:1-explosion,0,0,1,0);
-  ids.forEach(function(id,i){var el=layers[id];if(!el)return;var start=starts[i],end=start+.10,fadeIn=clamp((p-(start-.025))/.025),fadeOut=clamp(((end+.025)-p)/.025),baseOpacity=p<.16?explosion:p<.66?Math.min(fadeIn,fadeOut):0,fan=clamp((p-.62)/.04),chapterOpacity=p>=.62?Math.max(baseOpacity,fan):baseOpacity,ex=offsets[id],assembled=1-masterProgress;set(el,chapterOpacity*(1-masterProgress),ex[0]*assembled,ex[1]*assembled,1,rotations[id]*assembled);});
-  set(body,compositionOpacity,0,0,1,0);
-  var travel=(visual.clientWidth||620)*.086;set(lid,compositionOpacity,0,travel*lidTravel,1,0);
-  set(finished,finishProgress,0,0,1,0);
-  var active=chapterAt(p);chapters.forEach(function(ch,i){ch.classList.toggle('is-active',active===i);});
-  if(finalCopy){finalCopy.classList.toggle('is-active',finalCopyProgress>0);finalCopy.style.setProperty('--assembly-final-progress',String(finalCopyProgress));}
-  if(copy)copy.classList.toggle('is-right',active%2===1);
+ if(!section||section.getAttribute('data-assembly-ready'))return;section.setAttribute('data-assembly-ready','true');
+ section.innerHTML='<div class="ff-assembly-shell"><div class="ff-assembly-stage" aria-label="Scroll-driven assembly of a solar study light"><div class="ff-assembly-visual" aria-hidden="true"><img class="ff-assembly-piece ff-assembly-anchor" data-piece="anchor" src="'+ROOT+'assembled-anchor.webp" alt="" width="1254" height="1254" loading="lazy" decoding="async"><img class="ff-assembly-piece" data-piece="enclosure" src="'+parts.enclosure+'" alt="" width="1254" height="1254" loading="lazy" decoding="async"><img class="ff-assembly-piece" data-piece="lid" src="'+parts.lid+'" alt="" width="1536" height="1024" loading="lazy" decoding="async"><img class="ff-assembly-piece" data-piece="battery" src="'+parts.battery+'" alt="" width="1254" height="1254" loading="lazy" decoding="async"><img class="ff-assembly-piece" data-piece="module" src="'+parts.module+'" alt="" width="1254" height="1254" loading="lazy" decoding="async"><img class="ff-assembly-piece" data-piece="leds" src="'+parts.leds+'" alt="" width="1254" height="1254" loading="lazy" decoding="async"></div><div class="ff-assembly-copy"><div class="ff-assembly-intro-copy"><p class="ff-assembly-eyebrow">How it is built</p><h2 id="assembly-heading">One light. Built to study.</h2><p>Scroll to see every part take its place.</p></div><article class="ff-assembly-callout" data-callout="solar"><span class="ff-assembly-leader" aria-hidden="true"></span><p class="ff-assembly-eyebrow">'+copy.solar[0]+'</p><h3>'+copy.solar[1]+'</h3><p>'+copy.solar[2]+'</p></article><article class="ff-assembly-callout" data-callout="battery"><span class="ff-assembly-leader" aria-hidden="true"></span><p class="ff-assembly-eyebrow">'+copy.battery[0]+'</p><h3>'+copy.battery[1]+'</h3><p>'+copy.battery[2]+'</p></article><article class="ff-assembly-callout" data-callout="module"><span class="ff-assembly-leader" aria-hidden="true"></span><p class="ff-assembly-eyebrow">'+copy.module[0]+'</p><h3>'+copy.module[1]+'</h3><p>'+copy.module[2]+'</p></article><article class="ff-assembly-callout" data-callout="leds"><span class="ff-assembly-leader" aria-hidden="true"></span><p class="ff-assembly-eyebrow">'+copy.leds[0]+'</p><h3>'+copy.leds[1]+'</h3><p>'+copy.leds[2]+'</p></article><article class="ff-assembly-callout" data-callout="enclosure"><span class="ff-assembly-leader" aria-hidden="true"></span><p class="ff-assembly-eyebrow">'+copy.enclosure[0]+'</p><h3>'+copy.enclosure[1]+'</h3><p>'+copy.enclosure[2]+'</p></article><div class="ff-assembly-final-copy"><p class="ff-assembly-eyebrow">READY TO STUDY</p><h3>One light, complete.</h3><a class="button-base is-black" href="donate">Sponsor a Light</a></div></div></div><ol class="ff-assembly-accessible" aria-label="Assembly components"><li><strong>5V solar panel.</strong> Captures daylight to recharge the light.</li><li><strong>Rechargeable battery.</strong> Stores energy for study after dark.</li><li><strong>Recharge module.</strong> Manages safe charging from the panel.</li><li><strong>Two LEDs.</strong> Turn stored energy into focused study light.</li><li><strong>3D-printed enclosure.</strong> Shields every component.</li></ol></div>';
+ var stage=section.querySelector('.ff-assembly-stage'),anchor=section.querySelector('[data-piece="anchor"]'),copyWrap=section.querySelector('.ff-assembly-copy'),intro=section.querySelector('.ff-assembly-intro-copy'),finalCopy=section.querySelector('.ff-assembly-final-copy'),callouts={},layers={};
+ ['solar','battery','module','leds','enclosure'].forEach(function(id){callouts[id]=section.querySelector('[data-callout="'+id+'"]');});
+ ['enclosure','lid','battery','module','leds'].forEach(function(id){layers[id]=section.querySelector('[data-piece="'+id+'"]');});
+ function setPiece(el,opacity,x,y,z,scale,rx,ry,rz,size,blur){if(!el)return;el.style.opacity=String(clamp(opacity));el.style.width=size+'vw';el.style.filter=blur?'blur('+blur+'px)':'';el.style.transform='translate3d(calc(-50% + '+x+'vw),calc(-50% + '+y+'vh),'+z+'px) rotateX('+rx+'deg) rotateY('+ry+'deg) rotateZ('+rz+'deg) scale('+scale+')';}
+ function phase(p,start,end){return smooth((p-start)/.035)*(1-smooth((p-end)/.035));}
+ function render(progress){
+  var p=clamp(progress),mobile=window.innerWidth<700,baseSize=mobile?102:82,boost=mobile?1.15:1;
+  var impact=smooth(p/.13),explode=smooth((p-.09)/.16),explodeOut=1-smooth((p-.28)/.075),solar=phase(p,.25,.40),battery=phase(p,.38,.53),module=phase(p,.51,.66),leds=phase(p,.64,.79),enclosure=phase(p,.77,.91),reassemble=smooth((p-.90)/.09),finish=smooth((p-.975)/.025);
+  setPiece(anchor,Math.max(0,1-explode)*(1-finish)+finish,0,0,0,lerp(1,1.08,impact),0,0,lerp(0,-7,impact),baseSize,0);
+  Object.keys(layers).forEach(function(id){var f=fan[id],solo=0,soloX=0,soloY=0,soloRz=0,soloRx=0,soloRy=0,size=baseSize;
+   if(id==='lid'){solo=solar;soloX=lerp(f[0],14,solar);soloY=lerp(f[1],-2,solar);soloRz=lerp(0,-5,solar);soloRx=lerp(0,-9,solar);soloRy=lerp(0,10,solar);size=mobile?118:94;}
+   if(id==='battery'){solo=battery;soloX=lerp(f[0],-14,battery);soloY=lerp(f[1],1,battery);soloRz=lerp(0,-7,battery);soloRx=lerp(0,-8,battery);soloRy=lerp(0,12,battery);size=mobile?110:88;}
+   if(id==='module'){solo=module;soloX=lerp(f[0],14,module);soloY=lerp(f[1],0,module);soloRz=lerp(0,5,module);soloRx=lerp(0,8,module);soloRy=lerp(0,-12,module);size=mobile?108:84;}
+   if(id==='leds'){solo=leds;soloX=lerp(f[0],-14,leds);soloY=lerp(f[1],0,leds);soloRz=lerp(0,-5,leds);soloRx=lerp(0,-7,leds);soloRy=lerp(0,11,leds);size=mobile?108:78;}
+   if(id==='enclosure'){solo=enclosure;soloX=lerp(f[0],14,enclosure);soloY=lerp(f[1],3,enclosure);soloRz=lerp(0,-4,enclosure);soloRx=lerp(0,-7,enclosure);soloRy=lerp(0,6,enclosure);size=mobile?112:90;}
+   var explosionOpacity=explode*explodeOut*(1-solo*.93)*(1-reassemble*.95),assembledOpacity=reassemble*(1-finish),x=solo?soloX:lerp(lerp(0,f[0],explode),0,reassemble),y=solo?soloY:lerp(lerp(0,f[1],explode),0,reassemble),rz=solo?soloRz:lerp(lerp(0,f[4],explode),0,reassemble),rx=solo?soloRx:lerp(lerp(0,f[3],explode),0,reassemble),ry=solo?soloRy:lerp(lerp(0,f[2],explode),0,reassemble),opacity=Math.max(explosionOpacity,solo*(1-reassemble),assembledOpacity),spin=solo?lerp(0,id==='leds'?360:24,solo):lerp(0,8,explode);
+   setPiece(layers[id],opacity,x,y,solo?80:0,solo?boost:1,rx,ry,rz+spin,size,solo<.08?1.5:0);
+  });
+  if(finish)Object.keys(layers).forEach(function(id){setPiece(layers[id],0,0,0,0,1,0,0,0,baseSize,0);});
+  var active=p<.26?null:p<.39?'solar':p<.52?'battery':p<.65?'module':p<.78?'leds':p<.89?'enclosure':null;
+  intro.classList.toggle('is-hidden',p>.2);finalCopy.classList.toggle('is-active',p>.975);copyWrap.classList.toggle('is-finished',p>.975);
+  ['solar','battery','module','leds','enclosure'].forEach(function(id,i){var c=callouts[id];c.classList.toggle('is-active',active===id);c.classList.toggle('is-right',i%2===1);});
  }
- function cleanup(){if(cleaned)return;cleaned=true;if(tl){if(tl.scrollTrigger)tl.scrollTrigger.kill();tl.kill();tl=null;}if(scrollHandler)window.removeEventListener('scroll',scrollHandler);if(resizeHandler)window.removeEventListener('resize',resizeHandler);}
+ var timeline=null,proxy={p:0},ticking=false,scrollHandler,resizeHandler,cleanupDone=false;
+ function cleanup(){if(cleanupDone)return;cleanupDone=true;if(timeline){if(timeline.scrollTrigger)timeline.scrollTrigger.kill();timeline.kill();timeline=null;}if(scrollHandler)window.removeEventListener('scroll',scrollHandler);if(resizeHandler)window.removeEventListener('resize',resizeHandler);}
  render(0);window.addEventListener('pagehide',cleanup,{once:true});
- if(window.gsap&&window.ScrollTrigger){window.gsap.registerPlugin(window.ScrollTrigger);var proxy={p:0};tl=window.gsap.timeline({scrollTrigger:{trigger:section,start:'top top',end:'bottom bottom',pin:stage,pinSpacing:false,scrub:.55,anticipatePin:1,onUpdate:function(){render(proxy.p)}}});tl.to(proxy,{p:1,duration:1,ease:'none',onUpdate:function(){render(proxy.p)}});}
- else{var ticking=false;scrollHandler=function(){if(ticking)return;ticking=true;requestAnimationFrame(function(){var r=section.getBoundingClientRect(),p=clamp(-r.top/Math.max(1,section.offsetHeight-window.innerHeight));render(p);ticking=false;});};resizeHandler=scrollHandler;window.addEventListener('scroll',scrollHandler,{passive:true});window.addEventListener('resize',resizeHandler);scrollHandler();}
+ if(window.gsap&&window.ScrollTrigger){window.gsap.registerPlugin(window.ScrollTrigger);timeline=window.gsap.timeline({scrollTrigger:{trigger:section,start:'top top',end:'bottom bottom',pin:stage,pinSpacing:false,scrub:.32,anticipatePin:1,invalidateOnRefresh:true,onUpdate:function(){render(proxy.p)}}});timeline.to(proxy,{p:1,duration:1,ease:'none',onUpdate:function(){render(proxy.p)}});}
+ else{scrollHandler=function(){if(ticking)return;ticking=true;requestAnimationFrame(function(){var r=section.getBoundingClientRect();render(-r.top/Math.max(1,section.offsetHeight-window.innerHeight));ticking=false;});};resizeHandler=scrollHandler;window.addEventListener('scroll',scrollHandler,{passive:true});window.addEventListener('resize',resizeHandler);scrollHandler();}
  }
  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',function(){init(document.querySelector('[data-assembly-sequence]'));},{once:true});else init(document.querySelector('[data-assembly-sequence]'));
 })();
