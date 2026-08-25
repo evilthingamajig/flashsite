@@ -8,12 +8,12 @@ const FOV = 34;
 
 const PART_IDS = ['enclosure', 'switch', 'solar_lid', 'battery', 'charge_module', 'led_pair'];
 const CHAPTERS = [
-  { id: 'solar_lid', key: 'solar', num: '01 / DAYLIGHT IN', title: '5V solar panel', body: 'Captures daylight to recharge the light.', turn: 200, slot: [0, 0, 52], inspect: [0, 4, 74], anchor: [0, 0, 1.25] },
-  { id: 'battery', key: 'battery', num: '02 / POWER HELD', title: 'Rechargeable battery', body: 'Stores energy for study after dark.', turn: 185, slot: [-16, -2, 30], inspect: [-16, -2, 46], anchor: [0, 0, 0] },
-  { id: 'charge_module', key: 'module', num: '03 / CHARGE CONTROLLED', title: 'Recharge module', body: 'Manages safe charging from the panel.', turn: 175, slot: [16, -2, 30], inspect: [0, 0, 46], anchor: [0, 0, 2.8] },
-  { id: 'led_pair', key: 'leds', num: '04 / LIGHT OUT', title: 'Two LEDs', body: 'Turn stored energy into focused study light.', turn: 205, slot: [0, -30, 10], inspect: [0, -54, 26], anchor: [0, -2, 0] },
-  { id: 'switch', key: 'switch', num: '05 / SWITCHED BY HAND', title: 'Slide switch', body: 'Completes the circuit so study light flows.', turn: 190, slot: [0, 44, 12], inspect: [0, 64, 26], anchor: [0, 41, 3] },
-  { id: 'enclosure', key: 'enclosure', num: '06 / BUILT TO PROTECT', title: '3D-printed enclosure', body: 'Shields every component.', turn: 210, slot: [0, 0, 0], inspect: [0, -6, 36], anchor: [30, -30, 1] },
+  { id: 'solar_lid', key: 'solar', num: '01 / DAYLIGHT IN', title: '5V solar panel', body: 'Captures daylight to recharge the light.', turn: 200, slot: [0, 0, 52], inspect: [0, 4, 74], anchor: [-34, 0, 1.25] },
+  { id: 'battery', key: 'battery', num: '02 / POWER HELD', title: 'Rechargeable battery', body: 'Stores energy for study after dark.', turn: 185, slot: [-16, -2, 30], inspect: [-16, -2, 46], anchor: [18, 0, 0] },
+  { id: 'charge_module', key: 'module', num: '03 / CHARGE CONTROLLED', title: 'Recharge module', body: 'Manages safe charging from the panel.', turn: 175, slot: [16, -2, 30], inspect: [0, 0, 46], anchor: [-10, 0, 2.8] },
+  { id: 'led_pair', key: 'leds', num: '04 / LIGHT OUT', title: 'Two LEDs', body: 'Turn stored energy into focused study light.', turn: 205, slot: [0, -30, 10], inspect: [0, -54, 26], anchor: [8, -4.5, 0] },
+  { id: 'switch', key: 'switch', num: '05 / SWITCHED BY HAND', title: 'Slide switch', body: 'Completes the circuit so study light flows.', turn: 190, slot: [0, 44, 12], inspect: [0, 64, 26], anchor: [-24, 41, 3] },
+  { id: 'enclosure', key: 'enclosure', num: '06 / BUILT TO PROTECT', title: '3D-printed enclosure', body: 'Shields every component.', turn: 210, slot: [0, 0, 0], inspect: [0, -6, 36], anchor: [38, -36, 1] },
 ];
 const REASSEMBLY_ORDER = ['enclosure', 'switch', 'led_pair', 'charge_module', 'battery', 'solar_lid'];
 
@@ -21,7 +21,7 @@ const T_INTRO_END = 0.075;
 const T_EXPLODE = [0.075, 0.125];
 const T_CH_START = 0.125;
 const CH_W = 0.108;
-const T_RE_START = T_CH_START + CHAPTERS.length * CH_W;
+const T_RE_START = 0.80;
 const RE_SPACING = 0.022;
 const RE_W = 0.082;
 const T_FINAL = Math.max(0.955, T_RE_START + 5 * RE_SPACING + RE_W);
@@ -109,14 +109,12 @@ function init(section) {
   scene.add(sun);
 
   const groups = {};
-  const localBoxes = {};
   const meshNodes = {};
   const seats = {};
   let root = null;
   let ready = false;
-  // Expose a stable diagnostic surface before deferred loading begins. This
-  // keeps automated and assistive checks from racing the near-viewport fetch.
-  window.__ffasm3d = { version: 'pass2', get ready() { return ready; }, progress: () => lastProgress, frame: () => frameStats, activeCallout: () => (frameStats ? frameStats.activeCallout : null), parts: () => Object.keys(groups) };
+  let manifestBounds = null;
+  fetch('assets/3d/assembly-manifest.json').then((r) => r.ok ? r.json() : null).then((m) => { manifestBounds = m?.parts?.summary || null; }).catch(() => {});
 
   function showLoadError(err) {
     ready = false;
@@ -130,16 +128,22 @@ function init(section) {
     const props = {
       enclosure: { color: 0x151b18, roughness: 0.8, metalness: 0.02 },
       solar_lid: { color: 0x0b2332, roughness: 0.42, metalness: 0.28 },
-      battery: { color: 0xb8c0bc, roughness: 0.35, metalness: 0.52 },
+      battery: { color: 0xaeb9b4, roughness: 0.46, metalness: 0.08 },
       charge_module: { color: 0x126047, roughness: 0.55, metalness: 0.1 },
       led_pair: { color: 0xbbe6ed, roughness: 0.12, metalness: 0, transparent: true, opacity: 0.46 },
       switch: { color: 0x202824, roughness: 0.58, metalness: 0.03 },
     }[id];
-    return new THREE.MeshStandardMaterial({ ...props, envMapIntensity: 0.35 });
+    const material = new THREE.MeshStandardMaterial({ ...props, envMapIntensity: 0.35 });
+    material.userData.baseOpacity = props.opacity ?? 1;
+    return material;
   }
 
   function addProductDetails(id, holder) {
-    const matte = (color, roughness = 0.52, metalness = 0.05) => new THREE.MeshStandardMaterial({ color, roughness, metalness });
+    const matte = (color, roughness = 0.52, metalness = 0.05) => {
+      const material = new THREE.MeshStandardMaterial({ color, roughness, metalness });
+      material.userData.baseOpacity = 1;
+      return material;
+    };
     const detail = (geo, material, position) => {
       const m = new THREE.Mesh(geo, material);
       // Authoring dimensions below are millimetres; the GLB scene is metres.
@@ -157,6 +161,9 @@ function init(section) {
       detail(new THREE.BoxGeometry(81.5, 1.2, 0.32), matte(0x0a1111, 0.62, 0.04), [0, -40, 0.05]);
       detail(new THREE.BoxGeometry(81.5, 1.2, 0.32), matte(0x0a1111, 0.62, 0.04), [0, 40, 0.05]);
     } else if (id === 'battery') {
+      const pouch = matte(0xc8d0cb, 0.42, 0.04);
+      detail(new THREE.BoxGeometry(38, 26, 0.26), pouch, [0, 0, 2.58]);
+      detail(new THREE.BoxGeometry(38, 26, 0.26), pouch, [0, 0, -2.58]);
       const tape = matte(0xb45c1f, 0.46, 0.08);
       detail(new THREE.BoxGeometry(1.6, 30.6, 5.2), tape, [-21.1, 0, 0]);
       detail(new THREE.BoxGeometry(1.6, 30.6, 5.2), tape, [21.1, 0, 0]);
@@ -181,6 +188,9 @@ function init(section) {
       });
     } else if (id === 'switch') {
       detail(new THREE.BoxGeometry(10, 5, 3.3), matte(0x080c0a, 0.66, 0.02), [-5, 41.3, 3.5]);
+    } else if (id === 'enclosure') {
+      const layer = matte(0x26302a, 0.88, 0.01);
+      for (let i = 0; i < 8; i++) detail(new THREE.BoxGeometry(81, 0.24, 0.16), layer, [0, -42.08, -4.8 + i * 1.55]);
     }
   }
 
@@ -219,10 +229,8 @@ function init(section) {
         }
       });
       node.updateMatrixWorld(true);
-      const box = new THREE.Box3().setFromObject(node);
       addProductDetails(c.id, holder);
       groups[c.id] = pivot;
-      localBoxes[c.id] = box;
       meshNodes[c.id] = node;
       seats[c.id] = originalPos.clone();
     });
@@ -291,7 +299,11 @@ function init(section) {
     const c = CHAPTERS[i];
     const t = chapterT(p, i);
     const ENTER = 0.34;
-    const EXIT = 0.8;
+    // Keep the active component framed through the last inspection beat. The
+    // copy remains active while the surrounding assembly fades back in, so a
+    // late chapter sample never collapses to a tiny interpolation between the
+    // solo and full-assembly camera distances.
+    const EXIT = 0.95;
     let w = 0;
     if (t < ENTER) w = smooth(t / ENTER);
     else if (t > EXIT) w = 1 - smooth((t - EXIT) / (1 - EXIT));
@@ -332,6 +344,14 @@ function init(section) {
         dist = lerp(dAll, dPart, blend.w);
       }
     }
+    if (pane.mobile && blend.id === 'switch' && blend.w > 0.5) {
+      // The switch is a shallow, wide part. Give it the same visual weight as
+      // the other mobile solos, then bias it a few pixels away from the left
+      // editorial copy while preserving the pane's 16px safety edge.
+      dist *= 0.95;
+      const right = new THREE.Vector3(Math.cos(azim), 0, -Math.sin(azim));
+      center.addScaledVector(right, 0.001);
+    }
     return { center, dist };
   }
 
@@ -361,12 +381,16 @@ function init(section) {
   }
 
   function solveDistance(box, azim, elev, pane) {
+    // Subject scale is viewport-relative. The pane remains a collision and
+    // copy-clearance constraint only; it must not make the active component
+    // tiny merely because editorial copy occupies one side.
     const cfg = pane.mobile
-      ? { targetFrac: 0.44, maxFrac: 0.46, clearX: 16, clearY: 16 }
-      : { targetFrac: 0.63, maxFrac: 0.68, clearX: 32, clearY: 40 };
+      ? { targetW: sticky.clientWidth * 0.80, targetH: sticky.clientHeight * 0.54, maxW: sticky.clientWidth * 0.86, maxH: sticky.clientHeight * 0.60, clearX: 16, clearY: 16 }
+      : { targetW: sticky.clientWidth * 0.56, targetH: sticky.clientHeight * 0.52, maxW: sticky.clientWidth * 0.66, maxH: sticky.clientHeight * 0.65, clearX: 32, clearY: 40 };
     const sph = box.getBoundingSphere(tmpSphere);
     const c = tmpSphere.center;
-    let d = Math.max(sph.radius, 0.02) / (Math.tan((FOV * Math.PI) / 360) * cfg.targetFrac);
+    const targetFrac = pane.mobile ? 0.54 : 0.52;
+    let d = Math.max(sph.radius, 0.02) / (Math.tan((FOV * Math.PI) / 360) * targetFrac);
     const inX = pane.x + cfg.clearX;
     const inY = pane.y + cfg.clearY;
     const inW = pane.w - 2 * cfg.clearX;
@@ -377,13 +401,17 @@ function init(section) {
       const hPx = bb.maxY - bb.minY;
       const overMax = Math.max(inX - bb.minX, bb.maxX - (inX + inW), inY - bb.minY, bb.maxY - (inY + inH), 0);
       const fill = Math.max(hPx / pane.h, wPx / pane.w);
-      let scale = 1;
+      const desiredScale = pane.mobile
+        ? wPx / Math.max(1, cfg.targetW)
+        : Math.max(wPx / Math.max(1, cfg.targetW), hPx / Math.max(1, cfg.targetH));
+      let scale = desiredScale;
       if (overMax > 0.5) {
         scale = Math.max(scale, 1 + overMax / Math.max(10, Math.min(hPx, inH)));
-      } else if (Math.abs(fill - cfg.targetFrac) > 0.004 && fill > 0) {
-        scale = Math.max(0.5, fill / cfg.targetFrac);
       }
-      if (fill > cfg.maxFrac) scale = Math.max(scale, fill / cfg.maxFrac);
+      if (wPx > cfg.maxW) scale = Math.max(scale, wPx / cfg.maxW);
+      if (hPx > cfg.maxH) scale = Math.max(scale, hPx / cfg.maxH);
+      const paneMaxFrac = pane.mobile ? 0.84 : 0.68;
+      scale = Math.max(scale, wPx / Math.max(1, pane.w * paneMaxFrac), hPx / Math.max(1, pane.h * (pane.mobile ? 0.60 : 0.68)));
       if (Math.abs(scale - 1) < 0.0015) break;
       d *= Math.min(1.35, Math.max(0.75, scale));
     }
@@ -409,9 +437,11 @@ function init(section) {
         const liftIn = smooth(t / 0.22);
         const liftOut = smooth((t - 0.78) / 0.22);
         const liftAmt = liftIn - liftOut;
-        const turnUp = smooth(Math.max(0, Math.min(1, (t - 0.22) / 0.36)));
-        const turnDown = smooth(Math.max(0, Math.min(1, (t - 0.78) / 0.2)));
-        yaw = ((c.turn * (turnUp - turnDown)) * Math.PI) / 180;
+        // A solo turn only advances: it reaches the showcase angle, then
+        // continues forward to a full 360° identity before the tableau.
+        const turnUp = smooth(t / 0.84);
+        const finish = smooth((t - 0.84) / 0.16);
+        yaw = ((c.turn * turnUp + (360 - c.turn) * finish) * Math.PI) / 180;
         x += c.inspect[0] * MM * liftAmt;
         y += c.inspect[1] * MM * liftAmt;
         z += c.inspect[2] * MM * liftAmt;
@@ -422,7 +452,7 @@ function init(section) {
       // solo copy. It is cleanly hidden once the active chapter settles; the
       // short blend-in/out keeps the tableau coherent at chapter boundaries.
       const chapterPhase = chIdx >= 0 ? chapterT(p, chIdx) : 0;
-      const soloSettled = chIdx >= 0 && chapterPhase > 0.44 && chapterPhase < 0.86;
+      const soloSettled = chIdx >= 0 && chapterPhase > 0.44 && chapterPhase < 0.95;
       g.visible = !soloSettled || c.id === soloId;
       g.updateMatrixWorld(true);
     });
@@ -464,7 +494,7 @@ function init(section) {
   }
 
   function silhouettePx(id) {
-    const b = worldBox(id, tmpBox);
+    const b = id === 'all' ? boxForSubject('all', tmpBox) : worldBox(id, tmpBox);
     const corners = [];
     for (let i = 0; i < 8; i++) {
       V.set(i & 1 ? b.max.x : b.min.x, i & 2 ? b.max.y : b.min.y, i & 4 ? b.max.z : b.min.z);
@@ -491,9 +521,20 @@ function init(section) {
     const mobile = sticky.clientWidth < 700;
     const sx = mobile ? cr.left - sr.left + cr.width / 2 : (el.classList.contains('is-right') ? cr.left - sr.left : cr.right - sr.left);
     const sy = mobile ? cr.top - sr.top - 6 : cr.top - sr.top + cr.height * 0.45;
+    const sil = silhouettePx(keyToId(activeKey));
+    if (!sil) return;
+    // Route the leader in the whitespace around the subject, then use only a
+    // short terminal segment to the mesh-attached anchor. This avoids slicing
+    // diagonally through the active silhouette.
+    let routeX = pt.x, routeY = pt.y;
+    if (mobile) routeY = sil.y + sil.h + 14;
+    else routeX = el.classList.contains('is-right') ? sil.x + sil.w + 14 : sil.x - 14;
     const ns = 'http://www.w3.org/2000/svg';
+    const route = document.createElementNS(ns, 'polyline');
+    route.setAttribute('points', `${sx},${sy} ${routeX},${routeY}`);
+    leadersSvg.appendChild(route);
     const line = document.createElementNS(ns, 'line');
-    line.setAttribute('x1', sx); line.setAttribute('y1', sy);
+    line.setAttribute('x1', routeX); line.setAttribute('y1', routeY);
     line.setAttribute('x2', pt.x); line.setAttribute('y2', pt.y);
     const dot = document.createElementNS(ns, 'circle');
     dot.setAttribute('cx', pt.x); dot.setAttribute('cy', pt.y); dot.setAttribute('r', 3);
@@ -515,7 +556,10 @@ function init(section) {
     CHAPTERS.forEach((c) => {
       const dim = c.id === activeId ? 1 : 1 - 0.75 * blend.w;
       groups[c.id].traverse((o) => {
-        if (o.isMesh) o.material.opacity = dim;
+        if (o.isMesh) {
+          const mats = Array.isArray(o.material) ? o.material : [o.material];
+          mats.forEach((m) => { m.opacity = (m.userData.baseOpacity ?? 1) * dim; });
+        }
       });
     });
   }
@@ -553,6 +597,18 @@ function init(section) {
       stage: { w: sticky.clientWidth, h: sticky.clientHeight },
       pane: { x: pane.x, y: pane.y, w: pane.w, h: pane.h },
       silhouette: activeKey ? silhouettePx(keyToId(activeKey)) : null,
+      allSilhouette: silhouettePx('all'),
+      introBox: (() => { const r = introCopy.getBoundingClientRect(), s = sticky.getBoundingClientRect(); return { x: r.left - s.left, y: r.top - s.top, w: r.width, h: r.height }; })(),
+      finalBox: (() => { const r = finalMark.getBoundingClientRect(), s = sticky.getBoundingClientRect(); return { x: r.left - s.left, y: r.top - s.top, w: r.width, h: r.height }; })(),
+      pose: Object.fromEntries(PART_IDS.map((id) => [id, {
+        position: groups[id].position.toArray().map((v) => +v.toFixed(6)),
+        rotation: groups[id].rotation.toArray().slice(0, 3).map((v) => +v.toFixed(5)),
+        visible: groups[id].visible,
+      }])),
+      leaderPath: (() => {
+        const p = leadersSvg.querySelector('polyline');
+        return p ? p.getAttribute('points') : null;
+      })(),
       anchors: projectedAnchors(),
       leaderEnd: (() => {
         const l = leadersSvg.querySelector('line');
@@ -595,12 +651,13 @@ function init(section) {
     renderer.setSize(w, h, false);
   }
 
-  const io = new IntersectionObserver((entries) => {
+  const observerAvailable = 'IntersectionObserver' in window;
+  const io = observerAvailable ? new IntersectionObserver((entries) => {
     inView = entries[0].isIntersecting;
     if (inView) { loadModel(); requestRender(true); }
-  }, { rootMargin: '25% 0%' });
-  io.observe(section);
-  if (!('IntersectionObserver' in window)) { inView = true; loadModel(); }
+  }, { rootMargin: '25% 0%' }) : null;
+  if (io) io.observe(section);
+  else { inView = true; loadModel(); }
 
   const onScroll = () => requestRender(false);
   const onResize = () => requestRender(true);
@@ -611,7 +668,7 @@ function init(section) {
   const cleanup = () => {
     if (disposed) return;
     disposed = true;
-    io.disconnect();
+    io?.disconnect();
     document.removeEventListener('visibilitychange', onVisibility);
     window.removeEventListener('scroll', onScroll);
     window.removeEventListener('resize', onResize);
@@ -631,32 +688,24 @@ function init(section) {
   window.addEventListener('pagehide', cleanup, { once: true });
 
   window.__ffasm3d = {
-    version: 'proto-1',
+    version: 'pass3',
     get ready() { return ready; },
     progress: () => lastProgress,
     cam: () => ({ pos: camera.position.toArray(), dist: lastView ? lastView.dist : null, center: lastView ? lastView.center.toArray() : null }),
     activeCallout: () => (frameStats ? frameStats.activeCallout : null),
     frame: () => frameStats,
     seatedCheck: () => {
-      if (!ready) return false;
+      if (!ready || !manifestBounds) return false;
       const missing = PART_IDS.filter((id) => !groups[id]);
       if (missing.length) return false;
       applyPose(1);
-      const expected = {
-        enclosure: [[-42, -42, -5.75], [42, 42, 7.75]],
-        switch: [[-29.961, 37.199, -4.658], [18.854, 45.17, 5.771]],
-        solar_lid: [[-40, -40, 7.75], [40, 40, 10.25]],
-        battery: [[-21, -35, -4.25], [21, -5, 0.75]],
-        charge_module: [[-13.15, -0.55, -4.25], [13.15, 16.55, 1.35]],
-        led_pair: [[-10.1, -45, -1.1], [10.1, -36, 3.1]],
-      };
       return PART_IDS.every((id) => {
         const m = new THREE.Matrix4().extractRotation(groups[id].matrixWorld);
         const posOk = groups[id].getWorldPosition(V).distanceTo(seats[id]) < 1e-6;
         const rotOk = Math.abs(m.elements[0] - 1) < 1e-6 && Math.abs(m.elements[5] - 1) < 1e-6 && Math.abs(m.elements[10] - 1) < 1e-6;
         const b = new THREE.Box3().setFromObject(meshNodes[id]);
-        const eb = expected[id];
-        const boundsOk = eb && b.min.distanceTo(new THREE.Vector3(...eb[0].map((v) => v * MM))) < 1e-5 && b.max.distanceTo(new THREE.Vector3(...eb[1].map((v) => v * MM))) < 1e-5;
+        const eb = manifestBounds[id]?.worldBoundsMm;
+        const boundsOk = eb && b.min.distanceTo(new THREE.Vector3(...eb.lo.map((v) => v * MM))) < 1e-5 && b.max.distanceTo(new THREE.Vector3(...eb.hi.map((v) => v * MM))) < 1e-5;
         return posOk && rotOk && boundsOk;
       });
     },
