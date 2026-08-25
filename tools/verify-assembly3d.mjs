@@ -94,6 +94,10 @@ function serve(port) {
 
 const T_CH_START = 0.125;
 const CH_W = 0.108;
+const T_RE_START = 0.82;
+const RE_SPACING = 0.025;
+const RE_W = 0.05;
+const REASSEMBLY_ORDER = ['enclosure', 'switch', 'led_pair', 'charge_module', 'battery', 'solar_lid'];
 
 async function settle(cdp) {
   await cdp.evaluate('new Promise(r=>setTimeout(()=>requestAnimationFrame(()=>requestAnimationFrame(r)),220))', { awaitPromise: true });
@@ -165,6 +169,7 @@ async function browserPass() {
           pane: F.pane,
           sil: F.silhouette,
           allSil: F.allSilhouette,
+          trayVisible: F.trayVisible,
           introBox: F.introBox,
           finalBox: F.finalBox,
           calloutBox: F.calloutBox,
@@ -314,10 +319,50 @@ async function browserPass() {
     const tableauState = await readState();
     const tableauCopyGone = tableauState?.calloutOpacity && Object.values(tableauState.calloutOpacity).every((value) => value <= 0.001);
     check(`[${vp.label}] exploded tableau has no active copy`, !tableauState?.active && tableauState?.activeCount === 0 && tableauCopyGone, `active=${tableauState?.active || 'none'}`);
-    if (!vp.mobile && tableauState?.allSil) {
-      check(`[${vp.label}] exploded tableau meets viewport scale`, tableauState.allSil.w >= vp.w * 0.50 && tableauState.allSil.w <= vp.w * 0.70 && tableauState.allSil.h >= vp.h * 0.52 && tableauState.allSil.h <= vp.h * 0.76, `${tableauState.allSil.w.toFixed(0)}x${tableauState.allSil.h.toFixed(0)}`);
+    check(`[${vp.label}] exploded tableau exposes interior tray`, tableauState?.trayVisible === true);
+    if (tableauState?.pose) {
+      const pts = Object.values(tableauState.pose).map((p) => p.position);
+      const cx = pts.reduce((s, p) => s + p[0], 0) / pts.length;
+      const cy = pts.reduce((s, p) => s + p[1], 0) / pts.length;
+      const cz = pts.reduce((s, p) => s + p[2], 0) / pts.length;
+      const radius = Math.max(...pts.map((p) => Math.hypot(p[0] - cx, p[1] - cy, p[2] - cz)));
+      check(`[${vp.label}] tableau stays within central assembly radius`, radius <= (vp.mobile ? 0.115 : 0.14), `${radius.toFixed(3)}m`);
+    }
+    if (tableauState?.allSil) {
+      const minW = vp.mobile ? vp.w * 0.68 : vp.w * 0.39;
+      const maxW = vp.mobile ? vp.w * 0.86 : vp.w * 0.75;
+      const minH = vp.mobile ? vp.h * 0.50 : vp.h * 0.55;
+      const maxH = vp.mobile ? vp.h * 0.60 : vp.h * 0.65;
+      check(`[${vp.label}] exploded tableau meets viewport scale`, tableauState.allSil.w >= minW && tableauState.allSil.w <= maxW && tableauState.allSil.h >= minH && tableauState.allSil.h <= maxH, `${tableauState.allSil.w.toFixed(0)}x${tableauState.allSil.h.toFixed(0)}`);
     }
     await cdp.screenshot(join(OUT, vp.label + '-exploded-tableau.png'));
+    const reassemblyState = await (async () => { await goto(0.86); await settle(cdp); return readState(); })();
+    check(`[${vp.label}] reassembly exposes interior tray`, reassemblyState?.trayVisible === true);
+    if (reassemblyState?.allSil) {
+      const minW = vp.mobile ? vp.w * 0.68 : vp.w * 0.39;
+      const maxW = vp.mobile ? vp.w * 0.90 : vp.w * 0.78;
+      const minH = vp.mobile ? vp.h * 0.42 : vp.h * 0.42;
+      const maxH = vp.mobile ? vp.h * 0.64 : vp.h * 0.70;
+      check(`[${vp.label}] reassembly composition remains visible`, reassemblyState.allSil.w >= minW && reassemblyState.allSil.w <= maxW && reassemblyState.allSil.h >= minH && reassemblyState.allSil.h <= maxH, `${reassemblyState.allSil.w.toFixed(0)}x${reassemblyState.allSil.h.toFixed(0)}`);
+    }
+    const beforeTableau = await (async () => { await goto(0.765); await settle(cdp); return readState(); })();
+    const afterTableau = await (async () => { await goto(0.785); await settle(cdp); return readState(); })();
+    const angleDelta = beforeTableau?.cam && afterTableau?.cam ? Math.hypot(afterTableau.cam.azim - beforeTableau.cam.azim, afterTableau.cam.elev - beforeTableau.cam.elev) : Infinity;
+    check(`[${vp.label}] solo-to-tableau camera transition is smooth`, angleDelta <= 0.55, `${(angleDelta * 180 / Math.PI).toFixed(1)}deg`);
+    const seatedPose = (await (async () => { await goto(1); await settle(cdp); return readState(); })())?.pose;
+    let previousBeatPose = tableauState?.pose;
+    for (let idx = 0; idx < REASSEMBLY_ORDER.length; idx++) {
+      const beatP = T_RE_START + idx * RE_SPACING + RE_W * 0.62;
+      await goto(beatP); await settle(cdp);
+      const beatState = await readState();
+      const id = REASSEMBLY_ORDER[idx];
+      const here = beatState?.pose?.[id]?.position;
+      const prev = previousBeatPose?.[id]?.position;
+      const seat = seatedPose?.[id]?.position;
+      const dist = (a, b) => a && b ? Math.hypot(a[0] - b[0], a[1] - b[1], a[2] - b[2]) : Infinity;
+      check(`[${vp.label}] reassembly beat ${idx + 1} advances ${id}`, dist(here, seat) <= dist(prev, seat) + 0.0005, `${dist(here, seat).toFixed(4)}m`);
+      previousBeatPose = beatState?.pose || previousBeatPose;
+    }
     await goto(1); await settle(cdp);
     await cdp.screenshot(join(OUT, vp.label + '-final.png'));
 
@@ -365,7 +410,7 @@ staticChecks();
 await browserPass();
 
 writeFileSync(join(OUT, 'report.json'), JSON.stringify({
-  when: 'checkpoint-pass4',
+  when: 'checkpoint-pass5a',
   results,
   passed: results.filter((r) => r.ok).length,
   failed: results.filter((r) => !r.ok).length,
