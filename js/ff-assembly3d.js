@@ -8,12 +8,12 @@ const FOV = 34;
 
 const PART_IDS = ['enclosure', 'switch', 'solar_lid', 'battery', 'charge_module', 'led_pair'];
 const CHAPTERS = [
-  { id: 'solar_lid', key: 'solar', num: '01 / DAYLIGHT IN', title: '5V solar panel', body: 'Captures daylight to recharge the light.', turn: 200, slot: [-110, 0, 55], inspect: [0, 4, 74], anchor: [-34, 0, 1.25] },
-  { id: 'battery', key: 'battery', num: '02 / POWER HELD', title: 'Rechargeable battery', body: 'Stores energy for study after dark.', turn: 185, slot: [-40, -4, 22], inspect: [-16, -2, 46], anchor: [18, 0, 0] },
-  { id: 'charge_module', key: 'module', num: '03 / CHARGE CONTROLLED', title: 'Recharge module', body: 'Manages safe charging from the panel.', turn: 175, slot: [30, -2, 38], inspect: [0, 0, 46], anchor: [-10, 0, 2.8] },
-  { id: 'led_pair', key: 'leds', num: '04 / LIGHT OUT', title: 'Two LEDs', body: 'Turn stored energy into focused study light.', turn: 205, slot: [95, -38, 15], inspect: [0, -54, 26], anchor: [8, -4.5, 0] },
-  { id: 'switch', key: 'switch', num: '05 / SWITCHED BY HAND', title: 'Slide switch', body: 'Completes the circuit so study light flows.', turn: 190, slot: [125, 35, 18], inspect: [0, 64, 26], anchor: [-24, 41, 3] },
-  { id: 'enclosure', key: 'enclosure', num: '06 / BUILT TO PROTECT', title: '3D-printed enclosure', body: 'Shields every component.', turn: 210, slot: [0, 0, 0], inspect: [0, -6, 36], anchor: [38, -36, 1] },
+  { id: 'solar_lid', key: 'solar', num: '01 / DAYLIGHT IN', title: '5V solar panel', body: 'Captures daylight to recharge the light.', turn: 200, slot: [-100, 70, 34], mobileSlot: [0, 130, 28], inspect: [0, 4, 74], anchor: [-34, 0, 1.25] },
+  { id: 'battery', key: 'battery', num: '02 / POWER HELD', title: 'Rechargeable battery', body: 'Stores energy for study after dark.', turn: 185, slot: [-115, 10, 24], mobileSlot: [-66, 18, 20], inspect: [-16, -2, 46], anchor: [18, 0, 0] },
+  { id: 'charge_module', key: 'module', num: '03 / CHARGE CONTROLLED', title: 'Recharge module', body: 'Manages safe charging from the panel.', turn: 175, slot: [40, 20, 23], mobileSlot: [64, 18, 20], inspect: [0, 0, 46], anchor: [-10, 0, 2.8] },
+  { id: 'led_pair', key: 'leds', num: '04 / LIGHT OUT', title: 'Two LEDs', body: 'Turn stored energy into focused study light.', turn: 205, slot: [-65, -32, 18], mobileSlot: [-50, -34, 16], inspect: [0, -54, 26], anchor: [8, -4.5, 0] },
+  { id: 'switch', key: 'switch', num: '05 / SWITCHED BY HAND', title: 'Slide switch', body: 'Completes the circuit so study light flows.', turn: 190, slot: [100, 42, 18], mobileSlot: [56, 48, 16], inspect: [0, 64, 26], anchor: [-24, 41, 3] },
+  { id: 'enclosure', key: 'enclosure', num: '06 / BUILT TO PROTECT', title: '3D-printed enclosure', body: 'Shields every component.', turn: 210, slot: [0, 0, 0], mobileSlot: [0, 0, 0], inspect: [0, -6, 36], anchor: [38, -36, 1] },
 ];
 const REASSEMBLY_ORDER = ['enclosure', 'switch', 'led_pair', 'charge_module', 'battery', 'solar_lid'];
 
@@ -24,8 +24,8 @@ const CH_W = 0.108;
 // Leave a dedicated exploded-tableau beat after the final solo chapter. The
 // slightly tighter reassembly cadence keeps the finished state before p=1.
 const T_RE_START = 0.82;
-const RE_SPACING = 0.018;
-const RE_W = 0.07;
+const RE_SPACING = 0.025;
+const RE_W = 0.05;
 const T_FINAL = Math.max(0.955, T_RE_START + 5 * RE_SPACING + RE_W);
 
 const clamp01 = (v) => Math.max(0, Math.min(1, v));
@@ -176,22 +176,23 @@ function init(section) {
     } else if (id === 'battery') {
       const pouch = matte(0xc8d0cb, 0.48, 0.04);
       const roundedPouch = () => {
-        const s = new THREE.Shape(); const w = 19, h = 13, r = 2.6;
+        const s = new THREE.Shape(); const w = 20.5, h = 14.3, r = 3.2;
         s.moveTo(-w + r, -h); s.lineTo(w - r, -h); s.quadraticCurveTo(w, -h, w, -h + r);
         s.lineTo(w, h - r); s.quadraticCurveTo(w, h, w - r, h); s.lineTo(-w + r, h);
         s.quadraticCurveTo(-w, h, -w, h - r); s.lineTo(-w, -h + r); s.quadraticCurveTo(-w, -h, -w + r, -h);
-        const g = new THREE.ExtrudeGeometry(s, { depth: 0.34, bevelEnabled: true, bevelSegments: 2, bevelSize: 0.7, bevelThickness: 0.08 });
+        const g = new THREE.ExtrudeGeometry(s, { depth: 0.22, bevelEnabled: true, bevelSegments: 3, bevelSize: 0.8, bevelThickness: 0.06 });
         g.translate(0, 0, -0.17); return g;
       };
       detail(roundedPouch(), pouch, [0, 0, 2.58]);
       detail(roundedPouch(), pouch, [0, 0, -2.58]);
-      const tape = matte(0xb45c1f, 0.46, 0.08);
-      detail(new THREE.BoxGeometry(1.6, 30.6, 5.2), tape, [-21.1, 0, 0]);
-      detail(new THREE.BoxGeometry(1.6, 30.6, 5.2), tape, [21.1, 0, 0]);
-      const lead = matte(0x161c19, 0.48, 0.02);
-      detail(new THREE.CylinderGeometry(0.7, 0.7, 7, 12), lead, [-18, -17.5, 2.8]).rotation.z = Math.PI / 2;
-      detail(new THREE.CylinderGeometry(0.65, 0.65, 7, 12), matte(0x8f1717, 0.5, 0.02), [18, -17.5, 2.8]).rotation.z = Math.PI / 2;
-      detail(new THREE.BoxGeometry(6.5, 2.8, 0.5), matte(0xd59a35, 0.35, 0.18), [0, -14.1, 2.82]);
+      const amber = matte(0xd58b2b, 0.42, 0.16);
+      detail(new THREE.BoxGeometry(34, 2.2, 5.2), amber, [0, 14.4, 2.82]);
+      detail(new THREE.BoxGeometry(4.4, 0.9, 5.25), matte(0xe0a13a, 0.32, 0.2), [-13, 15.2, 2.84]);
+      detail(new THREE.BoxGeometry(4.4, 0.9, 5.25), matte(0xe0a13a, 0.32, 0.2), [13, 15.2, 2.84]);
+      const blackLead = matte(0x161c19, 0.48, 0.02);
+      const redLead = matte(0x8f1717, 0.5, 0.02);
+      detail(new THREE.CylinderGeometry(0.55, 0.55, 6, 12), blackLead, [-10, 18.0, 2.8]);
+      detail(new THREE.CylinderGeometry(0.52, 0.52, 6, 12), redLead, [10, 18.0, 2.8]);
     } else if (id === 'charge_module') {
       const chip = matte(0x111715, 0.3, 0.22);
       for (const z of [-3.35, 3.35]) {
@@ -229,12 +230,16 @@ function init(section) {
         front.rotation.x = Math.PI;
         detail(new THREE.SphereGeometry(0.95, 16, 10), core, [x, -5.85, 0]);
         detail(new THREE.CylinderGeometry(0.45, 0.45, 2.8, 10), leadMat, [x, -4.0, 0]);
-        detail(new THREE.SphereGeometry(2.2, 24, 16, 0, Math.PI * 2, 0, Math.PI / 2), domeMat, [x, 4.65, 0]);
-        detail(new THREE.SphereGeometry(0.95, 16, 10), core, [x, 5.85, 0]);
-        detail(new THREE.CylinderGeometry(0.45, 0.45, 2.8, 10), leadMat, [x, 4.0, 0]);
+        // Each through-hole LED has one emitting dome and two short rear
+        // leads, rather than a second lens at the back of the barrel.
+        detail(new THREE.CylinderGeometry(0.42, 0.42, 3.6, 10), leadMat, [x - 1.15, 5.1, 0]);
+        detail(new THREE.CylinderGeometry(0.42, 0.42, 3.6, 10), leadMat, [x + 1.15, 5.1, 0]);
       });
     } else if (id === 'switch') {
-      detail(new THREE.BoxGeometry(10, 5, 3.3), matte(0x080c0a, 0.66, 0.02), [-5, 41.3, 3.5]);
+      const body = matte(0x26342d, 0.52, 0.08);
+      const actuator = matte(0xb6c4bb, 0.34, 0.18);
+      detail(new THREE.BoxGeometry(22, 9, 3.6), body, [-5, 41.3, 3.7]);
+      detail(new THREE.BoxGeometry(9, 4.8, 3.8), actuator, [-1, 41.3, 6.6]);
     } else if (id === 'enclosure') {
       const layer = matte(0x26302a, 0.88, 0.01);
       for (let i = 0; i < 8; i++) detail(new THREE.BoxGeometry(81, 0.24, 0.16), layer, [0, -42.08, -4.8 + i * 1.55]);
@@ -243,6 +248,29 @@ function init(section) {
       detail(new THREE.BoxGeometry(82.5, 1.1, 0.42), rim, [0, 41.7, 6.8]);
       detail(new THREE.BoxGeometry(1.1, 81, 0.42), rim, [-41.7, 0, 6.8]);
       detail(new THREE.BoxGeometry(1.1, 81, 0.42), rim, [41.7, 0, 6.8]);
+      // Open-tray reading surface: visible only during the exploded and
+      // reassembly beats, then tucked behind the closed solar lid.
+      const trayMat = new THREE.MeshStandardMaterial({ color: 0x456b57, roughness: 0.62, metalness: 0.03 });
+      trayMat.userData.baseOpacity = 1;
+      trayMat.userData.baseTransparent = false;
+      trayMat.userData.baseDepthWrite = true;
+      const tray = detail(new THREE.BoxGeometry(150, 104, 0.9), trayMat, [0, 0, -8.5]);
+      tray.userData.assemblyInterior = true;
+      const seatMat = new THREE.MeshStandardMaterial({ color: 0x9cae88, roughness: 0.58, metalness: 0.04 });
+      seatMat.userData.baseOpacity = 1;
+      seatMat.userData.baseTransparent = false;
+      seatMat.userData.baseDepthWrite = true;
+      for (const [x, y, w, h] of [[-16, -7, 31, 22], [16, 8, 24, 19]]) {
+        const seat = detail(new THREE.BoxGeometry(w, h, 0.65), seatMat, [x, y, -9.0]);
+        seat.userData.assemblyInterior = true;
+      }
+      const aperture = detail(new THREE.BoxGeometry(14, 8, 0.7), matte(0x0c1410, 0.72, 0.04), [0, 35, -9.0]);
+      aperture.userData.assemblyInterior = true;
+      for (const x of [-14, 14]) {
+        const hole = detail(new THREE.CylinderGeometry(2.6, 2.6, 0.7, 16), matte(0x09120e, 0.68, 0.03), [x, -35, -9.0]);
+        hole.rotation.x = Math.PI / 2;
+        hole.userData.assemblyInterior = true;
+      }
     }
   }
 
@@ -296,7 +324,13 @@ function init(section) {
   function worldBox(id, out) {
     // Recompute from the final hierarchy/pose so leader and camera bounds are
     // always the geometry actually submitted to the renderer.
-    return out.copy(new THREE.Box3().setFromObject(groups[id]));
+    const hiddenInterior = [];
+    groups[id].traverse((o) => {
+      if (o.userData.assemblyInterior && o.visible) { hiddenInterior.push(o); o.visible = false; }
+    });
+    out.copy(new THREE.Box3().setFromObject(groups[id]));
+    hiddenInterior.forEach((o) => { o.visible = true; });
+    return out;
   }
 
   const tmpBox = new THREE.Box3();
@@ -331,14 +365,14 @@ function init(section) {
     { at: 0.02, azim: 34, elev: -28 },
     { at: T_EXPLODE[1], azim: 30, elev: -12 },
     ...CHAPTERS.map((c, i) => ({ at: T_CH_START + (i + 0.69) * CH_W, azim: 24 + i * 13, elev: 8 })),
-    { at: T_RE_START + 0.04, azim: 30, elev: -10 },
+    { at: T_CH_START + CHAPTERS.length * CH_W, azim: 40, elev: 18 },
+    { at: T_RE_START, azim: 40, elev: 18 },
+    { at: T_RE_START + 0.04, azim: 40, elev: 18 },
     { at: 0.99, azim: 20, elev: -24 },
   ];
 
   function viewAngles(p) {
     const ks = ANGLE_KEYS;
-    const chapterEnd = T_CH_START + CHAPTERS.length * CH_W;
-    if (p >= chapterEnd && p < T_RE_START) return { azim: 28, elev: -12 };
     if (p <= ks[0].at) return { azim: ks[0].azim, elev: ks[0].elev };
     for (let i = 0; i < ks.length - 1; i++) {
       if (p >= ks[i].at && p <= ks[i + 1].at) {
@@ -419,14 +453,14 @@ function init(section) {
     }
     if (p < T_INTRO_END) center.y += pane.mobile ? 0.012 : 0.025;
     const chapterEnd = T_CH_START + CHAPTERS.length * CH_W;
-    const tableauMode = p >= chapterEnd && p < T_RE_START;
-    if (!pane.mobile && (tableauMode || !blend.id || blend.w <= 0) && (p >= chapterEnd && p <= 0.94 || p >= T_FINAL)) {
+    const compositionMode = p >= chapterEnd && p <= 0.94;
+    if (compositionMode || p >= T_FINAL) {
       // Tableau, reassembly and final are viewport compositions rather than
       // editorial-pane solos. Refit against the full viewport so the closed
       // product and the spread assembly read at the requested scale.
       const finalMode = p >= T_FINAL;
-      const targetW = sticky.clientWidth * (finalMode ? 0.46 : 0.58);
-      const targetH = sticky.clientHeight * (finalMode ? 0.60 : 0.64);
+      const targetW = sticky.clientWidth * (finalMode ? 0.46 : (pane.mobile ? 0.82 : 0.68));
+      const targetH = sticky.clientHeight * (finalMode ? 0.60 : (pane.mobile ? 0.56 : 0.60));
       const compositionBox = boxForSubject('all', boxA);
       center = compositionBox.getCenter(centerV);
       // Use a damped solve. A hard clamp of the raw ratio can overshoot when
@@ -444,7 +478,7 @@ function init(section) {
       // The finished exterior has a compact depth box, so the pane fit is
       // height-dominated. Bring it a little closer to the viewport target
       // while retaining the safe margin around the final marker.
-      if (finalMode) dist *= 0.88;
+      if (finalMode) dist *= 0.94;
     }
     return { center, dist };
   }
@@ -518,13 +552,16 @@ function init(section) {
   function applyPose(p) {
     const ex = explodeK(p);
     const chIdx = chapterAt(p);
+    const tableauStart = T_CH_START + CHAPTERS.length * CH_W;
+    const mobileTableau = sticky.clientWidth < 700 && p >= tableauStart;
     const soloId = chIdx >= 0 ? CHAPTERS[chIdx].id : null;
     CHAPTERS.forEach((c, i) => {
       const g = groups[c.id];
       if (!g) return;
-      let x = c.slot[0] * MM * ex * reassemblyK(p, c.id);
-      let y = c.slot[1] * MM * ex * reassemblyK(p, c.id);
-      let z = c.slot[2] * MM * ex * reassemblyK(p, c.id);
+      const slot = mobileTableau ? (c.mobileSlot || c.slot) : c.slot;
+      let x = slot[0] * MM * ex * reassemblyK(p, c.id);
+      let y = slot[1] * MM * ex * reassemblyK(p, c.id);
+      let z = slot[2] * MM * ex * reassemblyK(p, c.id);
       let yaw = 0;
       const reassemblyProgress = smooth((p - T_RE_START) / Math.max(0.001, T_FINAL - T_RE_START));
       const hasCompletedSolo = chIdx > i || (chIdx === i && chapterT(p, i) >= 0.72) || p >= T_RE_START;
@@ -658,6 +695,7 @@ function init(section) {
       groups[c.id].visible = dim > 0.001 || c.id === activeId;
       groups[c.id].traverse((o) => {
         if (o.isMesh) {
+          if (o.userData.assemblyInterior) o.visible = p >= T_EXPLODE[1] && p < T_FINAL;
           const mats = Array.isArray(o.material) ? o.material : [o.material];
           mats.forEach((m) => {
             m.opacity = (m.userData.baseOpacity ?? 1) * dim;
@@ -713,6 +751,11 @@ function init(section) {
       pane: { x: pane.x, y: pane.y, w: pane.w, h: pane.h },
       silhouette: activeKey ? silhouettePx(keyToId(activeKey)) : null,
       allSilhouette: silhouettePx('all'),
+      trayVisible: Object.values(groups).some((g) => {
+        let found = false;
+        g.traverse((o) => { if (o.userData.assemblyInterior && o.visible) found = true; });
+        return found;
+      }),
       introBox: (() => { const r = introCopy.getBoundingClientRect(), s = sticky.getBoundingClientRect(); return { x: r.left - s.left, y: r.top - s.top, w: r.width, h: r.height }; })(),
       finalBox: (() => { const r = finalMark.getBoundingClientRect(), s = sticky.getBoundingClientRect(); return { x: r.left - s.left, y: r.top - s.top, w: r.width, h: r.height }; })(),
       calloutBox: activeKey ? (() => { const r = callouts[activeKey].getBoundingClientRect(), s = sticky.getBoundingClientRect(); return { x: r.left - s.left, y: r.top - s.top, w: r.width, h: r.height }; })() : null,
@@ -807,7 +850,13 @@ function init(section) {
     version: 'pass4',
     get ready() { return ready; },
     progress: () => lastProgress,
-    cam: () => ({ pos: camera.position.toArray(), dist: lastView ? lastView.dist : null, center: lastView ? lastView.center.toArray() : null }),
+    cam: () => {
+      const center = lastView ? lastView.center : new THREE.Vector3();
+      const dx = camera.position.x - center.x;
+      const dy = camera.position.y - center.y;
+      const dz = camera.position.z - center.z;
+      return { pos: camera.position.toArray(), dist: lastView ? lastView.dist : null, center: center.toArray(), azim: Math.atan2(dx, dz), elev: Math.atan2(dy, Math.hypot(dx, dz)) };
+    },
     activeCallout: () => (frameStats ? frameStats.activeCallout : null),
     frame: () => frameStats,
     seatedCheck: () => {
