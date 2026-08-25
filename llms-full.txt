@@ -136,31 +136,13 @@ See how a light is built
 ## index.html
 Flash Forward - Energy Poverty Nonprofit Foundation
 The Sponsor a Light Program
-Keep study time going after sunset.
-Sponsor one solar study light each month for a student without reliable electricity, then follow it from build to placement.
-$5.17 is the current build cost for one light; shipping and distribution are funded separately.
-Sponsor a Light — $5.17/month
-See What $5.17 Builds
-Flash Forward Foundation is an IRS-recognized 501(c)(3) nonprofit.
-What $5.17 builds
-Current build cost: $5.17
-3D-printed enclosure
-5V solar panel
-Rechargeable battery
-Recharge module
-Wires and connections
-LED
-Follow your sponsored light
-Receive individualized updates when your light is built, shipped, and placed with a student.
-Build
-Assembled in our student-led lab.
-Ship
-Sent through a distribution partner.
-Place
-Received by a student.
-Illustrated assembly
+One monthly sponsorship helps a student study after dark while interns gain real-world experience building the program alongside professionals.
+Sponsors receive individual updates when their light is built, shipped, and placed.
+Sponsor a Light + Get Updates
+See How the Light Is Built
+How it is built
 One light, assembled step by step.
-See the enclosure, battery, recharge module, two LEDs, and solar panel come together.
+See each component take its place in one finished solar study light.
 01
 3D-printed enclosure
 Protects every component.
@@ -169,16 +151,16 @@ Rechargeable battery
 Stores power collected during the day.
 03
 Recharge module
-Shown generically.
+Controls safe charging from the solar panel.
 04
 Two LEDs
-Provides focused study light.
+Turn stored energy into focused study light.
 05
 5V solar panel
-Charges the light during the day.
-Representative component imagery; parts may vary by build.
-Students in off-grid communities
-Our partner network helps place solar-powered study lights with students who need reliable light after dark.
+Recharges the light in daylight.
+$5.17 current build cost
+Receive individualized updates when your light is built, shipped, and placed.
+Sponsor a Light — $5.17/month
 
 ## mission.html
 Our Why and Mission | Flash Forward - Energy Poverty Nonprofit Foundation
