@@ -31,7 +31,7 @@ function staticChecks() {
   check('reassembly overlap <=20%', overlap <= RE_W * 0.20, `${(overlap / RE_W * 100).toFixed(1)}% overlap`);
   const glbPath = join(ROOT, 'assets', '3d', 'flashlight-assembly.glb');
   const manifest = JSON.parse(readFileSync(join(ROOT, 'assets', '3d', 'assembly-manifest.json'), 'utf8'));
-  check('pass10 checkpoint/cache token', manifest.checkpoint === 'pass10' && manifest.cacheToken === 'pass10', `${manifest.checkpoint}/${manifest.cacheToken}`);
+  check('pass10b checkpoint/cache token', manifest.checkpoint === 'pass10b' && manifest.cacheToken === 'pass10b', `${manifest.checkpoint}/${manifest.cacheToken}`);
   check('glb exists', existsSync(glbPath));
   const bytes = statSync(glbPath).size;
   check('glb <= 2 MB', bytes <= 2 * 1024 * 1024, bytes + ' bytes');
@@ -87,14 +87,14 @@ function staticChecks() {
   const switchVisible = manifest.parts.switchVisible || {};
   check('pass10 authored SS12D00 switch gate', switchVisible.family === 'SS12D00-style authored' && switchVisible.pins === 3 && switchVisible.ladderOverlay === false && switchVisible.sourceRendered === false && switchVisible.boundsMm?.length <= 9.8 && switchVisible.fitScale?.[0] === 1.04, JSON.stringify(switchVisible));
   const ledOptics = manifest.parts.ledOptics || {};
-  check('pass10 LED lens extension gate', ledOptics.lensExtensionMm >= 3 && ledOptics.lensExtensionMm <= 4 && ledOptics.clearMaterial === 'ClearLed' && ledOptics.domeFrontLocalMm >= 3 && ledOptics.leadInnerLocalMm <= -3, JSON.stringify(ledOptics));
+  check('pass10b LED geometry continuity gate', ledOptics.lensExtensionMm >= 3 && ledOptics.lensExtensionMm <= 4 && ledOptics.clearMaterial === 'ClearLed' && ledOptics.domeFrontLocalMm <= -3 && ledOptics.leadInnerLocalMm >= 0 && ledOptics.flangeOverlapMm > 0 && ledOptics.exteriorClearComponents === 2, JSON.stringify(ledOptics));
   const batterySpec = manifest.parts.batterySpec || {};
-  check('pass10 503040 battery spec/proportions', JSON.stringify(batterySpec.nominalMm) === JSON.stringify([5, 30, 40]) && JSON.stringify(batterySpec.finalEnvelopeMm) === JSON.stringify([5, 26, 40]) && Math.abs(batterySpec.fitScale?.[1] - (26 / 30)) < 1e-6, JSON.stringify(batterySpec));
+  check('pass10b 503040 battery spec/proportions', JSON.stringify(batterySpec.nominalMm) === JSON.stringify([5, 30, 40]) && JSON.stringify(batterySpec.finalEnvelopeMm) === JSON.stringify([5, 26, 40]) && Math.abs(batterySpec.fitScale?.[1] - (26 / 30)) < 1e-6, JSON.stringify(batterySpec));
   const solarSpec = manifest.parts.solarSpec || {};
   check('pass10 solar panel follows case face margin', JSON.stringify(solarSpec.caseFaceBoundsMm) === JSON.stringify({ x: [-42, 42], y: [-42, 42] }) && JSON.stringify(solarSpec.derivedPanelMm) === JSON.stringify([82, 82]) && solarSpec.edgeMarginMm === 1, JSON.stringify(solarSpec));
   const batteryTexture = readFileSync(join(ROOT, 'assets', '3d', 'textures', 'battery_basecolor.png'));
   const batteryTextureHash = createHash('sha256').update(batteryTexture).digest('hex');
-  check('pass10 battery print texture hash', batteryTextureHash === 'a14340658dbb8d125c32e27724e8643cb2896344f2b6cc66d6ad939f609c2234', batteryTextureHash.slice(0, 16));
+  check('pass10b battery print texture hash', batteryTextureHash === 'c068ff30d28be3e57965b4ef3bdc495285d5c3332b80be4c5bf2748c8a0f981b', batteryTextureHash.slice(0, 16));
   const asm3dForLock = readFileSync(join(ROOT, 'js', 'ff-assembly3d.js'), 'utf8');
   const lockStart = asm3dForLock.indexOf('const CHAPTERS = [');
   const chapterLockEnd = asm3dForLock.indexOf('const T_HERO_START', lockStart);
@@ -119,7 +119,7 @@ function staticChecks() {
   check('cavity floor is zero-thickness visual surface', /new THREE\.PlaneGeometry\(75, 75\)/.test(asm3d) && /visualOnly\s*=\s*true/.test(asm3d) && !/new THREE\.BoxGeometry\(75, 75,/.test(asm3d));
   check('no CDN references in runtime', !/https?:\/\//.test(asm3d.replace(/\/\/[^\n]*|\/\*[\s\S]*?\*\//g, '')));
   check('pass10 LED uniform normalization', !/sceneY\s*=|\* 0\.36/.test(readFileSync(join(ROOT, 'tools', 'build-assembly-glb.mjs'), 'utf8')) && /LED_LENS_EXTENSION\s*=\s*3\.4/.test(readFileSync(join(ROOT, 'tools', 'build-assembly-glb.mjs'), 'utf8')));
-  check('pass10 battery U flip and restrained normal', /RepeatWrapping/.test(asm3d) && /repeat\.x\s*=\s*-1/.test(asm3d) && /BatterySilver.*?\? 0\.07/.test(asm3d));
+  check('pass10b battery opaque foil/no normal map', /RepeatWrapping/.test(asm3d) && /repeat\.x\s*=\s*-1/.test(asm3d) && /m\.normalMap = null/.test(asm3d) && !/BatterySilver.*?\? 0\.07/.test(asm3d));
   check('pass10 switch fit removes crop bias', !/dist \*= 0\.95/.test(asm3d) && /dist \*= 0\.99/.test(asm3d) && /dist \*= 1\.03/.test(asm3d) && /switchCenterProbe/.test(asm3d));
   check('DPR cap present', /DPR_CAP\s*=\s*1\.75/.test(asm3d));
   check('ACES neutral renderer configured', /ACESFilmicToneMapping/.test(asm3d) && /toneMappingExposure = 1\.08/.test(asm3d) && /physicallyCorrectLights = true/.test(asm3d));
@@ -594,7 +594,7 @@ staticChecks();
 await browserPass();
 
 writeFileSync(join(OUT, 'report.json'), JSON.stringify({
-  when: 'checkpoint-pass10',
+  when: 'checkpoint-pass10b',
   results,
   passed: results.filter((r) => r.ok).length,
   failed: results.filter((r) => !r.ok).length,
