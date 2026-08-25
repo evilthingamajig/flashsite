@@ -41,7 +41,10 @@ def save_board():
         d.line((x, 8, x, 248), fill=(31, 142, 92), width=2)
     for y in (32, 90, 142, 206):
         d.line((8, y, 248, y), fill=(198, 143, 58), width=2)
-    d.rectangle((86, 78, 176, 172), fill=(17, 25, 22), outline=(3, 8, 6), width=3)
+    # Keep the texture as a board-bed cue; the imported CAD supplies the
+    # actual package silhouettes. A small IC shadow avoids the PASS9 generic
+    # planar-UV mapping turning the whole board face black.
+    d.rounded_rectangle((116, 108, 140, 136), radius=3, fill=(17, 25, 22), outline=(3, 8, 6), width=2)
     d.text((20, 218), "TP4056", fill=(224, 228, 180))
     im.save(ROOT / "tp4056_basecolor.png", optimize=True)
 

@@ -160,6 +160,12 @@
 !/review/assembly-3d/*.png
 !/source-assets/stl/enclosure.stl
 !/source-assets/stl/switch.stl
+!/source-assets/external/
+!/source-assets/external/pass9/
+!/source-assets/external/pass9/*.stl
+!/source-assets/external/pass9/*.step
+!/source-assets/external/pass9/derived/
+!/source-assets/external/pass9/derived/*.stl
 !/tools/build-assembly-glb.mjs
 !/tools/build-pbr-textures.py
 !/tools/cdp.mjs

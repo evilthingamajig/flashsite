@@ -7,7 +7,29 @@
     },
     "switch": {
       "file": "source-assets/stl/switch.stl",
-      "sha256": "a95ce9b836c5d39e68c84119dea6642ef09986266935cb6007acfc6cbb802932"
+      "sha256": "a95ce9b836c5d39e68c84119dea6642ef09986266935cb6007acfc6cbb802932",
+      "role": "hidden fit/collision proxy; not rendered"
+    },
+    "tp4056": {
+      "file": "source-assets/external/pass9/tp4056-usbc.stl",
+      "url": "https://raw.githubusercontent.com/spezifisch/pgpemu-case/main/Parts/TP4056%20battery%20charger%20USB-C.stl",
+      "sha256": "616d02bc3e1824e231b99afd24f1f3722407bc96d5b1d8918dc74cf3a7069e4d",
+      "license": "source repository provenance recorded; mockup integration"
+    },
+    "led": {
+      "file": "source-assets/external/pass9/led-d5-clear.step -> derived/led-d5-clear.stl",
+      "url": "https://gitlab.com/kicad/libraries/kicad-packages3D/-/raw/master/LED_THT.3dshapes/LED_D5.0mm_Clear.step",
+      "sha256": "276a8e7382a479f3bb73611e29be4b6a8411ca9bd753f3f1be6ff687a662fc59",
+      "derivedSha256": "7b3050f9067c73821b72ea724273e32951ef45e6b1ace4ca1727f4aa90e5ad32",
+      "license": "KiCad libraries provenance; STEP converted offline with CadQuery"
+    },
+    "compact_switch": {
+      "file": "source-assets/external/pass9/switch-dip-slide.step -> derived/switch-dip-slide.stl",
+      "url": "https://gitlab.com/kicad/libraries/kicad-packages3D/-/raw/master/Button_Switch_THT.3dshapes/SW_DIP_SPSTx01_Slide_6.7x4.1mm_W7.62mm_P2.54mm_LowProfile.step",
+      "sha256": "67a20f46c6da7b433d65ef81bcfa8dac1c5d29f4ad880d7d8af928a2cbcc0297",
+      "derivedSha256": "bf05ac7842eb5221cf20d3e0c03378c7358f7ca663e0a8c19b6646308247c01e",
+      "role": "visible compact replacement; supplied switch STL remains hidden fit/collision proxy",
+      "license": "KiCad libraries provenance; STEP converted offline with CadQuery"
     }
   },
   "parts": {
@@ -25,6 +47,30 @@
       "duplicateFacesDropped": 0,
       "verticesWelded": 138,
       "trianglesKept": 56,
+      "topology": "Procedural/solid source topology validated by deterministic bounds and seating checks."
+    },
+    "tp4056": {
+      "stlTriangles": 6404,
+      "degenerateDropped": 2,
+      "duplicateFacesDropped": 0,
+      "verticesWelded": 16033,
+      "trianglesKept": 6402,
+      "topology": "Procedural/solid source topology validated by deterministic bounds and seating checks."
+    },
+    "led_external": {
+      "stlTriangles": 4959,
+      "degenerateDropped": 1,
+      "duplicateFacesDropped": 0,
+      "verticesWelded": 12393,
+      "trianglesKept": 4958,
+      "topology": "Procedural/solid source topology validated by deterministic bounds and seating checks."
+    },
+    "compact_switch": {
+      "stlTriangles": 834,
+      "degenerateDropped": 0,
+      "duplicateFacesDropped": 0,
+      "verticesWelded": 2083,
+      "trianglesKept": 834,
       "topology": "Procedural/solid source topology validated by deterministic bounds and seating checks."
     },
     "summary": {
@@ -61,7 +107,7 @@
         }
       },
       "switch": {
-        "triangles": 260,
+        "triangles": 1010,
         "seatMm": [
           0,
           0,
@@ -69,26 +115,26 @@
         ],
         "localBoundsMm": {
           "lo": [
-            -29.961,
-            37.199,
-            -4.658
+            -6.845,
+            37.781,
+            -1.6
           ],
           "hi": [
-            18.854,
-            45.17,
-            7.04
+            -3.155,
+            44.819,
+            5.825
           ]
         },
         "worldBoundsMm": {
           "lo": [
-            -29.961,
-            37.199,
-            -4.658
+            -6.845,
+            37.781,
+            -1.6
           ],
           "hi": [
-            18.854,
-            45.17,
-            7.04
+            -3.155,
+            44.819,
+            5.825
           ]
         }
       },
@@ -125,7 +171,7 @@
         }
       },
       "battery": {
-        "triangles": 484,
+        "triangles": 608,
         "seatMm": [
           0,
           -20,
@@ -133,31 +179,31 @@
         ],
         "localBoundsMm": {
           "lo": [
-            -20.5,
-            -14.3,
-            -1.198
+            -20.192,
+            -14.085,
+            -1.225
           ],
           "hi": [
-            20.5,
+            20.192,
             19.1,
             1.69
           ]
         },
         "worldBoundsMm": {
           "lo": [
-            -20.5,
-            -34.3,
-            -2.947
+            -20.192,
+            -34.085,
+            -2.975
           ],
           "hi": [
-            20.5,
+            20.192,
             -0.9,
             -0.06
           ]
         }
       },
       "charge_module": {
-        "triangles": 1200,
+        "triangles": 6678,
         "seatMm": [
           0,
           8,
@@ -165,31 +211,31 @@
         ],
         "localBoundsMm": {
           "lo": [
-            -13.15,
-            -8.55,
-            -1.075
+            -14.05,
+            -8.6,
+            -0.19
           ],
           "hi": [
-            13.15,
-            10.79,
-            1.075
+            14.05,
+            8.6,
+            4.113
           ]
         },
         "worldBoundsMm": {
           "lo": [
-            -13.15,
-            -0.55,
-            -2.525
+            -14.05,
+            -0.6,
+            -1.64
           ],
           "hi": [
-            13.15,
-            18.79,
-            -0.375
+            14.05,
+            16.6,
+            2.663
           ]
         }
       },
       "led_pair": {
-        "triangles": 852,
+        "triangles": 10092,
         "seatMm": [
           0,
           -40.5,
@@ -197,26 +243,26 @@
         ],
         "localBoundsMm": {
           "lo": [
-            -10.2,
-            -4.85,
-            -2.167
+            -10.7,
+            -2.5,
+            -2.9
           ],
           "hi": [
-            10.2,
-            6.25,
-            2.167
+            10.7,
+            5.776,
+            2.9
           ]
         },
         "worldBoundsMm": {
           "lo": [
-            -10.2,
-            -45.35,
-            -1.167
+            -10.7,
+            -43,
+            -1.9
           ],
           "hi": [
-            10.2,
-            -34.25,
-            3.167
+            10.7,
+            -34.724,
+            3.9
           ]
         }
       }
@@ -237,12 +283,12 @@
     "note": "Pairs listed are designed contacts only: led_pair pierces the solid -Y wall by intent (no LED holes); everything else verified penetration-free."
   },
   "totals": {
-    "triangles": 4945,
-    "bytes": 254160,
+    "triangles": 20537,
+    "bytes": 1679104,
     "parts": 6
   },
   "limits": {
-    "maxTriangles": 5000,
-    "maxBytes": 256000
+    "maxTriangles": 50000,
+    "maxBytes": 2097152
   }
 }
