@@ -7,7 +7,7 @@ var seat={enclosure:{x:0,y:5,z:10,scale:1,rz:0},battery:{x:-9,y:-4,z:0,scale:.30
 var soloStart={lid:.13,battery:.25,module:.37,leds:.49,enclosure:.61};
 var soloEnd={lid:.25,battery:.37,module:.49,leds:.61,enclosure:.73};
 var turns={lid:190,battery:-220,module:175,leds:-205,enclosure:185};
-var hotspots={solar:{length:20,y:54,angle:-8},battery:{length:18,y:46,angle:8},module:{length:19,y:48,angle:-7},leds:{length:17,y:54,angle:12},enclosure:{length:21,y:43,angle:-10}};
+var hotspots={solar:{pointX:.5,pointY:.5},battery:{pointX:.5,pointY:.56},module:{pointX:.5,pointY:.5},leds:{pointX:.5,pointY:.53},enclosure:{pointX:.5,pointY:.58}};
 function clamp(v){return Math.max(0,Math.min(1,v));}
 function smooth(v){v=clamp(v);return v*v*(3-2*v);}
 function lerp(a,b,t){return a+(b-a)*t;}
@@ -36,8 +36,13 @@ function init(section){
   });
   setPiece(frontWall,(p>=.73?1:0)*tableauFade,seat.enclosure.x,seat.enclosure.y,30,1,0,0,0,30,0);
   intro.classList.toggle('is-hidden',p>.105);finalMark.classList.toggle('is-active',p>=.97);
-  var active=p<.19?null:p<.25?'solar':p<.31?null:p<.37?'battery':p<.43?null:p<.49?'module':p<.55?null:p<.61?'leds':p<.67?null:p<.73?'enclosure':null;
-  ['solar','battery','module','leds','enclosure'].forEach(function(id,i){var c=callouts[id],guide=hotspots[id],right=i%2===1;c.classList.toggle('is-active',active===id);c.classList.toggle('is-right',right);c.style.setProperty('--leader-length',(mobile?Math.max(22,guide.length*1.4):guide.length)+'vw');c.style.setProperty('--leader-y',guide.y+'%');c.style.setProperty('--leader-angle',(right?-guide.angle:guide.angle)+'deg');});
+  var active=null,chapterIds=['solar','battery','module','leds','enclosure'],chapterLayers={solar:'lid',battery:'battery',module:'module',leds:'leds',enclosure:'enclosure'};
+  chapterIds.some(function(id){var holdStart=soloStart[chapterLayers[id]]+.065,holdEnd=soloEnd[chapterLayers[id]]-.018;if(p>=holdStart&&p<=holdEnd){active=id;return true;}return false;});
+  chapterIds.forEach(function(id,i){var c=callouts[id],guide=hotspots[id],right=i%2===1,target=layers[chapterLayers[id]],cRect=c.getBoundingClientRect(),tRect=target&&target.getBoundingClientRect(),startX=mobile?cRect.width*.5:(right?-14:cRect.width+14),startY=mobile?-8:cRect.height*.56,endX=0,endY=0;
+   c.classList.toggle('is-active',active===id);c.classList.toggle('is-right',right);
+   if(tRect){endX=tRect.left+tRect.width*guide.pointX-(cRect.left+startX);endY=tRect.top+tRect.height*guide.pointY-(cRect.top+startY);}
+   c.style.setProperty('--leader-start-x',startX+'px');c.style.setProperty('--leader-start-y',startY+'px');c.style.setProperty('--leader-length',Math.max(24,Math.hypot(endX,endY))+'px');c.style.setProperty('--leader-angle',(Math.atan2(endY,endX)*180/Math.PI)+'deg');
+  });
  }
  var timeline=null,proxy={p:0},ticking=false,scrollHandler,resizeHandler,cleanupDone=false;
  function cleanup(){if(cleanupDone)return;cleanupDone=true;nav(false);if(timeline){if(timeline.scrollTrigger)timeline.scrollTrigger.kill();timeline.kill();timeline=null;}if(scrollHandler)window.removeEventListener('scroll',scrollHandler);if(resizeHandler)window.removeEventListener('resize',resizeHandler);}
