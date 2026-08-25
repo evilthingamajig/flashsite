@@ -63,8 +63,10 @@ function staticChecks() {
   check('cavity floor is zero-thickness visual surface', /new THREE\.PlaneGeometry\(75, 75\)/.test(asm3d) && /visualOnly\s*=\s*true/.test(asm3d) && !/new THREE\.BoxGeometry\(75, 75,/.test(asm3d));
   check('no CDN references in runtime', !/https?:\/\//.test(asm3d.replace(/\/\/[^\n]*|\/\*[\s\S]*?\*\//g, '')));
   check('DPR cap present', /DPR_CAP\s*=\s*1\.75/.test(asm3d));
+  check('ACES neutral renderer configured', /ACESFilmicToneMapping/.test(asm3d) && /toneMappingExposure = 1\.08/.test(asm3d) && /physicallyCorrectLights = true/.test(asm3d));
+  check('runtime render metrics instrumented', /renderMetrics: \{ triangles: renderer\.info\.render\.triangles, drawCalls: renderer\.info\.render\.calls \}/.test(asm3d));
   check('component material realism markers present', /MeshPhysicalMaterial/.test(asm3d) && /transmission/.test(asm3d) && /amber/.test(asm3d) && /redLead/.test(asm3d) && /portShell/.test(asm3d) && /actuator/.test(asm3d));
-  check('component geometry proportions authored', /roundedPouch/.test(asm3d) && /SphereGeometry\(2\.2/.test(asm3d) && /CylinderGeometry\(2\.02/.test(asm3d) && /BoxGeometry\(26\.0, 17\.0, 0\.38/.test(asm3d));
+  check('component geometry proportions authored', /roundedPouch/.test(asm3d) && /SphereGeometry\(2\.2/.test(asm3d) && /CylinderGeometry\(2\.02/.test(asm3d) && /ExtrudeGeometry\(boardShape/.test(asm3d));
   check('choreography constants frozen for 7A', /T_RE_START = 0\.76/.test(asm3d) && /RE_SPACING = 0\.035/.test(asm3d) && /RE_W = 0\.025/.test(asm3d) && /T_FINAL = 0\.925/.test(asm3d));
   const pngRuntime = readFileSync(join(ROOT, 'js', 'ff-assembly.js'), 'utf8');
   check('PNG assembly guarded in 3d mode', pngRuntime.includes("classList.contains('ff-asm3d')"));
@@ -189,6 +191,7 @@ async function browserPass() {
           finalBox: F.finalBox,
           markerActive: F.markerActive,
           closedGeometry: F.closedGeometry,
+          renderMetrics: F.renderMetrics,
           calloutBox: F.calloutBox,
           cam: window.__ffasm3d.cam(),
           leaderEnd: F.leaderEnd,
@@ -218,6 +221,7 @@ async function browserPass() {
       await goto(frac);
       const st = await readState();
       if (!st) continue;
+      if (st.renderMetrics) check(`[${vp.label}] procedural render triangle budget`, st.renderMetrics.triangles <= 40000 && st.renderMetrics.drawCalls <= 260, `${st.renderMetrics.triangles} tris/${st.renderMetrics.drawCalls} calls`);
       forward.set(frac.toFixed(4), JSON.stringify({ p: st.p.toFixed(4), active: st.active, pose: st.pose }));
       if (st.p >= T_CH_START && st.p < T_CH_START + CH_W * 6) {
         const opacities = Object.values(st.calloutOpacity || {}).sort((a, b) => b - a);
@@ -531,7 +535,7 @@ staticChecks();
 await browserPass();
 
 writeFileSync(join(OUT, 'report.json'), JSON.stringify({
-  when: 'checkpoint-pass7a',
+  when: 'checkpoint-pass7b',
   results,
   passed: results.filter((r) => r.ok).length,
   failed: results.filter((r) => !r.ok).length,
