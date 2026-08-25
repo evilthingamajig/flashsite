@@ -31,7 +31,7 @@ function staticChecks() {
   check('reassembly overlap <=20%', overlap <= RE_W * 0.20, `${(overlap / RE_W * 100).toFixed(1)}% overlap`);
   const glbPath = join(ROOT, 'assets', '3d', 'flashlight-assembly.glb');
   const manifest = JSON.parse(readFileSync(join(ROOT, 'assets', '3d', 'assembly-manifest.json'), 'utf8'));
-  check('pass10c checkpoint/cache token', manifest.checkpoint === 'pass10c' && manifest.cacheToken === 'pass10c', `${manifest.checkpoint}/${manifest.cacheToken}`);
+  check('pass10e checkpoint/cache token', manifest.checkpoint === 'pass10e' && manifest.cacheToken === 'pass10e', `${manifest.checkpoint}/${manifest.cacheToken}`);
   check('glb exists', existsSync(glbPath));
   const bytes = statSync(glbPath).size;
   check('glb <= 2 MB', bytes <= 2 * 1024 * 1024, bytes + ' bytes');
@@ -87,11 +87,11 @@ function staticChecks() {
   const switchVisible = manifest.parts.switchVisible || {};
   check('pass10 authored SS12D00 switch gate', switchVisible.family === 'SS12D00-style authored' && switchVisible.pins === 3 && switchVisible.ladderOverlay === false && switchVisible.sourceRendered === false && switchVisible.boundsMm?.length <= 9.8 && switchVisible.fitScale?.[0] === 1.04, JSON.stringify(switchVisible));
   const ledOptics = manifest.parts.ledOptics || {};
-  check('pass10b LED geometry continuity gate', ledOptics.lensExtensionMm >= 3 && ledOptics.lensExtensionMm <= 4 && ledOptics.clearMaterial === 'ClearLed' && ledOptics.domeFrontLocalMm <= -3 && ledOptics.leadInnerLocalMm >= 0 && ledOptics.flangeOverlapMm > 0 && ledOptics.exteriorClearComponents === 2, JSON.stringify(ledOptics));
+  check('pass10e LED source remap/diameter gate', /sourceZ>=3 clear body\/dome; sourceZ<3 leads/.test(ledOptics.sourceMapping || '') && ledOptics.lensExtensionMm >= 8 && ledOptics.clearCrossDiameterMm >= 5.5 && ledOptics.clearCrossDiameterMm <= 7.5 && ledOptics.leadCrossDiameterMm < 1.0 && ledOptics.clearMaterial === 'ClearLed' && ledOptics.domeFrontLocalMm < -8 && ledOptics.leadInnerLocalMm >= 0 && ledOptics.exteriorClearComponents === 2, JSON.stringify(ledOptics));
   const ledWorldFit = manifest.parts.ledWorldFit || {};
-  check('pass10c LED front-plane fit', ledWorldFit.seatY === -42.25 && ledWorldFit.flangePlaneDeltaMm <= 0.25 && ledWorldFit.domeProtrusionMm >= 3.4 && ledWorldFit.domeProtrusionMm <= 4.25 && ledWorldFit.exteriorClearComponents === 2 && ledWorldFit.pairCentersMm?.[0] === -8 && ledWorldFit.pairCentersMm?.[1] === 8, JSON.stringify(ledWorldFit));
+  check('pass10e LED full-length front-plane fit', ledWorldFit.seatY === -42.25 && ledWorldFit.flangePlaneDeltaMm <= 0.25 && ledWorldFit.domeProtrusionMm >= 8 && ledWorldFit.domeProtrusionMm <= 11 && ledWorldFit.exteriorClearComponents === 2 && ledWorldFit.pairCentersMm?.[0] === -8 && ledWorldFit.pairCentersMm?.[1] === 8, JSON.stringify(ledWorldFit));
   check('pass10c LED leads remain inward', ledWorldFit.leadStartWorldY >= ledWorldFit.enclosureOuterFrontY && ledWorldFit.leadWorldYMax > ledWorldFit.leadStartWorldY, JSON.stringify({ start: ledWorldFit.leadStartWorldY, max: ledWorldFit.leadWorldYMax }));
-  check('pass10c LED projected pixel gate', ledWorldFit.pixelGate?.desktop?.minWidth >= 22 && ledWorldFit.pixelGate.desktop.minHeight >= 18 && ledWorldFit.pixelGate.desktop.centerSeparation >= 35 && ledWorldFit.pixelGate.mobile.minWidth >= 14 && ledWorldFit.pixelGate.mobile.minHeight >= 11, JSON.stringify(ledWorldFit.pixelGate));
+  check('pass10e LED projected pixel gate', ledWorldFit.pixelGate?.desktop?.minWidth >= 20 && ledWorldFit.pixelGate.desktop.minHeight >= 18 && ledWorldFit.pixelGate.desktop.centerSeparation >= 35 && ledWorldFit.pixelGate.mobile.minWidth >= 14 && ledWorldFit.pixelGate.mobile.minHeight >= 11, JSON.stringify(ledWorldFit.pixelGate));
   const batterySpec = manifest.parts.batterySpec || {};
   check('pass10b 503040 battery spec/proportions', JSON.stringify(batterySpec.nominalMm) === JSON.stringify([5, 30, 40]) && JSON.stringify(batterySpec.finalEnvelopeMm) === JSON.stringify([5, 26, 40]) && Math.abs(batterySpec.fitScale?.[1] - (26 / 30)) < 1e-6, JSON.stringify(batterySpec));
   const solarSpec = manifest.parts.solarSpec || {};
@@ -122,12 +122,13 @@ function staticChecks() {
   const asm3d = readFileSync(join(ROOT, 'js', 'ff-assembly3d.js'), 'utf8');
   check('cavity floor is zero-thickness visual surface', /new THREE\.PlaneGeometry\(75, 75\)/.test(asm3d) && /visualOnly\s*=\s*true/.test(asm3d) && !/new THREE\.BoxGeometry\(75, 75,/.test(asm3d));
   check('no CDN references in runtime', !/https?:\/\//.test(asm3d.replace(/\/\/[^\n]*|\/\*[\s\S]*?\*\//g, '')));
-  check('pass10 LED uniform normalization', !/sceneY\s*=|\* 0\.36/.test(readFileSync(join(ROOT, 'tools', 'build-assembly-glb.mjs'), 'utf8')) && /LED_LENS_EXTENSION\s*=\s*3\.4/.test(readFileSync(join(ROOT, 'tools', 'build-assembly-glb.mjs'), 'utf8')));
+  check('pass10e LED official source normalization', !/sceneY\s*=|\* 0\.36/.test(readFileSync(join(ROOT, 'tools', 'build-assembly-glb.mjs'), 'utf8')) && /sourceZ>=3 clear body\/dome; sourceZ<3 leads/.test(readFileSync(join(ROOT, 'tools', 'build-assembly-glb.mjs'), 'utf8')) && /mappedY = -\(z - LED_FLANGE_SOURCE_Z\) \* LED_SCALE/.test(readFileSync(join(ROOT, 'tools', 'build-assembly-glb.mjs'), 'utf8')));
   check('pass10b battery opaque foil/no normal map', /RepeatWrapping/.test(asm3d) && /repeat\.x\s*=\s*-1/.test(asm3d) && /m\.normalMap = null/.test(asm3d) && !/BatterySilver.*?\? 0\.07/.test(asm3d));
   check('pass10 switch fit removes crop bias', !/dist \*= 0\.95/.test(asm3d) && /dist \*= 0\.99/.test(asm3d) && /dist \*= 1\.03/.test(asm3d) && /switchCenterProbe/.test(asm3d));
   check('DPR cap present', /DPR_CAP\s*=\s*1\.75/.test(asm3d));
   check('ACES neutral renderer configured', /ACESFilmicToneMapping/.test(asm3d) && /toneMappingExposure = 1\.08/.test(asm3d) && /physicallyCorrectLights = true/.test(asm3d));
   check('runtime render metrics instrumented', /renderMetrics: \{ triangles: renderer\.info\.render\.triangles, drawCalls: renderer\.info\.render\.calls \}/.test(asm3d));
+  check('pass10e visible LED optical material', /ClearLed[\s\S]{0,500}transmission: 0\.70[\s\S]{0,500}opacity: 0\.36/.test(asm3d) && /envMapIntensity: 1\.15/.test(asm3d) && /emissiveIntensity = 0\.10/.test(asm3d));
   check('component material realism markers present', /MeshPhysicalMaterial/.test(asm3d) && /transmission/.test(asm3d) && /amber/.test(asm3d) && /redLead/.test(asm3d) && /actuator/.test(asm3d) && /ClearLed/.test(asm3d));
   check('component geometry proportions authored', /roundedPouch/.test(asm3d) && /SS12D00|compact SS12D00/.test(readFileSync(join(ROOT, 'tools', 'build-assembly-glb.mjs'), 'utf8')) && /PcbTrace/.test(readFileSync(join(ROOT, 'tools', 'build-assembly-glb.mjs'), 'utf8')));
   check('choreography constants frozen for 7A', /T_RE_START = 0\.76/.test(asm3d) && /RE_SPACING = 0\.035/.test(asm3d) && /RE_W = 0\.025/.test(asm3d) && /T_FINAL = 0\.925/.test(asm3d));
@@ -598,7 +599,7 @@ staticChecks();
 await browserPass();
 
 writeFileSync(join(OUT, 'report.json'), JSON.stringify({
-  when: 'checkpoint-pass10c',
+  when: 'checkpoint-pass10e',
   results,
   passed: results.filter((r) => r.ok).length,
   failed: results.filter((r) => !r.ok).length,

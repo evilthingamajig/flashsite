@@ -1,7 +1,7 @@
 import * as THREE from 'three';
 import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
 
-const CACHE_TOKEN = 'pass10c';
+const CACHE_TOKEN = 'pass10e';
 const GLB_URL = `assets/3d/flashlight-assembly.glb?rev=${CACHE_TOKEN}`;
 const MM = 0.001;
 const DPR_CAP = 1.75;
@@ -383,22 +383,30 @@ function init(section) {
               // transmissive optical plastic. A single clear mesh plus dark
               // internal anvil gives an edge/rim read without a bloom blob.
               const lens = new THREE.MeshPhysicalMaterial({
-                name: 'ClearLed', color: 0x2f8f9b, roughness: 0.035,
-                metalness: 0.0, transmission: 0.88, ior: 1.49,
-                thickness: 0.28, transparent: true, opacity: 0.16,
+                name: 'ClearLed', color: 0x8fd7dc, roughness: 0.055,
+                metalness: 0.0, transmission: 0.70, ior: 1.49,
+                thickness: 0.28, transparent: true, opacity: 0.36,
                 depthWrite: false, side: THREE.DoubleSide,
-                envMapIntensity: 0.72,
+                envMapIntensity: 1.15,
               });
               if ('attenuationColor' in lens) lens.attenuationColor.setHex(0x398f99);
               if ('attenuationDistance' in lens) lens.attenuationDistance = 1.4;
-              lens.userData.baseOpacity = 0.16;
+              if (lens.emissive) lens.emissive.setHex(0x4f9da3);
+              if ('emissiveIntensity' in lens) lens.emissiveIntensity = 0.10;
+              lens.userData.baseOpacity = 0.36;
               lens.userData.baseTransparent = true;
               lens.userData.baseDepthWrite = false;
               o.material = lens;
+              // The approved enclosure has no LED cut-outs. Keep the shell
+              // optically visible in the closed hero while the separate metal
+              // leads remain ordinary depth-tested geometry inside the cavity.
+              lens.depthTest = false;
+              o.renderOrder = 20;
+              o.castShadow = false;
             } else if (m.name === 'LedDie') {
-              m.color?.setHex(0x9beaf0);
-              m.emissive?.setHex(0x4ecbd2);
-              if ('emissiveIntensity' in m) m.emissiveIntensity = 0.18;
+              m.color?.setHex(0x4f8589);
+              m.emissive?.setHex(0x62cbd0);
+              if ('emissiveIntensity' in m) m.emissiveIntensity = 0.12;
             } else if (m.name === 'LedAnvil') {
               m.color?.setHex(0x192321);
               m.metalness = 0.62;

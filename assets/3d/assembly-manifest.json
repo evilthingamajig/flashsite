@@ -1,7 +1,7 @@
 {
-  "generator": "flashsite build-assembly-glb 1.2.2-pass10c",
-  "checkpoint": "pass10c",
-  "cacheToken": "pass10c",
+  "generator": "flashsite build-assembly-glb 1.2.3-pass10e",
+  "checkpoint": "pass10e",
+  "cacheToken": "pass10e",
   "sources": {
     "enclosure": {
       "file": "source-assets/stl/enclosure.stl",
@@ -181,63 +181,66 @@
     },
     "ledOptics": {
       "source": "KiCad LED_D5.0mm_Clear",
-      "lensExtensionMm": 3.4,
+      "sourceMapping": "sourceZ>=3 clear body/dome; sourceZ<3 leads",
+      "lensExtensionMm": 10.32000045776367,
+      "clearCrossDiameterMm": 6.96,
+      "leadCrossDiameterMm": 0.48,
       "pairSpacingMm": 16,
       "clearMaterial": "ClearLed",
       "internalMaterial": "LedDie/LedAnvil",
-      "domeFrontLocalMm": -3.4,
+      "domeFrontLocalMm": -10.32000045776367,
       "leadInnerLocalMm": 0,
       "flangeOverlapMm": 0.05,
       "exteriorClearComponents": 2,
       "clearBoundsMm": [
         {
           "lo": [
-            -10.003462451696397,
-            -3.4,
-            -0.24000000357627868
-          ],
-          "hi": [
-            -6.475462436676025,
-            0,
-            0.24000000357627868
-          ]
-        },
-        {
-          "lo": [
-            5.996537548303604,
-            -3.4,
-            -0.24000000357627868
-          ],
-          "hi": [
-            9.524537563323975,
-            0,
-            0.24000000357627868
-          ]
-        }
-      ],
-      "leadBoundsMm": [
-        {
-          "lo": [
             -11.2394624710083,
-            0,
+            -10.32000045776367,
             -3.4799612045288084
           ],
           "hi": [
             -4.7605375289917,
-            10.32000045776367,
+            0,
             3.4799612045288084
           ]
         },
         {
           "lo": [
             4.7605375289917,
-            0,
+            -10.32000045776367,
             -3.4799612045288084
           ],
           "hi": [
             11.2394624710083,
-            10.32000045776367,
+            0,
             3.4799612045288084
+          ]
+        }
+      ],
+      "leadBoundsMm": [
+        {
+          "lo": [
+            -10.003462451696397,
+            0,
+            -0.24000000357627868
+          ],
+          "hi": [
+            -6.475462436676025,
+            6.6,
+            0.24000000357627868
+          ]
+        },
+        {
+          "lo": [
+            5.996537548303604,
+            0,
+            -0.24000000357627868
+          ],
+          "hi": [
+            9.524537563323975,
+            6.6,
+            0.24000000357627868
           ]
         }
       ]
@@ -442,7 +445,7 @@
         }
       },
       "led_pair": {
-        "triangles": 10092,
+        "triangles": 9596,
         "seatMm": [
           0,
           -42.25,
@@ -451,24 +454,24 @@
         "localBoundsMm": {
           "lo": [
             -11.239,
-            -3.4,
+            -10.32,
             -3.48
           ],
           "hi": [
             11.239,
-            10.32,
+            6.6,
             3.48
           ]
         },
         "worldBoundsMm": {
           "lo": [
             -11.239,
-            -45.65,
+            -52.57,
             -2.48
           ],
           "hi": [
             11.239,
-            -31.93,
+            -35.65,
             4.48
           ]
         }
@@ -478,11 +481,11 @@
       "enclosureOuterFrontY": -42.25,
       "seatY": -42.25,
       "flangeWorldY": -42.25,
-      "domeFrontWorldY": -45.65,
-      "domeProtrusionMm": 3.4,
+      "domeFrontWorldY": -52.57000045776367,
+      "domeProtrusionMm": 10.32,
       "flangePlaneDeltaMm": 0,
       "leadStartWorldY": -42.25,
-      "leadWorldYMax": -31.93,
+      "leadWorldYMax": -35.65,
       "pairCentersMm": [
         -8,
         8
@@ -511,17 +514,13 @@
       [
         "enclosure",
         "led_pair"
-      ],
-      [
-        "battery",
-        "led_pair"
       ]
     ],
     "note": "Pairs listed are designed contacts only: led_pair pierces the solid -Y wall by intent (no LED holes); everything else verified penetration-free."
   },
   "totals": {
-    "triangles": 15801,
-    "bytes": 1307280,
+    "triangles": 15305,
+    "bytes": 1263028,
     "parts": 6
   },
   "limits": {

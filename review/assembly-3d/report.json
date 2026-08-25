@@ -1,5 +1,5 @@
 {
-  "when": "checkpoint-pass10c",
+  "when": "checkpoint-pass10e",
   "results": [
     {
       "name": "reassembly overlap <=20%",
@@ -7,9 +7,9 @@
       "detail": "0.0% overlap"
     },
     {
-      "name": "pass10c checkpoint/cache token",
+      "name": "pass10e checkpoint/cache token",
       "ok": true,
-      "detail": "pass10c/pass10c"
+      "detail": "pass10e/pass10e"
     },
     {
       "name": "glb exists",
@@ -18,7 +18,7 @@
     {
       "name": "glb <= 2 MB",
       "ok": true,
-      "detail": "1307280 bytes"
+      "detail": "1263028 bytes"
     },
     {
       "name": "manifest bytes match glb",
@@ -27,7 +27,7 @@
     {
       "name": "triangles <= 50000",
       "ok": true,
-      "detail": "15801 tris"
+      "detail": "15305 tris"
     },
     {
       "name": "glb node names exact",
@@ -98,22 +98,22 @@
       "detail": "{\"family\":\"SS12D00-style authored\",\"boundsMm\":{\"length\":9.67,\"width\":5.51,\"height\":4.15},\"pins\":3,\"ladderOverlay\":false,\"sourceRendered\":false,\"fitScale\":[1.04,1.02,1]}"
     },
     {
-      "name": "pass10b LED geometry continuity gate",
+      "name": "pass10e LED source remap/diameter gate",
       "ok": true,
-      "detail": "{\"source\":\"KiCad LED_D5.0mm_Clear\",\"lensExtensionMm\":3.4,\"pairSpacingMm\":16,\"clearMaterial\":\"ClearLed\",\"internalMaterial\":\"LedDie/LedAnvil\",\"domeFrontLocalMm\":-3.4,\"leadInnerLocalMm\":0,\"flangeOverlapMm\":0.05,\"exteriorClearComponents\":2,\"clearBoundsMm\":[{\"lo\":[-10.003462451696397,-3.4,-0.24000000357627868],\"hi\":[-6.475462436676025,0,0.24000000357627868]},{\"lo\":[5.996537548303604,-3.4,-0.24000000357627868],\"hi\":[9.524537563323975,0,0.24000000357627868]}],\"leadBoundsMm\":[{\"lo\":[-11.2394624710083,0,-3.4799612045288084],\"hi\":[-4.7605375289917,10.32000045776367,3.4799612045288084]},{\"lo\":[4.7605375289917,0,-3.4799612045288084],\"hi\":[11.2394624710083,10.32000045776367,3.4799612045288084]}]}"
+      "detail": "{\"source\":\"KiCad LED_D5.0mm_Clear\",\"sourceMapping\":\"sourceZ>=3 clear body/dome; sourceZ<3 leads\",\"lensExtensionMm\":10.32000045776367,\"clearCrossDiameterMm\":6.96,\"leadCrossDiameterMm\":0.48,\"pairSpacingMm\":16,\"clearMaterial\":\"ClearLed\",\"internalMaterial\":\"LedDie/LedAnvil\",\"domeFrontLocalMm\":-10.32000045776367,\"leadInnerLocalMm\":0,\"flangeOverlapMm\":0.05,\"exteriorClearComponents\":2,\"clearBoundsMm\":[{\"lo\":[-11.2394624710083,-10.32000045776367,-3.4799612045288084],\"hi\":[-4.7605375289917,0,3.4799612045288084]},{\"lo\":[4.7605375289917,-10.32000045776367,-3.4799612045288084],\"hi\":[11.2394624710083,0,3.4799612045288084]}],\"leadBoundsMm\":[{\"lo\":[-10.003462451696397,0,-0.24000000357627868],\"hi\":[-6.475462436676025,6.6,0.24000000357627868]},{\"lo\":[5.996537548303604,0,-0.24000000357627868],\"hi\":[9.524537563323975,6.6,0.24000000357627868]}]}"
     },
     {
-      "name": "pass10c LED front-plane fit",
+      "name": "pass10e LED full-length front-plane fit",
       "ok": true,
-      "detail": "{\"enclosureOuterFrontY\":-42.25,\"seatY\":-42.25,\"flangeWorldY\":-42.25,\"domeFrontWorldY\":-45.65,\"domeProtrusionMm\":3.4,\"flangePlaneDeltaMm\":0,\"leadStartWorldY\":-42.25,\"leadWorldYMax\":-31.93,\"pairCentersMm\":[-8,8],\"exteriorClearComponents\":2,\"pixelGate\":{\"desktop\":{\"minWidth\":22,\"minHeight\":18,\"centerSeparation\":35},\"mobile\":{\"minWidth\":14,\"minHeight\":11}}}"
+      "detail": "{\"enclosureOuterFrontY\":-42.25,\"seatY\":-42.25,\"flangeWorldY\":-42.25,\"domeFrontWorldY\":-52.57000045776367,\"domeProtrusionMm\":10.32,\"flangePlaneDeltaMm\":0,\"leadStartWorldY\":-42.25,\"leadWorldYMax\":-35.65,\"pairCentersMm\":[-8,8],\"exteriorClearComponents\":2,\"pixelGate\":{\"desktop\":{\"minWidth\":22,\"minHeight\":18,\"centerSeparation\":35},\"mobile\":{\"minWidth\":14,\"minHeight\":11}}}"
     },
     {
       "name": "pass10c LED leads remain inward",
       "ok": true,
-      "detail": "{\"start\":-42.25,\"max\":-31.93}"
+      "detail": "{\"start\":-42.25,\"max\":-35.65}"
     },
     {
-      "name": "pass10c LED projected pixel gate",
+      "name": "pass10e LED projected pixel gate",
       "ok": true,
       "detail": "{\"desktop\":{\"minWidth\":22,\"minHeight\":18,\"centerSeparation\":35},\"mobile\":{\"minWidth\":14,\"minHeight\":11}}"
     },
@@ -174,7 +174,7 @@
       "ok": true
     },
     {
-      "name": "pass10 LED uniform normalization",
+      "name": "pass10e LED official source normalization",
       "ok": true
     },
     {
@@ -195,6 +195,10 @@
     },
     {
       "name": "runtime render metrics instrumented",
+      "ok": true
+    },
+    {
+      "name": "pass10e visible LED optical material",
       "ok": true
     },
     {
@@ -235,22 +239,22 @@
     {
       "name": "[desktop-1440x900] procedural render triangle budget",
       "ok": true,
-      "detail": "26162 tris/25 calls"
+      "detail": "34512 tris/25 calls"
     },
     {
       "name": "[desktop-1440x900] procedural render triangle budget",
       "ok": true,
-      "detail": "26162 tris/25 calls"
+      "detail": "34512 tris/25 calls"
     },
     {
       "name": "[desktop-1440x900] procedural render triangle budget",
       "ok": true,
-      "detail": "31642 tris/53 calls"
+      "detail": "39992 tris/53 calls"
     },
     {
       "name": "[desktop-1440x900] procedural render triangle budget",
       "ok": true,
-      "detail": "31642 tris/53 calls"
+      "detail": "39992 tris/53 calls"
     },
     {
       "name": "[desktop-1440x900] procedural render triangle budget",
@@ -315,7 +319,7 @@
     {
       "name": "[desktop-1440x900] procedural render triangle budget",
       "ok": true,
-      "detail": "20224 tris/9 calls"
+      "detail": "28574 tris/9 calls"
     },
     {
       "name": "[desktop-1440x900] dense solo copy remains readable @0.500",
@@ -330,7 +334,7 @@
     {
       "name": "[desktop-1440x900] procedural render triangle budget",
       "ok": true,
-      "detail": "20224 tris/9 calls"
+      "detail": "28574 tris/9 calls"
     },
     {
       "name": "[desktop-1440x900] dense solo copy remains readable @0.563",
@@ -390,42 +394,42 @@
     {
       "name": "[desktop-1440x900] procedural render triangle budget",
       "ok": true,
-      "detail": "31642 tris/53 calls"
+      "detail": "39992 tris/53 calls"
     },
     {
       "name": "[desktop-1440x900] procedural render triangle budget",
       "ok": true,
-      "detail": "31642 tris/53 calls"
+      "detail": "39992 tris/53 calls"
     },
     {
       "name": "[desktop-1440x900] procedural render triangle budget",
       "ok": true,
-      "detail": "26162 tris/25 calls"
+      "detail": "34512 tris/25 calls"
     },
     {
       "name": "[desktop-1440x900] procedural render triangle budget",
       "ok": true,
-      "detail": "26162 tris/25 calls"
+      "detail": "34512 tris/25 calls"
     },
     {
       "name": "[desktop-1440x900] explosion closed hold is rendered",
       "ok": true,
-      "detail": "485x597"
+      "detail": "458x597"
     },
     {
       "name": "[desktop-1440x900] explosion lid lift is rendered",
       "ok": true,
-      "detail": "530x559"
+      "detail": "527x579"
     },
     {
       "name": "[desktop-1440x900] explosion internal separation is rendered",
       "ok": true,
-      "detail": "526x533"
+      "detail": "526x554"
     },
     {
       "name": "[desktop-1440x900] explosion exploded hold is rendered",
       "ok": true,
-      "detail": "528x535"
+      "detail": "528x554"
     },
     {
       "name": "[desktop-1440x900] explosion lid lifts before internals",
@@ -530,7 +534,7 @@
     {
       "name": "[desktop-1440x900] hold ch4 clearance >=32/40px",
       "ok": true,
-      "detail": "L36 R341 T225 B179"
+      "detail": "L35 R341 T195 B138"
     },
     {
       "name": "[desktop-1440x900] leader lands on mesh anchor ch4",
@@ -540,7 +544,7 @@
     {
       "name": "[desktop-1440x900] leader route stays outside silhouette ch4",
       "ok": true,
-      "detail": "route 1041,562 sil 470,289,557,400"
+      "detail": "route 1041,455 sil 470,259,557,471"
     },
     {
       "name": "[desktop-1440x900] hold ch5 silhouette fills 58-74% of pane",
@@ -614,7 +618,7 @@
     {
       "name": "[desktop-1440x900] final composition meets viewport scale",
       "ok": true,
-      "detail": "548x596"
+      "detail": "551x634"
     },
     {
       "name": "[desktop-1440x900] exploded tableau has no active copy",
@@ -648,12 +652,12 @@
     {
       "name": "[desktop-1440x900] exploded tableau meets viewport scale",
       "ok": true,
-      "detail": "581x565"
+      "detail": "569x568"
     },
     {
       "name": "[desktop-1440x900] tableau enclosure anchor fills 32-40vw",
       "ok": true,
-      "detail": "477px"
+      "detail": "467px"
     },
     {
       "name": "[desktop-1440x900] reassembly exposes interior tray",
@@ -682,7 +686,7 @@
     {
       "name": "[desktop-1440x900] solo-to-tableau camera distance is continuous",
       "ok": true,
-      "detail": "1.07x"
+      "detail": "1.06x"
     },
     {
       "name": "[desktop-1440x900] solo-to-tableau camera center is continuous",
@@ -886,22 +890,22 @@
     {
       "name": "[mobile-390x844] procedural render triangle budget",
       "ok": true,
-      "detail": "26162 tris/25 calls"
+      "detail": "34512 tris/25 calls"
     },
     {
       "name": "[mobile-390x844] procedural render triangle budget",
       "ok": true,
-      "detail": "26162 tris/25 calls"
+      "detail": "34512 tris/25 calls"
     },
     {
       "name": "[mobile-390x844] procedural render triangle budget",
       "ok": true,
-      "detail": "31642 tris/53 calls"
+      "detail": "39992 tris/53 calls"
     },
     {
       "name": "[mobile-390x844] procedural render triangle budget",
       "ok": true,
-      "detail": "31642 tris/53 calls"
+      "detail": "39992 tris/53 calls"
     },
     {
       "name": "[mobile-390x844] procedural render triangle budget",
@@ -966,7 +970,7 @@
     {
       "name": "[mobile-390x844] procedural render triangle budget",
       "ok": true,
-      "detail": "20224 tris/9 calls"
+      "detail": "28574 tris/9 calls"
     },
     {
       "name": "[mobile-390x844] dense solo copy remains readable @0.500",
@@ -981,7 +985,7 @@
     {
       "name": "[mobile-390x844] procedural render triangle budget",
       "ok": true,
-      "detail": "20224 tris/9 calls"
+      "detail": "28574 tris/9 calls"
     },
     {
       "name": "[mobile-390x844] dense solo copy remains readable @0.563",
@@ -1041,42 +1045,42 @@
     {
       "name": "[mobile-390x844] procedural render triangle budget",
       "ok": true,
-      "detail": "31642 tris/53 calls"
+      "detail": "39992 tris/53 calls"
     },
     {
       "name": "[mobile-390x844] procedural render triangle budget",
       "ok": true,
-      "detail": "31642 tris/53 calls"
+      "detail": "39992 tris/53 calls"
     },
     {
       "name": "[mobile-390x844] procedural render triangle budget",
       "ok": true,
-      "detail": "26162 tris/25 calls"
+      "detail": "34512 tris/25 calls"
     },
     {
       "name": "[mobile-390x844] procedural render triangle budget",
       "ok": true,
-      "detail": "26162 tris/25 calls"
+      "detail": "34512 tris/25 calls"
     },
     {
       "name": "[mobile-390x844] explosion closed hold is rendered",
       "ok": true,
-      "detail": "275x352"
+      "detail": "260x353"
     },
     {
       "name": "[mobile-390x844] explosion lid lift is rendered",
       "ok": true,
-      "detail": "287x310"
+      "detail": "287x324"
     },
     {
       "name": "[mobile-390x844] explosion internal separation is rendered",
       "ok": true,
-      "detail": "287x295"
+      "detail": "287x306"
     },
     {
       "name": "[mobile-390x844] explosion exploded hold is rendered",
       "ok": true,
-      "detail": "287x294"
+      "detail": "287x305"
     },
     {
       "name": "[mobile-390x844] explosion lid lifts before internals",
@@ -1176,7 +1180,7 @@
     {
       "name": "[mobile-390x844] hold ch4 within 70-86vw/60svh",
       "ok": true,
-      "detail": "286x203"
+      "detail": "286x239"
     },
     {
       "name": "[mobile-390x844] hold ch4 clearance >=16px",
@@ -1191,7 +1195,7 @@
     {
       "name": "[mobile-390x844] leader route stays outside silhouette ch4",
       "ok": true,
-      "detail": "route 126,548 sil 60,331,286,203"
+      "detail": "route 126,568 sil 60,315,286,239"
     },
     {
       "name": "[mobile-390x844] hold ch5 within 70-86vw/60svh",
@@ -1270,7 +1274,7 @@
     {
       "name": "[mobile-390x844] final composition meets mobile viewport scale",
       "ok": true,
-      "detail": "298x334"
+      "detail": "299x356"
     },
     {
       "name": "[mobile-390x844] exploded tableau has no active copy",
@@ -1531,6 +1535,6 @@
       "detail": ""
     }
   ],
-  "passed": 312,
+  "passed": 313,
   "failed": 0
 }
