@@ -1,7 +1,7 @@
 {
-  "generator": "flashsite build-assembly-glb 1.1.0-pass9b",
-  "checkpoint": "pass9b",
-  "cacheToken": "pass9b",
+  "generator": "flashsite build-assembly-glb 1.2.0-pass10",
+  "checkpoint": "pass10",
+  "cacheToken": "pass10",
   "sources": {
     "enclosure": {
       "file": "source-assets/stl/enclosure.stl",
@@ -30,7 +30,7 @@
       "url": "https://gitlab.com/kicad/libraries/kicad-packages3D/-/raw/master/Button_Switch_THT.3dshapes/SW_DIP_SPSTx01_Slide_6.7x4.1mm_W7.62mm_P2.54mm_LowProfile.step",
       "sha256": "67a20f46c6da7b433d65ef81bcfa8dac1c5d29f4ad880d7d8af928a2cbcc0297",
       "derivedSha256": "bf05ac7842eb5221cf20d3e0c03378c7358f7ca663e0a8c19b6646308247c01e",
-      "role": "visible compact replacement; supplied switch STL remains hidden fit/collision proxy",
+      "role": "dimension reference only; not rendered (visible switch is authored SS12D00-style pack)",
       "license": "KiCad libraries provenance; STEP converted offline with CadQuery"
     }
   },
@@ -81,13 +81,13 @@
         "triangles": 3474,
         "boundsMm": {
           "lo": [
-            -14.05,
-            -3.818,
+            -12.5,
+            -3.885,
             2.063
           ],
           "hi": [
-            -6.784,
-            3.798,
+            -6.036,
+            3.864,
             2.885
           ]
         },
@@ -98,13 +98,13 @@
         "triangles": 2900,
         "boundsMm": {
           "lo": [
-            -13.961,
-            -4.5,
+            -12.421,
+            -4.578,
             0.712
           ],
           "hi": [
-            -5.485,
-            4.5,
+            -4.88,
+            4.578,
             4.113
           ]
         },
@@ -115,19 +115,117 @@
         "triangles": 28,
         "boundsMm": {
           "lo": [
-            -13.85,
-            -8.6,
+            -12.322,
+            -8.75,
             -0.19
           ],
           "hi": [
-            14.05,
-            8.6,
+            12.5,
+            8.75,
             0.76
           ]
         },
         "role": "board substrate"
       }
     ],
+    "tp4056Footprint": {
+      "targetMm": [
+        24,
+        18
+      ],
+      "visibleMm": [
+        24,
+        17.5
+      ],
+      "scale": [
+        0.889679703224702,
+        1.0174418435411368
+      ]
+    },
+    "switchVisible": {
+      "family": "SS12D00-style authored",
+      "boundsMm": {
+        "length": 9.67,
+        "width": 5.51,
+        "height": 4.15
+      },
+      "pins": 3,
+      "ladderOverlay": false,
+      "sourceRendered": false,
+      "fitScale": [
+        1.04,
+        1.02,
+        1
+      ]
+    },
+    "pcbDetail": {
+      "footprintMm": [
+        24,
+        18
+      ],
+      "traceWidthMm": [
+        0.12,
+        0.18
+      ],
+      "pads": 8,
+      "vias": 8,
+      "silkscreenRuns": 3,
+      "material": "PcbTrace",
+      "packages": 2,
+      "usb": "brushed shell / dark opening / tongue",
+      "localPresentationOffsetMm": [
+        -1.2,
+        0,
+        0
+      ]
+    },
+    "ledOptics": {
+      "source": "KiCad LED_D5.0mm_Clear",
+      "lensExtensionMm": 3.4,
+      "pairSpacingMm": 16,
+      "clearMaterial": "ClearLed",
+      "internalMaterial": "LedDie/LedAnvil",
+      "domeFrontLocalMm": 3.4,
+      "leadInnerLocalMm": -3.4
+    },
+    "batterySpec": {
+      "source": "503040 600mAh LiPo pouch reference",
+      "nominalMm": [
+        5,
+        30,
+        40
+      ],
+      "finalEnvelopeMm": [
+        5,
+        26,
+        40
+      ],
+      "fitScale": [
+        1,
+        0.8666666666666667,
+        1
+      ],
+      "localZFitMm": 1,
+      "construction": "pillow foil / heat-sealed perimeter / folded Kapton terminal / short red-black leads"
+    },
+    "solarSpec": {
+      "caseFaceBoundsMm": {
+        "x": [
+          -42,
+          42
+        ],
+        "y": [
+          -42,
+          42
+        ]
+      },
+      "derivedPanelMm": [
+        82,
+        82
+      ],
+      "edgeMarginMm": 1,
+      "basis": "enclosure.stl measured top face at z=1.00"
+    },
     "summary": {
       "enclosure": {
         "triangles": 1717,
@@ -162,7 +260,7 @@
         }
       },
       "switch": {
-        "triangles": 1010,
+        "triangles": 688,
         "seatMm": [
           0,
           0,
@@ -170,31 +268,31 @@
         ],
         "localBoundsMm": {
           "lo": [
-            -7.972,
-            38.45,
-            -1.41
+            -9.909,
+            38.546,
+            -0.77
           ],
           "hi": [
-            -2.028,
-            44.15,
-            5.825
+            -0.091,
+            44.054,
+            3.33
           ]
         },
         "worldBoundsMm": {
           "lo": [
-            -7.972,
-            38.45,
-            -1.41
+            -9.909,
+            38.546,
+            -0.77
           ],
           "hi": [
-            -2.028,
-            44.15,
-            5.825
+            -0.091,
+            44.054,
+            3.33
           ]
         }
       },
       "solar_lid": {
-        "triangles": 432,
+        "triangles": 564,
         "seatMm": [
           0,
           0,
@@ -202,25 +300,25 @@
         ],
         "localBoundsMm": {
           "lo": [
-            -40.75,
-            -40.75,
+            -42,
+            -42,
             -1.25
           ],
           "hi": [
-            40.75,
-            40.75,
+            42,
+            42,
             1.46
           ]
         },
         "worldBoundsMm": {
           "lo": [
-            -40.75,
-            -40.75,
+            -42,
+            -42,
             7.75
           ],
           "hi": [
-            40.75,
-            40.75,
+            42,
+            42,
             10.46
           ]
         }
@@ -234,31 +332,31 @@
         ],
         "localBoundsMm": {
           "lo": [
-            -20.192,
-            -14.085,
-            -1.225
+            -19.7,
+            -12.805,
+            -1.5
           ],
           "hi": [
-            20.192,
-            19.1,
-            1.69
+            19.7,
+            16.553,
+            3.5
           ]
         },
         "worldBoundsMm": {
           "lo": [
-            -20.192,
-            -34.085,
-            -2.975
+            -19.7,
+            -32.805,
+            -3.25
           ],
           "hi": [
-            20.192,
-            -0.9,
-            -0.06
+            19.7,
+            -3.447,
+            1.75
           ]
         }
       },
       "charge_module": {
-        "triangles": 7094,
+        "triangles": 2132,
         "seatMm": [
           0,
           8,
@@ -266,26 +364,26 @@
         ],
         "localBoundsMm": {
           "lo": [
-            -14.05,
-            -8.6,
-            -0.383
+            -13.522,
+            -8.99,
+            -1.005
           ],
           "hi": [
-            14.05,
-            10.25,
-            4.113
+            11.3,
+            9.11,
+            1.575
           ]
         },
         "worldBoundsMm": {
           "lo": [
-            -14.05,
-            -0.6,
-            -1.833
+            -13.522,
+            -0.99,
+            -2.455
           ],
           "hi": [
-            14.05,
-            18.25,
-            2.663
+            11.3,
+            17.11,
+            0.125
           ]
         }
       },
@@ -299,24 +397,24 @@
         "localBoundsMm": {
           "lo": [
             -11.239,
-            -3,
+            -13.92,
             -3.48
           ],
           "hi": [
             11.239,
-            13.92,
+            6.4,
             3.48
           ]
         },
         "worldBoundsMm": {
           "lo": [
             -11.239,
-            -43.5,
+            -54.42,
             -2.48
           ],
           "hi": [
             11.239,
-            -26.58,
+            -34.1,
             4.48
           ]
         }
@@ -333,17 +431,13 @@
       [
         "enclosure",
         "led_pair"
-      ],
-      [
-        "battery",
-        "led_pair"
       ]
     ],
     "note": "Pairs listed are designed contacts only: led_pair pierces the solid -Y wall by intent (no LED holes); everything else verified penetration-free."
   },
   "totals": {
-    "triangles": 20953,
-    "bytes": 1704472,
+    "triangles": 15801,
+    "bytes": 1307288,
     "parts": 6
   },
   "limits": {

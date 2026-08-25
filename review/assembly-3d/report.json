@@ -1,5 +1,5 @@
 {
-  "when": "checkpoint-pass9b",
+  "when": "checkpoint-pass10",
   "results": [
     {
       "name": "reassembly overlap <=20%",
@@ -7,9 +7,9 @@
       "detail": "0.0% overlap"
     },
     {
-      "name": "pass9b checkpoint/cache token",
+      "name": "pass10 checkpoint/cache token",
       "ok": true,
-      "detail": "pass9b/pass9b"
+      "detail": "pass10/pass10"
     },
     {
       "name": "glb exists",
@@ -18,7 +18,7 @@
     {
       "name": "glb <= 2 MB",
       "ok": true,
-      "detail": "1704472 bytes"
+      "detail": "1307288 bytes"
     },
     {
       "name": "manifest bytes match glb",
@@ -27,7 +27,7 @@
     {
       "name": "triangles <= 50000",
       "ok": true,
-      "detail": "20953 tris"
+      "detail": "15801 tris"
     },
     {
       "name": "glb node names exact",
@@ -37,7 +37,7 @@
     {
       "name": "every primitive has valid TEXCOORD_0",
       "ok": true,
-      "detail": "23 primitives checked"
+      "detail": "26 primitives checked"
     },
     {
       "name": "authored PBR material separation",
@@ -52,7 +52,7 @@
     {
       "name": "external detail material separation used",
       "ok": true,
-      "detail": "FDMCharcoal,SwitchPlastic,SwitchActuator,SwitchContact,SolarNavy,SolarCell,CopperBus,BatterySilver,BatteryFoil,KaptonAmber,WireBlack,WireRed,Silkscreen,PcbGreen,ICBlack,Solder,UsbMetal,ClearLed,LedDie"
+      "detail": "FDMCharcoal,SwitchPlastic,SwitchActuator,SwitchContact,SolarNavy,SolarCell,CopperBus,BatterySilver,BatteryFoil,KaptonAmber,WireBlack,WireRed,Silkscreen,PcbGreen,PcbEdge,ICBlack,PcbTrace,Solder,UsbMetal,ClearLed,LedDie,LedAnvil"
     },
     {
       "name": "manifest tracks enclosure.stl",
@@ -80,12 +80,42 @@
     {
       "name": "battery truth envelope dimensions",
       "ok": true,
-      "detail": "{\"lo\":[-20.192,-14.085,-1.225],\"hi\":[20.192,19.1,1.69]}"
+      "detail": "{\"lo\":[-19.7,-12.805,-1.5],\"hi\":[19.7,16.553,3.5]}"
     },
     {
       "name": "PCB imported relief clears board datum",
       "ok": true,
-      "detail": "{\"lo\":[-14.05,-8.6,-0.383],\"hi\":[14.05,10.25,4.113]}"
+      "detail": "{\"lo\":[-13.522,-8.99,-1.005],\"hi\":[11.3,9.11,1.575]}"
+    },
+    {
+      "name": "pass10 PCB underside detail gate",
+      "ok": true,
+      "detail": "{\"footprintMm\":[24,18],\"traceWidthMm\":[0.12,0.18],\"pads\":8,\"vias\":8,\"silkscreenRuns\":3,\"material\":\"PcbTrace\",\"packages\":2,\"usb\":\"brushed shell / dark opening / tongue\",\"localPresentationOffsetMm\":[-1.2,0,0]}"
+    },
+    {
+      "name": "pass10 authored SS12D00 switch gate",
+      "ok": true,
+      "detail": "{\"family\":\"SS12D00-style authored\",\"boundsMm\":{\"length\":9.67,\"width\":5.51,\"height\":4.15},\"pins\":3,\"ladderOverlay\":false,\"sourceRendered\":false,\"fitScale\":[1.04,1.02,1]}"
+    },
+    {
+      "name": "pass10 LED lens extension gate",
+      "ok": true,
+      "detail": "{\"source\":\"KiCad LED_D5.0mm_Clear\",\"lensExtensionMm\":3.4,\"pairSpacingMm\":16,\"clearMaterial\":\"ClearLed\",\"internalMaterial\":\"LedDie/LedAnvil\",\"domeFrontLocalMm\":3.4,\"leadInnerLocalMm\":-3.4}"
+    },
+    {
+      "name": "pass10 503040 battery spec/proportions",
+      "ok": true,
+      "detail": "{\"source\":\"503040 600mAh LiPo pouch reference\",\"nominalMm\":[5,30,40],\"finalEnvelopeMm\":[5,26,40],\"fitScale\":[1,0.8666666666666667,1],\"localZFitMm\":1,\"construction\":\"pillow foil / heat-sealed perimeter / folded Kapton terminal / short red-black leads\"}"
+    },
+    {
+      "name": "pass10 solar panel follows case face margin",
+      "ok": true,
+      "detail": "{\"caseFaceBoundsMm\":{\"x\":[-42,42],\"y\":[-42,42]},\"derivedPanelMm\":[82,82],\"edgeMarginMm\":1,\"basis\":\"enclosure.stl measured top face at z=1.00\"}"
+    },
+    {
+      "name": "pass10 battery print texture hash",
+      "ok": true,
+      "detail": "a14340658dbb8d12"
     },
     {
       "name": "choreography/applyPose lock hash",
@@ -129,15 +159,15 @@
       "ok": true
     },
     {
-      "name": "pass9b LED uniform normalization",
+      "name": "pass10 LED uniform normalization",
       "ok": true
     },
     {
-      "name": "pass9b battery U flip and restrained normal",
+      "name": "pass10 battery U flip and restrained normal",
       "ok": true
     },
     {
-      "name": "pass9b switch fit removes crop bias",
+      "name": "pass10 switch fit removes crop bias",
       "ok": true
     },
     {
@@ -190,77 +220,27 @@
     {
       "name": "[desktop-1440x900] procedural render triangle budget",
       "ok": true,
-      "detail": "13411 tris/13 calls"
+      "detail": "26162 tris/25 calls"
     },
     {
       "name": "[desktop-1440x900] procedural render triangle budget",
       "ok": true,
-      "detail": "13411 tris/13 calls"
+      "detail": "26162 tris/25 calls"
     },
     {
       "name": "[desktop-1440x900] procedural render triangle budget",
       "ok": true,
-      "detail": "13411 tris/13 calls"
+      "detail": "31642 tris/53 calls"
     },
     {
       "name": "[desktop-1440x900] procedural render triangle budget",
       "ok": true,
-      "detail": "20993 tris/24 calls"
+      "detail": "31642 tris/53 calls"
     },
     {
       "name": "[desktop-1440x900] procedural render triangle budget",
       "ok": true,
-      "detail": "20993 tris/24 calls"
-    },
-    {
-      "name": "[desktop-1440x900] procedural render triangle budget",
-      "ok": true,
-      "detail": "20993 tris/24 calls"
-    },
-    {
-      "name": "[desktop-1440x900] procedural render triangle budget",
-      "ok": true,
-      "detail": "20993 tris/24 calls"
-    },
-    {
-      "name": "[desktop-1440x900] procedural render triangle budget",
-      "ok": true,
-      "detail": "20993 tris/24 calls"
-    },
-    {
-      "name": "[desktop-1440x900] procedural render triangle budget",
-      "ok": true,
-      "detail": "864 tris/6 calls"
-    },
-    {
-      "name": "[desktop-1440x900] dense solo copy remains readable @0.200",
-      "ok": true,
-      "detail": "alpha 1.000/0.000"
-    },
-    {
-      "name": "[desktop-1440x900] dense solo copy has one prominent label @0.200",
-      "ok": true,
-      "detail": "prominent=1"
-    },
-    {
-      "name": "[desktop-1440x900] procedural render triangle budget",
-      "ok": true,
-      "detail": "552 tris/4 calls"
-    },
-    {
-      "name": "[desktop-1440x900] dense solo copy remains readable @0.225",
-      "ok": true,
-      "detail": "alpha 1.000/0.000"
-    },
-    {
-      "name": "[desktop-1440x900] dense solo copy has one prominent label @0.225",
-      "ok": true,
-      "detail": "prominent=1"
-    },
-    {
-      "name": "[desktop-1440x900] procedural render triangle budget",
-      "ok": true,
-      "detail": "552 tris/4 calls"
+      "detail": "564 tris/3 calls"
     },
     {
       "name": "[desktop-1440x900] dense solo copy remains readable @0.250",
@@ -275,60 +255,15 @@
     {
       "name": "[desktop-1440x900] procedural render triangle budget",
       "ok": true,
-      "detail": "552 tris/4 calls"
-    },
-    {
-      "name": "[desktop-1440x900] dense solo copy remains readable @0.275",
-      "ok": true,
-      "detail": "alpha 1.000/0.000"
-    },
-    {
-      "name": "[desktop-1440x900] dense solo copy has one prominent label @0.275",
-      "ok": true,
-      "detail": "prominent=1"
-    },
-    {
-      "name": "[desktop-1440x900] procedural render triangle budget",
-      "ok": true,
-      "detail": "2080 tris/18 calls"
-    },
-    {
-      "name": "[desktop-1440x900] dense solo copy remains readable @0.300",
-      "ok": true,
-      "detail": "alpha 0.909/0.091"
-    },
-    {
-      "name": "[desktop-1440x900] dense solo copy has one prominent label @0.300",
-      "ok": true,
-      "detail": "prominent=1"
-    },
-    {
-      "name": "[desktop-1440x900] procedural render triangle budget",
-      "ok": true,
       "detail": "680 tris/7 calls"
     },
     {
-      "name": "[desktop-1440x900] dense solo copy remains readable @0.325",
+      "name": "[desktop-1440x900] dense solo copy remains readable @0.313",
       "ok": true,
       "detail": "alpha 1.000/0.000"
     },
     {
-      "name": "[desktop-1440x900] dense solo copy has one prominent label @0.325",
-      "ok": true,
-      "detail": "prominent=1"
-    },
-    {
-      "name": "[desktop-1440x900] procedural render triangle budget",
-      "ok": true,
-      "detail": "680 tris/7 calls"
-    },
-    {
-      "name": "[desktop-1440x900] dense solo copy remains readable @0.350",
-      "ok": true,
-      "detail": "alpha 1.000/0.000"
-    },
-    {
-      "name": "[desktop-1440x900] dense solo copy has one prominent label @0.350",
+      "name": "[desktop-1440x900] dense solo copy has one prominent label @0.313",
       "ok": true,
       "detail": "prominent=1"
     },
@@ -350,67 +285,22 @@
     {
       "name": "[desktop-1440x900] procedural render triangle budget",
       "ok": true,
-      "detail": "15404 tris/24 calls"
+      "detail": "3540 tris/10 calls"
     },
     {
-      "name": "[desktop-1440x900] dense solo copy remains readable @0.400",
+      "name": "[desktop-1440x900] dense solo copy remains readable @0.437",
       "ok": true,
       "detail": "alpha 1.000/0.000"
     },
     {
-      "name": "[desktop-1440x900] dense solo copy has one prominent label @0.400",
+      "name": "[desktop-1440x900] dense solo copy has one prominent label @0.437",
       "ok": true,
       "detail": "prominent=1"
     },
     {
       "name": "[desktop-1440x900] procedural render triangle budget",
       "ok": true,
-      "detail": "7430 tris/7 calls"
-    },
-    {
-      "name": "[desktop-1440x900] dense solo copy remains readable @0.425",
-      "ok": true,
-      "detail": "alpha 1.000/0.000"
-    },
-    {
-      "name": "[desktop-1440x900] dense solo copy has one prominent label @0.425",
-      "ok": true,
-      "detail": "prominent=1"
-    },
-    {
-      "name": "[desktop-1440x900] procedural render triangle budget",
-      "ok": true,
-      "detail": "7430 tris/7 calls"
-    },
-    {
-      "name": "[desktop-1440x900] dense solo copy remains readable @0.450",
-      "ok": true,
-      "detail": "alpha 1.000/0.000"
-    },
-    {
-      "name": "[desktop-1440x900] dense solo copy has one prominent label @0.450",
-      "ok": true,
-      "detail": "prominent=1"
-    },
-    {
-      "name": "[desktop-1440x900] procedural render triangle budget",
-      "ok": true,
-      "detail": "7430 tris/7 calls"
-    },
-    {
-      "name": "[desktop-1440x900] dense solo copy remains readable @0.475",
-      "ok": true,
-      "detail": "alpha 0.999/0.001"
-    },
-    {
-      "name": "[desktop-1440x900] dense solo copy has one prominent label @0.475",
-      "ok": true,
-      "detail": "prominent=1"
-    },
-    {
-      "name": "[desktop-1440x900] procedural render triangle budget",
-      "ok": true,
-      "detail": "10132 tris/4 calls"
+      "detail": "20224 tris/9 calls"
     },
     {
       "name": "[desktop-1440x900] dense solo copy remains readable @0.500",
@@ -425,67 +315,22 @@
     {
       "name": "[desktop-1440x900] procedural render triangle budget",
       "ok": true,
-      "detail": "10132 tris/4 calls"
+      "detail": "20224 tris/9 calls"
     },
     {
-      "name": "[desktop-1440x900] dense solo copy remains readable @0.525",
+      "name": "[desktop-1440x900] dense solo copy remains readable @0.563",
       "ok": true,
       "detail": "alpha 1.000/0.000"
     },
     {
-      "name": "[desktop-1440x900] dense solo copy has one prominent label @0.525",
+      "name": "[desktop-1440x900] dense solo copy has one prominent label @0.563",
       "ok": true,
       "detail": "prominent=1"
     },
     {
       "name": "[desktop-1440x900] procedural render triangle budget",
       "ok": true,
-      "detail": "10132 tris/4 calls"
-    },
-    {
-      "name": "[desktop-1440x900] dense solo copy remains readable @0.550",
-      "ok": true,
-      "detail": "alpha 1.000/0.000"
-    },
-    {
-      "name": "[desktop-1440x900] dense solo copy has one prominent label @0.550",
-      "ok": true,
-      "detail": "prominent=1"
-    },
-    {
-      "name": "[desktop-1440x900] procedural render triangle budget",
-      "ok": true,
-      "detail": "19752 tris/2 calls"
-    },
-    {
-      "name": "[desktop-1440x900] dense solo copy remains readable @0.575",
-      "ok": true,
-      "detail": "alpha 0.560/0.440"
-    },
-    {
-      "name": "[desktop-1440x900] dense solo copy has one prominent label @0.575",
-      "ok": true,
-      "detail": "prominent=0"
-    },
-    {
-      "name": "[desktop-1440x900] procedural render triangle budget",
-      "ok": true,
-      "detail": "1010 tris/3 calls"
-    },
-    {
-      "name": "[desktop-1440x900] dense solo copy remains readable @0.600",
-      "ok": true,
-      "detail": "alpha 1.000/0.000"
-    },
-    {
-      "name": "[desktop-1440x900] dense solo copy has one prominent label @0.600",
-      "ok": true,
-      "detail": "prominent=1"
-    },
-    {
-      "name": "[desktop-1440x900] procedural render triangle budget",
-      "ok": true,
-      "detail": "1010 tris/3 calls"
+      "detail": "688 tris/3 calls"
     },
     {
       "name": "[desktop-1440x900] dense solo copy remains readable @0.625",
@@ -500,60 +345,15 @@
     {
       "name": "[desktop-1440x900] procedural render triangle budget",
       "ok": true,
-      "detail": "1010 tris/3 calls"
-    },
-    {
-      "name": "[desktop-1440x900] dense solo copy remains readable @0.650",
-      "ok": true,
-      "detail": "alpha 1.000/0.000"
-    },
-    {
-      "name": "[desktop-1440x900] dense solo copy has one prominent label @0.650",
-      "ok": true,
-      "detail": "prominent=1"
-    },
-    {
-      "name": "[desktop-1440x900] procedural render triangle budget",
-      "ok": true,
-      "detail": "3434 tris/4 calls"
-    },
-    {
-      "name": "[desktop-1440x900] dense solo copy remains readable @0.675",
-      "ok": true,
-      "detail": "alpha 0.996/0.004"
-    },
-    {
-      "name": "[desktop-1440x900] dense solo copy has one prominent label @0.675",
-      "ok": true,
-      "detail": "prominent=1"
-    },
-    {
-      "name": "[desktop-1440x900] procedural render triangle budget",
-      "ok": true,
       "detail": "1717 tris/2 calls"
     },
     {
-      "name": "[desktop-1440x900] dense solo copy remains readable @0.700",
+      "name": "[desktop-1440x900] dense solo copy remains readable @0.687",
       "ok": true,
       "detail": "alpha 1.000/0.000"
     },
     {
-      "name": "[desktop-1440x900] dense solo copy has one prominent label @0.700",
-      "ok": true,
-      "detail": "prominent=1"
-    },
-    {
-      "name": "[desktop-1440x900] procedural render triangle budget",
-      "ok": true,
-      "detail": "1717 tris/2 calls"
-    },
-    {
-      "name": "[desktop-1440x900] dense solo copy remains readable @0.725",
-      "ok": true,
-      "detail": "alpha 1.000/0.000"
-    },
-    {
-      "name": "[desktop-1440x900] dense solo copy has one prominent label @0.725",
+      "name": "[desktop-1440x900] dense solo copy has one prominent label @0.687",
       "ok": true,
       "detail": "prominent=1"
     },
@@ -575,72 +375,42 @@
     {
       "name": "[desktop-1440x900] procedural render triangle budget",
       "ok": true,
-      "detail": "20993 tris/24 calls"
+      "detail": "31642 tris/53 calls"
     },
     {
       "name": "[desktop-1440x900] procedural render triangle budget",
       "ok": true,
-      "detail": "20993 tris/24 calls"
+      "detail": "31642 tris/53 calls"
     },
     {
       "name": "[desktop-1440x900] procedural render triangle budget",
       "ok": true,
-      "detail": "20993 tris/24 calls"
+      "detail": "26162 tris/25 calls"
     },
     {
       "name": "[desktop-1440x900] procedural render triangle budget",
       "ok": true,
-      "detail": "20993 tris/24 calls"
-    },
-    {
-      "name": "[desktop-1440x900] procedural render triangle budget",
-      "ok": true,
-      "detail": "20993 tris/24 calls"
-    },
-    {
-      "name": "[desktop-1440x900] procedural render triangle budget",
-      "ok": true,
-      "detail": "20993 tris/24 calls"
-    },
-    {
-      "name": "[desktop-1440x900] procedural render triangle budget",
-      "ok": true,
-      "detail": "13411 tris/13 calls"
-    },
-    {
-      "name": "[desktop-1440x900] procedural render triangle budget",
-      "ok": true,
-      "detail": "13411 tris/13 calls"
-    },
-    {
-      "name": "[desktop-1440x900] procedural render triangle budget",
-      "ok": true,
-      "detail": "13411 tris/13 calls"
-    },
-    {
-      "name": "[desktop-1440x900] procedural render triangle budget",
-      "ok": true,
-      "detail": "13411 tris/13 calls"
+      "detail": "26162 tris/25 calls"
     },
     {
       "name": "[desktop-1440x900] explosion closed hold is rendered",
       "ok": true,
-      "detail": "494x596"
+      "detail": "452x597"
     },
     {
       "name": "[desktop-1440x900] explosion lid lift is rendered",
       "ok": true,
-      "detail": "530x551"
+      "detail": "521x579"
     },
     {
       "name": "[desktop-1440x900] explosion internal separation is rendered",
       "ok": true,
-      "detail": "525x526"
+      "detail": "525x559"
     },
     {
       "name": "[desktop-1440x900] explosion exploded hold is rendered",
       "ok": true,
-      "detail": "528x533"
+      "detail": "528x559"
     },
     {
       "name": "[desktop-1440x900] explosion lid lifts before internals",
@@ -680,7 +450,7 @@
     {
       "name": "[desktop-1440x900] hold ch1 silhouette fills 58-74% of pane",
       "ok": true,
-      "detail": "fill 0.679"
+      "detail": "fill 0.681"
     },
     {
       "name": "[desktop-1440x900] hold ch1 clearance >=32/40px",
@@ -695,17 +465,17 @@
     {
       "name": "[desktop-1440x900] leader route stays outside silhouette ch1",
       "ok": true,
-      "detail": "route 456,451 sil 470,197,505,546"
+      "detail": "route 456,451 sil 470,197,505,547"
     },
     {
       "name": "[desktop-1440x900] hold ch2 silhouette fills 58-74% of pane",
       "ok": true,
-      "detail": "fill 0.716"
+      "detail": "fill 0.614"
     },
     {
       "name": "[desktop-1440x900] hold ch2 clearance >=32/40px",
       "ok": true,
-      "detail": "L35 R341 T126 B102"
+      "detail": "L35 R351 T170 B141"
     },
     {
       "name": "[desktop-1440x900] leader lands on mesh anchor ch2",
@@ -715,17 +485,17 @@
     {
       "name": "[desktop-1440x900] leader route stays outside silhouette ch2",
       "ok": true,
-      "detail": "route 1041,260 sil 470,190,557,576"
+      "detail": "route 1031,257 sil 470,234,547,493"
     },
     {
       "name": "[desktop-1440x900] hold ch3 silhouette fills 58-74% of pane",
       "ok": true,
-      "detail": "fill 0.719"
+      "detail": "fill 0.720"
     },
     {
       "name": "[desktop-1440x900] hold ch3 clearance >=32/40px",
       "ok": true,
-      "detail": "L45 R317 T143 B83"
+      "detail": "L66 R351 T137 B88"
     },
     {
       "name": "[desktop-1440x900] leader lands on mesh anchor ch3",
@@ -735,17 +505,17 @@
     {
       "name": "[desktop-1440x900] leader route stays outside silhouette ch3",
       "ok": true,
-      "detail": "route 465,501 sil 479,207,571,578"
+      "detail": "route 486,475 sil 500,201,517,579"
     },
     {
       "name": "[desktop-1440x900] hold ch4 silhouette fills 58-74% of pane",
       "ok": true,
-      "detail": "fill 0.597"
+      "detail": "fill 0.687"
     },
     {
       "name": "[desktop-1440x900] hold ch4 clearance >=32/40px",
       "ok": true,
-      "detail": "L35 R341 T195 B138"
+      "detail": "L35 R341 T156 B95"
     },
     {
       "name": "[desktop-1440x900] leader lands on mesh anchor ch4",
@@ -755,17 +525,17 @@
     {
       "name": "[desktop-1440x900] leader route stays outside silhouette ch4",
       "ok": true,
-      "detail": "route 1041,601 sil 470,259,557,471"
+      "detail": "route 1041,417 sil 470,220,557,552"
     },
     {
       "name": "[desktop-1440x900] hold ch5 silhouette fills 58-74% of pane",
       "ok": true,
-      "detail": "fill 0.609"
+      "detail": "fill 0.701"
     },
     {
       "name": "[desktop-1440x900] hold ch5 clearance >=32/40px",
       "ok": true,
-      "detail": "L182 R182 T213 B185"
+      "detail": "L140 R140 T180 B68"
     },
     {
       "name": "[desktop-1440x900] leader lands on mesh anchor ch5",
@@ -775,7 +545,7 @@
     {
       "name": "[desktop-1440x900] leader route stays outside silhouette ch5",
       "ok": true,
-      "detail": "route 603,431 sil 617,277,569,406"
+      "detail": "route 560,424 sil 574,244,655,557"
     },
     {
       "name": "[desktop-1440x900] hold ch6 silhouette fills 58-74% of pane",
@@ -800,7 +570,7 @@
     {
       "name": "[desktop-1440x900] reverse scrub deterministic",
       "ok": true,
-      "detail": "14 points rechecked"
+      "detail": "6 points rechecked"
     },
     {
       "name": "[desktop-1440x900] final seating geometrically continuous",
@@ -829,7 +599,7 @@
     {
       "name": "[desktop-1440x900] final composition meets viewport scale",
       "ok": true,
-      "detail": "564x602"
+      "detail": "552x644"
     },
     {
       "name": "[desktop-1440x900] exploded tableau has no active copy",
@@ -863,12 +633,12 @@
     {
       "name": "[desktop-1440x900] exploded tableau meets viewport scale",
       "ok": true,
-      "detail": "584x564"
+      "detail": "565x569"
     },
     {
       "name": "[desktop-1440x900] tableau enclosure anchor fills 32-40vw",
       "ok": true,
-      "detail": "484px"
+      "detail": "464px"
     },
     {
       "name": "[desktop-1440x900] reassembly exposes interior tray",
@@ -882,12 +652,12 @@
     {
       "name": "[desktop-1440x900] reassembly composition remains visible",
       "ok": true,
-      "detail": "721x670"
+      "detail": "720x670"
     },
     {
       "name": "[desktop-1440x900] reassembly enclosure anchor fills 32-40vw",
       "ok": true,
-      "detail": "507px"
+      "detail": "503px"
     },
     {
       "name": "[desktop-1440x900] solo-to-tableau camera transition is smooth",
@@ -897,7 +667,7 @@
     {
       "name": "[desktop-1440x900] solo-to-tableau camera distance is continuous",
       "ok": true,
-      "detail": "1.07x"
+      "detail": "1.06x"
     },
     {
       "name": "[desktop-1440x900] solo-to-tableau camera center is continuous",
@@ -907,7 +677,7 @@
     {
       "name": "[desktop-1440x900] solo-to-tableau projected scale is continuous",
       "ok": true,
-      "detail": "1.04x"
+      "detail": "1.03x"
     },
     {
       "name": "[desktop-1440x900] final camera fit angle is continuous",
@@ -1101,77 +871,27 @@
     {
       "name": "[mobile-390x844] procedural render triangle budget",
       "ok": true,
-      "detail": "13411 tris/13 calls"
+      "detail": "26162 tris/25 calls"
     },
     {
       "name": "[mobile-390x844] procedural render triangle budget",
       "ok": true,
-      "detail": "13411 tris/13 calls"
+      "detail": "26162 tris/25 calls"
     },
     {
       "name": "[mobile-390x844] procedural render triangle budget",
       "ok": true,
-      "detail": "13411 tris/13 calls"
+      "detail": "31642 tris/53 calls"
     },
     {
       "name": "[mobile-390x844] procedural render triangle budget",
       "ok": true,
-      "detail": "20993 tris/24 calls"
+      "detail": "31642 tris/53 calls"
     },
     {
       "name": "[mobile-390x844] procedural render triangle budget",
       "ok": true,
-      "detail": "20993 tris/24 calls"
-    },
-    {
-      "name": "[mobile-390x844] procedural render triangle budget",
-      "ok": true,
-      "detail": "20993 tris/24 calls"
-    },
-    {
-      "name": "[mobile-390x844] procedural render triangle budget",
-      "ok": true,
-      "detail": "20993 tris/24 calls"
-    },
-    {
-      "name": "[mobile-390x844] procedural render triangle budget",
-      "ok": true,
-      "detail": "20993 tris/24 calls"
-    },
-    {
-      "name": "[mobile-390x844] procedural render triangle budget",
-      "ok": true,
-      "detail": "864 tris/6 calls"
-    },
-    {
-      "name": "[mobile-390x844] dense solo copy remains readable @0.200",
-      "ok": true,
-      "detail": "alpha 1.000/0.000"
-    },
-    {
-      "name": "[mobile-390x844] dense solo copy has one prominent label @0.200",
-      "ok": true,
-      "detail": "prominent=1"
-    },
-    {
-      "name": "[mobile-390x844] procedural render triangle budget",
-      "ok": true,
-      "detail": "552 tris/4 calls"
-    },
-    {
-      "name": "[mobile-390x844] dense solo copy remains readable @0.225",
-      "ok": true,
-      "detail": "alpha 1.000/0.000"
-    },
-    {
-      "name": "[mobile-390x844] dense solo copy has one prominent label @0.225",
-      "ok": true,
-      "detail": "prominent=1"
-    },
-    {
-      "name": "[mobile-390x844] procedural render triangle budget",
-      "ok": true,
-      "detail": "552 tris/4 calls"
+      "detail": "564 tris/3 calls"
     },
     {
       "name": "[mobile-390x844] dense solo copy remains readable @0.250",
@@ -1186,60 +906,15 @@
     {
       "name": "[mobile-390x844] procedural render triangle budget",
       "ok": true,
-      "detail": "552 tris/4 calls"
-    },
-    {
-      "name": "[mobile-390x844] dense solo copy remains readable @0.275",
-      "ok": true,
-      "detail": "alpha 1.000/0.000"
-    },
-    {
-      "name": "[mobile-390x844] dense solo copy has one prominent label @0.275",
-      "ok": true,
-      "detail": "prominent=1"
-    },
-    {
-      "name": "[mobile-390x844] procedural render triangle budget",
-      "ok": true,
-      "detail": "2080 tris/18 calls"
-    },
-    {
-      "name": "[mobile-390x844] dense solo copy remains readable @0.300",
-      "ok": true,
-      "detail": "alpha 0.909/0.091"
-    },
-    {
-      "name": "[mobile-390x844] dense solo copy has one prominent label @0.300",
-      "ok": true,
-      "detail": "prominent=1"
-    },
-    {
-      "name": "[mobile-390x844] procedural render triangle budget",
-      "ok": true,
       "detail": "680 tris/7 calls"
     },
     {
-      "name": "[mobile-390x844] dense solo copy remains readable @0.325",
+      "name": "[mobile-390x844] dense solo copy remains readable @0.313",
       "ok": true,
       "detail": "alpha 1.000/0.000"
     },
     {
-      "name": "[mobile-390x844] dense solo copy has one prominent label @0.325",
-      "ok": true,
-      "detail": "prominent=1"
-    },
-    {
-      "name": "[mobile-390x844] procedural render triangle budget",
-      "ok": true,
-      "detail": "680 tris/7 calls"
-    },
-    {
-      "name": "[mobile-390x844] dense solo copy remains readable @0.350",
-      "ok": true,
-      "detail": "alpha 1.000/0.000"
-    },
-    {
-      "name": "[mobile-390x844] dense solo copy has one prominent label @0.350",
+      "name": "[mobile-390x844] dense solo copy has one prominent label @0.313",
       "ok": true,
       "detail": "prominent=1"
     },
@@ -1261,67 +936,22 @@
     {
       "name": "[mobile-390x844] procedural render triangle budget",
       "ok": true,
-      "detail": "15404 tris/24 calls"
+      "detail": "3540 tris/10 calls"
     },
     {
-      "name": "[mobile-390x844] dense solo copy remains readable @0.400",
+      "name": "[mobile-390x844] dense solo copy remains readable @0.437",
       "ok": true,
       "detail": "alpha 1.000/0.000"
     },
     {
-      "name": "[mobile-390x844] dense solo copy has one prominent label @0.400",
+      "name": "[mobile-390x844] dense solo copy has one prominent label @0.437",
       "ok": true,
       "detail": "prominent=1"
     },
     {
       "name": "[mobile-390x844] procedural render triangle budget",
       "ok": true,
-      "detail": "7430 tris/7 calls"
-    },
-    {
-      "name": "[mobile-390x844] dense solo copy remains readable @0.425",
-      "ok": true,
-      "detail": "alpha 1.000/0.000"
-    },
-    {
-      "name": "[mobile-390x844] dense solo copy has one prominent label @0.425",
-      "ok": true,
-      "detail": "prominent=1"
-    },
-    {
-      "name": "[mobile-390x844] procedural render triangle budget",
-      "ok": true,
-      "detail": "7430 tris/7 calls"
-    },
-    {
-      "name": "[mobile-390x844] dense solo copy remains readable @0.450",
-      "ok": true,
-      "detail": "alpha 1.000/0.000"
-    },
-    {
-      "name": "[mobile-390x844] dense solo copy has one prominent label @0.450",
-      "ok": true,
-      "detail": "prominent=1"
-    },
-    {
-      "name": "[mobile-390x844] procedural render triangle budget",
-      "ok": true,
-      "detail": "7430 tris/7 calls"
-    },
-    {
-      "name": "[mobile-390x844] dense solo copy remains readable @0.475",
-      "ok": true,
-      "detail": "alpha 0.999/0.001"
-    },
-    {
-      "name": "[mobile-390x844] dense solo copy has one prominent label @0.475",
-      "ok": true,
-      "detail": "prominent=1"
-    },
-    {
-      "name": "[mobile-390x844] procedural render triangle budget",
-      "ok": true,
-      "detail": "10132 tris/4 calls"
+      "detail": "20224 tris/9 calls"
     },
     {
       "name": "[mobile-390x844] dense solo copy remains readable @0.500",
@@ -1336,67 +966,22 @@
     {
       "name": "[mobile-390x844] procedural render triangle budget",
       "ok": true,
-      "detail": "10132 tris/4 calls"
+      "detail": "20224 tris/9 calls"
     },
     {
-      "name": "[mobile-390x844] dense solo copy remains readable @0.525",
+      "name": "[mobile-390x844] dense solo copy remains readable @0.563",
       "ok": true,
       "detail": "alpha 1.000/0.000"
     },
     {
-      "name": "[mobile-390x844] dense solo copy has one prominent label @0.525",
+      "name": "[mobile-390x844] dense solo copy has one prominent label @0.563",
       "ok": true,
       "detail": "prominent=1"
     },
     {
       "name": "[mobile-390x844] procedural render triangle budget",
       "ok": true,
-      "detail": "10132 tris/4 calls"
-    },
-    {
-      "name": "[mobile-390x844] dense solo copy remains readable @0.550",
-      "ok": true,
-      "detail": "alpha 1.000/0.000"
-    },
-    {
-      "name": "[mobile-390x844] dense solo copy has one prominent label @0.550",
-      "ok": true,
-      "detail": "prominent=1"
-    },
-    {
-      "name": "[mobile-390x844] procedural render triangle budget",
-      "ok": true,
-      "detail": "20184 tris/6 calls"
-    },
-    {
-      "name": "[mobile-390x844] dense solo copy remains readable @0.575",
-      "ok": true,
-      "detail": "alpha 0.560/0.440"
-    },
-    {
-      "name": "[mobile-390x844] dense solo copy has one prominent label @0.575",
-      "ok": true,
-      "detail": "prominent=0"
-    },
-    {
-      "name": "[mobile-390x844] procedural render triangle budget",
-      "ok": true,
-      "detail": "1010 tris/3 calls"
-    },
-    {
-      "name": "[mobile-390x844] dense solo copy remains readable @0.600",
-      "ok": true,
-      "detail": "alpha 1.000/0.000"
-    },
-    {
-      "name": "[mobile-390x844] dense solo copy has one prominent label @0.600",
-      "ok": true,
-      "detail": "prominent=1"
-    },
-    {
-      "name": "[mobile-390x844] procedural render triangle budget",
-      "ok": true,
-      "detail": "1010 tris/3 calls"
+      "detail": "688 tris/3 calls"
     },
     {
       "name": "[mobile-390x844] dense solo copy remains readable @0.625",
@@ -1411,60 +996,15 @@
     {
       "name": "[mobile-390x844] procedural render triangle budget",
       "ok": true,
-      "detail": "1010 tris/3 calls"
-    },
-    {
-      "name": "[mobile-390x844] dense solo copy remains readable @0.650",
-      "ok": true,
-      "detail": "alpha 1.000/0.000"
-    },
-    {
-      "name": "[mobile-390x844] dense solo copy has one prominent label @0.650",
-      "ok": true,
-      "detail": "prominent=1"
-    },
-    {
-      "name": "[mobile-390x844] procedural render triangle budget",
-      "ok": true,
-      "detail": "5454 tris/10 calls"
-    },
-    {
-      "name": "[mobile-390x844] dense solo copy remains readable @0.675",
-      "ok": true,
-      "detail": "alpha 0.996/0.004"
-    },
-    {
-      "name": "[mobile-390x844] dense solo copy has one prominent label @0.675",
-      "ok": true,
-      "detail": "prominent=1"
-    },
-    {
-      "name": "[mobile-390x844] procedural render triangle budget",
-      "ok": true,
       "detail": "1717 tris/2 calls"
     },
     {
-      "name": "[mobile-390x844] dense solo copy remains readable @0.700",
+      "name": "[mobile-390x844] dense solo copy remains readable @0.687",
       "ok": true,
       "detail": "alpha 1.000/0.000"
     },
     {
-      "name": "[mobile-390x844] dense solo copy has one prominent label @0.700",
-      "ok": true,
-      "detail": "prominent=1"
-    },
-    {
-      "name": "[mobile-390x844] procedural render triangle budget",
-      "ok": true,
-      "detail": "1717 tris/2 calls"
-    },
-    {
-      "name": "[mobile-390x844] dense solo copy remains readable @0.725",
-      "ok": true,
-      "detail": "alpha 1.000/0.000"
-    },
-    {
-      "name": "[mobile-390x844] dense solo copy has one prominent label @0.725",
+      "name": "[mobile-390x844] dense solo copy has one prominent label @0.687",
       "ok": true,
       "detail": "prominent=1"
     },
@@ -1486,72 +1026,42 @@
     {
       "name": "[mobile-390x844] procedural render triangle budget",
       "ok": true,
-      "detail": "20993 tris/24 calls"
+      "detail": "31642 tris/53 calls"
     },
     {
       "name": "[mobile-390x844] procedural render triangle budget",
       "ok": true,
-      "detail": "20993 tris/24 calls"
+      "detail": "31642 tris/53 calls"
     },
     {
       "name": "[mobile-390x844] procedural render triangle budget",
       "ok": true,
-      "detail": "20993 tris/24 calls"
+      "detail": "26162 tris/25 calls"
     },
     {
       "name": "[mobile-390x844] procedural render triangle budget",
       "ok": true,
-      "detail": "20993 tris/24 calls"
-    },
-    {
-      "name": "[mobile-390x844] procedural render triangle budget",
-      "ok": true,
-      "detail": "20993 tris/24 calls"
-    },
-    {
-      "name": "[mobile-390x844] procedural render triangle budget",
-      "ok": true,
-      "detail": "20993 tris/24 calls"
-    },
-    {
-      "name": "[mobile-390x844] procedural render triangle budget",
-      "ok": true,
-      "detail": "13411 tris/13 calls"
-    },
-    {
-      "name": "[mobile-390x844] procedural render triangle budget",
-      "ok": true,
-      "detail": "13411 tris/13 calls"
-    },
-    {
-      "name": "[mobile-390x844] procedural render triangle budget",
-      "ok": true,
-      "detail": "13411 tris/13 calls"
-    },
-    {
-      "name": "[mobile-390x844] procedural render triangle budget",
-      "ok": true,
-      "detail": "13411 tris/13 calls"
+      "detail": "26162 tris/25 calls"
     },
     {
       "name": "[mobile-390x844] explosion closed hold is rendered",
       "ok": true,
-      "detail": "280x352"
+      "detail": "257x353"
     },
     {
       "name": "[mobile-390x844] explosion lid lift is rendered",
       "ok": true,
-      "detail": "287x305"
+      "detail": "287x327"
     },
     {
       "name": "[mobile-390x844] explosion internal separation is rendered",
       "ok": true,
-      "detail": "287x291"
+      "detail": "287x309"
     },
     {
       "name": "[mobile-390x844] explosion exploded hold is rendered",
       "ok": true,
-      "detail": "287x293"
+      "detail": "287x308"
     },
     {
       "name": "[mobile-390x844] explosion lid lifts before internals",
@@ -1591,7 +1101,7 @@
     {
       "name": "[mobile-390x844] hold ch1 within 70-86vw/60svh",
       "ok": true,
-      "detail": "287x306"
+      "detail": "287x307"
     },
     {
       "name": "[mobile-390x844] hold ch1 clearance >=16px",
@@ -1606,17 +1116,17 @@
     {
       "name": "[mobile-390x844] leader route stays outside silhouette ch1",
       "ok": true,
-      "detail": "route 313,598 sil 52,278,287,306"
+      "detail": "route 310,598 sil 52,277,287,307"
     },
     {
       "name": "[mobile-390x844] hold ch2 within 70-86vw/60svh",
       "ok": true,
-      "detail": "287x292"
+      "detail": "287x258"
     },
     {
       "name": "[mobile-390x844] hold ch2 clearance >=16px",
       "ok": true,
-      "detail": "19"
+      "detail": "20"
     },
     {
       "name": "[mobile-390x844] leader lands on mesh anchor ch2",
@@ -1626,17 +1136,17 @@
     {
       "name": "[mobile-390x844] leader route stays outside silhouette ch2",
       "ok": true,
-      "detail": "route 134,592 sil 59,286,287,292"
+      "detail": "route 131,575 sil 58,302,287,258"
     },
     {
       "name": "[mobile-390x844] hold ch3 within 70-86vw/60svh",
       "ok": true,
-      "detail": "282x281"
+      "detail": "278x306"
     },
     {
       "name": "[mobile-390x844] hold ch3 clearance >=16px",
       "ok": true,
-      "detail": "18"
+      "detail": "20"
     },
     {
       "name": "[mobile-390x844] leader lands on mesh anchor ch3",
@@ -1646,12 +1156,12 @@
     {
       "name": "[mobile-390x844] leader route stays outside silhouette ch3",
       "ok": true,
-      "detail": "route 290,590 sil 66,296,282,281"
+      "detail": "route 306,604 sil 68,284,278,306"
     },
     {
       "name": "[mobile-390x844] hold ch4 within 70-86vw/60svh",
       "ok": true,
-      "detail": "286x239"
+      "detail": "286x278"
     },
     {
       "name": "[mobile-390x844] hold ch4 clearance >=16px",
@@ -1666,17 +1176,17 @@
     {
       "name": "[mobile-390x844] leader route stays outside silhouette ch4",
       "ok": true,
-      "detail": "route 126,568 sil 60,315,286,239"
+      "detail": "route 126,589 sil 60,297,286,278"
     },
     {
       "name": "[mobile-390x844] hold ch5 within 70-86vw/60svh",
       "ok": true,
-      "detail": "278x209"
+      "detail": "274x254"
     },
     {
       "name": "[mobile-390x844] hold ch5 clearance >=16px",
       "ok": true,
-      "detail": "32"
+      "detail": "34"
     },
     {
       "name": "[mobile-390x844] leader lands on mesh anchor ch5",
@@ -1686,7 +1196,7 @@
     {
       "name": "[mobile-390x844] leader route stays outside silhouette ch5",
       "ok": true,
-      "detail": "route 214,549 sil 56,326,278,209"
+      "detail": "route 243,580 sil 58,312,274,254"
     },
     {
       "name": "[mobile-390x844] hold ch6 within 70-86vw/60svh",
@@ -1716,7 +1226,7 @@
     {
       "name": "[mobile-390x844] reverse scrub deterministic",
       "ok": true,
-      "detail": "14 points rechecked"
+      "detail": "6 points rechecked"
     },
     {
       "name": "[mobile-390x844] final seating geometrically continuous",
@@ -1745,7 +1255,7 @@
     {
       "name": "[mobile-390x844] final composition meets mobile viewport scale",
       "ok": true,
-      "detail": "307x338"
+      "detail": "299x361"
     },
     {
       "name": "[mobile-390x844] exploded tableau has no active copy",
@@ -1779,7 +1289,7 @@
     {
       "name": "[mobile-390x844] exploded tableau meets viewport scale",
       "ok": true,
-      "detail": "302x439"
+      "detail": "301x439"
     },
     {
       "name": "[mobile-390x844] reassembly exposes interior tray",
@@ -1793,7 +1303,7 @@
     {
       "name": "[mobile-390x844] reassembly composition remains visible",
       "ok": true,
-      "detail": "282x473"
+      "detail": "280x473"
     },
     {
       "name": "[mobile-390x844] solo-to-tableau camera transition is smooth",
@@ -1813,7 +1323,7 @@
     {
       "name": "[mobile-390x844] solo-to-tableau projected scale is continuous",
       "ok": true,
-      "detail": "1.06x"
+      "detail": "1.07x"
     },
     {
       "name": "[mobile-390x844] final camera fit angle is continuous",
@@ -2006,6 +1516,6 @@
       "detail": ""
     }
   ],
-  "passed": 407,
+  "passed": 309,
   "failed": 0
 }
