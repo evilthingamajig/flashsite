@@ -21,6 +21,16 @@ Blender 5.2.1 imports it with these named objects:
 `enclosure`, `solar_panel_placeholder`, `battery`, `charge_module`,
 `led_left`, `led_right`, `switch`, and `ScrollSequence`.
 
+The exported binary can be checked directly with Blender after building:
+
+```powershell
+& "C:\Program Files\Blender Foundation\Blender 5.2\blender.exe" `
+  --background --factory-startup --python tools\verify-blender-candidate.py
+```
+
+That gate checks the seven named parts, seven animation actions, measured pass9
+switch dimensions, parented battery detail meshes, and frame-120 return-to-seat.
+
 The GLB contains a named `ScrollSequence` action and is approximately 2.1 MB.
 The candidate was built and re-imported headlessly on the local Blender 5.2.1
 installation.
