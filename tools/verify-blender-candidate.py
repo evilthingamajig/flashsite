@@ -54,9 +54,10 @@ if 'switch_actuator' not in switch_children:
 passed('switch actuator detail present')
 
 solar_children = {child.name for child in parts['solar_panel_placeholder'].children}
-if 'solar_rear_connector' not in solar_children or 'solar_rear_wire' not in solar_children:
+solar_screws = {name for name in solar_children if name.startswith('solar_screw_head_')}
+if 'solar_rear_connector' not in solar_children or 'solar_rear_wire' not in solar_children or 'solar_center_divider' not in solar_children or len(solar_screws) != 4:
     fail('solar rear connector detail children are missing')
-passed('solar connector detail present')
+passed('solar connector and reference details present')
 
 scene = bpy.context.scene
 scene.frame_set(1)
