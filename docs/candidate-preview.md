@@ -15,6 +15,15 @@ python -m http.server 8000
 http://127.0.0.1:8000/candidate-preview.html
 ```
 
+To avoid a port conflict with an existing server, use an alternate port such as
+8001; the command must be run from the repository root so the static files are
+served from this checkout:
+
+```powershell
+python -m http.server 8001
+Start-Process "http://127.0.0.1:8001/candidate-preview.html"
+```
+
 For a shareable starting pose, append `?p=0` for closed, `?p=0.67` for the
 exploded review tableau, or `?p=1` for the reassembled final view. Intermediate
 numeric values open at the corresponding scrub point; deep links seek
