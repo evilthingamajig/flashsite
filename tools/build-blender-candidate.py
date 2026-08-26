@@ -172,11 +172,25 @@ def add_led_wire(led, lead_material, side):
         (0.010, 0.0, 0.0), (0.016, 0.0, z), (0.022, 0.0, z)
     ], lead_material)
 
-def add_switch_details(switch, actuator_material):
+def add_switch_details(switch, actuator_material, red_material, black_material):
     # The pass9 mesh remains the authoritative switch body; this inset slider
     # makes the body/actuator relationship legible without changing its seat.
     actuator = cube('switch_actuator', (0.0024, 0.0034, 0.0018), (0.0, 0.0, 0.0), actuator_material)
     parent_detail(actuator, switch, (0.0, 0.0, 0.0020))
+    # Two short inward-running wire cues exiting from the switch's positive-Y
+    # seat toward negative Y into the enclosure.  The switch sits at y ≈ 0.029
+    # (positive-Y case wall); these 3-point polylines drop ~2 mm in Z over a
+    # ~6 mm Y run so they read as short leads routed into the shell interior.
+    wire_detail('switch_red_wire', switch, [
+        (0.0008, 0.0, 0.0024),
+        (0.0008, -0.003, 0.0016),
+        (0.0008, -0.006, 0.0010),
+    ], red_material, bevel=0.00028)
+    wire_detail('switch_black_wire', switch, [
+        (-0.0008, 0.0, 0.0024),
+        (-0.0008, -0.003, 0.0016),
+        (-0.0008, -0.006, 0.0010),
+    ], black_material, bevel=0.00028)
 
 def center_mesh_origin(ob):
     """Move imported geometry around its own bounds so location is its seat."""
@@ -274,6 +288,8 @@ def main():
     ledmat = mat('LedClear', (0.88, 0.92, 0.94), roughness=0.10, transmission=0.85)
     switchmat = mat('SwitchPlastic', (0.055, 0.06, 0.065), roughness=0.48)
     actuator_mat = mat('SwitchActuator', (0.16, 0.17, 0.16), metallic=0.1, roughness=0.34)
+    wire_red = mat('SwitchWireRed', (0.72, 0.06, 0.04), roughness=0.42)
+    wire_black = mat('SwitchWireBlack', (0.018, 0.018, 0.018), roughness=0.48)
 
     enclosure = import_stl(CASE, 'enclosure')
     set_mat(enclosure, charcoal)
@@ -338,7 +354,7 @@ def main():
     # centered on the wall edge makes the control read as physically mounted
     # in the closed three-quarter view instead of floating inside the shell.
     sw.location = (0.0, 0.029, 0.0)
-    add_switch_details(sw, actuator_mat)
+    add_switch_details(sw, actuator_mat, wire_red, wire_black)
 
     parts = [enclosure, panel, battery, charge, led_a, led_b, sw]
     seats = {p.name: tuple(p.location) for p in parts}
@@ -393,7 +409,7 @@ def main():
             name: {key: [round(math.degrees(value), 1) for value in rotation] for key, rotation in profile.items()}
             for name, profile in MOTION_PROFILES.items()
         },
-        'visualDetails': ['solar panel has a raised frame, bus lines, cell-strip details, and a parented rear connector/wire cue', 'battery has lightweight provisional Kapton band, label plate, and lead cue parented to the supplied mesh', 'TP4056 board has lightweight blue PCB, USB-C, and component cues parented to the supplied mesh', 'switch has a small contrasting actuator cue parented to the pass9 source mesh', 'enclosure has four interior corner mount blocks (enclosure_mount_block_1..4) parented to the case shell', 'mount blocks are 5x5x6 mm dark plastic cubes at ±42 mm X, ±24 mm Y, z −4.5 mm'],
+        'visualDetails': ['solar panel has a raised frame, bus lines, cell-strip details, and a parented rear connector/wire cue', 'battery has lightweight provisional Kapton band, label plate, and lead cue parented to the supplied mesh', 'TP4056 board has lightweight blue PCB, USB-C, and component cues parented to the supplied mesh', 'switch has a small contrasting actuator cue parented to the pass9 source mesh', 'switch has two short inward-running wire cues (switch_red_wire, switch_black_wire) parented to the switch, routed toward negative Y into the enclosure', 'enclosure has four interior corner mount blocks (enclosure_mount_block_1..4) parented to the case shell', 'mount blocks are 5x5x6 mm dark plastic cubes at ±42 mm X, ±24 mm Y, z −4.5 mm'],
         'provisional': ['solar panel is reference-informed geometry; no solar-panel CAD supplied', 'led_right duplicates the supplied single LED', 'battery and switch seating are provisional', 'user-supplied STEP files were converted to coarse browser-safe STL meshes through FreeCAD'],
         'authoredAction': 'ScrollSequence', 'frameRange': [1, 120],
         'timeline': {'closed': 0.0, 'explodedReview': 0.67, 'reassembled': 1.0},
