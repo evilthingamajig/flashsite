@@ -117,7 +117,7 @@ const callouts = await cdp.evaluate(`({
   label: document.getElementById('cpv-callouts').getAttribute('aria-label'),
   explodedPosePressed: document.querySelector('[data-cpv-pose="0.67"]')?.getAttribute('aria-pressed') === 'true',
 })`);
-check('exploded editorial callout', callouts.boxes === 6 && callouts.lines === 6 && callouts.visible && callouts.plainText && callouts.shortCopy && callouts.activeBoxes === 1 && callouts.fadeMounted && callouts.activeLines === 1 && callouts.activeAria === 1 && callouts.label === 'Current part: 5 mm LEDs. Cost TBD.' && callouts.explodedPosePressed && exploded?.activeCallout === 'led_pair', JSON.stringify({ ...callouts, activeCallout: exploded?.activeCallout }));
+check('exploded editorial callout', callouts.boxes === 6 && callouts.lines === 6 && callouts.visible && callouts.plainText && callouts.shortCopy && callouts.activeBoxes === 1 && callouts.fadeMounted && callouts.activeLines === 1 && callouts.activeAria === 1 && callouts.label === 'Current part: 5 mm LEDs. Cost: TBD.' && callouts.explodedPosePressed && exploded?.activeCallout === 'led_pair', JSON.stringify({ ...callouts, activeCallout: exploded?.activeCallout }));
 const editorialSamples = [];
 for (const sample of [0.2, 0.32, 0.44, 0.56, 0.68, 0.8]) {
   await cdp.evaluate(`window.__ffCandidatePreview.setProgress(${sample}); undefined`);
@@ -241,7 +241,7 @@ const reverseClosed = await cdp.evaluate(`({
   leadersHidden: document.getElementById('cpv-leaders').style.display === 'none',
   activeParts: document.querySelectorAll('#cpv-part-list li.is-active').length
 })`);
-check('reverse scrub restores annotations', /Cost TBD/.test(reverseExploded.activeCallout) && reverseExploded.activeLeaders === 1 && reverseExploded.activeParts > 0 && reverseClosed.calloutsHidden && reverseClosed.leadersHidden && reverseClosed.activeParts === 0, JSON.stringify({ reverseExploded, reverseClosed }));
+check('reverse scrub restores annotations', /Cost: TBD/.test(reverseExploded.activeCallout) && reverseExploded.activeLeaders === 1 && reverseExploded.activeParts > 0 && reverseClosed.calloutsHidden && reverseClosed.leadersHidden && reverseClosed.activeParts === 0, JSON.stringify({ reverseExploded, reverseClosed }));
 
 await cdp.close();
 server.close();

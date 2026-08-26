@@ -182,7 +182,7 @@ function buildCallouts(root) {
     const box = document.createElement('div');
     box.className = 'cpv-callout cpv-callout-' + spec.side;
     box.dataset.part = spec.part;
-    box.innerHTML = '<span class="cpv-callout-name"></span><span class="cpv-callout-cost">Cost TBD</span>';
+    box.innerHTML = '<span class="cpv-callout-name"></span><span class="cpv-callout-cost">Cost: TBD</span>';
     box.querySelector('.cpv-callout-name').textContent = spec.name;
     calloutsEl.append(box);
     const line = document.createElementNS('http://www.w3.org/2000/svg', 'line');
@@ -235,7 +235,7 @@ function updateCallouts(root = assetRoot) {
   syncPartListHighlight(activeSpec);
   calloutsEl.setAttribute(
     'aria-label',
-    activeSpec ? 'Current part: ' + activeSpec.name + '. Cost TBD.' : 'Current candidate part annotation'
+    activeSpec ? 'Current part: ' + activeSpec.name + '. Cost: TBD.' : 'Current candidate part annotation'
   );
   calloutsEl.hidden = !visible;
   leadersEl.hidden = !visible;
