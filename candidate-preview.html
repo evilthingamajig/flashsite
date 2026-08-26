@@ -54,6 +54,11 @@
       <div class="cpv-controls" aria-label="Candidate preview controls">
         <button class="cpv-reset" id="cpv-reset" type="button">Reset</button>
         <button class="cpv-copy-link" id="cpv-copy-link" type="button">Copy pose link</button>
+        <div class="cpv-pose-buttons" role="group" aria-label="Jump to authored pose">
+          <button type="button" data-cpv-pose="0" aria-pressed="true">Closed</button>
+          <button type="button" data-cpv-pose="0.67" aria-pressed="false">Exploded</button>
+          <button type="button" data-cpv-pose="1" aria-pressed="false">Reassembled</button>
+        </div>
         <label class="cpv-range-label" for="cpv-range">
           <span>Timeline</span>
           <input id="cpv-range" type="range" min="0" max="1" step="0.001" value="0" aria-label="Scrub the authored assembly timeline">

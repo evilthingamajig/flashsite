@@ -73,8 +73,9 @@ const callouts = await cdp.evaluate(`({
   lines: document.querySelectorAll('#cpv-leaders line').length,
   visible: !document.getElementById('cpv-callouts').hidden,
   shortCopy: [...document.querySelectorAll('.cpv-callout')].every((el) => el.textContent.trim().split(/\\s+/).length <= 5),
+  explodedPosePressed: document.querySelector('[data-cpv-pose="0.67"]')?.getAttribute('aria-pressed') === 'true',
 })`);
-check('exploded part callouts', callouts.boxes === 6 && callouts.lines === 6 && callouts.visible && callouts.shortCopy, JSON.stringify(callouts));
+check('exploded part callouts', callouts.boxes === 6 && callouts.lines === 6 && callouts.visible && callouts.shortCopy && callouts.explodedPosePressed, JSON.stringify(callouts));
 for (const part of ['battery', 'charge_module']) {
   const a = closed?.partTransforms?.[part];
   const b = exploded?.partTransforms?.[part];
@@ -86,8 +87,9 @@ const controls = await cdp.evaluate(`({
   range: !!document.getElementById('cpv-range'),
   reset: !!document.getElementById('cpv-reset'),
   reference: !!document.querySelector('.cpv-reference img'),
+  poses: document.querySelectorAll('[data-cpv-pose]').length === 3,
 })`);
-check('review controls and reference', controls.range && controls.reset && controls.reference);
+check('review controls and reference', controls.range && controls.reset && controls.reference && controls.poses);
 
 await cdp.send('Emulation.setDeviceMetricsOverride', { width: 390, height: 844, deviceScaleFactor: 1, mobile: true });
 const mobile = await cdp.evaluate(`(() => {
