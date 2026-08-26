@@ -45,6 +45,21 @@ if any(abs(actual - expected) > 0.0002 for actual, expected in zip(switch_dimens
     fail('switch dimensions %.6f, %.6f, %.6f m do not match measured pass9 source' % tuple(parts['switch'].dimensions))
 passed('switch dimensions match measured pass9 source')
 
+def dimensions_match(part, expected, tolerance=0.0002):
+    actual = sorted(float(value) for value in parts[part].dimensions)
+    target = sorted(expected)
+    return all(abs(value - wanted) <= tolerance for value, wanted in zip(actual, target)), actual
+
+case_dimensions_ok, case_dimensions = dimensions_match('enclosure', (0.105, 0.065, 0.015))
+if not case_dimensions_ok:
+    fail('exported enclosure dimensions %.6f, %.6f, %.6f m do not match FreeCAD case source' % tuple(case_dimensions))
+passed('exported enclosure dimensions match FreeCAD case source')
+
+panel_dimensions_ok, panel_dimensions = dimensions_match('solar_panel_placeholder', (0.098, 0.058, 0.0018))
+if not panel_dimensions_ok:
+    fail('exported solar panel footprint %.6f, %.6f, %.6f m is unexpected' % tuple(panel_dimensions))
+passed('exported solar panel footprint matches candidate target')
+
 battery_children = {child.name for child in parts['battery'].children}
 required_children = {'battery_kapton_band', 'battery_label_plate'}
 if not required_children.issubset(battery_children):
