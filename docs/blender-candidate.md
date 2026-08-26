@@ -84,6 +84,9 @@ are absent on the current candidate build.
 - The switch also carries short red/black inward-running wire cues, parented to
   the switch so they follow its authored motion; their exact routing remains
   provisional pending authoritative wiring references.
+- A thin `switch_case_surround` cue is parented to the enclosure at the
+  positive-Y wall, making the switch-to-case connection legible without
+  changing the supplied switch mesh or its measured envelope.
 - The enclosure carries four lightweight dark-plastic interior corner mounting
   blocks, parented to the case shell and sized from the media evidence; these
   are reference-informed candidate details, not a new authoritative CAD claim.
