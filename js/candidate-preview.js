@@ -146,6 +146,14 @@ function scrollToProgress(p) {
   window.scrollTo({ top: clamp01(p) * max, behavior: reducedMotion ? 'auto' : 'smooth' });
 }
 
+function requestedReviewProgress() {
+  const params = new URLSearchParams(window.location.search);
+  const raw = params.get('p') ?? params.get('candidate-review');
+  if (raw === null || raw.trim() === '') return null;
+  const num = Number(raw);
+  return Number.isFinite(num) ? clamp01(num) : null;
+}
+
 function measureStage() {
   const w = stage.clientWidth || 1;
   const h = stage.clientHeight || 1;
@@ -283,7 +291,13 @@ if (renderer && !failed) {
         ? 'Ready — ' + clips.length + ' ScrollSequence clip' + (clips.length > 1 ? 's' : '') + ' · ' + duration.toFixed(2) + ' s'
         : 'No ScrollSequence clips found — static candidate view.'
     );
-    computeProgressFromScroll();
+    const requested = requestedReviewProgress();
+    if (requested === null) {
+      computeProgressFromScroll();
+    } else {
+      applyProgress(requested);
+      scrollToProgress(requested);
+    }
   }, (evt) => {
     if (evt.total > 0) {
       setStatus('Loading candidate asset… ' + Math.round((evt.loaded / evt.total) * 100) + '%');
