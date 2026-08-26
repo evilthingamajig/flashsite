@@ -91,7 +91,12 @@ No external network assets.
 
 - Render-on-demand: rendering pauses when the stage is offscreen
   (IntersectionObserver) or the document is hidden (visibilitychange).
-- Pixel ratio capped at 1.75.
+- Desktop rendering uses the high-performance GPU preference, caps device-pixel
+  ratio at 1.25, and applies a 2.6-million-pixel framebuffer budget (with a
+  0.75 lower bound) so large/high-DPI windows do not multiply the scrub cost.
+- Only the seven major assembly parts participate in the 512 px shadow pass;
+  small decorative meshes still render normally without duplicating dozens of
+  shadow draw calls. Only the active editorial callout is projected each frame.
 - WebGL context-loss fallback: on `webglcontextlost`, the handler calls
   `preventDefault()` to block the browser default, stops rendering via
   `showFallback`, and surfaces the existing parts-list-and-controls

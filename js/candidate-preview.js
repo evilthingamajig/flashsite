@@ -3,8 +3,22 @@ import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
 
 const GLB_URL = 'assets/3d/flashlight-assembly-blender-candidate.glb';
 const CLIP_PATTERN = /^ScrollSequence/;
-const DPR_CAP = 1.75;
+// A full browser window can contain several times as many pixels as the
+// embedded review pane. Bound both device-pixel ratio and total framebuffer
+// area so scrubbing remains responsive on large/high-DPI displays.
+const DPR_CAP = 1.25;
+const MIN_RENDER_DPR = 0.75;
+const MAX_RENDER_PIXELS = 2_600_000;
 const FOV = 32;
+const SHADOW_CASTERS = new Set([
+  'enclosure',
+  'solar_panel_placeholder',
+  'battery',
+  'charge_module',
+  'led_left',
+  'led_right',
+  'switch',
+]);
 
 const canvas = document.getElementById('cpv-canvas');
 const stage = canvas?.parentElement ?? null;
@@ -273,15 +287,19 @@ function updateCallouts(root = assetRoot) {
   for (const [index, spec] of calloutSpecs.entries()) {
     const box = calloutTargets.get(spec.part);
     const line = calloutLines.get(spec.part);
-    const point = targetFor(root, spec.part);
-    if (!box || !line || !point) continue;
+    if (!box || !line) continue;
     const active = index === activeIndex;
     box.classList.toggle('is-active', active);
     // Keep inactive labels mounted so the CSS opacity transition can crossfade
     // from one editorial caption to the next instead of snapping via display.
     box.style.display = 'block';
     box.setAttribute('aria-hidden', String(!active));
-      line.style.opacity = active ? '0.88' : '0';
+    line.style.opacity = active ? '0.88' : '0';
+    // Only the visible label needs a world-matrix lookup, projection, and DOM
+    // geometry update. Inactive labels stay mounted for their opacity fade.
+    if (!active) continue;
+    const point = targetFor(root, spec.part);
+    if (!point) continue;
     point.project(camera);
     const targetX = (point.x * 0.5 + 0.5) * width;
     const targetY = (-point.y * 0.5 + 0.5) * height;
@@ -369,7 +387,9 @@ function measureStage() {
   if (!stage || !renderer || !camera || failed) return;
   const w = stage.clientWidth || 1;
   const h = stage.clientHeight || 1;
-  renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, DPR_CAP));
+  const deviceDpr = Math.min(window.devicePixelRatio || 1, DPR_CAP);
+  const pixelBudgetDpr = Math.sqrt(MAX_RENDER_PIXELS / Math.max(1, w * h));
+  renderer.setPixelRatio(Math.max(MIN_RENDER_DPR, Math.min(deviceDpr, pixelBudgetDpr)));
   renderer.setSize(w, h, false);
   camera.aspect = w / h;
   camera.updateProjectionMatrix();
@@ -430,7 +450,7 @@ function initScene() {
   const key = new THREE.DirectionalLight(0xffffff, 1.9);
   key.position.set(0.35, 0.7, 0.45);
   key.castShadow = true;
-  key.shadow.mapSize.set(1024, 1024);
+  key.shadow.mapSize.set(512, 512);
   key.shadow.bias = -0.0002;
   key.shadow.camera.left = -0.15;
   key.shadow.camera.right = 0.15;
@@ -456,7 +476,7 @@ function initScene() {
 }
 
 try {
-  renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: true, powerPreference: 'low-power' });
+  renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: true, powerPreference: 'high-performance' });
 } catch (err) {
   showFallback('WebGL is unavailable in this browser.', err);
 }
@@ -465,7 +485,7 @@ if (renderer && !failed) {
   renderer.toneMapping = THREE.ACESFilmicToneMapping;
   renderer.toneMappingExposure = 1.08;
   renderer.shadowMap.enabled = true;
-  renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+  renderer.shadowMap.type = THREE.PCFShadowMap;
 
   initScene();
 
@@ -476,8 +496,10 @@ if (renderer && !failed) {
     scene.add(root);
     root.traverse((o) => {
       if (o.isMesh) {
-        o.castShadow = true;
-        o.receiveShadow = true;
+        // Detail meshes still render normally, but excluding them from the
+        // shadow pass avoids duplicating dozens of tiny draw calls per frame.
+        o.castShadow = SHADOW_CASTERS.has(o.name);
+        o.receiveShadow = o.name === 'enclosure';
       }
     });
 
@@ -609,6 +631,11 @@ window.__ffCandidatePreview = {
         x: Number(camera.position.x.toFixed(4)),
         y: Number(camera.position.y.toFixed(4)),
         z: Number(camera.position.z.toFixed(4)),
+      } : null,
+      renderPixelRatio: renderer ? Number(renderer.getPixelRatio().toFixed(3)) : null,
+      renderSize: renderer ? {
+        width: renderer.domElement.width,
+        height: renderer.domElement.height,
       } : null,
       actionTimes: actions.map((action) => Number(action.time.toFixed(4))),
       trackNames: actions.slice(0, 2).map((action) => action.getClip().tracks.map((track) => track.name)),
