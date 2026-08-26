@@ -233,6 +233,25 @@ def reduce_mesh(ob, ratio=0.35):
     mod.ratio = ratio
     bpy.context.view_layer.objects.active = ob
     bpy.ops.object.modifier_apply(modifier=mod.name)
+    # The supplied battery and TP4056 meshes can retain exact duplicate
+    # triangles after decimation. Remove only duplicate vertex-index sets so
+    # the visible shell and all measured bounds remain unchanged.
+    bm = bmesh.new()
+    bm.from_mesh(ob.data)
+    seen_faces = set()
+    duplicate_faces = []
+    for face in bm.faces:
+        signature = tuple(sorted(vertex.index for vertex in face.verts))
+        if signature in seen_faces:
+            duplicate_faces.append(face)
+        else:
+            seen_faces.add(signature)
+    if duplicate_faces:
+        bmesh.ops.delete(bm, geom=duplicate_faces, context='FACES')
+        bmesh.ops.recalc_face_normals(bm, faces=bm.faces)
+        bm.to_mesh(ob.data)
+        ob.data.update()
+    bm.free()
 
 MOTION_PROFILES = {
     'enclosure': {
