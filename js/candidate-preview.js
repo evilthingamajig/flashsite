@@ -251,9 +251,9 @@ function computeProgressFromScroll() {
   applyProgress(clamp01(window.scrollY / max));
 }
 
-function scrollToProgress(p) {
+function scrollToProgress(p, instant = false) {
   const max = Math.max(1, document.documentElement.scrollHeight - window.innerHeight);
-  window.scrollTo({ top: clamp01(p) * max, behavior: reducedMotion ? 'auto' : 'smooth' });
+  window.scrollTo({ top: clamp01(p) * max, behavior: instant || reducedMotion ? 'auto' : 'smooth' });
 }
 
 function requestedReviewProgress() {
@@ -429,7 +429,7 @@ if (renderer && !failed) {
       computeProgressFromScroll();
     } else {
       applyProgress(requested);
-      scrollToProgress(requested);
+      scrollToProgress(requested, true);
     }
   }, (evt) => {
     if (evt.total > 0) {

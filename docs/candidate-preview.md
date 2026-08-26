@@ -17,7 +17,9 @@ http://127.0.0.1:8000/candidate-preview.html
 
 For a shareable starting pose, append `?p=0` for closed, `?p=0.67` for the
 exploded review tableau, or `?p=1` for the reassembled final view. Intermediate
-numeric values open at the corresponding scrub point.
+numeric values open at the corresponding scrub point; deep links seek
+instantly on load so browser scroll restoration cannot override the requested
+pose.
 
 Any static file server rooted at the repo works. No build step; Three.js
 r160 and GLTFLoader are vendored under `js/vendor/three/` via import map.
@@ -86,4 +88,6 @@ locally but remains intentionally unlinked from production navigation. The
 same smoke check also validates the 390 × 844 mobile layout for overflow and
 control reachability. It also guards closed-pose seating: both LEDs must stay
 at the negative-X short end with their pair axis across Z, and the switch must
-remain within the enclosure-centered seating envelope.
+remain within the enclosure-centered seating envelope. The final deep-link
+check additionally proves the movable parts return to those seats after the
+exploded review.
