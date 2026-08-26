@@ -17,6 +17,10 @@ const resetEl = document.getElementById('cpv-reset');
 const fallbackEl = document.getElementById('cpv-fallback');
 const fallbackMessage = document.getElementById('cpv-fallback-message');
 
+const poseEl = document.createElement('span');
+poseEl.className = 'cpv-pose-state';
+poseEl.setAttribute('aria-hidden', 'true');
+
 const clamp01 = (v) => Math.max(0, Math.min(1, v));
 const easeInOutCubic = (t) => (t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2);
 const reducedMotion = window.matchMedia?.('(prefers-reduced-motion: reduce)').matches ?? false;
@@ -37,7 +41,16 @@ let dirty = false;
 let rafId = 0;
 
 function setStatus(text) {
-  if (statusEl) statusEl.textContent = text;
+  if (statusEl) {
+    statusEl.textContent = text;
+    if (poseEl.textContent && !statusEl.contains(poseEl)) statusEl.appendChild(poseEl);
+  }
+}
+
+function poseStateFor(p) {
+  if (p <= 0) return 'Closed';
+  if (p >= 1) return 'Exploded';
+  return 'Scrubbing';
 }
 
 function showFallback(reason, err) {
@@ -106,6 +119,10 @@ function updateProgressUI(p) {
   progressFill.style.transform = 'scaleX(' + p.toFixed(4) + ')';
   progressLabel.textContent = 'scrub ' + String(pct).padStart(3, '0') + '%';
   progressEl.setAttribute('aria-valuenow', String(pct));
+  const pose = poseStateFor(p);
+  progressEl.setAttribute('aria-valuetext', pose + ' — ' + pct + '%');
+  poseEl.textContent = ' · ' + pose;
+  if (statusEl && !statusEl.contains(poseEl)) statusEl.appendChild(poseEl);
   if (rangeEl && document.activeElement !== rangeEl) rangeEl.value = p.toFixed(3);
 }
 
