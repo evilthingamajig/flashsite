@@ -1,0 +1,31 @@
+{
+  "kind": "candidate-only",
+  "generator": "tools/build-blender-candidate.py",
+  "targetFootprint": "approximately 100x60 mm; supplied STL measured 105x65x15 mm",
+  "sourceCase": "C:\\Users\\romir\\Downloads\\Revamp Flashlight w addon.stl",
+  "sourceCaseUnits": "raw STL values interpreted as millimetres",
+  "parts": [
+    "enclosure",
+    "solar_panel_placeholder",
+    "battery",
+    "charge_module",
+    "led_left",
+    "led_right",
+    "switch"
+  ],
+  "provisional": [
+    "solar panel is a geometry placeholder; no CAD/photo baked in",
+    "led_right duplicates the supplied single LED",
+    "battery and switch seating are provisional",
+    "electronics/LED meshes use repository CAD-derived browser-safe STL derivatives pending direct STEP bake"
+  ],
+  "authoredAction": "ScrollSequence",
+  "frameRange": [
+    1,
+    100
+  ],
+  "fallbackPreserved": "assets/3d/flashlight-assembly.glb",
+  "validation": {
+    "blender": "export completed; inspect GLB node/action metadata before web integration"
+  }
+}
