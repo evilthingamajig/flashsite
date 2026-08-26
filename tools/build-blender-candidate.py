@@ -35,7 +35,8 @@ def clear():
     scene.unit_settings.length_unit = 'MILLIMETERS'
     scene.render.engine = 'BLENDER_EEVEE'
 
-def mat(name, color, metallic=0.0, roughness=0.45, transmission=0.0):
+def mat(name, color, metallic=0.0, roughness=0.45, transmission=0.0,
+        emission=None, emission_strength=0.0):
     m = bpy.data.materials.new(name)
     m.diffuse_color = (*color, 1.0)
     m.use_nodes = True
@@ -45,6 +46,11 @@ def mat(name, color, metallic=0.0, roughness=0.45, transmission=0.0):
     bs.inputs['Roughness'].default_value = roughness
     if 'Transmission Weight' in bs.inputs:
         bs.inputs['Transmission Weight'].default_value = transmission
+    if emission is not None:
+        if 'Emission Color' in bs.inputs:
+            bs.inputs['Emission Color'].default_value = (*emission, 1.0)
+        if 'Emission Strength' in bs.inputs:
+            bs.inputs['Emission Strength'].default_value = emission_strength
     return m
 
 def solar_material():
@@ -203,6 +209,11 @@ def add_switch_details(switch, actuator_material, red_material, black_material):
         (-0.0008, -0.006, 0.0010),
     ], black_material, bevel=0.00028)
 
+def add_led_details(led, die_material):
+    die = cylinder('led_die_' + led.name, 0.0012, 0.0007, (0.0, 0.0, 0.0), die_material)
+    parent_detail(die, led, (-0.002, 0.0, 0.0))
+    return die
+
 def center_mesh_origin(ob):
     """Move imported geometry around its own bounds so location is its seat."""
     center = sum((Vector(c) for c in ob.bound_box), Vector()) / 8.0
@@ -298,11 +309,14 @@ def main():
     pcb = mat('PcbBlue', (0.02, 0.12, 0.42), roughness=0.34)
     solder = mat('PcbComponent', (0.55, 0.56, 0.55), metallic=0.65, roughness=0.22)
     usb_metal = mat('UsbMetal', (0.42, 0.44, 0.44), metallic=0.85, roughness=0.18)
-    ledmat = mat('LedClear', (0.88, 0.92, 0.94), roughness=0.10, transmission=0.85)
-    switchmat = mat('SwitchPlastic', (0.055, 0.06, 0.065), roughness=0.48)
-    actuator_mat = mat('SwitchActuator', (0.16, 0.17, 0.16), metallic=0.1, roughness=0.34)
-    wire_red = mat('SwitchWireRed', (0.72, 0.06, 0.04), roughness=0.42)
-    wire_black = mat('SwitchWireBlack', (0.018, 0.018, 0.018), roughness=0.48)
+    ledmat = mat('LedClear', (0.88, 0.92, 0.94), roughness=0.10, transmission=0.85,
+                 emission=(0.95, 0.92, 0.82), emission_strength=0.08)
+    led_die = mat('LedDie', (0.92, 0.88, 0.72), roughness=0.22,
+                  emission=(1.0, 0.94, 0.78), emission_strength=0.12)
+    switchmat = mat('SwitchPlastic', (0.040, 0.042, 0.045), roughness=0.55)
+    actuator_mat = mat('SwitchActuator', (0.20, 0.20, 0.19), metallic=0.12, roughness=0.30)
+    wire_red = mat('SwitchWireRed', (0.78, 0.05, 0.03), roughness=0.36)
+    wire_black = mat('SwitchWireBlack', (0.012, 0.012, 0.012), roughness=0.52)
 
     enclosure = import_stl(CASE, 'enclosure')
     set_mat(enclosure, charcoal)
@@ -356,6 +370,8 @@ def main():
         led.select_set(True)
         bpy.ops.object.transform_apply(location=False, rotation=True, scale=False)
         led.select_set(False)
+    add_led_details(led_a, led_die)
+    add_led_details(led_b, led_die)
     add_led_wire(led_a, battery_lead, 'left')
     add_led_wire(led_b, battery_lead, 'right')
     # The LEDs belong on the short end of the case. Their clear/lens end is
@@ -425,7 +441,7 @@ def main():
             name: {key: [round(math.degrees(value), 1) for value in rotation] for key, rotation in profile.items()}
             for name, profile in MOTION_PROFILES.items()
         },
-        'visualDetails': ['solar panel has a raised pale frame with enhanced metallic contrast, brighter bus lines, brighter cell-strip grid, four enlarged corner screw heads, and a thickened rear connector/wire cue', 'battery has lightweight provisional Kapton band, label plate, and lead cue parented to the supplied mesh', 'TP4056 board has lightweight blue PCB, USB-C, and component cues parented to the supplied mesh', 'switch has a small contrasting actuator cue parented to the pass9 source mesh', 'switch has two short inward-running wire cues (switch_red_wire, switch_black_wire) parented to the switch, routed toward negative Y into the enclosure', 'enclosure has four interior corner mount blocks (enclosure_mount_block_1..4) parented to the case shell', 'mount blocks are 5x5x6 mm dark plastic cubes at ±42 mm X, ±24 mm Y, z −4.5 mm'],
+        'visualDetails': ['solar panel has a raised pale frame with enhanced metallic contrast, brighter bus lines, brighter cell-strip grid, four enlarged corner screw heads, and a thickened rear connector/wire cue', 'battery has lightweight provisional Kapton band, label plate, and lead cue parented to the supplied mesh', 'TP4056 board has lightweight blue PCB, USB-C, and component cues parented to the supplied mesh', 'switch body is darker matte plastic with a lighter contrasting actuator cue parented to the pass9 source mesh', 'switch has two short inward-running wire cues (switch_red_wire, switch_black_wire) parented to the switch, routed toward negative Y into the enclosure', 'LED lenses have subtle warm-white emission with an inner die cylinder for physical lens contrast', 'enclosure has four interior corner mount blocks (enclosure_mount_block_1..4) parented to the case shell', 'mount blocks are 5x5x6 mm dark plastic cubes at ±42 mm X, ±24 mm Y, z −4.5 mm'],
         'provisional': ['solar panel is reference-informed geometry; no solar-panel CAD supplied', 'led_right duplicates the supplied single LED', 'battery and switch seating are provisional', 'user-supplied STEP files were converted to coarse browser-safe STL meshes through FreeCAD'],
         'authoredAction': 'ScrollSequence', 'frameRange': [1, 120],
         'timeline': {'closed': 0.0, 'explodedReview': 0.67, 'reassembled': 1.0},
