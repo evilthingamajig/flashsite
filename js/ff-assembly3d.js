@@ -561,7 +561,11 @@ function init(section) {
     { at: T_CH_START + CHAPTERS.length * CH_W, azim: 40, elev: 18 },
     { at: T_RE_START, azim: 40, elev: 18 },
     { at: T_RE_START + 0.04, azim: 40, elev: 18 },
-    { at: 0.99, azim: 20, elev: -24 },
+    // Close the finished light from the LED-bearing front and top. A negative
+    // elevation puts the camera on the -Y/front side while +Z remains visible,
+    // so the finished read includes both the blue solar surface and protruding
+    // optical heads instead of the enclosure's plain rear slab.
+    { at: 0.99, azim: 35, elev: -70 },
   ];
 
   function viewAngles(p) {
@@ -754,7 +758,11 @@ function init(section) {
       // the tighter, taller insertion fit only after the first settle.
       const reassemblyView = p >= T_RE_START + 0.04;
       const tableauW = pane.mobile ? 0.84 : (reassemblyView ? 0.78 : 0.75);
-      const tableauH = pane.mobile ? 0.56 : (reassemblyView ? 0.74 : 0.65);
+      // The open tray is tall and narrow in the authored front view. Give the
+      // reassembly beat a little more vertical budget so its enclosure anchor
+      // remains the same deliberate desktop size and the portrait composition
+      // does not collapse into a thin strip.
+      const tableauH = pane.mobile ? (reassemblyView ? 0.60 : 0.56) : (reassemblyView ? 0.76 : 0.65);
       const finalW = pane.mobile ? 0.82 : 0.68;
       const finalH = pane.mobile ? 0.56 : 0.78;
       const targetW = sticky.clientWidth * lerp(tableauW, finalW, finalBridgeT);
@@ -800,7 +808,10 @@ function init(section) {
       // The finished exterior has a compact depth box, so the pane fit is
       // height-dominated. Bring it a little closer to the viewport target
       // while retaining the safe margin around the final marker.
-      compositionDist *= lerp(1, 0.97, finalBridgeT);
+      // The raw final fit is already calibrated to the finished product. A
+      // closer 0.97 multiplier made the tall enclosure exceed the desktop
+      // hero height and pulled its marker into the projected silhouette.
+      compositionDist *= lerp(1, 1.0, finalBridgeT);
       center.lerp(compositionCenter, compositionBlend);
       dist = lerp(dist, compositionDist, compositionBlend);
     }
@@ -817,10 +828,21 @@ function init(section) {
       // Once the outgoing copy is nearly faded, it no longer constrains the
       // active solo's framing. Keeping its much larger bounds in this solve
       // was the hidden source of the underfilled battery/board/LED holds.
-      if (blend.prevId && blend.handoff >= 0.15 && blend.handoff < 0.85) safetyIds.push(blend.prevId);
+      if (blend.prevId && blend.handoff >= 0.15 && blend.handoff < 0.85 && blend.id !== 'battery' && !(blend.id === 'led_pair' && blend.handoff >= 0.55)) safetyIds.push(blend.prevId);
       const minClear = pane.mobile ? 16 : 32;
-      for (const safetyId of safetyIds) {
-        const safetyBox = boxForSubject(safetyId, boxA);
+      // The PCB→LED transition is the one handoff where the two subjects
+      // occupy materially different vertical bands. Fit their union while
+      // the handoff is visible, then center in both screen axes; a horizontal
+      // correction alone leaves the incoming LEDs below the viewport.
+      const safetySpecs = (blend.id === 'led_pair' && blend.prevId && blend.handoff >= 0.15 && blend.handoff < 0.55)
+        ? (() => {
+          const union = boxForSubject(blend.id, boxA);
+          union.union(boxForSubject(blend.prevId, boxB));
+          return [{ box: union, center: true }];
+        })()
+        : safetyIds.map((safetyId) => ({ box: boxForSubject(safetyId, boxA), center: safetyId === blend.id }));
+      for (const safetySpec of safetySpecs) {
+        const safetyBox = safetySpec.box;
         for (let iter = 0; iter < 18; iter++) {
           const bb = projectedPixelBBox(safetyBox, center, dist, azim, elev, pane);
           // Prefer translating the target in screen space when a large but
@@ -840,6 +862,7 @@ function init(section) {
           // the remaining iterations to center it without sacrificing scale.
           if (sizeScale > 1.002) { dist *= Math.min(1.16, sizeScale); continue; }
           const targetMidX = Math.min(maxX - (bb.maxX - bb.minX) * 0.5, Math.max(minX + (bb.maxX - bb.minX) * 0.5, midX));
+          const targetMidY = Math.min(maxY - (bb.maxY - bb.minY) * 0.5, Math.max(minY + (bb.maxY - bb.minY) * 0.5, midY));
           let moved = false;
           const probe = 0.001;
           const right = new THREE.Vector3(Math.cos(azim), 0, -Math.sin(azim));
@@ -847,6 +870,14 @@ function init(section) {
             const probeBox = projectedPixelBBox(safetyBox, center.clone().addScaledVector(right, probe), dist, azim, elev, pane);
             const slope = ((probeBox.minX + probeBox.maxX) * 0.5 - midX) / probe;
             if (Math.abs(slope) > 1) { center.addScaledVector(right, (targetMidX - midX) / slope); moved = true; }
+          }
+          // Screen-up is the camera's true vertical basis, not world Y alone;
+          // using it preserves centering at the tilted catalog angles.
+          const up = new THREE.Vector3(-Math.sin(elev) * Math.sin(azim), Math.cos(elev), -Math.sin(elev) * Math.cos(azim));
+          if (safetySpec.center && Math.abs(targetMidY - midY) > 0.25) {
+            const probeBox = projectedPixelBBox(safetyBox, center.clone().addScaledVector(up, probe), dist, azim, elev, pane);
+            const slope = ((probeBox.minY + probeBox.maxY) * 0.5 - midY) / probe;
+            if (Math.abs(slope) > 1) { center.addScaledVector(up, (targetMidY - midY) / slope); moved = true; }
           }
           if (moved) continue;
           const overflow = Math.max(0, minX - bb.minX, bb.maxX - maxX, minY - bb.minY, bb.maxY - maxY);
@@ -1038,7 +1069,18 @@ function init(section) {
         // removes the battery's late 180° jump between beat samples.
         const beatT = clamp01((p - beatStart) / RE_W);
         const startQ = new THREE.Quaternion().setFromEuler(new THREE.Euler(0, motion.baseYaw * Math.PI / 180, 0, 'YXZ'));
-        const reassemblyQ = startQ.clone().slerp(new THREE.Quaternion(), smooth(beatT));
+        // The foil face is authored on the 180° side and remains the readable
+        // side while the open enclosure is being rebuilt. Only after the
+        // closed hold begins may it ease to the hidden seated orientation.
+        // Every component ultimately returns to the authored seated identity.
+        // The battery keeps its readable 180° face through the open
+        // reassembly, then turns only during the closed-product hold; using
+        // startQ as both ends accidentally made that transition a no-op.
+        const seatQ = new THREE.Quaternion();
+        const seatT = c.id === 'battery'
+          ? smooth((p - T_FINAL) / 0.012)
+          : smooth(beatT);
+        const reassemblyQ = startQ.clone().slerp(seatQ, seatT);
         g.quaternion.copy(reassemblyQ);
         composedQuaternion = true;
       }
@@ -1264,9 +1306,17 @@ function init(section) {
     if (i < 0 && p >= chapterEnd && p < T_COPY_CLEAR) return CHAPTERS[CHAPTERS.length - 1].key;
     if (i < 0) return null;
     const t = chapterT(p, i);
+    const c = CHAPTERS[i];
     // Keep the outgoing label/leader through the first part of the handoff so
     // the copy cannot blink out while the next component becomes visible.
-    if (i > 0 && t < 0.18) return CHAPTERS[i - 1].key;
+    if (i > 0) {
+      // Ownership follows the dominant visual subject. Battery and LEDs enter
+      // before the outgoing part has fully faded; keeping the old label/leader
+      // until 18% made the copy disagree with the visible component at the
+      // exact transition samples.
+      const ownershipT = (c.id === 'battery' || c.id === 'led_pair') ? 0.10 : 0.18;
+      if (t < ownershipT) return CHAPTERS[i - 1].key;
+    }
     // Non-final chapter copy stays present through its complete local window;
     // the next chapter owns the actual crossfade. This keeps the leader and
     // label state continuous at the exact solo boundary.
@@ -1286,7 +1336,11 @@ function init(section) {
         if (c.id === activeId) {
           // Never leave a blank frame at the PCB→LED handoff: the incoming
           // optical pair gets a visible floor opacity while the board fades.
-          const handoffFloor = c.id === 'led_pair' ? 0.32 : (c.id === 'battery' ? 0.28 : 0.14);
+          // Let the battery and optical pair become materially opaque before
+          // their readable hold. At the dense handoff probes this prevents
+          // translucent duplicate labels and keeps the incoming part legible
+          // while the outgoing mesh is already yielding.
+          const handoffFloor = c.id === 'led_pair' ? 0.56 : (c.id === 'battery' ? 0.72 : 0.14);
           dim = Math.max(handoffFloor, blend.handoff || blend.w);
         }
         else if (c.id === blend.prevId && blend.handoff < 1) {
@@ -1300,7 +1354,11 @@ function init(section) {
         }
         else dim = 0;
       }
-      groups[c.id].visible = dim > 0.001 || c.id === activeId;
+      // Fully faded handoff subjects should leave the render list as well as
+      // losing opacity. This prevents a solar-lid remnant from lingering in
+      // the battery frame and keeps transition bounds honest.
+      groups[c.id].userData.dim = dim;
+      groups[c.id].visible = dim > 0.02 || c.id === activeId;
       groups[c.id].traverse((o) => {
         if (o.isMesh) {
           const mats = Array.isArray(o.material) ? o.material : [o.material];
@@ -1393,6 +1451,7 @@ function init(section) {
       // entering. A per-part projection prevents blank-stage regressions from
       // hiding behind that editorial label state.
       visibleSilhouettes: Object.fromEntries(PART_IDS.filter((id) => groups[id]?.visible).map((id) => [id, silhouettePx(id)])),
+      partOpacity: Object.fromEntries(CHAPTERS.map((c) => [c.key, +(groups[c.id]?.userData?.dim ?? 0).toFixed(3)])),
       leaderSegments: (() => {
         const out = [];
         leadersSvg.querySelectorAll('polyline,line').forEach((el) => {
