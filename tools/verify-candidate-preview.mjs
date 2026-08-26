@@ -156,6 +156,9 @@ const focusStyles = {
   rangeRing: /\.cpv-range-label input:focus-visible\{[^}]*outline:1px solid var\(--cpv-accent\)/.test(candidateCss),
 };
 check('keyboard focus visibility', focusStyles.disclosureRing && focusStyles.controlRing && focusStyles.rangeRing, JSON.stringify(focusStyles));
+const candidateJs = await readFile(join(ROOT, 'js', 'candidate-preview.js'), 'utf8');
+const pagehideCleanupSafe = /addEventListener\('pagehide', \(event\) => \{\s*if \(event\.persisted\) return;[\s\S]*?renderer\.dispose\(\)/.test(candidateJs);
+check('pagehide cleanup preserves bfcache', pagehideCleanupSafe);
 const metadata = await cdp.evaluate(`({
   title: document.title,
   description: document.querySelector('meta[name="description"]')?.getAttribute('content') || '',
