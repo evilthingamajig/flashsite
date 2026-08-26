@@ -42,9 +42,10 @@ No external network assets.
   `LoopOnce` + `clampWhenFinished` action, so all parts scrub together;
   `action.paused` is cleared before each absolute seek so reverse
   scrubbing never sticks at the final frame.
-- Camera framing interpolates between the closed (p=0) and exploded (p=1)
-  bounds with a slow azimuth/elevation drift; everything is a pure function
-  of progress.
+- Camera framing interpolates between the closed (p=0) and exploded-review
+  (p=0.67) bounds with a slow azimuth/elevation drift, then returns to the
+  closed framing as the product reassembles at p=1; everything is a pure
+  function of progress.
 - During the exploded review, one plain two-line editorial label appears at a
   time and fades to the next part as the timeline advances. Each label uses a
   dotted SVG leader and the provisional second line `Cost TBD` until
