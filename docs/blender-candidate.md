@@ -35,6 +35,12 @@ lines, cell strips, and frame-120 return-to-seat.
 The GLB contains a named `ScrollSequence` action and is approximately 2.1 MB.
 The candidate was built and re-imported headlessly on the local Blender 5.2.1
 installation.
+
+An additional Blender Workbench render of frame 120 was visually inspected at
+the authored three-quarter camera framing. It shows the rectangular solar
+surface and cell details, enclosure depth, four panel fasteners, and both LED
+heads seated on the short end. No production asset was changed during this
+review.
 The build removes exact duplicate triangle faces from the decimated supplied
 battery and TP4056 meshes before export; Blender's invalid-mesh export warnings
 are absent on the current candidate build.
