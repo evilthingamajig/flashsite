@@ -342,8 +342,11 @@ def main():
                  emission=(0.95, 0.92, 0.82), emission_strength=0.08)
     led_die = mat('LedDie', (0.92, 0.88, 0.72), roughness=0.22,
                   emission=(1.0, 0.94, 0.78), emission_strength=0.12)
-    switchmat = mat('SwitchPlastic', (0.040, 0.042, 0.045), roughness=0.55)
-    actuator_mat = mat('SwitchActuator', (0.20, 0.20, 0.19), metallic=0.12, roughness=0.30)
+    # The switch sits in the pale side opening shown in the reference. Use a
+    # light body with a contrasting actuator so the seated control remains
+    # legible against both the white surround and charcoal case.
+    switchmat = mat('SwitchPlastic', (0.72, 0.74, 0.72), roughness=0.42)
+    actuator_mat = mat('SwitchActuator', (0.08, 0.09, 0.085), metallic=0.12, roughness=0.30)
     wire_red = mat('SwitchWireRed', (0.78, 0.05, 0.03), roughness=0.36)
     wire_black = mat('SwitchWireBlack', (0.012, 0.012, 0.012), roughness=0.52)
 
