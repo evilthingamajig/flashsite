@@ -48,6 +48,11 @@ if not required_children.issubset(battery_children):
     fail('battery detail children missing: ' + ', '.join(sorted(required_children - battery_children)))
 passed('battery detail children present')
 
+switch_children = {child.name for child in parts['switch'].children}
+if 'switch_actuator' not in switch_children:
+    fail('switch actuator detail child is missing')
+passed('switch actuator detail present')
+
 scene = bpy.context.scene
 scene.frame_set(1)
 closed_locations = {name: tuple(obj.location) for name, obj in parts.items() if name in EXPECTED_PARTS}
