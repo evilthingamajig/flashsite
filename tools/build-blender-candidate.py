@@ -97,6 +97,31 @@ def set_mat(ob, material):
     ob.data.materials.clear()
     ob.data.materials.append(material)
 
+def parent_detail(detail, parent, location):
+    detail.parent = parent
+    detail.location = location
+    return detail
+
+def add_battery_details(battery, kapton, battery_label, lead_material):
+    # Keep the supplied pouch as the authoritative envelope and add only the
+    # visible physical cues that survive the low-poly browser export.
+    band = cube('battery_kapton_band', (0.054, 0.006, 0.0064), (0.0, 0.0, 0.0), kapton)
+    parent_detail(band, battery, (0.0, 0.011, 0.0002))
+    tag = cube('battery_label_plate', (0.022, 0.014, 0.00024), (0.0, 0.0, 0.0), battery_label)
+    parent_detail(tag, battery, (0.008, -0.006, 0.0031))
+    lead = cube('battery_lead_pair', (0.012, 0.0012, 0.0008), (0.0, 0.0, 0.0), lead_material)
+    parent_detail(lead, battery, (0.022, 0.023, 0.0022))
+
+def add_charge_details(charge, solder, usb_metal):
+    # TP4056 boards are visually defined by the blue PCB, USB-C end, and a
+    # handful of dark/silver components; these cues remain intentionally light.
+    port = cube('charge_usb_c_port', (0.0045, 0.009, 0.0032), (0.0, 0.0, 0.0), usb_metal)
+    parent_detail(port, charge, (0.0148, 0.0, 0.0018))
+    chip = cube('charge_controller_chip', (0.006, 0.005, 0.0012), (0.0, 0.0, 0.0), solder)
+    parent_detail(chip, charge, (-0.003, 0.002, 0.0022))
+    resistor = cube('charge_resistor_bank', (0.011, 0.002, 0.001), (0.0, 0.0, 0.0), solder)
+    parent_detail(resistor, charge, (-0.008, -0.004, 0.0021))
+
 def center_mesh_origin(ob):
     """Move imported geometry around its own bounds so location is its seat."""
     center = sum((Vector(c) for c in ob.bound_box), Vector()) / 8.0
@@ -183,10 +208,13 @@ def main():
     solar = solar_material()
     solar_bus = mat('SolarBus', (0.06, 0.065, 0.055), metallic=0.3, roughness=0.3)
     solar_line = mat('SolarCellLine', (0.22, 0.28, 0.34), metallic=0.25, roughness=0.25)
-    foil = mat('BatteryFoil', (0.42, 0.45, 0.46), metallic=0.45, roughness=0.32)
+    foil = mat('BatteryFoil', (0.48, 0.50, 0.49), metallic=0.62, roughness=0.27)
     kapton = mat('BatteryKapton', (0.72, 0.38, 0.035), roughness=0.48)
     battery_label = mat('BatteryLabel', (0.035, 0.04, 0.038), roughness=0.62)
-    pcb = mat('PcbGreen', (0.015, 0.16, 0.07), roughness=0.42)
+    battery_lead = mat('BatteryLead', (0.11, 0.12, 0.12), metallic=0.4, roughness=0.36)
+    pcb = mat('PcbBlue', (0.012, 0.07, 0.18), roughness=0.38)
+    solder = mat('PcbComponent', (0.27, 0.30, 0.29), metallic=0.45, roughness=0.28)
+    usb_metal = mat('UsbMetal', (0.16, 0.18, 0.18), metallic=0.8, roughness=0.2)
     ledmat = mat('LedClear', (0.88, 0.92, 0.94), roughness=0.10, transmission=0.85)
     switchmat = mat('SwitchPlastic', (0.055, 0.06, 0.065), roughness=0.48)
 
@@ -203,6 +231,7 @@ def main():
     set_mat(charge, pcb)
     reduce_mesh(charge, 0.03)
     charge.location = (0.0, 0.016, -0.002)
+    add_charge_details(charge, solder, usb_metal)
     battery = import_stl(BATTERY, 'battery')
     set_mat(battery, foil)
     reduce_mesh(battery, 0.03)
@@ -210,12 +239,7 @@ def main():
     # Lightweight provisional LiPo surface cues. Keep these as children of
     # the supplied battery mesh so the existing single battery action carries
     # them through the exploded and reassembled poses.
-    battery_band = cube('battery_kapton_band', (0.054, 0.006, 0.0064), (0.0, 0.0, 0.0), kapton)
-    battery_band.parent = battery
-    battery_band.location = (0.0, 0.011, 0.0002)
-    battery_tag = cube('battery_label_plate', (0.022, 0.014, 0.00024), (0.0, 0.0, 0.0), battery_label)
-    battery_tag.parent = battery
-    battery_tag.location = (0.008, -0.006, 0.0031)
+    add_battery_details(battery, kapton, battery_label, battery_lead)
     led_a = import_stl(LED, 'led_left')
     led_b = import_stl(LED, 'led_right')
     set_mat(led_a, ledmat); set_mat(led_b, ledmat)
@@ -291,7 +315,7 @@ def main():
             name: {key: [round(math.degrees(value), 1) for value in rotation] for key, rotation in profile.items()}
             for name, profile in MOTION_PROFILES.items()
         },
-        'visualDetails': ['battery has lightweight provisional Kapton band and label plate parented to the supplied mesh'],
+        'visualDetails': ['solar panel has a raised frame, bus lines, and cell-strip details', 'battery has lightweight provisional Kapton band, label plate, and lead cue parented to the supplied mesh', 'TP4056 board has lightweight blue PCB, USB-C, and component cues parented to the supplied mesh'],
         'provisional': ['solar panel is reference-informed geometry; no solar-panel CAD supplied', 'led_right duplicates the supplied single LED', 'battery and switch seating are provisional', 'user-supplied STEP files were converted to coarse browser-safe STL meshes through FreeCAD'],
         'authoredAction': 'ScrollSequence', 'frameRange': [1, 120],
         'timeline': {'closed': 0.0, 'explodedReview': 0.67, 'reassembled': 1.0},
