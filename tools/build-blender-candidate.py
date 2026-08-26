@@ -74,6 +74,13 @@ def add_solar_details(panel, bus_material, line_material):
         detail.location = (detail.location.x, detail.location.y, detail.location.z)
     return details
 
+def add_solar_connection_details(panel, connector_material, lead_material):
+    connector = cube('solar_rear_connector', (0.006, 0.008, 0.0015), (0.0, 0.0, 0.0), connector_material)
+    parent_detail(connector, panel, (0.028, 0.014, -0.0011))
+    wire_detail('solar_rear_wire', panel, [
+        (0.028, 0.014, -0.0012), (0.034, 0.018, -0.0010), (0.041, 0.018, -0.0008)
+    ], lead_material)
+
 def import_stl(path, name, scale=BLENDER_MM):
     bpy.ops.wm.stl_import(filepath=path)
     ob = bpy.context.selected_objects[0]
@@ -263,6 +270,7 @@ def main():
 
     panel = cube('solar_panel_placeholder', (0.098, 0.058, 0.0018), (0.0, 0.0, 0.0088), solar)
     add_solar_details(panel, solar_bus, solar_line)
+    add_solar_connection_details(panel, usb_metal, battery_lead)
     charge = import_stl(TP4056, 'charge_module')
     set_mat(charge, pcb)
     reduce_mesh(charge, 0.03)
@@ -354,7 +362,7 @@ def main():
             name: {key: [round(math.degrees(value), 1) for value in rotation] for key, rotation in profile.items()}
             for name, profile in MOTION_PROFILES.items()
         },
-        'visualDetails': ['solar panel has a raised frame, bus lines, and cell-strip details', 'battery has lightweight provisional Kapton band, label plate, and lead cue parented to the supplied mesh', 'TP4056 board has lightweight blue PCB, USB-C, and component cues parented to the supplied mesh', 'switch has a small contrasting actuator cue parented to the pass9 source mesh'],
+        'visualDetails': ['solar panel has a raised frame, bus lines, cell-strip details, and a parented rear connector/wire cue', 'battery has lightweight provisional Kapton band, label plate, and lead cue parented to the supplied mesh', 'TP4056 board has lightweight blue PCB, USB-C, and component cues parented to the supplied mesh', 'switch has a small contrasting actuator cue parented to the pass9 source mesh'],
         'provisional': ['solar panel is reference-informed geometry; no solar-panel CAD supplied', 'led_right duplicates the supplied single LED', 'battery and switch seating are provisional', 'user-supplied STEP files were converted to coarse browser-safe STL meshes through FreeCAD'],
         'authoredAction': 'ScrollSequence', 'frameRange': [1, 120],
         'timeline': {'closed': 0.0, 'explodedReview': 0.67, 'reassembled': 1.0},

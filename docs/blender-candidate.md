@@ -46,7 +46,8 @@ installation.
 - TP4056, LiPo, and LED STEP dimensions were validated in FreeCAD before this
   candidate was created, then tessellated into browser-safe STL meshes.
 - The solar panel is a placeholder because its photo was not baked into this
-  candidate.
+  candidate; its front has a raised frame/cell study and its rear has a small
+  parented connector/wire cue for the exploded view.
 - The supplied battery mesh has lightweight provisional silver-foil, yellow
   Kapton, label-plate, lead, and wire cues parented to it; these inherit the
   battery's authored motion.
