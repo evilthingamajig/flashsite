@@ -37,7 +37,7 @@ const requiredCandidateFiles = [
   'fonts/667d8d81555e958a89e78dd3_TWKLausanne-400.woff2',
   'fonts/667d8d81555e958a89e78dd7_TWKLausanne-500.woff2',
   'assets/3d/flashlight-assembly-blender-candidate.glb',
-  'assets/3d/references/solar-panel-tops.png',
+  'assets/3d/references/solarpanel.jpg',
   'assets/3d/references/flashlight-internals-charging-board.png',
 ];
 const missingCandidateFiles = [];
@@ -201,7 +201,7 @@ const controls = await cdp.evaluate(`({
 })`);
 const referenceSources = controls.references.map((reference) => reference.source);
 const referenceNames = controls.references.map((reference) => reference.name);
-check('review controls and references', controls.range && controls.reset && controls.references.length === 2 && referenceSources.includes('assets/3d/references/solar-panel-tops.png') && referenceSources.includes('assets/3d/references/flashlight-internals-charging-board.png') && referenceNames.length === 2 && referenceNames.every((name) => name === 'candidate-reference') && controls.poses && controls.partsCollapsed && JSON.stringify(controls.chapters) === JSON.stringify(['Closed', 'Exploded review', 'Reassembled']), JSON.stringify(controls));
+check('review controls and references', controls.range && controls.reset && controls.references.length === 2 && referenceSources.includes('assets/3d/references/solarpanel.jpg') && referenceSources.includes('assets/3d/references/flashlight-internals-charging-board.png') && referenceNames.length === 2 && referenceNames.every((name) => name === 'candidate-reference') && controls.poses && controls.partsCollapsed && JSON.stringify(controls.chapters) === JSON.stringify(['Closed', 'Exploded review', 'Reassembled']), JSON.stringify(controls));
 const candidateCss = await readFile(join(ROOT, 'css', 'candidate-preview.css'), 'utf8');
 const focusStyles = {
   disclosureRing: /\.cpv-parts summary:focus-visible,\.cpv-reference summary:focus-visible\{[^}]*outline:1px solid var\(--cpv-accent\)/.test(candidateCss),
