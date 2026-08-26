@@ -50,6 +50,12 @@ await cdp.evaluate('window.__ffCandidatePreview.setProgress(0); undefined');
 await new Promise((resolve) => setTimeout(resolve, 180));
 const closed = await info();
 check('closed pose label', /Closed/.test(await cdp.evaluate("document.getElementById('cpv-status').textContent")));
+const closedAnnotations = await cdp.evaluate(`({
+  calloutsHidden: document.getElementById('cpv-callouts').style.display === 'none',
+  leadersHidden: document.getElementById('cpv-leaders').style.display === 'none',
+  activeAria: [...document.querySelectorAll('.cpv-callout')].filter((el) => el.getAttribute('aria-hidden') === 'false').length,
+})`);
+check('closed annotations hidden', closedAnnotations.calloutsHidden && closedAnnotations.leadersHidden && closedAnnotations.activeAria === 0, JSON.stringify(closedAnnotations));
 const closedParts = closed?.partTransforms || {};
 const leftLed = closedParts.led_left;
 const rightLed = closedParts.led_right;

@@ -51,7 +51,8 @@ No external network assets.
 - During the exploded review, one plain two-line editorial label appears at a
   time and fades to the next part as the timeline advances. Each label uses a
   dotted SVG leader and the provisional second line `Cost TBD` until
-  authoritative pricing is supplied.
+  authoritative pricing is supplied. Labels and leaders stay hidden in the
+  closed and reassembled poses so the product view remains uncluttered.
 
 ## Performance and fallbacks
 
