@@ -262,6 +262,12 @@ def main():
         'kind': 'candidate-only', 'generator': 'tools/build-blender-candidate.py',
         'targetFootprint': 'approximately 100x60 mm; supplied STL measured 105x65x15 mm',
         'sourceCase': CASE, 'sourceCaseUnits': 'raw STL values interpreted as millimetres',
+        'sourceDimensionsMm': {
+            'case': [105.0, 65.0, 15.0],
+            'charge_module': [29.3, 17.4, 4.14],
+            'battery': [53.1, 46.821, 6.0],
+            'led': [5.58, 6.0, 36.5],
+        },
         'referencePhoto': 'assets/3d/references/solarpanel.jpg',
         'convertedCadSources': {
             'charge_module': 'source-assets/external/user-supplied/tp4056-user-supplied.stl',
