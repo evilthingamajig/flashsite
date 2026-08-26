@@ -76,6 +76,12 @@ const closedAnnotations = await cdp.evaluate(`({
   activeParts: document.querySelectorAll('#cpv-part-list li.is-active').length,
 })`);
 check('closed annotations hidden', closedAnnotations.calloutsHidden && closedAnnotations.leadersHidden && closedAnnotations.activeAria === 0 && closedAnnotations.label === 'Current candidate part annotation' && closedAnnotations.activeParts === 0, JSON.stringify(closedAnnotations));
+const calloutAccessibility = await cdp.evaluate(`({
+  live: document.getElementById('cpv-callouts').getAttribute('aria-live'),
+  atomic: document.getElementById('cpv-callouts').getAttribute('aria-atomic'),
+  ledNames: [...document.querySelectorAll('#cpv-part-list [data-cpv-part="led_pair"] .cpv-part-name')].map((el) => el.textContent.trim())
+})`);
+check('callout accessibility and LED copy', calloutAccessibility.live === 'polite' && calloutAccessibility.atomic === 'true' && calloutAccessibility.ledNames.length === 2 && calloutAccessibility.ledNames.every((name) => name === '5 mm LED'), JSON.stringify(calloutAccessibility));
 const closedParts = closed?.partTransforms || {};
 const leftLed = closedParts.led_left;
 const rightLed = closedParts.led_right;
