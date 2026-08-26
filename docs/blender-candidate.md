@@ -14,7 +14,8 @@ It does not replace `assets/3d/flashlight-assembly.glb`.
 The exported candidate is `assets/3d/flashlight-assembly-blender-candidate.glb`.
 The converted source meshes are kept under
 `source-assets/external/user-supplied/`, and the supplied solar reference photo
-is kept at `assets/3d/references/solarpanel.jpg`.
+is kept at `assets/3d/references/solarpanel.jpg`. The candidate uses that
+reference for its cell layout; no solar-panel CAD was supplied.
 Blender 5.2.1 imports it with these named objects:
 
 `enclosure`, `solar_panel_placeholder`, `battery`, `charge_module`,
