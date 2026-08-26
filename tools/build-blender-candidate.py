@@ -191,23 +191,23 @@ def add_led_wire(led, lead_material, side):
 
 def add_switch_details(switch, actuator_material, red_material, black_material):
     # The pass9 mesh remains the authoritative switch body. Its actuator must
-    # project through the positive-Y case-side opening; placing it on local Z
+    # project through the negative-Y case-side opening; placing it on local Z
     # made the side view look like an empty white recess.
     actuator = cube('switch_actuator', (0.0034, 0.0020, 0.0040), (0.0, 0.0, 0.0), actuator_material)
-    parent_detail(actuator, switch, (0.0, 0.0048, 0.0))
-    # Two short inward-running wire cues exiting from the switch's positive-Y
-    # seat toward negative Y into the enclosure.  The switch sits at y ≈ 0.029
-    # (positive-Y case wall); these 3-point polylines drop ~2 mm in Z over a
+    parent_detail(actuator, switch, (0.0, -0.0048, 0.0))
+    # Two short inward-running wire cues exiting from the switch's negative-Y
+    # seat toward positive Y into the enclosure. The switch sits at y ≈ -0.029
+    # (negative-Y case wall); these 3-point polylines drop ~2 mm in Z over a
     # ~6 mm Y run so they read as short leads routed into the shell interior.
     wire_detail('switch_red_wire', switch, [
         (0.0008, 0.0, 0.0024),
-        (0.0008, -0.003, 0.0016),
-        (0.0008, -0.006, 0.0010),
+        (0.0008, 0.003, 0.0016),
+        (0.0008, 0.006, 0.0010),
     ], red_material, bevel=0.00028)
     wire_detail('switch_black_wire', switch, [
         (-0.0008, 0.0, 0.0024),
-        (-0.0008, -0.003, 0.0016),
-        (-0.0008, -0.006, 0.0010),
+        (-0.0008, 0.003, 0.0016),
+        (-0.0008, 0.006, 0.0010),
     ], black_material, bevel=0.00028)
 
 def add_led_details(led, die_material):
@@ -427,10 +427,12 @@ def main():
     sw = import_stl(SWITCH, 'switch', scale=BLENDER_MM)
     set_mat(sw, switchmat)
     center_mesh_origin(sw)
-    # Seat the switch against the positive-Y case wall. Keeping its body
+    # Seat the switch against the negative-Y case wall identified by the user
+    # as the long pale recess beneath the parts disclosure in the product view.
+    # Keeping its body
     # centered on the wall edge makes the control read as physically mounted
     # in the closed three-quarter view instead of floating inside the shell.
-    sw.location = (0.0, 0.029, 0.0)
+    sw.location = (0.0, -0.029, 0.0)
     add_switch_details(sw, actuator_mat, wire_red, wire_black)
 
     switch_surround_mat = mat('SwitchSurround', (0.14, 0.15, 0.16), roughness=0.55)
@@ -438,9 +440,9 @@ def main():
     # Parent to the enclosure so the surround follows the case shell through
     # the closed and exploded poses.  Convert the switch's world seat to the
     # enclosure's local coordinates and align the bracket's positive-Y face
-    # flush with the switch's positive-Y seating edge.
+    # flush with the switch's negative-Y seating edge.
     parent_detail(switch_surround, enclosure, tuple(Vector(sw.location) - enclosure.location))
-    switch_surround.location.y -= 0.0006
+    switch_surround.location.y += 0.0006
 
     parts = [enclosure, panel, battery, charge, led_a, led_b, sw]
     seats = {p.name: tuple(p.location) for p in parts}

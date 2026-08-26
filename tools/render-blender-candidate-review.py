@@ -81,10 +81,11 @@ def main():
     cam_obj = bpy.data.objects.new("ReviewCamera", cam_data)
     scene.collection.objects.link(cam_obj)
 
-    # View from the negative-X short end so both LED heads remain visible.
+    # View from the negative-X short end and negative-Y wall so both LED heads
+    # and the user-identified switch opening remain visible in the audit render.
     cam_distance = radius * 2.8
     elevation = math.radians(22)
-    azimuth = math.radians(135)
+    azimuth = math.radians(-135)
     cam_pos = Vector((
         center.x + cam_distance * math.cos(elevation) * math.cos(azimuth),
         center.y + cam_distance * math.cos(elevation) * math.sin(azimuth),

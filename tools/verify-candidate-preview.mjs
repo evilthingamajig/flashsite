@@ -297,7 +297,7 @@ await cdp.evaluate(`Object.defineProperty(document,'hidden',{configurable:true,g
 check('zero console errors', errors.length === 0, errors.join(', '));
 
 await cdp.send('Page.navigate', { url: `http://127.0.0.1:${PORT}/candidate-preview.html?p=1` });
-await new Promise((resolve) => setTimeout(resolve, 1800));
+await new Promise((resolve) => setTimeout(resolve, 3200));
 const deepLink = await info();
 const deepLinkQuery = await cdp.evaluate('window.location.search');
 await cdp.evaluate('window.__ffCandidatePreview.setProgress(1); undefined');
