@@ -183,6 +183,13 @@ function init(section) {
   let root = null;
   let ready = false;
   let manifestBounds = null;
+  // Optional Blender-authored choreography (docs/BLENDER-HANDOFF.md). When
+  // the GLB ships an action named ScrollSequence, these hold the mixer and
+  // its single looping-clamped action; otherwise they stay null and the
+  // procedural SOLO_MOTION/applyPose fallback below drives every pose.
+  let animClip = null;
+  let animMixer = null;
+  let animAction = null;
   fetch('assets/3d/assembly-manifest.json').then((r) => r.ok ? r.json() : null).then((m) => { manifestBounds = m?.parts?.summary || null; }).catch(() => {});
 
   function showLoadError(err) {
@@ -513,6 +520,23 @@ function init(section) {
       seats[c.id] = originalPos.clone();
     });
     if (PART_IDS.some((id) => !groups[id])) { showLoadError(new Error('GLB is missing a required named part')); return; }
+    // Consume an authored master action when the exporter provides one. The
+    // clip targets the same named part nodes reparented above, so
+    // PropertyBinding resolves by name and the pivot/holder seats still
+    // compose with every authored local transform.
+    animClip = (Array.isArray(gltf.animations) ? gltf.animations : []).find((clip) => clip && clip.name === 'ScrollSequence') || null;
+    if (animClip && animMixer === null) {
+      animMixer = new THREE.AnimationMixer(root);
+      animAction = animMixer.clipAction(animClip);
+      // One forward pass clamped at the tail: LoopRepeat would wrap a
+      // setTime(duration) sample back to t=0, while LoopOnce +
+      // clampWhenFinished parks the final evaluation exactly on the last
+      // authored frame. scrubScrollSequence clears the finished pause before
+      // each scrub so absolute re-scrubbing never sticks.
+      animAction.setLoop(THREE.LoopOnce, 1);
+      animAction.clampWhenFinished = true;
+      animAction.play();
+    }
     ready = true;
     loadingEl.classList.add('is-done');
     requestRender(true);
@@ -1372,9 +1396,32 @@ function init(section) {
       });
     });
   }
+  // Deterministic playhead for the authored ScrollSequence action. setTime()
+  // resets the mixer and every action time to zero before advancing by the
+  // given absolute duration offset, so identical scroll progress produces an
+  // identical pose in either scrub direction and nothing accumulates between
+  // frames. Rendering stays event-driven: the mixer is never advanced by a
+  // clock, only by this pure function of normalized progress.
+  function scrubScrollSequence(p) {
+    if (!animMixer || !animAction || !animClip) return;
+    const duration = Math.max(0, animClip.duration);
+    const seconds = clamp01(p) * duration;
+    // A finished LoopOnce action is parked with paused=true, which zeroes its
+    // effective time scale and would freeze later updates at t=0. Un-pause
+    // before each absolute seek; clampWhenFinished still pins the terminal
+    // sample to the exact final frame instead of wrapping.
+    animAction.paused = false;
+    animMixer.setTime(seconds);
+    root.updateMatrixWorld(true);
+  }
+
   function renderFrame() {
     const p = lastProgress;
-    applyPose(p);
+    if (animMixer && animAction && animClip) {
+      scrubScrollSequence(p);
+    } else {
+      applyPose(p);
+    }
     applyDim(p);
     const pane = paneRect();
     const ang = viewAngles(p);
@@ -1536,6 +1583,9 @@ function init(section) {
     document.removeEventListener('visibilitychange', onVisibility);
     window.removeEventListener('scroll', onScroll);
     window.removeEventListener('resize', onResize);
+    if (animMixer) { animMixer.stopAllAction(); if (root) animMixer.uncacheRoot(root); animMixer = null; }
+    animAction = null;
+    animClip = null;
     Object.values(groups).forEach((g) => g.traverse((o) => {
       if (!o.isMesh) return;
       if (o.geometry && o.geometry.dispose) o.geometry.dispose();
@@ -1568,10 +1618,12 @@ function init(section) {
       if (!ready || !manifestBounds) return false;
       const missing = PART_IDS.filter((id) => !groups[id]);
       if (missing.length) return false;
-      applyPose(1);
+      if (animMixer && animAction && animClip) scrubScrollSequence(1);
+      else applyPose(1);
       return authoritativeSeatedPose();
     },
     parts: () => Object.keys(groups),
+    animation: () => (animClip ? { clip: animClip.name, duration: animClip.duration, active: !!(animMixer && animAction) } : null),
   };
 
   requestRender(true);
