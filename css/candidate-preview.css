@@ -162,6 +162,7 @@ body{
 }
 
 @media(max-width:760px){
+  .cpv-leaders line{stroke-width:2}
   .cpv-main{height:420vh}
   .cpv-parts{
     left:16px;right:16px;top:auto;bottom:64px;transform:none;
