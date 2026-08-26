@@ -123,6 +123,13 @@ if missing_mounts:
     fail('enclosure mount block children missing: ' + ', '.join(sorted(missing_mounts)))
 passed('four enclosure corner mount blocks present')
 
+expected_screws = {"mount_screw_enclosure_mount_block_%d" % index for index in range(1, 5)}
+mount_screws = {child.name for mount in parts['enclosure'].children for child in mount.children}
+missing_screws = expected_screws - mount_screws
+if missing_screws:
+    fail('enclosure mount screw children missing: ' + ', '.join(sorted(missing_screws)))
+passed('four metallic mount screw cues present and parented to mount blocks')
+
 _TOL = 0.001
 _scene = bpy.context.scene
 _enc = parts['enclosure']

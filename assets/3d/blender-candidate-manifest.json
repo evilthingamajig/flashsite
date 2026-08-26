@@ -146,7 +146,8 @@
     "switch has two short inward-running wire cues (switch_red_wire, switch_black_wire) parented to the switch, routed toward negative Y into the enclosure",
     "LED lenses have subtle warm-white emission with an inner die cylinder for physical lens contrast",
     "enclosure has four interior corner mount blocks (enclosure_mount_block_1..4) parented to the case shell",
-    "mount blocks are 5x5x6 mm dark plastic cubes at \u00b142 mm X, \u00b124 mm Y, z \u22124.5 mm"
+    "mount blocks are 5x5x6 mm dark plastic cubes at \u00b142 mm X, \u00b124 mm Y, z \u22124.5 mm",
+    "each interior mount block carries a small metallic fastener head (mount_screw_enclosure_mount_block_1..4) seated into its top so the posts read as real screw-down points"
   ],
   "provisional": [
     "solar panel is reference-informed geometry; no solar-panel CAD supplied",
