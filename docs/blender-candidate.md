@@ -56,6 +56,9 @@ installation.
 - The supplied pass9 switch mesh has a small contrasting actuator cue parented
   to it; the native verifier requires that child while preserving the measured
   source envelope.
+- The switch also carries short red/black inward-running wire cues, parented to
+  the switch so they follow its authored motion; their exact routing remains
+  provisional pending authoritative wiring references.
 - The enclosure carries four lightweight dark-plastic interior corner mounting
   blocks, parented to the case shell and sized from the media evidence; these
   are reference-informed candidate details, not a new authoritative CAD claim.

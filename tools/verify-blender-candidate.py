@@ -49,9 +49,10 @@ if not required_children.issubset(battery_children):
 passed('battery detail children present')
 
 switch_children = {child.name for child in parts['switch'].children}
-if 'switch_actuator' not in switch_children:
-    fail('switch actuator detail child is missing')
-passed('switch actuator detail present')
+required_switch = {'switch_actuator', 'switch_red_wire', 'switch_black_wire'}
+if not required_switch.issubset(switch_children):
+    fail('switch detail children missing: ' + ', '.join(sorted(required_switch - switch_children)))
+passed('switch actuator and both wire detail children present')
 
 solar_children = {child.name for child in parts['solar_panel_placeholder'].children}
 solar_screws = {name for name in solar_children if name.startswith('solar_screw_head_')}

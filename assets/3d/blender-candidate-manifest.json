@@ -143,6 +143,7 @@
     "battery has lightweight provisional Kapton band, label plate, and lead cue parented to the supplied mesh",
     "TP4056 board has lightweight blue PCB, USB-C, and component cues parented to the supplied mesh",
     "switch has a small contrasting actuator cue parented to the pass9 source mesh",
+    "switch has two short inward-running wire cues (switch_red_wire, switch_black_wire) parented to the switch, routed toward negative Y into the enclosure",
     "enclosure has four interior corner mount blocks (enclosure_mount_block_1..4) parented to the case shell",
     "mount blocks are 5x5x6 mm dark plastic cubes at \u00b142 mm X, \u00b124 mm Y, z \u22124.5 mm"
   ],
