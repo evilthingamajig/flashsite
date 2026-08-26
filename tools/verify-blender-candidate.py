@@ -91,10 +91,17 @@ switch_actuator = next(child for child in parts['switch'].children
                        if child.name.split('.')[0] == 'switch_actuator')
 actuator_dims_ok, actuator_dims = dimensions_match_obj(
     switch_actuator, (0.0034, 0.0020, 0.0040), tolerance=0.0001)
-if not actuator_dims_ok or switch_actuator.location.y < 0.004:
-    fail('switch actuator does not protrude through positive-Y case opening: dims=%s location=%s'
+if not actuator_dims_ok or switch_actuator.location.y > -0.004:
+    fail('switch actuator does not protrude through negative-Y case opening: dims=%s location=%s'
          % (actuator_dims, tuple(switch_actuator.location)))
 passed('switch actuator protrudes through the case-side opening')
+
+scene = bpy.context.scene
+scene.frame_set(1)
+if abs(parts['switch'].location.x) > 0.001 or abs(parts['switch'].location.y + 0.029) > 0.001:
+    fail('switch is not seated in the user-identified negative-Y case opening: %s'
+         % (tuple(parts['switch'].location),))
+passed('switch is seated on the user-identified case wall')
 
 def led_die_child(part):
     for child in parts[part].children:
