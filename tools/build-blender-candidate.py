@@ -17,6 +17,17 @@ LED = os.path.join(ROOT, "source-assets", "external", "user-supplied", "led-user
 
 def clear():
     bpy.ops.wm.read_factory_settings(use_empty=True)
+    # Blender 5.x may still restore the startup scene when invoked headless;
+    # remove every inherited object so the candidate bounds contain only the
+    # authored flashlight assembly.
+    bpy.ops.object.select_all(action='SELECT')
+    bpy.ops.object.delete(use_global=False)
+    for obj in list(bpy.data.objects):
+        bpy.data.objects.remove(obj, do_unlink=True)
+    for datablocks in (bpy.data.meshes, bpy.data.curves, bpy.data.cameras, bpy.data.lights):
+        for datablock in list(datablocks):
+            if datablock.users == 0:
+                datablocks.remove(datablock)
     scene = bpy.context.scene
     scene.unit_settings.system = 'METRIC'
     scene.unit_settings.length_unit = 'MILLIMETERS'
@@ -38,6 +49,7 @@ def import_stl(path, name, scale=BLENDER_MM):
     bpy.ops.wm.stl_import(filepath=path)
     ob = bpy.context.selected_objects[0]
     ob.name = name
+    ob.data.name = name
     ob.scale = (scale, scale, scale)
     bpy.ops.object.transform_apply(location=False, rotation=False, scale=True)
     return ob
@@ -46,6 +58,7 @@ def cube(name, dims, loc, material):
     bpy.ops.mesh.primitive_cube_add(location=loc)
     ob = bpy.context.object
     ob.name = name
+    ob.data.name = name
     ob.dimensions = dims
     bpy.ops.object.transform_apply(location=False, rotation=False, scale=True)
     ob.data.materials.append(material)
@@ -131,15 +144,11 @@ def main():
         inspect = s + Vector(((-1 if i % 2 else 1) * 0.06, (i - 3) * 0.01, 0.055 + i * 0.004))
         add_keyframes(p, s, explode, inspect, 42 + i * 7)
 
-    # A named control action makes the authored timeline discoverable by GLTFLoader.
-    bpy.ops.object.empty_add(type='PLAIN_AXES', location=(0, 0, 0))
-    control = bpy.context.object
-    control.name = 'ScrollSequence'
-    control.scale = (1, 1, 1); control.keyframe_insert('scale', frame=1)
-    control.scale = (1.001, 1.001, 1.001); control.keyframe_insert('scale', frame=100)
-    control.animation_data.action.name = 'ScrollSequence'
-    control.hide_render = True
-    control.hide_viewport = True
+    # Defensive cleanup for headless Blender startup datablocks that can
+    # survive factory reset and otherwise export as a 2 m default Cube.
+    for ob in list(bpy.data.objects):
+        if ob.name in {'Cube', 'Camera', 'Light'}:
+            bpy.data.objects.remove(ob, do_unlink=True)
 
     scene = bpy.context.scene
     scene.frame_start = 1; scene.frame_end = 100; scene.render.fps = 24
