@@ -158,9 +158,10 @@ const focusStyles = {
 check('keyboard focus visibility', focusStyles.disclosureRing && focusStyles.controlRing && focusStyles.rangeRing, JSON.stringify(focusStyles));
 const metadata = await cdp.evaluate(`({
   title: document.title,
-  description: document.querySelector('meta[name="description"]')?.getAttribute('content') || ''
+  description: document.querySelector('meta[name="description"]')?.getAttribute('content') || '',
+  themeColor: document.querySelector('meta[name="theme-color"]')?.getAttribute('content') || ''
 })`);
-check('Flash Forward metadata', metadata.title === 'Flash Forward — Inside the flashlight' && /Flash Forward/.test(metadata.description) && /assembly study/.test(metadata.description), JSON.stringify(metadata));
+check('Flash Forward metadata', metadata.title === 'Flash Forward — Inside the flashlight' && /Flash Forward/.test(metadata.description) && /assembly study/.test(metadata.description) && metadata.themeColor === '#151b17', JSON.stringify(metadata));
 
 await cdp.send('Emulation.setDeviceMetricsOverride', { width: 390, height: 844, deviceScaleFactor: 1, mobile: true });
 await cdp.send('Page.reload');
