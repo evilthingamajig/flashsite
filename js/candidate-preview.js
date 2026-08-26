@@ -1,7 +1,7 @@
 import * as THREE from 'three';
 import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
 
-const GLB_URL = 'assets/3d/flashlight-assembly-blender-candidate.glb';
+const GLB_URL = 'assets/3d/flashlight-assembly-blender-candidate.glb?v=candidate-3';
 const CLIP_PATTERN = /^ScrollSequence/;
 // A full browser window can contain several times as many pixels as the
 // embedded review pane. Bound both device-pixel ratio and total framebuffer
@@ -69,6 +69,7 @@ let dirty = false;
 let rafId = 0;
 let scrubQuality = false;
 let scrubIdleTimer = 0;
+let hasAppliedProgress = false;
 const calloutSpecs = [
   { part: 'enclosure', name: 'Case', cost: 'Cost: TBD', side: 'left', row: 0 },
   { part: 'solar_panel_placeholder', name: 'Solar panel', cost: 'Cost: TBD', side: 'left', row: 1 },
@@ -128,10 +129,12 @@ function setScrubQuality() {
   clearTimeout(scrubIdleTimer);
   if (!scrubQuality) {
     scrubQuality = true;
+    document.body.classList.add('cpv-scrubbing');
     measureStage();
   }
   scrubIdleTimer = window.setTimeout(() => {
     scrubQuality = false;
+    document.body.classList.remove('cpv-scrubbing');
     measureStage();
     // Shadows stay frozen while parts move; refresh them once at the final
     // settled pose instead of rebuilding the shadow map every scrub frame.
@@ -366,8 +369,11 @@ function updateProgressUI(p) {
 }
 
 function applyProgress(p) {
-  progress = clamp01(p);
+  const nextProgress = clamp01(p);
+  if (ready && hasAppliedProgress && Math.abs(nextProgress - progress) < 0.0005) return;
+  progress = nextProgress;
   if (ready) {
+    hasAppliedProgress = true;
     setScrubQuality();
     samplePose(progress);
     updateCamera(progress);
@@ -600,7 +606,10 @@ if (renderer && !failed) {
   rangeEl?.addEventListener('input', () => {
     const next = clamp01(Number(rangeEl.value));
     applyProgress(next);
-    scrollToProgress(next);
+    // A range drag is already a continuous direct-manipulation gesture.
+    // Starting/restarting native smooth scrolling for every input event makes
+    // the browser animate two competing timelines and duplicates frames.
+    scrollToProgress(next, true);
   });
   resetEl?.addEventListener('click', () => {
     scrollToProgress(0);
@@ -645,6 +654,7 @@ if (renderer && !failed) {
     if (event.persisted) return;
     cancelAnimationFrame(rafId);
     clearTimeout(scrubIdleTimer);
+    document.body.classList.remove('cpv-scrubbing');
     rafId = 0;
     if (mixer) mixer.stopAllAction();
     if (renderer) renderer.dispose();
@@ -672,6 +682,8 @@ window.__ffCandidatePreview = {
         height: renderer.domElement.height,
       } : null,
       scrubQuality,
+      scrubBackdropDisabled: document.body.classList.contains('cpv-scrubbing'),
+      panelBackdrop: partsEl ? getComputedStyle(partsEl).backdropFilter : null,
       actionTimes: actions.map((action) => Number(action.time.toFixed(4))),
       trackNames: actions.slice(0, 2).map((action) => action.getClip().tracks.map((track) => track.name)),
       trackSamples: actions.slice(0, 2).map((action) => action.getClip().tracks.slice(0, 2).map((track) => ({

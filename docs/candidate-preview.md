@@ -34,6 +34,10 @@ Any static file server rooted at the repo works. No build step; Three.js
 r160 and GLTFLoader are vendored under `js/vendor/three/` via import map.
 No external network assets.
 
+The candidate stylesheet, module, and GLB URLs carry the same release token.
+Increment that token whenever these coordinated assets change so a full browser
+cannot combine a new controller with stale cached CSS or 3D geometry.
+
 ## What it does
 
 - Full-screen white stage in the Flash Forward visual language
@@ -101,6 +105,12 @@ No external network assets.
   aggressive 0.8 DPR / 0.9-million-pixel budget and reuses the previous shadow
   map. After 140 ms idle, full review resolution returns and shadows refresh
   once at the settled pose.
+- The four glass-style UI panels temporarily replace `backdrop-filter` blur
+  with opaque white while scrubbing, avoiding repeated resampling of the moving
+  WebGL canvas. The glass treatment returns at the same idle boundary.
+- Direct range-input dragging uses immediate scroll synchronization rather than
+  restarting native smooth scrolling on every pointer event; duplicate
+  sub-pixel progress samples are discarded.
 - WebGL context-loss fallback: on `webglcontextlost`, the handler calls
   `preventDefault()` to block the browser default, stops rendering via
   `showFallback`, and surfaces the existing parts-list-and-controls

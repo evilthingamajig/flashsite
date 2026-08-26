@@ -75,8 +75,12 @@ const movingPixels = (movingQuality?.renderSize?.width || 0) * (movingQuality?.r
 check('adaptive scrub render budget', movingQuality?.scrubQuality === true
   && movingQuality?.renderPixelRatio <= 0.8
   && movingPixels <= 900000
+  && movingQuality?.scrubBackdropDisabled === true
+  && (movingQuality?.panelBackdrop === 'none' || movingQuality?.panelBackdrop === '')
   && settledQuality?.scrubQuality === false
-  && settledQuality?.renderPixelRatio >= movingQuality?.renderPixelRatio,
+  && settledQuality?.renderPixelRatio >= movingQuality?.renderPixelRatio
+  && settledQuality?.scrubBackdropDisabled === false
+  && /blur/.test(settledQuality?.panelBackdrop || ''),
 JSON.stringify({ movingQuality, settledQuality, movingPixels }));
 const motionManifest = JSON.parse(await readFile(join(ROOT, 'assets', '3d', 'blender-candidate-manifest.json'), 'utf8'));
 const motionProfiles = motionManifest?.motionProfiles || {};
