@@ -393,7 +393,9 @@ def main():
     battery = import_stl(BATTERY, 'battery')
     set_mat(battery, foil)
     reduce_mesh(battery, 0.03)
-    battery.location = (0.0, -0.014, -0.003)
+    # Keep the pouch recessed from the negative-Y switch wall so it does not
+    # protrude through or visually crowd the exterior slider opening.
+    battery.location = (0.0, -0.004, -0.003)
     # Lightweight provisional LiPo surface cues. Keep these as children of
     # the supplied battery mesh so the existing single battery action carries
     # them through the exploded and reassembled poses.
@@ -446,7 +448,9 @@ def main():
     explode_offsets = {
         'enclosure': (0.000, 0.000, 0.035),
         'solar_panel_placeholder': (0.000, 0.000, 0.040),
-        'battery': (-0.060, -0.020, 0.047),
+        # Keep the battery behind the switch-side wall during the exploded
+        # tableau instead of pulling it outward through the slider opening.
+        'battery': (-0.060, 0.015, 0.047),
         'charge_module': (0.060, 0.024, 0.052),
         'led_left': (-0.032, -0.050, 0.045),
         'led_right': (0.032, -0.050, 0.045),
@@ -462,6 +466,11 @@ def main():
             # so the mounted switch never drifts out of the case-side opening.
             inspect = s + Vector((0.060, -0.030, 0.055))
             inspect_frame = 42
+        elif p.name == 'battery':
+            # Keep the inspection path recessed on the positive-Y interior
+            # side as well; otherwise the rotated pouch crosses the switch.
+            inspect = s + Vector((0.060, 0.015, 0.063))
+            inspect_frame = 56
         else:
             inspect = s + Vector(((-1 if i % 2 else 1) * 0.06, (i - 3) * 0.01, 0.055 + i * 0.004))
             inspect_frame = 42 + i * 7
