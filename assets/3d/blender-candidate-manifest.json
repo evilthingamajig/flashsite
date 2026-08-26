@@ -19,6 +19,9 @@
     "led_right",
     "switch"
   ],
+  "visualDetails": [
+    "battery has lightweight provisional Kapton band and label plate parented to the supplied mesh"
+  ],
   "provisional": [
     "solar panel is reference-informed geometry; no solar-panel CAD supplied",
     "led_right duplicates the supplied single LED",
