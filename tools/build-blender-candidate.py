@@ -49,6 +49,10 @@ def cube(name, dims, loc, material):
     ob.data.materials.append(material)
     return ob
 
+def set_mat(ob, material):
+    ob.data.materials.clear()
+    ob.data.materials.append(material)
+
 def add_keyframes(ob, seat, explode, inspect, frame_inspect):
     ob.location = seat
     ob.rotation_euler = (0.0, 0.0, 0.0)
@@ -79,7 +83,7 @@ def main():
     switchmat = mat('SwitchPlastic', (0.055, 0.06, 0.065), roughness=0.48)
 
     enclosure = import_stl(CASE, 'enclosure')
-    enclosure.data.materials.append(charcoal)
+    set_mat(enclosure, charcoal)
     # Case STL is unitless raw millimetres; center it for authored pivots.
     b = [enclosure.matrix_world @ Vector(c) for c in enclosure.bound_box]
     center = sum(b, Vector()) / 8.0
@@ -88,15 +92,15 @@ def main():
     panel = cube('solar_panel_placeholder', (0.098, 0.058, 0.0018), (0.0, 0.0, 0.0088), solar)
     battery = cube('battery', (0.0506, 0.0335, 0.005), (0.0, -0.014, -0.003), foil)
     charge = import_stl(TP4056, 'charge_module')
-    charge.data.materials.append(pcb)
+    set_mat(charge, pcb)
     charge.location = (0.0, 0.016, -0.002)
     led_a = import_stl(LED, 'led_left')
     led_b = import_stl(LED, 'led_right')
-    led_a.data.materials.append(ledmat); led_b.data.materials.append(ledmat)
+    set_mat(led_a, ledmat); set_mat(led_b, ledmat)
     led_a.location = (-0.012, -0.033, 0.0)
     led_b.location = (0.012, -0.033, 0.0)
     sw = import_stl(SWITCH, 'switch')
-    sw.data.materials.append(switchmat)
+    set_mat(sw, switchmat)
     sw.location = (0.018, 0.025, 0.0)
 
     parts = [enclosure, panel, battery, charge, led_a, led_b, sw]
