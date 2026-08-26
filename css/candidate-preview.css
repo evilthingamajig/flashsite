@@ -148,6 +148,17 @@ body{
   border:1px solid var(--cpv-line);border-radius:99px;padding:7px 13px;
   background:rgba(255,255,255,.82);-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px);
 }
+/* Backdrop blur must resample the changing WebGL canvas under every panel.
+   Keep the glass treatment at rest, but switch to an opaque equivalent while
+   scrubbing so scrolling can stay on the cheapest compositor path. */
+.cpv-scrubbing .cpv-parts,
+.cpv-scrubbing .cpv-reference,
+.cpv-scrubbing .cpv-controls,
+.cpv-scrubbing .cpv-status{
+  background:#fff;
+  -webkit-backdrop-filter:none;
+  backdrop-filter:none;
+}
 .cpv-fallback{
   position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);z-index:20;
   width:min(26rem,calc(100% - 32px));text-align:center;
