@@ -7,7 +7,7 @@ const DPR_CAP = 1.75;
 const FOV = 32;
 
 const canvas = document.getElementById('cpv-canvas');
-const stage = canvas.parentElement;
+const stage = canvas?.parentElement ?? null;
 const statusEl = document.getElementById('cpv-status');
 const progressEl = document.getElementById('cpv-progress');
 const progressFill = document.getElementById('cpv-progress-fill');
@@ -229,7 +229,7 @@ function syncPartListHighlight(spec) {
 }
 
 function updateCallouts(root = assetRoot) {
-  if (!root || !calloutsEl || !leadersEl || !camera) return;
+  if (!root || !calloutsEl || !leadersEl || !camera || !stage) return;
   const activeIndex = activeCalloutIndex(progress);
   const visible = activeIndex >= 0;
   const activeSpec = visible ? calloutSpecs[activeIndex] : null;
@@ -361,6 +361,7 @@ async function copyPoseLink() {
 }
 
 function measureStage() {
+  if (!stage || !renderer || !camera || failed) return;
   const w = stage.clientWidth || 1;
   const h = stage.clientHeight || 1;
   renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, DPR_CAP));
@@ -557,7 +558,7 @@ if (renderer && !failed) {
       scrollToProgress(next);
     });
   }
-  if (typeof ResizeObserver !== 'undefined') new ResizeObserver(measureStage).observe(stage);
+  if (stage && typeof ResizeObserver !== 'undefined') new ResizeObserver(measureStage).observe(stage);
 
   const io = new IntersectionObserver((entries) => {
     inView = entries.some((entry) => entry.isIntersecting);
@@ -567,7 +568,7 @@ if (renderer && !failed) {
       rafId = 0;
     }
   }, { threshold: 0 });
-  io.observe(stage);
+  if (stage) io.observe(stage);
 
   document.addEventListener('visibilitychange', () => {
     if (document.hidden) {
