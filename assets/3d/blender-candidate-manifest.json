@@ -134,7 +134,7 @@
     }
   },
   "visualDetails": [
-    "solar panel has a raised frame, bus lines, and cell-strip details",
+    "solar panel has a raised frame, bus lines, cell-strip details, and a parented rear connector/wire cue",
     "battery has lightweight provisional Kapton band, label plate, and lead cue parented to the supplied mesh",
     "TP4056 board has lightweight blue PCB, USB-C, and component cues parented to the supplied mesh",
     "switch has a small contrasting actuator cue parented to the pass9 source mesh"
