@@ -135,7 +135,7 @@
     {
       "name": "choreography/applyPose lock hash",
       "ok": true,
-      "detail": "5fb238aaed61"
+      "detail": "2d1cf7452127"
     },
     {
       "name": "builder deterministic (rebuild identical)",
@@ -218,6 +218,14 @@
       "ok": true
     },
     {
+      "name": "pass11D transition safety paths present",
+      "ok": true
+    },
+    {
+      "name": "leader paths explicitly use no fill/stroke",
+      "ok": true
+    },
+    {
       "name": "component material realism markers present",
       "ok": true
     },
@@ -236,17 +244,17 @@
     {
       "name": "untouched donate.html",
       "ok": true,
-      "detail": "verified via git status separately"
+      "detail": "no diff from Pass11B checkpoint"
     },
     {
       "name": "untouched vercel.json",
       "ok": true,
-      "detail": "verified via git status separately"
+      "detail": "no diff from Pass11B checkpoint"
     },
     {
-      "name": "untouched PROJECT-NOTES.md",
+      "name": "[desktop-1440x900] navigation and assembly document loaded",
       "ok": true,
-      "detail": "verified via git status separately"
+      "detail": "{\"readyState\":\"complete\",\"url\":\"http://127.0.0.1:8137/index.html?ffasm=3d\",\"hasAssembly\":true}"
     },
     {
       "name": "[desktop-1440x900] model ready",
@@ -355,7 +363,7 @@
     {
       "name": "[desktop-1440x900] procedural render triangle budget",
       "ok": true,
-      "detail": "2344 tris/18 calls"
+      "detail": "1216 tris/12 calls"
     },
     {
       "name": "[desktop-1440x900] dense solo copy remains readable @0.300",
@@ -415,7 +423,7 @@
     {
       "name": "[desktop-1440x900] procedural render triangle budget",
       "ok": true,
-      "detail": "5480 tris/28 calls"
+      "detail": "4264 tris/16 calls"
     },
     {
       "name": "[desktop-1440x900] dense solo copy remains readable @0.400",
@@ -580,7 +588,7 @@
     {
       "name": "[desktop-1440x900] procedural render triangle budget",
       "ok": true,
-      "detail": "4810 tris/10 calls"
+      "detail": "3434 tris/4 calls"
     },
     {
       "name": "[desktop-1440x900] dense solo copy remains readable @0.675",
@@ -760,7 +768,22 @@
     {
       "name": "[desktop-1440x900] leader route stays outside silhouette ch1",
       "ok": true,
-      "detail": "route 460,427 sil 474,206,508,527"
+      "detail": "route 456,188 sil 474,206,508,527"
+    },
+    {
+      "name": "[desktop-1440x900] leader avoids copy bbox ch1",
+      "ok": true,
+      "detail": "438.390625,376.46875 456.3634363500463,376.46875 456.3634363500463,187.84251054042682 | 456.3634363500463,187.84251054042682 555.1725381590179,426.60254159993457"
+    },
+    {
+      "name": "[desktop-1440x900] leader geometry stays in viewport ch1",
+      "ok": true,
+      "detail": "438.390625,376.46875 456.3634363500463,376.46875 456.3634363500463,187.84251054042682 | 456.3634363500463,187.84251054042682 555.1725381590179,426.60254159993457"
+    },
+    {
+      "name": "[desktop-1440x900] leader originates at copy edge ch1",
+      "ok": true,
+      "detail": "438,376 copy 86,376,352,147"
     },
     {
       "name": "[desktop-1440x900] hold ch2 silhouette fills 58-74% of pane",
@@ -770,7 +793,7 @@
     {
       "name": "[desktop-1440x900] hold ch2 clearance >=32/40px",
       "ok": true,
-      "detail": "L35 R298 T160 B119"
+      "detail": "L35 R298 T159 B119"
     },
     {
       "name": "[desktop-1440x900] leader lands on mesh anchor ch2",
@@ -780,7 +803,22 @@
     {
       "name": "[desktop-1440x900] leader route stays outside silhouette ch2",
       "ok": true,
-      "detail": "route 1084,229 sil 469,224,601,525"
+      "detail": "route 1088,205 sil 469,223,601,525"
+    },
+    {
+      "name": "[desktop-1440x900] leader avoids copy bbox ch2",
+      "ok": true,
+      "detail": "1030.40625,347.4375 1088.2117620683741,347.4375 1088.2117620683741,205.43458948900368 | 1088.2117620683741,205.43458948900368 690.9492106807784,229.32573752887754"
+    },
+    {
+      "name": "[desktop-1440x900] leader geometry stays in viewport ch2",
+      "ok": true,
+      "detail": "1030.40625,347.4375 1088.2117620683741,347.4375 1088.2117620683741,205.43458948900368 | 1088.2117620683741,205.43458948900368 690.9492106807784,229.32573752887754"
+    },
+    {
+      "name": "[desktop-1440x900] leader originates at copy edge ch2",
+      "ok": true,
+      "detail": "1030,347 copy 1030,347,352,205"
     },
     {
       "name": "[desktop-1440x900] hold ch3 silhouette fills 58-74% of pane",
@@ -800,7 +838,22 @@
     {
       "name": "[desktop-1440x900] leader route stays outside silhouette ch3",
       "ok": true,
-      "detail": "route 453,471 sil 467,254,586,464"
+      "detail": "route 449,236 sil 467,254,586,464"
+    },
+    {
+      "name": "[desktop-1440x900] leader avoids copy bbox ch3",
+      "ok": true,
+      "detail": "438.390625,347.4375 448.80168902522837,347.4375 448.80168902522837,236.3374935836643 | 448.80168902522837,236.3374935836643 577.4958932421479,470.9967783488393"
+    },
+    {
+      "name": "[desktop-1440x900] leader geometry stays in viewport ch3",
+      "ok": true,
+      "detail": "438.390625,347.4375 448.80168902522837,347.4375 448.80168902522837,236.3374935836643 | 448.80168902522837,236.3374935836643 577.4958932421479,470.9967783488393"
+    },
+    {
+      "name": "[desktop-1440x900] leader originates at copy edge ch3",
+      "ok": true,
+      "detail": "438,347 copy 86,347,352,205"
     },
     {
       "name": "[desktop-1440x900] hold ch4 silhouette fills 58-74% of pane",
@@ -820,7 +873,22 @@
     {
       "name": "[desktop-1440x900] leader route stays outside silhouette ch4",
       "ok": true,
-      "detail": "route 1135,429 sil 468,193,652,549"
+      "detail": "route 1139,175 sil 468,193,652,549"
+    },
+    {
+      "name": "[desktop-1440x900] leader avoids copy bbox ch4",
+      "ok": true,
+      "detail": "1030.40625,376.46875 1138.7408863830744,376.46875 1138.7408863830744,175.43177696513234 | 1138.7408863830744,175.43177696513234 948.7803042063748,429.25944894946537"
+    },
+    {
+      "name": "[desktop-1440x900] leader geometry stays in viewport ch4",
+      "ok": true,
+      "detail": "1030.40625,376.46875 1138.7408863830744,376.46875 1138.7408863830744,175.43177696513234 | 1138.7408863830744,175.43177696513234 948.7803042063748,429.25944894946537"
+    },
+    {
+      "name": "[desktop-1440x900] leader originates at copy edge ch4",
+      "ok": true,
+      "detail": "1030,376 copy 1030,376,352,147"
     },
     {
       "name": "[desktop-1440x900] hold ch5 silhouette fills 58-74% of pane",
@@ -840,7 +908,22 @@
     {
       "name": "[desktop-1440x900] leader route stays outside silhouette ch5",
       "ok": true,
-      "detail": "route 561,524 sil 575,227,653,586"
+      "detail": "route 557,209 sil 575,227,653,586"
+    },
+    {
+      "name": "[desktop-1440x900] leader avoids copy bbox ch5",
+      "ok": true,
+      "detail": "438.390625,376.46875 556.5248557262688,376.46875 556.5248557262688,208.6819947730026 | 556.5248557262688,208.6819947730026 695.2289687134087,524.1578346589641"
+    },
+    {
+      "name": "[desktop-1440x900] leader geometry stays in viewport ch5",
+      "ok": true,
+      "detail": "438.390625,376.46875 556.5248557262688,376.46875 556.5248557262688,208.6819947730026 | 556.5248557262688,208.6819947730026 695.2289687134087,524.1578346589641"
+    },
+    {
+      "name": "[desktop-1440x900] leader originates at copy edge ch5",
+      "ok": true,
+      "detail": "438,376 copy 86,376,352,147"
     },
     {
       "name": "[desktop-1440x900] hold ch6 silhouette fills 58-74% of pane",
@@ -860,7 +943,147 @@
     {
       "name": "[desktop-1440x900] leader route stays outside silhouette ch6",
       "ok": true,
-      "detail": "route 987,764 sil 470,186,503,625"
+      "detail": "route 991,168 sil 470,186,503,625"
+    },
+    {
+      "name": "[desktop-1440x900] leader avoids copy bbox ch6",
+      "ok": true,
+      "detail": "1030.40625,360.1640625 991.2560542179856,360.1640625 991.2560542179856,167.52373954546485 | 991.2560542179856,167.52373954546485 863.8887520037543,763.6078735885146"
+    },
+    {
+      "name": "[desktop-1440x900] leader geometry stays in viewport ch6",
+      "ok": true,
+      "detail": "1030.40625,360.1640625 991.2560542179856,360.1640625 991.2560542179856,167.52373954546485 | 991.2560542179856,167.52373954546485 863.8887520037543,763.6078735885146"
+    },
+    {
+      "name": "[desktop-1440x900] leader originates at copy edge ch6",
+      "ok": true,
+      "detail": "1030,360 copy 1030,360,352,180"
+    },
+    {
+      "name": "[desktop-1440x900] dense battery handoff owns copy @0.2993",
+      "ok": true,
+      "detail": "active=battery"
+    },
+    {
+      "name": "[desktop-1440x900] dense battery handoff clears solar remnant @0.2993",
+      "ok": true,
+      "detail": "solar=0"
+    },
+    {
+      "name": "[desktop-1440x900] dense battery handoff shows subject @0.2993",
+      "ok": true,
+      "detail": "{\"x\":736.9580723728608,\"y\":532.3667773962937,\"w\":345.3395407072229,\"h\":297.9197502724461}"
+    },
+    {
+      "name": "[desktop-1440x900] dense LED handoff owns copy @0.4866",
+      "ok": true,
+      "detail": "active=leds"
+    },
+    {
+      "name": "[desktop-1440x900] dense LED handoff shows incoming pair @0.4866",
+      "ok": true,
+      "detail": "{\"x\":468.8193085614322,\"y\":327.8936426020821,\"w\":429.5450513383797,\"h\":393.1611012426357}"
+    },
+    {
+      "name": "[desktop-1440x900] dense LED handoff releases PCB @0.4866",
+      "ok": true,
+      "detail": "module=0.011"
+    },
+    {
+      "name": "[desktop-1440x900] dense reassembly keeps enclosure present @0.89",
+      "ok": true,
+      "detail": "{\"x\":577.2593382739537,\"y\":169.4327775533416,\"w\":505.12086039772817,\"h\":555.1651104336394}"
+    },
+    {
+      "name": "[desktop-1440x900] dense reassembly lid stays subordinate @0.89",
+      "ok": true,
+      "detail": "222x333 vs 505x555"
+    },
+    {
+      "name": "[desktop-1440x900] dense reassembly battery face stays readable @0.89",
+      "ok": true,
+      "detail": "3.14"
+    },
+    {
+      "name": "[desktop-1440x900] dense reassembly LEDs remain seated @0.89",
+      "ok": true,
+      "detail": "-0.04225"
+    },
+    {
+      "name": "[desktop-1440x900] dense reassembly keeps enclosure present @0.9",
+      "ok": true,
+      "detail": "{\"x\":588.2450310044175,\"y\":160.77241115334067,\"w\":470.25769758623835,\"h\":555.9456493286489}"
+    },
+    {
+      "name": "[desktop-1440x900] dense reassembly lid stays subordinate @0.9",
+      "ok": true,
+      "detail": "211x303 vs 470x556"
+    },
+    {
+      "name": "[desktop-1440x900] dense reassembly battery face stays readable @0.9",
+      "ok": true,
+      "detail": "3.14"
+    },
+    {
+      "name": "[desktop-1440x900] dense reassembly LEDs remain seated @0.9",
+      "ok": true,
+      "detail": "-0.04225"
+    },
+    {
+      "name": "[desktop-1440x900] dense reassembly keeps enclosure present @0.912",
+      "ok": true,
+      "detail": "{\"x\":592.0248042995321,\"y\":163.39656987830685,\"w\":435.09051429204953,\"h\":523.8398154580044}"
+    },
+    {
+      "name": "[desktop-1440x900] dense reassembly lid stays subordinate @0.912",
+      "ok": true,
+      "detail": "279x367 vs 435x524"
+    },
+    {
+      "name": "[desktop-1440x900] dense reassembly battery face stays readable @0.912",
+      "ok": true,
+      "detail": "3.14"
+    },
+    {
+      "name": "[desktop-1440x900] dense reassembly LEDs remain seated @0.912",
+      "ok": true,
+      "detail": "-0.04225"
+    },
+    {
+      "name": "[desktop-1440x900] dense reassembly keeps enclosure present @0.922",
+      "ok": true,
+      "detail": "{\"x\":459.7962829789796,\"y\":150.09488934799168,\"w\":559.9065782467483,\"h\":617.0893027420814}"
+    },
+    {
+      "name": "[desktop-1440x900] dense reassembly lid stays subordinate @0.922",
+      "ok": true,
+      "detail": "506x566 vs 560x617"
+    },
+    {
+      "name": "[desktop-1440x900] dense reassembly battery face stays readable @0.922",
+      "ok": true,
+      "detail": "3.14"
+    },
+    {
+      "name": "[desktop-1440x900] dense reassembly LEDs remain seated @0.922",
+      "ok": true,
+      "detail": "-0.04225"
+    },
+    {
+      "name": "[desktop-1440x900] dense reassembly keeps enclosure present @0.925",
+      "ok": true,
+      "detail": "{\"x\":457.40585857276824,\"y\":157.09656554118402,\"w\":565.8967325160775,\"h\":613.0115430022222}"
+    },
+    {
+      "name": "[desktop-1440x900] dense reassembly lid stays subordinate @0.925",
+      "ok": true,
+      "detail": "522x568 vs 566x613"
+    },
+    {
+      "name": "[desktop-1440x900] dense reassembly battery face stays readable @0.925",
+      "ok": true,
+      "detail": "3.14"
     },
     {
       "name": "[desktop-1440x900] reverse scrub deterministic",
@@ -870,7 +1093,7 @@
     {
       "name": "[desktop-1440x900] per-part solo rotation signatures are distinct",
       "ok": true,
-      "detail": "3.013/1.086/1.706/0.351/0.426/1.928/1.329/2.760/2.593/0.634/0.852/0.671/1.435/1.292/0.308"
+      "detail": "3.014/1.087/1.706/0.351/0.426/1.929/1.329/2.761/2.594/0.634/0.852/0.671/1.435/1.292/0.308"
     },
     {
       "name": "[desktop-1440x900] switch travel moves actuator child",
@@ -898,6 +1121,16 @@
       "detail": "solar→solar/0.0px"
     },
     {
+      "name": "[desktop-1440x900] boundary 1 keeps visible subject coverage",
+      "ok": true,
+      "detail": "solar_lid→battery"
+    },
+    {
+      "name": "[desktop-1440x900] battery handoff keeps readable face orientation",
+      "ok": true,
+      "detail": "3.14/3.14"
+    },
+    {
       "name": "[desktop-1440x900] boundary 2 camera C0",
       "ok": true,
       "detail": "1.000x/0.000m"
@@ -911,6 +1144,11 @@
       "name": "[desktop-1440x900] boundary 2 label/leader C0",
       "ok": true,
       "detail": "battery→battery/0.0px"
+    },
+    {
+      "name": "[desktop-1440x900] boundary 2 keeps visible subject coverage",
+      "ok": true,
+      "detail": "battery→charge_module"
     },
     {
       "name": "[desktop-1440x900] boundary 3 camera C0",
@@ -928,6 +1166,11 @@
       "detail": "module→module/0.0px"
     },
     {
+      "name": "[desktop-1440x900] boundary 3 keeps visible subject coverage",
+      "ok": true,
+      "detail": "charge_module→led_pair"
+    },
+    {
       "name": "[desktop-1440x900] boundary 4 camera C0",
       "ok": true,
       "detail": "1.000x/0.000m"
@@ -943,6 +1186,11 @@
       "detail": "leds→leds/0.0px"
     },
     {
+      "name": "[desktop-1440x900] boundary 4 keeps visible subject coverage",
+      "ok": true,
+      "detail": "led_pair→switch"
+    },
+    {
       "name": "[desktop-1440x900] boundary 5 camera C0",
       "ok": true,
       "detail": "1.030x/0.000m"
@@ -956,6 +1204,11 @@
       "name": "[desktop-1440x900] boundary 5 label/leader C0",
       "ok": true,
       "detail": "switch→switch/0.0px"
+    },
+    {
+      "name": "[desktop-1440x900] boundary 5 keeps visible subject coverage",
+      "ok": true,
+      "detail": "switch→enclosure"
     },
     {
       "name": "[desktop-1440x900] final seating geometrically continuous",
@@ -984,7 +1237,7 @@
     {
       "name": "[desktop-1440x900] final composition meets viewport scale",
       "ok": true,
-      "detail": "551x634"
+      "detail": "622x593"
     },
     {
       "name": "[desktop-1440x900] exploded tableau has no active copy",
@@ -1018,12 +1271,12 @@
     {
       "name": "[desktop-1440x900] exploded tableau meets viewport scale",
       "ok": true,
-      "detail": "564x597"
+      "detail": "612x598"
     },
     {
       "name": "[desktop-1440x900] tableau enclosure anchor fills 32-40vw",
       "ok": true,
-      "detail": "474px"
+      "detail": "534px"
     },
     {
       "name": "[desktop-1440x900] reassembly exposes interior tray",
@@ -1037,12 +1290,12 @@
     {
       "name": "[desktop-1440x900] reassembly composition remains visible",
       "ok": true,
-      "detail": "715x669"
+      "detail": "713x679"
     },
     {
       "name": "[desktop-1440x900] reassembly enclosure anchor fills 32-40vw",
       "ok": true,
-      "detail": "511px"
+      "detail": "521px"
     },
     {
       "name": "[desktop-1440x900] solo-to-tableau camera transition is smooth",
@@ -1052,37 +1305,47 @@
     {
       "name": "[desktop-1440x900] solo-to-tableau camera distance is continuous",
       "ok": true,
-      "detail": "1.01x"
+      "detail": "1.05x"
     },
     {
       "name": "[desktop-1440x900] solo-to-tableau camera center is continuous",
       "ok": true,
-      "detail": "0.035m"
+      "detail": "0.034m"
     },
     {
       "name": "[desktop-1440x900] solo-to-tableau projected scale is continuous",
       "ok": true,
-      "detail": "1.02x"
+      "detail": "1.10x"
+    },
+    {
+      "name": "[desktop-1440x900] solo-to-tableau enclosure pose is continuous",
+      "ok": true,
+      "detail": "0.000"
+    },
+    {
+      "name": "[desktop-1440x900] solo-to-tableau camera boundary is continuous",
+      "ok": true,
+      "detail": "0.028"
     },
     {
       "name": "[desktop-1440x900] final camera fit angle is continuous",
       "ok": true,
-      "detail": "2.0deg"
+      "detail": "3.8deg"
     },
     {
       "name": "[desktop-1440x900] final camera fit distance is continuous",
       "ok": true,
-      "detail": "1.00x"
+      "detail": "1.03x"
     },
     {
       "name": "[desktop-1440x900] final camera fit center is continuous",
       "ok": true,
-      "detail": "0.000m"
+      "detail": "0.004m"
     },
     {
       "name": "[desktop-1440x900] final projected scale is continuous",
       "ok": true,
-      "detail": "1.01x"
+      "detail": "1.03x"
     },
     {
       "name": "[desktop-1440x900] closed hold precedes final push",
@@ -1120,6 +1383,16 @@
       "detail": "0.02→0.01→0.00"
     },
     {
+      "name": "[desktop-1440x900] reassembly beat 1 active rotation is continuous",
+      "ok": true,
+      "detail": "0.07rad"
+    },
+    {
+      "name": "[desktop-1440x900] reassembly beat 1 eases active rotation to seat",
+      "ok": true,
+      "detail": "0.00rad"
+    },
+    {
       "name": "[desktop-1440x900] reassembly beat 1 advances switch",
       "ok": true,
       "detail": "0.0000m"
@@ -1137,7 +1410,17 @@
     {
       "name": "[desktop-1440x900] reassembly beat 1 keeps enclosure stationary",
       "ok": true,
-      "detail": "0.0000m/0.00deg"
+      "detail": "0.0000m/16.00deg"
+    },
+    {
+      "name": "[desktop-1440x900] reassembly beat 2 active rotation is continuous",
+      "ok": true,
+      "detail": "0.12rad"
+    },
+    {
+      "name": "[desktop-1440x900] reassembly beat 2 eases active rotation to seat",
+      "ok": true,
+      "detail": "0.00rad"
     },
     {
       "name": "[desktop-1440x900] reassembly beat 2 advances led_pair",
@@ -1165,6 +1448,16 @@
       "detail": "0.0000m/0.00deg"
     },
     {
+      "name": "[desktop-1440x900] reassembly beat 3 active rotation is continuous",
+      "ok": true,
+      "detail": "0.33rad"
+    },
+    {
+      "name": "[desktop-1440x900] reassembly beat 3 eases active rotation to seat",
+      "ok": true,
+      "detail": "0.00rad"
+    },
+    {
       "name": "[desktop-1440x900] reassembly beat 3 advances charge_module",
       "ok": true,
       "detail": "0.0000m"
@@ -1190,6 +1483,16 @@
       "detail": "0.0000m/0.00deg"
     },
     {
+      "name": "[desktop-1440x900] reassembly beat 4 active rotation is continuous",
+      "ok": true,
+      "detail": "0.00rad"
+    },
+    {
+      "name": "[desktop-1440x900] reassembly beat 4 eases active rotation to seat",
+      "ok": true,
+      "detail": "readable battery hold"
+    },
+    {
       "name": "[desktop-1440x900] reassembly beat 4 advances battery",
       "ok": true,
       "detail": "0.0000m"
@@ -1213,6 +1516,16 @@
       "name": "[desktop-1440x900] reassembly beat 4 keeps enclosure stationary",
       "ok": true,
       "detail": "0.0000m/0.00deg"
+    },
+    {
+      "name": "[desktop-1440x900] reassembly beat 5 active rotation is continuous",
+      "ok": true,
+      "detail": "0.00rad"
+    },
+    {
+      "name": "[desktop-1440x900] reassembly beat 5 eases active rotation to seat",
+      "ok": true,
+      "detail": "0.00rad"
     },
     {
       "name": "[desktop-1440x900] reassembly beat 5 advances solar_lid",
@@ -1248,6 +1561,11 @@
       "name": "[desktop-1440x900] zero console errors",
       "ok": true,
       "detail": ""
+    },
+    {
+      "name": "[mobile-390x844] navigation and assembly document loaded",
+      "ok": true,
+      "detail": "{\"readyState\":\"complete\",\"url\":\"http://127.0.0.1:8137/index.html?ffasm=3d\",\"hasAssembly\":true}"
     },
     {
       "name": "[mobile-390x844] model ready",
@@ -1356,7 +1674,7 @@
     {
       "name": "[mobile-390x844] procedural render triangle budget",
       "ok": true,
-      "detail": "2344 tris/18 calls"
+      "detail": "1216 tris/12 calls"
     },
     {
       "name": "[mobile-390x844] dense solo copy remains readable @0.300",
@@ -1416,7 +1734,7 @@
     {
       "name": "[mobile-390x844] procedural render triangle budget",
       "ok": true,
-      "detail": "5480 tris/28 calls"
+      "detail": "4264 tris/16 calls"
     },
     {
       "name": "[mobile-390x844] dense solo copy remains readable @0.400",
@@ -1754,14 +2072,9 @@
       "detail": "27"
     },
     {
-      "name": "[mobile-390x844] leader lands on mesh anchor ch1",
+      "name": "[mobile-390x844] mobile leader layer stays hidden ch1",
       "ok": true,
-      "detail": "delta 0.00px"
-    },
-    {
-      "name": "[mobile-390x844] leader route stays outside silhouette ch1",
-      "ok": true,
-      "detail": "route 98,593 sil 57,277,282,301"
+      "detail": "hidden"
     },
     {
       "name": "[mobile-390x844] hold ch2 within 70-86vw/60svh",
@@ -1774,14 +2087,9 @@
       "detail": "16"
     },
     {
-      "name": "[mobile-390x844] leader lands on mesh anchor ch2",
+      "name": "[mobile-390x844] mobile leader layer stays hidden ch2",
       "ok": true,
-      "detail": "delta 0.00px"
-    },
-    {
-      "name": "[mobile-390x844] leader route stays outside silhouette ch2",
-      "ok": true,
-      "detail": "route 151,583 sil 40,295,309,274"
+      "detail": "hidden"
     },
     {
       "name": "[mobile-390x844] hold ch3 within 70-86vw/60svh",
@@ -1794,14 +2102,9 @@
       "detail": "23"
     },
     {
-      "name": "[mobile-390x844] leader lands on mesh anchor ch3",
+      "name": "[mobile-390x844] mobile leader layer stays hidden ch3",
       "ok": true,
-      "detail": "delta 0.00px"
-    },
-    {
-      "name": "[mobile-390x844] leader route stays outside silhouette ch3",
-      "ok": true,
-      "detail": "route 99,564 sil 48,314,296,236"
+      "detail": "hidden"
     },
     {
       "name": "[mobile-390x844] hold ch4 within 70-86vw/60svh",
@@ -1814,14 +2117,9 @@
       "detail": "16"
     },
     {
-      "name": "[mobile-390x844] leader lands on mesh anchor ch4",
+      "name": "[mobile-390x844] mobile leader layer stays hidden ch4",
       "ok": true,
-      "detail": "delta 0.00px"
-    },
-    {
-      "name": "[mobile-390x844] leader route stays outside silhouette ch4",
-      "ok": true,
-      "detail": "route 279,569 sil 41,303,309,252"
+      "detail": "hidden"
     },
     {
       "name": "[mobile-390x844] hold ch5 within 70-86vw/60svh",
@@ -1834,14 +2132,9 @@
       "detail": "29"
     },
     {
-      "name": "[mobile-390x844] leader lands on mesh anchor ch5",
+      "name": "[mobile-390x844] mobile leader layer stays hidden ch5",
       "ok": true,
-      "detail": "delta 0.00px"
-    },
-    {
-      "name": "[mobile-390x844] leader route stays outside silhouette ch5",
-      "ok": true,
-      "detail": "route 96,593 sil 53,303,284,277"
+      "detail": "hidden"
     },
     {
       "name": "[mobile-390x844] hold ch6 within 70-86vw/60svh",
@@ -1859,14 +2152,134 @@
       "detail": "29px"
     },
     {
-      "name": "[mobile-390x844] leader lands on mesh anchor ch6",
+      "name": "[mobile-390x844] mobile leader layer stays hidden ch6",
       "ok": true,
-      "detail": "delta 0.00px"
+      "detail": "hidden"
     },
     {
-      "name": "[mobile-390x844] leader route stays outside silhouette ch6",
+      "name": "[mobile-390x844] dense battery handoff owns copy @0.2993",
       "ok": true,
-      "detail": "route 264,645 sil 65,250,255,381"
+      "detail": "active=battery"
+    },
+    {
+      "name": "[mobile-390x844] dense battery handoff clears solar remnant @0.2993",
+      "ok": true,
+      "detail": "solar=0"
+    },
+    {
+      "name": "[mobile-390x844] dense battery handoff shows subject @0.2993",
+      "ok": true,
+      "detail": "{\"x\":165.83577485173282,\"y\":478.47753063721154,\"w\":183.11729712736815,\"h\":158.03278387052285}"
+    },
+    {
+      "name": "[mobile-390x844] dense LED handoff owns copy @0.4866",
+      "ok": true,
+      "detail": "active=leds"
+    },
+    {
+      "name": "[mobile-390x844] dense LED handoff shows incoming pair @0.4866",
+      "ok": true,
+      "detail": "{\"x\":41.471965533643086,\"y\":372.31935948798315,\"w\":247.82884308390106,\"h\":226.61612400751477}"
+    },
+    {
+      "name": "[mobile-390x844] dense LED handoff releases PCB @0.4866",
+      "ok": true,
+      "detail": "module=0.011"
+    },
+    {
+      "name": "[mobile-390x844] dense reassembly keeps enclosure present @0.89",
+      "ok": true,
+      "detail": "{\"x\":58.807330071010114,\"y\":377.01751206185594,\"w\":270.8498648961461,\"h\":290.03292686111996}"
+    },
+    {
+      "name": "[mobile-390x844] dense reassembly lid stays subordinate @0.89",
+      "ok": true,
+      "detail": "133x195 vs 271x290"
+    },
+    {
+      "name": "[mobile-390x844] dense reassembly battery face stays readable @0.89",
+      "ok": true,
+      "detail": "3.14"
+    },
+    {
+      "name": "[mobile-390x844] dense reassembly LEDs remain seated @0.89",
+      "ok": true,
+      "detail": "-0.04225"
+    },
+    {
+      "name": "[mobile-390x844] dense reassembly keeps enclosure present @0.9",
+      "ok": true,
+      "detail": "{\"x\":55.7330421606445,\"y\":350.33519385898893,\"w\":276.79440102335167,\"h\":327.5016530314603}"
+    },
+    {
+      "name": "[mobile-390x844] dense reassembly lid stays subordinate @0.9",
+      "ok": true,
+      "detail": "131x187 vs 277x328"
+    },
+    {
+      "name": "[mobile-390x844] dense reassembly battery face stays readable @0.9",
+      "ok": true,
+      "detail": "3.14"
+    },
+    {
+      "name": "[mobile-390x844] dense reassembly LEDs remain seated @0.9",
+      "ok": true,
+      "detail": "-0.04225"
+    },
+    {
+      "name": "[mobile-390x844] dense reassembly keeps enclosure present @0.912",
+      "ok": true,
+      "detail": "{\"x\":51.584233758677236,\"y\":303.89565566939746,\"w\":288.1451307098224,\"h\":353.6259198741915}"
+    },
+    {
+      "name": "[mobile-390x844] dense reassembly lid stays subordinate @0.912",
+      "ok": true,
+      "detail": "187x243 vs 288x354"
+    },
+    {
+      "name": "[mobile-390x844] dense reassembly battery face stays readable @0.912",
+      "ok": true,
+      "detail": "3.14"
+    },
+    {
+      "name": "[mobile-390x844] dense reassembly LEDs remain seated @0.912",
+      "ok": true,
+      "detail": "-0.04225"
+    },
+    {
+      "name": "[mobile-390x844] dense reassembly keeps enclosure present @0.922",
+      "ok": true,
+      "detail": "{\"x\":44.30494509981089,\"y\":238.0107634711656,\"w\":316.3029380739374,\"h\":369.77885809534547}"
+    },
+    {
+      "name": "[mobile-390x844] dense reassembly lid stays subordinate @0.922",
+      "ok": true,
+      "detail": "285x338 vs 316x370"
+    },
+    {
+      "name": "[mobile-390x844] dense reassembly battery face stays readable @0.922",
+      "ok": true,
+      "detail": "3.14"
+    },
+    {
+      "name": "[mobile-390x844] dense reassembly LEDs remain seated @0.922",
+      "ok": true,
+      "detail": "-0.04225"
+    },
+    {
+      "name": "[mobile-390x844] dense reassembly keeps enclosure present @0.925",
+      "ok": true,
+      "detail": "{\"x\":46.47714626259502,\"y\":244.55012129781807,\"w\":312.6310656822077,\"h\":360.559992384602}"
+    },
+    {
+      "name": "[mobile-390x844] dense reassembly lid stays subordinate @0.925",
+      "ok": true,
+      "detail": "287x333 vs 313x361"
+    },
+    {
+      "name": "[mobile-390x844] dense reassembly battery face stays readable @0.925",
+      "ok": true,
+      "detail": "3.14"
     },
     {
       "name": "[mobile-390x844] reverse scrub deterministic",
@@ -1876,7 +2289,7 @@
     {
       "name": "[mobile-390x844] per-part solo rotation signatures are distinct",
       "ok": true,
-      "detail": "3.042/0.984/1.354/0.291/0.390/2.058/1.704/2.817/2.655/0.390/0.771/0.601/1.116/0.974/0.255"
+      "detail": "3.043/0.984/1.354/0.291/0.390/2.059/1.705/2.818/2.656/0.389/0.772/0.601/1.116/0.974/0.255"
     },
     {
       "name": "[mobile-390x844] switch travel moves actuator child",
@@ -1904,6 +2317,16 @@
       "detail": "solar→solar/0.0px"
     },
     {
+      "name": "[mobile-390x844] boundary 1 keeps visible subject coverage",
+      "ok": true,
+      "detail": "solar_lid→battery"
+    },
+    {
+      "name": "[mobile-390x844] battery handoff keeps readable face orientation",
+      "ok": true,
+      "detail": "3.14/3.14"
+    },
+    {
       "name": "[mobile-390x844] boundary 2 camera C0",
       "ok": true,
       "detail": "1.000x/0.000m"
@@ -1917,6 +2340,11 @@
       "name": "[mobile-390x844] boundary 2 label/leader C0",
       "ok": true,
       "detail": "battery→battery/0.0px"
+    },
+    {
+      "name": "[mobile-390x844] boundary 2 keeps visible subject coverage",
+      "ok": true,
+      "detail": "battery→charge_module"
     },
     {
       "name": "[mobile-390x844] boundary 3 camera C0",
@@ -1934,6 +2362,11 @@
       "detail": "module→module/0.0px"
     },
     {
+      "name": "[mobile-390x844] boundary 3 keeps visible subject coverage",
+      "ok": true,
+      "detail": "charge_module→led_pair"
+    },
+    {
       "name": "[mobile-390x844] boundary 4 camera C0",
       "ok": true,
       "detail": "1.000x/0.000m"
@@ -1949,6 +2382,11 @@
       "detail": "leds→leds/0.0px"
     },
     {
+      "name": "[mobile-390x844] boundary 4 keeps visible subject coverage",
+      "ok": true,
+      "detail": "led_pair→switch"
+    },
+    {
       "name": "[mobile-390x844] boundary 5 camera C0",
       "ok": true,
       "detail": "1.010x/0.000m"
@@ -1962,6 +2400,11 @@
       "name": "[mobile-390x844] boundary 5 label/leader C0",
       "ok": true,
       "detail": "switch→switch/0.0px"
+    },
+    {
+      "name": "[mobile-390x844] boundary 5 keeps visible subject coverage",
+      "ok": true,
+      "detail": "switch→enclosure"
     },
     {
       "name": "[mobile-390x844] final seating geometrically continuous",
@@ -1990,7 +2433,7 @@
     {
       "name": "[mobile-390x844] final composition meets mobile viewport scale",
       "ok": true,
-      "detail": "299x356"
+      "detail": "306x317"
     },
     {
       "name": "[mobile-390x844] exploded tableau has no active copy",
@@ -2024,7 +2467,7 @@
     {
       "name": "[mobile-390x844] exploded tableau meets viewport scale",
       "ok": true,
-      "detail": "314x482"
+      "detail": "336x469"
     },
     {
       "name": "[mobile-390x844] reassembly exposes interior tray",
@@ -2038,7 +2481,7 @@
     {
       "name": "[mobile-390x844] reassembly composition remains visible",
       "ok": true,
-      "detail": "273x473"
+      "detail": "291x508"
     },
     {
       "name": "[mobile-390x844] solo-to-tableau camera transition is smooth",
@@ -2048,7 +2491,7 @@
     {
       "name": "[mobile-390x844] solo-to-tableau camera distance is continuous",
       "ok": true,
-      "detail": "1.03x"
+      "detail": "1.08x"
     },
     {
       "name": "[mobile-390x844] solo-to-tableau camera center is continuous",
@@ -2058,27 +2501,37 @@
     {
       "name": "[mobile-390x844] solo-to-tableau projected scale is continuous",
       "ok": true,
-      "detail": "1.10x"
+      "detail": "1.20x"
+    },
+    {
+      "name": "[mobile-390x844] solo-to-tableau enclosure pose is continuous",
+      "ok": true,
+      "detail": "0.000"
+    },
+    {
+      "name": "[mobile-390x844] solo-to-tableau camera boundary is continuous",
+      "ok": true,
+      "detail": "0.095"
     },
     {
       "name": "[mobile-390x844] final camera fit angle is continuous",
       "ok": true,
-      "detail": "2.0deg"
+      "detail": "3.8deg"
     },
     {
       "name": "[mobile-390x844] final camera fit distance is continuous",
       "ok": true,
-      "detail": "1.00x"
+      "detail": "1.05x"
     },
     {
       "name": "[mobile-390x844] final camera fit center is continuous",
       "ok": true,
-      "detail": "0.000m"
+      "detail": "0.004m"
     },
     {
       "name": "[mobile-390x844] final projected scale is continuous",
       "ok": true,
-      "detail": "1.00x"
+      "detail": "1.03x"
     },
     {
       "name": "[mobile-390x844] closed hold precedes final push",
@@ -2116,6 +2569,16 @@
       "detail": "0.02→0.01→0.00"
     },
     {
+      "name": "[mobile-390x844] reassembly beat 1 active rotation is continuous",
+      "ok": true,
+      "detail": "0.07rad"
+    },
+    {
+      "name": "[mobile-390x844] reassembly beat 1 eases active rotation to seat",
+      "ok": true,
+      "detail": "0.00rad"
+    },
+    {
       "name": "[mobile-390x844] reassembly beat 1 advances switch",
       "ok": true,
       "detail": "0.0000m"
@@ -2133,7 +2596,17 @@
     {
       "name": "[mobile-390x844] reassembly beat 1 keeps enclosure stationary",
       "ok": true,
-      "detail": "0.0000m/0.00deg"
+      "detail": "0.0000m/17.92deg"
+    },
+    {
+      "name": "[mobile-390x844] reassembly beat 2 active rotation is continuous",
+      "ok": true,
+      "detail": "0.12rad"
+    },
+    {
+      "name": "[mobile-390x844] reassembly beat 2 eases active rotation to seat",
+      "ok": true,
+      "detail": "0.00rad"
     },
     {
       "name": "[mobile-390x844] reassembly beat 2 advances led_pair",
@@ -2161,6 +2634,16 @@
       "detail": "0.0000m/0.00deg"
     },
     {
+      "name": "[mobile-390x844] reassembly beat 3 active rotation is continuous",
+      "ok": true,
+      "detail": "0.33rad"
+    },
+    {
+      "name": "[mobile-390x844] reassembly beat 3 eases active rotation to seat",
+      "ok": true,
+      "detail": "0.00rad"
+    },
+    {
       "name": "[mobile-390x844] reassembly beat 3 advances charge_module",
       "ok": true,
       "detail": "0.0000m"
@@ -2186,6 +2669,16 @@
       "detail": "0.0000m/0.00deg"
     },
     {
+      "name": "[mobile-390x844] reassembly beat 4 active rotation is continuous",
+      "ok": true,
+      "detail": "0.00rad"
+    },
+    {
+      "name": "[mobile-390x844] reassembly beat 4 eases active rotation to seat",
+      "ok": true,
+      "detail": "readable battery hold"
+    },
+    {
       "name": "[mobile-390x844] reassembly beat 4 advances battery",
       "ok": true,
       "detail": "0.0000m"
@@ -2209,6 +2702,16 @@
       "name": "[mobile-390x844] reassembly beat 4 keeps enclosure stationary",
       "ok": true,
       "detail": "0.0000m/0.00deg"
+    },
+    {
+      "name": "[mobile-390x844] reassembly beat 5 active rotation is continuous",
+      "ok": true,
+      "detail": "0.00rad"
+    },
+    {
+      "name": "[mobile-390x844] reassembly beat 5 eases active rotation to seat",
+      "ok": true,
+      "detail": "0.00rad"
     },
     {
       "name": "[mobile-390x844] reassembly beat 5 advances solar_lid",
@@ -2251,6 +2754,6 @@
       "detail": ""
     }
   ],
-  "passed": 457,
+  "passed": 558,
   "failed": 0
 }
