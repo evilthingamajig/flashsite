@@ -32,9 +32,8 @@ No external network assets.
   parts list, a collapsible media-library solar-reference panel, a bottom scrub
   progress indicator, direct timeline/reset controls, restrained helper copy,
   and a live loading/status pill.
-- The parts list stays open by default on desktop and starts collapsed below
-  760px so the mobile product view remains visible; it remains a native,
-  user-expandable disclosure.
+- The parts list starts collapsed on all viewports so part descriptions are not
+  visible continuously; it remains a native, user-expandable disclosure.
 - The timeline range input and Reset button mirror the scroll position. Reset
   uses an instant seek when `prefers-reduced-motion: reduce` is enabled.
 - The live status pill identifies the current pose as `Closed`, `Scrubbing`,
