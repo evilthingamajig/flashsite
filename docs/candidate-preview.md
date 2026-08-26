@@ -141,4 +141,6 @@ types served by the local verification server), a bfcache-safe `pagehide`
 cleanup (non-persisted navigations stop the mixer and dispose the renderer),
 and a WebGL context-loss fallback (synthetic `webglcontextlost` event
 triggers `preventDefault`, the existing fallback surfaces, and no reload loop
-occurs). The current candidate suite contains 30 checks.
+occurs). The current candidate suite contains 31 checks, including a focused
+regression check that the active annotation is exactly two plain text lines,
+with only its dotted leader visible.

@@ -141,6 +141,37 @@ const callouts = await cdp.evaluate(`({
 })`);
 const calloutCostsDataDriven = callouts.costLines.length === 6 && callouts.costLines.every((value) => /^Cost: \S/.test(value));
 check('exploded editorial callout', callouts.boxes === 6 && callouts.lines === 6 && callouts.visible && callouts.plainText && calloutCostsDataDriven && callouts.shortCopy && callouts.activeBoxes === 1 && callouts.fadeMounted && callouts.activeLines === 1 && callouts.activeAria === 1 && callouts.label === 'Current part: 5 mm LEDs. Cost: TBD.' && callouts.explodedPosePressed && exploded?.activeCallout === 'led_pair', JSON.stringify({ ...callouts, calloutCostsDataDriven, activeCallout: exploded?.activeCallout }));
+await cdp.evaluate('window.__ffCandidatePreview.setProgress(0.67); undefined');
+await new Promise((resolve) => setTimeout(resolve, 200));
+const calloutSpec = await cdp.evaluate(`(() => {
+  const boxes = [...document.querySelectorAll('.cpv-callout')];
+  const lines = [...document.querySelectorAll('#cpv-leaders line')];
+  const activeBox = boxes.find((el) => el.classList.contains('is-active'));
+  const activeName = activeBox?.querySelector('.cpv-callout-name');
+  const activeCost = activeBox?.querySelector('.cpv-callout-cost');
+  const activeLine = lines.find((el) => el.style.opacity !== '0');
+  const boxStyle = activeBox ? getComputedStyle(activeBox) : null;
+  const twoLines = !!activeBox && activeBox.children.length === 2
+    && activeBox.children[0] === activeName && activeBox.children[1] === activeCost
+    && getComputedStyle(activeName).display === 'block' && getComputedStyle(activeName).whiteSpace === 'nowrap'
+    && getComputedStyle(activeCost).display === 'block' && getComputedStyle(activeCost).whiteSpace === 'nowrap';
+  const plainText = !!boxStyle
+    && boxStyle.backgroundColor === 'rgba(0, 0, 0, 0)'
+    && boxStyle.borderTopWidth === '0px' && boxStyle.borderRightWidth === '0px'
+    && boxStyle.borderBottomWidth === '0px' && boxStyle.borderLeftWidth === '0px'
+    && boxStyle.boxShadow === 'none';
+  const onlyActiveVisible = activeBox?.getAttribute('aria-hidden') === 'false'
+    && boxes.filter((el) => el.getAttribute('aria-hidden') === 'false').length === 1
+    && boxes.every((el) => el.classList.contains('is-active') || getComputedStyle(el).opacity === '0')
+    && lines.filter((el) => el.style.opacity !== '0').length === 1
+    && lines.every((el) => el.style.opacity === '0' || el === activeLine);
+  const leaderDotted = !!activeLine && getComputedStyle(activeLine).strokeDasharray !== 'none';
+  return { twoLines, plainText, onlyActiveVisible, leaderDotted };
+})()`);
+check('callout requirements: two-line plain active, others hidden, dotted leader',
+  calloutSpec.twoLines && calloutSpec.plainText && calloutSpec.onlyActiveVisible && calloutSpec.leaderDotted,
+  JSON.stringify(calloutSpec));
+
 const editorialSamples = [];
 for (const sample of [0.2, 0.32, 0.44, 0.56, 0.68, 0.8]) {
   await cdp.evaluate(`window.__ffCandidatePreview.setProgress(${sample}); undefined`);
