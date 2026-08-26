@@ -23,8 +23,10 @@ No external network assets.
 
 - Full-screen dark neutral stage in the Flash Forward visual language
   (Lausanne type, green accent, hairline borders), with a compact accessible
-  parts list, a bottom scrub progress indicator, restrained helper copy,
-  and a live loading/status pill.
+  parts list, a bottom scrub progress indicator, direct timeline/reset
+  controls, restrained helper copy, and a live loading/status pill.
+- The timeline range input and Reset button mirror the scroll position. Reset
+  uses an instant seek when `prefers-reduced-motion: reduce` is enabled.
 - Scrub is deterministic: scroll progress maps to
   `THREE.AnimationMixer.setTime(progress * duration)` on one mixer bound to
   the GLB scene root. Every clip whose name starts with `ScrollSequence`
@@ -59,7 +61,8 @@ node --check js\candidate-preview.js
 ```
 
 Headless Chrome smoke check (via `tools/cdp.mjs`, SwiftShader): page loads
-with zero console errors, reports ready state with 8 ScrollSequence clips at
-4.17 s, scrubs to p=0 / p=0.5 / p=1 and back deterministically, and keeps
+with zero console errors, reports ready state with 7 ScrollSequence clips at
+4.17 s, scrubs to p=0 / p=0.5 / p=1 and back deterministically, exposes the
+timeline/reset controls, and keeps
 `renderPaused` true while the document is hidden. The preview is checkpointed
 locally but remains intentionally unlinked from production navigation.
