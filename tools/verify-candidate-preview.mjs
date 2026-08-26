@@ -84,6 +84,11 @@ check('hidden tab pauses', state?.renderPaused === true);
 await cdp.evaluate(`Object.defineProperty(document,'hidden',{configurable:true,get(){return false}});document.dispatchEvent(new Event('visibilitychange'));undefined`);
 check('zero console errors', errors.length === 0, errors.join(', '));
 
+await cdp.send('Page.navigate', { url: `http://127.0.0.1:${PORT}/candidate-preview.html?p=1` });
+await new Promise((resolve) => setTimeout(resolve, 900));
+const deepLink = await info();
+check('exploded deep link', deepLink?.progress >= 0.999 && /Exploded/.test(await cdp.evaluate("document.getElementById('cpv-status').textContent")));
+
 await cdp.close();
 server.close();
 if (checks.some((ok) => !ok)) process.exitCode = 1;

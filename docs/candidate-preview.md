@@ -15,6 +15,9 @@ python -m http.server 8000
 http://127.0.0.1:8000/candidate-preview.html
 ```
 
+For a shareable starting pose, append `?p=0` for closed or `?p=1` for
+exploded. Intermediate numeric values open at the corresponding scrub point.
+
 Any static file server rooted at the repo works. No build step; Three.js
 r160 and GLTFLoader are vendored under `js/vendor/three/` via import map.
 No external network assets.
