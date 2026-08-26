@@ -154,8 +154,9 @@ viewport above the mobile parts disclosure. A reverse-scrub assertion moves
 from the reassembled pose back to the exploded pose and then closed, proving
 that the active leader/callout returns and hidden-state cleanup remains intact.
 It also guards closed-pose seating: both LEDs must stay
-at the negative-X short end with their pair axis across Z, and the switch must
-remain within the enclosure-centered seating envelope. The final deep-link
+at the negative-X short end with their pair axis across Z, and the transferred
+long-slider switch must stay on the negative-Y case wall with a constant
+switch-to-enclosure offset throughout the timeline. The final deep-link
 check additionally proves the movable parts return to those seats after the
 exploded review. The camera-settle assertion also guards that the three-quarter
 framing is stable once authored reassembly begins. The verification suite also
@@ -164,6 +165,6 @@ types served by the local verification server), a bfcache-safe `pagehide`
 cleanup (non-persisted navigations stop the mixer and dispose the renderer),
 and a WebGL context-loss fallback (synthetic `webglcontextlost` event
 triggers `preventDefault`, the existing fallback surfaces, and no reload loop
-occurs). The current candidate suite contains 31 checks, including a focused
+occurs). The current candidate suite contains 33 checks, including a focused
 regression check that the active annotation is exactly two plain text lines,
 with only its dotted leader visible.

@@ -28,9 +28,9 @@ The exported binary can be checked directly with Blender after building:
   --background --factory-startup --python tools\verify-blender-candidate.py
 ```
 
-That gate checks the seven named parts, seven animation actions, measured pass9
-switch dimensions, parented battery and switch detail meshes, frame bars, bus
-lines, cell strips, and frame-120 return-to-seat.
+That gate checks the seven named parts, seven animation actions, the transferred
+long-slider switch dimensions and source provenance, parented battery and switch
+wire details, frame bars, bus lines, cell strips, and frame-120 return-to-seat.
 
 The GLB contains a named `ScrollSequence` action and is approximately 2.1 MB.
 The candidate was built and re-imported headlessly on the local Blender 5.2.1
@@ -55,7 +55,8 @@ are absent on the current candidate build.
   authoritative fastener CAD claim.
 - FreeCAD measurements for the supplied component sources are recorded in the
   manifest: TP4056 board 29.3 × 17.4 × 4.14 mm, LiPo 53.1 × 46.821 × 6.0 mm,
-  LED 5.58 × 6.0 × 36.5 mm, and pass9 slide switch 4.1 × 7.82 × 6.0 mm.
+  LED 5.58 × 6.0 × 36.5 mm, and the transferred custom slider/rail switch
+  48.816 × 7.971 × 10.429 mm.
 - An independent FreeCAD 1.1.3 re-audit reproduced those three assembly-root
   bounds from the transferred STEP files: TP4056_Charging_Module_Type_C_v12
   at 29.300 × 17.400 × 4.140 mm, Bateria_LiPo_3_7V_1000mA_503450_v23 at
@@ -77,16 +78,13 @@ are absent on the current candidate build.
 - The supplied TP4056 mesh has lightweight vivid-blue PCB, bright USB-C
   port, brightened chip/resistor-bank, and input-wire cues parented to it;
   these inherit the board's authored motion.
-- The supplied pass9 switch mesh has a contrasting actuator cue parented
-  to it; the switch body is darker matte plastic and the actuator is
-  lighter with higher contrast; the native verifier requires that child
-  while preserving the measured source envelope.
+- The visible switch uses the original transferred custom slider/rail geometry
+  from `source-assets/stl/switch.stl`, rather than the small pass9 board-switch
+  reference. Its original long body and central grip are rendered directly;
+  no synthetic actuator or bezel is added.
 - The switch also carries short red/black inward-running wire cues, parented to
-  the switch so they follow its authored motion; their exact routing remains
-  provisional pending authoritative wiring references.
-- A thin `switch_case_surround` cue is parented to the enclosure at the
-  positive-Y wall, making the switch-to-case connection legible without
-  changing the supplied switch mesh or its measured envelope.
+  the switch and routed inward from the negative-Y case wall; their exact
+  routing remains provisional pending authoritative wiring references.
 - The enclosure carries four lightweight dark-plastic interior corner mounting
   blocks, parented to the case shell and sized from the media evidence; these
   are reference-informed candidate details, not a new authoritative CAD claim.
@@ -95,14 +93,15 @@ are absent on the current candidate build.
   parented to it for physical lens contrast, and the clear-lens material
   has subtle warm-white emission.
 - Motion is authored per component: the enclosure stays stable, the panel
-  reveals, the battery rolls, the board turns, the LEDs splay symmetrically,
-  and the switch lifts. The exact degree values are recorded in the candidate
-  manifest under `motionProfiles`.
+  reveals, the battery rolls, the board turns, and the LEDs splay
+  symmetrically. The switch remains mounted to the enclosure and follows its
+  movement throughout the timeline. The exact degree values are recorded in
+  the candidate manifest under `motionProfiles`.
 - The second LED is a duplicate of the supplied single LED and must be
   confirmed against the final product.
 - Battery and solar-panel placement remain provisional until the user supplies
-  exact mounting/wiring references; the switch is seated against the positive-Y
-  case wall so its body reads as mounted in the closed three-quarter view.
+  exact mounting/wiring references; the long slider is seated against the
+  negative-Y case wall in the location shown by the transferred CAD reference.
 - The existing approved GLB and its manifest remain untouched.
 
 Do not point the production feature flag at this candidate until an independent
