@@ -50,6 +50,20 @@ await cdp.evaluate('window.__ffCandidatePreview.setProgress(0); undefined');
 await new Promise((resolve) => setTimeout(resolve, 180));
 const closed = await info();
 check('closed pose label', /Closed/.test(await cdp.evaluate("document.getElementById('cpv-status').textContent")));
+const closedParts = closed?.partTransforms || {};
+const leftLed = closedParts.led_left;
+const rightLed = closedParts.led_right;
+const seatedSwitch = closedParts.switch;
+const ledGeometry = leftLed && rightLed
+  && leftLed.x < -0.03 && rightLed.x < -0.03
+  && Math.abs(leftLed.y - rightLed.y) < 0.01
+  && Math.abs(leftLed.z - rightLed.z) > 0.015;
+const switchGeometry = seatedSwitch
+  && Math.abs(seatedSwitch.x) <= 0.025
+  && Math.abs(seatedSwitch.y) <= 0.03
+  && Math.abs(seatedSwitch.z) <= 0.03;
+check('closed LEDs seated at short end', ledGeometry, JSON.stringify({ leftLed, rightLed }));
+check('closed switch seated near case', switchGeometry, JSON.stringify({ seatedSwitch }));
 await cdp.evaluate('window.__ffCandidatePreview.setProgress(1); undefined');
 await new Promise((resolve) => setTimeout(resolve, 180));
 const exploded = await info();
