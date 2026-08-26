@@ -109,8 +109,9 @@ const controls = await cdp.evaluate(`({
   reset: !!document.getElementById('cpv-reset'),
   reference: !!document.querySelector('.cpv-reference img'),
   poses: document.querySelectorAll('[data-cpv-pose]').length === 3,
+  chapters: [...document.querySelectorAll('.cpv-chapter span')].map((el) => el.textContent.trim()),
 })`);
-check('review controls and reference', controls.range && controls.reset && controls.reference && controls.poses);
+check('review controls and reference', controls.range && controls.reset && controls.reference && controls.poses && JSON.stringify(controls.chapters) === JSON.stringify(['Closed', 'Exploded review', 'Reassembled']), JSON.stringify(controls));
 
 await cdp.send('Emulation.setDeviceMetricsOverride', { width: 390, height: 844, deviceScaleFactor: 1, mobile: true });
 const mobile = await cdp.evaluate(`(() => {

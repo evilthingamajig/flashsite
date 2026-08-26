@@ -101,12 +101,21 @@ body{
   display:flex;align-items:center;gap:14px;padding:14px clamp(16px,3vw,40px) 18px;
 }
 .cpv-progress-track{
-  position:relative;flex:1;height:2px;background:rgba(232,240,235,.18);overflow:hidden;border-radius:1px;
+  position:relative;flex:1;height:2px;background:rgba(232,240,235,.18);overflow:visible;border-radius:1px;
 }
 .cpv-progress-fill{
   position:absolute;inset:0;background:linear-gradient(90deg,var(--cpv-accent-deep),var(--cpv-accent));
   transform:scaleX(0);transform-origin:left center;
 }
+.cpv-chapter{position:absolute;top:0;width:1px;height:2px;background:var(--cpv-muted);pointer-events:none}
+.cpv-chapter::after{content:"";position:absolute;top:6px;left:0;width:1px;height:4px;background:currentColor}
+.cpv-chapter span{position:absolute;top:14px;color:var(--cpv-muted);font-size:8px;line-height:1;letter-spacing:.1em;text-transform:uppercase;white-space:nowrap}
+.cpv-chapter-closed{left:0;color:var(--cpv-accent)}
+.cpv-chapter-closed span{left:0}
+.cpv-chapter-exploded{left:67%;color:var(--cpv-accent)}
+.cpv-chapter-exploded span{left:0;transform:translateX(-50%)}
+.cpv-chapter-reassembled{right:0;color:var(--cpv-accent)}
+.cpv-chapter-reassembled span{right:0}
 .cpv-progress-label{
   color:var(--cpv-muted);font-size:11px;letter-spacing:.14em;text-transform:uppercase;
   font-variant-numeric:tabular-nums;white-space:nowrap;
@@ -164,6 +173,7 @@ body{
   .cpv-reference{left:16px;top:190px;transform:none;width:13rem}
   .cpv-callout-name{font-size:9px}
   .cpv-callout-cost{font-size:8px}
+  .cpv-chapter span{font-size:7px;letter-spacing:.06em}
 }
 @media(prefers-reduced-motion:reduce){
   .cpv-progress-fill{transition:none}
