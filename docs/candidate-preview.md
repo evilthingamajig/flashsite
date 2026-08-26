@@ -107,6 +107,9 @@ No external network assets.
 - `review/blender-candidate-frame-120.png` — retained Blender review frame at
   the authored reassembly boundary (frame 120 of 120), used for visual QA of
   the closed-pose seating and camera-settle three-quarter framing.
+- `review/blender-candidate-frame-60.png` — retained exploded mid-sequence
+  review frame showing the separated case, panel, board, battery, LEDs, and
+  switch.
 
 The Blender review renderer explicitly binds each imported `ScrollSequence`
 action to its named object and fits the camera to the requested authored pose;
