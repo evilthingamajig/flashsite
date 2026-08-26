@@ -425,6 +425,14 @@ def main():
     sw = import_stl(SWITCH, 'switch', scale=1.0)
     set_mat(sw, switchmat)
     center_mesh_origin(sw)
+    # Flip the transferred slider through the side-wall plane so its protruding
+    # control stick faces outward, away from the enclosure, while its long axis
+    # remains aligned with the same opening.
+    sw.rotation_euler.x = math.pi
+    bpy.context.view_layer.objects.active = sw
+    sw.select_set(True)
+    bpy.ops.object.transform_apply(location=False, rotation=True, scale=False)
+    sw.select_set(False)
     # Seat the switch against the negative-Y case wall identified by the user
     # as the long pale recess beneath the parts disclosure in the product view.
     # Keeping its body
