@@ -3,7 +3,7 @@ import bmesh
 import math
 import os
 import json
-from mathutils import Vector
+from mathutils import Matrix, Vector
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 OUT = os.path.join(ROOT, "assets", "3d", "flashlight-assembly-blender-candidate.glb")
@@ -87,6 +87,12 @@ def set_mat(ob, material):
     ob.data.materials.clear()
     ob.data.materials.append(material)
 
+def center_mesh_origin(ob):
+    """Move imported geometry around its own bounds so location is its seat."""
+    center = sum((Vector(c) for c in ob.bound_box), Vector()) / 8.0
+    ob.data.transform(Matrix.Translation(Vector((-center.x, -center.y, -center.z))))
+    ob.data.update()
+
 def reduce_mesh(ob, ratio=0.35):
     if len(ob.data.polygons) < 1500:
         return
@@ -155,22 +161,25 @@ def main():
     led_a = import_stl(LED, 'led_left')
     led_b = import_stl(LED, 'led_right')
     set_mat(led_a, ledmat); set_mat(led_b, ledmat)
-    # The supplied STEP's long axis imports along Z. Apply a 90° X rotation
-    # to the mesh so the LEDs run through the case's front wall along Y while
-    # the authored animation can still use clean object rotations.
+    # Normalize the imported part origins before seating them. The supplied
+    # LED mesh is offset along its long axis, which otherwise makes a correct
+    # location look displaced and makes the two lens directions ambiguous.
     for led in (led_a, led_b):
-        led.rotation_euler.x = math.radians(90)
+        center_mesh_origin(led)
+        led.rotation_euler.y = math.radians(90)
         bpy.context.view_layer.objects.active = led
         led.select_set(True)
         bpy.ops.object.transform_apply(location=False, rotation=True, scale=False)
         led.select_set(False)
-    # Case front wall is approximately y=-32.5 mm; center the 36.5 mm body
-    # at -23 mm so its clear lens projects about 8-9 mm beyond that wall.
-    led_a.location = (-0.012, -0.023, 0.0)
-    led_b.location = (0.012, -0.023, 0.0)
+    # The LEDs belong on the short end of the case. Their clear/lens end is
+    # the negative-X end after the Y rotation; the body runs back into the
+    # enclosure from an X seat near the end wall.
+    led_a.location = (-0.046, -0.012, 0.0)
+    led_b.location = (-0.046, 0.012, 0.0)
     sw = import_stl(SWITCH, 'switch', scale=1.0)
     set_mat(sw, switchmat)
-    sw.location = (0.018, 0.025, 0.0)
+    center_mesh_origin(sw)
+    sw.location = (0.0, 0.018, 0.0)
 
     parts = [enclosure, panel, battery, charge, led_a, led_b, sw]
     seats = {p.name: tuple(p.location) for p in parts}

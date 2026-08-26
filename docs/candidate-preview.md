@@ -44,6 +44,9 @@ No external network assets.
 - Camera framing interpolates between the closed (p=0) and exploded (p=1)
   bounds with a slow azimuth/elevation drift; everything is a pure function
   of progress.
+- Exploded review shows six compact two-line part callouts at once, with dotted
+  SVG leader lines. The provisional second line is `Cost TBD` until
+  authoritative pricing is supplied.
 
 ## Performance and fallbacks
 
