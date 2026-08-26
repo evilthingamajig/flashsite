@@ -363,12 +363,21 @@ def main():
         ('enclosure_mount_block_3', (-0.042, -0.024, block_z)),
         ('enclosure_mount_block_4', ( 0.042, -0.024, block_z)),
     ]
+    mount_blocks = []
     for mname, mloc in mount_positions:
         blk = cube(mname, block_dims, (0.0, 0.0, 0.0), mount_mat)
         # The imported case mesh keeps its raw STL origin while the object is
         # translated by -center. Convert the desired world seat to the
         # enclosure's local coordinates so the child stays inside the shell.
         parent_detail(blk, enclosure, tuple(Vector(mloc) - enclosure.location))
+        mount_blocks.append(blk)
+    # Seat a small fastener head into the top of each interior mount post so
+    # the blocks read as real screw-down points rather than floating plastic.
+    screw_head_mat = mat('MountScrew', (0.60, 0.62, 0.60), metallic=0.85, roughness=0.20)
+    for blk in mount_blocks:
+        screw = cylinder('mount_screw_' + blk.name, 0.0011, 0.0010, (0.0, 0.0, 0.0), screw_head_mat)
+        screw.parent = blk
+        screw.location = (0.0, 0.0, 0.0032)
 
     panel = cube('solar_panel_placeholder', (0.098, 0.058, 0.0018), (0.0, 0.0, 0.0088), solar)
     add_solar_details(panel, solar_bus, solar_line)
@@ -471,7 +480,7 @@ def main():
             name: {key: [round(math.degrees(value), 1) for value in rotation] for key, rotation in profile.items()}
             for name, profile in MOTION_PROFILES.items()
         },
-        'visualDetails': ['solar panel has a raised pale frame with enhanced metallic contrast, brighter bus lines, brighter cell-strip grid, four enlarged corner screw heads, and a thickened rear connector/wire cue', 'battery has lightweight provisional Kapton band, label plate, and lead cue parented to the supplied mesh', 'TP4056 board has lightweight blue PCB, USB-C, and component cues parented to the supplied mesh', 'switch body is darker matte plastic with a lighter contrasting actuator cue parented to the pass9 source mesh', 'switch has two short inward-running wire cues (switch_red_wire, switch_black_wire) parented to the switch, routed toward negative Y into the enclosure', 'LED lenses have subtle warm-white emission with an inner die cylinder for physical lens contrast', 'enclosure has four interior corner mount blocks (enclosure_mount_block_1..4) parented to the case shell', 'mount blocks are 5x5x6 mm dark plastic cubes at ±42 mm X, ±24 mm Y, z −4.5 mm'],
+        'visualDetails': ['solar panel has a raised pale frame with enhanced metallic contrast, brighter bus lines, brighter cell-strip grid, four enlarged corner screw heads, and a thickened rear connector/wire cue', 'battery has lightweight provisional Kapton band, label plate, and lead cue parented to the supplied mesh', 'TP4056 board has lightweight blue PCB, USB-C, and component cues parented to the supplied mesh', 'switch body is darker matte plastic with a lighter contrasting actuator cue parented to the pass9 source mesh', 'switch has two short inward-running wire cues (switch_red_wire, switch_black_wire) parented to the switch, routed toward negative Y into the enclosure', 'LED lenses have subtle warm-white emission with an inner die cylinder for physical lens contrast', 'enclosure has four interior corner mount blocks (enclosure_mount_block_1..4) parented to the case shell', 'mount blocks are 5x5x6 mm dark plastic cubes at ±42 mm X, ±24 mm Y, z −4.5 mm', 'each interior mount block carries a small metallic fastener head (mount_screw_enclosure_mount_block_1..4) seated into its top so the posts read as real screw-down points'],
         'provisional': ['solar panel is reference-informed geometry; no solar-panel CAD supplied', 'led_right duplicates the supplied single LED', 'battery and switch seating are provisional', 'user-supplied STEP files were converted to coarse browser-safe STL meshes through FreeCAD'],
         'authoredAction': 'ScrollSequence', 'frameRange': [1, 120],
         'timeline': {'closed': 0.0, 'explodedReview': 0.67, 'reassembled': 1.0},

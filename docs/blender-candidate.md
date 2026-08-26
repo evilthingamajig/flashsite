@@ -43,6 +43,9 @@ are absent on the current candidate build.
 
 - The supplied case STL measures 105 × 65 × 15 mm; raw STL values were treated
   as millimetres and scaled to Blender metres.
+- The enclosure's four interior mount posts now carry small metallic fastener
+  heads parented to the posts; these are generic visual cues, not an
+  authoritative fastener CAD claim.
 - FreeCAD measurements for the supplied component sources are recorded in the
   manifest: TP4056 board 29.3 × 17.4 × 4.14 mm, LiPo 53.1 × 46.821 × 6.0 mm,
   LED 5.58 × 6.0 × 36.5 mm, and pass9 slide switch 4.1 × 7.82 × 6.0 mm.
