@@ -56,10 +56,17 @@ if not required_switch.issubset(switch_children):
 passed('switch actuator and both wire detail children present')
 
 solar_children = {child.name for child in parts['solar_panel_placeholder'].children}
-solar_screws = {name for name in solar_children if name.startswith('solar_screw_head_')}
-if 'solar_rear_connector' not in solar_children or 'solar_rear_wire' not in solar_children or 'solar_center_divider' not in solar_children or len(solar_screws) != 4:
-    fail('solar rear connector detail children are missing')
-passed('solar connector and reference details present')
+# GLB import appends .001 .002 suffixes to repeated base names; match by
+# the base prefix so both the original and any suffixed duplicates count.
+solar_screws = {name for name in solar_children if name.split('.')[0].startswith('solar_screw_head_')}
+solar_frame = {name for name in solar_children if name.split('.')[0].startswith('solar_frame_')}
+solar_bus = {name for name in solar_children if name.split('.')[0] == 'solar_bus'}
+solar_cells = {name for name in solar_children if name.split('.')[0].startswith('solar_cell_line')}
+if ('solar_rear_connector' not in solar_children or 'solar_rear_wire' not in solar_children
+        or 'solar_center_divider' not in solar_children or len(solar_screws) != 4
+        or len(solar_frame) != 4 or len(solar_bus) != 2 or len(solar_cells) < 12):
+    fail('solar detail children are missing or incomplete')
+passed('solar connector, frame bars, bus lines, cell strips, and screw details present')
 
 enclosure_children = {child.name for child in parts['enclosure'].children}
 expected_mounts = {'enclosure_mount_block_1', 'enclosure_mount_block_2', 'enclosure_mount_block_3', 'enclosure_mount_block_4'}
