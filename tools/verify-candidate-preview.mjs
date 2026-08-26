@@ -9,6 +9,7 @@ const PORT = 8140;
 const MIME = {
   '.html': 'text/html; charset=utf-8', '.js': 'text/javascript; charset=utf-8',
   '.css': 'text/css; charset=utf-8', '.json': 'application/json', '.glb': 'model/gltf-binary',
+  '.woff2': 'font/woff2',
   '.jpg': 'image/jpeg', '.png': 'image/png',
 };
 const checks = [];
@@ -28,6 +29,26 @@ const server = createServer(async (req, res) => {
   }
 });
 await new Promise((resolve) => server.listen(PORT, '127.0.0.1', resolve));
+
+const requiredCandidateFiles = [
+  'candidate-preview.html',
+  'css/candidate-preview.css',
+  'js/candidate-preview.js',
+  'fonts/667d8d81555e958a89e78dd3_TWKLausanne-400.woff2',
+  'fonts/667d8d81555e958a89e78dd7_TWKLausanne-500.woff2',
+  'assets/3d/flashlight-assembly-blender-candidate.glb',
+  'assets/3d/references/solar-panel-tops.png',
+  'assets/3d/references/flashlight-internals-charging-board.png',
+];
+const missingCandidateFiles = [];
+for (const relativePath of requiredCandidateFiles) {
+  try {
+    await readFile(join(ROOT, relativePath));
+  } catch {
+    missingCandidateFiles.push(relativePath);
+  }
+}
+check('candidate asset files present', missingCandidateFiles.length === 0, missingCandidateFiles.join(', '));
 
 const cdp = await Cdp.launch();
 const errors = [];
