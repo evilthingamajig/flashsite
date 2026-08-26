@@ -309,7 +309,10 @@ def main():
     ]
     for mname, mloc in mount_positions:
         blk = cube(mname, block_dims, (0.0, 0.0, 0.0), mount_mat)
-        parent_detail(blk, enclosure, mloc)
+        # The imported case mesh keeps its raw STL origin while the object is
+        # translated by -center. Convert the desired world seat to the
+        # enclosure's local coordinates so the child stays inside the shell.
+        parent_detail(blk, enclosure, tuple(Vector(mloc) - enclosure.location))
 
     panel = cube('solar_panel_placeholder', (0.098, 0.058, 0.0018), (0.0, 0.0, 0.0088), solar)
     add_solar_details(panel, solar_bus, solar_line)
