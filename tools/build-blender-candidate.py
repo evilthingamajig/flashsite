@@ -141,6 +141,8 @@ def main():
     solar_bus = mat('SolarBus', (0.06, 0.065, 0.055), metallic=0.3, roughness=0.3)
     solar_line = mat('SolarCellLine', (0.22, 0.28, 0.34), metallic=0.25, roughness=0.25)
     foil = mat('BatteryFoil', (0.42, 0.45, 0.46), metallic=0.45, roughness=0.32)
+    kapton = mat('BatteryKapton', (0.72, 0.38, 0.035), roughness=0.48)
+    battery_label = mat('BatteryLabel', (0.035, 0.04, 0.038), roughness=0.62)
     pcb = mat('PcbGreen', (0.015, 0.16, 0.07), roughness=0.42)
     ledmat = mat('LedClear', (0.88, 0.92, 0.94), roughness=0.10, transmission=0.85)
     switchmat = mat('SwitchPlastic', (0.055, 0.06, 0.065), roughness=0.48)
@@ -162,6 +164,15 @@ def main():
     set_mat(battery, foil)
     reduce_mesh(battery, 0.03)
     battery.location = (0.0, -0.014, -0.003)
+    # Lightweight provisional LiPo surface cues. Keep these as children of
+    # the supplied battery mesh so the existing single battery action carries
+    # them through the exploded and reassembled poses.
+    battery_band = cube('battery_kapton_band', (0.054, 0.006, 0.0064), (0.0, 0.0, 0.0), kapton)
+    battery_band.parent = battery
+    battery_band.location = (0.0, 0.011, 0.0002)
+    battery_tag = cube('battery_label_plate', (0.022, 0.014, 0.00024), (0.0, 0.0, 0.0), battery_label)
+    battery_tag.parent = battery
+    battery_tag.location = (0.008, -0.006, 0.0031)
     led_a = import_stl(LED, 'led_left')
     led_b = import_stl(LED, 'led_right')
     set_mat(led_a, ledmat); set_mat(led_b, ledmat)
@@ -225,6 +236,7 @@ def main():
             'led': 'source-assets/external/user-supplied/led-user-supplied.stl',
         },
         'parts': ['enclosure','solar_panel_placeholder','battery','charge_module','led_left','led_right','switch'],
+        'visualDetails': ['battery has lightweight provisional Kapton band and label plate parented to the supplied mesh'],
         'provisional': ['solar panel is reference-informed geometry; no solar-panel CAD supplied', 'led_right duplicates the supplied single LED', 'battery and switch seating are provisional', 'user-supplied STEP files were converted to coarse browser-safe STL meshes through FreeCAD'],
         'authoredAction': 'ScrollSequence', 'frameRange': [1, 120],
         'timeline': {'closed': 0.0, 'explodedReview': 0.67, 'reassembled': 1.0},

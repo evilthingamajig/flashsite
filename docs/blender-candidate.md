@@ -21,7 +21,7 @@ Blender 5.2.1 imports it with these named objects:
 `enclosure`, `solar_panel_placeholder`, `battery`, `charge_module`,
 `led_left`, `led_right`, `switch`, and `ScrollSequence`.
 
-The GLB contains a named `ScrollSequence` action and is approximately 1.1 MB.
+The GLB contains a named `ScrollSequence` action and is approximately 2.1 MB.
 The candidate was built and re-imported headlessly on the local Blender 5.2.1
 installation.
 
@@ -33,6 +33,8 @@ installation.
   candidate was created, then tessellated into browser-safe STL meshes.
 - The solar panel is a placeholder because its photo was not baked into this
   candidate.
+- The supplied battery mesh has lightweight provisional yellow Kapton and
+  label-plate cues parented to it; these inherit the battery's authored motion.
 - The second LED is a duplicate of the supplied single LED and must be
   confirmed against the final product.
 - Battery, switch, solar-panel placement, and internal seating remain
