@@ -23,6 +23,7 @@ const reducedMotion = window.matchMedia?.('(prefers-reduced-motion: reduce)').ma
 
 let renderer = null;
 let mixer = null;
+let assetRoot = null;
 let actions = [];
 let duration = 0;
 let closedFrame = null;
@@ -233,6 +234,7 @@ if (renderer && !failed) {
   new GLTFLoader().load(GLB_URL, (gltf) => {
     if (failed) return;
     const root = gltf.scene;
+    assetRoot = root;
     scene.add(root);
     root.traverse((o) => {
       if (o.isMesh) {
@@ -327,6 +329,18 @@ window.__ffCandidatePreview = {
       duration,
       progress,
       renderPaused: !inView || document.hidden,
+      actionTimes: actions.map((action) => Number(action.time.toFixed(4))),
+      trackNames: actions.slice(0, 2).map((action) => action.getClip().tracks.map((track) => track.name)),
+      trackSamples: actions.slice(0, 2).map((action) => action.getClip().tracks.slice(0, 2).map((track) => ({
+        name: track.name,
+        first: Array.from(track.values.slice(0, 3)).map((v) => Number(v.toFixed(4))),
+        last: Array.from(track.values.slice(-3)).map((v) => Number(v.toFixed(4))),
+      }))),
+      partTransforms: assetRoot ? Object.fromEntries(assetRoot.children.map((o) => [o.name, {
+        x: Number(o.position.x.toFixed(4)),
+        y: Number(o.position.y.toFixed(4)),
+        z: Number(o.position.z.toFixed(4)),
+      }])) : {},
     };
   },
   setProgress(p) {

@@ -114,8 +114,11 @@ def add_keyframes(ob, seat, explode, inspect, frame_inspect):
     ob.rotation_euler = (0.0, 1.2 if frame_inspect % 2 else -1.0, 0.25)
     ob.keyframe_insert('location', frame=frame_inspect)
     ob.keyframe_insert('rotation_euler', frame=frame_inspect)
-    ob.location = seat
-    ob.rotation_euler = (0.0, 0.0, 0.0)
+    # Candidate preview treats progress 1 as the exploded inspection state;
+    # keep the parts separated at the end so the review camera can frame the
+    # complete assembly rather than silently returning to the closed pose.
+    ob.location = explode
+    ob.rotation_euler = (0.0, 0.35, 0.0)
     ob.keyframe_insert('location', frame=100)
     ob.keyframe_insert('rotation_euler', frame=100)
     if ob.animation_data and ob.animation_data.action:
@@ -171,9 +174,18 @@ def main():
 
     parts = [enclosure, panel, battery, charge, led_a, led_b, sw]
     seats = {p.name: tuple(p.location) for p in parts}
+    explode_offsets = {
+        'enclosure': (0.000, 0.000, 0.035),
+        'solar_panel_placeholder': (0.000, 0.000, 0.040),
+        'battery': (-0.060, -0.020, 0.047),
+        'charge_module': (0.060, 0.024, 0.052),
+        'led_left': (-0.032, -0.050, 0.045),
+        'led_right': (0.032, -0.050, 0.045),
+        'switch': (0.060, 0.052, 0.055),
+    }
     for i, p in enumerate(parts):
         s = Vector(seats[p.name])
-        explode = s + Vector(((i - 3) * 0.014, ((i % 2) * 2 - 1) * 0.018, 0.035 + i * 0.004))
+        explode = s + Vector(explode_offsets[p.name])
         inspect = s + Vector(((-1 if i % 2 else 1) * 0.06, (i - 3) * 0.01, 0.055 + i * 0.004))
         add_keyframes(p, s, explode, inspect, 42 + i * 7)
 
