@@ -67,9 +67,10 @@ No external network assets.
   provisional second line is `Cost: TBD` until authoritative pricing is supplied.
   Labels and leaders stay hidden in the
   closed and reassembled poses so the product view remains uncluttered.
-- The active callout is exposed as a polite atomic live announcement for
-  assistive technology; inactive labels remain mounted for the visual opacity
-  crossfade but are `aria-hidden` and never highlighted.
+- The active callout's two visible text spans are the sole polite atomic live
+  announcement for assistive technology; inactive labels remain mounted for
+  the visual opacity crossfade but are `aria-hidden` and never highlighted.
+  The container has no redundant label that could duplicate the announcement.
 - While a callout is active, its matching parts-list row(s) get a subtle accent
   and `aria-current="step"`; both LED rows highlight together for
   `led_pair`. Highlighting clears whenever no callout is active (closed,

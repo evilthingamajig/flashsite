@@ -97,7 +97,7 @@ const closedAnnotations = await cdp.evaluate(`({
   label: document.getElementById('cpv-callouts').getAttribute('aria-label'),
   activeParts: document.querySelectorAll('#cpv-part-list li.is-active').length,
 })`);
-check('closed annotations hidden', closedAnnotations.calloutsHidden && closedAnnotations.leadersHidden && closedAnnotations.activeAria === 0 && closedAnnotations.label === 'Current candidate part annotation' && closedAnnotations.activeParts === 0, JSON.stringify(closedAnnotations));
+check('closed annotations hidden', closedAnnotations.calloutsHidden && closedAnnotations.leadersHidden && closedAnnotations.activeAria === 0 && (!closedAnnotations.label || closedAnnotations.label === '') && closedAnnotations.activeParts === 0, JSON.stringify(closedAnnotations));
 const calloutAccessibility = await cdp.evaluate(`({
   live: document.getElementById('cpv-callouts').getAttribute('aria-live'),
   atomic: document.getElementById('cpv-callouts').getAttribute('aria-atomic'),
@@ -136,11 +136,12 @@ const callouts = await cdp.evaluate(`({
   fadeMounted: [...document.querySelectorAll('.cpv-callout')].every((el) => getComputedStyle(el).display !== 'none'),
   activeLines: [...document.querySelectorAll('#cpv-leaders line')].filter((el) => el.style.opacity !== '0').length,
   activeAria: [...document.querySelectorAll('.cpv-callout')].filter((el) => el.getAttribute('aria-hidden') === 'false').length,
-  label: document.getElementById('cpv-callouts').getAttribute('aria-label'),
+  activeName: document.querySelector('.cpv-callout.is-active .cpv-callout-name')?.textContent.trim() || '',
+  activeCost: document.querySelector('.cpv-callout.is-active .cpv-callout-cost')?.textContent.trim() || '',
   explodedPosePressed: document.querySelector('[data-cpv-pose="0.67"]')?.getAttribute('aria-pressed') === 'true',
 })`);
 const calloutCostsDataDriven = callouts.costLines.length === 6 && callouts.costLines.every((value) => /^Cost: \S/.test(value));
-check('exploded editorial callout', callouts.boxes === 6 && callouts.lines === 6 && callouts.visible && callouts.plainText && calloutCostsDataDriven && callouts.shortCopy && callouts.activeBoxes === 1 && callouts.fadeMounted && callouts.activeLines === 1 && callouts.activeAria === 1 && callouts.label === 'Current part: 5 mm LEDs. Cost: TBD.' && callouts.explodedPosePressed && exploded?.activeCallout === 'led_pair', JSON.stringify({ ...callouts, calloutCostsDataDriven, activeCallout: exploded?.activeCallout }));
+check('exploded editorial callout', callouts.boxes === 6 && callouts.lines === 6 && callouts.visible && callouts.plainText && calloutCostsDataDriven && callouts.shortCopy && callouts.activeBoxes === 1 && callouts.fadeMounted && callouts.activeLines === 1 && callouts.activeAria === 1 && callouts.activeName === '5 mm LEDs' && callouts.activeCost === 'Cost: TBD' && callouts.explodedPosePressed && exploded?.activeCallout === 'led_pair', JSON.stringify({ ...callouts, calloutCostsDataDriven, activeCallout: exploded?.activeCallout }));
 await cdp.evaluate('window.__ffCandidatePreview.setProgress(0.67); undefined');
 await new Promise((resolve) => setTimeout(resolve, 200));
 const calloutSpec = await cdp.evaluate(`(() => {

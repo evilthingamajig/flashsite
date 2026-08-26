@@ -234,10 +234,6 @@ function updateCallouts(root = assetRoot) {
   const visible = activeIndex >= 0;
   const activeSpec = visible ? calloutSpecs[activeIndex] : null;
   syncPartListHighlight(activeSpec);
-  calloutsEl.setAttribute(
-    'aria-label',
-    activeSpec ? 'Current part: ' + activeSpec.name + '. ' + activeSpec.cost + '.' : 'Current candidate part annotation'
-  );
   calloutsEl.hidden = !visible;
   leadersEl.hidden = !visible;
   calloutsEl.style.display = visible ? '' : 'none';
