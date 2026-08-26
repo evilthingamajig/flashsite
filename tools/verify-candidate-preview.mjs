@@ -75,9 +75,10 @@ const callouts = await cdp.evaluate(`({
   shortCopy: [...document.querySelectorAll('.cpv-callout')].every((el) => el.textContent.trim().split(/\\s+/).length <= 5),
   activeBoxes: [...document.querySelectorAll('.cpv-callout')].filter((el) => getComputedStyle(el).display !== 'none').length,
   activeLines: [...document.querySelectorAll('#cpv-leaders line')].filter((el) => getComputedStyle(el).opacity !== '0').length,
+  activeAria: [...document.querySelectorAll('.cpv-callout')].filter((el) => el.getAttribute('aria-hidden') === 'false').length,
   explodedPosePressed: document.querySelector('[data-cpv-pose="0.67"]')?.getAttribute('aria-pressed') === 'true',
 })`);
-check('exploded editorial callout', callouts.boxes === 6 && callouts.lines === 6 && callouts.visible && callouts.shortCopy && callouts.activeBoxes === 1 && callouts.activeLines === 1 && callouts.explodedPosePressed, JSON.stringify(callouts));
+check('exploded editorial callout', callouts.boxes === 6 && callouts.lines === 6 && callouts.visible && callouts.shortCopy && callouts.activeBoxes === 1 && callouts.activeLines === 1 && callouts.activeAria === 1 && callouts.explodedPosePressed && exploded?.activeCallout === 'led_pair', JSON.stringify({ ...callouts, activeCallout: exploded?.activeCallout }));
 const editorialSamples = [];
 for (const sample of [0.2, 0.32, 0.44, 0.56, 0.68, 0.8]) {
   await cdp.evaluate(`window.__ffCandidatePreview.setProgress(${sample}); undefined`);
