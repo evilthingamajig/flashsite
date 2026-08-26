@@ -172,14 +172,18 @@ function targetFor(root, part) {
   return projection.clone();
 }
 
-function updateCallouts(root = assetRoot) {
-  if (!root || !calloutsEl || !leadersEl || !camera) return;
+function activeCalloutIndex(p) {
   const annotationStart = 0.16;
   const annotationEnd = 0.88;
   const annotationSpan = (annotationEnd - annotationStart) / calloutSpecs.length;
-  const activeIndex = progress >= annotationStart && progress <= annotationEnd
-    ? Math.min(calloutSpecs.length - 1, Math.floor((progress - annotationStart) / annotationSpan))
+  return p >= annotationStart && p <= annotationEnd
+    ? Math.min(calloutSpecs.length - 1, Math.floor((p - annotationStart) / annotationSpan))
     : -1;
+}
+
+function updateCallouts(root = assetRoot) {
+  if (!root || !calloutsEl || !leadersEl || !camera) return;
+  const activeIndex = activeCalloutIndex(progress);
   const visible = activeIndex >= 0;
   calloutsEl.hidden = !visible;
   leadersEl.hidden = !visible;
@@ -201,6 +205,7 @@ function updateCallouts(root = assetRoot) {
     const active = index === activeIndex;
     box.classList.toggle('is-active', active);
     box.style.display = active ? 'block' : 'none';
+    box.setAttribute('aria-hidden', String(!active));
     line.style.opacity = active ? '0.72' : '0';
     point.project(camera);
     const targetX = (point.x * 0.5 + 0.5) * width;
@@ -503,6 +508,7 @@ window.__ffCandidatePreview = {
       clips: actions.length,
       duration,
       progress,
+      activeCallout: activeCalloutIndex(progress) >= 0 ? calloutSpecs[activeCalloutIndex(progress)].part : null,
       renderPaused: !inView || document.hidden,
       actionTimes: actions.map((action) => Number(action.time.toFixed(4))),
       trackNames: actions.slice(0, 2).map((action) => action.getClip().tracks.map((track) => track.name)),
