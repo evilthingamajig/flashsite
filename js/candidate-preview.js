@@ -12,11 +12,14 @@ const statusEl = document.getElementById('cpv-status');
 const progressEl = document.getElementById('cpv-progress');
 const progressFill = document.getElementById('cpv-progress-fill');
 const progressLabel = document.getElementById('cpv-progress-label');
+const rangeEl = document.getElementById('cpv-range');
+const resetEl = document.getElementById('cpv-reset');
 const fallbackEl = document.getElementById('cpv-fallback');
 const fallbackMessage = document.getElementById('cpv-fallback-message');
 
 const clamp01 = (v) => Math.max(0, Math.min(1, v));
 const easeInOutCubic = (t) => (t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2);
+const reducedMotion = window.matchMedia?.('(prefers-reduced-motion: reduce)').matches ?? false;
 
 let renderer = null;
 let mixer = null;
@@ -102,6 +105,7 @@ function updateProgressUI(p) {
   progressFill.style.transform = 'scaleX(' + p.toFixed(4) + ')';
   progressLabel.textContent = 'scrub ' + String(pct).padStart(3, '0') + '%';
   progressEl.setAttribute('aria-valuenow', String(pct));
+  if (rangeEl && document.activeElement !== rangeEl) rangeEl.value = p.toFixed(3);
 }
 
 function applyProgress(p) {
@@ -117,6 +121,11 @@ function applyProgress(p) {
 function computeProgressFromScroll() {
   const max = Math.max(1, document.documentElement.scrollHeight - window.innerHeight);
   applyProgress(clamp01(window.scrollY / max));
+}
+
+function scrollToProgress(p) {
+  const max = Math.max(1, document.documentElement.scrollHeight - window.innerHeight);
+  window.scrollTo({ top: clamp01(p) * max, behavior: reducedMotion ? 'auto' : 'smooth' });
 }
 
 function measureStage() {
@@ -277,6 +286,16 @@ if (renderer && !failed) {
   }, { passive: true });
 
   window.addEventListener('resize', measureStage);
+  rangeEl?.addEventListener('input', () => {
+    const next = clamp01(Number(rangeEl.value));
+    applyProgress(next);
+    scrollToProgress(next);
+  });
+  resetEl?.addEventListener('click', () => {
+    scrollToProgress(0);
+    applyProgress(0);
+    rangeEl?.focus({ preventScroll: true });
+  });
   if (typeof ResizeObserver !== 'undefined') new ResizeObserver(measureStage).observe(stage);
 
   const io = new IntersectionObserver((entries) => {
