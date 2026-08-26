@@ -81,6 +81,8 @@ body{
 .cpv-part-name{color:var(--cpv-text);font-weight:500}
 .cpv-part-note{grid-column:2;color:var(--cpv-muted);font-size:12px}
 .cpv-parts-footnote{margin:12px 0 0;color:var(--cpv-muted);font-size:11px;line-height:1.45}
+.cpv-part-list li.is-active{background:rgba(52,192,122,.09);border-radius:6px}
+.cpv-part-list li.is-active .cpv-part-name{color:var(--cpv-accent)}
 .cpv-reference{
   position:absolute;left:clamp(16px,3vw,40px);top:50%;transform:translateY(-50%);z-index:10;
   width:min(15rem,30vw);background:rgba(22,27,25,.78);border:1px solid var(--cpv-line);

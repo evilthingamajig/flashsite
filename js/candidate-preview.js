@@ -20,6 +20,7 @@ const leadersEl = document.getElementById('cpv-leaders');
 const calloutsEl = document.getElementById('cpv-callouts');
 const fallbackEl = document.getElementById('cpv-fallback');
 const fallbackMessage = document.getElementById('cpv-fallback-message');
+const partListItems = [...document.querySelectorAll('#cpv-part-list [data-cpv-part]')];
 
 const poseEl = document.createElement('span');
 poseEl.className = 'cpv-pose-state';
@@ -193,11 +194,21 @@ function activeCalloutIndex(p) {
     : -1;
 }
 
+function syncPartListHighlight(spec) {
+  for (const item of partListItems) {
+    const match = spec !== null && item.dataset.cpvPart === spec.part;
+    item.classList.toggle('is-active', match);
+    if (match) item.setAttribute('aria-current', 'step');
+    else item.removeAttribute('aria-current');
+  }
+}
+
 function updateCallouts(root = assetRoot) {
   if (!root || !calloutsEl || !leadersEl || !camera) return;
   const activeIndex = activeCalloutIndex(progress);
   const visible = activeIndex >= 0;
   const activeSpec = visible ? calloutSpecs[activeIndex] : null;
+  syncPartListHighlight(activeSpec);
   calloutsEl.setAttribute(
     'aria-label',
     activeSpec ? 'Current part: ' + activeSpec.name + '. Cost TBD.' : 'Current candidate part annotation'
