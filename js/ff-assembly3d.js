@@ -974,12 +974,20 @@ function init(section) {
       if (i === chIdx) {
         const t = chapterT(p, i);
         const liftIn = smooth(t / 0.22);
-        const liftOut = smooth((t - 0.78) / 0.22);
+        // The enclosure is the final solo and must carry its inspection pose
+        // into the exploded tableau. Letting it settle back to its seat in
+        // the final 22% creates a visible 36mm position / 17deg rotation
+        // jump at the solo-to-tableau boundary.
+        const liftOut = c.id === 'enclosure' ? 0 : smooth((t - 0.78) / 0.22);
         const liftAmt = liftIn - liftOut;
         // Per-part orientation is intentionally different: the panel tilts,
         // the pouch reveals its crimp, the board shows its port, the LEDs
         // twirl on-axis, the switch barely turns, and the enclosure opens.
-        const orientationProgress = smooth(t / 0.72);
+        // Keep the foil face readable from the moment the battery enters the
+        // frame. Its authored pitch/roll still supplies a modest thickness
+        // reveal, but a 0→180deg yaw sweep makes the printed face appear
+        // mirrored/upside-down during the solar handoff.
+        const orientationProgress = c.id === 'battery' ? 1 : smooth(t / 0.72);
         yaw = (motion.baseYaw * orientationProgress + (t >= 0.72 ? motion.reassemblyYaw * reassemblyProgress : 0)) * Math.PI / 180;
         x += c.inspect[0] * MM * liftAmt;
         y += c.inspect[1] * MM * liftAmt;
@@ -1019,21 +1027,35 @@ function init(section) {
         // Complete the visible turn early in the beat, before the slight
         // position overlap with the next insertion, then hold it stationary.
         const turnLocal = smooth((p - beatStart) / Math.max(0.001, RE_SPACING * 0.45));
+        // Keep reassembly quaternion-continuous. The previous implementation
+        // reset directly from the authored insertion turn to Euler identity
+        // at RE_W, which made each seated part visibly snap. Ease the same
+        // yaw quaternion to identity during the remaining beat spacing.
+        let reassemblyYaw = motion.baseYaw;
         if (local > 0 && local < 1) {
-          yaw = lerp(motion.baseYaw, motion.reassemblyYaw, turnLocal) * Math.PI / 180;
+          reassemblyYaw = lerp(motion.baseYaw, motion.reassemblyYaw, turnLocal);
         } else if (p >= beatStart + RE_W) {
-          yaw = 0;
-        } else {
-          yaw = motion.baseYaw * Math.PI / 180;
+          const settleT = smooth((p - (beatStart + RE_W)) / Math.max(0.001, RE_SPACING - RE_W));
+          reassemblyYaw = lerp(motion.reassemblyYaw, 0, settleT);
         }
+        const reassemblyQ = new THREE.Quaternion().setFromEuler(new THREE.Euler(0, reassemblyYaw * Math.PI / 180, 0, 'YXZ'));
+        g.quaternion.copy(reassemblyQ);
+        composedQuaternion = true;
       }
       if (p >= T_RE_START && c.id === 'enclosure') {
         // A deliberate cavity-facing orientation is held through tableau,
         // every insertion beat, and the closed hero. This makes the base
         // genuinely stationary; the lid itself supplies the final exterior
         // read without a late enclosure rotation.
+        const tableauSample = samplePartPose(c.id, 1, sticky.clientWidth < 700);
+        const tableauQ = new THREE.Quaternion().setFromEuler(new THREE.Euler(0, motion.baseYaw * Math.PI / 180, 0, 'YXZ')).multiply(tableauSample.quaternion);
+        const cavityQ = new THREE.Quaternion().setFromEuler(new THREE.Euler(0, 40 * Math.PI / 180, 0, 'YXZ'));
+        const cavityBlend = smooth((p - T_RE_START) / 0.02);
+        const cavityPose = tableauQ.clone().slerp(cavityQ, cavityBlend);
         const closure = smooth((p - 0.91) / 0.015);
-        yaw = lerp(40, 0, closure) * Math.PI / 180;
+        const closedQ = cavityQ.clone().slerp(new THREE.Quaternion(), closure);
+        g.quaternion.copy(cavityBlend < 1 ? cavityPose : closedQ);
+        composedQuaternion = true;
       }
       if (c.id === 'enclosure' && p >= tableauStart && p < T_RE_START) {
         // Carry the final enclosure inspection offset across the short
@@ -1042,6 +1064,13 @@ function init(section) {
         x += c.inspect[0] * MM * (1 - settleBridge);
         y += c.inspect[1] * MM * (1 - settleBridge);
         z += c.inspect[2] * MM * (1 - settleBridge);
+        // Preserve the final solo orientation while the enclosure transitions
+        // into the tableau. This is the orientation counterpart to the
+        // carried inspection offset above; both converge smoothly afterward.
+        const tableauSample = samplePartPose(c.id, 1, sticky.clientWidth < 700);
+        const tableauQ = new THREE.Quaternion().setFromEuler(new THREE.Euler(0, motion.baseYaw * Math.PI / 180, 0, 'YXZ'));
+        g.quaternion.copy(tableauQ).multiply(tableauSample.quaternion);
+        composedQuaternion = true;
       }
       g.position.set(seats[c.id].x + x, seats[c.id].y + y, seats[c.id].z + z);
       if (i !== chIdx && !composedQuaternion) g.rotation.set(0, yaw, 0, 'YXZ');
@@ -1147,7 +1176,11 @@ function init(section) {
     const sr = sticky.getBoundingClientRect();
     const mobile = sticky.clientWidth < 700;
     const sx = mobile ? cr.left - sr.left + cr.width / 2 : (el.classList.contains('is-right') ? cr.left - sr.left : cr.right - sr.left);
-    const sy = mobile ? cr.top - sr.top - 6 : cr.top - sr.top + cr.height * 0.45;
+    // Start the LED leader below its copy block. The earlier mid-heading
+    // origin let the diagonal pass through the large “Two LEDs” title on
+    // desktop while still technically landing on the mesh anchor.
+    const copySafeLeader = !mobile && activeKey === 'leds';
+    const sy = mobile ? cr.top - sr.top - 6 : (copySafeLeader ? cr.bottom - sr.top + 14 : cr.top - sr.top + cr.height * 0.45);
     const sil = silhouettePx(keyToId(activeKey));
     if (!sil) return;
     // Route the leader in the whitespace around the subject, then use only a
@@ -1155,6 +1188,7 @@ function init(section) {
     // diagonally through the active silhouette.
     let routeX = pt.x, routeY = pt.y;
     if (mobile) routeY = sil.y + sil.h + 14;
+    else if (copySafeLeader) routeY = cr.bottom - sr.top + 14;
     else routeX = el.classList.contains('is-right') ? sil.x + sil.w + 14 : sil.x - 14;
     const ns = 'http://www.w3.org/2000/svg';
     const route = document.createElementNS(ns, 'polyline');
@@ -1198,8 +1232,19 @@ function init(section) {
       const hiddenInterior = exteriorOnly && !exteriorParts.has(c.id);
       let dim = hiddenInterior ? 0 : 1;
       if (!hiddenInterior && blend.id) {
-        if (c.id === activeId) dim = Math.max(0.14, blend.handoff || blend.w);
-        else if (c.id === blend.prevId && blend.handoff < 1) dim = Math.max(0, 1 - blend.handoff);
+        if (c.id === activeId) {
+          // Never leave a blank frame at the PCB→LED handoff: the incoming
+          // optical pair gets a visible floor opacity while the board fades.
+          const handoffFloor = c.id === 'led_pair' ? 0.32 : (c.id === 'battery' ? 0.28 : 0.14);
+          dim = Math.max(handoffFloor, blend.handoff || blend.w);
+        }
+        else if (c.id === blend.prevId && blend.handoff < 1) {
+          // Crossfade the outgoing solar panel promptly so its cropped edge
+          // cannot linger above the readable battery face. The active part
+          // remains visible for the full direct handoff.
+          const outgoingFade = activeId === 'battery' ? smooth(blend.handoff / 0.50) : blend.handoff;
+          dim = Math.max(0, 1 - outgoingFade);
+        }
         else dim = 0;
       }
       groups[c.id].visible = dim > 0.001 || c.id === activeId;
@@ -1290,6 +1335,19 @@ function init(section) {
       closedGeometry,
       renderMetrics: { triangles: renderer.info.render.triangles, drawCalls: renderer.info.render.calls },
       calloutBox: activeKey ? (() => { const r = callouts[activeKey].getBoundingClientRect(), s = sticky.getBoundingClientRect(); return { x: r.left - s.left, y: r.top - s.top, w: r.width, h: r.height }; })() : null,
+      // Keep handoff coverage observable: the active callout can intentionally
+      // remain on the outgoing label while the incoming subject is already
+      // entering. A per-part projection prevents blank-stage regressions from
+      // hiding behind that editorial label state.
+      visibleSilhouettes: Object.fromEntries(PART_IDS.filter((id) => groups[id]?.visible).map((id) => [id, silhouettePx(id)])),
+      leaderSegments: (() => {
+        const out = [];
+        leadersSvg.querySelectorAll('polyline,line').forEach((el) => {
+          const attrs = el.tagName.toLowerCase() === 'polyline' ? el.getAttribute('points') : `${el.getAttribute('x1')},${el.getAttribute('y1')} ${el.getAttribute('x2')},${el.getAttribute('y2')}`;
+          if (attrs) out.push(attrs);
+        });
+        return out;
+      })(),
       pose: Object.fromEntries(PART_IDS.map((id) => [id, {
         position: groups[id].position.toArray().map((v) => +v.toFixed(6)),
         rotation: groups[id].rotation.toArray().slice(0, 3).map((v) => +v.toFixed(5)),
