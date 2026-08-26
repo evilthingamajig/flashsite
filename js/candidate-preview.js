@@ -15,6 +15,7 @@ const progressLabel = document.getElementById('cpv-progress-label');
 const rangeEl = document.getElementById('cpv-range');
 const resetEl = document.getElementById('cpv-reset');
 const copyLinkEl = document.getElementById('cpv-copy-link');
+const poseButtons = [...document.querySelectorAll('[data-cpv-pose]')];
 const leadersEl = document.getElementById('cpv-leaders');
 const calloutsEl = document.getElementById('cpv-callouts');
 const fallbackEl = document.getElementById('cpv-fallback');
@@ -217,6 +218,11 @@ function updateProgressUI(p) {
   poseEl.textContent = ' · ' + pose;
   if (statusEl && !statusEl.contains(poseEl)) statusEl.appendChild(poseEl);
   if (rangeEl && document.activeElement !== rangeEl) rangeEl.value = p.toFixed(3);
+  for (const button of poseButtons) {
+    const target = Number(button.dataset.cpvPose);
+    const active = target === 0 ? p <= 0.02 : target === 0.67 ? p >= 0.52 && p <= 0.82 : p >= 0.9;
+    button.setAttribute('aria-pressed', String(active));
+  }
 }
 
 function applyProgress(p) {
@@ -449,6 +455,14 @@ if (renderer && !failed) {
   copyLinkEl?.addEventListener('click', () => {
     copyPoseLink();
   });
+  for (const button of poseButtons) {
+    button.addEventListener('click', () => {
+      const next = clamp01(Number(button.dataset.cpvPose));
+      applyProgress(next);
+      history.replaceState(null, '', poseLinkFor(next));
+      scrollToProgress(next);
+    });
+  }
   if (typeof ResizeObserver !== 'undefined') new ResizeObserver(measureStage).observe(stage);
 
   const io = new IntersectionObserver((entries) => {
