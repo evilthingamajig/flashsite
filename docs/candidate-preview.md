@@ -28,7 +28,7 @@ No external network assets.
 ## What it does
 
 - Full-screen dark neutral stage in the Flash Forward visual language
-  (Lausanne type, green accent, hairline borders), with a compact accessible
+  (Lausanne type, white accent, hairline borders), with a compact accessible
   parts list, two collapsible media-library reference panels (solar and
   flashlight-internals), a bottom scrub
   progress indicator, direct timeline/reset controls, restrained helper copy,
@@ -64,14 +64,14 @@ No external network assets.
 - During the exploded review, one plain two-line editorial label appears at a
   time and crossfades to the next part as the timeline advances. Labels use the
   site's Lausanne type, sentence-case copy, and a dotted SVG leader; the
-  provisional second line is `Cost TBD` until authoritative pricing is supplied.
+  provisional second line is `Cost: TBD` until authoritative pricing is supplied.
   Labels and leaders stay hidden in the
   closed and reassembled poses so the product view remains uncluttered.
 - The active callout is exposed as a polite atomic live announcement for
   assistive technology; inactive labels remain mounted for the visual opacity
   crossfade but are `aria-hidden` and never highlighted.
-- While a callout is active, its matching parts-list row(s) get a subtle green
-  accent and `aria-current="step"`; both LED rows highlight together for
+- While a callout is active, its matching parts-list row(s) get a subtle accent
+  and `aria-current="step"`; both LED rows highlight together for
   `led_pair`. Highlighting clears whenever no callout is active (closed,
   reassembled, or outside the annotation band). No new elements are added.
 
@@ -80,6 +80,13 @@ No external network assets.
 - Render-on-demand: rendering pauses when the stage is offscreen
   (IntersectionObserver) or the document is hidden (visibilitychange).
 - Pixel ratio capped at 1.75.
+- WebGL context-loss fallback: on `webglcontextlost`, the handler calls
+  `preventDefault()` to block the browser default, stops rendering via
+  `showFallback`, and surfaces the existing parts-list-and-controls
+  fallback without a reload loop.
+- bfcache-safe pagehide cleanup: on `pagehide` (non-persisted), the handler
+  stops all mixer actions and disposes the renderer so the page is safe for
+  bfcache eviction; persisted navigations are skipped.
 - Text fallback replaces the canvas when WebGL is unavailable or the GLB
   fails to load; the parts list remains readable, and a `<noscript>` notice
   covers JS-less browsing.
@@ -95,6 +102,9 @@ No external network assets.
 - `tools/verify-blender-candidate.py`
 - `assets/3d/flashlight-assembly-blender-candidate.glb`
 - `assets/3d/blender-candidate-manifest.json`
+- `review/blender-candidate-frame-120.png` — retained Blender review frame at
+  the authored reassembly boundary (frame 120 of 120), used for visual QA of
+  the closed-pose seating and camera-settle three-quarter framing.
 
 ## Verification
 
@@ -122,5 +132,10 @@ at the negative-X short end with their pair axis across Z, and the switch must
 remain within the enclosure-centered seating envelope. The final deep-link
 check additionally proves the movable parts return to those seats after the
 exploded review. The camera-settle assertion also guards that the three-quarter
-framing is stable once authored reassembly begins. The current candidate suite
-contains 26 checks.
+framing is stable once authored reassembly begins. The verification suite also
+validates a required runtime asset inventory (candidate file presence and MIME
+types served by the local verification server), a bfcache-safe `pagehide`
+cleanup (non-persisted navigations stop the mixer and dispose the renderer),
+and a WebGL context-loss fallback (synthetic `webglcontextlost` event
+triggers `preventDefault`, the existing fallback surfaces, and no reload loop
+occurs). The current candidate suite contains 30 checks.
