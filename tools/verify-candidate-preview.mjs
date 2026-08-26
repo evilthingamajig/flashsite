@@ -124,6 +124,14 @@ await cdp.evaluate('window.__ffCandidatePreview.setProgress(1); undefined');
 await new Promise((resolve) => setTimeout(resolve, 120));
 const deepLinkStatus = await cdp.evaluate("({status: document.getElementById('cpv-status').textContent, range: Number(document.getElementById('cpv-range').value), calloutsHidden: document.getElementById('cpv-callouts').style.display === 'none', leadersHidden: document.getElementById('cpv-leaders').style.display === 'none'})");
 check('reassembled deep link', deepLinkQuery.includes('p=1') && deepLinkStatus.range >= 0.999 && /Reassembled/.test(deepLinkStatus.status) && deepLinkStatus.calloutsHidden && deepLinkStatus.leadersHidden, JSON.stringify({ query: deepLinkQuery, ...deepLinkStatus }));
+const reassembled = await info();
+const reassembledParts = ['battery', 'charge_module', 'led_left', 'led_right', 'switch'];
+const returnedToSeats = reassembledParts.every((part) => {
+  const a = closed?.partTransforms?.[part];
+  const b = reassembled?.partTransforms?.[part];
+  return a && b && Math.hypot(a.x - b.x, a.y - b.y, a.z - b.z) < 0.002;
+});
+check('reassembled parts return to seats', returnedToSeats, JSON.stringify({ closed: closed?.partTransforms, reassembled: reassembled?.partTransforms }));
 
 await cdp.close();
 server.close();
