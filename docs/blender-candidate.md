@@ -40,7 +40,8 @@ An additional Blender Workbench render of frame 120 was visually inspected at
 the authored three-quarter camera framing. It shows the rectangular solar
 surface and cell details, enclosure depth, four panel fasteners, and both LED
 heads seated on the short end. No production asset was changed during this
-review.
+review. The retained review frame is
+`review/blender-candidate-frame-120.png`.
 The build removes exact duplicate triangle faces from the decimated supplied
 battery and TP4056 meshes before export; Blender's invalid-mesh export warnings
 are absent on the current candidate build.
