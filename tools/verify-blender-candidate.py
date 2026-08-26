@@ -59,6 +59,13 @@ if 'solar_rear_connector' not in solar_children or 'solar_rear_wire' not in sola
     fail('solar rear connector detail children are missing')
 passed('solar connector and reference details present')
 
+enclosure_children = {child.name for child in parts['enclosure'].children}
+expected_mounts = {'enclosure_mount_block_1', 'enclosure_mount_block_2', 'enclosure_mount_block_3', 'enclosure_mount_block_4'}
+missing_mounts = expected_mounts - enclosure_children
+if missing_mounts:
+    fail('enclosure mount block children missing: ' + ', '.join(sorted(missing_mounts)))
+passed('four enclosure corner mount blocks present')
+
 scene = bpy.context.scene
 scene.frame_set(1)
 closed_locations = {name: tuple(obj.location) for name, obj in parts.items() if name in EXPECTED_PARTS}

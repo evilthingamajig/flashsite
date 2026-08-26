@@ -282,6 +282,19 @@ def main():
     center = sum(b, Vector()) / 8.0
     enclosure.location -= center
 
+    mount_mat = mat('MountBlockPlastic', (0.04, 0.045, 0.05), roughness=0.55)
+    block_dims = (0.005, 0.005, 0.006)
+    block_z = -0.0045
+    mount_positions = [
+        ('enclosure_mount_block_1', ( 0.042,  0.024, block_z)),
+        ('enclosure_mount_block_2', (-0.042,  0.024, block_z)),
+        ('enclosure_mount_block_3', (-0.042, -0.024, block_z)),
+        ('enclosure_mount_block_4', ( 0.042, -0.024, block_z)),
+    ]
+    for mname, mloc in mount_positions:
+        blk = cube(mname, block_dims, (0.0, 0.0, 0.0), mount_mat)
+        parent_detail(blk, enclosure, mloc)
+
     panel = cube('solar_panel_placeholder', (0.098, 0.058, 0.0018), (0.0, 0.0, 0.0088), solar)
     add_solar_details(panel, solar_bus, solar_line)
     add_solar_connection_details(panel, usb_metal, battery_lead)
@@ -380,7 +393,7 @@ def main():
             name: {key: [round(math.degrees(value), 1) for value in rotation] for key, rotation in profile.items()}
             for name, profile in MOTION_PROFILES.items()
         },
-        'visualDetails': ['solar panel has a raised frame, bus lines, cell-strip details, and a parented rear connector/wire cue', 'battery has lightweight provisional Kapton band, label plate, and lead cue parented to the supplied mesh', 'TP4056 board has lightweight blue PCB, USB-C, and component cues parented to the supplied mesh', 'switch has a small contrasting actuator cue parented to the pass9 source mesh'],
+        'visualDetails': ['solar panel has a raised frame, bus lines, cell-strip details, and a parented rear connector/wire cue', 'battery has lightweight provisional Kapton band, label plate, and lead cue parented to the supplied mesh', 'TP4056 board has lightweight blue PCB, USB-C, and component cues parented to the supplied mesh', 'switch has a small contrasting actuator cue parented to the pass9 source mesh', 'enclosure has four interior corner mount blocks (enclosure_mount_block_1..4) parented to the case shell', 'mount blocks are 5x5x6 mm dark plastic cubes at ±42 mm X, ±24 mm Y, z −4.5 mm'],
         'provisional': ['solar panel is reference-informed geometry; no solar-panel CAD supplied', 'led_right duplicates the supplied single LED', 'battery and switch seating are provisional', 'user-supplied STEP files were converted to coarse browser-safe STL meshes through FreeCAD'],
         'authoredAction': 'ScrollSequence', 'frameRange': [1, 120],
         'timeline': {'closed': 0.0, 'explodedReview': 0.67, 'reassembled': 1.0},

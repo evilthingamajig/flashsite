@@ -142,7 +142,9 @@
     "solar panel has a raised frame, bus lines, cell-strip details, and a parented rear connector/wire cue",
     "battery has lightweight provisional Kapton band, label plate, and lead cue parented to the supplied mesh",
     "TP4056 board has lightweight blue PCB, USB-C, and component cues parented to the supplied mesh",
-    "switch has a small contrasting actuator cue parented to the pass9 source mesh"
+    "switch has a small contrasting actuator cue parented to the pass9 source mesh",
+    "enclosure has four interior corner mount blocks (enclosure_mount_block_1..4) parented to the case shell",
+    "mount blocks are 5x5x6 mm dark plastic cubes at \u00b142 mm X, \u00b124 mm Y, z \u22124.5 mm"
   ],
   "provisional": [
     "solar panel is reference-informed geometry; no solar-panel CAD supplied",
