@@ -50,12 +50,12 @@ let inView = true;
 let dirty = false;
 let rafId = 0;
 const calloutSpecs = [
-  { part: 'enclosure', name: 'Case', side: 'left', row: 0 },
-  { part: 'solar_panel_placeholder', name: 'Solar panel', side: 'left', row: 1 },
-  { part: 'battery', name: 'LiPo battery', side: 'right', row: 0 },
-  { part: 'charge_module', name: 'TP4056 board', side: 'right', row: 1 },
-  { part: 'led_pair', name: '5 mm LEDs', side: 'left', row: 2 },
-  { part: 'switch', name: 'Slide switch', side: 'right', row: 2 },
+  { part: 'enclosure', name: 'Case', cost: 'Cost: TBD', side: 'left', row: 0 },
+  { part: 'solar_panel_placeholder', name: 'Solar panel', cost: 'Cost: TBD', side: 'left', row: 1 },
+  { part: 'battery', name: 'LiPo battery', cost: 'Cost: TBD', side: 'right', row: 0 },
+  { part: 'charge_module', name: 'TP4056 board', cost: 'Cost: TBD', side: 'right', row: 1 },
+  { part: 'led_pair', name: '5 mm LEDs', cost: 'Cost: TBD', side: 'left', row: 2 },
+  { part: 'switch', name: 'Slide switch', cost: 'Cost: TBD', side: 'right', row: 2 },
 ];
 const calloutTargets = new Map();
 const calloutLines = new Map();
@@ -182,8 +182,9 @@ function buildCallouts(root) {
     const box = document.createElement('div');
     box.className = 'cpv-callout cpv-callout-' + spec.side;
     box.dataset.part = spec.part;
-    box.innerHTML = '<span class="cpv-callout-name"></span><span class="cpv-callout-cost">Cost: TBD</span>';
+    box.innerHTML = '<span class="cpv-callout-name"></span><span class="cpv-callout-cost"></span>';
     box.querySelector('.cpv-callout-name').textContent = spec.name;
+    box.querySelector('.cpv-callout-cost').textContent = spec.cost;
     calloutsEl.append(box);
     const line = document.createElementNS('http://www.w3.org/2000/svg', 'line');
     line.setAttribute('stroke-linecap', 'round');
@@ -235,7 +236,7 @@ function updateCallouts(root = assetRoot) {
   syncPartListHighlight(activeSpec);
   calloutsEl.setAttribute(
     'aria-label',
-    activeSpec ? 'Current part: ' + activeSpec.name + '. Cost: TBD.' : 'Current candidate part annotation'
+    activeSpec ? 'Current part: ' + activeSpec.name + '. ' + activeSpec.cost + '.' : 'Current candidate part annotation'
   );
   calloutsEl.hidden = !visible;
   leadersEl.hidden = !visible;
