@@ -52,6 +52,14 @@ const motionProfileShape = motionParts.every((part) => Array.isArray(motionProfi
 const mirroredLedSplay = motionProfiles.led_left?.inspect_rotation?.[2] === 26 && motionProfiles.led_right?.inspect_rotation?.[2] === -26;
 const stableEnclosure = motionProfiles.enclosure?.explode_rotation?.every((value) => value === 0) && motionProfiles.enclosure?.inspect_rotation?.every((value) => value === 0);
 check('motion profile manifest', motionProfileShape && mirroredLedSplay && stableEnclosure, JSON.stringify(motionProfiles));
+const sourceDimensions = motionManifest?.sourceDimensionsMm || {};
+const dimensionsMatch = JSON.stringify(sourceDimensions) === JSON.stringify({
+  case: [105, 65, 15],
+  charge_module: [29.3, 17.4, 4.14],
+  battery: [53.1, 46.821, 6],
+  led: [5.58, 6, 36.5],
+});
+check('FreeCAD source dimensions recorded', dimensionsMatch, JSON.stringify(sourceDimensions));
 
 await cdp.evaluate('window.__ffCandidatePreview.setProgress(0); undefined');
 await new Promise((resolve) => setTimeout(resolve, 180));
