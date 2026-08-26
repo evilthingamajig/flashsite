@@ -155,14 +155,19 @@ const mobile = await cdp.evaluate(`(() => {
   const parts = rect('.cpv-parts'); const controls = rect('.cpv-controls');
   const head = rect('.cpv-head'); const reference = rect('.cpv-reference'); const status = rect('.cpv-status');
   const overlaps = (a, b) => !!a && !!b && a.left < b.right && a.right > b.left && a.top < b.bottom && a.bottom > b.top;
+  const refs = [...document.querySelectorAll('.cpv-reference')];
+  const refsPresent = refs.length === 2;
+  const refsCollapsed = refs.every((el) => el.open === false);
+  const refsInside = refs.every((el) => { const r = el.getBoundingClientRect(); return r.left >= 0 && r.right <= innerWidth && r.top >= 0 && r.bottom <= innerHeight; });
   return { overflow: document.documentElement.scrollWidth - innerWidth,
     parts: !!parts && parts.left >= 0 && parts.right <= innerWidth && parts.bottom <= innerHeight,
     partsCollapsed: document.querySelector('.cpv-parts')?.open === false,
     controls: !!controls && controls.left >= 0 && controls.right <= innerWidth,
     headerReferenceClear: !overlaps(head, reference),
-    headerStatusClear: !overlaps(head, status) };
+    headerStatusClear: !overlaps(head, status),
+    refsPresent, refsCollapsed, refsInside };
 })()`);
-check('390x844 layout', mobile.overflow <= 1 && mobile.parts && mobile.partsCollapsed && mobile.controls && mobile.headerReferenceClear && mobile.headerStatusClear, JSON.stringify(mobile));
+check('390x844 layout', mobile.overflow <= 1 && mobile.parts && mobile.partsCollapsed && mobile.controls && mobile.headerReferenceClear && mobile.headerStatusClear && mobile.refsPresent && mobile.refsCollapsed && mobile.refsInside, JSON.stringify(mobile));
 await cdp.evaluate('window.__ffCandidatePreview.setProgress(0.67); undefined');
 await new Promise((resolve) => setTimeout(resolve, 450));
 const mobileCallout = await cdp.evaluate(`(() => {
