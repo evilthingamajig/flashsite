@@ -1,7 +1,7 @@
 import * as THREE from 'three';
 import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
 
-const GLB_URL = 'assets/3d/flashlight-assembly-blender-candidate.glb?v=candidate-5';
+const GLB_URL = 'assets/3d/flashlight-assembly-blender-candidate.glb?v=candidate-11';
 const CLIP_PATTERN = /^ScrollSequence/;
 // A full browser window can contain several times as many pixels as the
 // embedded review pane. Bound both device-pixel ratio and total framebuffer
@@ -10,6 +10,8 @@ const DPR_CAP = 1.0;
 const MIN_RENDER_DPR = 0.75;
 const MAX_RENDER_PIXELS = 1_500_000;
 const SCRUB_IDLE_MS = 140;
+const SCROLL_DAMPING = 18;
+const SCROLL_SNAP_EPSILON = 0.00035;
 const FOV = 32;
 const HEADER_SAFE_SHIFT = 0.1;
 const SHADOW_CASTERS = new Set([
@@ -65,6 +67,9 @@ let failed = false;
 let inView = true;
 let dirty = false;
 let rafId = 0;
+let scrollTarget = 0;
+let scrollFrameTime = 0;
+let scrollAnimating = false;
 let scrubQuality = false;
 let scrubIdleTimer = 0;
 let hasAppliedProgress = false;
@@ -104,6 +109,7 @@ function showFallback(reason, err) {
   setStatus('Preview unavailable.');
   cancelAnimationFrame(rafId);
   rafId = 0;
+  scrollAnimating = false;
   dirty = false;
   if (err) console.warn('Candidate preview:', err);
 }
@@ -137,15 +143,29 @@ function setScrubQuality() {
 }
 
 function startLoop() {
-  if (rafId || !dirty || !inView || document.hidden || !ready || failed) return;
+  if (rafId || (!dirty && !scrollAnimating) || !inView || document.hidden || !ready || failed) return;
   rafId = requestAnimationFrame(tick);
 }
 
-function tick() {
+function tick(now) {
   rafId = 0;
-  if (!inView || document.hidden || !dirty) return;
+  if (!inView || document.hidden || (!dirty && !scrollAnimating)) return;
+  let needsRender = dirty;
   dirty = false;
-  renderer.render(scene, camera);
+  if (scrollAnimating) {
+    const dt = scrollFrameTime ? Math.min(0.05, (now - scrollFrameTime) / 1000) : 1 / 60;
+    scrollFrameTime = now;
+    let next = THREE.MathUtils.damp(progress, scrollTarget, SCROLL_DAMPING, dt);
+    if (Math.abs(next - scrollTarget) <= SCROLL_SNAP_EPSILON) {
+      next = scrollTarget;
+      scrollAnimating = false;
+      scrollFrameTime = 0;
+    }
+    applyProgress(next, false);
+    needsRender = true;
+  }
+  if (needsRender) renderer.render(scene, camera);
+  if (scrollAnimating) startLoop();
 }
 
 function samplePose(p) {
@@ -365,7 +385,7 @@ function updateProgressUI(p) {
   }
 }
 
-function applyProgress(p) {
+function applyProgress(p, scheduleRender = true) {
   const nextProgress = clamp01(p);
   if (ready && hasAppliedProgress && Math.abs(nextProgress - progress) < 0.0005) return;
   progress = nextProgress;
@@ -376,18 +396,37 @@ function applyProgress(p) {
     updateCamera(progress);
     updateCallouts();
     updateProgressUI(progress);
-    requestRender();
+    if (scheduleRender) requestRender();
   }
 }
 
-function computeProgressFromScroll() {
+function progressFromScroll() {
   const max = Math.max(1, document.documentElement.scrollHeight - window.innerHeight);
-  applyProgress(clamp01(window.scrollY / max));
+  return clamp01(window.scrollY / max);
 }
 
-function scrollToProgress(p, instant = false) {
+function computeProgressFromScroll() {
+  scrollTarget = progressFromScroll();
+  applyProgress(scrollTarget);
+}
+
+function targetProgressFromScroll() {
+  scrollTarget = progressFromScroll();
+  if (reducedMotion) {
+    scrollAnimating = false;
+    applyProgress(scrollTarget);
+    return;
+  }
+  if (!scrollAnimating) scrollFrameTime = 0;
+  scrollAnimating = Math.abs(progress - scrollTarget) > SCROLL_SNAP_EPSILON;
+  if (scrollAnimating) startLoop();
+}
+
+function scrollToProgress(p) {
   const max = Math.max(1, document.documentElement.scrollHeight - window.innerHeight);
-  window.scrollTo({ top: clamp01(p) * max, behavior: instant || reducedMotion ? 'auto' : 'smooth' });
+  // The Three.js timeline owns visual interpolation. A second native smooth
+  // scroll would create a competing timeline and replay intermediate poses.
+  window.scrollTo({ top: clamp01(p) * max, behavior: 'auto' });
 }
 
 function requestedReviewProgress() {
@@ -574,7 +613,7 @@ if (renderer && !failed) {
       computeProgressFromScroll();
     } else {
       applyProgress(requested);
-      scrollToProgress(requested, true);
+      scrollToProgress(requested);
     }
   }, (evt) => {
     if (evt.total > 0) {
@@ -586,15 +625,9 @@ if (renderer && !failed) {
 }
 
 if (renderer && !failed) {
-  let scrollScheduled = false;
-  window.addEventListener('scroll', () => {
-    if (scrollScheduled) return;
-    scrollScheduled = true;
-    requestAnimationFrame(() => {
-      scrollScheduled = false;
-      computeProgressFromScroll();
-    });
-  }, { passive: true });
+  // Scroll events only update a numeric target. The single render loop above
+  // samples that target, advances the authored pose, and draws once per frame.
+  window.addEventListener('scroll', targetProgressFromScroll, { passive: true });
 
   window.addEventListener('resize', measureStage);
 
@@ -608,13 +641,22 @@ if (renderer && !failed) {
 
   rangeEl?.addEventListener('input', () => {
     const next = clamp01(Number(rangeEl.value));
+    scrollAnimating = false;
+    scrollFrameTime = 0;
+    scrollTarget = next;
     applyProgress(next);
-    // A range drag is already a continuous direct-manipulation gesture.
-    // Starting/restarting native smooth scrolling for every input event makes
-    // the browser animate two competing timelines and duplicates frames.
-    scrollToProgress(next, true);
+  });
+  rangeEl?.addEventListener('change', () => {
+    // Keep the range gesture single-owner: `input` drives the WebGL pose while
+    // the thumb moves, then the committed value synchronizes page scroll once.
+    // Scrolling on every input feeds back through the scroll listener and
+    // schedules a second pose update for the same visual frame.
+    scrollToProgress(clamp01(Number(rangeEl.value)));
   });
   resetEl?.addEventListener('click', () => {
+    scrollAnimating = false;
+    scrollFrameTime = 0;
+    scrollTarget = 0;
     scrollToProgress(0);
     applyProgress(0);
     rangeEl?.focus({ preventScroll: true });
@@ -625,6 +667,9 @@ if (renderer && !failed) {
   for (const button of poseButtons) {
     button.addEventListener('click', () => {
       const next = clamp01(Number(button.dataset.cpvPose));
+      scrollAnimating = false;
+      scrollFrameTime = 0;
+      scrollTarget = next;
       applyProgress(next);
       history.replaceState(null, '', poseLinkFor(next));
       scrollToProgress(next);
@@ -639,6 +684,8 @@ if (renderer && !failed) {
       else {
         cancelAnimationFrame(rafId);
         rafId = 0;
+        scrollAnimating = false;
+        scrollFrameTime = 0;
       }
     }, { threshold: 0 });
     if (stage) io.observe(stage);
@@ -648,7 +695,11 @@ if (renderer && !failed) {
     if (document.hidden) {
       cancelAnimationFrame(rafId);
       rafId = 0;
+      scrollAnimating = false;
+      scrollFrameTime = 0;
     } else {
+      scrollTarget = progressFromScroll();
+      if (Math.abs(progress - scrollTarget) > SCROLL_SNAP_EPSILON) targetProgressFromScroll();
       requestRender();
     }
   });
@@ -659,6 +710,7 @@ if (renderer && !failed) {
     clearTimeout(scrubIdleTimer);
     document.body.classList.remove('cpv-scrubbing');
     rafId = 0;
+    scrollAnimating = false;
     if (mixer) mixer.stopAllAction();
     if (renderer) renderer.dispose();
   });
