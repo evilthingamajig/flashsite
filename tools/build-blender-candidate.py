@@ -1,4 +1,5 @@
 import bpy
+import bmesh
 import os
 import json
 from mathutils import Vector
@@ -10,8 +11,9 @@ BLENDER_MM = 0.001
 
 CASE = r"C:\Users\romir\Downloads\Revamp Flashlight w addon.stl"
 SWITCH = os.path.join(ROOT, "source-assets", "stl", "switch.stl")
-TP4056 = os.path.join(ROOT, "source-assets", "external", "pass9", "tp4056-usbc.stl")
-LED = os.path.join(ROOT, "source-assets", "external", "pass9", "derived", "led-d5-clear.stl")
+TP4056 = os.path.join(ROOT, "source-assets", "external", "user-supplied", "tp4056-user-supplied.stl")
+BATTERY = os.path.join(ROOT, "source-assets", "external", "user-supplied", "battery-user-supplied.stl")
+LED = os.path.join(ROOT, "source-assets", "external", "user-supplied", "led-user-supplied.stl")
 
 def clear():
     bpy.ops.wm.read_factory_settings(use_empty=True)
@@ -53,6 +55,20 @@ def set_mat(ob, material):
     ob.data.materials.clear()
     ob.data.materials.append(material)
 
+def reduce_mesh(ob, ratio=0.35):
+    if len(ob.data.polygons) < 1500:
+        return
+    bm = bmesh.new()
+    bm.from_mesh(ob.data)
+    bmesh.ops.remove_doubles(bm, verts=bm.verts, dist=0.000001)
+    bm.to_mesh(ob.data)
+    bm.free()
+    ob.data.update()
+    mod = ob.modifiers.new('Candidate lightweight reduction', 'DECIMATE')
+    mod.ratio = ratio
+    bpy.context.view_layer.objects.active = ob
+    bpy.ops.object.modifier_apply(modifier=mod.name)
+
 def add_keyframes(ob, seat, explode, inspect, frame_inspect):
     ob.location = seat
     ob.rotation_euler = (0.0, 0.0, 0.0)
@@ -90,16 +106,20 @@ def main():
     enclosure.location -= center
 
     panel = cube('solar_panel_placeholder', (0.098, 0.058, 0.0018), (0.0, 0.0, 0.0088), solar)
-    battery = cube('battery', (0.0506, 0.0335, 0.005), (0.0, -0.014, -0.003), foil)
     charge = import_stl(TP4056, 'charge_module')
     set_mat(charge, pcb)
+    reduce_mesh(charge, 0.03)
     charge.location = (0.0, 0.016, -0.002)
+    battery = import_stl(BATTERY, 'battery')
+    set_mat(battery, foil)
+    reduce_mesh(battery, 0.03)
+    battery.location = (0.0, -0.014, -0.003)
     led_a = import_stl(LED, 'led_left')
     led_b = import_stl(LED, 'led_right')
     set_mat(led_a, ledmat); set_mat(led_b, ledmat)
     led_a.location = (-0.012, -0.033, 0.0)
     led_b.location = (0.012, -0.033, 0.0)
-    sw = import_stl(SWITCH, 'switch')
+    sw = import_stl(SWITCH, 'switch', scale=1.0)
     set_mat(sw, switchmat)
     sw.location = (0.018, 0.025, 0.0)
 
@@ -131,8 +151,14 @@ def main():
         'kind': 'candidate-only', 'generator': 'tools/build-blender-candidate.py',
         'targetFootprint': 'approximately 100x60 mm; supplied STL measured 105x65x15 mm',
         'sourceCase': CASE, 'sourceCaseUnits': 'raw STL values interpreted as millimetres',
+        'referencePhoto': 'assets/3d/references/solarpanel.jpg',
+        'convertedCadSources': {
+            'charge_module': 'source-assets/external/user-supplied/tp4056-user-supplied.stl',
+            'battery': 'source-assets/external/user-supplied/battery-user-supplied.stl',
+            'led': 'source-assets/external/user-supplied/led-user-supplied.stl',
+        },
         'parts': ['enclosure','solar_panel_placeholder','battery','charge_module','led_left','led_right','switch'],
-        'provisional': ['solar panel is a geometry placeholder; no CAD/photo baked in', 'led_right duplicates the supplied single LED', 'battery and switch seating are provisional', 'electronics/LED meshes use repository CAD-derived browser-safe STL derivatives pending direct STEP bake'],
+        'provisional': ['solar panel is a geometry placeholder; no CAD/photo baked in', 'led_right duplicates the supplied single LED', 'battery and switch seating are provisional', 'user-supplied STEP files were converted to coarse browser-safe STL meshes through FreeCAD'],
         'authoredAction': 'ScrollSequence', 'frameRange': [1, 100],
         'fallbackPreserved': 'assets/3d/flashlight-assembly.glb',
         'validation': {'blender': 'export completed; inspect GLB node/action metadata before web integration'}

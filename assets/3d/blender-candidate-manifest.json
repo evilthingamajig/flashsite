@@ -4,6 +4,12 @@
   "targetFootprint": "approximately 100x60 mm; supplied STL measured 105x65x15 mm",
   "sourceCase": "C:\\Users\\romir\\Downloads\\Revamp Flashlight w addon.stl",
   "sourceCaseUnits": "raw STL values interpreted as millimetres",
+  "referencePhoto": "assets/3d/references/solarpanel.jpg",
+  "convertedCadSources": {
+    "charge_module": "source-assets/external/user-supplied/tp4056-user-supplied.stl",
+    "battery": "source-assets/external/user-supplied/battery-user-supplied.stl",
+    "led": "source-assets/external/user-supplied/led-user-supplied.stl"
+  },
   "parts": [
     "enclosure",
     "solar_panel_placeholder",
@@ -17,7 +23,7 @@
     "solar panel is a geometry placeholder; no CAD/photo baked in",
     "led_right duplicates the supplied single LED",
     "battery and switch seating are provisional",
-    "electronics/LED meshes use repository CAD-derived browser-safe STL derivatives pending direct STEP bake"
+    "user-supplied STEP files were converted to coarse browser-safe STL meshes through FreeCAD"
   ],
   "authoredAction": "ScrollSequence",
   "frameRange": [
