@@ -216,4 +216,59 @@ for frame in (30, 60, 84, 100, 120):
              % (frame, tuple(current_offset), tuple(switch_case_offset)))
 passed('switch remains mounted in the case-side opening for the full timeline')
 
+# Bind every imported action before collision sampling. Blender's glTF importer
+# can leave layered actions present but not attached in headless mode.
+def action_for_part(part):
+    return next((item for item in bpy.data.actions if item.name.startswith('ScrollSequence')
+                 and any(slot.identifier == 'OB' + part for slot in item.slots)), None)
+
+
+for part, obj in parts.items():
+    if part not in EXPECTED_PARTS:
+        continue
+    action = action_for_part(part)
+    if action is None:
+        fail('%s collision-audit action is missing' % part)
+    obj.animation_data_create()
+    obj.animation_data.action = action
+
+
+def world_aabb(obj):
+    corners = [obj.matrix_world @ Vector(corner) for corner in obj.bound_box]
+    lo = Vector((min(value.x for value in corners), min(value.y for value in corners),
+                 min(value.z for value in corners)))
+    hi = Vector((max(value.x for value in corners), max(value.y for value in corners),
+                 max(value.z for value in corners)))
+    return lo, hi
+
+
+def overlap_ratio(a, b):
+    alo, ahi = world_aabb(a)
+    blo, bhi = world_aabb(b)
+    extent = Vector((
+        max(0.0, min(ahi.x, bhi.x) - max(alo.x, blo.x)),
+        max(0.0, min(ahi.y, bhi.y) - max(alo.y, blo.y)),
+        max(0.0, min(ahi.z, bhi.z) - max(alo.z, blo.z)),
+    ))
+    overlap = extent.x * extent.y * extent.z
+    avol = max(1e-12, (ahi.x - alo.x) * (ahi.y - alo.y) * (ahi.z - alo.z))
+    bvol = max(1e-12, (bhi.x - blo.x) * (bhi.y - blo.y) * (bhi.z - blo.z))
+    return overlap / min(avol, bvol)
+
+
+loose_parts = ['solar_panel_placeholder', 'battery', 'charge_module', 'led_left', 'led_right']
+worst_overlap = (0.0, None, None, None)
+for frame in range(100, 121):
+    scene.frame_set(frame)
+    bpy.context.view_layer.update()
+    for index, left in enumerate(loose_parts):
+        for right in loose_parts[index + 1:]:
+            ratio = overlap_ratio(parts[left], parts[right])
+            if ratio > worst_overlap[0]:
+                worst_overlap = (ratio, frame, left, right)
+if worst_overlap[0] > 0.02:
+    fail('reassembly parts overlap %.1f%% at frame %d: %s / %s' % (
+        worst_overlap[0] * 100.0, worst_overlap[1], worst_overlap[2], worst_overlap[3]))
+passed('reassembly loose-part AABB overlap stays below 2%% (worst %.2f%%)' % (worst_overlap[0] * 100.0))
+
 print('SUMMARY  Blender candidate verification passed')

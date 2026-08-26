@@ -267,6 +267,12 @@ check('keyboard focus visibility and Flash Forward palette', focusStyles.disclos
 const candidateJs = await readFile(join(ROOT, 'js', 'candidate-preview.js'), 'utf8');
 const pagehideCleanupSafe = /addEventListener\('pagehide', \(event\) => \{\s*if \(event\.persisted\) return;[\s\S]*?renderer\.dispose\(\)/.test(candidateJs);
 check('pagehide cleanup preserves bfcache', pagehideCleanupSafe);
+const chromeScrollOwnership = /history\.scrollRestoration = 'manual'/.test(candidateJs)
+  && /function restoreRequestedProgress\(p\)/.test(candidateJs);
+const adaptiveResolution = /ADAPTIVE_DPR_STEPS/.test(candidateJs)
+  && /SLOW_FRAME_SCORE_LIMIT/.test(candidateJs)
+  && /renderQualityScale/.test(candidateJs);
+check('Chrome scroll ownership and adaptive render resolution', chromeScrollOwnership && adaptiveResolution);
 const metadata = await cdp.evaluate(`({
   title: document.title,
   description: document.querySelector('meta[name="description"]')?.getAttribute('content') || '',
@@ -340,6 +346,22 @@ const returnedToSeats = reassembledParts.every((part) => {
   return a && b && Math.hypot(a.x - b.x, a.y - b.y, a.z - b.z) < 0.002;
 });
 check('reassembled parts return to seats', returnedToSeats, JSON.stringify({ closed: closed?.partTransforms, reassembled: reassembled?.partTransforms }));
+
+await cdp.send('Page.navigate', { url: `http://127.0.0.1:${PORT}/candidate-preview.html?p=0.82` });
+await new Promise((resolve) => setTimeout(resolve, 1800));
+const requestedMidPose = await cdp.evaluate(`(() => {
+  const max = Math.max(1, document.documentElement.scrollHeight - innerHeight);
+  return {
+    restoration: history.scrollRestoration,
+    ratio: scrollY / max,
+    range: Number(document.getElementById('cpv-range').value),
+    status: document.getElementById('cpv-status').textContent,
+  };
+})()`);
+check('mid-pose URL owns restored scroll position', requestedMidPose.restoration === 'manual'
+  && Math.abs(requestedMidPose.ratio - 0.82) < 0.01
+  && Math.abs(requestedMidPose.range - 0.82) < 0.01
+  && /Exploded/.test(requestedMidPose.status), JSON.stringify(requestedMidPose));
 
 await cdp.evaluate('window.__ffCandidatePreview.setProgress(0.67); undefined');
 await new Promise((resolve) => setTimeout(resolve, 450));

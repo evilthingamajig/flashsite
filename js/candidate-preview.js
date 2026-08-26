@@ -1,8 +1,9 @@
 import * as THREE from 'three';
 import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
 
-const GLB_URL = 'assets/3d/flashlight-assembly-blender-candidate.glb?v=candidate-11';
+const GLB_URL = 'assets/3d/flashlight-assembly-blender-candidate.glb?v=candidate-13';
 const CLIP_PATTERN = /^ScrollSequence/;
+if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
 // A full browser window can contain several times as many pixels as the
 // embedded review pane. Bound both device-pixel ratio and total framebuffer
 // area so scrubbing remains responsive on large/high-DPI displays.
@@ -12,6 +13,9 @@ const MAX_RENDER_PIXELS = 1_500_000;
 const SCRUB_IDLE_MS = 140;
 const SCROLL_DAMPING = 18;
 const SCROLL_SNAP_EPSILON = 0.00035;
+const ADAPTIVE_DPR_STEPS = [1, 0.85, 0.7];
+const SLOW_FRAME_MS = 22;
+const SLOW_FRAME_SCORE_LIMIT = 4;
 const FOV = 32;
 const HEADER_SAFE_SHIFT = 0.1;
 const SHADOW_CASTERS = new Set([
@@ -73,6 +77,8 @@ let scrollAnimating = false;
 let scrubQuality = false;
 let scrubIdleTimer = 0;
 let hasAppliedProgress = false;
+let renderQualityIndex = 0;
+let slowFrameScore = 0;
 const calloutSpecs = [
   { part: 'enclosure', name: 'Case', cost: 'Cost: TBD', side: 'left', row: 0 },
   { part: 'solar_panel_placeholder', name: 'Solar panel', cost: 'Cost: TBD', side: 'left', row: 1 },
@@ -122,7 +128,16 @@ function requestRender() {
 function renderPixelRatio(w, h) {
   const deviceDpr = Math.min(window.devicePixelRatio || 1, DPR_CAP);
   const pixelBudgetDpr = Math.sqrt(MAX_RENDER_PIXELS / Math.max(1, w * h));
-  return Math.max(MIN_RENDER_DPR, Math.min(deviceDpr, pixelBudgetDpr));
+  const baseDpr = Math.max(MIN_RENDER_DPR, Math.min(deviceDpr, pixelBudgetDpr));
+  return Math.max(0.55, baseDpr * ADAPTIVE_DPR_STEPS[renderQualityIndex]);
+}
+
+function applyRenderResolution() {
+  if (!stage || !renderer || failed) return;
+  const w = stage.clientWidth || 1;
+  const h = stage.clientHeight || 1;
+  renderer.setPixelRatio(renderPixelRatio(w, h));
+  renderer.setSize(w, h, false);
 }
 
 function setScrubQuality() {
@@ -153,8 +168,18 @@ function tick(now) {
   let needsRender = dirty;
   dirty = false;
   if (scrollAnimating) {
-    const dt = scrollFrameTime ? Math.min(0.05, (now - scrollFrameTime) / 1000) : 1 / 60;
+    const elapsedMs = scrollFrameTime ? now - scrollFrameTime : 1000 / 60;
+    const dt = Math.min(0.05, elapsedMs / 1000);
     scrollFrameTime = now;
+    slowFrameScore = elapsedMs > SLOW_FRAME_MS
+      ? slowFrameScore + 1
+      : Math.max(0, slowFrameScore - 0.35);
+    if (slowFrameScore >= SLOW_FRAME_SCORE_LIMIT && renderQualityIndex < ADAPTIVE_DPR_STEPS.length - 1) {
+      renderQualityIndex += 1;
+      slowFrameScore = 0;
+      applyRenderResolution();
+      needsRender = true;
+    }
     let next = THREE.MathUtils.damp(progress, scrollTarget, SCROLL_DAMPING, dt);
     if (Math.abs(next - scrollTarget) <= SCROLL_SNAP_EPSILON) {
       next = scrollTarget;
@@ -437,6 +462,22 @@ function requestedReviewProgress() {
   return Number.isFinite(num) ? clamp01(num) : null;
 }
 
+function restoreRequestedProgress(p) {
+  scrollAnimating = false;
+  scrollFrameTime = 0;
+  scrollTarget = p;
+  applyProgress(p);
+  scrollToProgress(p);
+  // Chrome may apply its saved scroll position after scripts and after the
+  // final layout pass. Reassert the explicit review URL once on the next
+  // frame so `?p=` wins without fighting later user scrolling.
+  requestAnimationFrame(() => {
+    scrollTarget = p;
+    scrollToProgress(p);
+    applyProgress(p);
+  });
+}
+
 function poseLinkFor(progressValue) {
   const url = new URL(window.location.href);
   url.searchParams.set('p', clamp01(progressValue).toFixed(3));
@@ -462,8 +503,7 @@ function measureStage() {
   if (!stage || !renderer || !camera || failed) return;
   const w = stage.clientWidth || 1;
   const h = stage.clientHeight || 1;
-  renderer.setPixelRatio(renderPixelRatio(w, h));
-  renderer.setSize(w, h, false);
+  applyRenderResolution();
   camera.aspect = w / h;
   camera.updateProjectionMatrix();
   if (closedFrame && explodedFrame) {
@@ -612,8 +652,7 @@ if (renderer && !failed) {
     if (requested === null) {
       computeProgressFromScroll();
     } else {
-      applyProgress(requested);
-      scrollToProgress(requested);
+      restoreRequestedProgress(requested);
     }
   }, (evt) => {
     if (evt.total > 0) {
@@ -630,6 +669,11 @@ if (renderer && !failed) {
   window.addEventListener('scroll', targetProgressFromScroll, { passive: true });
 
   window.addEventListener('resize', measureStage);
+
+  window.addEventListener('pageshow', () => {
+    const requested = requestedReviewProgress();
+    if (requested !== null) restoreRequestedProgress(requested);
+  }, { once: true });
 
   // Harden against GPU/WebGL context loss: prevent the browser default, stop
   // rendering, and surface the existing fallback without a reload loop. The
@@ -732,6 +776,7 @@ window.__ffCandidatePreview = {
         z: Number(camera.position.z.toFixed(4)),
       } : null,
       renderPixelRatio: renderer ? Number(renderer.getPixelRatio().toFixed(3)) : null,
+      renderQualityScale: ADAPTIVE_DPR_STEPS[renderQualityIndex],
       renderSize: renderer ? {
         width: renderer.domElement.width,
         height: renderer.domElement.height,

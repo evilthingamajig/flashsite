@@ -163,7 +163,18 @@
   "timeline": {
     "closed": 0.0,
     "explodedReview": 0.67,
-    "reassembled": 1.0
+    "reassembled": 1.0,
+    "explosionOrder": [
+      "solar_panel_placeholder",
+      "internals"
+    ],
+    "reassemblyOrder": [
+      "charge_module",
+      "battery",
+      "led_pair",
+      "solar_panel_placeholder"
+    ],
+    "collisionStrategy": "fixed inspection lanes plus above-seat insertion waypoints"
   },
   "fallbackPreserved": "assets/3d/flashlight-assembly.glb",
   "validation": {
