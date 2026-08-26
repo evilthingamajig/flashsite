@@ -38,8 +38,10 @@ No external network assets.
 
 - Full-screen white stage in the Flash Forward visual language
   (Lausanne type, dark black-green text, green accent, hairline borders), with a compact accessible
-  parts list, two collapsible media-library reference panels (solar and
-  flashlight-internals), a bottom scrub
+  parts list, two collapsible media-library reference panels (the supplied
+   solar reference JPG at `assets/3d/references/solarpanel.jpg` — a flat image
+   only, not a solar-panel CAD model — and the flashlight-internals reference), a
+   bottom scrub
   progress indicator, direct timeline/reset controls, restrained helper copy,
   and a live loading/status pill.
 - The parts list starts collapsed on all viewports so part descriptions are not
@@ -114,6 +116,10 @@ No external network assets.
   render for the retained review frame.
 - `assets/3d/flashlight-assembly-blender-candidate.glb`
 - `assets/3d/blender-candidate-manifest.json`
+- `assets/3d/references/solarpanel.jpg` — supplied solar reference image
+  (flat JPG only; no solar-panel CAD/model is supplied or implied)
+- `assets/3d/references/flashlight-internals-charging-board.png` —
+  flashlight-internals reference shown in the second disclosure panel
 - `review/blender-candidate-frame-120.png` — retained Blender review frame at
   the authored reassembly boundary (frame 120 of 120), used for visual QA of
   the closed-pose seating and camera-settle three-quarter framing.
