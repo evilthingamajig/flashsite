@@ -56,8 +56,9 @@ const closedAnnotations = await cdp.evaluate(`({
   leadersHidden: document.getElementById('cpv-leaders').style.display === 'none',
   activeAria: [...document.querySelectorAll('.cpv-callout')].filter((el) => el.getAttribute('aria-hidden') === 'false').length,
   label: document.getElementById('cpv-callouts').getAttribute('aria-label'),
+  activeParts: document.querySelectorAll('#cpv-part-list li.is-active').length,
 })`);
-check('closed annotations hidden', closedAnnotations.calloutsHidden && closedAnnotations.leadersHidden && closedAnnotations.activeAria === 0 && closedAnnotations.label === 'Current candidate part annotation', JSON.stringify(closedAnnotations));
+check('closed annotations hidden', closedAnnotations.calloutsHidden && closedAnnotations.leadersHidden && closedAnnotations.activeAria === 0 && closedAnnotations.label === 'Current candidate part annotation' && closedAnnotations.activeParts === 0, JSON.stringify(closedAnnotations));
 const closedParts = closed?.partTransforms || {};
 const leftLed = closedParts.led_left;
 const rightLed = closedParts.led_right;
@@ -92,9 +93,10 @@ const editorialSamples = [];
 for (const sample of [0.2, 0.32, 0.44, 0.56, 0.68, 0.8]) {
   await cdp.evaluate(`window.__ffCandidatePreview.setProgress(${sample}); undefined`);
   await new Promise((resolve) => setTimeout(resolve, 55));
-  editorialSamples.push(await cdp.evaluate(`({p:${sample}, active:[...document.querySelectorAll('.cpv-callout')].filter((el) => getComputedStyle(el).display !== 'none').length, lines:[...document.querySelectorAll('#cpv-leaders line')].filter((el) => getComputedStyle(el).opacity !== '0').length})`));
+  editorialSamples.push(await cdp.evaluate(`({p:${sample}, active:[...document.querySelectorAll('.cpv-callout')].filter((el) => getComputedStyle(el).display !== 'none').length, lines:[...document.querySelectorAll('#cpv-leaders line')].filter((el) => getComputedStyle(el).opacity !== '0').length, partRows:[...document.querySelectorAll('#cpv-part-list li.is-active')].map((el) => el.dataset.cpvPart), partAria:[...document.querySelectorAll('#cpv-part-list [aria-current="step"]')].map((el) => el.dataset.cpvPart)})`));
 }
-check('editorial callouts sequence', editorialSamples.every((sample) => sample.active === 1 && sample.lines === 1), JSON.stringify(editorialSamples));
+const expectedPartRows = [['enclosure'], ['solar_panel_placeholder'], ['battery'], ['charge_module'], ['led_pair', 'led_pair'], ['switch']];
+check('editorial callouts sequence', editorialSamples.every((sample, index) => sample.active === 1 && sample.lines === 1 && JSON.stringify(sample.partRows) === JSON.stringify(expectedPartRows[index]) && JSON.stringify(sample.partAria) === JSON.stringify(expectedPartRows[index])), JSON.stringify(editorialSamples));
 for (const part of ['battery', 'charge_module']) {
   const a = closed?.partTransforms?.[part];
   const b = exploded?.partTransforms?.[part];
@@ -136,8 +138,8 @@ const deepLink = await info();
 const deepLinkQuery = await cdp.evaluate('window.location.search');
 await cdp.evaluate('window.__ffCandidatePreview.setProgress(1); undefined');
 await new Promise((resolve) => setTimeout(resolve, 120));
-const deepLinkStatus = await cdp.evaluate("({status: document.getElementById('cpv-status').textContent, range: Number(document.getElementById('cpv-range').value), calloutsHidden: document.getElementById('cpv-callouts').style.display === 'none', leadersHidden: document.getElementById('cpv-leaders').style.display === 'none'})");
-check('reassembled deep link', deepLinkQuery.includes('p=1') && deepLinkStatus.range >= 0.999 && /Reassembled/.test(deepLinkStatus.status) && deepLinkStatus.calloutsHidden && deepLinkStatus.leadersHidden, JSON.stringify({ query: deepLinkQuery, ...deepLinkStatus }));
+const deepLinkStatus = await cdp.evaluate("({status: document.getElementById('cpv-status').textContent, range: Number(document.getElementById('cpv-range').value), calloutsHidden: document.getElementById('cpv-callouts').style.display === 'none', leadersHidden: document.getElementById('cpv-leaders').style.display === 'none', activeParts: document.querySelectorAll('#cpv-part-list li.is-active').length})");
+check('reassembled deep link', deepLinkQuery.includes('p=1') && deepLinkStatus.range >= 0.999 && /Reassembled/.test(deepLinkStatus.status) && deepLinkStatus.calloutsHidden && deepLinkStatus.leadersHidden && deepLinkStatus.activeParts === 0, JSON.stringify({ query: deepLinkQuery, ...deepLinkStatus }));
 const reassembled = await info();
 const finalCamera = reassembled?.cameraPosition;
 const finalCameraDistinct = closedCamera && finalCamera

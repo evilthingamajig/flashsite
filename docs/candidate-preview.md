@@ -53,6 +53,10 @@ No external network assets.
   dotted SVG leader and the provisional second line `Cost TBD` until
   authoritative pricing is supplied. Labels and leaders stay hidden in the
   closed and reassembled poses so the product view remains uncluttered.
+- While a callout is active, its matching parts-list row(s) get a subtle green
+  accent and `aria-current="step"`; both LED rows highlight together for
+  `led_pair`. Highlighting clears whenever no callout is active (closed,
+  reassembled, or outside the annotation band). No new elements are added.
 
 ## Performance and fallbacks
 
