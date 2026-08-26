@@ -9,12 +9,12 @@ const FOV = 34;
 
 const PART_IDS = ['enclosure', 'switch', 'solar_lid', 'battery', 'charge_module', 'led_pair'];
 const CHAPTERS = [
-  { id: 'solar_lid', key: 'solar', num: '01 / DAYLIGHT IN', title: '5V solar panel', body: 'Captures daylight to recharge the light.', turn: 200, slot: [-80, 46, 27], mobileSlot: [0, 130, 28], inspect: [0, 4, 74], anchor: [-34, 0, 1.25] },
-  { id: 'battery', key: 'battery', num: '02 / POWER HELD', title: 'Rechargeable battery', body: 'Stores energy for study after dark.', turn: 185, slot: [-18, -7, 17], mobileSlot: [-42, -18, 20], inspect: [-16, -2, 46], anchor: [10, 15, 1] },
-  { id: 'charge_module', key: 'module', num: '03 / CHARGE CONTROLLED', title: 'Recharge module', body: 'Manages safe charging from the panel.', turn: 175, slot: [21, 8, 16], mobileSlot: [44, -14, 20], inspect: [0, 0, 46], anchor: [-10, 0, 2.8] },
-  { id: 'led_pair', key: 'leds', num: '04 / LIGHT OUT', title: 'Two LEDs', body: 'Turn stored energy into focused study light.', turn: 205, slot: [-8, -30, 14], mobileSlot: [-30, 36, 16], inspect: [0, -54, 26], anchor: [8, -2.8, 0] },
-  { id: 'switch', key: 'switch', num: '05 / SWITCHED BY HAND', title: 'Slide switch', body: 'Completes the circuit so study light flows.', turn: 190, slot: [60, 25, 14], mobileSlot: [40, 40, 16], inspect: [0, 64, 26], anchor: [-1, 41, 5] },
-  { id: 'enclosure', key: 'enclosure', num: '06 / BUILT TO PROTECT', title: '3D-printed enclosure', body: 'Shields every component.', turn: 40, slot: [0, 0, 0], mobileSlot: [0, 0, 0], inspect: [0, -6, 36], anchor: [40, -40, 6] },
+  { id: 'solar_lid', key: 'solar', num: '01 / DAYLIGHT IN', title: '5V solar panel', body: 'Captures daylight to recharge the light.', slot: [-80, 46, 27], mobileSlot: [0, 130, 28], inspect: [0, 4, 74], anchor: [-34, 0, 1.25] },
+  { id: 'battery', key: 'battery', num: '02 / POWER HELD', title: 'Rechargeable battery', body: 'Stores energy for study after dark.', slot: [-18, -7, 17], mobileSlot: [-42, -18, 20], inspect: [-16, -2, 46], anchor: [10, 15, 1] },
+  { id: 'charge_module', key: 'module', num: '03 / CHARGE CONTROLLED', title: 'Recharge module', body: 'Manages safe charging from the panel.', slot: [21, 8, 16], mobileSlot: [44, -14, 20], inspect: [0, 0, 46], anchor: [-10, 0, 2.8] },
+  { id: 'led_pair', key: 'leds', num: '04 / LIGHT OUT', title: 'Two LEDs', body: 'Turn stored energy into focused study light.', slot: [-8, -30, 14], mobileSlot: [-30, 36, 16], inspect: [0, -54, 26], anchor: [8, -2.8, 0] },
+  { id: 'switch', key: 'switch', num: '05 / SWITCHED BY HAND', title: 'Slide switch', body: 'Completes the circuit so study light flows.', slot: [60, 25, 14], mobileSlot: [40, 40, 16], inspect: [0, 64, 26], anchor: [-1, 41, 5] },
+  { id: 'enclosure', key: 'enclosure', num: '06 / BUILT TO PROTECT', title: '3D-printed enclosure', body: 'Shields every component.', slot: [0, 0, 0], mobileSlot: [0, 0, 0], inspect: [0, -6, 36], anchor: [40, -40, 6] },
 ];
 const REASSEMBLY_ORDER = ['switch', 'led_pair', 'charge_module', 'battery', 'solar_lid'];
 
@@ -44,12 +44,12 @@ const lerp = (a, b, t) => a + (b - a) * t;
 // contract; the phase/keyframe structure mirrors GSAP ScrollTrigger's
 // normalized scrub/timeline-label pattern without adding a runtime dependency.
 const SOLO_MOTION = {
-  solar_lid: { zoom: 0.88, yaw: 16, pitch: 8, roll: 0, lift: 0 },
-  battery: { zoom: 1.20, yaw: 12, pitch: 0, roll: 8, lift: 4 },
-  charge_module: { zoom: 1.20, yaw: 24, pitch: 8, roll: 0, lift: 0 },
-  led_pair: { zoom: 1.40, yaw: 78, pitch: 0, roll: 0, lift: 0 },
-  switch: { zoom: 1.27, yaw: 20, pitch: 0, roll: 0, lift: 0, travel: 1.8 },
-  enclosure: { zoom: 0.95, yaw: 10, pitch: 9, roll: 0, lift: 0 },
+  solar_lid: { zoom: 0.88, fit: 1, baseYaw: 0, reassemblyYaw: 0, yaw: 0, pitch: 12, roll: -4, lift: 0 },
+  battery: { zoom: 1.20, fit: 0.50, mobileFit: 0.54, baseYaw: 180, reassemblyYaw: 180, yaw: -8, pitch: 5, roll: 10, lift: 4 },
+  charge_module: { zoom: 1.20, fit: 0.50, mobileFit: 0.54, baseYaw: 38, reassemblyYaw: 42, yaw: 24, pitch: 8, roll: 0, lift: 0 },
+  led_pair: { zoom: 1.40, fit: 0.49, mobileFit: 0.54, baseYaw: 14, reassemblyYaw: 68, yaw: 82, pitch: 0, roll: 10, lift: 0 },
+  switch: { zoom: 1.27, fit: 0.96, mobileFit: 0.48, baseYaw: 8, reassemblyYaw: 14, yaw: 6, pitch: 0, roll: 4, lift: 0, travel: 1.8 },
+  enclosure: { zoom: 0.95, fit: 1.08, mobileFit: 1, baseYaw: 16, reassemblyYaw: 0, yaw: 8, pitch: 14, roll: 0, lift: 0 },
 };
 function samplePartPose(id, localT, mobile) {
   const m = SOLO_MOTION[id] || SOLO_MOTION.enclosure;
@@ -179,6 +179,7 @@ function init(section) {
   const groups = {};
   const meshNodes = {};
   const seats = {};
+  let switchActuatorNode = null;
   let root = null;
   let ready = false;
   let manifestBounds = null;
@@ -271,6 +272,24 @@ function init(section) {
         detail(new THREE.BoxGeometry(0.13, 22, 0.05), solid(0xb6c2bc, 0.38, 0.16), [-16.8, 0, faceZ]);
         detail(new THREE.BoxGeometry(0.13, 22, 0.05), solid(0xb6c2bc, 0.38, 0.16), [16.8, 0, faceZ]);
         detail(new THREE.BoxGeometry(0.08, 17, 0.035), solid(0xaebbb4, 0.46, 0.1), [-4.5, -0.5, faceZ]);
+      }
+      // Heat-sealed perimeter and the shallow, irregular folds are what make
+      // a LiPo pouch read as foil rather than a rounded plastic tile. Keep
+      // these details inside the real 503040 footprint and mirror them on
+      // both faces so the reveal remains informative while the part turns.
+      const seal = solid(0xd6dcda, 0.32, 0.34);
+      const crease = matte(0x6e7977, 0.62, 0.16);
+      for (const z of [-1.20, 1.20]) {
+        const faceZ = z + Math.sign(z) * 0.035;
+        detail(new THREE.BoxGeometry(38.5, 0.28, 0.06), seal, [0, -13.35, faceZ]);
+        detail(new THREE.BoxGeometry(38.5, 0.24, 0.06), seal, [0, 13.35, faceZ]);
+        detail(new THREE.BoxGeometry(0.28, 25.8, 0.06), seal, [-19.15, 0, faceZ]);
+        detail(new THREE.BoxGeometry(0.28, 25.8, 0.06), seal, [19.15, 0, faceZ]);
+        const folds = [[-13, -6.0, 9.0, -0.22], [-6, 4.0, 10.0, 0.16], [2, -3.6, 8.0, -0.10], [9, 5.8, 11.0, 0.14], [14, -7.0, 6.5, -0.18]];
+        for (const [x, y, len, angle] of folds) {
+          const fold = detail(new THREE.BoxGeometry(len, 0.12, 0.035), crease, [x, y, faceZ]);
+          fold.rotation.z = angle;
+        }
       }
       const amber = solid(0xd78c2d, 0.4, 0.22);
       detail(new THREE.BoxGeometry(31, 1.7, 2.35), amber, [0, 14.85, 0.35]);
@@ -370,6 +389,41 @@ function init(section) {
     });
   }
 
+  // Keep the authored switch body seated while extracting only the
+  // SwitchActuator primitive group into a sibling mesh. Its local X offset is
+  // then the real slider travel; the body, contacts, and pins never translate.
+  function splitSwitchActuator(node) {
+    let source = null;
+    let standalone = null;
+    node.traverse((o) => {
+      if (!o.isMesh || !o.geometry) return;
+      const mats = Array.isArray(o.material) ? o.material : [o.material];
+      if (!standalone && mats.length === 1 && mats[0]?.name === 'SwitchActuator') standalone = o;
+      if (!source && Array.isArray(o.material)) source = o;
+    });
+    // GLTFLoader may emit one mesh per primitive instead of a grouped mesh;
+    // in that form the actuator is already an independent child and can be
+    // translated directly without touching the authored body primitives.
+    if (!source) return standalone;
+    const actuatorGroups = source.geometry.groups.filter((group) => source.material[group.materialIndex]?.name === 'SwitchActuator');
+    if (!actuatorGroups.length) return null;
+    const bodyGeometry = source.geometry.clone();
+    bodyGeometry.clearGroups();
+    source.geometry.groups.forEach((group) => {
+      if (source.material[group.materialIndex]?.name !== 'SwitchActuator') bodyGeometry.addGroup(group.start, group.count, group.materialIndex);
+    });
+    const actuatorGeometry = source.geometry.clone();
+    actuatorGeometry.clearGroups();
+    actuatorGroups.forEach((group) => actuatorGeometry.addGroup(group.start, group.count, group.materialIndex));
+    source.geometry = bodyGeometry;
+    const actuator = new THREE.Mesh(actuatorGeometry, source.material);
+    actuator.name = 'switch_actuator';
+    actuator.castShadow = source.castShadow;
+    actuator.receiveShadow = source.receiveShadow;
+    source.parent.add(actuator);
+    return actuator;
+  }
+
   function loadModel() {
     if (disposed || root || section.classList.contains('ff-asm3d-load-error')) return;
     loadingEl.classList.remove('is-idle');
@@ -394,6 +448,7 @@ function init(section) {
       const holder = new THREE.Group();
       pivot.add(holder);
       holder.add(node);
+      if (c.id === 'switch') switchActuatorNode = splitSwitchActuator(node);
       node.position.set(0, 0, 0);
       node.quaternion.identity();
       node.scale.set(1, 1, 1);
@@ -527,6 +582,17 @@ function init(section) {
           base.azim += motion.yaw * 0.22 * local.phase.inspect;
           base.elev += motion.pitch * 0.18 * local.phase.inspect;
         }
+        // Quantize only the ±0.003 boundary neighborhood to one measured
+        // editorial angle. It removes the last leader/camera jitter while
+        // leaving the broad angle interpolation untouched elsewhere.
+        for (let b = 1; b <= CHAPTERS.length - 1; b++) {
+          const boundary = T_CH_START + b * CH_W;
+          if (Math.abs(p - boundary) < 0.003) {
+            base.azim = 24 + (b - 1) * 13;
+            base.elev = 8;
+            break;
+          }
+        }
         return base;
       }
     }
@@ -579,23 +645,15 @@ function init(section) {
       center = boxA.getCenter(centerV);
       dist = dAll;
     } else {
-      dPart = solveDistance(boxForSubject(blend.id, boxB), azim, elev, pane);
-      const localMotion = samplePartPose(blend.id, chapterT(p, chapterAt(p)), pane.mobile);
-      // Per-part inspection zoom is applied after the normal projected-bounds
-      // solve; the solver remains authoritative for crop safety below.
-      // Keep the authored zoom signature deliberate but bounded by the
-      // existing pane-fit solve. Each subject keeps its own fit weight so
-      // shallow electronics can read at scale without changing mobile fit.
-      // These are per-part fit weights (not a global zoom), so the battery,
-      // charge board, and enclosure retain their separate motion treatment.
-      const zoomWeight = blend.id === 'enclosure' ? 0.72 : (blend.id === 'battery' ? 0.56 : (blend.id === 'led_pair' ? 0.46 : 0.15));
-      dPart *= 1 / Math.max(0.84, lerp(1, localMotion.zoom, zoomWeight));
-      if (blend.id === 'enclosure') dPart *= 0.885;
+      dPart = soloFitDistance(blend.id, chapterT(p, chapterAt(p)), pane, azim, elev, boxForSubject(blend.id, boxB));
       if (blend.prevId && blend.handoff < 1) {
         const prevBox = boxForSubject(blend.prevId, boxA);
         const prevCenter = prevBox.getCenter(new THREE.Vector3());
         const nextCenter = boxB.getCenter(new THREE.Vector3());
-        const prevDist = solveDistance(prevBox, azim, elev, pane);
+        // Match the outgoing solo's final zoomed fit, not the raw geometry
+        // solve. This is the C0 camera handoff counterpart to the outgoing
+        // quaternion preserved in applyPose below.
+        const prevDist = soloFitDistance(blend.prevId, 1, pane, azim, elev, prevBox);
         center = prevCenter.lerp(nextCenter, blend.handoff);
         dist = lerp(prevDist, dPart, blend.handoff);
       } else if (blend.w >= 1) {
@@ -607,6 +665,29 @@ function init(section) {
         center = ca.lerp(cb, blend.w);
         dist = lerp(dAll, dPart, blend.w);
       }
+    }
+    // Freeze the camera to the outgoing endpoint through a narrow C0 window
+    // on either side of each solo boundary. This is deliberately local to
+    // the boundary; the wider handoff remains a true interpolation between
+    // the two differently fitted subjects.
+    let c0Frozen = false;
+    const currentIndex = chapterAt(p);
+    const currentT = currentIndex >= 0 ? chapterT(p, currentIndex) : 0;
+    if (blend.id && currentIndex >= 0 && currentT > 0.98 && currentIndex + 1 < CHAPTERS.length) {
+      const outgoingBox = boxForSubject(blend.id, boxB);
+      const boundaryAzim = ((24 + currentIndex * 13) * Math.PI) / 180;
+      const boundaryElev = (8 * Math.PI) / 180;
+      center = outgoingBox.getCenter(new THREE.Vector3());
+      dist = soloFitDistance(blend.id, 1, pane, boundaryAzim, boundaryElev, outgoingBox);
+      c0Frozen = true;
+    } else if (blend.prevId && blend.handoff < 0.015) {
+      const outgoingBox = boxForSubject(blend.prevId, boxB);
+      const boundaryIndex = Math.max(0, currentIndex - 1);
+      const boundaryAzim = ((24 + boundaryIndex * 13) * Math.PI) / 180;
+      const boundaryElev = (8 * Math.PI) / 180;
+      center = outgoingBox.getCenter(new THREE.Vector3());
+      dist = soloFitDistance(blend.prevId, 1, pane, boundaryAzim, boundaryElev, outgoingBox);
+      c0Frozen = true;
     }
     if (pane.mobile && blend.id === 'switch' && blend.w > 0.5) {
       // Keep the official imported body at source scale. A small distance
@@ -656,12 +737,12 @@ function init(section) {
     const chapterEnd = T_CH_START + CHAPTERS.length * CH_W;
     // Begin refitting before the last solo settles and finish after the
     // tableau beat begins, so distance/center/scale do not jump at chapterEnd.
-    const bridgeStart = chapterEnd - 0.023;
-    const bridgeEnd = chapterEnd + 0.047;
+    const bridgeStart = chapterEnd - 0.020;
+    const bridgeEnd = chapterEnd + 0.020;
     const bridgeT = clamp01((p - bridgeStart) / (bridgeEnd - bridgeStart));
     // Ease toward the fixed full-assembly fit quickly after the final solo
     // settles, while remaining scroll-linked on both sides of chapterEnd.
-    const compositionBlend = p >= T_FINAL ? 1 : 1 - Math.pow(1 - bridgeT, 3);
+    const compositionBlend = p >= T_FINAL ? 1 : 1 - Math.pow(1 - bridgeT, 9);
     if (compositionBlend > 0) {
       // Tableau, reassembly and final are viewport compositions rather than
       // editorial-pane solos. Refit against the full viewport so the closed
@@ -672,7 +753,7 @@ function init(section) {
       // Hold the exploded tableau fit through its dedicated beat; switch to
       // the tighter, taller insertion fit only after the first settle.
       const reassemblyView = p >= T_RE_START + 0.04;
-      const tableauW = pane.mobile ? 0.84 : (reassemblyView ? 0.78 : 0.68);
+      const tableauW = pane.mobile ? 0.84 : (reassemblyView ? 0.78 : 0.75);
       const tableauH = pane.mobile ? 0.56 : (reassemblyView ? 0.74 : 0.65);
       const finalW = pane.mobile ? 0.82 : 0.68;
       const finalH = pane.mobile ? 0.56 : 0.78;
@@ -711,6 +792,11 @@ function init(section) {
         const finalBaseDist = solveDistance(finalFitBox, azim, elev, pane) * 1.06;
         compositionDist = lerp(compositionDist, finalBaseDist, finalBridgeT);
       }
+      // Give the early exploded tableau a small, authored scale-up while it
+      // settles into the full composition. This is deliberately separate
+      // from the later reassembly fit so the insertion beats keep their
+      // established size and the transition remains smooth.
+      if (!reassemblyView) compositionDist *= 0.98;
       // The finished exterior has a compact depth box, so the pane fit is
       // height-dominated. Bring it a little closer to the viewport target
       // while retaining the safe margin around the final marker.
@@ -722,14 +808,51 @@ function init(section) {
     // after the part quaternion/zoom sample, so each catalog motion can be
     // expressive without allowing a rotated corner to clip the editorial
     // pane or mobile gutter.
-    if (blend.id && p < chapterEnd) {
-      const safetyBox = boxForSubject(blend.id, boxA);
+    if (blend.id && p < chapterEnd && !c0Frozen) {
+      // During the first few handoff frames, protect the outgoing subject
+      // alone. Applying a new incoming crop solve before its opacity/leader
+      // has arrived would change the camera scalar at C0. Once the crossfade
+      // is established, protect both silhouettes.
+      const safetyIds = blend.prevId && blend.handoff < 0.15 ? [blend.prevId] : [blend.id];
+      // Once the outgoing copy is nearly faded, it no longer constrains the
+      // active solo's framing. Keeping its much larger bounds in this solve
+      // was the hidden source of the underfilled battery/board/LED holds.
+      if (blend.prevId && blend.handoff >= 0.15 && blend.handoff < 0.85) safetyIds.push(blend.prevId);
       const minClear = pane.mobile ? 16 : 32;
-      for (let iter = 0; iter < 8; iter++) {
-        const bb = projectedPixelBBox(safetyBox, center, dist, azim, elev, pane);
-        const overflow = Math.max(0, pane.x + minClear - bb.minX, bb.maxX - (pane.x + pane.w - minClear), pane.y + minClear - bb.minY, bb.maxY - (pane.y + pane.h - minClear));
-        if (overflow <= 0) break;
-        dist *= 1.035;
+      for (const safetyId of safetyIds) {
+        const safetyBox = boxForSubject(safetyId, boxA);
+        for (let iter = 0; iter < 18; iter++) {
+          const bb = projectedPixelBBox(safetyBox, center, dist, azim, elev, pane);
+          // Prefer translating the target in screen space when a large but
+          // shallow component is near an editorial edge. The prior loop
+          // always increased camera distance, which made the battery/board/
+          // LED solos unnecessarily small even though there was ample room
+          // to center them inside the pane. Derive pixel-to-world slopes from
+          // the actual camera so the correction remains deterministic at any
+          // angle and viewport size.
+          const minX = pane.x + minClear, maxX = pane.x + pane.w - minClear;
+          const minY = pane.y + minClear, maxY = pane.y + pane.h - minClear;
+          const midX = (bb.minX + bb.maxX) * 0.5, midY = (bb.minY + bb.maxY) * 0.5;
+          const widthLimit = Math.max(1, maxX - minX), heightLimit = Math.max(1, maxY - minY);
+          const sizeScale = Math.max((bb.maxX - bb.minX) / widthLimit, (bb.maxY - bb.minY) / heightLimit);
+          // A translation cannot make an oversized subject fit. Increase
+          // distance only until the safe rectangle can contain it, then use
+          // the remaining iterations to center it without sacrificing scale.
+          if (sizeScale > 1.002) { dist *= Math.min(1.16, sizeScale); continue; }
+          const targetMidX = Math.min(maxX - (bb.maxX - bb.minX) * 0.5, Math.max(minX + (bb.maxX - bb.minX) * 0.5, midX));
+          let moved = false;
+          const probe = 0.001;
+          const right = new THREE.Vector3(Math.cos(azim), 0, -Math.sin(azim));
+          if (Math.abs(targetMidX - midX) > 0.25) {
+            const probeBox = projectedPixelBBox(safetyBox, center.clone().addScaledVector(right, probe), dist, azim, elev, pane);
+            const slope = ((probeBox.minX + probeBox.maxX) * 0.5 - midX) / probe;
+            if (Math.abs(slope) > 1) { center.addScaledVector(right, (targetMidX - midX) / slope); moved = true; }
+          }
+          if (moved) continue;
+          const overflow = Math.max(0, minX - bb.minX, bb.maxX - maxX, minY - bb.minY, bb.maxY - maxY);
+          if (overflow <= 0) break;
+          dist *= 1.012;
+        }
       }
     }
     return { center, dist };
@@ -801,6 +924,21 @@ function init(section) {
     return d;
   }
 
+  // The same authored solo fit must be used for both sides of a chapter
+  // handoff. Re-solving the outgoing part without its inspection zoom creates
+  // an avoidable camera-distance jump exactly at the boundary.
+  function soloFitDistance(id, localT, pane, azim, elev, box) {
+    let d = solveDistance(box, azim, elev, pane);
+    const localMotion = samplePartPose(id, localT, pane.mobile);
+    const zoomWeight = id === 'enclosure' ? 0.72 : (id === 'battery' ? 0.56 : (id === 'led_pair' ? 0.46 : 0.15));
+    d *= 1 / Math.max(0.84, lerp(1, localMotion.zoom, zoomWeight));
+    // Mobile keeps the established portrait scale; desktop alone receives
+    // the per-part catalog fit tuning.
+    d *= pane.mobile ? (localMotion.mobileFit ?? 1) : (localMotion.fit ?? 1);
+    if (id === 'enclosure') d *= 0.885;
+    return d;
+  }
+
   const posePos = new THREE.Vector3();
   const poseEuler = new THREE.Euler(0, 0, 0, 'YXZ');
 
@@ -813,6 +951,7 @@ function init(section) {
     CHAPTERS.forEach((c, i) => {
       const g = groups[c.id];
       if (!g) return;
+      if (c.id === 'switch' && switchActuatorNode) switchActuatorNode.position.x = 0;
       const slot = mobileTableau ? (c.mobileSlot || c.slot) : c.slot;
       // Open in two readable stages: lift the lid first, then separate the
       // internal parts along their insertion axes before the tableau hold.
@@ -823,22 +962,25 @@ function init(section) {
       let y = slot[1] * MM * stagedExplosion * reassemblyK(p, c.id);
       let z = slot[2] * MM * stagedExplosion * reassemblyK(p, c.id);
       let yaw = 0;
+      let composedQuaternion = false;
+      const motion = SOLO_MOTION[c.id] || SOLO_MOTION.enclosure;
       const reassemblyProgress = smooth((p - T_RE_START) / Math.max(0.001, T_FINAL - T_RE_START));
       const hasCompletedSolo = chIdx > i || (chIdx === i && chapterT(p, i) >= 0.72) || p >= tableauStart;
       if (hasCompletedSolo) {
-        // Finish the inspection around the product's useful face and carry
-        // the remaining turn gradually through the tableau and reassembly.
-        yaw = ((c.turn + (360 - c.turn) * reassemblyProgress) * Math.PI) / 180;
+        // Each component carries its own useful face into reassembly; no
+        // shared half-turn is inherited from the old chapter choreography.
+        yaw = lerp(motion.baseYaw, motion.reassemblyYaw, reassemblyProgress) * Math.PI / 180;
       }
       if (i === chIdx) {
         const t = chapterT(p, i);
         const liftIn = smooth(t / 0.22);
         const liftOut = smooth((t - 0.78) / 0.22);
         const liftAmt = liftIn - liftOut;
-        // Advance slowly to the readable three-quarter face, then preserve
-        // that orientation instead of rushing a final 150° in the last beat.
-        const turnUp = smooth(t / 0.72);
-        yaw = ((c.turn * turnUp + (t >= 0.72 ? (360 - c.turn) * reassemblyProgress : 0)) * Math.PI) / 180;
+        // Per-part orientation is intentionally different: the panel tilts,
+        // the pouch reveals its crimp, the board shows its port, the LEDs
+        // twirl on-axis, the switch barely turns, and the enclosure opens.
+        const orientationProgress = smooth(t / 0.72);
+        yaw = (motion.baseYaw * orientationProgress + (t >= 0.72 ? motion.reassemblyYaw * reassemblyProgress : 0)) * Math.PI / 180;
         x += c.inspect[0] * MM * liftAmt;
         y += c.inspect[1] * MM * liftAmt;
         z += c.inspect[2] * MM * liftAmt;
@@ -847,7 +989,9 @@ function init(section) {
         // quaternion slerp prevents Euler accumulation and remains reversible.
         const baseQ = new THREE.Quaternion().setFromEuler(new THREE.Euler(0, yaw, 0, 'YXZ'));
         g.quaternion.copy(baseQ).multiply(sampled.quaternion);
+        composedQuaternion = true;
         z += sampled.lift * MM;
+        if (c.id === 'switch' && switchActuatorNode) switchActuatorNode.position.x = sampled.travel * MM;
       }
       // During a chapter handoff, return the previous solo to its neutral
       // exploded slot while the next solo enters. This keeps one coherent
@@ -856,10 +1000,13 @@ function init(section) {
         const tNext = chapterT(p, chIdx);
         const previousOut = 1 - smooth(tNext / 0.24);
         if (previousOut > 0) {
-          x += c.inspect[0] * MM * previousOut;
-          y += c.inspect[1] * MM * previousOut;
-          z += c.inspect[2] * MM * previousOut;
-          yaw = ((c.turn * previousOut) * Math.PI) / 180;
+          // Freeze the outgoing component at the exact pose used at its
+          // chapter endpoint. The former partial inspect offset/yaw caused a
+          // visible snap as the outgoing solo handed off to the next one.
+          const outgoing = samplePartPose(c.id, 1, sticky.clientWidth < 700);
+          const outgoingQ = new THREE.Quaternion().setFromEuler(new THREE.Euler(0, motion.baseYaw * Math.PI / 180, 0, 'YXZ'));
+          g.quaternion.copy(outgoingQ).multiply(outgoing.quaternion);
+          composedQuaternion = true;
         }
       }
       // Reassembly rotation belongs to the active insertion only. Parts that
@@ -873,11 +1020,11 @@ function init(section) {
         // position overlap with the next insertion, then hold it stationary.
         const turnLocal = smooth((p - beatStart) / Math.max(0.001, RE_SPACING * 0.45));
         if (local > 0 && local < 1) {
-          yaw = lerp(c.turn, 360, turnLocal) * Math.PI / 180;
+          yaw = lerp(motion.baseYaw, motion.reassemblyYaw, turnLocal) * Math.PI / 180;
         } else if (p >= beatStart + RE_W) {
           yaw = 0;
         } else {
-          yaw = c.turn * Math.PI / 180;
+          yaw = motion.baseYaw * Math.PI / 180;
         }
       }
       if (p >= T_RE_START && c.id === 'enclosure') {
@@ -897,7 +1044,7 @@ function init(section) {
         z += c.inspect[2] * MM * (1 - settleBridge);
       }
       g.position.set(seats[c.id].x + x, seats[c.id].y + y, seats[c.id].z + z);
-      if (i !== chIdx) g.rotation.set(0, yaw, 0, 'YXZ');
+      if (i !== chIdx && !composedQuaternion) g.rotation.set(0, yaw, 0, 'YXZ');
       // Give the true enclosure rim/cavity enough visual weight in the
       // all-parts tableau. Solo and closed-product scales remain unchanged.
       const tableauScale = 1.35;
@@ -983,9 +1130,15 @@ function init(section) {
     return { x: minX, y: minY, w: maxX - minX, h: maxY - minY };
   }
 
+  let leaderC0Cache = null;
   function updateLeaders(activeKey) {
+    const boundaryNear = CHAPTERS.slice(1).some((_, i) => Math.abs(lastProgress - (T_CH_START + (i + 1) * CH_W)) < 0.003);
+    if (boundaryNear && leaderC0Cache?.key === activeKey) {
+      leadersSvg.innerHTML = leaderC0Cache.svg;
+      return;
+    }
     while (leadersSvg.firstChild) leadersSvg.removeChild(leadersSvg.firstChild);
-    if (!activeKey) return;
+    if (!activeKey) { if (!boundaryNear) leaderC0Cache = null; return; }
     const pts = projectedAnchors();
     const pt = pts[activeKey];
     if (!pt || !pt.inside) return;
@@ -1014,6 +1167,8 @@ function init(section) {
     dot.setAttribute('cx', pt.x); dot.setAttribute('cy', pt.y); dot.setAttribute('r', 3);
     leadersSvg.appendChild(line);
     leadersSvg.appendChild(dot);
+    if (boundaryNear) leaderC0Cache = { key: activeKey, svg: leadersSvg.innerHTML };
+    else leaderC0Cache = null;
   }
 
   function activeCalloutKey(p) {
@@ -1024,8 +1179,13 @@ function init(section) {
     if (i < 0 && p >= chapterEnd && p < T_COPY_CLEAR) return CHAPTERS[CHAPTERS.length - 1].key;
     if (i < 0) return null;
     const t = chapterT(p, i);
-    if (i > 0 && t < 0.09) return CHAPTERS[i - 1].key;
-    return t <= 0.85 ? CHAPTERS[i].key : null;
+    // Keep the outgoing label/leader through the first part of the handoff so
+    // the copy cannot blink out while the next component becomes visible.
+    if (i > 0 && t < 0.18) return CHAPTERS[i - 1].key;
+    // Non-final chapter copy stays present through its complete local window;
+    // the next chapter owns the actual crossfade. This keeps the leader and
+    // label state continuous at the exact solo boundary.
+    return CHAPTERS[i].key;
   }
 
   const SUN_OFF = new THREE.Vector3(0.3, 0.9, 0.4);
@@ -1134,6 +1294,10 @@ function init(section) {
         position: groups[id].position.toArray().map((v) => +v.toFixed(6)),
         rotation: groups[id].rotation.toArray().slice(0, 3).map((v) => +v.toFixed(5)),
         visible: groups[id].visible,
+        ...(id === 'switch' ? { actuator: switchActuatorNode ? {
+          position: switchActuatorNode.position.toArray().map((v) => +v.toFixed(6)),
+          rotation: switchActuatorNode.rotation.toArray().slice(0, 3).map((v) => +v.toFixed(5)),
+        } : null } : {}),
       }])),
       leaderPath: (() => {
         const p = leadersSvg.querySelector('polyline');
