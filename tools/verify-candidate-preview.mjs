@@ -60,8 +60,9 @@ const dimensionsMatch = JSON.stringify(sourceDimensions) === JSON.stringify({
   led: [5.58, 6, 36.5],
   switch: [4.1, 7.82, 6],
 });
+const chargeSourceRecorded = motionManifest?.convertedCadSources?.charge_module === 'source-assets/external/user-supplied/tp4056-authoritative-freecad.stl';
 const switchSourceRecorded = motionManifest?.convertedCadSources?.switch === 'source-assets/external/pass9/derived/switch-dip-slide.stl';
-check('FreeCAD source dimensions recorded', dimensionsMatch && switchSourceRecorded, JSON.stringify({ sourceDimensions, switchSource: motionManifest?.convertedCadSources?.switch }));
+check('FreeCAD source dimensions recorded', dimensionsMatch && chargeSourceRecorded && switchSourceRecorded, JSON.stringify({ sourceDimensions, chargeSource: motionManifest?.convertedCadSources?.charge_module, switchSource: motionManifest?.convertedCadSources?.switch }));
 
 await cdp.evaluate('window.__ffCandidatePreview.setProgress(0); undefined');
 await new Promise((resolve) => setTimeout(resolve, 400));

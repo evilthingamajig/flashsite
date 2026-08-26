@@ -51,7 +51,11 @@ are absent on the current candidate build.
   at 29.300 × 17.400 × 4.140 mm, Bateria_LiPo_3_7V_1000mA_503450_v23 at
   53.100 × 46.821 × 6.000 mm, and _5mm_LED at 5.580 × 6.000 × 36.500 mm.
 - TP4056, LiPo, and LED STEP dimensions were validated in FreeCAD before this
-  candidate was created, then tessellated into browser-safe STL meshes.
+  candidate was created, then tessellated into browser-safe STL meshes. The
+  TP4056 candidate now uses `tp4056-authoritative-freecad.stl`, regenerated from
+  the supplied STEP assembly root with FreeCAD's 0.15 mm linear and 0.3 rad
+  angular tessellation settings. After reduction, its exported envelope is
+  restored to the measured 29.3 × 17.4 × 4.14 mm source bounds.
 - The solar panel is a placeholder because its photo was not baked into this
   candidate; its front has a darkened cell surface with a raised pale frame
   (wider bezel bars with metallic finish), brighter bus lines, brighter

@@ -12,7 +12,7 @@ BLENDER_MM = 0.001
 
 CASE = r"C:\Users\romir\Downloads\Revamp Flashlight w addon.stl"
 SWITCH = os.path.join(ROOT, "source-assets", "external", "pass9", "derived", "switch-dip-slide.stl")
-TP4056 = os.path.join(ROOT, "source-assets", "external", "user-supplied", "tp4056-user-supplied.stl")
+TP4056 = os.path.join(ROOT, "source-assets", "external", "user-supplied", "tp4056-authoritative-freecad.stl")
 BATTERY = os.path.join(ROOT, "source-assets", "external", "user-supplied", "battery-user-supplied.stl")
 LED = os.path.join(ROOT, "source-assets", "external", "user-supplied", "led-user-supplied.stl")
 SOLAR_PHOTO = os.path.join(ROOT, "assets", "3d", "references", "solarpanel.jpg")
@@ -253,6 +253,16 @@ def reduce_mesh(ob, ratio=0.35):
         ob.data.update()
     bm.free()
 
+def fit_dimensions(ob, dimensions):
+    """Restore a decimated derived mesh to its measured CAD envelope."""
+    measured = tuple(float(value) for value in ob.dimensions)
+    ob.scale = tuple(target / actual for target, actual in zip(dimensions, measured))
+    bpy.context.view_layer.objects.active = ob
+    ob.select_set(True)
+    bpy.ops.object.transform_apply(location=False, rotation=False, scale=True)
+    ob.select_set(False)
+    ob.data.update()
+
 MOTION_PROFILES = {
     'enclosure': {
         'explode_rotation': (0.0, 0.0, 0.0),
@@ -366,6 +376,7 @@ def main():
     charge = import_stl(TP4056, 'charge_module')
     set_mat(charge, pcb)
     reduce_mesh(charge, 0.03)
+    fit_dimensions(charge, (0.0293, 0.0174, 0.00414))
     charge.location = (0.0, 0.016, -0.002)
     add_charge_details(charge, solder, usb_metal, battery_lead)
     battery = import_stl(BATTERY, 'battery')
@@ -450,7 +461,7 @@ def main():
         'referencePhoto': 'assets/3d/references/solarpanel.jpg',
         'mediaLibraryReferences': ['assets/3d/references/solar-panel-tops.png', 'assets/3d/references/flashlight-units-group.png', 'assets/3d/references/flashlight-internals-charging-board.png'],
         'convertedCadSources': {
-            'charge_module': 'source-assets/external/user-supplied/tp4056-user-supplied.stl',
+            'charge_module': 'source-assets/external/user-supplied/tp4056-authoritative-freecad.stl',
             'battery': 'source-assets/external/user-supplied/battery-user-supplied.stl',
             'led': 'source-assets/external/user-supplied/led-user-supplied.stl',
             'switch': 'source-assets/external/pass9/derived/switch-dip-slide.stl',
