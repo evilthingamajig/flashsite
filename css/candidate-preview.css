@@ -165,5 +165,6 @@ body{
 }
 @media(prefers-reduced-motion:reduce){
   .cpv-progress-fill{transition:none}
+  .cpv-callout{transition:none}
   .cpv-parts,.cpv-fallback{scroll-behavior:auto}
 }
