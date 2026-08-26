@@ -45,8 +45,9 @@ No external network assets.
 - Camera framing interpolates between the closed (p=0) and exploded (p=1)
   bounds with a slow azimuth/elevation drift; everything is a pure function
   of progress.
-- Exploded review (around p=0.67) shows six compact two-line part callouts at once, with dotted
-  SVG leader lines. The provisional second line is `Cost TBD` until
+- During the exploded review, one plain two-line editorial label appears at a
+  time and fades to the next part as the timeline advances. Each label uses a
+  dotted SVG leader and the provisional second line `Cost TBD` until
   authoritative pricing is supplied.
 
 ## Performance and fallbacks
