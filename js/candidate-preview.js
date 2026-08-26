@@ -20,7 +20,12 @@ const leadersEl = document.getElementById('cpv-leaders');
 const calloutsEl = document.getElementById('cpv-callouts');
 const fallbackEl = document.getElementById('cpv-fallback');
 const fallbackMessage = document.getElementById('cpv-fallback-message');
+const partsEl = document.querySelector('.cpv-parts');
 const partListItems = [...document.querySelectorAll('#cpv-part-list [data-cpv-part]')];
+
+// Keep the product visible on narrow screens while preserving the native
+// details disclosure so the full parts list remains one tap away.
+if (partsEl && window.innerWidth < 760) partsEl.open = false;
 
 const poseEl = document.createElement('span');
 poseEl.className = 'cpv-pose-state';
@@ -117,6 +122,20 @@ function frameFor(box) {
   return { center: sphere.center.clone(), dist };
 }
 
+const PORTRAIT_MAX_ASPECT = 0.9;
+const PORTRAIT_DISTANCE_CAP = 1.75;
+
+function portraitDistanceScale() {
+  const aspect = camera ? camera.aspect : 1;
+  if (aspect >= PORTRAIT_MAX_ASPECT) return 1;
+  const halfVertical = THREE.MathUtils.degToRad(FOV) / 2;
+  const halfHorizontal = Math.atan(Math.tan(halfVertical) * aspect);
+  const fit = Math.sin(halfVertical) / Math.sin(halfHorizontal);
+  const gate = clamp01((PORTRAIT_MAX_ASPECT - aspect) / PORTRAIT_MAX_ASPECT);
+  const blend = gate * gate * (3 - 2 * gate);
+  return Math.min(1 + (fit - 1) * blend, PORTRAIT_DISTANCE_CAP);
+}
+
 function updateCamera(p) {
   if (!closedFrame || !explodedFrame) return;
   const explosionEnd = 0.67;
@@ -140,6 +159,7 @@ function updateCamera(p) {
     azim = THREE.MathUtils.lerp(0.5, -0.78, t);
     elev = THREE.MathUtils.lerp(0.4, 0.52, t);
   }
+  dist *= portraitDistanceScale();
   camera.position.set(
     center.x + dist * Math.cos(elev) * Math.sin(azim),
     center.y + dist * Math.sin(elev),
