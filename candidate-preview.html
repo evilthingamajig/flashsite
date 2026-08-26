@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex, nofollow">
+  <meta name="theme-color" content="#101413">
+  <meta name="description" content="Gated local preview of the Blender candidate flashlight assembly GLB. Candidate-only; not linked from production navigation.">
+  <title>Candidate Preview — Flashlight Assembly (Blender candidate)</title>
+  <link rel="icon" type="image/png" href="images/flashforward/flash-favicon.png">
+  <link rel="stylesheet" href="css/candidate-preview.css?v=candidate-1">
+  <script type="importmap">{"imports":{"three":"./js/vendor/three/three.module.js","three/addons/loaders/GLTFLoader.js":"./js/vendor/three/addons/loaders/GLTFLoader.js"}}</script>
+</head>
+<body>
+  <main class="cpv-main" id="cpv-main">
+    <section class="cpv-stage" aria-label="Candidate 3D assembly preview">
+      <canvas class="cpv-canvas" id="cpv-canvas" aria-hidden="true"></canvas>
+
+      <header class="cpv-head">
+        <p class="cpv-eyebrow">Flash Forward · Candidate preview</p>
+        <h1>Blender assembly, scrubbed.</h1>
+        <p class="cpv-sub">Scroll to move every part along its authored ScrollSequence clips.</p>
+      </header>
+
+      <details class="cpv-parts" open>
+        <summary>Parts in this candidate <span class="cpv-count">7</span></summary>
+        <ol class="cpv-part-list" id="cpv-part-list">
+          <li><span class="cpv-part-index">01</span><span class="cpv-part-name">Enclosure</span><span class="cpv-part-note">3D-printed case shell</span></li>
+          <li><span class="cpv-part-index">02</span><span class="cpv-part-name">Solar panel</span><span class="cpv-part-note">placeholder geometry</span></li>
+          <li><span class="cpv-part-index">03</span><span class="cpv-part-name">Battery</span><span class="cpv-part-note">rechargeable LiPo cell</span></li>
+          <li><span class="cpv-part-index">04</span><span class="cpv-part-name">Charge module</span><span class="cpv-part-note">TP4056 USB-C board</span></li>
+          <li><span class="cpv-part-index">05</span><span class="cpv-part-name">LED left</span><span class="cpv-part-note">5 mm study-light LED</span></li>
+          <li><span class="cpv-part-index">06</span><span class="cpv-part-name">LED right</span><span class="cpv-part-note">duplicate pending confirmation</span></li>
+          <li><span class="cpv-part-index">07</span><span class="cpv-part-name">Switch</span><span class="cpv-part-note">slide switch</span></li>
+        </ol>
+        <p class="cpv-parts-footnote">Provisional candidate geometry — gated, candidate-only. Not for production.</p>
+      </details>
+
+      <div class="cpv-progress" role="progressbar" aria-label="Assembly sequence progress" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" id="cpv-progress">
+        <span class="cpv-progress-track" aria-hidden="true"><span class="cpv-progress-fill" id="cpv-progress-fill"></span></span>
+        <span class="cpv-progress-label" id="cpv-progress-label">scrub 000%</span>
+      </div>
+
+      <p class="cpv-status" id="cpv-status" role="status" aria-live="polite">Loading candidate asset…</p>
+
+      <div class="cpv-fallback" id="cpv-fallback" hidden>
+        <p class="cpv-eyebrow">3D preview unavailable</p>
+        <p id="cpv-fallback-message">This preview needs WebGL and the local candidate asset. The parts list stays available beside this notice.</p>
+      </div>
+    </section>
+  </main>
+
+  <noscript>
+    <div class="cpv-noscript">JavaScript is required for the 3D scrub preview. The parts list above still describes the candidate assembly.</div>
+  </noscript>
+
+  <script type="module" src="js/candidate-preview.js?v=candidate-1"></script>
+</body>
+</html>
