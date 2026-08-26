@@ -450,7 +450,10 @@ def main():
     for i, p in enumerate(parts):
         s = Vector(seats[p.name])
         explode = s + Vector(explode_offsets[p.name])
-        inspect = s + Vector(((-1 if i % 2 else 1) * 0.06, (i - 3) * 0.01, 0.055 + i * 0.004))
+        # Keep the switch parked beside the case during the short inspection
+        # beat. The generic inspect spread pulled it back across the battery,
+        # making the annotated switch look absent before reassembly begins.
+        inspect = explode.copy() if p.name == 'switch' else s + Vector(((-1 if i % 2 else 1) * 0.06, (i - 3) * 0.01, 0.055 + i * 0.004))
         add_keyframes(p, s, explode, inspect, 42 + i * 7, MOTION_PROFILES[p.name])
 
     # Defensive cleanup for headless Blender startup datablocks that can

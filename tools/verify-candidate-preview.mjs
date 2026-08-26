@@ -173,6 +173,27 @@ check('callout requirements: two-line plain active, others hidden, dotted leader
   calloutSpec.twoLines && calloutSpec.plainText && calloutSpec.onlyActiveVisible && calloutSpec.leaderDotted,
   JSON.stringify(calloutSpec));
 
+await cdp.evaluate('window.__ffCandidatePreview.setProgress(0.67); undefined');
+await new Promise((resolve) => setTimeout(resolve, 180));
+const explodedFrameCamera = (await info())?.cameraPosition;
+await cdp.evaluate('window.__ffCandidatePreview.setProgress(0.8); undefined');
+await new Promise((resolve) => setTimeout(resolve, 180));
+const switchReview = await cdp.evaluate(`(() => {
+  const active = document.querySelector('.cpv-callout.is-active');
+  const rect = active?.getBoundingClientRect();
+  const leader = [...document.querySelectorAll('#cpv-leaders line')].find((el) => el.style.opacity !== '0');
+  return {
+    switchActive: active?.dataset.part === 'switch',
+    text: active?.textContent.trim() || '',
+    leaderVisible: !!leader,
+    calloutInside: !!rect && rect.left >= 0 && rect.right <= innerWidth && rect.top >= 0 && rect.bottom <= innerHeight,
+  };
+})()`);
+const switchCamera = (await info())?.cameraPosition;
+const explodedFrameDistance = explodedFrameCamera && Math.hypot(explodedFrameCamera.x, explodedFrameCamera.y, explodedFrameCamera.z);
+const switchReviewDistance = switchCamera && Math.hypot(switchCamera.x, switchCamera.y, switchCamera.z);
+check('switch remains visible in late exploded pose', switchReview.switchActive && switchReview.leaderVisible && switchReview.calloutInside && Math.abs(switchReviewDistance - explodedFrameDistance) < 0.002, JSON.stringify({ switchReview, explodedFrameDistance, switchReviewDistance }));
+
 const editorialSamples = [];
 for (const sample of [0.2, 0.32, 0.44, 0.56, 0.68, 0.8]) {
   await cdp.evaluate(`window.__ffCandidatePreview.setProgress(${sample}); undefined`);
@@ -273,7 +294,7 @@ const finalCamera = reassembled?.cameraPosition;
 const finalCameraDistinct = closedCamera && finalCamera
   && Math.hypot(closedCamera.x - finalCamera.x, closedCamera.y - finalCamera.y, closedCamera.z - finalCamera.z) > 0.005;
 check('reassembled three-quarter camera', finalCameraDistinct, JSON.stringify({ closedCamera, finalCamera }));
-await cdp.evaluate('window.__ffCandidatePreview.setProgress(0.84); undefined');
+await cdp.evaluate('window.__ffCandidatePreview.setProgress(1); undefined');
 await new Promise((resolve) => setTimeout(resolve, 120));
 const settledCamera = (await info())?.cameraPosition;
 const cameraHoldDelta = settledCamera && finalCamera
