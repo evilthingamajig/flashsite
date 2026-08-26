@@ -32,6 +32,9 @@ No external network assets.
   parts list, a collapsible supplied solar-reference panel, a bottom scrub
   progress indicator, direct timeline/reset controls, restrained helper copy,
   and a live loading/status pill.
+- The parts list stays open by default on desktop and starts collapsed below
+  760px so the mobile product view remains visible; it remains a native,
+  user-expandable disclosure.
 - The timeline range input and Reset button mirror the scroll position. Reset
   uses an instant seek when `prefers-reduced-motion: reduce` is enabled.
 - The live status pill identifies the current pose as `Closed`, `Scrubbing`,
@@ -50,7 +53,13 @@ No external network assets.
 - Camera framing interpolates between the closed (p=0) and exploded-review
   (p=0.67) bounds with a slow azimuth/elevation drift, then settles into a
   distinct measured three-quarter product angle as the product reassembles at
-  p=1; everything is a pure function of progress.
+  p=1; everything is a pure function of progress, extended with responsive
+  portrait framing: when `camera.aspect < 0.9` the interpolated distance gains
+  a smooth bounded multiplier,
+  `min(1.75, 1 + (sin(FOV/2) / sin(atan(tan(FOV/2)·aspect)) − 1) · smoothstep(clamp01((0.9 − aspect)/0.9)))`,
+  which pulls the camera back so the full product — including both seated LEDs
+  — stays inside the frame at narrow mobile widths, while the multiplier is
+  exactly 1 (desktop framing unchanged) at `aspect ≥ 0.9`.
 - During the exploded review, one plain two-line editorial label appears at a
   time and fades to the next part as the timeline advances. Each label uses a
   dotted SVG leader and the provisional second line `Cost TBD` until
