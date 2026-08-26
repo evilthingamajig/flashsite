@@ -218,7 +218,7 @@ const metadata = await cdp.evaluate(`({
   description: document.querySelector('meta[name="description"]')?.getAttribute('content') || '',
   themeColor: document.querySelector('meta[name="theme-color"]')?.getAttribute('content') || ''
 })`);
-check('Flash Forward metadata', metadata.title === 'Flash Forward — Inside the flashlight' && /Flash Forward/.test(metadata.description) && /assembly study/.test(metadata.description) && metadata.themeColor === '#151b17', JSON.stringify(metadata));
+check('Flash Forward metadata', /Flash Forward — Sponsor a Light/.test(metadata.title) && /Flash Forward Sponsor a Light/.test(metadata.description) && /assembly study/.test(metadata.description) && metadata.themeColor === '#151b17', JSON.stringify(metadata));
 
 await cdp.send('Emulation.setDeviceMetricsOverride', { width: 390, height: 844, deviceScaleFactor: 1, mobile: true });
 await cdp.send('Page.reload');
