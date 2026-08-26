@@ -28,6 +28,9 @@ No external network assets.
   and a live loading/status pill.
 - The timeline range input and Reset button mirror the scroll position. Reset
   uses an instant seek when `prefers-reduced-motion: reduce` is enabled.
+- The live status pill identifies the current pose as `Closed`, `Scrubbing`,
+  or `Exploded`, and the progressbar exposes the same state through
+  `aria-valuetext`.
 - Scrub is deterministic: scroll progress maps to
   `THREE.AnimationMixer.setTime(progress * duration)` on one mixer bound to
   the GLB scene root. Every clip whose name starts with `ScrollSequence`
