@@ -64,7 +64,8 @@ function setStatus(text) {
 
 function poseStateFor(p) {
   if (p <= 0) return 'Closed';
-  if (p >= 1) return 'Exploded';
+  if (p >= 0.9) return 'Reassembled';
+  if (p >= 0.52 && p <= 0.82) return 'Exploded';
   return 'Scrubbing';
 }
 
@@ -116,7 +117,11 @@ function frameFor(box) {
 
 function updateCamera(p) {
   if (!closedFrame || !explodedFrame) return;
-  const t = easeInOutCubic(p);
+  const explosionEnd = 0.67;
+  const cameraProgress = p <= explosionEnd
+    ? p / explosionEnd
+    : 1 - ((p - explosionEnd) / (1 - explosionEnd));
+  const t = easeInOutCubic(clamp01(cameraProgress));
   const center = closedFrame.center.clone().lerp(explodedFrame.center, t);
   const dist = THREE.MathUtils.lerp(closedFrame.dist, explodedFrame.dist, t);
   const azim = THREE.MathUtils.lerp(-0.55, 0.5, t);
@@ -168,9 +173,11 @@ function targetFor(root, part) {
 
 function updateCallouts(root = assetRoot) {
   if (!root || !calloutsEl || !leadersEl || !camera) return;
-  const visible = progress >= 0.12;
+  const visible = progress >= 0.12 && progress <= 0.88;
   calloutsEl.hidden = !visible;
   leadersEl.hidden = !visible;
+  calloutsEl.style.display = visible ? '' : 'none';
+  leadersEl.style.display = visible ? 'block' : 'none';
   if (!visible) return;
   const width = stage.clientWidth || 1;
   const height = stage.clientHeight || 1;
@@ -281,7 +288,7 @@ function computeFrames(root) {
   samplePose(0);
   root.updateMatrixWorld(true);
   const closedBox = new THREE.Box3().setFromObject(root);
-  samplePose(1);
+  samplePose(0.67);
   root.updateMatrixWorld(true);
   const explodedBox = new THREE.Box3().setFromObject(root);
   samplePose(progress);

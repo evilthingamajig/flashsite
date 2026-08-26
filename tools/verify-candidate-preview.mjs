@@ -44,7 +44,7 @@ const info = () => cdp.evaluate('window.__ffCandidatePreview && window.__ffCandi
 let state = await info();
 check('candidate ready', state?.ready === true && state?.failed === false);
 check('seven authored clips', state?.clips === 7, String(state?.clips));
-check('authored duration', Math.abs((state?.duration || 0) - 4.167) < 0.01, String(state?.duration));
+check('authored duration', Math.abs((state?.duration || 0) - 5.0) < 0.01, String(state?.duration));
 
 await cdp.evaluate('window.__ffCandidatePreview.setProgress(0); undefined');
 await new Promise((resolve) => setTimeout(resolve, 180));
@@ -64,7 +64,7 @@ const switchGeometry = seatedSwitch
   && Math.abs(seatedSwitch.z) <= 0.03;
 check('closed LEDs seated at short end', ledGeometry, JSON.stringify({ leftLed, rightLed }));
 check('closed switch seated near case', switchGeometry, JSON.stringify({ seatedSwitch }));
-await cdp.evaluate('window.__ffCandidatePreview.setProgress(1); undefined');
+await cdp.evaluate('window.__ffCandidatePreview.setProgress(0.67); undefined');
 await new Promise((resolve) => setTimeout(resolve, 180));
 const exploded = await info();
 check('exploded pose label', /Exploded/.test(await cdp.evaluate("document.getElementById('cpv-status').textContent")));
@@ -108,7 +108,8 @@ check('zero console errors', errors.length === 0, errors.join(', '));
 await cdp.send('Page.navigate', { url: `http://127.0.0.1:${PORT}/candidate-preview.html?p=1` });
 await new Promise((resolve) => setTimeout(resolve, 900));
 const deepLink = await info();
-check('exploded deep link', deepLink?.progress >= 0.999 && /Exploded/.test(await cdp.evaluate("document.getElementById('cpv-status').textContent")));
+const deepLinkStatus = await cdp.evaluate("({status: document.getElementById('cpv-status').textContent, range: Number(document.getElementById('cpv-range').value), calloutsHidden: document.getElementById('cpv-callouts').style.display === 'none', leadersHidden: document.getElementById('cpv-leaders').style.display === 'none'})");
+check('reassembled deep link', deepLinkStatus.range >= 0.999 && /Reassembled/.test(deepLinkStatus.status) && deepLinkStatus.calloutsHidden && deepLinkStatus.leadersHidden, JSON.stringify(deepLinkStatus));
 
 await cdp.close();
 server.close();
