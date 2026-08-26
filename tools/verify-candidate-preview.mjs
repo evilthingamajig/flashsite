@@ -198,6 +198,22 @@ const returnedToSeats = reassembledParts.every((part) => {
 });
 check('reassembled parts return to seats', returnedToSeats, JSON.stringify({ closed: closed?.partTransforms, reassembled: reassembled?.partTransforms }));
 
+await cdp.evaluate('window.__ffCandidatePreview.setProgress(0.67); undefined');
+await new Promise((resolve) => setTimeout(resolve, 450));
+const reverseExploded = await cdp.evaluate(`({
+  activeCallout: document.querySelector('.cpv-callout.is-active')?.textContent.trim() || '',
+  activeLeaders: [...document.querySelectorAll('#cpv-leaders line')].filter((el) => el.style.opacity !== '0').length,
+  activeParts: document.querySelectorAll('#cpv-part-list li.is-active').length
+})`);
+await cdp.evaluate('window.__ffCandidatePreview.setProgress(0); undefined');
+await new Promise((resolve) => setTimeout(resolve, 450));
+const reverseClosed = await cdp.evaluate(`({
+  calloutsHidden: document.getElementById('cpv-callouts').style.display === 'none',
+  leadersHidden: document.getElementById('cpv-leaders').style.display === 'none',
+  activeParts: document.querySelectorAll('#cpv-part-list li.is-active').length
+})`);
+check('reverse scrub restores annotations', /Cost TBD/.test(reverseExploded.activeCallout) && reverseExploded.activeLeaders === 1 && reverseExploded.activeParts > 0 && reverseClosed.calloutsHidden && reverseClosed.leadersHidden && reverseClosed.activeParts === 0, JSON.stringify({ reverseExploded, reverseClosed }));
+
 await cdp.close();
 server.close();
 if (checks.some((ok) => !ok)) process.exitCode = 1;
