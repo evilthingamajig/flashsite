@@ -102,6 +102,23 @@ def parent_detail(detail, parent, location):
     detail.location = location
     return detail
 
+def wire_detail(name, parent, points, material, bevel=0.00042):
+    curve_data = bpy.data.curves.new(name, type='CURVE')
+    curve_data.dimensions = '3D'
+    curve_data.resolution_u = 2
+    curve_data.bevel_depth = bevel
+    curve_data.bevel_resolution = 1
+    spline = curve_data.splines.new('POLY')
+    spline.points.add(len(points) - 1)
+    for point, co in zip(spline.points, points):
+        point.co = (*co, 1.0)
+    wire = bpy.data.objects.new(name, curve_data)
+    bpy.context.collection.objects.link(wire)
+    wire.data.materials.append(material)
+    wire.parent = parent
+    wire.location = (0.0, 0.0, 0.0)
+    return wire
+
 def add_battery_details(battery, kapton, battery_label, lead_material):
     # Keep the supplied pouch as the authoritative envelope and add only the
     # visible physical cues that survive the low-poly browser export.
@@ -111,8 +128,11 @@ def add_battery_details(battery, kapton, battery_label, lead_material):
     parent_detail(tag, battery, (0.008, -0.006, 0.0031))
     lead = cube('battery_lead_pair', (0.012, 0.0012, 0.0008), (0.0, 0.0, 0.0), lead_material)
     parent_detail(lead, battery, (0.022, 0.023, 0.0022))
+    wire_detail('battery_lead_wire', battery, [
+        (0.018, 0.023, 0.0022), (0.027, 0.025, 0.0028), (0.034, 0.022, 0.0030)
+    ], lead_material)
 
-def add_charge_details(charge, solder, usb_metal):
+def add_charge_details(charge, solder, usb_metal, lead_material):
     # TP4056 boards are visually defined by the blue PCB, USB-C end, and a
     # handful of dark/silver components; these cues remain intentionally light.
     port = cube('charge_usb_c_port', (0.0045, 0.009, 0.0032), (0.0, 0.0, 0.0), usb_metal)
@@ -121,6 +141,15 @@ def add_charge_details(charge, solder, usb_metal):
     parent_detail(chip, charge, (-0.003, 0.002, 0.0022))
     resistor = cube('charge_resistor_bank', (0.011, 0.002, 0.001), (0.0, 0.0, 0.0), solder)
     parent_detail(resistor, charge, (-0.008, -0.004, 0.0021))
+    wire_detail('charge_input_wire', charge, [
+        (-0.014, 0.006, 0.0018), (-0.019, 0.008, 0.0015), (-0.024, 0.006, 0.0012)
+    ], lead_material)
+
+def add_led_wire(led, lead_material, side):
+    z = 0.0012 if side == 'left' else -0.0012
+    wire_detail('led_wire_' + side, led, [
+        (0.010, 0.0, 0.0), (0.016, 0.0, z), (0.022, 0.0, z)
+    ], lead_material)
 
 def center_mesh_origin(ob):
     """Move imported geometry around its own bounds so location is its seat."""
@@ -231,7 +260,7 @@ def main():
     set_mat(charge, pcb)
     reduce_mesh(charge, 0.03)
     charge.location = (0.0, 0.016, -0.002)
-    add_charge_details(charge, solder, usb_metal)
+    add_charge_details(charge, solder, usb_metal, battery_lead)
     battery = import_stl(BATTERY, 'battery')
     set_mat(battery, foil)
     reduce_mesh(battery, 0.03)
@@ -253,6 +282,8 @@ def main():
         led.select_set(True)
         bpy.ops.object.transform_apply(location=False, rotation=True, scale=False)
         led.select_set(False)
+    add_led_wire(led_a, battery_lead, 'left')
+    add_led_wire(led_b, battery_lead, 'right')
     # The LEDs belong on the short end of the case. Their clear/lens end is
     # the negative-X end after the Y rotation; the body runs back into the
     # enclosure from an X seat near the end wall.
