@@ -66,6 +66,18 @@ let state = await info();
 check('candidate ready', state?.ready === true && state?.failed === false);
 check('seven authored clips', state?.clips === 7, String(state?.clips));
 check('authored duration', Math.abs((state?.duration || 0) - 5.0) < 0.01, String(state?.duration));
+await cdp.evaluate('window.__ffCandidatePreview.setProgress(0.5); undefined');
+await new Promise((resolve) => setTimeout(resolve, 30));
+const movingQuality = await info();
+await new Promise((resolve) => setTimeout(resolve, 180));
+const settledQuality = await info();
+const movingPixels = (movingQuality?.renderSize?.width || 0) * (movingQuality?.renderSize?.height || 0);
+check('adaptive scrub render budget', movingQuality?.scrubQuality === true
+  && movingQuality?.renderPixelRatio <= 0.8
+  && movingPixels <= 900000
+  && settledQuality?.scrubQuality === false
+  && settledQuality?.renderPixelRatio >= movingQuality?.renderPixelRatio,
+JSON.stringify({ movingQuality, settledQuality, movingPixels }));
 const motionManifest = JSON.parse(await readFile(join(ROOT, 'assets', '3d', 'blender-candidate-manifest.json'), 'utf8'));
 const motionProfiles = motionManifest?.motionProfiles || {};
 const motionParts = ['enclosure', 'solar_panel_placeholder', 'battery', 'charge_module', 'led_left', 'led_right', 'switch'];

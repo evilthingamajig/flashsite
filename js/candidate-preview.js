@@ -9,6 +9,10 @@ const CLIP_PATTERN = /^ScrollSequence/;
 const DPR_CAP = 1.25;
 const MIN_RENDER_DPR = 0.75;
 const MAX_RENDER_PIXELS = 2_600_000;
+const SCRUB_DPR_CAP = 0.8;
+const SCRUB_MIN_RENDER_DPR = 0.6;
+const SCRUB_MAX_RENDER_PIXELS = 900_000;
+const SCRUB_IDLE_MS = 140;
 const FOV = 32;
 const SHADOW_CASTERS = new Set([
   'enclosure',
@@ -63,6 +67,8 @@ let failed = false;
 let inView = true;
 let dirty = false;
 let rafId = 0;
+let scrubQuality = false;
+let scrubIdleTimer = 0;
 const calloutSpecs = [
   { part: 'enclosure', name: 'Case', cost: 'Cost: TBD', side: 'left', row: 0 },
   { part: 'solar_panel_placeholder', name: 'Solar panel', cost: 'Cost: TBD', side: 'left', row: 1 },
@@ -106,6 +112,32 @@ function showFallback(reason, err) {
 function requestRender() {
   dirty = true;
   startLoop();
+}
+
+function renderPixelRatio(w, h) {
+  const dprCap = scrubQuality ? SCRUB_DPR_CAP : DPR_CAP;
+  const minDpr = scrubQuality ? SCRUB_MIN_RENDER_DPR : MIN_RENDER_DPR;
+  const pixelBudget = scrubQuality ? SCRUB_MAX_RENDER_PIXELS : MAX_RENDER_PIXELS;
+  const deviceDpr = Math.min(window.devicePixelRatio || 1, dprCap);
+  const pixelBudgetDpr = Math.sqrt(pixelBudget / Math.max(1, w * h));
+  return Math.max(minDpr, Math.min(deviceDpr, pixelBudgetDpr));
+}
+
+function setScrubQuality() {
+  if (!renderer || failed) return;
+  clearTimeout(scrubIdleTimer);
+  if (!scrubQuality) {
+    scrubQuality = true;
+    measureStage();
+  }
+  scrubIdleTimer = window.setTimeout(() => {
+    scrubQuality = false;
+    measureStage();
+    // Shadows stay frozen while parts move; refresh them once at the final
+    // settled pose instead of rebuilding the shadow map every scrub frame.
+    renderer.shadowMap.needsUpdate = true;
+    requestRender();
+  }, SCRUB_IDLE_MS);
 }
 
 function startLoop() {
@@ -336,6 +368,7 @@ function updateProgressUI(p) {
 function applyProgress(p) {
   progress = clamp01(p);
   if (ready) {
+    setScrubQuality();
     samplePose(progress);
     updateCamera(progress);
     updateCallouts();
@@ -387,9 +420,7 @@ function measureStage() {
   if (!stage || !renderer || !camera || failed) return;
   const w = stage.clientWidth || 1;
   const h = stage.clientHeight || 1;
-  const deviceDpr = Math.min(window.devicePixelRatio || 1, DPR_CAP);
-  const pixelBudgetDpr = Math.sqrt(MAX_RENDER_PIXELS / Math.max(1, w * h));
-  renderer.setPixelRatio(Math.max(MIN_RENDER_DPR, Math.min(deviceDpr, pixelBudgetDpr)));
+  renderer.setPixelRatio(renderPixelRatio(w, h));
   renderer.setSize(w, h, false);
   camera.aspect = w / h;
   camera.updateProjectionMatrix();
@@ -486,6 +517,8 @@ if (renderer && !failed) {
   renderer.toneMappingExposure = 1.08;
   renderer.shadowMap.enabled = true;
   renderer.shadowMap.type = THREE.PCFShadowMap;
+  renderer.shadowMap.autoUpdate = false;
+  renderer.shadowMap.needsUpdate = true;
 
   initScene();
 
@@ -611,6 +644,7 @@ if (renderer && !failed) {
   window.addEventListener('pagehide', (event) => {
     if (event.persisted) return;
     cancelAnimationFrame(rafId);
+    clearTimeout(scrubIdleTimer);
     rafId = 0;
     if (mixer) mixer.stopAllAction();
     if (renderer) renderer.dispose();
@@ -637,6 +671,7 @@ window.__ffCandidatePreview = {
         width: renderer.domElement.width,
         height: renderer.domElement.height,
       } : null,
+      scrubQuality,
       actionTimes: actions.map((action) => Number(action.time.toFixed(4))),
       trackNames: actions.slice(0, 2).map((action) => action.getClip().tracks.map((track) => track.name)),
       trackSamples: actions.slice(0, 2).map((action) => action.getClip().tracks.slice(0, 2).map((track) => ({

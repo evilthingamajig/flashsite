@@ -97,6 +97,10 @@ No external network assets.
 - Only the seven major assembly parts participate in the 512 px shadow pass;
   small decorative meshes still render normally without duplicating dozens of
   shadow draw calls. Only the active editorial callout is projected each frame.
+- While the timeline is actively moving, the framebuffer temporarily uses an
+  aggressive 0.8 DPR / 0.9-million-pixel budget and reuses the previous shadow
+  map. After 140 ms idle, full review resolution returns and shadows refresh
+  once at the settled pose.
 - WebGL context-loss fallback: on `webglcontextlost`, the handler calls
   `preventDefault()` to block the browser default, stops rendering via
   `showFallback`, and surfaces the existing parts-list-and-controls
@@ -170,6 +174,7 @@ types served by the local verification server), a bfcache-safe `pagehide`
 cleanup (non-persisted navigations stop the mixer and dispose the renderer),
 and a WebGL context-loss fallback (synthetic `webglcontextlost` event
 triggers `preventDefault`, the existing fallback surfaces, and no reload loop
-occurs). The current candidate suite contains 33 checks, including a focused
+occurs). The current candidate suite contains 34 checks, including a focused
 regression check that the active annotation is exactly two plain text lines,
-with only its dotted leader visible.
+with only its dotted leader visible, plus an adaptive scrub-quality budget
+check that verifies reduced moving-frame resolution and full-quality recovery.
