@@ -46,7 +46,12 @@ if any(abs(actual - expected) > 0.0002 for actual, expected in zip(switch_dimens
 passed('switch dimensions match measured pass9 source')
 
 def dimensions_match(part, expected, tolerance=0.0002):
-    actual = sorted(float(value) for value in parts[part].dimensions)
+    obj = parts[part]
+    return dimensions_match_obj(obj, expected, tolerance)
+
+
+def dimensions_match_obj(obj, expected, tolerance=0.0002):
+    actual = sorted(float(value) for value in obj.dimensions)
     target = sorted(expected)
     return all(abs(value - wanted) <= tolerance for value, wanted in zip(actual, target)), actual
 
@@ -129,6 +134,18 @@ missing_screws = expected_screws - mount_screws
 if missing_screws:
     fail('enclosure mount screw children missing: ' + ', '.join(sorted(missing_screws)))
 passed('four metallic mount screw cues present and parented to mount blocks')
+
+switch_case_surround = next((child for child in parts['enclosure'].children
+                             if child.name.split('.')[0] == 'switch_case_surround'), None)
+if switch_case_surround is None:
+    fail('switch_case_surround is missing as a child of enclosure')
+passed('switch_case_surround present and parented to enclosure')
+
+switch_case_ok, switch_case_dims = dimensions_match_obj(
+    switch_case_surround, (0.012, 0.001, 0.008), tolerance=0.0001)
+if not switch_case_ok:
+    fail('switch_case_surround dimensions %.6f, %.6f, %.6f m do not match 12 x 1 x 8 mm target' % tuple(switch_case_dims))
+passed('switch_case_surround dimensions approx 12 x 1 x 8 mm (0.012 x 0.001 x 0.008 m)')
 
 _TOL = 0.001
 _scene = bpy.context.scene

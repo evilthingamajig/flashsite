@@ -427,6 +427,15 @@ def main():
     sw.location = (0.0, 0.029, 0.0)
     add_switch_details(sw, actuator_mat, wire_red, wire_black)
 
+    switch_surround_mat = mat('SwitchSurround', (0.04, 0.045, 0.05), roughness=0.55)
+    switch_surround = cube('switch_case_surround', (0.012, 0.0010, 0.008), (0.0, 0.0, 0.0), switch_surround_mat)
+    # Parent to the enclosure so the surround follows the case shell through
+    # the closed and exploded poses.  Convert the switch's world seat to the
+    # enclosure's local coordinates and align the bracket's positive-Y face
+    # flush with the switch's positive-Y seating edge.
+    parent_detail(switch_surround, enclosure, tuple(Vector(sw.location) - enclosure.location))
+    switch_surround.location.y -= 0.0006
+
     parts = [enclosure, panel, battery, charge, led_a, led_b, sw]
     seats = {p.name: tuple(p.location) for p in parts}
     explode_offsets = {
