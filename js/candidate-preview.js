@@ -43,12 +43,12 @@ let inView = true;
 let dirty = false;
 let rafId = 0;
 const calloutSpecs = [
-  { part: 'enclosure', name: 'Enclosure', side: 'left' },
-  { part: 'solar_panel_placeholder', name: 'Solar panel', side: 'left' },
-  { part: 'battery', name: 'LiPo battery', side: 'right' },
-  { part: 'charge_module', name: 'TP4056 board', side: 'right' },
-  { part: 'led_pair', name: 'LED pair', side: 'left' },
-  { part: 'switch', name: 'Slide switch', side: 'right' },
+  { part: 'enclosure', name: 'Enclosure', side: 'left', row: 0 },
+  { part: 'solar_panel_placeholder', name: 'Solar panel', side: 'left', row: 1 },
+  { part: 'battery', name: 'LiPo battery', side: 'right', row: 0 },
+  { part: 'charge_module', name: 'TP4056 board', side: 'right', row: 1 },
+  { part: 'led_pair', name: 'LED pair', side: 'left', row: 2 },
+  { part: 'switch', name: 'Slide switch', side: 'right', row: 2 },
 ];
 const calloutTargets = new Map();
 const calloutLines = new Map();
@@ -174,8 +174,12 @@ function updateCallouts(root = assetRoot) {
   if (!visible) return;
   const width = stage.clientWidth || 1;
   const height = stage.clientHeight || 1;
-  const slots = [0.23, 0.35, 0.47, 0.59, 0.71, 0.83];
-  for (const [index, spec] of calloutSpecs.entries()) {
+  // Match the stylesheet breakpoint against the viewport, not the sticky
+  // stage width (the vertical scrollbar can make the latter slightly smaller
+  // and incorrectly switch a desktop review into mobile lanes).
+  const mobile = window.innerWidth < 760;
+  const slots = mobile ? [0.24, 0.36, 0.48] : [0.24, 0.40, 0.56];
+  for (const spec of calloutSpecs) {
     const box = calloutTargets.get(spec.part);
     const line = calloutLines.get(spec.part);
     const point = targetFor(root, spec.part);
@@ -183,8 +187,10 @@ function updateCallouts(root = assetRoot) {
     point.project(camera);
     const targetX = (point.x * 0.5 + 0.5) * width;
     const targetY = (-point.y * 0.5 + 0.5) * height;
-    const boxX = width * (spec.side === 'left' ? 0.18 : 0.82);
-    const boxY = height * slots[index];
+    // The side panels occupy the outer lanes. Keep labels in the two clear
+    // lanes between the reference panel, the model, and the parts panel.
+    const boxX = width * (mobile ? (spec.side === 'left' ? 0.22 : 0.78) : (spec.side === 'left' ? 0.35 : 0.52));
+    const boxY = height * slots[spec.row];
     box.style.left = boxX + 'px';
     box.style.top = boxY + 'px';
     line.setAttribute('x1', String(targetX));
