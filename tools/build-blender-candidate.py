@@ -190,10 +190,11 @@ def add_led_wire(led, lead_material, side):
     ], lead_material)
 
 def add_switch_details(switch, actuator_material, red_material, black_material):
-    # The pass9 mesh remains the authoritative switch body; this inset slider
-    # makes the body/actuator relationship legible without changing its seat.
-    actuator = cube('switch_actuator', (0.0024, 0.0034, 0.0018), (0.0, 0.0, 0.0), actuator_material)
-    parent_detail(actuator, switch, (0.0, 0.0, 0.0020))
+    # The pass9 mesh remains the authoritative switch body. Its actuator must
+    # project through the positive-Y case-side opening; placing it on local Z
+    # made the side view look like an empty white recess.
+    actuator = cube('switch_actuator', (0.0034, 0.0020, 0.0040), (0.0, 0.0, 0.0), actuator_material)
+    parent_detail(actuator, switch, (0.0, 0.0048, 0.0))
     # Two short inward-running wire cues exiting from the switch's positive-Y
     # seat toward negative Y into the enclosure.  The switch sits at y ≈ 0.029
     # (positive-Y case wall); these 3-point polylines drop ~2 mm in Z over a
@@ -289,8 +290,10 @@ MOTION_PROFILES = {
         'inspect_rotation': (math.radians(-8.0), 0.0, math.radians(-26.0)),
     },
     'switch': {
-        'explode_rotation': (math.radians(-6.0), 0.0, 0.0),
-        'inspect_rotation': (math.radians(-14.0), 0.0, 0.0),
+        # The switch is a mounted control, not a loose internal component.
+        # Keep it seated in the case-side opening throughout the sequence.
+        'explode_rotation': (0.0, 0.0, 0.0),
+        'inspect_rotation': (0.0, 0.0, 0.0),
     },
 }
 
@@ -343,10 +346,10 @@ def main():
     led_die = mat('LedDie', (0.92, 0.88, 0.72), roughness=0.22,
                   emission=(1.0, 0.94, 0.78), emission_strength=0.12)
     # The switch sits in the pale side opening shown in the reference. Use a
-    # light body with a contrasting actuator so the seated control remains
-    # legible against both the white surround and charcoal case.
-    switchmat = mat('SwitchPlastic', (0.72, 0.74, 0.72), roughness=0.42)
-    actuator_mat = mat('SwitchActuator', (0.08, 0.09, 0.085), metallic=0.12, roughness=0.30)
+    # dark inset body with a light metallic actuator so the seated control
+    # remains legible against both the surround and charcoal case.
+    switchmat = mat('SwitchPlastic', (0.08, 0.09, 0.085), roughness=0.50)
+    actuator_mat = mat('SwitchActuator', (0.76, 0.78, 0.76), metallic=0.32, roughness=0.24)
     wire_red = mat('SwitchWireRed', (0.78, 0.05, 0.03), roughness=0.36)
     wire_black = mat('SwitchWireBlack', (0.012, 0.012, 0.012), roughness=0.52)
 
@@ -448,16 +451,22 @@ def main():
         'charge_module': (0.060, 0.024, 0.052),
         'led_left': (-0.032, -0.050, 0.045),
         'led_right': (0.032, -0.050, 0.045),
-        'switch': (0.060, 0.052, 0.055),
+        # The switch is mounted to the enclosure, so its phase offsets must
+        # match the case rather than remain fixed in world space.
+        'switch': (0.000, 0.000, 0.035),
     }
     for i, p in enumerate(parts):
         s = Vector(seats[p.name])
         explode = s + Vector(explode_offsets[p.name])
-        # Keep the switch parked beside the case during the short inspection
-        # beat. The generic inspect spread pulled it back across the battery,
-        # making the annotated switch look absent before reassembly begins.
-        inspect = explode.copy() if p.name == 'switch' else s + Vector(((-1 if i % 2 else 1) * 0.06, (i - 3) * 0.01, 0.055 + i * 0.004))
-        add_keyframes(p, s, explode, inspect, 42 + i * 7, MOTION_PROFILES[p.name])
+        if p.name == 'switch':
+            # Follow the enclosure's inspection translation and timing exactly
+            # so the mounted switch never drifts out of the case-side opening.
+            inspect = s + Vector((0.060, -0.030, 0.055))
+            inspect_frame = 42
+        else:
+            inspect = s + Vector(((-1 if i % 2 else 1) * 0.06, (i - 3) * 0.01, 0.055 + i * 0.004))
+            inspect_frame = 42 + i * 7
+        add_keyframes(p, s, explode, inspect, inspect_frame, MOTION_PROFILES[p.name])
 
     # Defensive cleanup for headless Blender startup datablocks that can
     # survive factory reset and otherwise export as a 2 m default Cube.
