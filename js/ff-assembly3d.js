@@ -961,9 +961,13 @@ function init(section) {
       let x = slot[0] * MM * stagedExplosion * reassemblyK(p, c.id);
       let y = slot[1] * MM * stagedExplosion * reassemblyK(p, c.id);
       let z = slot[2] * MM * stagedExplosion * reassemblyK(p, c.id);
-      let yaw = 0;
-      let composedQuaternion = false;
       const motion = SOLO_MOTION[c.id] || SOLO_MOTION.enclosure;
+      // Seed every exploded component with its authored face before it is
+      // called into its solo chapter. This makes the incoming component's
+      // first rendered handoff frame match the pose it was already carrying
+      // off-screen, instead of introducing a hidden half-turn at C0.
+      let yaw = p >= T_EXPLODE[1] ? motion.baseYaw * Math.PI / 180 : 0;
+      let composedQuaternion = false;
       const reassemblyProgress = smooth((p - T_RE_START) / Math.max(0.001, T_FINAL - T_RE_START));
       const hasCompletedSolo = chIdx > i || (chIdx === i && chapterT(p, i) >= 0.72) || p >= tableauStart;
       if (hasCompletedSolo) {
@@ -987,7 +991,11 @@ function init(section) {
         // frame. Its authored pitch/roll still supplies a modest thickness
         // reveal, but a 0→180deg yaw sweep makes the printed face appear
         // mirrored/upside-down during the solar handoff.
-        const orientationProgress = c.id === 'battery' ? 1 : smooth(t / 0.72);
+        // The authored base face is already present at the chapter entrance;
+        // the distinct inspection motion comes from samplePartPose's
+        // quaternion, so delaying this base yaw would create a C0 jump for
+        // every incoming chapter (most visibly the board and LEDs).
+        const orientationProgress = 1;
         yaw = (motion.baseYaw * orientationProgress + (t >= 0.72 ? motion.reassemblyYaw * reassemblyProgress : 0)) * Math.PI / 180;
         x += c.inspect[0] * MM * liftAmt;
         y += c.inspect[1] * MM * liftAmt;
@@ -1023,22 +1031,14 @@ function init(section) {
       if (p >= T_RE_START && c.id !== 'enclosure') {
         const reIdx = REASSEMBLY_ORDER.indexOf(c.id);
         const beatStart = T_RE_START + reIdx * RE_SPACING;
-        const local = smooth((p - beatStart) / RE_W);
-        // Complete the visible turn early in the beat, before the slight
-        // position overlap with the next insertion, then hold it stationary.
-        const turnLocal = smooth((p - beatStart) / Math.max(0.001, RE_SPACING * 0.45));
-        // Keep reassembly quaternion-continuous. The previous implementation
-        // reset directly from the authored insertion turn to Euler identity
-        // at RE_W, which made each seated part visibly snap. Ease the same
-        // yaw quaternion to identity during the remaining beat spacing.
-        let reassemblyYaw = motion.baseYaw;
-        if (local > 0 && local < 1) {
-          reassemblyYaw = lerp(motion.baseYaw, motion.reassemblyYaw, turnLocal);
-        } else if (p >= beatStart + RE_W) {
-          const settleT = smooth((p - (beatStart + RE_W)) / Math.max(0.001, RE_SPACING - RE_W));
-          reassemblyYaw = lerp(motion.reassemblyYaw, 0, settleT);
-        }
-        const reassemblyQ = new THREE.Quaternion().setFromEuler(new THREE.Euler(0, reassemblyYaw * Math.PI / 180, 0, 'YXZ'));
+        // Each part waits at the exact orientation it carried into the
+        // reassembly phase. During its own insertion beat it eases that
+        // quaternion all the way to its seated identity, then remains frozen
+        // there. This prevents inactive parts from continuing to rotate and
+        // removes the battery's late 180° jump between beat samples.
+        const beatT = clamp01((p - beatStart) / RE_W);
+        const startQ = new THREE.Quaternion().setFromEuler(new THREE.Euler(0, motion.baseYaw * Math.PI / 180, 0, 'YXZ'));
+        const reassemblyQ = startQ.clone().slerp(new THREE.Quaternion(), smooth(beatT));
         g.quaternion.copy(reassemblyQ);
         composedQuaternion = true;
       }
@@ -1161,6 +1161,16 @@ function init(section) {
 
   let leaderC0Cache = null;
   function updateLeaders(activeKey) {
+    const mobile = sticky.clientWidth < 700;
+    // Portrait copy is intentionally stacked below the product. Hiding the
+    // desktop annotation layer keeps that layout clean instead of drawing a
+    // misleading V through the LEDs or down to the viewport edge.
+    leadersSvg.style.display = mobile ? 'none' : '';
+    if (mobile) {
+      while (leadersSvg.firstChild) leadersSvg.removeChild(leadersSvg.firstChild);
+      leaderC0Cache = null;
+      return;
+    }
     const boundaryNear = CHAPTERS.slice(1).some((_, i) => Math.abs(lastProgress - (T_CH_START + (i + 1) * CH_W)) < 0.003);
     if (boundaryNear && leaderC0Cache?.key === activeKey) {
       leadersSvg.innerHTML = leaderC0Cache.svg;
@@ -1174,28 +1184,69 @@ function init(section) {
     const el = callouts[activeKey];
     const cr = el.getBoundingClientRect();
     const sr = sticky.getBoundingClientRect();
-    const mobile = sticky.clientWidth < 700;
-    const sx = mobile ? cr.left - sr.left + cr.width / 2 : (el.classList.contains('is-right') ? cr.left - sr.left : cr.right - sr.left);
-    // Start the LED leader below its copy block. The earlier mid-heading
-    // origin let the diagonal pass through the large “Two LEDs” title on
-    // desktop while still technically landing on the mesh anchor.
-    const copySafeLeader = !mobile && activeKey === 'leds';
-    const sy = mobile ? cr.top - sr.top - 6 : (copySafeLeader ? cr.bottom - sr.top + 14 : cr.top - sr.top + cr.height * 0.45);
+    const isRight = el.classList.contains('is-right');
+    const sx = mobile
+      ? cr.left - sr.left + cr.width / 2
+      : (isRight ? cr.left - sr.left : cr.right - sr.left);
+    // The leader starts on the nearest copy edge. On desktop it uses the
+    // vertical midpoint of the copy; on portrait layouts the copy sits below
+    // the product, so the line begins at its top edge.
+    const copyTop = cr.top - sr.top;
+    const sy = copyTop;
     const sil = silhouettePx(keyToId(activeKey));
     if (!sil) return;
-    // Route the leader in the whitespace around the subject, then use only a
-    // short terminal segment to the mesh-attached anchor. This avoids slicing
-    // diagonally through the active silhouette.
-    let routeX = pt.x, routeY = pt.y;
-    if (mobile) routeY = sil.y + sil.h + 14;
-    else if (copySafeLeader) routeY = cr.bottom - sr.top + 14;
-    else routeX = el.classList.contains('is-right') ? sil.x + sil.w + 14 : sil.x - 14;
+    // Use one deliberate elbow outside the real silhouette, then a single
+    // terminal segment to the mesh anchor. Keeping the route to two segments
+    // avoids the old disconnected-looking lines that ran off-stage.
+    const stageW = sticky.clientWidth;
+    const stageH = sticky.clientHeight;
+    let routeX;
+    let routeY;
+    let routePoints;
+    if (mobile) {
+      // The copy is below the product in portrait. For the LED pair, use the
+      // open gap between the two lamps instead of sending a leader around the
+      // whole viewport; this keeps the annotation visually attached and lets
+      // the final segment identify the selected lamp.
+      const clearY = Math.max(8, copyTop - 18);
+      const isLedPair = keyToId(activeKey) === 'led_pair';
+      if (isLedPair) {
+        const centerX = sil.x + sil.w * 0.5;
+        // Approach from the side of the center gap opposite the selected LED.
+        routeX = pt.x >= centerX ? centerX - 16 : centerX + 16;
+        routeX = Math.max(8, Math.min(stageW - 8, routeX));
+        routeY = Math.min(stageH - 18, Math.max(clearY, sil.y + sil.h * 0.58));
+        routePoints = [[sx, sy], [sx, clearY], [routeX, clearY], [routeX, routeY]];
+      } else {
+        routeX = sx <= sil.x + sil.w * 0.5 ? sil.x - 18 : sil.x + sil.w + 18;
+        routeX = Math.max(8, Math.min(stageW - 8, routeX));
+        routeY = Math.min(stageH - 18, Math.max(clearY, sil.y + sil.h + 18));
+        routePoints = [[sx, sy], [sx, clearY], [routeX, clearY], [routeX, routeY]];
+      }
+    } else {
+      // Run from the copy's top edge to the outside-side elbow, then rise
+      // above the silhouette before the short terminal segment. Keeping the
+      // first leg visible makes the annotation unmistakably attached.
+      routeX = isRight ? sil.x + sil.w + 18 : sil.x - 18;
+      routeY = Math.min(sy - 1, sil.y - 18);
+      routeX = Math.max(8, Math.min(stageW - 8, routeX));
+      routeY = Math.max(8, Math.min(stageH - 8, routeY));
+      routePoints = [[sx, sy], [routeX, sy], [routeX, routeY]];
+    }
     const ns = 'http://www.w3.org/2000/svg';
     const route = document.createElementNS(ns, 'polyline');
-    route.setAttribute('points', `${sx},${sy} ${routeX},${routeY}`);
+    const terminalX = routeX;
+    const terminalY = routeY;
+    route.setAttribute('points', routePoints.map(([x, y]) => `${x},${y}`).join(' '));
+    // Keep the open leader path from inheriting SVG's default black fill.
+    // Otherwise Chromium closes the polyline visually and paints a large
+    // triangular wedge over the assembly and copy.
+    route.setAttribute('fill', 'none');
+    route.setAttribute('stroke', '#0b7f47');
+    route.setAttribute('stroke-width', '1');
     leadersSvg.appendChild(route);
     const line = document.createElementNS(ns, 'line');
-    line.setAttribute('x1', routeX); line.setAttribute('y1', routeY);
+    line.setAttribute('x1', terminalX); line.setAttribute('y1', terminalY);
     line.setAttribute('x2', pt.x); line.setAttribute('y2', pt.y);
     const dot = document.createElementNS(ns, 'circle');
     dot.setAttribute('cx', pt.x); dot.setAttribute('cy', pt.y); dot.setAttribute('r', 3);
@@ -1242,7 +1293,9 @@ function init(section) {
           // Crossfade the outgoing solar panel promptly so its cropped edge
           // cannot linger above the readable battery face. The active part
           // remains visible for the full direct handoff.
-          const outgoingFade = activeId === 'battery' ? smooth(blend.handoff / 0.50) : blend.handoff;
+          const outgoingFade = activeId === 'battery'
+            ? smooth(blend.handoff / 0.22)
+            : (activeId === 'led_pair' ? smooth((blend.handoff - 0.05) / 0.72) : blend.handoff);
           dim = Math.max(0, 1 - outgoingFade);
         }
         else dim = 0;
