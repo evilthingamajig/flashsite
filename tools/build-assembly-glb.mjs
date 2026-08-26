@@ -18,7 +18,7 @@ import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..');
-const GENERATOR = 'flashsite build-assembly-glb 1.2.3-pass10e';
+const GENERATOR = 'flashsite build-assembly-glb 1.2.3-pass11';
 const MM = 0.001; // millimetre -> metre
 const PASS9 = join(ROOT, 'source-assets', 'external', 'pass9');
 
@@ -423,7 +423,7 @@ function buildGlb(meshes, materialIndexByName) {
 
 // --------------------------------------------------------------------- main
 
-const report = { generator: GENERATOR, checkpoint: 'pass10e', cacheToken: 'pass10e', sources: {}, parts: {} };
+const report = { generator: GENERATOR, checkpoint: 'pass11', cacheToken: 'pass11', sources: {}, parts: {} };
 const ENC_TTL_RAW = readFileSync(join(ROOT, 'source-assets/stl/enclosure.stl'));
 const SWI_TTL_RAW = readFileSync(join(ROOT, 'source-assets/stl/switch.stl'));
 const TP4056_RAW = readFileSync(join(PASS9, 'tp4056-usbc.stl'));

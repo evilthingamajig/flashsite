@@ -1,7 +1,7 @@
 {
-  "generator": "flashsite build-assembly-glb 1.2.3-pass10e",
-  "checkpoint": "pass10e",
-  "cacheToken": "pass10e",
+  "generator": "flashsite build-assembly-glb 1.2.3-pass11",
+  "checkpoint": "pass11",
+  "cacheToken": "pass11",
   "sources": {
     "enclosure": {
       "file": "source-assets/stl/enclosure.stl",

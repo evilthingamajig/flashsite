@@ -1,7 +1,7 @@
 import * as THREE from 'three';
 import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
 
-const CACHE_TOKEN = 'pass10e';
+const CACHE_TOKEN = 'pass11';
 const GLB_URL = `assets/3d/flashlight-assembly.glb?rev=${CACHE_TOKEN}`;
 const MM = 0.001;
 const DPR_CAP = 1.75;
@@ -37,6 +37,35 @@ const clamp01 = (v) => Math.max(0, Math.min(1, v));
 const easeInOutCubic = (t) => (t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2);
 const smooth = (v) => easeInOutCubic(clamp01(v));
 const lerp = (a, b, t) => a + (b - a) * t;
+
+// PASS11 motion sheet. This is intentionally a pure native-scroll sampler:
+// one normalized chapter t produces the same pose in either scrub direction.
+// Quaternion interpolation follows the official THREE.Quaternion.slerp
+// contract; the phase/keyframe structure mirrors GSAP ScrollTrigger's
+// normalized scrub/timeline-label pattern without adding a runtime dependency.
+const SOLO_MOTION = {
+  solar_lid: { zoom: 0.88, yaw: 16, pitch: 8, roll: 0, lift: 0 },
+  battery: { zoom: 1.20, yaw: 12, pitch: 0, roll: 8, lift: 4 },
+  charge_module: { zoom: 1.20, yaw: 24, pitch: 8, roll: 0, lift: 0 },
+  led_pair: { zoom: 1.40, yaw: 78, pitch: 0, roll: 0, lift: 0 },
+  switch: { zoom: 1.27, yaw: 20, pitch: 0, roll: 0, lift: 0, travel: 1.8 },
+  enclosure: { zoom: 0.95, yaw: 10, pitch: 9, roll: 0, lift: 0 },
+};
+function samplePartPose(id, localT, mobile) {
+  const m = SOLO_MOTION[id] || SOLO_MOTION.enclosure;
+  const amp = mobile ? 0.76 : 1;
+  const enter = smooth(localT / 0.20);
+  const inspect = smooth((localT - 0.20) / 0.50);
+  const hold = smooth((localT - 0.70) / 0.12);
+  const settle = smooth((localT - 0.82) / 0.18);
+  const active = Math.max(0, enter - settle);
+  const q0 = new THREE.Quaternion().setFromEuler(new THREE.Euler(0, 0, 0, 'YXZ'));
+  const q1 = new THREE.Quaternion().setFromEuler(new THREE.Euler(m.pitch * amp * Math.PI / 180, m.yaw * amp * Math.PI / 180, m.roll * amp * Math.PI / 180, 'YXZ'));
+  const q = q0.clone().slerp(q1, Math.min(1, inspect + hold * 0.18));
+  const lift = m.lift * amp * active;
+  const travel = id === 'switch' ? m.travel * amp * Math.sin(Math.PI * Math.min(1, inspect)) : 0;
+  return { quaternion: q, zoom: lerp(1, m.zoom, Math.min(1, inspect + hold)), lift, travel, phase: { enter, inspect, hold, settle } };
+}
 
 function ramp(p, a, b) { return smooth((p - a) / (b - a)); }
 
@@ -486,10 +515,19 @@ function init(section) {
     for (let i = 0; i < ks.length - 1; i++) {
       if (p >= ks[i].at && p <= ks[i + 1].at) {
         const t = smooth((p - ks[i].at) / Math.max(1e-6, ks[i + 1].at - ks[i].at));
-        return {
+        const base = {
           azim: lerp(ks[i].azim, ks[i + 1].azim, t),
           elev: lerp(ks[i].elev, ks[i + 1].elev, t),
         };
+        const chapter = chapterAt(p);
+        if (chapter >= 0) {
+          const c = CHAPTERS[chapter];
+          const local = samplePartPose(c.id, chapterT(p, chapter), sticky.clientWidth < 700);
+          const motion = SOLO_MOTION[c.id];
+          base.azim += motion.yaw * 0.22 * local.phase.inspect;
+          base.elev += motion.pitch * 0.18 * local.phase.inspect;
+        }
+        return base;
       }
     }
     const last = ks[ks.length - 1];
@@ -542,6 +580,17 @@ function init(section) {
       dist = dAll;
     } else {
       dPart = solveDistance(boxForSubject(blend.id, boxB), azim, elev, pane);
+      const localMotion = samplePartPose(blend.id, chapterT(p, chapterAt(p)), pane.mobile);
+      // Per-part inspection zoom is applied after the normal projected-bounds
+      // solve; the solver remains authoritative for crop safety below.
+      // Keep the authored zoom signature deliberate but bounded by the
+      // existing pane-fit solve. Each subject keeps its own fit weight so
+      // shallow electronics can read at scale without changing mobile fit.
+      // These are per-part fit weights (not a global zoom), so the battery,
+      // charge board, and enclosure retain their separate motion treatment.
+      const zoomWeight = blend.id === 'enclosure' ? 0.72 : (blend.id === 'battery' ? 0.56 : (blend.id === 'led_pair' ? 0.46 : 0.15));
+      dPart *= 1 / Math.max(0.84, lerp(1, localMotion.zoom, zoomWeight));
+      if (blend.id === 'enclosure') dPart *= 0.885;
       if (blend.prevId && blend.handoff < 1) {
         const prevBox = boxForSubject(blend.prevId, boxA);
         const prevCenter = prevBox.getCenter(new THREE.Vector3());
@@ -588,6 +637,20 @@ function init(section) {
       const shiftedMid = (shifted.minX + shifted.maxX) * 0.5;
       const slope = (shiftedMid - baseMid) / 0.001;
       if (Math.abs(slope) > 1) center.addScaledVector(right, ((pane.x + pane.w * 0.5) - baseMid) / slope);
+    }
+    if (!pane.mobile && blend.w > 0.5 && (blend.id === 'battery' || blend.id === 'led_pair')) {
+      // The right-side callouts intentionally bias these two wide subjects
+      // toward the copy gutter. Give the larger per-part inspection zoom a
+      // small opposing screen-space bias so the pane safety solve does not
+      // immediately undo the authored scale at its left clearance edge.
+      const right = new THREE.Vector3(Math.cos(azim), 0, -Math.sin(azim));
+      const subjectBox = boxForSubject(blend.id, boxA);
+      const base = projectedPixelBBox(subjectBox, center, dist, azim, elev, pane);
+      const shifted = projectedPixelBBox(subjectBox, switchCenterProbe(center, right, 0.001), dist, azim, elev, pane);
+      const baseMid = (base.minX + base.maxX) * 0.5;
+      const shiftedMid = (shifted.minX + shifted.maxX) * 0.5;
+      const slope = (shiftedMid - baseMid) / 0.001;
+      if (Math.abs(slope) > 1) center.addScaledVector(right, 10 / slope);
     }
     if (p < T_INTRO_END) center.y += pane.mobile ? 0.012 : 0.025;
     const chapterEnd = T_CH_START + CHAPTERS.length * CH_W;
@@ -654,6 +717,20 @@ function init(section) {
       compositionDist *= lerp(1, 0.97, finalBridgeT);
       center.lerp(compositionCenter, compositionBlend);
       dist = lerp(dist, compositionDist, compositionBlend);
+    }
+    // Final local safety solve for the animated solo pose. This is evaluated
+    // after the part quaternion/zoom sample, so each catalog motion can be
+    // expressive without allowing a rotated corner to clip the editorial
+    // pane or mobile gutter.
+    if (blend.id && p < chapterEnd) {
+      const safetyBox = boxForSubject(blend.id, boxA);
+      const minClear = pane.mobile ? 16 : 32;
+      for (let iter = 0; iter < 8; iter++) {
+        const bb = projectedPixelBBox(safetyBox, center, dist, azim, elev, pane);
+        const overflow = Math.max(0, pane.x + minClear - bb.minX, bb.maxX - (pane.x + pane.w - minClear), pane.y + minClear - bb.minY, bb.maxY - (pane.y + pane.h - minClear));
+        if (overflow <= 0) break;
+        dist *= 1.035;
+      }
     }
     return { center, dist };
   }
@@ -765,6 +842,12 @@ function init(section) {
         x += c.inspect[0] * MM * liftAmt;
         y += c.inspect[1] * MM * liftAmt;
         z += c.inspect[2] * MM * liftAmt;
+        const sampled = samplePartPose(c.id, t, sticky.clientWidth < 700);
+        // Local inspection motion is composed with the frozen chapter yaw;
+        // quaternion slerp prevents Euler accumulation and remains reversible.
+        const baseQ = new THREE.Quaternion().setFromEuler(new THREE.Euler(0, yaw, 0, 'YXZ'));
+        g.quaternion.copy(baseQ).multiply(sampled.quaternion);
+        z += sampled.lift * MM;
       }
       // During a chapter handoff, return the previous solo to its neutral
       // exploded slot while the next solo enters. This keeps one coherent
@@ -814,7 +897,7 @@ function init(section) {
         z += c.inspect[2] * MM * (1 - settleBridge);
       }
       g.position.set(seats[c.id].x + x, seats[c.id].y + y, seats[c.id].z + z);
-      g.rotation.set(0, yaw, 0, 'YXZ');
+      if (i !== chIdx) g.rotation.set(0, yaw, 0, 'YXZ');
       // Give the true enclosure rim/cavity enough visual weight in the
       // all-parts tableau. Solo and closed-product scales remain unchanged.
       const tableauScale = 1.35;

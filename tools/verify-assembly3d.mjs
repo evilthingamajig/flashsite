@@ -31,7 +31,7 @@ function staticChecks() {
   check('reassembly overlap <=20%', overlap <= RE_W * 0.20, `${(overlap / RE_W * 100).toFixed(1)}% overlap`);
   const glbPath = join(ROOT, 'assets', '3d', 'flashlight-assembly.glb');
   const manifest = JSON.parse(readFileSync(join(ROOT, 'assets', '3d', 'assembly-manifest.json'), 'utf8'));
-  check('pass10e checkpoint/cache token', manifest.checkpoint === 'pass10e' && manifest.cacheToken === 'pass10e', `${manifest.checkpoint}/${manifest.cacheToken}`);
+  check('pass11 checkpoint/cache token', manifest.checkpoint === 'pass11' && manifest.cacheToken === 'pass11', `${manifest.checkpoint}/${manifest.cacheToken}`);
   check('glb exists', existsSync(glbPath));
   const bytes = statSync(glbPath).size;
   check('glb <= 2 MB', bytes <= 2 * 1024 * 1024, bytes + ' bytes');
@@ -106,7 +106,7 @@ function staticChecks() {
   const poseEnd = asm3dForLock.indexOf('  let lastProgress', poseStart);
   const choreographyHash = lockStart >= 0 && chapterLockEnd > lockStart && poseStart > chapterLockEnd && poseEnd > poseStart
     ? createHash('sha256').update(asm3dForLock.slice(lockStart, chapterLockEnd) + asm3dForLock.slice(poseStart, poseEnd)).digest('hex') : '';
-  check('choreography/applyPose lock hash', choreographyHash === 'cebe12c62dae2ba0c29a8ad18c8ef5caaaab3a60c17c231db976a72b4ac182fc', choreographyHash.slice(0, 12));
+  check('choreography/applyPose lock hash', choreographyHash === '3294e580c7820a86d457bd95576558f0cab90a669b2e9f707a24ec2a5e9a2d74', choreographyHash.slice(0, 12));
   execFileSync(process.execPath, [join(ROOT, 'tools', 'build-assembly-glb.mjs')], { cwd: ROOT });
   const rebuilt = readFileSync(glbPath);
   check('builder deterministic (rebuild identical)', createHash('sha256').update(rebuilt).digest('hex') === createHash('sha256').update(data).digest('hex'));
@@ -129,6 +129,8 @@ function staticChecks() {
   check('ACES neutral renderer configured', /ACESFilmicToneMapping/.test(asm3d) && /toneMappingExposure = 1\.08/.test(asm3d) && /physicallyCorrectLights = true/.test(asm3d));
   check('runtime render metrics instrumented', /renderMetrics: \{ triangles: renderer\.info\.render\.triangles, drawCalls: renderer\.info\.render\.calls \}/.test(asm3d));
   check('pass10e visible LED optical material', /ClearLed[\s\S]{0,500}transmission: 0\.70[\s\S]{0,500}opacity: 0\.36/.test(asm3d) && /envMapIntensity: 1\.15/.test(asm3d) && /emissiveIntensity = 0\.10/.test(asm3d));
+  check('pass11 data-driven solo motion sampler', /const SOLO_MOTION = \{/.test(asm3d) && /function samplePartPose\(id, localT, mobile\)/.test(asm3d) && /\.slerp\(q1/.test(asm3d) && /source note|official THREE\.Quaternion\.slerp/i.test(asm3d));
+  check('pass11 distinct per-part motion signatures', /solar_lid: \{ zoom: 0\.88, yaw: 16, pitch: 8/.test(asm3d) && /battery: \{ zoom: 1\.20, yaw: 12, pitch: 0, roll: 8, lift: 4/.test(asm3d) && /led_pair: \{ zoom: 1\.40, yaw: 78/.test(asm3d) && /switch: \{ zoom: 1\.27, yaw: 20/.test(asm3d));
   check('component material realism markers present', /MeshPhysicalMaterial/.test(asm3d) && /transmission/.test(asm3d) && /amber/.test(asm3d) && /redLead/.test(asm3d) && /actuator/.test(asm3d) && /ClearLed/.test(asm3d));
   check('component geometry proportions authored', /roundedPouch/.test(asm3d) && /SS12D00|compact SS12D00/.test(readFileSync(join(ROOT, 'tools', 'build-assembly-glb.mjs'), 'utf8')) && /PcbTrace/.test(readFileSync(join(ROOT, 'tools', 'build-assembly-glb.mjs'), 'utf8')));
   check('choreography constants frozen for 7A', /T_RE_START = 0\.76/.test(asm3d) && /RE_SPACING = 0\.035/.test(asm3d) && /RE_W = 0\.025/.test(asm3d) && /T_FINAL = 0\.925/.test(asm3d));
@@ -599,7 +601,7 @@ staticChecks();
 await browserPass();
 
 writeFileSync(join(OUT, 'report.json'), JSON.stringify({
-  when: 'checkpoint-pass10e',
+  when: 'checkpoint-pass11',
   results,
   passed: results.filter((r) => r.ok).length,
   failed: results.filter((r) => !r.ok).length,
