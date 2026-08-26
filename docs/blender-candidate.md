@@ -56,9 +56,10 @@ installation.
 - The supplied TP4056 mesh has lightweight vivid-blue PCB, bright USB-C
   port, brightened chip/resistor-bank, and input-wire cues parented to it;
   these inherit the board's authored motion.
-- The supplied pass9 switch mesh has a small contrasting actuator cue parented
-  to it; the native verifier requires that child while preserving the measured
-  source envelope.
+- The supplied pass9 switch mesh has a contrasting actuator cue parented
+  to it; the switch body is darker matte plastic and the actuator is
+  lighter with higher contrast; the native verifier requires that child
+  while preserving the measured source envelope.
 - The switch also carries short red/black inward-running wire cues, parented to
   the switch so they follow its authored motion; their exact routing remains
   provisional pending authoritative wiring references.
@@ -66,7 +67,9 @@ installation.
   blocks, parented to the case shell and sized from the media evidence; these
   are reference-informed candidate details, not a new authoritative CAD claim.
 - Both LED meshes carry restrained parented wire cues and retain their
-  negative-X short-end seats.
+  negative-X short-end seats. Each LED has a small inner die cylinder
+  parented to it for physical lens contrast, and the clear-lens material
+  has subtle warm-white emission.
 - Motion is authored per component: the enclosure stays stable, the panel
   reveals, the battery rolls, the board turns, the LEDs splay symmetrically,
   and the switch lifts. The exact degree values are recorded in the candidate
