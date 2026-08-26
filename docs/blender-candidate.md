@@ -35,6 +35,10 @@ installation.
   candidate.
 - The supplied battery mesh has lightweight provisional yellow Kapton and
   label-plate cues parented to it; these inherit the battery's authored motion.
+- Motion is authored per component: the enclosure stays stable, the panel
+  reveals, the battery rolls, the board turns, the LEDs splay symmetrically,
+  and the switch lifts. The exact degree values are recorded in the candidate
+  manifest under `motionProfiles`.
 - The second LED is a duplicate of the supplied single LED and must be
   confirmed against the final product.
 - Battery, switch, solar-panel placement, and internal seating remain

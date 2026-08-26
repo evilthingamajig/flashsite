@@ -19,6 +19,92 @@
     "led_right",
     "switch"
   ],
+  "motionProfiles": {
+    "enclosure": {
+      "explode_rotation": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "inspect_rotation": [
+        0.0,
+        0.0,
+        0.0
+      ]
+    },
+    "solar_panel_placeholder": {
+      "explode_rotation": [
+        -8.0,
+        0.0,
+        0.0
+      ],
+      "inspect_rotation": [
+        -18.0,
+        6.0,
+        0.0
+      ]
+    },
+    "battery": {
+      "explode_rotation": [
+        9.0,
+        0.0,
+        0.0
+      ],
+      "inspect_rotation": [
+        24.0,
+        0.0,
+        0.0
+      ]
+    },
+    "charge_module": {
+      "explode_rotation": [
+        0.0,
+        0.0,
+        12.0
+      ],
+      "inspect_rotation": [
+        -6.0,
+        0.0,
+        38.0
+      ]
+    },
+    "led_left": {
+      "explode_rotation": [
+        0.0,
+        0.0,
+        10.0
+      ],
+      "inspect_rotation": [
+        -8.0,
+        0.0,
+        26.0
+      ]
+    },
+    "led_right": {
+      "explode_rotation": [
+        0.0,
+        0.0,
+        -10.0
+      ],
+      "inspect_rotation": [
+        -8.0,
+        0.0,
+        -26.0
+      ]
+    },
+    "switch": {
+      "explode_rotation": [
+        -6.0,
+        0.0,
+        0.0
+      ],
+      "inspect_rotation": [
+        -14.0,
+        0.0,
+        0.0
+      ]
+    }
+  },
   "visualDetails": [
     "battery has lightweight provisional Kapton band and label plate parented to the supplied mesh"
   ],

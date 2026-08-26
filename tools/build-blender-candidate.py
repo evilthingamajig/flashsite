@@ -107,24 +107,57 @@ def reduce_mesh(ob, ratio=0.35):
     bpy.context.view_layer.objects.active = ob
     bpy.ops.object.modifier_apply(modifier=mod.name)
 
-def add_keyframes(ob, seat, explode, inspect, frame_inspect):
+MOTION_PROFILES = {
+    'enclosure': {
+        'explode_rotation': (0.0, 0.0, 0.0),
+        'inspect_rotation': (0.0, 0.0, 0.0),
+    },
+    'solar_panel_placeholder': {
+        'explode_rotation': (math.radians(-8.0), 0.0, 0.0),
+        'inspect_rotation': (math.radians(-18.0), math.radians(6.0), 0.0),
+    },
+    'battery': {
+        'explode_rotation': (math.radians(9.0), 0.0, 0.0),
+        'inspect_rotation': (math.radians(24.0), 0.0, 0.0),
+    },
+    'charge_module': {
+        'explode_rotation': (0.0, 0.0, math.radians(12.0)),
+        'inspect_rotation': (math.radians(-6.0), 0.0, math.radians(38.0)),
+    },
+    'led_left': {
+        'explode_rotation': (0.0, 0.0, math.radians(10.0)),
+        'inspect_rotation': (math.radians(-8.0), 0.0, math.radians(26.0)),
+    },
+    'led_right': {
+        'explode_rotation': (0.0, 0.0, math.radians(-10.0)),
+        'inspect_rotation': (math.radians(-8.0), 0.0, math.radians(-26.0)),
+    },
+    'switch': {
+        'explode_rotation': (math.radians(-6.0), 0.0, 0.0),
+        'inspect_rotation': (math.radians(-14.0), 0.0, 0.0),
+    },
+}
+
+def add_keyframes(ob, seat, explode, inspect, frame_inspect, profile):
+    explode_rot = profile['explode_rotation']
+    inspect_rot = profile['inspect_rotation']
     ob.location = seat
     ob.rotation_euler = (0.0, 0.0, 0.0)
     ob.keyframe_insert('location', frame=1)
     ob.keyframe_insert('rotation_euler', frame=1)
     ob.location = explode
-    ob.rotation_euler = (0.0, 0.35, 0.0)
+    ob.rotation_euler = explode_rot
     ob.keyframe_insert('location', frame=30)
     ob.keyframe_insert('rotation_euler', frame=30)
     ob.location = inspect
-    ob.rotation_euler = (0.0, 1.2 if frame_inspect % 2 else -1.0, 0.25)
+    ob.rotation_euler = inspect_rot
     ob.keyframe_insert('location', frame=frame_inspect)
     ob.keyframe_insert('rotation_euler', frame=frame_inspect)
     # Hold the exploded inspection state through the middle of the authored
     # timeline, then return every part to its real closed-pose seat for the
     # final product view.
     ob.location = explode
-    ob.rotation_euler = (0.0, 0.35, 0.0)
+    ob.rotation_euler = explode_rot
     ob.keyframe_insert('location', frame=100)
     ob.keyframe_insert('rotation_euler', frame=100)
     ob.location = seat
@@ -211,7 +244,7 @@ def main():
         s = Vector(seats[p.name])
         explode = s + Vector(explode_offsets[p.name])
         inspect = s + Vector(((-1 if i % 2 else 1) * 0.06, (i - 3) * 0.01, 0.055 + i * 0.004))
-        add_keyframes(p, s, explode, inspect, 42 + i * 7)
+        add_keyframes(p, s, explode, inspect, 42 + i * 7, MOTION_PROFILES[p.name])
 
     # Defensive cleanup for headless Blender startup datablocks that can
     # survive factory reset and otherwise export as a 2 m default Cube.
@@ -236,6 +269,10 @@ def main():
             'led': 'source-assets/external/user-supplied/led-user-supplied.stl',
         },
         'parts': ['enclosure','solar_panel_placeholder','battery','charge_module','led_left','led_right','switch'],
+        'motionProfiles': {
+            name: {key: [round(math.degrees(value), 1) for value in rotation] for key, rotation in profile.items()}
+            for name, profile in MOTION_PROFILES.items()
+        },
         'visualDetails': ['battery has lightweight provisional Kapton band and label plate parented to the supplied mesh'],
         'provisional': ['solar panel is reference-informed geometry; no solar-panel CAD supplied', 'led_right duplicates the supplied single LED', 'battery and switch seating are provisional', 'user-supplied STEP files were converted to coarse browser-safe STL meshes through FreeCAD'],
         'authoredAction': 'ScrollSequence', 'frameRange': [1, 120],
