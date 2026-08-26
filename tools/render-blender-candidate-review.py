@@ -96,10 +96,12 @@ def main():
     cam_obj.rotation_euler = rot.to_euler("XYZ")
     scene.camera = cam_obj
 
-    # Workbench renderer: no lights, no world – solid viewport colors.
+    # Workbench renderer: no lights, solid viewport colors on a white stage.
     scene.render.engine = "BLENDER_WORKBENCH"
     scene.display.shading.light = "FLAT"
     scene.display.shading.color_type = "MATERIAL"
+    scene.display.shading.background_type = "VIEWPORT"
+    scene.display.shading.background_color = (1.0, 1.0, 1.0)
     scene.display.shadow_shift = 0.1
     scene.view_settings.view_transform = "Standard"
 
