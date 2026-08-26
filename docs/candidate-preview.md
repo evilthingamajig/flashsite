@@ -23,8 +23,9 @@ No external network assets.
 
 - Full-screen dark neutral stage in the Flash Forward visual language
   (Lausanne type, green accent, hairline borders), with a compact accessible
-  parts list, a bottom scrub progress indicator, direct timeline/reset
-  controls, restrained helper copy, and a live loading/status pill.
+  parts list, a collapsible supplied solar-reference panel, a bottom scrub
+  progress indicator, direct timeline/reset controls, restrained helper copy,
+  and a live loading/status pill.
 - The timeline range input and Reset button mirror the scroll position. Reset
   uses an instant seek when `prefers-reduced-motion: reduce` is enabled.
 - Scrub is deterministic: scroll progress maps to
