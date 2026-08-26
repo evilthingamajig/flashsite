@@ -104,11 +104,15 @@ await cdp.send('Emulation.setDeviceMetricsOverride', { width: 390, height: 844, 
 const mobile = await cdp.evaluate(`(() => {
   const rect = (selector) => document.querySelector(selector)?.getBoundingClientRect();
   const parts = rect('.cpv-parts'); const controls = rect('.cpv-controls');
+  const head = rect('.cpv-head'); const reference = rect('.cpv-reference'); const status = rect('.cpv-status');
+  const overlaps = (a, b) => !!a && !!b && a.left < b.right && a.right > b.left && a.top < b.bottom && a.bottom > b.top;
   return { overflow: document.documentElement.scrollWidth - innerWidth,
     parts: !!parts && parts.left >= 0 && parts.right <= innerWidth && parts.bottom <= innerHeight,
-    controls: !!controls && controls.left >= 0 && controls.right <= innerWidth };
+    controls: !!controls && controls.left >= 0 && controls.right <= innerWidth,
+    headerReferenceClear: !overlaps(head, reference),
+    headerStatusClear: !overlaps(head, status) };
 })()`);
-check('390x844 layout', mobile.overflow <= 1 && mobile.parts && mobile.controls, JSON.stringify(mobile));
+check('390x844 layout', mobile.overflow <= 1 && mobile.parts && mobile.controls && mobile.headerReferenceClear && mobile.headerStatusClear, JSON.stringify(mobile));
 await cdp.send('Emulation.clearDeviceMetricsOverride');
 
 state = await cdp.evaluate(`Object.defineProperty(document,'hidden',{configurable:true,get(){return true}});document.dispatchEvent(new Event('visibilitychange'));window.__ffCandidatePreview.info()`);

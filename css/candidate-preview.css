@@ -153,13 +153,13 @@ body{
     left:16px;right:16px;top:auto;bottom:64px;transform:none;
     width:auto;max-height:44svh;
   }
-  .cpv-status{left:16px}
+  .cpv-status{left:16px;top:10px}
   .cpv-head{width:92vw}
   .cpv-controls{left:16px;right:16px;bottom:54px;flex-wrap:wrap}
   .cpv-pose-buttons{order:3;width:100%;justify-content:center}
   .cpv-range-label{flex:1}
   .cpv-range-label input{width:100%}
-  .cpv-reference{left:16px;top:64px;transform:none;width:13rem}
+  .cpv-reference{left:16px;top:190px;transform:none;width:13rem}
   .cpv-callout-name{font-size:9px}
   .cpv-callout-cost{font-size:8px}
 }
