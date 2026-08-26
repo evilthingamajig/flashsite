@@ -174,7 +174,13 @@ function targetFor(root, part) {
 
 function updateCallouts(root = assetRoot) {
   if (!root || !calloutsEl || !leadersEl || !camera) return;
-  const visible = progress >= 0.12 && progress <= 0.88;
+  const annotationStart = 0.16;
+  const annotationEnd = 0.88;
+  const annotationSpan = (annotationEnd - annotationStart) / calloutSpecs.length;
+  const activeIndex = progress >= annotationStart && progress <= annotationEnd
+    ? Math.min(calloutSpecs.length - 1, Math.floor((progress - annotationStart) / annotationSpan))
+    : -1;
+  const visible = activeIndex >= 0;
   calloutsEl.hidden = !visible;
   leadersEl.hidden = !visible;
   calloutsEl.style.display = visible ? '' : 'none';
@@ -187,11 +193,15 @@ function updateCallouts(root = assetRoot) {
   // and incorrectly switch a desktop review into mobile lanes).
   const mobile = window.innerWidth < 760;
   const slots = mobile ? [0.24, 0.36, 0.48] : [0.24, 0.40, 0.56];
-  for (const spec of calloutSpecs) {
+  for (const [index, spec] of calloutSpecs.entries()) {
     const box = calloutTargets.get(spec.part);
     const line = calloutLines.get(spec.part);
     const point = targetFor(root, spec.part);
     if (!box || !line || !point) continue;
+    const active = index === activeIndex;
+    box.classList.toggle('is-active', active);
+    box.style.display = active ? 'block' : 'none';
+    line.style.opacity = active ? '0.72' : '0';
     point.project(camera);
     const targetX = (point.x * 0.5 + 0.5) * width;
     const targetY = (-point.y * 0.5 + 0.5) * height;

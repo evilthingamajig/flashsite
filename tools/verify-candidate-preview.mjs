@@ -73,9 +73,18 @@ const callouts = await cdp.evaluate(`({
   lines: document.querySelectorAll('#cpv-leaders line').length,
   visible: !document.getElementById('cpv-callouts').hidden,
   shortCopy: [...document.querySelectorAll('.cpv-callout')].every((el) => el.textContent.trim().split(/\\s+/).length <= 5),
+  activeBoxes: [...document.querySelectorAll('.cpv-callout')].filter((el) => getComputedStyle(el).display !== 'none').length,
+  activeLines: [...document.querySelectorAll('#cpv-leaders line')].filter((el) => getComputedStyle(el).opacity !== '0').length,
   explodedPosePressed: document.querySelector('[data-cpv-pose="0.67"]')?.getAttribute('aria-pressed') === 'true',
 })`);
-check('exploded part callouts', callouts.boxes === 6 && callouts.lines === 6 && callouts.visible && callouts.shortCopy && callouts.explodedPosePressed, JSON.stringify(callouts));
+check('exploded editorial callout', callouts.boxes === 6 && callouts.lines === 6 && callouts.visible && callouts.shortCopy && callouts.activeBoxes === 1 && callouts.activeLines === 1 && callouts.explodedPosePressed, JSON.stringify(callouts));
+const editorialSamples = [];
+for (const sample of [0.2, 0.32, 0.44, 0.56, 0.68, 0.8]) {
+  await cdp.evaluate(`window.__ffCandidatePreview.setProgress(${sample}); undefined`);
+  await new Promise((resolve) => setTimeout(resolve, 55));
+  editorialSamples.push(await cdp.evaluate(`({p:${sample}, active:[...document.querySelectorAll('.cpv-callout')].filter((el) => getComputedStyle(el).display !== 'none').length, lines:[...document.querySelectorAll('#cpv-leaders line')].filter((el) => getComputedStyle(el).opacity !== '0').length})`));
+}
+check('editorial callouts sequence', editorialSamples.every((sample) => sample.active === 1 && sample.lines === 1), JSON.stringify(editorialSamples));
 for (const part of ['battery', 'charge_module']) {
   const a = closed?.partTransforms?.[part];
   const b = exploded?.partTransforms?.[part];
@@ -108,10 +117,13 @@ await cdp.evaluate(`Object.defineProperty(document,'hidden',{configurable:true,g
 check('zero console errors', errors.length === 0, errors.join(', '));
 
 await cdp.send('Page.navigate', { url: `http://127.0.0.1:${PORT}/candidate-preview.html?p=1` });
-await new Promise((resolve) => setTimeout(resolve, 900));
+await new Promise((resolve) => setTimeout(resolve, 1800));
 const deepLink = await info();
+const deepLinkQuery = await cdp.evaluate('window.location.search');
+await cdp.evaluate('window.__ffCandidatePreview.setProgress(1); undefined');
+await new Promise((resolve) => setTimeout(resolve, 120));
 const deepLinkStatus = await cdp.evaluate("({status: document.getElementById('cpv-status').textContent, range: Number(document.getElementById('cpv-range').value), calloutsHidden: document.getElementById('cpv-callouts').style.display === 'none', leadersHidden: document.getElementById('cpv-leaders').style.display === 'none'})");
-check('reassembled deep link', deepLinkStatus.range >= 0.999 && /Reassembled/.test(deepLinkStatus.status) && deepLinkStatus.calloutsHidden && deepLinkStatus.leadersHidden, JSON.stringify(deepLinkStatus));
+check('reassembled deep link', deepLinkQuery.includes('p=1') && deepLinkStatus.range >= 0.999 && /Reassembled/.test(deepLinkStatus.status) && deepLinkStatus.calloutsHidden && deepLinkStatus.leadersHidden, JSON.stringify({ query: deepLinkQuery, ...deepLinkStatus }));
 
 await cdp.close();
 server.close();
