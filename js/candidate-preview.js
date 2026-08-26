@@ -527,6 +527,15 @@ if (renderer && !failed) {
   }, { passive: true });
 
   window.addEventListener('resize', measureStage);
+
+  // Harden against GPU/WebGL context loss: prevent the browser default, stop
+  // rendering, and surface the existing fallback without a reload loop. The
+  // parts list and controls remain usable alongside the notice.
+  canvas.addEventListener('webglcontextlost', (event) => {
+    event.preventDefault();
+    showFallback('The 3D graphics context was lost.', new Error('webglcontextlost'));
+  });
+
   rangeEl?.addEventListener('input', () => {
     const next = clamp01(Number(rangeEl.value));
     applyProgress(next);
