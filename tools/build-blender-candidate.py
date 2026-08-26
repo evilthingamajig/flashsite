@@ -55,13 +55,23 @@ def solar_material():
 
 def add_solar_details(panel, bus_material, line_material):
     details = []
+    frame_material = bpy.data.materials.get('SolarFrame') or mat('SolarFrame', (0.018, 0.022, 0.024), metallic=0.45, roughness=0.32)
+    # A thin raised frame keeps the reference-informed panel from reading as
+    # a floating blue rectangle while staying below the case scale.
+    frame_parts = [
+        ('solar_frame_top', (0.098, 0.0018, 0.0008), (0.0, 0.0281, 0.00125)),
+        ('solar_frame_bottom', (0.098, 0.0018, 0.0008), (0.0, -0.0281, 0.00125)),
+        ('solar_frame_left', (0.0018, 0.0544, 0.0008), (-0.0481, 0.0, 0.00125)),
+        ('solar_frame_right', (0.0018, 0.0544, 0.0008), (0.0481, 0.0, 0.00125)),
+    ]
+    details.extend(cube(name, dims, loc, frame_material) for name, dims, loc in frame_parts)
     for x in (-0.025, 0.025):
         details.append(cube('solar_bus', (0.0012, 0.054, 0.00025), (x, 0.0, 0.00105), bus_material))
     for y in (-0.023, -0.015, -0.007, 0.001, 0.009, 0.017, 0.025):
         details.append(cube('solar_cell_line', (0.094, 0.00035, 0.00022), (0.0, y, 0.00104), line_material))
     for detail in details:
         detail.parent = panel
-        detail.location = (detail.location.x, detail.location.y, 0.00105)
+        detail.location = (detail.location.x, detail.location.y, detail.location.z)
     return details
 
 def import_stl(path, name, scale=BLENDER_MM):
