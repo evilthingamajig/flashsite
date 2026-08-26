@@ -1,5 +1,6 @@
 import math
 import sys
+from collections import Counter
 from pathlib import Path
 
 import bpy
@@ -68,6 +69,14 @@ def led_die_child(part):
 led_die_child('led_left')
 led_die_child('led_right')
 passed('both LED inner die children use LedDie material')
+
+duplicate_faces = {}
+for part in ('battery', 'charge_module'):
+    signatures = [tuple(sorted(poly.vertices)) for poly in parts[part].data.polygons]
+    duplicate_faces[part] = sum(count - 1 for count in Counter(signatures).values() if count > 1)
+if any(count for count in duplicate_faces.values()):
+    fail('exported battery/charge meshes retain duplicate faces: %s' % duplicate_faces)
+passed('exported battery and charge meshes contain no duplicate triangle faces')
 
 solar_children = {child.name for child in parts['solar_panel_placeholder'].children}
 # GLB import appends .001 .002 suffixes to repeated base names; match by
