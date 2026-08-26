@@ -44,6 +44,9 @@ No external network assets.
   `LoopOnce` + `clampWhenFinished` action, so all parts scrub together;
   `action.paused` is cleared before each absolute seek so reverse
   scrubbing never sticks at the final frame.
+- The scrub rail carries three decorative chapter markers: `Closed` at 0%,
+  `Exploded review` at 67%, and `Reassembled` at 100%. They do not alter the
+  scroll mapping or live status text.
 - Camera framing interpolates between the closed (p=0) and exploded-review
   (p=0.67) bounds with a slow azimuth/elevation drift, then settles into a
   distinct measured three-quarter product angle as the product reassembles at
