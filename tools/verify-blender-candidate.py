@@ -55,6 +55,19 @@ if not required_switch.issubset(switch_children):
     fail('switch detail children missing: ' + ', '.join(sorted(required_switch - switch_children)))
 passed('switch actuator and both wire detail children present')
 
+def led_die_child(part):
+    for child in parts[part].children:
+        if child.name.split('.')[0] == 'led_die_' + part:
+            materials = {material.name for material in child.data.materials if material}
+            if 'LedDie' not in materials:
+                fail('%s inner die is missing LedDie material' % part)
+            return child
+    fail('%s inner die child is missing' % part)
+
+led_die_child('led_left')
+led_die_child('led_right')
+passed('both LED inner die children use LedDie material')
+
 solar_children = {child.name for child in parts['solar_panel_placeholder'].children}
 # GLB import appends .001 .002 suffixes to repeated base names; match by
 # the base prefix so both the original and any suffixed duplicates count.
