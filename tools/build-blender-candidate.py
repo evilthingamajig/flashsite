@@ -14,6 +14,7 @@ SWITCH = os.path.join(ROOT, "source-assets", "stl", "switch.stl")
 TP4056 = os.path.join(ROOT, "source-assets", "external", "user-supplied", "tp4056-user-supplied.stl")
 BATTERY = os.path.join(ROOT, "source-assets", "external", "user-supplied", "battery-user-supplied.stl")
 LED = os.path.join(ROOT, "source-assets", "external", "user-supplied", "led-user-supplied.stl")
+SOLAR_PHOTO = os.path.join(ROOT, "assets", "3d", "references", "solarpanel.jpg")
 
 def clear():
     bpy.ops.wm.read_factory_settings(use_empty=True)
@@ -44,6 +45,23 @@ def mat(name, color, metallic=0.0, roughness=0.45, transmission=0.0):
     if 'Transmission Weight' in bs.inputs:
         bs.inputs['Transmission Weight'].default_value = transmission
     return m
+
+def solar_material():
+    # Cell layout and proportions follow the supplied solar-panel reference
+    # photo. Geometry details below are used instead of the contact-sheet
+    # pixels so the GLB stays self-contained and free of white background.
+    return mat('SolarPhotoCell', (0.012, 0.035, 0.07), metallic=0.15, roughness=0.28)
+
+def add_solar_details(panel, bus_material, line_material):
+    details = []
+    for x in (-0.025, 0.025):
+        details.append(cube('solar_bus', (0.0012, 0.054, 0.00025), (x, 0.0, 0.00105), bus_material))
+    for y in (-0.023, -0.015, -0.007, 0.001, 0.009, 0.017, 0.025):
+        details.append(cube('solar_cell_line', (0.094, 0.00035, 0.00022), (0.0, y, 0.00104), line_material))
+    for detail in details:
+        detail.parent = panel
+        detail.location = (detail.location.x, detail.location.y, 0.00105)
+    return details
 
 def import_stl(path, name, scale=BLENDER_MM):
     bpy.ops.wm.stl_import(filepath=path)
@@ -105,7 +123,9 @@ def add_keyframes(ob, seat, explode, inspect, frame_inspect):
 def main():
     clear()
     charcoal = mat('CaseCharcoal', (0.025, 0.035, 0.04), roughness=0.62)
-    solar = mat('SolarPlaceholder', (0.012, 0.035, 0.07), roughness=0.3)
+    solar = solar_material()
+    solar_bus = mat('SolarBus', (0.06, 0.065, 0.055), metallic=0.3, roughness=0.3)
+    solar_line = mat('SolarCellLine', (0.22, 0.28, 0.34), metallic=0.25, roughness=0.25)
     foil = mat('BatteryFoil', (0.42, 0.45, 0.46), metallic=0.45, roughness=0.32)
     pcb = mat('PcbGreen', (0.015, 0.16, 0.07), roughness=0.42)
     ledmat = mat('LedClear', (0.62, 0.9, 1.0), roughness=0.12, transmission=0.6)
@@ -119,6 +139,7 @@ def main():
     enclosure.location -= center
 
     panel = cube('solar_panel_placeholder', (0.098, 0.058, 0.0018), (0.0, 0.0, 0.0088), solar)
+    add_solar_details(panel, solar_bus, solar_line)
     charge = import_stl(TP4056, 'charge_module')
     set_mat(charge, pcb)
     reduce_mesh(charge, 0.03)
@@ -167,7 +188,7 @@ def main():
             'led': 'source-assets/external/user-supplied/led-user-supplied.stl',
         },
         'parts': ['enclosure','solar_panel_placeholder','battery','charge_module','led_left','led_right','switch'],
-        'provisional': ['solar panel is a geometry placeholder; no CAD/photo baked in', 'led_right duplicates the supplied single LED', 'battery and switch seating are provisional', 'user-supplied STEP files were converted to coarse browser-safe STL meshes through FreeCAD'],
+        'provisional': ['solar panel is reference-informed geometry; no solar-panel CAD supplied', 'led_right duplicates the supplied single LED', 'battery and switch seating are provisional', 'user-supplied STEP files were converted to coarse browser-safe STL meshes through FreeCAD'],
         'authoredAction': 'ScrollSequence', 'frameRange': [1, 100],
         'fallbackPreserved': 'assets/3d/flashlight-assembly.glb',
         'validation': {'blender': 'export completed; inspect GLB node/action metadata before web integration'}

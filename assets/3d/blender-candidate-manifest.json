@@ -20,7 +20,7 @@
     "switch"
   ],
   "provisional": [
-    "solar panel is a geometry placeholder; no CAD/photo baked in",
+    "solar panel is reference-informed geometry; no solar-panel CAD supplied",
     "led_right duplicates the supplied single LED",
     "battery and switch seating are provisional",
     "user-supplied STEP files were converted to coarse browser-safe STL meshes through FreeCAD"
