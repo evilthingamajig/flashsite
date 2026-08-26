@@ -61,9 +61,10 @@ No external network assets.
   — stays inside the frame at narrow mobile widths, while the multiplier is
   exactly 1 (desktop framing unchanged) at `aspect ≥ 0.9`.
 - During the exploded review, one plain two-line editorial label appears at a
-  time and fades to the next part as the timeline advances. Each label uses a
-  dotted SVG leader and the provisional second line `Cost TBD` until
-  authoritative pricing is supplied. Labels and leaders stay hidden in the
+  time and fades to the next part as the timeline advances. Labels use the
+  site's Lausanne type, sentence-case copy, and a dotted SVG leader; the
+  provisional second line is `Cost TBD` until authoritative pricing is supplied.
+  Labels and leaders stay hidden in the
   closed and reassembled poses so the product view remains uncluttered.
 - While a callout is active, its matching parts-list row(s) get a subtle green
   accent and `aria-current="step"`; both LED rows highlight together for

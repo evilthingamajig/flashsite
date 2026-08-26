@@ -35,11 +35,11 @@ body{
 .cpv-leaders{position:absolute;inset:0;width:100%;height:100%;z-index:7;pointer-events:none;overflow:visible}
 .cpv-leaders line{stroke:var(--cpv-accent);stroke-width:1.2;stroke-dasharray:2 4;opacity:.72}
 .cpv-callouts{position:absolute;inset:0;z-index:8;pointer-events:none}
-.cpv-callout{position:absolute;min-width:0;padding:0;transform:translate(-50%,-50%);line-height:1.15;opacity:0;transition:opacity .18s ease;text-shadow:0 2px 12px rgba(0,0,0,.8)}
+.cpv-callout{position:absolute;min-width:0;padding:0;background:none;border:0;box-shadow:none;transform:translate(-50%,-50%);line-height:1.15;opacity:0;transition:opacity .18s ease;text-shadow:0 2px 12px rgba(0,0,0,.8)}
 .cpv-callout.is-active{opacity:1}
 .cpv-callout-name,.cpv-callout-cost{display:block;white-space:nowrap}
-.cpv-callout-name{color:var(--cpv-accent);font-size:11px;font-weight:500;letter-spacing:.14em;text-transform:uppercase}
-.cpv-callout-cost{margin-top:3px;color:var(--cpv-muted);font-size:10px;letter-spacing:.06em;text-transform:uppercase}
+.cpv-callout-name{color:var(--cpv-accent);font-size:12px;font-weight:500;letter-spacing:-.01em}
+.cpv-callout-cost{margin-top:3px;color:var(--cpv-muted);font-size:11px;letter-spacing:0;text-transform:none}
 .cpv-head{
   position:absolute;left:50%;top:clamp(28px,5svh,56px);transform:translateX(-50%);
   z-index:10;width:min(38rem,88vw);text-align:center;pointer-events:none;
