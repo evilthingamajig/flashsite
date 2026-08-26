@@ -1,5 +1,6 @@
 import bpy
 import bmesh
+import math
 import os
 import json
 from mathutils import Vector
@@ -151,6 +152,15 @@ def main():
     led_a = import_stl(LED, 'led_left')
     led_b = import_stl(LED, 'led_right')
     set_mat(led_a, ledmat); set_mat(led_b, ledmat)
+    # The supplied STEP's long axis imports along Z. Apply a 90° X rotation
+    # to the mesh so the LEDs run through the case's front wall along Y while
+    # the authored animation can still use clean object rotations.
+    for led in (led_a, led_b):
+        led.rotation_euler.x = math.radians(90)
+        bpy.context.view_layer.objects.active = led
+        led.select_set(True)
+        bpy.ops.object.transform_apply(location=False, rotation=True, scale=False)
+        led.select_set(False)
     led_a.location = (-0.012, -0.033, 0.0)
     led_b.location = (0.012, -0.033, 0.0)
     sw = import_stl(SWITCH, 'switch', scale=1.0)
