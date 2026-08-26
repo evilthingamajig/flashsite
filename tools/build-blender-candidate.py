@@ -161,8 +161,10 @@ def main():
         led.select_set(True)
         bpy.ops.object.transform_apply(location=False, rotation=True, scale=False)
         led.select_set(False)
-    led_a.location = (-0.012, -0.033, 0.0)
-    led_b.location = (0.012, -0.033, 0.0)
+    # Case front wall is approximately y=-32.5 mm; center the 36.5 mm body
+    # at -23 mm so its clear lens projects about 8-9 mm beyond that wall.
+    led_a.location = (-0.012, -0.023, 0.0)
+    led_b.location = (0.012, -0.023, 0.0)
     sw = import_stl(SWITCH, 'switch', scale=1.0)
     set_mat(sw, switchmat)
     sw.location = (0.018, 0.025, 0.0)
