@@ -64,7 +64,7 @@ const switchSourceRecorded = motionManifest?.convertedCadSources?.switch === 'so
 check('FreeCAD source dimensions recorded', dimensionsMatch && switchSourceRecorded, JSON.stringify({ sourceDimensions, switchSource: motionManifest?.convertedCadSources?.switch }));
 
 await cdp.evaluate('window.__ffCandidatePreview.setProgress(0); undefined');
-await new Promise((resolve) => setTimeout(resolve, 180));
+await new Promise((resolve) => setTimeout(resolve, 400));
 const closed = await info();
 check('closed pose label', /Closed/.test(await cdp.evaluate("document.getElementById('cpv-status').textContent")));
 const closedCamera = closed?.cameraPosition;
@@ -105,18 +105,19 @@ const callouts = await cdp.evaluate(`({
   lines: document.querySelectorAll('#cpv-leaders line').length,
   visible: !document.getElementById('cpv-callouts').hidden,
   shortCopy: [...document.querySelectorAll('.cpv-callout')].every((el) => el.textContent.trim().split(/\\s+/).length <= 5),
-  activeBoxes: [...document.querySelectorAll('.cpv-callout')].filter((el) => getComputedStyle(el).display !== 'none').length,
-  activeLines: [...document.querySelectorAll('#cpv-leaders line')].filter((el) => getComputedStyle(el).opacity !== '0').length,
+  activeBoxes: [...document.querySelectorAll('.cpv-callout')].filter((el) => el.classList.contains('is-active')).length,
+  fadeMounted: [...document.querySelectorAll('.cpv-callout')].every((el) => getComputedStyle(el).display !== 'none'),
+  activeLines: [...document.querySelectorAll('#cpv-leaders line')].filter((el) => el.style.opacity !== '0').length,
   activeAria: [...document.querySelectorAll('.cpv-callout')].filter((el) => el.getAttribute('aria-hidden') === 'false').length,
   label: document.getElementById('cpv-callouts').getAttribute('aria-label'),
   explodedPosePressed: document.querySelector('[data-cpv-pose="0.67"]')?.getAttribute('aria-pressed') === 'true',
 })`);
-check('exploded editorial callout', callouts.boxes === 6 && callouts.lines === 6 && callouts.visible && callouts.shortCopy && callouts.activeBoxes === 1 && callouts.activeLines === 1 && callouts.activeAria === 1 && callouts.label === 'Current part: 5 mm LEDs. Cost TBD.' && callouts.explodedPosePressed && exploded?.activeCallout === 'led_pair', JSON.stringify({ ...callouts, activeCallout: exploded?.activeCallout }));
+check('exploded editorial callout', callouts.boxes === 6 && callouts.lines === 6 && callouts.visible && callouts.shortCopy && callouts.activeBoxes === 1 && callouts.fadeMounted && callouts.activeLines === 1 && callouts.activeAria === 1 && callouts.label === 'Current part: 5 mm LEDs. Cost TBD.' && callouts.explodedPosePressed && exploded?.activeCallout === 'led_pair', JSON.stringify({ ...callouts, activeCallout: exploded?.activeCallout }));
 const editorialSamples = [];
 for (const sample of [0.2, 0.32, 0.44, 0.56, 0.68, 0.8]) {
   await cdp.evaluate(`window.__ffCandidatePreview.setProgress(${sample}); undefined`);
-  await new Promise((resolve) => setTimeout(resolve, 55));
-  editorialSamples.push(await cdp.evaluate(`({p:${sample}, active:[...document.querySelectorAll('.cpv-callout')].filter((el) => getComputedStyle(el).display !== 'none').length, lines:[...document.querySelectorAll('#cpv-leaders line')].filter((el) => getComputedStyle(el).opacity !== '0').length, partRows:[...document.querySelectorAll('#cpv-part-list li.is-active')].map((el) => el.dataset.cpvPart), partAria:[...document.querySelectorAll('#cpv-part-list [aria-current="step"]')].map((el) => el.dataset.cpvPart)})`));
+  await new Promise((resolve) => setTimeout(resolve, 400));
+  editorialSamples.push(await cdp.evaluate(`({p:${sample}, active:[...document.querySelectorAll('.cpv-callout')].filter((el) => el.classList.contains('is-active')).length, lines:[...document.querySelectorAll('#cpv-leaders line')].filter((el) => el.style.opacity !== '0').length, partRows:[...document.querySelectorAll('#cpv-part-list li.is-active')].map((el) => el.dataset.cpvPart), partAria:[...document.querySelectorAll('#cpv-part-list [aria-current="step"]')].map((el) => el.dataset.cpvPart)})`));
 }
 const expectedPartRows = [['enclosure'], ['solar_panel_placeholder'], ['battery'], ['charge_module'], ['led_pair', 'led_pair'], ['switch']];
 check('editorial callouts sequence', editorialSamples.every((sample, index) => sample.active === 1 && sample.lines === 1 && JSON.stringify(sample.partRows) === JSON.stringify(expectedPartRows[index]) && JSON.stringify(sample.partAria) === JSON.stringify(expectedPartRows[index])), JSON.stringify(editorialSamples));

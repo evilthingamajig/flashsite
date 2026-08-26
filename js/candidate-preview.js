@@ -237,7 +237,19 @@ function updateCallouts(root = assetRoot) {
   leadersEl.hidden = !visible;
   calloutsEl.style.display = visible ? '' : 'none';
   leadersEl.style.display = visible ? 'block' : 'none';
-  if (!visible) return;
+  if (!visible) {
+    for (const spec of calloutSpecs) {
+      const box = calloutTargets.get(spec.part);
+      const line = calloutLines.get(spec.part);
+      if (box) {
+        box.classList.remove('is-active');
+        box.style.display = 'none';
+        box.setAttribute('aria-hidden', 'true');
+      }
+      if (line) line.style.opacity = '0';
+    }
+    return;
+  }
   const width = stage.clientWidth || 1;
   const height = stage.clientHeight || 1;
   // Match the stylesheet breakpoint against the viewport, not the sticky
@@ -255,7 +267,9 @@ function updateCallouts(root = assetRoot) {
     if (!box || !line || !point) continue;
     const active = index === activeIndex;
     box.classList.toggle('is-active', active);
-    box.style.display = active ? 'block' : 'none';
+    // Keep inactive labels mounted so the CSS opacity transition can crossfade
+    // from one editorial caption to the next instead of snapping via display.
+    box.style.display = 'block';
     box.setAttribute('aria-hidden', String(!active));
     line.style.opacity = active ? '0.72' : '0';
     point.project(camera);
