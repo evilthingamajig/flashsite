@@ -146,6 +146,13 @@ const controls = await cdp.evaluate(`({
 const referenceSources = controls.references.map((reference) => reference.source);
 const referenceNames = controls.references.map((reference) => reference.name);
 check('review controls and references', controls.range && controls.reset && controls.references.length === 2 && referenceSources.includes('assets/3d/references/solar-panel-tops.png') && referenceSources.includes('assets/3d/references/flashlight-internals-charging-board.png') && referenceNames.length === 2 && referenceNames.every((name) => name === 'candidate-reference') && controls.poses && controls.partsCollapsed && JSON.stringify(controls.chapters) === JSON.stringify(['Closed', 'Exploded review', 'Reassembled']), JSON.stringify(controls));
+const candidateCss = await readFile(join(ROOT, 'css', 'candidate-preview.css'), 'utf8');
+const focusStyles = {
+  disclosureRing: /\.cpv-parts summary:focus-visible,\.cpv-reference summary:focus-visible\{[^}]*outline:1px solid var\(--cpv-accent\)/.test(candidateCss),
+  controlRing: /\.cpv-copy-link:hover,\.cpv-copy-link:focus-visible,\.cpv-pose-buttons button:hover,\.cpv-pose-buttons button:focus-visible\{[^}]*box-shadow:0 0 0 2px/.test(candidateCss),
+  rangeRing: /\.cpv-range-label input:focus-visible\{[^}]*outline:1px solid var\(--cpv-accent\)/.test(candidateCss),
+};
+check('keyboard focus visibility', focusStyles.disclosureRing && focusStyles.controlRing && focusStyles.rangeRing, JSON.stringify(focusStyles));
 const metadata = await cdp.evaluate(`({
   title: document.title,
   description: document.querySelector('meta[name="description"]')?.getAttribute('content') || ''
