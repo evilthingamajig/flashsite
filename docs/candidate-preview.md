@@ -76,6 +76,10 @@ cannot combine a new controller with stale cached CSS or 3D geometry.
   which pulls the camera back so the full product — including both seated LEDs
   — stays inside the frame at narrow mobile widths, while the multiplier is
   exactly 1 (desktop framing unchanged) at `aspect ≥ 0.9`.
+- Camera fitting samples the complete animation path and applies a restrained
+  header-safe vertical offset, so intermediate inspection poses remain inside
+  the viewport and below the large program title rather than only fitting the
+  three named checkpoints.
 - During the exploded review, one plain two-line editorial label appears at a
   time and crossfades to the next part as the timeline advances. Labels use the
   site's Lausanne type, sentence-case copy, and a dotted SVG leader; the
@@ -95,16 +99,16 @@ cannot combine a new controller with stale cached CSS or 3D geometry.
 
 - Render-on-demand: rendering pauses when the stage is offscreen
   (IntersectionObserver) or the document is hidden (visibilitychange).
-- Desktop rendering uses the high-performance GPU preference, caps device-pixel
-  ratio at 1.25, and applies a 2.6-million-pixel framebuffer budget (with a
-  0.75 lower bound) so large/high-DPI windows do not multiply the scrub cost.
+- Desktop rendering uses the high-performance GPU preference and one stable
+  framebuffer for both moving and settled poses: device-pixel ratio is capped
+  at 1.0 with a 1.5-million-pixel budget and 0.75 lower bound. Avoiding
+  mid-scrub framebuffer reallocations prevents blank flashes and resize jank.
 - Only the seven major assembly parts participate in the 512 px shadow pass;
   small decorative meshes still render normally without duplicating dozens of
   shadow draw calls. Only the active editorial callout is projected each frame.
-- While the timeline is actively moving, the framebuffer temporarily uses an
-  aggressive 0.8 DPR / 0.9-million-pixel budget and reuses the previous shadow
-  map. After 140 ms idle, full review resolution returns and shadows refresh
-  once at the settled pose.
+- While the timeline is actively moving, the viewer reuses the previous shadow
+  map. After 140 ms idle, shadows refresh once at the settled pose without
+  resizing the canvas.
 - The four glass-style UI panels temporarily replace `backdrop-filter` blur
   with opaque white while scrubbing, avoiding repeated resampling of the moving
   WebGL canvas. The glass treatment returns at the same idle boundary.
@@ -186,5 +190,5 @@ and a WebGL context-loss fallback (synthetic `webglcontextlost` event
 triggers `preventDefault`, the existing fallback surfaces, and no reload loop
 occurs). The current candidate suite contains 34 checks, including a focused
 regression check that the active annotation is exactly two plain text lines,
-with only its dotted leader visible, plus an adaptive scrub-quality budget
-check that verifies reduced moving-frame resolution and full-quality recovery.
+with only its dotted leader visible, plus a stable scrub-render budget check
+that verifies moving and settled frames use the same framebuffer allocation.

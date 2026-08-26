@@ -72,13 +72,15 @@ const movingQuality = await info();
 await new Promise((resolve) => setTimeout(resolve, 180));
 const settledQuality = await info();
 const movingPixels = (movingQuality?.renderSize?.width || 0) * (movingQuality?.renderSize?.height || 0);
-check('adaptive scrub render budget', movingQuality?.scrubQuality === true
-  && movingQuality?.renderPixelRatio <= 0.8
-  && movingPixels <= 900000
+check('stable scrub render budget', movingQuality?.scrubQuality === true
+  && movingQuality?.renderPixelRatio <= 1.0
+  && movingPixels <= 1500000
   && movingQuality?.scrubBackdropDisabled === true
   && (movingQuality?.panelBackdrop === 'none' || movingQuality?.panelBackdrop === '')
   && settledQuality?.scrubQuality === false
-  && settledQuality?.renderPixelRatio >= movingQuality?.renderPixelRatio
+  && settledQuality?.renderPixelRatio === movingQuality?.renderPixelRatio
+  && settledQuality?.renderSize?.width === movingQuality?.renderSize?.width
+  && settledQuality?.renderSize?.height === movingQuality?.renderSize?.height
   && settledQuality?.scrubBackdropDisabled === false
   && /blur/.test(settledQuality?.panelBackdrop || ''),
 JSON.stringify({ movingQuality, settledQuality, movingPixels }));
