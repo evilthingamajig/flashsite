@@ -134,7 +134,9 @@
     }
   },
   "visualDetails": [
-    "battery has lightweight provisional Kapton band and label plate parented to the supplied mesh"
+    "solar panel has a raised frame, bus lines, and cell-strip details",
+    "battery has lightweight provisional Kapton band, label plate, and lead cue parented to the supplied mesh",
+    "TP4056 board has lightweight blue PCB, USB-C, and component cues parented to the supplied mesh"
   ],
   "provisional": [
     "solar panel is reference-informed geometry; no solar-panel CAD supplied",
