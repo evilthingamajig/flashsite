@@ -2,6 +2,7 @@ import sys
 from pathlib import Path
 
 import bpy
+from mathutils import Vector
 
 ROOT = Path(__file__).resolve().parents[1]
 GLB = ROOT / 'assets' / '3d' / 'flashlight-assembly-blender-candidate.glb'
@@ -66,6 +67,33 @@ missing_mounts = expected_mounts - enclosure_children
 if missing_mounts:
     fail('enclosure mount block children missing: ' + ', '.join(sorted(missing_mounts)))
 passed('four enclosure corner mount blocks present')
+
+_TOL = 0.001
+_scene = bpy.context.scene
+_enc = parts['enclosure']
+_mbs = [next(child for child in _enc.children if child.name == n) for n in sorted(expected_mounts)]
+for _frame in (1, 120):
+    _scene.frame_set(_frame)
+    _enc_corners = [_enc.matrix_world @ Vector(c) for c in _enc.bound_box]
+    _enc_lo = Vector((min(v.x for v in _enc_corners),
+                       min(v.y for v in _enc_corners),
+                       min(v.z for v in _enc_corners)))
+    _enc_hi = Vector((max(v.x for v in _enc_corners),
+                       max(v.y for v in _enc_corners),
+                       max(v.z for v in _enc_corners)))
+    for _mb in _mbs:
+        _mb_corners = [_mb.matrix_world @ Vector(c) for c in _mb.bound_box]
+        _mb_lo = Vector((min(v.x for v in _mb_corners),
+                          min(v.y for v in _mb_corners),
+                          min(v.z for v in _mb_corners)))
+        _mb_hi = Vector((max(v.x for v in _mb_corners),
+                          max(v.y for v in _mb_corners),
+                          max(v.z for v in _mb_corners)))
+        if (_mb_lo.x - _enc_lo.x < -_TOL or _mb_lo.y - _enc_lo.y < -_TOL or
+                _mb_lo.z - _enc_lo.z < -_TOL or _enc_hi.x - _mb_hi.x < -_TOL or
+                _enc_hi.y - _mb_hi.y < -_TOL or _enc_hi.z - _mb_hi.z < -_TOL):
+            fail('mount block %s world AABB exceeds enclosure AABB at frame %d' % (_mb.name, _frame))
+passed('all mount block AABB corners inside enclosure AABB at frame 1 and 120 (0.001 m tolerance)')
 
 scene = bpy.context.scene
 scene.frame_set(1)
