@@ -46,6 +46,10 @@ are absent on the current candidate build.
 - FreeCAD measurements for the supplied component sources are recorded in the
   manifest: TP4056 board 29.3 × 17.4 × 4.14 mm, LiPo 53.1 × 46.821 × 6.0 mm,
   LED 5.58 × 6.0 × 36.5 mm, and pass9 slide switch 4.1 × 7.82 × 6.0 mm.
+- An independent FreeCAD 1.1.3 re-audit reproduced those three assembly-root
+  bounds from the transferred STEP files: TP4056_Charging_Module_Type_C_v12
+  at 29.300 × 17.400 × 4.140 mm, Bateria_LiPo_3_7V_1000mA_503450_v23 at
+  53.100 × 46.821 × 6.000 mm, and _5mm_LED at 5.580 × 6.000 × 36.500 mm.
 - TP4056, LiPo, and LED STEP dimensions were validated in FreeCAD before this
   candidate was created, then tessellated into browser-safe STL meshes.
 - The solar panel is a placeholder because its photo was not baked into this
