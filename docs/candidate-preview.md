@@ -29,7 +29,8 @@ No external network assets.
 
 - Full-screen dark neutral stage in the Flash Forward visual language
   (Lausanne type, green accent, hairline borders), with a compact accessible
-  parts list, a collapsible media-library solar-reference panel, a bottom scrub
+  parts list, two collapsible media-library reference panels (solar and
+  flashlight-internals), a bottom scrub
   progress indicator, direct timeline/reset controls, restrained helper copy,
   and a live loading/status pill.
 - The parts list starts collapsed on all viewports so part descriptions are not
