@@ -60,6 +60,16 @@ if not panel_dimensions_ok:
     fail('exported solar panel footprint %.6f, %.6f, %.6f m is unexpected' % tuple(panel_dimensions))
 passed('exported solar panel footprint matches candidate target')
 
+for part, expected, label in (
+    ('charge_module', (0.0293, 0.0174, 0.00414), 'FreeCAD TP4056 source'),
+    ('battery', (0.0531, 0.046821, 0.006), 'FreeCAD LiPo source'),
+    ('led_left', (0.00558, 0.006, 0.0365), 'FreeCAD LED source'),
+):
+    matches, measured = dimensions_match(part, expected)
+    if not matches:
+        fail('exported %s dimensions %.6f, %.6f, %.6f m do not match %s' % (part, *measured, label))
+    passed('exported %s dimensions match %s' % (part, label))
+
 battery_children = {child.name for child in parts['battery'].children}
 required_children = {'battery_kapton_band', 'battery_label_plate'}
 if not required_children.issubset(battery_children):
