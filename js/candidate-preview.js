@@ -153,7 +153,11 @@ function updateCamera(p) {
     // Settle into a distinct final three-quarter product angle. The target
     // and distance come from the measured closed frame, so this remains
     // deterministic when the supplied case dimensions change.
-    const t = easeInOutCubic(clamp01((p - explosionEnd) / (1 - explosionEnd)));
+    // Blender's authored parts return to their seats over frames 100–120,
+    // which is the final 1/6 of the 120-frame action. Reach the final camera
+    // at the same authored boundary, then hold it for the finished product.
+    const reassemblyEnd = 0.8333333333;
+    const t = easeInOutCubic(clamp01((p - explosionEnd) / (reassemblyEnd - explosionEnd)));
     center = explodedFrame.center.clone().lerp(closedFrame.center, t);
     dist = THREE.MathUtils.lerp(explodedFrame.dist, closedFrame.dist * 1.08, t);
     azim = THREE.MathUtils.lerp(0.5, -0.78, t);

@@ -190,6 +190,12 @@ const finalCamera = reassembled?.cameraPosition;
 const finalCameraDistinct = closedCamera && finalCamera
   && Math.hypot(closedCamera.x - finalCamera.x, closedCamera.y - finalCamera.y, closedCamera.z - finalCamera.z) > 0.005;
 check('reassembled three-quarter camera', finalCameraDistinct, JSON.stringify({ closedCamera, finalCamera }));
+await cdp.evaluate('window.__ffCandidatePreview.setProgress(0.84); undefined');
+await new Promise((resolve) => setTimeout(resolve, 120));
+const settledCamera = (await info())?.cameraPosition;
+const cameraHoldDelta = settledCamera && finalCamera
+  ? Math.hypot(settledCamera.x - finalCamera.x, settledCamera.y - finalCamera.y, settledCamera.z - finalCamera.z) : Infinity;
+check('camera settles with reassembly', cameraHoldDelta < 0.001, JSON.stringify({ cameraHoldDelta, settledCamera, finalCamera }));
 const reassembledParts = ['battery', 'charge_module', 'led_left', 'led_right', 'switch'];
 const returnedToSeats = reassembledParts.every((part) => {
   const a = closed?.partTransforms?.[part];

@@ -51,9 +51,10 @@ No external network assets.
   `Exploded review` at 67%, and `Reassembled` at 100%. They do not alter the
   scroll mapping or live status text.
 - Camera framing interpolates between the closed (p=0) and exploded-review
-  (p=0.67) bounds with a slow azimuth/elevation drift, then settles into a
-  distinct measured three-quarter product angle as the product reassembles at
-  p=1; everything is a pure function of progress, extended with responsive
+  (p=0.67) bounds with a slow azimuth/elevation drift, then reaches a distinct
+  measured three-quarter product angle at the authored reassembly boundary
+  (p≈0.833) and holds it while the parts finish returning through p=1;
+  everything is a pure function of progress, extended with responsive
   portrait framing: when `camera.aspect < 0.9` the interpolated distance gains
   a smooth bounded multiplier,
   `min(1.75, 1 + (sin(FOV/2) / sin(atan(tan(FOV/2)·aspect)) − 1) · smoothstep(clamp01((0.9 − aspect)/0.9)))`,
@@ -120,4 +121,6 @@ It also guards closed-pose seating: both LEDs must stay
 at the negative-X short end with their pair axis across Z, and the switch must
 remain within the enclosure-centered seating envelope. The final deep-link
 check additionally proves the movable parts return to those seats after the
-exploded review. The current candidate suite contains 25 checks.
+exploded review. The camera-settle assertion also guards that the three-quarter
+framing is stable once authored reassembly begins. The current candidate suite
+contains 26 checks.
