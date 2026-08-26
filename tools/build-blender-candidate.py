@@ -11,7 +11,7 @@ MANIFEST = os.path.join(ROOT, "assets", "3d", "blender-candidate-manifest.json")
 BLENDER_MM = 0.001
 
 CASE = r"C:\Users\romir\Downloads\Revamp Flashlight w addon.stl"
-SWITCH = os.path.join(ROOT, "source-assets", "external", "pass9", "derived", "switch-dip-slide.stl")
+SWITCH = os.path.join(ROOT, "source-assets", "stl", "switch.stl")
 TP4056 = os.path.join(ROOT, "source-assets", "external", "user-supplied", "tp4056-authoritative-freecad.stl")
 BATTERY = os.path.join(ROOT, "source-assets", "external", "user-supplied", "battery-user-supplied.stl")
 LED = os.path.join(ROOT, "source-assets", "external", "user-supplied", "led-user-supplied.stl")
@@ -189,12 +189,9 @@ def add_led_wire(led, lead_material, side):
         (0.010, 0.0, 0.0), (0.016, 0.0, z), (0.022, 0.0, z)
     ], lead_material)
 
-def add_switch_details(switch, actuator_material, red_material, black_material):
-    # The pass9 mesh remains the authoritative switch body. Its actuator must
-    # project through the negative-Y case-side opening; placing it on local Z
-    # made the side view look like an empty white recess.
-    actuator = cube('switch_actuator', (0.0034, 0.0020, 0.0040), (0.0, 0.0, 0.0), actuator_material)
-    parent_detail(actuator, switch, (0.0, -0.0048, 0.0))
+def add_switch_details(switch, red_material, black_material):
+    # The original long custom slider STL already contains the external rail
+    # and grip geometry shown in the transferred CAD redesign reference.
     # Two short inward-running wire cues exiting from the switch's negative-Y
     # seat toward positive Y into the enclosure. The switch sits at y ≈ -0.029
     # (negative-Y case wall); these 3-point polylines drop ~2 mm in Z over a
@@ -345,11 +342,10 @@ def main():
                  emission=(0.95, 0.92, 0.82), emission_strength=0.08)
     led_die = mat('LedDie', (0.92, 0.88, 0.72), roughness=0.22,
                   emission=(1.0, 0.94, 0.78), emission_strength=0.12)
-    # The switch sits in the pale side opening shown in the reference. Use a
-    # dark inset body with a light metallic actuator so the seated control
-    # remains legible against both the surround and charcoal case.
-    switchmat = mat('SwitchPlastic', (0.08, 0.09, 0.085), roughness=0.50)
-    actuator_mat = mat('SwitchActuator', (0.76, 0.78, 0.76), metallic=0.32, roughness=0.24)
+    # The long custom slider sits in the pale side opening shown in the
+    # transferred reference. A medium gray finish keeps its original rail and
+    # central grip legible against the charcoal case.
+    switchmat = mat('SwitchPlastic', (0.46, 0.48, 0.45), metallic=0.10, roughness=0.42)
     wire_red = mat('SwitchWireRed', (0.78, 0.05, 0.03), roughness=0.36)
     wire_black = mat('SwitchWireBlack', (0.012, 0.012, 0.012), roughness=0.52)
 
@@ -424,7 +420,9 @@ def main():
     # enclosure from an X seat near the end wall.
     led_a.location = (-0.046, -0.012, 0.0)
     led_b.location = (-0.046, 0.012, 0.0)
-    sw = import_stl(SWITCH, 'switch', scale=BLENDER_MM)
+    # Unlike the millimetre-authored external CAD, the earlier transferred
+    # switch STL is already expressed in metres (48.816 mm long).
+    sw = import_stl(SWITCH, 'switch', scale=1.0)
     set_mat(sw, switchmat)
     center_mesh_origin(sw)
     # Seat the switch against the negative-Y case wall identified by the user
@@ -433,16 +431,7 @@ def main():
     # centered on the wall edge makes the control read as physically mounted
     # in the closed three-quarter view instead of floating inside the shell.
     sw.location = (0.0, -0.029, 0.0)
-    add_switch_details(sw, actuator_mat, wire_red, wire_black)
-
-    switch_surround_mat = mat('SwitchSurround', (0.14, 0.15, 0.16), roughness=0.55)
-    switch_surround = cube('switch_case_surround', (0.012, 0.0010, 0.008), (0.0, 0.0, 0.0), switch_surround_mat)
-    # Parent to the enclosure so the surround follows the case shell through
-    # the closed and exploded poses.  Convert the switch's world seat to the
-    # enclosure's local coordinates and align the bracket's positive-Y face
-    # flush with the switch's negative-Y seating edge.
-    parent_detail(switch_surround, enclosure, tuple(Vector(sw.location) - enclosure.location))
-    switch_surround.location.y += 0.0006
+    add_switch_details(sw, wire_red, wire_black)
 
     parts = [enclosure, panel, battery, charge, led_a, led_b, sw]
     seats = {p.name: tuple(p.location) for p in parts}
@@ -491,7 +480,7 @@ def main():
             'charge_module': [29.3, 17.4, 4.14],
             'battery': [53.1, 46.821, 6.0],
             'led': [5.58, 6.0, 36.5],
-            'switch': [4.1, 7.82, 6.0],
+            'switch': [48.816, 7.971, 10.429],
         },
         'referencePhoto': 'assets/3d/references/solarpanel.jpg',
         'mediaLibraryReferences': ['assets/3d/references/solar-panel-tops.png', 'assets/3d/references/flashlight-units-group.png', 'assets/3d/references/flashlight-internals-charging-board.png'],
@@ -499,14 +488,14 @@ def main():
             'charge_module': 'source-assets/external/user-supplied/tp4056-authoritative-freecad.stl',
             'battery': 'source-assets/external/user-supplied/battery-user-supplied.stl',
             'led': 'source-assets/external/user-supplied/led-user-supplied.stl',
-            'switch': 'source-assets/external/pass9/derived/switch-dip-slide.stl',
+            'switch': 'source-assets/stl/switch.stl',
         },
         'parts': ['enclosure','solar_panel_placeholder','battery','charge_module','led_left','led_right','switch'],
         'motionProfiles': {
             name: {key: [round(math.degrees(value), 1) for value in rotation] for key, rotation in profile.items()}
             for name, profile in MOTION_PROFILES.items()
         },
-        'visualDetails': ['solar panel has a raised pale frame with enhanced metallic contrast, brighter bus lines, brighter cell-strip grid, four enlarged corner screw heads, and a thickened rear connector/wire cue', 'battery has lightweight provisional Kapton band, label plate, and lead cue parented to the supplied mesh', 'TP4056 board has lightweight blue PCB, USB-C, and component cues parented to the supplied mesh', 'switch body is darker matte plastic with a lighter contrasting actuator cue parented to the pass9 source mesh', 'switch has two short inward-running wire cues (switch_red_wire, switch_black_wire) parented to the switch, routed toward negative Y into the enclosure', 'LED lenses have subtle warm-white emission with an inner die cylinder for physical lens contrast', 'enclosure has four interior corner mount blocks (enclosure_mount_block_1..4) parented to the case shell', 'mount blocks are 5x5x6 mm dark plastic cubes at ±42 mm X, ±24 mm Y, z −4.5 mm', 'each interior mount block carries a small metallic fastener head (mount_screw_enclosure_mount_block_1..4) seated into its top so the posts read as real screw-down points'],
+        'visualDetails': ['solar panel has a raised pale frame with enhanced metallic contrast, brighter bus lines, brighter cell-strip grid, four enlarged corner screw heads, and a thickened rear connector/wire cue', 'battery has lightweight provisional Kapton band, label plate, and lead cue parented to the supplied mesh', 'TP4056 board has lightweight blue PCB, USB-C, and component cues parented to the supplied mesh', 'switch uses the original transferred 48.816 mm custom slider/rail STL shown in the CAD redesign reference', 'switch has two short inward-running wire cues (switch_red_wire, switch_black_wire) parented to the switch, routed toward positive Y into the enclosure', 'LED lenses have subtle warm-white emission with an inner die cylinder for physical lens contrast', 'enclosure has four interior corner mount blocks (enclosure_mount_block_1..4) parented to the case shell', 'mount blocks are 5x5x6 mm dark plastic cubes at ±42 mm X, ±24 mm Y, z −4.5 mm', 'each interior mount block carries a small metallic fastener head (mount_screw_enclosure_mount_block_1..4) seated into its top so the posts read as real screw-down points'],
         'provisional': ['solar panel is reference-informed geometry; no solar-panel CAD supplied', 'led_right duplicates the supplied single LED', 'battery and switch seating are provisional', 'user-supplied STEP files were converted to coarse browser-safe STL meshes through FreeCAD'],
         'authoredAction': 'ScrollSequence', 'frameRange': [1, 120],
         'timeline': {'closed': 0.0, 'explodedReview': 0.67, 'reassembled': 1.0},

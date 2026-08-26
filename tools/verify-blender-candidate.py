@@ -40,10 +40,10 @@ if len(actions) != 7:
 passed('seven ScrollSequence actions present')
 
 switch_dimensions = sorted(float(value) for value in parts['switch'].dimensions)
-expected_dimensions = sorted((0.0041, 0.00782, 0.006))
+expected_dimensions = sorted((0.048816, 0.007971, 0.010429))
 if any(abs(actual - expected) > 0.0002 for actual, expected in zip(switch_dimensions, expected_dimensions)):
-    fail('switch dimensions %.6f, %.6f, %.6f m do not match measured pass9 source' % tuple(parts['switch'].dimensions))
-passed('switch dimensions match measured pass9 source')
+    fail('switch dimensions %.6f, %.6f, %.6f m do not match original transferred source' % tuple(parts['switch'].dimensions))
+passed('switch dimensions match original transferred long-slider source')
 
 def dimensions_match(part, expected, tolerance=0.0002):
     obj = parts[part]
@@ -82,19 +82,10 @@ if not required_children.issubset(battery_children):
 passed('battery detail children present')
 
 switch_children = {child.name for child in parts['switch'].children}
-required_switch = {'switch_actuator', 'switch_red_wire', 'switch_black_wire'}
+required_switch = {'switch_red_wire', 'switch_black_wire'}
 if not required_switch.issubset(switch_children):
     fail('switch detail children missing: ' + ', '.join(sorted(required_switch - switch_children)))
-passed('switch actuator and both wire detail children present')
-
-switch_actuator = next(child for child in parts['switch'].children
-                       if child.name.split('.')[0] == 'switch_actuator')
-actuator_dims_ok, actuator_dims = dimensions_match_obj(
-    switch_actuator, (0.0034, 0.0020, 0.0040), tolerance=0.0001)
-if not actuator_dims_ok or switch_actuator.location.y > -0.004:
-    fail('switch actuator does not protrude through negative-Y case opening: dims=%s location=%s'
-         % (actuator_dims, tuple(switch_actuator.location)))
-passed('switch actuator protrudes through the case-side opening')
+passed('original switch mesh and both wire detail children present')
 
 scene = bpy.context.scene
 scene.frame_set(1)
@@ -150,18 +141,6 @@ missing_screws = expected_screws - mount_screws
 if missing_screws:
     fail('enclosure mount screw children missing: ' + ', '.join(sorted(missing_screws)))
 passed('four metallic mount screw cues present and parented to mount blocks')
-
-switch_case_surround = next((child for child in parts['enclosure'].children
-                             if child.name.split('.')[0] == 'switch_case_surround'), None)
-if switch_case_surround is None:
-    fail('switch_case_surround is missing as a child of enclosure')
-passed('switch_case_surround present and parented to enclosure')
-
-switch_case_ok, switch_case_dims = dimensions_match_obj(
-    switch_case_surround, (0.012, 0.001, 0.008), tolerance=0.0001)
-if not switch_case_ok:
-    fail('switch_case_surround dimensions %.6f, %.6f, %.6f m do not match 12 x 1 x 8 mm target' % tuple(switch_case_dims))
-passed('switch_case_surround dimensions approx 12 x 1 x 8 mm (0.012 x 0.001 x 0.008 m)')
 
 _TOL = 0.001
 _scene = bpy.context.scene
