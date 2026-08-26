@@ -158,6 +158,18 @@ const mobile = await cdp.evaluate(`(() => {
     headerStatusClear: !overlaps(head, status) };
 })()`);
 check('390x844 layout', mobile.overflow <= 1 && mobile.parts && mobile.partsCollapsed && mobile.controls && mobile.headerReferenceClear && mobile.headerStatusClear, JSON.stringify(mobile));
+await cdp.evaluate('window.__ffCandidatePreview.setProgress(0.67); undefined');
+await new Promise((resolve) => setTimeout(resolve, 450));
+const mobileCallout = await cdp.evaluate(`(() => {
+  const label = document.querySelector('.cpv-callout.is-active')?.getBoundingClientRect();
+  const parts = document.querySelector('.cpv-parts')?.getBoundingClientRect();
+  return {
+    labelInside: !!label && label.left >= 0 && label.right <= innerWidth && label.top >= 0 && label.bottom <= innerHeight,
+    aboveParts: !!label && !!parts && label.bottom < parts.top,
+    text: document.querySelector('.cpv-callout.is-active')?.textContent.trim() || ''
+  };
+})()`);
+check('390x844 active callout lane', mobileCallout.labelInside && mobileCallout.aboveParts && mobileCallout.text.split(/\\s+/).length <= 5, JSON.stringify(mobileCallout));
 await cdp.send('Emulation.clearDeviceMetricsOverride');
 
 state = await cdp.evaluate(`Object.defineProperty(document,'hidden',{configurable:true,get(){return true}});document.dispatchEvent(new Event('visibilitychange'));window.__ffCandidatePreview.info()`);
