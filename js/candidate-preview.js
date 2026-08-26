@@ -275,7 +275,7 @@ function updateCallouts(root = assetRoot) {
     // from one editorial caption to the next instead of snapping via display.
     box.style.display = 'block';
     box.setAttribute('aria-hidden', String(!active));
-    line.style.opacity = active ? '0.72' : '0';
+      line.style.opacity = active ? '0.88' : '0';
     point.project(camera);
     const targetX = (point.x * 0.5 + 0.5) * width;
     const targetY = (-point.y * 0.5 + 0.5) * height;
