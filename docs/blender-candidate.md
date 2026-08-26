@@ -56,6 +56,9 @@ installation.
 - The supplied pass9 switch mesh has a small contrasting actuator cue parented
   to it; the native verifier requires that child while preserving the measured
   source envelope.
+- The enclosure carries four lightweight dark-plastic interior corner mounting
+  blocks, parented to the case shell and sized from the media evidence; these
+  are reference-informed candidate details, not a new authoritative CAD claim.
 - Both LED meshes carry restrained parented wire cues and retain their
   negative-X short-end seats.
 - Motion is authored per component: the enclosure stays stable, the panel
