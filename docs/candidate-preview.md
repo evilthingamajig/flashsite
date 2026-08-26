@@ -15,8 +15,9 @@ python -m http.server 8000
 http://127.0.0.1:8000/candidate-preview.html
 ```
 
-For a shareable starting pose, append `?p=0` for closed or `?p=1` for
-exploded. Intermediate numeric values open at the corresponding scrub point.
+For a shareable starting pose, append `?p=0` for closed, `?p=0.67` for the
+exploded review tableau, or `?p=1` for the reassembled final view. Intermediate
+numeric values open at the corresponding scrub point.
 
 Any static file server rooted at the repo works. No build step; Three.js
 r160 and GLTFLoader are vendored under `js/vendor/three/` via import map.
@@ -32,7 +33,7 @@ No external network assets.
 - The timeline range input and Reset button mirror the scroll position. Reset
   uses an instant seek when `prefers-reduced-motion: reduce` is enabled.
 - The live status pill identifies the current pose as `Closed`, `Scrubbing`,
-  or `Exploded`, and the progressbar exposes the same state through
+  `Exploded`, or `Reassembled`, and the progressbar exposes the same state through
   `aria-valuetext`.
 - Scrub is deterministic: scroll progress maps to
   `THREE.AnimationMixer.setTime(progress * duration)` on one mixer bound to
@@ -44,7 +45,7 @@ No external network assets.
 - Camera framing interpolates between the closed (p=0) and exploded (p=1)
   bounds with a slow azimuth/elevation drift; everything is a pure function
   of progress.
-- Exploded review shows six compact two-line part callouts at once, with dotted
+- Exploded review (around p=0.67) shows six compact two-line part callouts at once, with dotted
   SVG leader lines. The provisional second line is `Cost TBD` until
   authoritative pricing is supplied.
 
@@ -73,7 +74,7 @@ node tools\verify-candidate-preview.mjs
 
 The tracked headless Chrome check (via `tools/cdp.mjs`, SwiftShader): page loads
 with zero console errors, reports ready state with 7 ScrollSequence clips at
-4.17 s, scrubs to p=0 / p=0.5 / p=1 and back deterministically, exposes the
+5.00 s, scrubs to p=0 / p=0.67 / p=1 and back deterministically, exposes the
 timeline/reset controls, and keeps
 `renderPaused` true while the document is hidden. Candidate diagnostics also
 prove transform separation: `battery` and `charge_module` report distinct

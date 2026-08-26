@@ -28,8 +28,13 @@
   "authoredAction": "ScrollSequence",
   "frameRange": [
     1,
-    100
+    120
   ],
+  "timeline": {
+    "closed": 0.0,
+    "explodedReview": 0.67,
+    "reassembled": 1.0
+  },
   "fallbackPreserved": "assets/3d/flashlight-assembly.glb",
   "validation": {
     "blender": "export completed; inspect GLB node/action metadata before web integration"

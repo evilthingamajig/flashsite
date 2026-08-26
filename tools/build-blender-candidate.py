@@ -120,13 +120,17 @@ def add_keyframes(ob, seat, explode, inspect, frame_inspect):
     ob.rotation_euler = (0.0, 1.2 if frame_inspect % 2 else -1.0, 0.25)
     ob.keyframe_insert('location', frame=frame_inspect)
     ob.keyframe_insert('rotation_euler', frame=frame_inspect)
-    # Candidate preview treats progress 1 as the exploded inspection state;
-    # keep the parts separated at the end so the review camera can frame the
-    # complete assembly rather than silently returning to the closed pose.
+    # Hold the exploded inspection state through the middle of the authored
+    # timeline, then return every part to its real closed-pose seat for the
+    # final product view.
     ob.location = explode
     ob.rotation_euler = (0.0, 0.35, 0.0)
     ob.keyframe_insert('location', frame=100)
     ob.keyframe_insert('rotation_euler', frame=100)
+    ob.location = seat
+    ob.rotation_euler = (0.0, 0.0, 0.0)
+    ob.keyframe_insert('location', frame=120)
+    ob.keyframe_insert('rotation_euler', frame=120)
     if ob.animation_data and ob.animation_data.action:
         ob.animation_data.action.name = 'ScrollSequence'
 
@@ -205,7 +209,7 @@ def main():
             bpy.data.objects.remove(ob, do_unlink=True)
 
     scene = bpy.context.scene
-    scene.frame_start = 1; scene.frame_end = 100; scene.render.fps = 24
+    scene.frame_start = 1; scene.frame_end = 120; scene.render.fps = 24
     scene.frame_set(1)
     os.makedirs(os.path.dirname(OUT), exist_ok=True)
     bpy.ops.export_scene.gltf(filepath=OUT, export_format='GLB', export_animations=True, export_apply=True)
@@ -222,7 +226,8 @@ def main():
         },
         'parts': ['enclosure','solar_panel_placeholder','battery','charge_module','led_left','led_right','switch'],
         'provisional': ['solar panel is reference-informed geometry; no solar-panel CAD supplied', 'led_right duplicates the supplied single LED', 'battery and switch seating are provisional', 'user-supplied STEP files were converted to coarse browser-safe STL meshes through FreeCAD'],
-        'authoredAction': 'ScrollSequence', 'frameRange': [1, 100],
+        'authoredAction': 'ScrollSequence', 'frameRange': [1, 120],
+        'timeline': {'closed': 0.0, 'explodedReview': 0.67, 'reassembled': 1.0},
         'fallbackPreserved': 'assets/3d/flashlight-assembly.glb',
         'validation': {'blender': 'export completed; inspect GLB node/action metadata before web integration'}
     }
