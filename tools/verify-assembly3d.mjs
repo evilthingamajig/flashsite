@@ -106,7 +106,7 @@ function staticChecks() {
   const poseEnd = asm3dForLock.indexOf('  let lastProgress', poseStart);
   const choreographyHash = lockStart >= 0 && chapterLockEnd > lockStart && poseStart > chapterLockEnd && poseEnd > poseStart
     ? createHash('sha256').update(asm3dForLock.slice(lockStart, chapterLockEnd) + asm3dForLock.slice(poseStart, poseEnd)).digest('hex') : '';
-  check('choreography/applyPose lock hash', choreographyHash === '5fb238aaed611c42e4de87a2a89c475b4afdf29a50ddd9c8df9604c08e700dc0', choreographyHash.slice(0, 12));
+  check('choreography/applyPose lock hash', choreographyHash === '8796225fe0cee7515655bf5f90262b7fa856d2a8cb00f7a8a720cf7090350471', choreographyHash.slice(0, 12));
   execFileSync(process.execPath, [join(ROOT, 'tools', 'build-assembly-glb.mjs')], { cwd: ROOT });
   const rebuilt = readFileSync(glbPath);
   check('builder deterministic (rebuild identical)', createHash('sha256').update(rebuilt).digest('hex') === createHash('sha256').update(data).digest('hex'));
@@ -133,13 +133,18 @@ function staticChecks() {
   check('pass11B distinct per-part motion signatures', /solar_lid: \{ zoom: 0\.88, fit: 1, baseYaw: 0, reassemblyYaw: 0/.test(asm3d) && /battery: \{ zoom: 1\.20, fit: 0\.50, mobileFit: 0\.54, baseYaw: 180/.test(asm3d) && /charge_module: \{ zoom: 1\.20, fit: 0\.50, mobileFit: 0\.54, baseYaw: 38/.test(asm3d) && /led_pair: \{ zoom: 1\.40, fit: 0\.49, mobileFit: 0\.54, baseYaw: 14/.test(asm3d) && /switch: \{ zoom: 1\.27, fit: 0\.96, mobileFit: 0\.48, baseYaw: 8/.test(asm3d) && /enclosure: \{ zoom: 0\.95, fit: 1\.08, mobileFit: 1, baseYaw: 16/.test(asm3d));
   check('pass11B switch actuator travel is consumed', /splitSwitchActuator/.test(asm3d) && /sampled\.travel \* MM/.test(asm3d) && /actuator:\s*switchActuatorNode/.test(asm3d));
   check('pass11B C0 handoff helpers present', /soloFitDistance\(blend\.prevId, 1/.test(asm3d) && /outgoing = samplePartPose\(c\.id, 1/.test(asm3d) && /composedQuaternion/.test(asm3d) && /safetyIds/.test(asm3d));
+  check('pass11C transition safety paths present', /c\.id === 'battery' \? 1 : smooth\(t \/ 0\.72\)/.test(asm3d) && /visibleSilhouettes/.test(asm3d) && /leaderSegments/.test(asm3d) && /reassemblyQ/.test(asm3d) && /tableauSample/.test(asm3d));
   check('component material realism markers present', /MeshPhysicalMaterial/.test(asm3d) && /transmission/.test(asm3d) && /amber/.test(asm3d) && /redLead/.test(asm3d) && /actuator/.test(asm3d) && /ClearLed/.test(asm3d));
   check('component geometry proportions authored', /roundedPouch/.test(asm3d) && /SS12D00|compact SS12D00/.test(readFileSync(join(ROOT, 'tools', 'build-assembly-glb.mjs'), 'utf8')) && /PcbTrace/.test(readFileSync(join(ROOT, 'tools', 'build-assembly-glb.mjs'), 'utf8')));
   check('choreography constants frozen for 7A', /T_RE_START = 0\.76/.test(asm3d) && /RE_SPACING = 0\.035/.test(asm3d) && /RE_W = 0\.025/.test(asm3d) && /T_FINAL = 0\.925/.test(asm3d));
   const pngRuntime = readFileSync(join(ROOT, 'js', 'ff-assembly.js'), 'utf8');
   check('PNG assembly guarded in 3d mode', pngRuntime.includes("classList.contains('ff-asm3d')"));
-  const protectedFiles = ['donate.html', 'vercel.json', 'PROJECT-NOTES.md'];
-  for (const f of protectedFiles) check('untouched ' + f, true, 'verified via git status separately');
+  const protectedFiles = ['donate.html', 'vercel.json'];
+  for (const f of protectedFiles) {
+    let clean = false;
+    try { execFileSync('git', ['diff', '--quiet', '48d6404', '--', f], { cwd: ROOT, stdio: 'ignore' }); clean = true; } catch { clean = false; }
+    check('untouched ' + f, clean, clean ? 'no diff from Pass11B checkpoint' : 'changed since Pass11B checkpoint');
+  }
 }
 
 // ------------------------------------------------------------- http server
@@ -217,6 +222,9 @@ async function browserPass() {
     await cdp.send('Page.navigate', { url: 'http://127.0.0.1:8137/index.html?ffasm=3d' });
     await new Promise((r) => setTimeout(r, 1200));
 
+    const navigationState = await cdp.evaluate('JSON.stringify({readyState: document.readyState, url: location.href, hasAssembly: !!document.querySelector("[data-assembly-sequence]")})').then(JSON.parse).catch(() => null);
+    check(`[${vp.label}] navigation and assembly document loaded`, navigationState?.readyState === 'complete' && (navigationState.url || '').endsWith('/index.html?ffasm=3d') && navigationState.hasAssembly === true, JSON.stringify(navigationState));
+
     let readyState = null;
     while (Date.now() - t0 < 30000) {
       readyState = await cdp.evaluate('(window.__ffasm3d && __ffasm3d.ready && __ffasm3d.frame()) ? "ready" : "wait"').catch(() => 'wait');
@@ -266,6 +274,8 @@ async function browserPass() {
           cam: window.__ffasm3d.cam(),
           leaderEnd: F.leaderEnd,
           leaderPath: F.leaderPath,
+          leaderSegments: F.leaderSegments,
+          visibleSilhouettes: F.visibleSilhouettes,
           anchorActive: F.activeCallout ? F.anchors[F.activeCallout] : null,
           pose: F.pose,
           activeCount: document.querySelectorAll('.ff-asm3d-callout.is-active').length,
@@ -379,6 +389,26 @@ async function browserPass() {
     check(`[${vp.label}] active subject meets viewport scale`, viewportViolations.length === 0, viewportViolations.slice(0, 3).join('; '));
 
     const holdSamples = [];
+    const leaderAvoidsCopy = (state) => {
+      const box = state?.calloutBox;
+      if (!box || !state?.leaderSegments?.length) return false;
+      const pad = 4;
+      const inside = (x, y) => x >= box.x - pad && x <= box.x + box.w + pad && y >= box.y - pad && y <= box.y + box.h + pad;
+      return state.leaderSegments.every((segment) => {
+        const nums = segment.match(/-?\d+(?:\.\d+)?/g)?.map(Number) || [];
+        const points = [];
+        for (let n = 0; n + 1 < nums.length; n += 2) points.push([nums[n], nums[n + 1]]);
+        for (let n = 0; n + 1 < points.length; n++) {
+          // The first polyline endpoint intentionally touches the copy edge;
+          // test the routed body after that attachment point.
+          for (let step = 1; step <= 20; step++) {
+            const t = step / 20;
+            if (inside(points[n][0] + (points[n + 1][0] - points[n][0]) * t, points[n][1] + (points[n + 1][1] - points[n][1]) * t)) return false;
+          }
+        }
+        return true;
+      });
+    };
     for (let i = 0; i < 6; i++) {
       const pTarget = T_CH_START + (i + 0.69) * CH_W;
       const frac = pTarget;
@@ -417,6 +447,7 @@ async function browserPass() {
         const routeX = vals[2], routeY = vals[3], sil = st.sil;
         const outside = vp.mobile ? routeY > sil.y + sil.h : (i % 2 === 1 ? routeX > sil.x + sil.w : routeX < sil.x);
         check(`[${vp.label}] leader route stays outside silhouette ch${i + 1}`, outside, `route ${routeX.toFixed(0)},${routeY.toFixed(0)} sil ${sil.x.toFixed(0)},${sil.y.toFixed(0)},${sil.w.toFixed(0)},${sil.h.toFixed(0)}`);
+        check(`[${vp.label}] leader avoids copy bbox ch${i + 1}`, leaderAvoidsCopy(st), st.leaderSegments?.join(' | ') || 'missing segments');
       } else {
         check(`[${vp.label}] leader visible ch${i + 1}`, false, 'no leader/anchor');
       }
@@ -479,6 +510,27 @@ async function browserPass() {
       check(`[${vp.label}] boundary ${idx + 1} camera C0`, distRatio <= 1.08 && centerDelta <= 0.045, `${distRatio.toFixed(3)}x/${centerDelta.toFixed(3)}m`);
       check(`[${vp.label}] boundary ${idx + 1} pose C0`, poseDelta <= 0.06, `${poseDelta.toFixed(3)}`);
       check(`[${vp.label}] boundary ${idx + 1} label/leader C0`, labels && leaderDelta <= 36, `${before.active || 'none'}→${after.active || 'none'}/${leaderDelta.toFixed(1)}px`);
+      const incomingId = CHAPTER_IDS[idx + 1];
+      const outgoingId = CHAPTER_IDS[idx];
+      const coverage = [boundary - 0.004, boundary - 0.001, boundary + 0.001, boundary + 0.004].map((sample) => sample);
+      const coverageStates = [];
+      for (const sample of coverage) { await goto(sample); coverageStates.push(await readState()); }
+      const subjectVisible = coverageStates.every((state) => {
+        const a = state?.visibleSilhouettes?.[outgoingId];
+        const b = state?.visibleSilhouettes?.[incomingId];
+        const intersects = (s) => s && s.w > 0 && s.h > 0 && s.x < state.stage.w && s.x + s.w > 0 && s.y < state.stage.h && s.y + s.h > 0;
+        return intersects(a) || intersects(b);
+      });
+      check(`[${vp.label}] boundary ${idx + 1} keeps visible subject coverage`, subjectVisible, `${outgoingId}→${incomingId}`);
+      if (incomingId === 'battery') {
+        // The battery's readable foil face is authored on the 180° side. A
+        // handoff sample must not pass through the old edge-on/mirrored phase.
+        const readable = coverageStates.slice(2).every((state) => {
+          const rot = state?.pose?.battery?.rotation;
+          return rot && Math.abs(rot[1]) > 2.35;
+        });
+        check(`[${vp.label}] battery handoff keeps readable face orientation`, readable, coverageStates.slice(2).map((s) => s?.pose?.battery?.rotation?.[1]?.toFixed(2)).join('/'));
+      }
       return true;
     };
     for (let i = 0; i < 5; i++) await boundaryCheck(i);
@@ -563,6 +615,15 @@ async function browserPass() {
     check(`[${vp.label}] solo-to-tableau camera distance is continuous`, distRatio <= 1.45, `${distRatio.toFixed(2)}x`);
     check(`[${vp.label}] solo-to-tableau camera center is continuous`, centerDelta <= 0.18, `${centerDelta.toFixed(3)}m`);
     check(`[${vp.label}] solo-to-tableau projected scale is continuous`, silScale <= 1.55, `${silScale.toFixed(2)}x`);
+    const soloBoundaryP = T_CH_START + CH_W * 6;
+    const soloBoundaryBefore = await (async () => { await goto(soloBoundaryP - 0.001); await settle(cdp); return readState(); })();
+    const soloBoundaryAfter = await (async () => { await goto(soloBoundaryP + 0.001); await settle(cdp); return readState(); })();
+    const enclosurePoseDelta = soloBoundaryBefore?.pose?.enclosure && soloBoundaryAfter?.pose?.enclosure
+      ? Math.max(Math.hypot(...soloBoundaryBefore.pose.enclosure.position.map((v, i) => v - soloBoundaryAfter.pose.enclosure.position[i])), Math.hypot(...soloBoundaryBefore.pose.enclosure.rotation.map((v, i) => v - soloBoundaryAfter.pose.enclosure.rotation[i]))) : Infinity;
+    check(`[${vp.label}] solo-to-tableau enclosure pose is continuous`, enclosurePoseDelta <= 0.06, `${enclosurePoseDelta.toFixed(3)}`);
+    const tableauCameraDelta = soloBoundaryBefore?.cam && soloBoundaryAfter?.cam
+      ? Math.max(Math.abs(soloBoundaryBefore.cam.dist - soloBoundaryAfter.cam.dist), Math.hypot(...soloBoundaryBefore.cam.center.map((v, i) => v - soloBoundaryAfter.cam.center[i]))) : Infinity;
+    check(`[${vp.label}] solo-to-tableau camera boundary is continuous`, tableauCameraDelta <= 0.18, `${tableauCameraDelta.toFixed(3)}`);
     const beforeFinal = await (async () => { await goto(T_FINAL - 0.002); await settle(cdp); return readState(); })();
     const afterFinal = await (async () => { await goto(Math.min(0.999, T_FINAL + 0.004)); await settle(cdp); return readState(); })();
     const finalAngleDelta = beforeFinal?.cam && afterFinal?.cam ? Math.hypot(afterFinal.cam.azim - beforeFinal.cam.azim, afterFinal.cam.elev - beforeFinal.cam.elev) : Infinity;
@@ -598,6 +659,16 @@ async function browserPass() {
     const reassemblyBase = (await (async () => { await goto(T_RE_START); await settle(cdp); return readState(); })());
     let previousBeatPose = reassemblyBase?.pose || tableauState?.pose;
     for (let idx = 0; idx < REASSEMBLY_ORDER.length; idx++) {
+      const beatStart = T_RE_START + idx * RE_SPACING;
+      const preBeat = await (async () => { await goto(Math.max(T_RE_START, beatStart - 0.001)); await settle(cdp); return readState(); })();
+      const midBeat = await (async () => { await goto(beatStart + RE_W * 0.50); await settle(cdp); return readState(); })();
+      const endBeat = await (async () => { await goto(beatStart + RE_SPACING - 0.001); await settle(cdp); return readState(); })();
+      const activeId = REASSEMBLY_ORDER[idx];
+      const rotDistance = (a, b) => a && b ? Math.hypot(...a.map((v, axis) => v - b[axis])) : Infinity;
+      const activeRotDelta = Math.max(rotDistance(preBeat?.pose?.[activeId]?.rotation, midBeat?.pose?.[activeId]?.rotation), rotDistance(midBeat?.pose?.[activeId]?.rotation, endBeat?.pose?.[activeId]?.rotation));
+      const seatedRotation = rotDistance(endBeat?.pose?.[activeId]?.rotation, [0, 0, 0]);
+      check(`[${vp.label}] reassembly beat ${idx + 1} active rotation is continuous`, activeRotDelta <= 1.8, `${activeRotDelta.toFixed(2)}rad`);
+      check(`[${vp.label}] reassembly beat ${idx + 1} eases active rotation to seat`, seatedRotation <= 0.20, `${seatedRotation.toFixed(2)}rad`);
       const beatP = Math.min(T_RE_START + idx * RE_SPACING + RE_W + 0.003, T_FINAL - 0.02);
       await goto(beatP); await settle(cdp);
       const beatState = await readState();
