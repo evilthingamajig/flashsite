@@ -224,7 +224,10 @@ function updateCallouts(root = assetRoot) {
   // stage width (the vertical scrollbar can make the latter slightly smaller
   // and incorrectly switch a desktop review into mobile lanes).
   const mobile = window.innerWidth < 760;
-  const slots = mobile ? [0.24, 0.36, 0.48] : [0.24, 0.40, 0.56];
+  // On narrow screens the parts list occupies the lower review lane. Keep
+  // all three editorial label lanes above it so the active text never hides
+  // behind the open list.
+  const slots = mobile ? [0.30, 0.35, 0.40] : [0.24, 0.40, 0.56];
   for (const [index, spec] of calloutSpecs.entries()) {
     const box = calloutTargets.get(spec.part);
     const line = calloutLines.get(spec.part);
