@@ -88,6 +88,7 @@ body{
   width:min(15rem,30vw);background:rgba(22,27,25,.78);border:1px solid var(--cpv-line);
   border-radius:10px;padding:12px 14px;-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px);
 }
+.cpv-reference-internals{top:calc(50% + 11.5rem)}
 .cpv-reference summary{cursor:pointer;color:var(--cpv-text);font-size:11px;letter-spacing:.12em;text-transform:uppercase;list-style:none}
 .cpv-reference summary::-webkit-details-marker{display:none}
 .cpv-reference summary::after{content:'+';float:right;color:var(--cpv-muted)}
@@ -171,6 +172,7 @@ body{
   .cpv-range-label{flex:1}
   .cpv-range-label input{width:100%}
   .cpv-reference{left:16px;top:190px;transform:none;width:13rem}
+  .cpv-reference-internals{top:360px}
   .cpv-callout-name{font-size:9px}
   .cpv-callout-cost{font-size:8px}
   .cpv-chapter span{font-size:7px;letter-spacing:.06em}
