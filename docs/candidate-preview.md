@@ -62,9 +62,10 @@ No external network assets.
 
 ```powershell
 node --check js\candidate-preview.js
+node tools\verify-candidate-preview.mjs
 ```
 
-Headless Chrome smoke check (via `tools/cdp.mjs`, SwiftShader): page loads
+The tracked headless Chrome check (via `tools/cdp.mjs`, SwiftShader): page loads
 with zero console errors, reports ready state with 7 ScrollSequence clips at
 4.17 s, scrubs to p=0 / p=0.5 / p=1 and back deterministically, exposes the
 timeline/reset controls, and keeps
