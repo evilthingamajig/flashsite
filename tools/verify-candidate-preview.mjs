@@ -131,6 +131,8 @@ const controls = await cdp.evaluate(`({
 check('review controls and reference', controls.range && controls.reset && controls.reference && controls.poses && JSON.stringify(controls.chapters) === JSON.stringify(['Closed', 'Exploded review', 'Reassembled']), JSON.stringify(controls));
 
 await cdp.send('Emulation.setDeviceMetricsOverride', { width: 390, height: 844, deviceScaleFactor: 1, mobile: true });
+await cdp.send('Page.reload');
+await new Promise((resolve) => setTimeout(resolve, 1800));
 const mobile = await cdp.evaluate(`(() => {
   const rect = (selector) => document.querySelector(selector)?.getBoundingClientRect();
   const parts = rect('.cpv-parts'); const controls = rect('.cpv-controls');
@@ -138,11 +140,12 @@ const mobile = await cdp.evaluate(`(() => {
   const overlaps = (a, b) => !!a && !!b && a.left < b.right && a.right > b.left && a.top < b.bottom && a.bottom > b.top;
   return { overflow: document.documentElement.scrollWidth - innerWidth,
     parts: !!parts && parts.left >= 0 && parts.right <= innerWidth && parts.bottom <= innerHeight,
+    partsCollapsed: document.querySelector('.cpv-parts')?.open === false,
     controls: !!controls && controls.left >= 0 && controls.right <= innerWidth,
     headerReferenceClear: !overlaps(head, reference),
     headerStatusClear: !overlaps(head, status) };
 })()`);
-check('390x844 layout', mobile.overflow <= 1 && mobile.parts && mobile.controls && mobile.headerReferenceClear && mobile.headerStatusClear, JSON.stringify(mobile));
+check('390x844 layout', mobile.overflow <= 1 && mobile.parts && mobile.partsCollapsed && mobile.controls && mobile.headerReferenceClear && mobile.headerStatusClear, JSON.stringify(mobile));
 await cdp.send('Emulation.clearDeviceMetricsOverride');
 
 state = await cdp.evaluate(`Object.defineProperty(document,'hidden',{configurable:true,get(){return true}});document.dispatchEvent(new Event('visibilitychange'));window.__ffCandidatePreview.info()`);
