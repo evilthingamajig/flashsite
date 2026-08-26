@@ -137,10 +137,11 @@ const controls = await cdp.evaluate(`({
   })),
   poses: document.querySelectorAll('[data-cpv-pose]').length === 3,
   chapters: [...document.querySelectorAll('.cpv-chapter span')].map((el) => el.textContent.trim()),
+  partsCollapsed: document.querySelector('.cpv-parts')?.open === false,
 })`);
 const referenceSources = controls.references.map((reference) => reference.source);
 const referenceNames = controls.references.map((reference) => reference.name);
-check('review controls and references', controls.range && controls.reset && controls.references.length === 2 && referenceSources.includes('assets/3d/references/solar-panel-tops.png') && referenceSources.includes('assets/3d/references/flashlight-internals-charging-board.png') && referenceNames.length === 2 && referenceNames.every((name) => name === 'candidate-reference') && controls.poses && JSON.stringify(controls.chapters) === JSON.stringify(['Closed', 'Exploded review', 'Reassembled']), JSON.stringify(controls));
+check('review controls and references', controls.range && controls.reset && controls.references.length === 2 && referenceSources.includes('assets/3d/references/solar-panel-tops.png') && referenceSources.includes('assets/3d/references/flashlight-internals-charging-board.png') && referenceNames.length === 2 && referenceNames.every((name) => name === 'candidate-reference') && controls.poses && controls.partsCollapsed && JSON.stringify(controls.chapters) === JSON.stringify(['Closed', 'Exploded review', 'Reassembled']), JSON.stringify(controls));
 const metadata = await cdp.evaluate(`({
   title: document.title,
   description: document.querySelector('meta[name="description"]')?.getAttribute('content') || ''
