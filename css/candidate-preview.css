@@ -65,6 +65,7 @@ body{
   text-transform:uppercase;font-weight:500;list-style:none;display:flex;align-items:center;gap:8px;
 }
 .cpv-parts summary::-webkit-details-marker{display:none}
+.cpv-parts summary:focus-visible,.cpv-reference summary:focus-visible{outline:1px solid var(--cpv-accent);outline-offset:4px;border-radius:2px}
 .cpv-parts summary::after{content:"+";margin-left:auto;color:var(--cpv-muted)}
 .cpv-parts[open] summary::after{content:"–"}
 .cpv-count{
@@ -134,11 +135,12 @@ body{
 }
 .cpv-reset:hover,.cpv-reset:focus-visible{background:rgba(21,128,61,.35);outline:none}
 .cpv-copy-link,.cpv-pose-buttons button{border:1px solid var(--cpv-line);border-radius:99px;padding:6px 10px;color:var(--cpv-muted);background:rgba(232,240,235,.06);font:500 10px Lausanne,Arial,sans-serif;letter-spacing:.06em;text-transform:uppercase;cursor:pointer}
-.cpv-copy-link:hover,.cpv-copy-link:focus-visible,.cpv-pose-buttons button:hover,.cpv-pose-buttons button:focus-visible{color:var(--cpv-text);border-color:rgba(21,128,61,.55);outline:none}
+.cpv-copy-link:hover,.cpv-copy-link:focus-visible,.cpv-pose-buttons button:hover,.cpv-pose-buttons button:focus-visible{color:var(--cpv-text);border-color:rgba(21,128,61,.55);outline:none;box-shadow:0 0 0 2px rgba(21,128,61,.28)}
 .cpv-pose-buttons{display:flex;align-items:center;gap:4px}
 .cpv-pose-buttons button[aria-pressed="true"]{color:var(--cpv-text);border-color:rgba(21,128,61,.7);background:rgba(11,127,71,.28)}
 .cpv-range-label{display:flex;align-items:center;gap:8px;color:var(--cpv-muted);font-size:11px;letter-spacing:.1em;text-transform:uppercase}
 .cpv-range-label input{width:min(18vw,180px);accent-color:var(--cpv-accent);cursor:pointer}
+.cpv-range-label input:focus-visible{outline:1px solid var(--cpv-accent);outline-offset:4px}
 
 .cpv-status{
   position:absolute;left:clamp(16px,3vw,40px);top:clamp(24px,4svh,44px);z-index:10;margin:0;
