@@ -1,3 +1,4 @@
+import math
 import sys
 from pathlib import Path
 
@@ -129,4 +130,27 @@ if max_delta > 0.0005:
     worst_part = max(deltas, key=deltas.get)
     fail('reassembled part locations drift by %.6f m; worst offending part: %s (%.6f m)' % (max_delta, worst_part, deltas[worst_part]))
 passed('frame 120 returns top-level parts to frame 1 locations')
+
+def action_rotation_angle(part, frame):
+    action = next((item for item in bpy.data.actions if item.name.startswith('ScrollSequence')
+                   and any(slot.identifier == 'OB' + part for slot in item.slots)), None)
+    if action is None:
+        fail('%s ScrollSequence action is missing' % part)
+    bag = next((bag for bag in action.layers[0].strips[0].channelbags
+                if bag.slot.identifier == 'OB' + part), None)
+    curves = {curve.array_index: curve for curve in bag.fcurves if curve.data_path == 'rotation_quaternion'}
+    if len(curves) != 4:
+        fail('%s quaternion rotation tracks are incomplete' % part)
+    w = max(-1.0, min(1.0, abs(curves[0].evaluate(frame))))
+    return math.degrees(2.0 * math.acos(w))
+
+mid_angles = {name: action_rotation_angle(name, 60) for name in EXPECTED_PARTS}
+rotating_parts = {name: angle for name, angle in mid_angles.items()
+                  if name != 'enclosure' and angle > 0.5}
+if mid_angles['enclosure'] > 0.5 or len(rotating_parts) != 6:
+    fail('mid-action rotation coverage is incomplete at frame 60: %s' % mid_angles)
+if min(rotating_parts.values()) < 2.0:
+    fail('mid-action rotation is too weak at frame 60: %s' % mid_angles)
+passed('bespoke mid-action rotations cover all six movable parts at frame 60')
+
 print('SUMMARY  Blender candidate verification passed')
