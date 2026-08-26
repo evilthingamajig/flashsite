@@ -50,11 +50,12 @@ installation.
   (wider bezel bars with metallic finish), brighter bus lines, brighter
   cell-strip grid, four enlarged corner screw heads, and its rear has a
   thickened parented connector/wire cue for the exploded view.
-- The supplied battery mesh has lightweight provisional silver-foil, yellow
-  Kapton, label-plate, lead, and wire cues parented to it; these inherit the
-  battery's authored motion.
-- The supplied TP4056 mesh has lightweight blue-PCB, USB-C, component, and
-  input-wire cues parented to it; these inherit the board's authored motion.
+- The supplied battery mesh has lightweight provisional silver-pouch (high-
+  metallic bright foil), warm-amber Kapton, dark label plate, tinned-lead,
+  and wire cues parented to it; these inherit the battery's authored motion.
+- The supplied TP4056 mesh has lightweight vivid-blue PCB, bright USB-C
+  port, brightened chip/resistor-bank, and input-wire cues parented to it;
+  these inherit the board's authored motion.
 - The supplied pass9 switch mesh has a small contrasting actuator cue parented
   to it; the native verifier requires that child while preserving the measured
   source envelope.
