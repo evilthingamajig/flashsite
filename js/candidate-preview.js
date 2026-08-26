@@ -139,6 +139,7 @@ function portraitDistanceScale() {
 function updateCamera(p) {
   if (!closedFrame || !explodedFrame) return;
   const explosionEnd = 0.67;
+  const reassemblyStart = 0.8333333333;
   let center;
   let dist;
   let azim;
@@ -149,6 +150,15 @@ function updateCamera(p) {
     dist = THREE.MathUtils.lerp(closedFrame.dist, explodedFrame.dist, t);
     azim = THREE.MathUtils.lerp(-0.55, 0.5, t);
     elev = THREE.MathUtils.lerp(0.62, 0.4, t);
+  } else if (p <= reassemblyStart) {
+    // Keep the full exploded bounds in frame while the parts are still
+    // separated. The authored reassembly does not begin until frame 100;
+    // closing the camera before then makes the switch and its leader
+    // disappear behind the other components.
+    center = explodedFrame.center.clone();
+    dist = explodedFrame.dist;
+    azim = 0.5;
+    elev = 0.4;
   } else {
     // Settle into a distinct final three-quarter product angle. The target
     // and distance come from the measured closed frame, so this remains
@@ -156,8 +166,7 @@ function updateCamera(p) {
     // Blender's authored parts return to their seats over frames 100–120,
     // which is the final 1/6 of the 120-frame action. Reach the final camera
     // at the same authored boundary, then hold it for the finished product.
-    const reassemblyEnd = 0.8333333333;
-    const t = easeInOutCubic(clamp01((p - explosionEnd) / (reassemblyEnd - explosionEnd)));
+    const t = easeInOutCubic(clamp01((p - reassemblyStart) / (1 - reassemblyStart)));
     center = explodedFrame.center.clone().lerp(closedFrame.center, t);
     dist = THREE.MathUtils.lerp(explodedFrame.dist, closedFrame.dist * 1.08, t);
     azim = THREE.MathUtils.lerp(0.5, -0.78, t);
