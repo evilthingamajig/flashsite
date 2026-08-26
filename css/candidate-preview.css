@@ -174,6 +174,10 @@ body{
   .cpv-callout-name{font-size:9px}
   .cpv-callout-cost{font-size:8px}
   .cpv-chapter span{font-size:7px;letter-spacing:.06em}
+  .cpv-chapter-exploded span,.cpv-chapter-reassembled span{font-size:0}
+  .cpv-chapter-exploded span::after,.cpv-chapter-reassembled span::after{font-size:7px;letter-spacing:.06em}
+  .cpv-chapter-exploded span::after{content:'Review'}
+  .cpv-chapter-reassembled span::after{content:'Final'}
 }
 @media(prefers-reduced-motion:reduce){
   .cpv-progress-fill{transition:none}
