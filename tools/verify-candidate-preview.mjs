@@ -175,8 +175,9 @@ const focusStyles = {
   disclosureRing: /\.cpv-parts summary:focus-visible,\.cpv-reference summary:focus-visible\{[^}]*outline:1px solid var\(--cpv-accent\)/.test(candidateCss),
   controlRing: /\.cpv-copy-link:hover,\.cpv-copy-link:focus-visible,\.cpv-pose-buttons button:hover,\.cpv-pose-buttons button:focus-visible\{[^}]*box-shadow:0 0 0 2px/.test(candidateCss),
   rangeRing: /\.cpv-range-label input:focus-visible\{[^}]*outline:1px solid var\(--cpv-accent\)/.test(candidateCss),
+  noLegacyGreenControls: !/rgba\(21,128,61|rgba\(11,127,71/.test(candidateCss),
 };
-check('keyboard focus visibility', focusStyles.disclosureRing && focusStyles.controlRing && focusStyles.rangeRing, JSON.stringify(focusStyles));
+check('keyboard focus visibility', focusStyles.disclosureRing && focusStyles.controlRing && focusStyles.rangeRing && focusStyles.noLegacyGreenControls, JSON.stringify(focusStyles));
 const candidateJs = await readFile(join(ROOT, 'js', 'candidate-preview.js'), 'utf8');
 const pagehideCleanupSafe = /addEventListener\('pagehide', \(event\) => \{\s*if \(event\.persisted\) return;[\s\S]*?renderer\.dispose\(\)/.test(candidateJs);
 check('pagehide cleanup preserves bfcache', pagehideCleanupSafe);
