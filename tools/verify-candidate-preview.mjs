@@ -122,6 +122,21 @@ await cdp.evaluate('window.__ffCandidatePreview.setProgress(0.67); undefined');
 await new Promise((resolve) => setTimeout(resolve, 180));
 const exploded = await info();
 check('exploded pose label', /Exploded/.test(await cdp.evaluate("document.getElementById('cpv-status').textContent")));
+const relativeOffset = (state, child, parent) => {
+  const a = state?.partTransforms?.[child];
+  const b = state?.partTransforms?.[parent];
+  return a && b ? { x: a.x - b.x, y: a.y - b.y, z: a.z - b.z } : null;
+};
+const closedSwitchOffset = relativeOffset(closed, 'switch', 'enclosure');
+const explodedSwitchOffset = relativeOffset(exploded, 'switch', 'enclosure');
+const switchMountedDuringExplosion = closedSwitchOffset && explodedSwitchOffset
+  && Math.hypot(
+    closedSwitchOffset.x - explodedSwitchOffset.x,
+    closedSwitchOffset.y - explodedSwitchOffset.y,
+    closedSwitchOffset.z - explodedSwitchOffset.z
+  ) < 0.002;
+check('switch stays mounted to case in exploded review', switchMountedDuringExplosion,
+  JSON.stringify({ closedSwitchOffset, explodedSwitchOffset }));
 const callouts = await cdp.evaluate(`({
   boxes: document.querySelectorAll('.cpv-callout').length,
   lines: document.querySelectorAll('#cpv-leaders line').length,

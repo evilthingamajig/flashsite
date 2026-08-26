@@ -87,6 +87,15 @@ if not required_switch.issubset(switch_children):
     fail('switch detail children missing: ' + ', '.join(sorted(required_switch - switch_children)))
 passed('switch actuator and both wire detail children present')
 
+switch_actuator = next(child for child in parts['switch'].children
+                       if child.name.split('.')[0] == 'switch_actuator')
+actuator_dims_ok, actuator_dims = dimensions_match_obj(
+    switch_actuator, (0.0034, 0.0020, 0.0040), tolerance=0.0001)
+if not actuator_dims_ok or switch_actuator.location.y < 0.004:
+    fail('switch actuator does not protrude through positive-Y case opening: dims=%s location=%s'
+         % (actuator_dims, tuple(switch_actuator.location)))
+passed('switch actuator protrudes through the case-side opening')
+
 def led_die_child(part):
     for child in parts[part].children:
         if child.name.split('.')[0] == 'led_die_' + part:
@@ -204,11 +213,21 @@ def action_rotation_angle(part, frame):
 
 mid_angles = {name: action_rotation_angle(name, 60) for name in EXPECTED_PARTS}
 rotating_parts = {name: angle for name, angle in mid_angles.items()
-                  if name != 'enclosure' and angle > 0.5}
-if mid_angles['enclosure'] > 0.5 or len(rotating_parts) != 6:
+                  if name not in {'enclosure', 'switch'} and angle > 0.5}
+if mid_angles['enclosure'] > 0.5 or mid_angles['switch'] > 0.5 or len(rotating_parts) != 5:
     fail('mid-action rotation coverage is incomplete at frame 60: %s' % mid_angles)
 if min(rotating_parts.values()) < 2.0:
     fail('mid-action rotation is too weak at frame 60: %s' % mid_angles)
-passed('bespoke mid-action rotations cover all six movable parts at frame 60')
+passed('bespoke mid-action rotations cover five loose parts while switch stays mounted')
+
+scene.frame_set(1)
+switch_case_offset = Vector(parts['switch'].location) - Vector(parts['enclosure'].location)
+for frame in (30, 60, 84, 100, 120):
+    scene.frame_set(frame)
+    current_offset = Vector(parts['switch'].location) - Vector(parts['enclosure'].location)
+    if (current_offset - switch_case_offset).length > 0.0001:
+        fail('switch leaves its mounted case-side seat at frame %d: offset=%s expected=%s'
+             % (frame, tuple(current_offset), tuple(switch_case_offset)))
+passed('switch remains mounted in the case-side opening for the full timeline')
 
 print('SUMMARY  Blender candidate verification passed')
