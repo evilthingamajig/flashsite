@@ -58,8 +58,10 @@ const dimensionsMatch = JSON.stringify(sourceDimensions) === JSON.stringify({
   charge_module: [29.3, 17.4, 4.14],
   battery: [53.1, 46.821, 6],
   led: [5.58, 6, 36.5],
+  switch: [4.1, 7.82, 6],
 });
-check('FreeCAD source dimensions recorded', dimensionsMatch, JSON.stringify(sourceDimensions));
+const switchSourceRecorded = motionManifest?.convertedCadSources?.switch === 'source-assets/external/pass9/derived/switch-dip-slide.stl';
+check('FreeCAD source dimensions recorded', dimensionsMatch && switchSourceRecorded, JSON.stringify({ sourceDimensions, switchSource: motionManifest?.convertedCadSources?.switch }));
 
 await cdp.evaluate('window.__ffCandidatePreview.setProgress(0); undefined');
 await new Promise((resolve) => setTimeout(resolve, 180));

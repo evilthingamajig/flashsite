@@ -11,7 +11,7 @@ MANIFEST = os.path.join(ROOT, "assets", "3d", "blender-candidate-manifest.json")
 BLENDER_MM = 0.001
 
 CASE = r"C:\Users\romir\Downloads\Revamp Flashlight w addon.stl"
-SWITCH = os.path.join(ROOT, "source-assets", "stl", "switch.stl")
+SWITCH = os.path.join(ROOT, "source-assets", "external", "pass9", "derived", "switch-dip-slide.stl")
 TP4056 = os.path.join(ROOT, "source-assets", "external", "user-supplied", "tp4056-user-supplied.stl")
 BATTERY = os.path.join(ROOT, "source-assets", "external", "user-supplied", "battery-user-supplied.stl")
 LED = os.path.join(ROOT, "source-assets", "external", "user-supplied", "led-user-supplied.stl")
@@ -224,7 +224,7 @@ def main():
     # enclosure from an X seat near the end wall.
     led_a.location = (-0.046, -0.012, 0.0)
     led_b.location = (-0.046, 0.012, 0.0)
-    sw = import_stl(SWITCH, 'switch', scale=1.0)
+    sw = import_stl(SWITCH, 'switch', scale=BLENDER_MM)
     set_mat(sw, switchmat)
     center_mesh_origin(sw)
     sw.location = (0.0, 0.018, 0.0)
@@ -267,12 +267,14 @@ def main():
             'charge_module': [29.3, 17.4, 4.14],
             'battery': [53.1, 46.821, 6.0],
             'led': [5.58, 6.0, 36.5],
+            'switch': [4.1, 7.82, 6.0],
         },
         'referencePhoto': 'assets/3d/references/solarpanel.jpg',
         'convertedCadSources': {
             'charge_module': 'source-assets/external/user-supplied/tp4056-user-supplied.stl',
             'battery': 'source-assets/external/user-supplied/battery-user-supplied.stl',
             'led': 'source-assets/external/user-supplied/led-user-supplied.stl',
+            'switch': 'source-assets/external/pass9/derived/switch-dip-slide.stl',
         },
         'parts': ['enclosure','solar_panel_placeholder','battery','charge_module','led_left','led_right','switch'],
         'motionProfiles': {

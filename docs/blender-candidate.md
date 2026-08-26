@@ -31,7 +31,7 @@ installation.
   as millimetres and scaled to Blender metres.
 - FreeCAD measurements for the supplied component sources are recorded in the
   manifest: TP4056 board 29.3 × 17.4 × 4.14 mm, LiPo 53.1 × 46.821 × 6.0 mm,
-  and LED 5.58 × 6.0 × 36.5 mm.
+  LED 5.58 × 6.0 × 36.5 mm, and pass9 slide switch 4.1 × 7.82 × 6.0 mm.
 - TP4056, LiPo, and LED STEP dimensions were validated in FreeCAD before this
   candidate was created, then tessellated into browser-safe STL meshes.
 - The solar panel is a placeholder because its photo was not baked into this
