@@ -36,8 +36,8 @@ No external network assets.
 
 ## What it does
 
-- Full-screen dark neutral stage in the Flash Forward visual language
-  (Lausanne type, white accent, hairline borders), with a compact accessible
+- Full-screen white stage in the Flash Forward visual language
+  (Lausanne type, dark black-green text, green accent, hairline borders), with a compact accessible
   parts list, two collapsible media-library reference panels (solar and
   flashlight-internals), a bottom scrub
   progress indicator, direct timeline/reset controls, restrained helper copy,
