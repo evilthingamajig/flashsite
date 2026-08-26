@@ -246,6 +246,18 @@ const reverseClosed = await cdp.evaluate(`({
 })`);
 check('reverse scrub restores annotations', /Cost: TBD/.test(reverseExploded.activeCallout) && reverseExploded.activeLeaders === 1 && reverseExploded.activeParts > 0 && reverseClosed.calloutsHidden && reverseClosed.leadersHidden && reverseClosed.activeParts === 0, JSON.stringify({ reverseExploded, reverseClosed }));
 
+const contextLoss = await cdp.evaluate(`(() => {
+  const event = new Event('webglcontextlost', { cancelable: true });
+  const dispatched = document.getElementById('cpv-canvas')?.dispatchEvent(event);
+  return {
+    dispatched,
+    defaultPrevented: event.defaultPrevented,
+    fallbackVisible: document.getElementById('cpv-fallback')?.hidden === false,
+    status: document.getElementById('cpv-status')?.textContent || ''
+  };
+})()`);
+check('WebGL context-loss fallback', contextLoss.dispatched === false && contextLoss.defaultPrevented && contextLoss.fallbackVisible && /Preview unavailable/.test(contextLoss.status), JSON.stringify(contextLoss));
+
 await cdp.close();
 server.close();
 if (checks.some((ok) => !ok)) process.exitCode = 1;
