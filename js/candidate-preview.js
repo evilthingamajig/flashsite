@@ -577,6 +577,14 @@ if (renderer && !failed) {
       requestRender();
     }
   });
+
+  window.addEventListener('pagehide', (event) => {
+    if (event.persisted) return;
+    cancelAnimationFrame(rafId);
+    rafId = 0;
+    if (mixer) mixer.stopAllAction();
+    if (renderer) renderer.dispose();
+  });
 }
 
 window.__ffCandidatePreview = {
