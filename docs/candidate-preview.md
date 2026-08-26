@@ -65,5 +65,8 @@ Headless Chrome smoke check (via `tools/cdp.mjs`, SwiftShader): page loads
 with zero console errors, reports ready state with 7 ScrollSequence clips at
 4.17 s, scrubs to p=0 / p=0.5 / p=1 and back deterministically, exposes the
 timeline/reset controls, and keeps
-`renderPaused` true while the document is hidden. The preview is checkpointed
+`renderPaused` true while the document is hidden. Candidate diagnostics also
+prove transform separation: `battery` and `charge_module` report distinct
+world positions at progress 0 versus 1 (closed vs exploded), confirming the
+per-part ScrollSequence actions move each part independently. The preview is checkpointed
 locally but remains intentionally unlinked from production navigation.
