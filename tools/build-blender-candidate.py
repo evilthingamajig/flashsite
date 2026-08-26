@@ -142,7 +142,7 @@ def main():
     solar_line = mat('SolarCellLine', (0.22, 0.28, 0.34), metallic=0.25, roughness=0.25)
     foil = mat('BatteryFoil', (0.42, 0.45, 0.46), metallic=0.45, roughness=0.32)
     pcb = mat('PcbGreen', (0.015, 0.16, 0.07), roughness=0.42)
-    ledmat = mat('LedClear', (0.62, 0.9, 1.0), roughness=0.12, transmission=0.6)
+    ledmat = mat('LedClear', (0.88, 0.92, 0.94), roughness=0.10, transmission=0.85)
     switchmat = mat('SwitchPlastic', (0.055, 0.06, 0.065), roughness=0.48)
 
     enclosure = import_stl(CASE, 'enclosure')
