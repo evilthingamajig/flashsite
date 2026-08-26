@@ -50,11 +50,11 @@ let inView = true;
 let dirty = false;
 let rafId = 0;
 const calloutSpecs = [
-  { part: 'enclosure', name: 'Enclosure', side: 'left', row: 0 },
+  { part: 'enclosure', name: 'Case', side: 'left', row: 0 },
   { part: 'solar_panel_placeholder', name: 'Solar panel', side: 'left', row: 1 },
   { part: 'battery', name: 'LiPo battery', side: 'right', row: 0 },
   { part: 'charge_module', name: 'TP4056 board', side: 'right', row: 1 },
-  { part: 'led_pair', name: 'LED pair', side: 'left', row: 2 },
+  { part: 'led_pair', name: '5 mm LEDs', side: 'left', row: 2 },
   { part: 'switch', name: 'Slide switch', side: 'right', row: 2 },
 ];
 const calloutTargets = new Map();
