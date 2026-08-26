@@ -556,15 +556,17 @@ if (renderer && !failed) {
   }
   if (stage && typeof ResizeObserver !== 'undefined') new ResizeObserver(measureStage).observe(stage);
 
-  const io = new IntersectionObserver((entries) => {
-    inView = entries.some((entry) => entry.isIntersecting);
-    if (inView) requestRender();
-    else {
-      cancelAnimationFrame(rafId);
-      rafId = 0;
-    }
-  }, { threshold: 0 });
-  if (stage) io.observe(stage);
+  if (typeof IntersectionObserver !== 'undefined') {
+    const io = new IntersectionObserver((entries) => {
+      inView = entries.some((entry) => entry.isIntersecting);
+      if (inView) requestRender();
+      else {
+        cancelAnimationFrame(rafId);
+        rafId = 0;
+      }
+    }, { threshold: 0 });
+    if (stage) io.observe(stage);
+  }
 
   document.addEventListener('visibilitychange', () => {
     if (document.hidden) {
