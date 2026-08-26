@@ -353,7 +353,7 @@ async function copyPoseLink() {
   }
   try {
     await navigator.clipboard.writeText(link);
-    setStatus('Pose link copied.');
+    setStatus('Link copied.');
   } catch (err) {
     setStatus('Copy blocked by the browser — copy the address bar link.');
     console.warn('Candidate preview clipboard:', err);
@@ -496,8 +496,8 @@ if (renderer && !failed) {
     ready = true;
     setStatus(
       clips.length
-        ? 'Ready — ' + clips.length + ' ScrollSequence clip' + (clips.length > 1 ? 's' : '') + ' · ' + duration.toFixed(2) + ' s'
-        : 'No ScrollSequence clips found — static candidate view.'
+        ? 'Ready — assembly review'
+        : 'Ready — static assembly review'
     );
     const requested = requestedReviewProgress();
     if (requested === null) {
@@ -508,10 +508,10 @@ if (renderer && !failed) {
     }
   }, (evt) => {
     if (evt.total > 0) {
-      setStatus('Loading candidate asset… ' + Math.round((evt.loaded / evt.total) * 100) + '%');
+      setStatus('Loading assembly…');
     }
   }, (err) => {
-    showFallback('The candidate GLB failed to load.', err);
+    showFallback('The assembly preview failed to load.', err);
   });
 }
 
@@ -533,7 +533,7 @@ if (renderer && !failed) {
   // parts list and controls remain usable alongside the notice.
   canvas.addEventListener('webglcontextlost', (event) => {
     event.preventDefault();
-    showFallback('The 3D graphics context was lost.', new Error('webglcontextlost'));
+    showFallback('The assembly preview lost its connection.', new Error('webglcontextlost'));
   });
 
   rangeEl?.addEventListener('input', () => {

@@ -234,7 +234,7 @@ const deepLinkQuery = await cdp.evaluate('window.location.search');
 await cdp.evaluate('window.__ffCandidatePreview.setProgress(1); undefined');
 await new Promise((resolve) => setTimeout(resolve, 120));
 const deepLinkStatus = await cdp.evaluate("({status: document.getElementById('cpv-status').textContent, range: Number(document.getElementById('cpv-range').value), calloutsHidden: document.getElementById('cpv-callouts').style.display === 'none', leadersHidden: document.getElementById('cpv-leaders').style.display === 'none', activeParts: document.querySelectorAll('#cpv-part-list li.is-active').length})");
-check('reassembled deep link', deepLinkQuery.includes('p=1') && deepLinkStatus.range >= 0.999 && /Reassembled/.test(deepLinkStatus.status) && deepLinkStatus.calloutsHidden && deepLinkStatus.leadersHidden && deepLinkStatus.activeParts === 0, JSON.stringify({ query: deepLinkQuery, ...deepLinkStatus }));
+check('reassembled deep link', deepLinkQuery.includes('p=1') && deepLinkStatus.range >= 0.999 && /Reassembled/.test(deepLinkStatus.status) && !/GLB|ScrollSequence|candidate asset/i.test(deepLinkStatus.status) && deepLinkStatus.calloutsHidden && deepLinkStatus.leadersHidden && deepLinkStatus.activeParts === 0, JSON.stringify({ query: deepLinkQuery, ...deepLinkStatus }));
 const reassembled = await info();
 const finalCamera = reassembled?.cameraPosition;
 const finalCameraDistinct = closedCamera && finalCamera
