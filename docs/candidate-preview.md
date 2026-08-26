@@ -108,6 +108,10 @@ No external network assets.
   the authored reassembly boundary (frame 120 of 120), used for visual QA of
   the closed-pose seating and camera-settle three-quarter framing.
 
+The Blender review renderer explicitly binds each imported `ScrollSequence`
+action to its named object and fits the camera to the requested authored pose;
+for example, pass `60` to inspect the exploded mid-sequence without clipping.
+
 ## Verification
 
 ```powershell

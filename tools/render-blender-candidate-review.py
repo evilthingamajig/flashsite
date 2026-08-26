@@ -31,27 +31,46 @@ def main():
     bpy.ops.import_scene.gltf(filepath=GLB)
     imported = list(bpy.context.selected_objects)
 
-    # Compute bounds of all imported meshes for camera framing.
+    # Blender's glTF importer stores each object action with an object slot,
+    # but only one may be bound automatically in a headless scene. Bind every
+    # authored ScrollSequence action explicitly so review frames evaluate the
+    # same seven-part choreography that the browser mixer plays.
+    for action in bpy.data.actions:
+        if not action.name.startswith("ScrollSequence") or not action.slots:
+            continue
+        identifier = action.slots[0].identifier
+        object_name = identifier[2:] if identifier.startswith("OB") else identifier
+        target = bpy.data.objects.get(object_name)
+        if target is not None:
+            target.animation_data_create()
+            target.animation_data.action = action
+
+    scene = bpy.context.scene
+
+    # Compute bounds at the requested authored pose. Exploded parts travel well
+    # outside the frame-1 enclosure bounds, so each review frame needs its own
+    # camera fit.
+    scene.frame_set(FRAME)
     world_min = Vector((float("inf"),) * 3)
     world_max = Vector((float("-inf"),) * 3)
-    for obj in imported:
-        if obj.type != "MESH":
-            continue
-        for corner in obj.bound_box:
-            world = obj.matrix_world @ Vector(corner)
-            world_min.x = min(world_min.x, world.x)
-            world_min.y = min(world_min.y, world.y)
-            world_min.z = min(world_min.z, world.z)
-            world_max.x = max(world_max.x, world.x)
-            world_max.y = max(world_max.y, world.y)
-            world_max.z = max(world_max.z, world.z)
+    for sample_frame in (FRAME,):
+        scene.frame_set(sample_frame)
+        bpy.context.view_layer.update()
+        for obj in imported:
+            if obj.type != "MESH":
+                continue
+            for corner in obj.bound_box:
+                world = obj.matrix_world @ Vector(corner)
+                world_min.x = min(world_min.x, world.x)
+                world_min.y = min(world_min.y, world.y)
+                world_min.z = min(world_min.z, world.z)
+                world_max.x = max(world_max.x, world.x)
+                world_max.y = max(world_max.y, world.y)
+                world_max.z = max(world_max.z, world.z)
 
     center = (world_min + world_max) / 2.0
     span = (world_max - world_min).length
     radius = span / 2.0
-
-    scene = bpy.context.scene
-    scene.frame_set(FRAME)
 
     # Set up the camera at a three-quarter angle.
     cam_data = bpy.data.cameras.new("ReviewCamera")
