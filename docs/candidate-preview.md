@@ -100,6 +100,8 @@ No external network assets.
 - `tools/verify-candidate-preview.mjs`
 - `tools/build-blender-candidate.py`
 - `tools/verify-blender-candidate.py`
+- `tools/render-blender-candidate-review.py` — reproducible headless Blender
+  render for the retained review frame.
 - `assets/3d/flashlight-assembly-blender-candidate.glb`
 - `assets/3d/blender-candidate-manifest.json`
 - `review/blender-candidate-frame-120.png` — retained Blender review frame at
@@ -111,6 +113,7 @@ No external network assets.
 ```powershell
 node --check js\candidate-preview.js
 node tools\verify-candidate-preview.mjs
+& 'C:\Program Files\Blender Foundation\Blender 5.2\blender.exe' --background --factory-startup --python tools\render-blender-candidate-review.py -- 120
 ```
 
 The tracked headless Chrome check (via `tools/cdp.mjs`, SwiftShader): page loads
