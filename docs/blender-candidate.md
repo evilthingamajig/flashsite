@@ -29,7 +29,8 @@ The exported binary can be checked directly with Blender after building:
 ```
 
 That gate checks the seven named parts, seven animation actions, measured pass9
-switch dimensions, parented battery detail meshes, and frame-120 return-to-seat.
+switch dimensions, parented battery and switch detail meshes, and frame-120
+return-to-seat.
 
 The GLB contains a named `ScrollSequence` action and is approximately 2.1 MB.
 The candidate was built and re-imported headlessly on the local Blender 5.2.1
@@ -46,8 +47,16 @@ installation.
   candidate was created, then tessellated into browser-safe STL meshes.
 - The solar panel is a placeholder because its photo was not baked into this
   candidate.
-- The supplied battery mesh has lightweight provisional yellow Kapton and
-  label-plate cues parented to it; these inherit the battery's authored motion.
+- The supplied battery mesh has lightweight provisional silver-foil, yellow
+  Kapton, label-plate, lead, and wire cues parented to it; these inherit the
+  battery's authored motion.
+- The supplied TP4056 mesh has lightweight blue-PCB, USB-C, component, and
+  input-wire cues parented to it; these inherit the board's authored motion.
+- The supplied pass9 switch mesh has a small contrasting actuator cue parented
+  to it; the native verifier requires that child while preserving the measured
+  source envelope.
+- Both LED meshes carry restrained parented wire cues and retain their
+  negative-X short-end seats.
 - Motion is authored per component: the enclosure stays stable, the panel
   reveals, the battery rolls, the board turns, the LEDs splay symmetrically,
   and the switch lifts. The exact degree values are recorded in the candidate

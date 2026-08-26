@@ -61,11 +61,14 @@ No external network assets.
   — stays inside the frame at narrow mobile widths, while the multiplier is
   exactly 1 (desktop framing unchanged) at `aspect ≥ 0.9`.
 - During the exploded review, one plain two-line editorial label appears at a
-  time and fades to the next part as the timeline advances. Labels use the
+  time and crossfades to the next part as the timeline advances. Labels use the
   site's Lausanne type, sentence-case copy, and a dotted SVG leader; the
   provisional second line is `Cost TBD` until authoritative pricing is supplied.
   Labels and leaders stay hidden in the
   closed and reassembled poses so the product view remains uncluttered.
+- The active callout is exposed as a polite atomic live announcement for
+  assistive technology; inactive labels remain mounted for the visual opacity
+  crossfade but are `aria-hidden` and never highlighted.
 - While a callout is active, its matching parts-list row(s) get a subtle green
   accent and `aria-current="step"`; both LED rows highlight together for
   `led_pair`. Highlighting clears whenever no callout is active (closed,
@@ -86,6 +89,11 @@ No external network assets.
 - `js/candidate-preview.js`
 - `css/candidate-preview.css`
 - `docs/candidate-preview.md`
+- `tools/verify-candidate-preview.mjs`
+- `tools/build-blender-candidate.py`
+- `tools/verify-blender-candidate.py`
+- `assets/3d/flashlight-assembly-blender-candidate.glb`
+- `assets/3d/blender-candidate-manifest.json`
 
 ## Verification
 
