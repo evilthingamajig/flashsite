@@ -51,29 +51,38 @@ def solar_material():
     # Cell layout and proportions follow the supplied solar-panel reference
     # photo. Geometry details below are used instead of the contact-sheet
     # pixels so the GLB stays self-contained and free of white background.
-    return mat('SolarPhotoCell', (0.012, 0.035, 0.07), metallic=0.15, roughness=0.28)
+    # Darken the base so the pale frame, bright bus lines, and cell strips
+    # read as physically distinct layers on the dark cell surface.
+    return mat('SolarPhotoCell', (0.006, 0.018, 0.04), metallic=0.12, roughness=0.32)
 
 def add_solar_details(panel, bus_material, line_material):
     details = []
-    frame_material = bpy.data.materials.get('SolarFrame') or mat('SolarFrame', (0.72, 0.70, 0.62), metallic=0.15, roughness=0.4)
-    screw_material = bpy.data.materials.get('SolarScrew') or mat('SolarScrew', (0.48, 0.50, 0.48), metallic=0.8, roughness=0.2)
+    frame_material = bpy.data.materials.get('SolarFrame') or mat('SolarFrame', (0.78, 0.76, 0.68), metallic=0.22, roughness=0.32)
+    screw_material = bpy.data.materials.get('SolarScrew') or mat('SolarScrew', (0.62, 0.64, 0.62), metallic=0.85, roughness=0.18)
     # The supplied product photo shows a pale perimeter frame, four corner
     # screws, a dark center divider, and fine parallel cell strips.
+    # Wider frame bars with a raised profile so the pale perimeter reads as a
+    # physical bezel that visibly contains the dark cell strips.
     frame_parts = [
-        ('solar_frame_top', (0.098, 0.0018, 0.0008), (0.0, 0.0281, 0.00125)),
-        ('solar_frame_bottom', (0.098, 0.0018, 0.0008), (0.0, -0.0281, 0.00125)),
-        ('solar_frame_left', (0.0018, 0.0544, 0.0008), (-0.0481, 0.0, 0.00125)),
-        ('solar_frame_right', (0.0018, 0.0544, 0.0008), (0.0481, 0.0, 0.00125)),
+        ('solar_frame_top', (0.098, 0.0026, 0.0011), (0.0, 0.0277, 0.00135)),
+        ('solar_frame_bottom', (0.098, 0.0026, 0.0011), (0.0, -0.0277, 0.00135)),
+        ('solar_frame_left', (0.0026, 0.0534, 0.0011), (-0.0477, 0.0, 0.00135)),
+        ('solar_frame_right', (0.0026, 0.0534, 0.0011), (0.0477, 0.0, 0.00135)),
     ]
     details.extend(cube(name, dims, loc, frame_material) for name, dims, loc in frame_parts)
-    details.append(cube('solar_center_divider', (0.0032, 0.054, 0.00028), (0.0, 0.0, 0.0011), bus_material))
+    # Centre divider and bus lines sit visibly above the cell surface.
+    details.append(cube('solar_center_divider', (0.0036, 0.054, 0.00036), (0.0, 0.0, 0.00122), bus_material))
     for x in (-0.025, 0.025):
-        details.append(cube('solar_bus', (0.0012, 0.054, 0.00025), (x, 0.0, 0.00105), bus_material))
+        details.append(cube('solar_bus', (0.0016, 0.054, 0.00032), (x, 0.0, 0.00118), bus_material))
+    # Cell-strip lines are raised above the dark base so they read as the
+    # fine conductive grid visible on a real panel.
     for index in range(13):
         y = -0.024 + index * 0.004
-        details.append(cube('solar_cell_line', (0.094, 0.00018, 0.00022), (0.0, y, 0.00104), line_material))
+        details.append(cube('solar_cell_line', (0.094, 0.00022, 0.00028), (0.0, y, 0.00116), line_material))
+    # Enlarge screw heads so the four corner fasteners are legible at
+    # product-explosion scale.
     for index, (x, y) in enumerate(((-0.042, -0.022), (0.042, -0.022), (-0.042, 0.022), (0.042, 0.022))):
-        screw = cylinder('solar_screw_head_' + str(index + 1), 0.00125, 0.00045, (x, y, 0.0016), screw_material)
+        screw = cylinder('solar_screw_head_' + str(index + 1), 0.0016, 0.00055, (x, y, 0.00175), screw_material)
         details.append(screw)
     for detail in details:
         detail.parent = panel
@@ -81,11 +90,13 @@ def add_solar_details(panel, bus_material, line_material):
     return details
 
 def add_solar_connection_details(panel, connector_material, lead_material):
-    connector = cube('solar_rear_connector', (0.006, 0.008, 0.0015), (0.0, 0.0, 0.0), connector_material)
-    parent_detail(connector, panel, (0.028, 0.014, -0.0011))
+    # Make the rear connector block and wire thicker so they read as a
+    # physical solder point and lead on the panel underside.
+    connector = cube('solar_rear_connector', (0.008, 0.010, 0.0020), (0.0, 0.0, 0.0), connector_material)
+    parent_detail(connector, panel, (0.028, 0.014, -0.0014))
     wire_detail('solar_rear_wire', panel, [
-        (0.028, 0.014, -0.0012), (0.034, 0.018, -0.0010), (0.041, 0.018, -0.0008)
-    ], lead_material)
+        (0.028, 0.014, -0.0015), (0.034, 0.018, -0.0012), (0.041, 0.018, -0.0010)
+    ], lead_material, bevel=0.00052)
 
 def import_stl(path, name, scale=BLENDER_MM):
     bpy.ops.wm.stl_import(filepath=path)
@@ -276,8 +287,10 @@ def main():
     clear()
     charcoal = mat('CaseCharcoal', (0.025, 0.035, 0.04), roughness=0.62)
     solar = solar_material()
-    solar_bus = mat('SolarBus', (0.06, 0.065, 0.055), metallic=0.3, roughness=0.3)
-    solar_line = mat('SolarCellLine', (0.22, 0.28, 0.34), metallic=0.25, roughness=0.25)
+    # Brighter bus bars and cell lines so they contrast against the darkened
+    # cell surface; the pale frame already sits higher via add_solar_details.
+    solar_bus = mat('SolarBus', (0.18, 0.20, 0.17), metallic=0.5, roughness=0.25)
+    solar_line = mat('SolarCellLine', (0.40, 0.50, 0.58), metallic=0.30, roughness=0.22)
     foil = mat('BatteryFoil', (0.48, 0.50, 0.49), metallic=0.62, roughness=0.27)
     kapton = mat('BatteryKapton', (0.72, 0.38, 0.035), roughness=0.48)
     battery_label = mat('BatteryLabel', (0.035, 0.04, 0.038), roughness=0.62)
@@ -412,7 +425,7 @@ def main():
             name: {key: [round(math.degrees(value), 1) for value in rotation] for key, rotation in profile.items()}
             for name, profile in MOTION_PROFILES.items()
         },
-        'visualDetails': ['solar panel has a raised frame, bus lines, cell-strip details, and a parented rear connector/wire cue', 'battery has lightweight provisional Kapton band, label plate, and lead cue parented to the supplied mesh', 'TP4056 board has lightweight blue PCB, USB-C, and component cues parented to the supplied mesh', 'switch has a small contrasting actuator cue parented to the pass9 source mesh', 'switch has two short inward-running wire cues (switch_red_wire, switch_black_wire) parented to the switch, routed toward negative Y into the enclosure', 'enclosure has four interior corner mount blocks (enclosure_mount_block_1..4) parented to the case shell', 'mount blocks are 5x5x6 mm dark plastic cubes at ±42 mm X, ±24 mm Y, z −4.5 mm'],
+        'visualDetails': ['solar panel has a raised pale frame with enhanced metallic contrast, brighter bus lines, brighter cell-strip grid, four enlarged corner screw heads, and a thickened rear connector/wire cue', 'battery has lightweight provisional Kapton band, label plate, and lead cue parented to the supplied mesh', 'TP4056 board has lightweight blue PCB, USB-C, and component cues parented to the supplied mesh', 'switch has a small contrasting actuator cue parented to the pass9 source mesh', 'switch has two short inward-running wire cues (switch_red_wire, switch_black_wire) parented to the switch, routed toward negative Y into the enclosure', 'enclosure has four interior corner mount blocks (enclosure_mount_block_1..4) parented to the case shell', 'mount blocks are 5x5x6 mm dark plastic cubes at ±42 mm X, ±24 mm Y, z −4.5 mm'],
         'provisional': ['solar panel is reference-informed geometry; no solar-panel CAD supplied', 'led_right duplicates the supplied single LED', 'battery and switch seating are provisional', 'user-supplied STEP files were converted to coarse browser-safe STL meshes through FreeCAD'],
         'authoredAction': 'ScrollSequence', 'frameRange': [1, 120],
         'timeline': {'closed': 0.0, 'explodedReview': 0.67, 'reassembled': 1.0},

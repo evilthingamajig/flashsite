@@ -29,8 +29,8 @@ The exported binary can be checked directly with Blender after building:
 ```
 
 That gate checks the seven named parts, seven animation actions, measured pass9
-switch dimensions, parented battery and switch detail meshes, and frame-120
-return-to-seat.
+switch dimensions, parented battery and switch detail meshes, frame bars, bus
+lines, cell strips, and frame-120 return-to-seat.
 
 The GLB contains a named `ScrollSequence` action and is approximately 2.1 MB.
 The candidate was built and re-imported headlessly on the local Blender 5.2.1
@@ -46,8 +46,10 @@ installation.
 - TP4056, LiPo, and LED STEP dimensions were validated in FreeCAD before this
   candidate was created, then tessellated into browser-safe STL meshes.
 - The solar panel is a placeholder because its photo was not baked into this
-  candidate; its front has a raised frame/cell study and its rear has a small
-  parented connector/wire cue for the exploded view.
+  candidate; its front has a darkened cell surface with a raised pale frame
+  (wider bezel bars with metallic finish), brighter bus lines, brighter
+  cell-strip grid, four enlarged corner screw heads, and its rear has a
+  thickened parented connector/wire cue for the exploded view.
 - The supplied battery mesh has lightweight provisional silver-foil, yellow
   Kapton, label-plate, lead, and wire cues parented to it; these inherit the
   battery's authored motion.
