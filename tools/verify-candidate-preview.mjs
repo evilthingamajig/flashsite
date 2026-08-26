@@ -45,6 +45,13 @@ let state = await info();
 check('candidate ready', state?.ready === true && state?.failed === false);
 check('seven authored clips', state?.clips === 7, String(state?.clips));
 check('authored duration', Math.abs((state?.duration || 0) - 5.0) < 0.01, String(state?.duration));
+const motionManifest = JSON.parse(await readFile(join(ROOT, 'assets', '3d', 'blender-candidate-manifest.json'), 'utf8'));
+const motionProfiles = motionManifest?.motionProfiles || {};
+const motionParts = ['enclosure', 'solar_panel_placeholder', 'battery', 'charge_module', 'led_left', 'led_right', 'switch'];
+const motionProfileShape = motionParts.every((part) => Array.isArray(motionProfiles[part]?.explode_rotation) && motionProfiles[part].explode_rotation.length === 3 && Array.isArray(motionProfiles[part]?.inspect_rotation) && motionProfiles[part].inspect_rotation.length === 3);
+const mirroredLedSplay = motionProfiles.led_left?.inspect_rotation?.[2] === 26 && motionProfiles.led_right?.inspect_rotation?.[2] === -26;
+const stableEnclosure = motionProfiles.enclosure?.explode_rotation?.every((value) => value === 0) && motionProfiles.enclosure?.inspect_rotation?.every((value) => value === 0);
+check('motion profile manifest', motionProfileShape && mirroredLedSplay && stableEnclosure, JSON.stringify(motionProfiles));
 
 await cdp.evaluate('window.__ffCandidatePreview.setProgress(0); undefined');
 await new Promise((resolve) => setTimeout(resolve, 180));
