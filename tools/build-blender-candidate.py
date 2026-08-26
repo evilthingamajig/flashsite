@@ -365,6 +365,7 @@ def main():
             'switch': [4.1, 7.82, 6.0],
         },
         'referencePhoto': 'assets/3d/references/solarpanel.jpg',
+        'mediaLibraryReferences': ['assets/3d/references/solar-panel-tops.png', 'assets/3d/references/flashlight-units-group.png', 'assets/3d/references/flashlight-internals-charging-board.png'],
         'convertedCadSources': {
             'charge_module': 'source-assets/external/user-supplied/tp4056-user-supplied.stl',
             'battery': 'source-assets/external/user-supplied/battery-user-supplied.stl',
