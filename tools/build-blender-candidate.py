@@ -321,7 +321,10 @@ def main():
     sw = import_stl(SWITCH, 'switch', scale=BLENDER_MM)
     set_mat(sw, switchmat)
     center_mesh_origin(sw)
-    sw.location = (0.0, 0.018, 0.0)
+    # Seat the switch against the positive-Y case wall. Keeping its body
+    # centered on the wall edge makes the control read as physically mounted
+    # in the closed three-quarter view instead of floating inside the shell.
+    sw.location = (0.0, 0.029, 0.0)
     add_switch_details(sw, actuator_mat)
 
     parts = [enclosure, panel, battery, charge, led_a, led_b, sw]

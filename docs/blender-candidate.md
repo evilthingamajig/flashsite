@@ -64,8 +64,9 @@ installation.
   manifest under `motionProfiles`.
 - The second LED is a duplicate of the supplied single LED and must be
   confirmed against the final product.
-- Battery, switch, solar-panel placement, and internal seating remain
-  provisional until the user supplies exact mounting/wiring references.
+- Battery and solar-panel placement remain provisional until the user supplies
+  exact mounting/wiring references; the switch is seated against the positive-Y
+  case wall so its body reads as mounted in the closed three-quarter view.
 - The existing approved GLB and its manifest remain untouched.
 
 Do not point the production feature flag at this candidate until an independent
