@@ -185,6 +185,11 @@ function updateCallouts(root = assetRoot) {
   if (!root || !calloutsEl || !leadersEl || !camera) return;
   const activeIndex = activeCalloutIndex(progress);
   const visible = activeIndex >= 0;
+  const activeSpec = visible ? calloutSpecs[activeIndex] : null;
+  calloutsEl.setAttribute(
+    'aria-label',
+    activeSpec ? 'Current part: ' + activeSpec.name + '. Cost TBD.' : 'Current candidate part annotation'
+  );
   calloutsEl.hidden = !visible;
   leadersEl.hidden = !visible;
   calloutsEl.style.display = visible ? '' : 'none';
