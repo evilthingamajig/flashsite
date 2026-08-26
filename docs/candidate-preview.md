@@ -72,4 +72,6 @@ timeline/reset controls, and keeps
 prove transform separation: `battery` and `charge_module` report distinct
 world positions at progress 0 versus 1 (closed vs exploded), confirming the
 per-part ScrollSequence actions move each part independently. The preview is checkpointed
-locally but remains intentionally unlinked from production navigation.
+locally but remains intentionally unlinked from production navigation. The
+same smoke check also validates the 390 × 844 mobile layout for overflow and
+control reachability.
