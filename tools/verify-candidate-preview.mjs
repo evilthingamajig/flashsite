@@ -54,6 +54,13 @@ await cdp.evaluate('window.__ffCandidatePreview.setProgress(1); undefined');
 await new Promise((resolve) => setTimeout(resolve, 180));
 const exploded = await info();
 check('exploded pose label', /Exploded/.test(await cdp.evaluate("document.getElementById('cpv-status').textContent")));
+const callouts = await cdp.evaluate(`({
+  boxes: document.querySelectorAll('.cpv-callout').length,
+  lines: document.querySelectorAll('#cpv-leaders line').length,
+  visible: !document.getElementById('cpv-callouts').hidden,
+  shortCopy: [...document.querySelectorAll('.cpv-callout')].every((el) => el.textContent.trim().split(/\\s+/).length <= 5),
+})`);
+check('exploded part callouts', callouts.boxes === 6 && callouts.lines === 6 && callouts.visible && callouts.shortCopy, JSON.stringify(callouts));
 for (const part of ['battery', 'charge_module']) {
   const a = closed?.partTransforms?.[part];
   const b = exploded?.partTransforms?.[part];

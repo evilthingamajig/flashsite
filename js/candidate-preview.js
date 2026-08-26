@@ -14,6 +14,9 @@ const progressFill = document.getElementById('cpv-progress-fill');
 const progressLabel = document.getElementById('cpv-progress-label');
 const rangeEl = document.getElementById('cpv-range');
 const resetEl = document.getElementById('cpv-reset');
+const copyLinkEl = document.getElementById('cpv-copy-link');
+const leadersEl = document.getElementById('cpv-leaders');
+const calloutsEl = document.getElementById('cpv-callouts');
 const fallbackEl = document.getElementById('cpv-fallback');
 const fallbackMessage = document.getElementById('cpv-fallback-message');
 
@@ -39,6 +42,18 @@ let failed = false;
 let inView = true;
 let dirty = false;
 let rafId = 0;
+const calloutSpecs = [
+  { part: 'enclosure', name: 'Enclosure', side: 'left' },
+  { part: 'solar_panel_placeholder', name: 'Solar panel', side: 'left' },
+  { part: 'battery', name: 'LiPo battery', side: 'right' },
+  { part: 'charge_module', name: 'TP4056 board', side: 'right' },
+  { part: 'led_pair', name: 'LED pair', side: 'left' },
+  { part: 'switch', name: 'Slide switch', side: 'right' },
+];
+const calloutTargets = new Map();
+const calloutLines = new Map();
+const projection = new THREE.Vector3();
+const ledProjection = new THREE.Vector3();
 
 function setStatus(text) {
   if (statusEl) {
@@ -114,6 +129,71 @@ function updateCamera(p) {
   camera.lookAt(center);
 }
 
+function buildCallouts(root) {
+  if (!calloutsEl || !leadersEl) return;
+  calloutsEl.replaceChildren();
+  leadersEl.replaceChildren();
+  calloutTargets.clear();
+  calloutLines.clear();
+  for (const spec of calloutSpecs) {
+    const box = document.createElement('div');
+    box.className = 'cpv-callout cpv-callout-' + spec.side;
+    box.dataset.part = spec.part;
+    box.innerHTML = '<span class="cpv-callout-name"></span><span class="cpv-callout-cost">Cost TBD</span>';
+    box.querySelector('.cpv-callout-name').textContent = spec.name;
+    calloutsEl.append(box);
+    const line = document.createElementNS('http://www.w3.org/2000/svg', 'line');
+    line.setAttribute('stroke-linecap', 'round');
+    leadersEl.append(line);
+    calloutTargets.set(spec.part, box);
+    calloutLines.set(spec.part, line);
+  }
+  updateCallouts(root);
+}
+
+function targetFor(root, part) {
+  if (part === 'led_pair') {
+    const left = root.getObjectByName('led_left');
+    const right = root.getObjectByName('led_right');
+    if (!left || !right) return null;
+    left.getWorldPosition(projection);
+    right.getWorldPosition(ledProjection);
+    return projection.clone().lerp(ledProjection, 0.5);
+  }
+  const object = root.getObjectByName(part);
+  if (!object) return null;
+  object.getWorldPosition(projection);
+  return projection.clone();
+}
+
+function updateCallouts(root = assetRoot) {
+  if (!root || !calloutsEl || !leadersEl || !camera) return;
+  const visible = progress >= 0.12;
+  calloutsEl.hidden = !visible;
+  leadersEl.hidden = !visible;
+  if (!visible) return;
+  const width = stage.clientWidth || 1;
+  const height = stage.clientHeight || 1;
+  const slots = [0.23, 0.35, 0.47, 0.59, 0.71, 0.83];
+  for (const [index, spec] of calloutSpecs.entries()) {
+    const box = calloutTargets.get(spec.part);
+    const line = calloutLines.get(spec.part);
+    const point = targetFor(root, spec.part);
+    if (!box || !line || !point) continue;
+    point.project(camera);
+    const targetX = (point.x * 0.5 + 0.5) * width;
+    const targetY = (-point.y * 0.5 + 0.5) * height;
+    const boxX = width * (spec.side === 'left' ? 0.18 : 0.82);
+    const boxY = height * slots[index];
+    box.style.left = boxX + 'px';
+    box.style.top = boxY + 'px';
+    line.setAttribute('x1', String(targetX));
+    line.setAttribute('y1', String(targetY));
+    line.setAttribute('x2', String(boxX));
+    line.setAttribute('y2', String(boxY));
+  }
+}
+
 function updateProgressUI(p) {
   const pct = Math.round(p * 100);
   progressFill.style.transform = 'scaleX(' + p.toFixed(4) + ')';
@@ -131,6 +211,7 @@ function applyProgress(p) {
   if (ready) {
     samplePose(progress);
     updateCamera(progress);
+    updateCallouts();
     updateProgressUI(progress);
     requestRender();
   }
@@ -154,6 +235,27 @@ function requestedReviewProgress() {
   return Number.isFinite(num) ? clamp01(num) : null;
 }
 
+function poseLinkFor(progressValue) {
+  const url = new URL(window.location.href);
+  url.searchParams.set('p', clamp01(progressValue).toFixed(3));
+  return url.toString();
+}
+
+async function copyPoseLink() {
+  const link = poseLinkFor(progress);
+  if (!navigator.clipboard?.writeText) {
+    setStatus('Clipboard unavailable — copy the address bar link.');
+    return;
+  }
+  try {
+    await navigator.clipboard.writeText(link);
+    setStatus('Pose link copied.');
+  } catch (err) {
+    setStatus('Copy blocked by the browser — copy the address bar link.');
+    console.warn('Candidate preview clipboard:', err);
+  }
+}
+
 function measureStage() {
   const w = stage.clientWidth || 1;
   const h = stage.clientHeight || 1;
@@ -163,6 +265,7 @@ function measureStage() {
   camera.updateProjectionMatrix();
   if (closedFrame && explodedFrame) {
     updateCamera(progress);
+    updateCallouts();
     requestRender();
   }
 }
@@ -284,6 +387,7 @@ if (renderer && !failed) {
     }
 
     computeFrames(root);
+    buildCallouts(root);
     measureStage();
     ready = true;
     setStatus(
@@ -328,6 +432,9 @@ if (renderer && !failed) {
     scrollToProgress(0);
     applyProgress(0);
     rangeEl?.focus({ preventScroll: true });
+  });
+  copyLinkEl?.addEventListener('click', () => {
+    copyPoseLink();
   });
   if (typeof ResizeObserver !== 'undefined') new ResizeObserver(measureStage).observe(stage);
 
