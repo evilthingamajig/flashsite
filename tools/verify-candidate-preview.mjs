@@ -136,6 +136,11 @@ const controls = await cdp.evaluate(`({
   chapters: [...document.querySelectorAll('.cpv-chapter span')].map((el) => el.textContent.trim()),
 })`);
 check('review controls and reference', controls.range && controls.reset && controls.reference && controls.poses && JSON.stringify(controls.chapters) === JSON.stringify(['Closed', 'Exploded review', 'Reassembled']), JSON.stringify(controls));
+const metadata = await cdp.evaluate(`({
+  title: document.title,
+  description: document.querySelector('meta[name="description"]')?.getAttribute('content') || ''
+})`);
+check('Flash Forward metadata', metadata.title === 'Flash Forward — Inside the flashlight' && /Flash Forward/.test(metadata.description) && /assembly study/.test(metadata.description), JSON.stringify(metadata));
 
 await cdp.send('Emulation.setDeviceMetricsOverride', { width: 390, height: 844, deviceScaleFactor: 1, mobile: true });
 await cdp.send('Page.reload');
