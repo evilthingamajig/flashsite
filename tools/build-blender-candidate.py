@@ -294,17 +294,22 @@ MOTION_PROFILES = {
     },
 }
 
-def add_keyframes(ob, seat, explode, inspect, frame_inspect, profile):
+def add_keyframes(ob, seat, explode, inspect, frame_inspect, profile,
+                  explode_start=1, explode_end=30,
+                  reassembly_start=100, reassembly_end=120):
     explode_rot = profile['explode_rotation']
     inspect_rot = profile['inspect_rotation']
     ob.location = seat
     ob.rotation_euler = (0.0, 0.0, 0.0)
     ob.keyframe_insert('location', frame=1)
     ob.keyframe_insert('rotation_euler', frame=1)
+    if explode_start > 1:
+        ob.keyframe_insert('location', frame=explode_start)
+        ob.keyframe_insert('rotation_euler', frame=explode_start)
     ob.location = explode
     ob.rotation_euler = explode_rot
-    ob.keyframe_insert('location', frame=30)
-    ob.keyframe_insert('rotation_euler', frame=30)
+    ob.keyframe_insert('location', frame=explode_end)
+    ob.keyframe_insert('rotation_euler', frame=explode_end)
     ob.location = inspect
     ob.rotation_euler = inspect_rot
     ob.keyframe_insert('location', frame=frame_inspect)
@@ -314,14 +319,43 @@ def add_keyframes(ob, seat, explode, inspect, frame_inspect, profile):
     # final product view.
     ob.location = explode
     ob.rotation_euler = explode_rot
-    ob.keyframe_insert('location', frame=100)
-    ob.keyframe_insert('rotation_euler', frame=100)
+    ob.keyframe_insert('location', frame=reassembly_start)
+    ob.keyframe_insert('rotation_euler', frame=reassembly_start)
+    if reassembly_end - reassembly_start >= 3 and ob.name not in {'enclosure', 'switch'}:
+        # Route every loose part to a clear point directly above its seat
+        # before the final vertical insertion. This prevents straight-line
+        # interpolation from cutting through another component or a side wall.
+        clearance = Vector(seat)
+        clearance.z = max(explode.z, seat.z + 0.028)
+        ob.location = clearance
+        ob.rotation_euler = explode_rot
+        ob.keyframe_insert('location', frame=reassembly_end - 2)
+        ob.keyframe_insert('rotation_euler', frame=reassembly_end - 2)
     ob.location = seat
     ob.rotation_euler = (0.0, 0.0, 0.0)
-    ob.keyframe_insert('location', frame=120)
-    ob.keyframe_insert('rotation_euler', frame=120)
+    ob.keyframe_insert('location', frame=reassembly_end)
+    ob.keyframe_insert('rotation_euler', frame=reassembly_end)
     if ob.animation_data and ob.animation_data.action:
-        ob.animation_data.action.name = 'ScrollSequence'
+        action = ob.animation_data.action
+        action.name = 'ScrollSequence'
+        # Auto-clamped handles preserve the smooth authored motion without
+        # Bezier overshoot between held poses and insertion waypoints.
+        if hasattr(action, 'fcurves'):
+            curves = action.fcurves
+        else:
+            # Blender 5 stores curves in layered action channel bags.
+            curves = [
+                curve
+                for layer in action.layers
+                for strip in layer.strips
+                for bag in strip.channelbags
+                for curve in bag.fcurves
+            ]
+        for curve in curves:
+            for point in curve.keyframe_points:
+                point.interpolation = 'BEZIER'
+                point.handle_left_type = 'AUTO_CLAMPED'
+                point.handle_right_type = 'AUTO_CLAMPED'
 
 def main():
     clear()
@@ -388,14 +422,21 @@ def main():
     set_mat(charge, pcb)
     reduce_mesh(charge, 0.03)
     fit_dimensions(charge, (0.0293, 0.0174, 0.00414))
-    charge.location = (0.0, 0.016, -0.002)
+    # Rotate the board footprint so its narrow dimension packs beside the
+    # battery instead of occupying the same closed-pose volume.
+    charge.rotation_euler.z = math.radians(90)
+    bpy.context.view_layer.objects.active = charge
+    charge.select_set(True)
+    bpy.ops.object.transform_apply(location=False, rotation=True, scale=False)
+    charge.select_set(False)
+    charge.location = (0.042, 0.010, -0.002)
     add_charge_details(charge, solder, usb_metal, battery_lead)
     battery = import_stl(BATTERY, 'battery')
     set_mat(battery, foil)
     reduce_mesh(battery, 0.03)
     # Keep the pouch recessed from the negative-Y switch wall so it does not
     # protrude through or visually crowd the exterior slider opening.
-    battery.location = (0.0, -0.004, -0.003)
+    battery.location = (0.005, -0.004, -0.003)
     # Lightweight provisional LiPo surface cues. Keep these as children of
     # the supplied battery mesh so the existing single battery action carries
     # them through the exploded and reassembled poses.
@@ -446,35 +487,68 @@ def main():
     parts = [enclosure, panel, battery, charge, led_a, led_b, sw]
     seats = {p.name: tuple(p.location) for p in parts}
     explode_offsets = {
-        'enclosure': (0.000, 0.000, 0.035),
-        'solar_panel_placeholder': (0.000, 0.000, 0.040),
+        # The enclosure is the assembly datum; moving it through independently
+        # animated internals creates false intersections. Keep it anchored.
+        'enclosure': (0.000, 0.000, 0.000),
+        # Park the full-width lid beyond the positive-Y wall. Leaving it above
+        # the cavity blocks every later internal insertion path.
+        'solar_panel_placeholder': (0.000, 0.075, 0.055),
         # Keep the battery behind the switch-side wall during the exploded
         # tableau instead of pulling it outward through the slider opening.
         'battery': (-0.060, 0.015, 0.047),
         'charge_module': (0.060, 0.024, 0.052),
         'led_left': (-0.032, -0.050, 0.045),
         'led_right': (0.032, -0.050, 0.045),
-        # The switch is mounted to the enclosure, so its phase offsets must
-        # match the case rather than remain fixed in world space.
-        'switch': (0.000, 0.000, 0.035),
+        # The switch is mounted to the enclosure and remains seated with it.
+        'switch': (0.000, 0.000, 0.000),
+    }
+    inspect_offsets = {
+        'enclosure': (0.000, 0.000, 0.000),
+        'solar_panel_placeholder': (0.000, 0.080, 0.075),
+        'battery': (-0.085, 0.015, 0.063),
+        'charge_module': (0.085, 0.030, 0.070),
+        'led_left': (-0.045, -0.065, 0.065),
+        'led_right': (0.045, -0.065, 0.065),
+        'switch': (0.000, 0.000, 0.000),
+    }
+    inspect_frames = {
+        'enclosure': 42,
+        'solar_panel_placeholder': 49,
+        'battery': 56,
+        'charge_module': 63,
+        'led_left': 70,
+        'led_right': 77,
+        'switch': 42,
+    }
+    explosion_windows = {
+        'enclosure': (1, 1),
+        'switch': (1, 1),
+        # Clear the lid first, then lift loose internals into their own lanes.
+        'solar_panel_placeholder': (1, 15),
+        'battery': (12, 30),
+        'charge_module': (12, 30),
+        'led_left': (12, 30),
+        'led_right': (12, 30),
+    }
+    reassembly_windows = {
+        'enclosure': (100, 100),
+        'switch': (100, 100),
+        'charge_module': (100, 105),
+        'battery': (105, 110),
+        'led_left': (110, 115),
+        'led_right': (110, 115),
+        'solar_panel_placeholder': (115, 120),
     }
     for i, p in enumerate(parts):
         s = Vector(seats[p.name])
         explode = s + Vector(explode_offsets[p.name])
-        if p.name == 'switch':
-            # Follow the enclosure's inspection translation and timing exactly
-            # so the mounted switch never drifts out of the case-side opening.
-            inspect = s + Vector((0.060, -0.030, 0.055))
-            inspect_frame = 42
-        elif p.name == 'battery':
-            # Keep the inspection path recessed on the positive-Y interior
-            # side as well; otherwise the rotated pouch crosses the switch.
-            inspect = s + Vector((0.060, 0.015, 0.063))
-            inspect_frame = 56
-        else:
-            inspect = s + Vector(((-1 if i % 2 else 1) * 0.06, (i - 3) * 0.01, 0.055 + i * 0.004))
-            inspect_frame = 42 + i * 7
-        add_keyframes(p, s, explode, inspect, inspect_frame, MOTION_PROFILES[p.name])
+        inspect = s + Vector(inspect_offsets[p.name])
+        explode_start, explode_end = explosion_windows[p.name]
+        reassembly_start, reassembly_end = reassembly_windows[p.name]
+        add_keyframes(
+            p, s, explode, inspect, inspect_frames[p.name], MOTION_PROFILES[p.name],
+            explode_start, explode_end, reassembly_start, reassembly_end,
+        )
 
     # Defensive cleanup for headless Blender startup datablocks that can
     # survive factory reset and otherwise export as a 2 m default Cube.
@@ -515,7 +589,14 @@ def main():
         'visualDetails': ['solar panel has a raised pale frame with enhanced metallic contrast, brighter bus lines, brighter cell-strip grid, four enlarged corner screw heads, and a thickened rear connector/wire cue', 'battery has lightweight provisional Kapton band, label plate, and lead cue parented to the supplied mesh', 'TP4056 board has lightweight blue PCB, USB-C, and component cues parented to the supplied mesh', 'switch uses the original transferred 48.816 mm custom slider/rail STL shown in the CAD redesign reference', 'switch has two short inward-running wire cues (switch_red_wire, switch_black_wire) parented to the switch, routed toward positive Y into the enclosure', 'LED lenses have subtle warm-white emission with an inner die cylinder for physical lens contrast', 'enclosure has four interior corner mount blocks (enclosure_mount_block_1..4) parented to the case shell', 'mount blocks are 5x5x6 mm dark plastic cubes at ±42 mm X, ±24 mm Y, z −4.5 mm', 'each interior mount block carries a small metallic fastener head (mount_screw_enclosure_mount_block_1..4) seated into its top so the posts read as real screw-down points'],
         'provisional': ['solar panel is reference-informed geometry; no solar-panel CAD supplied', 'led_right duplicates the supplied single LED', 'battery and switch seating are provisional', 'user-supplied STEP files were converted to coarse browser-safe STL meshes through FreeCAD'],
         'authoredAction': 'ScrollSequence', 'frameRange': [1, 120],
-        'timeline': {'closed': 0.0, 'explodedReview': 0.67, 'reassembled': 1.0},
+        'timeline': {
+            'closed': 0.0,
+            'explodedReview': 0.67,
+            'reassembled': 1.0,
+            'explosionOrder': ['solar_panel_placeholder', 'internals'],
+            'reassemblyOrder': ['charge_module', 'battery', 'led_pair', 'solar_panel_placeholder'],
+            'collisionStrategy': 'fixed inspection lanes plus above-seat insertion waypoints',
+        },
         'fallbackPreserved': 'assets/3d/flashlight-assembly.glb',
         'validation': {'blender': 'export completed; inspect GLB node/action metadata before web integration'}
     }
