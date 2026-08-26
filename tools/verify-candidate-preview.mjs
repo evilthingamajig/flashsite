@@ -50,6 +50,7 @@ await cdp.evaluate('window.__ffCandidatePreview.setProgress(0); undefined');
 await new Promise((resolve) => setTimeout(resolve, 180));
 const closed = await info();
 check('closed pose label', /Closed/.test(await cdp.evaluate("document.getElementById('cpv-status').textContent")));
+const closedCamera = closed?.cameraPosition;
 const closedAnnotations = await cdp.evaluate(`({
   calloutsHidden: document.getElementById('cpv-callouts').style.display === 'none',
   leadersHidden: document.getElementById('cpv-leaders').style.display === 'none',
@@ -138,6 +139,10 @@ await new Promise((resolve) => setTimeout(resolve, 120));
 const deepLinkStatus = await cdp.evaluate("({status: document.getElementById('cpv-status').textContent, range: Number(document.getElementById('cpv-range').value), calloutsHidden: document.getElementById('cpv-callouts').style.display === 'none', leadersHidden: document.getElementById('cpv-leaders').style.display === 'none'})");
 check('reassembled deep link', deepLinkQuery.includes('p=1') && deepLinkStatus.range >= 0.999 && /Reassembled/.test(deepLinkStatus.status) && deepLinkStatus.calloutsHidden && deepLinkStatus.leadersHidden, JSON.stringify({ query: deepLinkQuery, ...deepLinkStatus }));
 const reassembled = await info();
+const finalCamera = reassembled?.cameraPosition;
+const finalCameraDistinct = closedCamera && finalCamera
+  && Math.hypot(closedCamera.x - finalCamera.x, closedCamera.y - finalCamera.y, closedCamera.z - finalCamera.z) > 0.005;
+check('reassembled three-quarter camera', finalCameraDistinct, JSON.stringify({ closedCamera, finalCamera }));
 const reassembledParts = ['battery', 'charge_module', 'led_left', 'led_right', 'switch'];
 const returnedToSeats = reassembledParts.every((part) => {
   const a = closed?.partTransforms?.[part];

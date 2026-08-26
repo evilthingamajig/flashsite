@@ -119,14 +119,26 @@ function frameFor(box) {
 function updateCamera(p) {
   if (!closedFrame || !explodedFrame) return;
   const explosionEnd = 0.67;
-  const cameraProgress = p <= explosionEnd
-    ? p / explosionEnd
-    : 1 - ((p - explosionEnd) / (1 - explosionEnd));
-  const t = easeInOutCubic(clamp01(cameraProgress));
-  const center = closedFrame.center.clone().lerp(explodedFrame.center, t);
-  const dist = THREE.MathUtils.lerp(closedFrame.dist, explodedFrame.dist, t);
-  const azim = THREE.MathUtils.lerp(-0.55, 0.5, t);
-  const elev = THREE.MathUtils.lerp(0.62, 0.4, t);
+  let center;
+  let dist;
+  let azim;
+  let elev;
+  if (p <= explosionEnd) {
+    const t = easeInOutCubic(clamp01(p / explosionEnd));
+    center = closedFrame.center.clone().lerp(explodedFrame.center, t);
+    dist = THREE.MathUtils.lerp(closedFrame.dist, explodedFrame.dist, t);
+    azim = THREE.MathUtils.lerp(-0.55, 0.5, t);
+    elev = THREE.MathUtils.lerp(0.62, 0.4, t);
+  } else {
+    // Settle into a distinct final three-quarter product angle. The target
+    // and distance come from the measured closed frame, so this remains
+    // deterministic when the supplied case dimensions change.
+    const t = easeInOutCubic(clamp01((p - explosionEnd) / (1 - explosionEnd)));
+    center = explodedFrame.center.clone().lerp(closedFrame.center, t);
+    dist = THREE.MathUtils.lerp(explodedFrame.dist, closedFrame.dist * 1.08, t);
+    azim = THREE.MathUtils.lerp(0.5, -0.78, t);
+    elev = THREE.MathUtils.lerp(0.4, 0.52, t);
+  }
   camera.position.set(
     center.x + dist * Math.cos(elev) * Math.sin(azim),
     center.y + dist * Math.sin(elev),
@@ -515,6 +527,11 @@ window.__ffCandidatePreview = {
       progress,
       activeCallout: activeCalloutIndex(progress) >= 0 ? calloutSpecs[activeCalloutIndex(progress)].part : null,
       renderPaused: !inView || document.hidden,
+      cameraPosition: camera ? {
+        x: Number(camera.position.x.toFixed(4)),
+        y: Number(camera.position.y.toFixed(4)),
+        z: Number(camera.position.z.toFixed(4)),
+      } : null,
       actionTimes: actions.map((action) => Number(action.time.toFixed(4))),
       trackNames: actions.slice(0, 2).map((action) => action.getClip().tracks.map((track) => track.name)),
       trackSamples: actions.slice(0, 2).map((action) => action.getClip().tracks.slice(0, 2).map((track) => ({
