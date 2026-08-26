@@ -20,7 +20,7 @@ body{
   font-weight:400;
   -webkit-font-smoothing:antialiased;
 }
-.cpv-main{position:relative;height:480vh}
+.cpv-main{position:relative;height:400vh}
 .cpv-stage{
   position:-webkit-sticky;position:sticky;top:0;height:100svh;min-height:560px;
   overflow:hidden;isolation:isolate;
@@ -163,7 +163,7 @@ body{
 
 @media(max-width:760px){
   .cpv-leaders line{stroke-width:2}
-  .cpv-main{height:420vh}
+  .cpv-main{height:360vh}
   .cpv-parts{
     left:16px;right:16px;top:auto;bottom:64px;transform:none;
     width:auto;max-height:44svh;
