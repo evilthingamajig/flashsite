@@ -1,19 +1,17 @@
 import * as THREE from 'three';
 import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
 
-const GLB_URL = 'assets/3d/flashlight-assembly-blender-candidate.glb?v=candidate-3';
+const GLB_URL = 'assets/3d/flashlight-assembly-blender-candidate.glb?v=candidate-5';
 const CLIP_PATTERN = /^ScrollSequence/;
 // A full browser window can contain several times as many pixels as the
 // embedded review pane. Bound both device-pixel ratio and total framebuffer
 // area so scrubbing remains responsive on large/high-DPI displays.
-const DPR_CAP = 1.25;
+const DPR_CAP = 1.0;
 const MIN_RENDER_DPR = 0.75;
-const MAX_RENDER_PIXELS = 2_600_000;
-const SCRUB_DPR_CAP = 0.8;
-const SCRUB_MIN_RENDER_DPR = 0.6;
-const SCRUB_MAX_RENDER_PIXELS = 900_000;
+const MAX_RENDER_PIXELS = 1_500_000;
 const SCRUB_IDLE_MS = 140;
 const FOV = 32;
+const HEADER_SAFE_SHIFT = 0.1;
 const SHADOW_CASTERS = new Set([
   'enclosure',
   'solar_panel_placeholder',
@@ -116,12 +114,9 @@ function requestRender() {
 }
 
 function renderPixelRatio(w, h) {
-  const dprCap = scrubQuality ? SCRUB_DPR_CAP : DPR_CAP;
-  const minDpr = scrubQuality ? SCRUB_MIN_RENDER_DPR : MIN_RENDER_DPR;
-  const pixelBudget = scrubQuality ? SCRUB_MAX_RENDER_PIXELS : MAX_RENDER_PIXELS;
-  const deviceDpr = Math.min(window.devicePixelRatio || 1, dprCap);
-  const pixelBudgetDpr = Math.sqrt(pixelBudget / Math.max(1, w * h));
-  return Math.max(minDpr, Math.min(deviceDpr, pixelBudgetDpr));
+  const deviceDpr = Math.min(window.devicePixelRatio || 1, DPR_CAP);
+  const pixelBudgetDpr = Math.sqrt(MAX_RENDER_PIXELS / Math.max(1, w * h));
+  return Math.max(MIN_RENDER_DPR, Math.min(deviceDpr, pixelBudgetDpr));
 }
 
 function setScrubQuality() {
@@ -130,12 +125,10 @@ function setScrubQuality() {
   if (!scrubQuality) {
     scrubQuality = true;
     document.body.classList.add('cpv-scrubbing');
-    measureStage();
   }
   scrubIdleTimer = window.setTimeout(() => {
     scrubQuality = false;
     document.body.classList.remove('cpv-scrubbing');
-    measureStage();
     // Shadows stay frozen while parts move; refresh them once at the final
     // settled pose instead of rebuilding the shadow map every scrub frame.
     renderer.shadowMap.needsUpdate = true;
@@ -222,6 +215,10 @@ function updateCamera(p) {
     elev = THREE.MathUtils.lerp(0.4, 0.52, t);
   }
   dist *= portraitDistanceScale();
+  // The title occupies the upper stage lane. Aim the camera slightly above
+  // the assembly so the rendered product sits lower on screen and never
+  // disappears behind the headline during intermediate inspection poses.
+  center.y += dist * HEADER_SAFE_SHIFT;
   camera.position.set(
     center.x + dist * Math.cos(elev) * Math.sin(azim),
     center.y + dist * Math.sin(elev),
@@ -442,13 +439,19 @@ function computeFrames(root) {
   samplePose(0);
   root.updateMatrixWorld(true);
   const closedBox = new THREE.Box3().setFromObject(root);
-  samplePose(0.67);
-  root.updateMatrixWorld(true);
-  const explodedBox = new THREE.Box3().setFromObject(root);
+  // Fit the review camera to the complete authored path, not only the 67%
+  // checkpoint. Several parts reach their widest inspection offsets between
+  // the named poses; omitting those bounds lets the assembly leave frame.
+  const reviewBox = new THREE.Box3().makeEmpty();
+  for (let i = 0; i <= 24; i++) {
+    samplePose(i / 24);
+    root.updateMatrixWorld(true);
+    reviewBox.union(new THREE.Box3().setFromObject(root));
+  }
   samplePose(progress);
   root.updateMatrixWorld(true);
   closedFrame = frameFor(closedBox);
-  explodedFrame = frameFor(explodedBox);
+  explodedFrame = frameFor(reviewBox);
   if (shadowGround) {
     shadowGround.position.y = closedBox.min.y - 0.004;
     shadowGround.receiveShadow = true;
