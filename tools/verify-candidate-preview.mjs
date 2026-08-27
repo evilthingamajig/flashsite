@@ -58,7 +58,8 @@ cdp.on('Runtime.consoleAPICalled', (event) => {
 cdp.on('Runtime.exceptionThrown', () => errors.push('exception'));
 await cdp.send('Runtime.enable');
 await cdp.send('Page.enable');
-await cdp.send('Page.navigate', { url: `http://127.0.0.1:${PORT}/candidate-preview.html` });
+await cdp.send('Network.setCacheDisabled', { cacheDisabled: true });
+await cdp.send('Page.navigate', { url: `http://127.0.0.1:${PORT}/candidate-preview.html?verify=${Date.now()}` });
 await new Promise((resolve) => setTimeout(resolve, 3200));
 
 const info = () => cdp.evaluate('window.__ffCandidatePreview && window.__ffCandidatePreview.info()');
@@ -180,10 +181,12 @@ await new Promise((resolve) => setTimeout(resolve, 200));
 const calloutSpec = await cdp.evaluate(`(() => {
   const boxes = [...document.querySelectorAll('.cpv-callout')];
   const lines = [...document.querySelectorAll('#cpv-leaders line')];
+  const dots = [...document.querySelectorAll('#cpv-leaders .cpv-leader-dot')];
   const activeBox = boxes.find((el) => el.classList.contains('is-active'));
   const activeName = activeBox?.querySelector('.cpv-callout-name');
   const activeCost = activeBox?.querySelector('.cpv-callout-cost');
   const activeLine = lines.find((el) => el.style.opacity !== '0');
+  const activeDot = dots.find((el) => el.dataset.part === activeBox?.dataset.part);
   const boxStyle = activeBox ? getComputedStyle(activeBox) : null;
   const twoLines = !!activeBox && activeBox.children.length === 2
     && activeBox.children[0] === activeName && activeBox.children[1] === activeCost
@@ -198,12 +201,20 @@ const calloutSpec = await cdp.evaluate(`(() => {
     && boxes.filter((el) => el.getAttribute('aria-hidden') === 'false').length === 1
     && boxes.every((el) => el.classList.contains('is-active') || getComputedStyle(el).opacity === '0')
     && lines.filter((el) => el.style.opacity !== '0').length === 1
-    && lines.every((el) => el.style.opacity === '0' || el === activeLine);
-  const leaderDotted = !!activeLine && getComputedStyle(activeLine).strokeDasharray !== 'none';
-  return { twoLines, plainText, onlyActiveVisible, leaderDotted };
+    && lines.every((el) => el.style.opacity === '0' || el === activeLine)
+    && dots.filter((el) => getComputedStyle(el).opacity !== '0').length === 1;
+  const lineStyle = activeLine ? getComputedStyle(activeLine) : null;
+  const dotStyle = activeDot ? getComputedStyle(activeDot) : null;
+  const leaderSolid = !!lineStyle && lineStyle.strokeDasharray === 'none' && parseFloat(lineStyle.strokeWidth) >= 2.5;
+  const dotAttached = !!activeLine && !!activeDot
+    && Math.abs(Number(activeDot.getAttribute('cx')) - Number(activeLine.getAttribute('x1'))) < .1
+    && Math.abs(Number(activeDot.getAttribute('cy')) - Number(activeLine.getAttribute('y1'))) < .1
+    && Number(activeDot.getAttribute('r')) >= 6 && parseFloat(dotStyle.strokeWidth) >= 2;
+  const quarterSecondFollow = /0\.24s/.test(boxStyle?.transition || '');
+  return { twoLines, plainText, onlyActiveVisible, leaderSolid, dotAttached, quarterSecondFollow };
 })()`);
-check('callout requirements: two-line plain active, others hidden, dotted leader',
-  calloutSpec.twoLines && calloutSpec.plainText && calloutSpec.onlyActiveVisible && calloutSpec.leaderDotted,
+check('callout requirements: two-line text, solid thick leader, mesh dot, quarter-second follow',
+  calloutSpec.twoLines && calloutSpec.plainText && calloutSpec.onlyActiveVisible && calloutSpec.leaderSolid && calloutSpec.dotAttached && calloutSpec.quarterSecondFollow,
   JSON.stringify(calloutSpec));
 
 await cdp.evaluate('window.__ffCandidatePreview.setProgress(0.67); undefined');
@@ -230,10 +241,11 @@ check('switch remains visible in late exploded pose', switchReview.switchActive 
 const editorialSamples = [];
 for (const sample of [0.2, 0.32, 0.44, 0.56, 0.68, 0.8]) {
   await cdp.evaluate(`window.__ffCandidatePreview.setProgress(${sample}); undefined`);
-  await new Promise((resolve) => setTimeout(resolve, 400));
+  await new Promise((resolve) => setTimeout(resolve, 520));
   editorialSamples.push(await cdp.evaluate(`(() => {
     const activeBox = document.querySelector('.cpv-callout.is-active');
     const activeLine = [...document.querySelectorAll('#cpv-leaders line')].find((el) => el.style.opacity !== '0');
+    const activeDot = [...document.querySelectorAll('#cpv-leaders .cpv-leader-dot')].find((el) => el.dataset.part === activeBox?.dataset.part);
     const stage = document.querySelector('.cpv-stage').getBoundingClientRect();
     const box = activeBox?.getBoundingClientRect();
     const values = activeLine ? ['x1','y1','x2','y2'].map((name) => Number(activeLine.getAttribute(name))) : [];
@@ -243,14 +255,15 @@ for (const sample of [0.2, 0.32, 0.44, 0.56, 0.68, 0.8]) {
     const boxBounds = box ? [box.left-stage.left, box.top-stage.top, box.right-stage.left, box.bottom-stage.top] : [];
     const [boxLeft,boxTop,boxRight,boxBottom] = boxBounds;
     const targetInside = bounds.length === 4 && x1 >= minX-.2 && x1 <= maxX+.2 && y1 >= minY-.2 && y1 <= maxY+.2;
+    const dotAttached = !!activeDot && Math.abs(Number(activeDot.getAttribute('cx'))-x1)<.1 && Math.abs(Number(activeDot.getAttribute('cy'))-y1)<.1;
     const labelEdge = boxBounds.length === 4 && Math.min(Math.abs(x2-boxLeft),Math.abs(x2-boxRight),Math.abs(y2-boxTop),Math.abs(y2-boxBottom)) < .7;
     const labelClearsPart = boxBounds.length === 4 && (boxRight <= minX || boxLeft >= maxX || boxBottom <= minY || boxTop >= maxY);
-    return {p:${sample}, active:[...document.querySelectorAll('.cpv-callout')].filter((el) => el.classList.contains('is-active')).length, lines:[...document.querySelectorAll('#cpv-leaders line')].filter((el) => el.style.opacity !== '0').length, partRows:[...document.querySelectorAll('#cpv-part-list li.is-active')].map((el) => el.dataset.cpvPart), partAria:[...document.querySelectorAll('#cpv-part-list [aria-current="step"]')].map((el) => el.dataset.cpvPart), targetInside, labelEdge, labelClearsPart};
+    return {p:${sample}, active:[...document.querySelectorAll('.cpv-callout')].filter((el) => el.classList.contains('is-active')).length, lines:[...document.querySelectorAll('#cpv-leaders line')].filter((el) => el.style.opacity !== '0').length, partRows:[...document.querySelectorAll('#cpv-part-list li.is-active')].map((el) => el.dataset.cpvPart), partAria:[...document.querySelectorAll('#cpv-part-list [aria-current="step"]')].map((el) => el.dataset.cpvPart), targetInside, dotAttached, labelEdge, labelClearsPart};
   })()`));
 }
 const expectedPartRows = [['enclosure'], ['solar_panel_placeholder'], ['battery'], ['charge_module'], ['led_pair', 'led_pair'], ['switch']];
 check('editorial callouts sequence', editorialSamples.every((sample, index) => sample.active === 1 && sample.lines === 1 && JSON.stringify(sample.partRows) === JSON.stringify(expectedPartRows[index]) && JSON.stringify(sample.partAria) === JSON.stringify(expectedPartRows[index])), JSON.stringify(editorialSamples));
-check('editorial leaders touch the visible part and label edges without text overlap', editorialSamples.every((sample) => sample.targetInside && sample.labelEdge && sample.labelClearsPart), JSON.stringify(editorialSamples));
+check('editorial mesh dots and leaders stay attached without text overlap', editorialSamples.every((sample) => sample.targetInside && sample.dotAttached && sample.labelEdge && sample.labelClearsPart), JSON.stringify(editorialSamples));
 for (const part of ['battery', 'charge_module']) {
   const a = closed?.partTransforms?.[part];
   const b = exploded?.partTransforms?.[part];

@@ -1,7 +1,7 @@
 import * as THREE from 'three';
 import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
 
-const GLB_URL = 'assets/3d/flashlight-assembly-blender-candidate.glb?v=candidate-15';
+const GLB_URL = 'assets/3d/flashlight-assembly-blender-candidate.glb?v=candidate-18';
 const CLIP_PATTERN = /^ScrollSequence/;
 if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
 // A full browser window can contain several times as many pixels as the
@@ -79,18 +79,23 @@ let scrubIdleTimer = 0;
 let hasAppliedProgress = false;
 let renderQualityIndex = 0;
 let slowFrameScore = 0;
+let calloutFollowRaf = 0;
+let calloutFollowUntil = 0;
 const calloutSpecs = [
   { part: 'enclosure', name: 'Case', cost: 'Cost: TBD', side: 'left', row: 0 },
   { part: 'solar_panel_placeholder', name: 'Solar panel', cost: 'Cost: TBD', side: 'left', row: 1 },
   { part: 'battery', name: 'LiPo battery', cost: 'Cost: TBD', side: 'right', row: 0 },
   { part: 'charge_module', name: 'TP4056 board', cost: 'Cost: TBD', side: 'right', row: 1 },
-  { part: 'led_pair', name: '5 mm LEDs', cost: 'Cost: TBD', side: 'left', row: 2 },
+  { part: 'led_pair', name: '5 mm LEDs', cost: 'Cost: TBD', side: 'right', row: 2 },
   { part: 'switch', name: 'Slide switch', cost: 'Cost: TBD', side: 'right', row: 2 },
 ];
 const calloutTargets = new Map();
 const calloutLines = new Map();
+const calloutDots = new Map();
+const calloutSurfaceSamples = new Map();
 const projectedPartBox = new THREE.Box3();
 const projectedCorner = new THREE.Vector3();
+const projectedSurfacePoint = new THREE.Vector3();
 
 function setStatus(text) {
   if (statusEl) {
@@ -114,7 +119,9 @@ function showFallback(reason, err) {
   if (fallbackMessage && reason) fallbackMessage.textContent = reason + ' The parts list stays available beside this notice.';
   setStatus('Preview unavailable.');
   cancelAnimationFrame(rafId);
+  cancelAnimationFrame(calloutFollowRaf);
   rafId = 0;
+  calloutFollowRaf = 0;
   scrollAnimating = false;
   dirty = false;
   if (err) console.warn('Candidate preview:', err);
@@ -278,6 +285,8 @@ function buildCallouts(root) {
   leadersEl.replaceChildren();
   calloutTargets.clear();
   calloutLines.clear();
+  calloutDots.clear();
+  calloutSurfaceSamples.clear();
   for (const spec of calloutSpecs) {
     const box = document.createElement('div');
     box.className = 'cpv-callout cpv-callout-' + spec.side;
@@ -289,10 +298,51 @@ function buildCallouts(root) {
     const line = document.createElementNS('http://www.w3.org/2000/svg', 'line');
     line.setAttribute('stroke-linecap', 'round');
     leadersEl.append(line);
+    const dot = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+    dot.classList.add('cpv-leader-dot');
+    dot.dataset.part = spec.part;
+    dot.setAttribute('r', '6.5');
+    leadersEl.append(dot);
     calloutTargets.set(spec.part, box);
     calloutLines.set(spec.part, line);
+    calloutDots.set(spec.part, dot);
+    const objects = spec.part === 'led_pair'
+      ? [root.getObjectByName('led_left'), root.getObjectByName('led_right')]
+      : [root.getObjectByName(spec.part)];
+    const samples = [];
+    for (const object of objects) {
+      const positions = object?.geometry?.getAttribute('position');
+      if (!object || !positions) continue;
+      const stride = Math.max(1, Math.ceil(positions.count / 320));
+      const points = [];
+      for (let index = 0; index < positions.count; index += stride) {
+        points.push(new THREE.Vector3().fromBufferAttribute(positions, index));
+      }
+      samples.push({ object, points });
+    }
+    calloutSurfaceSamples.set(spec.part, samples);
   }
   updateCallouts(root);
+}
+
+function surfaceAnchorFor(part, labelX, labelY, width, height, fallbackBounds) {
+  let best = null;
+  let bestDistance = Infinity;
+  for (const sample of calloutSurfaceSamples.get(part) || []) {
+    sample.object.updateWorldMatrix(true, false);
+    for (const localPoint of sample.points) {
+      projectedSurfacePoint.copy(localPoint).applyMatrix4(sample.object.matrixWorld).project(camera);
+      if (projectedSurfacePoint.z < -1 || projectedSurfacePoint.z > 1) continue;
+      const x = (projectedSurfacePoint.x * 0.5 + 0.5) * width;
+      const y = (-projectedSurfacePoint.y * 0.5 + 0.5) * height;
+      const distance = (x - labelX) ** 2 + (y - labelY) ** 2;
+      if (distance < bestDistance) {
+        bestDistance = distance;
+        best = { x, y };
+      }
+    }
+  }
+  return best || nearestRectEdge(fallbackBounds, labelX, labelY, 3);
 }
 
 function projectedBoundsFor(root, part, width, height) {
@@ -353,6 +403,42 @@ function activeCalloutIndex(p) {
     : -1;
 }
 
+function syncLeaderToMovingLabel(part) {
+  if (!stage) return;
+  const box = calloutTargets.get(part);
+  const line = calloutLines.get(part);
+  if (!box || !line || !box.classList.contains('is-active')) return;
+  const target = { x: Number(line.dataset.anchorX), y: Number(line.dataset.anchorY) };
+  if (!Number.isFinite(target.x) || !Number.isFinite(target.y)) return;
+  const stageRect = stage.getBoundingClientRect();
+  const boxRect = box.getBoundingClientRect();
+  const labelBounds = {
+    minX: boxRect.left - stageRect.left,
+    minY: boxRect.top - stageRect.top,
+    maxX: boxRect.right - stageRect.left,
+    maxY: boxRect.bottom - stageRect.top,
+  };
+  const labelEdge = nearestRectEdge(labelBounds, target.x, target.y);
+  line.setAttribute('x2', String(labelEdge.x));
+  line.setAttribute('y2', String(labelEdge.y));
+}
+
+function followMovingCallout(now) {
+  calloutFollowRaf = 0;
+  const active = calloutSpecs[activeCalloutIndex(progress)];
+  if (active) syncLeaderToMovingLabel(active.part);
+  if (now < calloutFollowUntil) {
+    calloutFollowRaf = requestAnimationFrame(followMovingCallout);
+  }
+}
+
+function scheduleCalloutFollow() {
+  // The caption itself eases for 240 ms; keep the connector synchronized for
+  // a little longer so its text-end never trails behind the final CSS frame.
+  calloutFollowUntil = performance.now() + 420;
+  if (!calloutFollowRaf) calloutFollowRaf = requestAnimationFrame(followMovingCallout);
+}
+
 function syncPartListHighlight(spec) {
   for (const item of partListItems) {
     const match = spec !== null && item.dataset.cpvPart === spec.part;
@@ -376,12 +462,14 @@ function updateCallouts(root = assetRoot) {
     for (const spec of calloutSpecs) {
       const box = calloutTargets.get(spec.part);
       const line = calloutLines.get(spec.part);
+      const dot = calloutDots.get(spec.part);
       if (box) {
         box.classList.remove('is-active');
         box.style.display = 'none';
         box.setAttribute('aria-hidden', 'true');
       }
       if (line) line.style.opacity = '0';
+      if (dot) dot.style.opacity = '0';
     }
     return;
   }
@@ -398,14 +486,16 @@ function updateCallouts(root = assetRoot) {
   for (const [index, spec] of calloutSpecs.entries()) {
     const box = calloutTargets.get(spec.part);
     const line = calloutLines.get(spec.part);
-    if (!box || !line) continue;
+    const dot = calloutDots.get(spec.part);
+    if (!box || !line || !dot) continue;
     const active = index === activeIndex;
     box.classList.toggle('is-active', active);
     // Keep inactive labels mounted so the CSS opacity transition can crossfade
     // from one editorial caption to the next instead of snapping via display.
     box.style.display = 'block';
     box.setAttribute('aria-hidden', String(!active));
-    line.style.opacity = active ? '0.88' : '0';
+    line.style.opacity = active ? '0.94' : '0';
+    dot.style.opacity = active ? '1' : '0';
     // Only the visible label needs a world-matrix lookup, projection, and DOM
     // geometry update. Inactive labels stay mounted for their opacity fade.
     if (!active) continue;
@@ -453,25 +543,61 @@ function updateCallouts(root = assetRoot) {
         Math.max(labelHeight / 2 + 12, height * 0.20),
         height * 0.76
       );
+      // A side lane can still be pulled back over a narrow subject by the
+      // viewport clamp. Resolve that last collision in a vertical lane so the
+      // caption never sits on top of the part it is describing.
+      const candidateBounds = {
+        minX: boxX - labelWidth / 2,
+        minY: boxY - labelHeight / 2,
+        maxX: boxX + labelWidth / 2,
+        maxY: boxY + labelHeight / 2,
+      };
+      const overlaps = candidateBounds.minX < bounds.maxX
+        && candidateBounds.maxX > bounds.minX
+        && candidateBounds.minY < bounds.maxY
+        && candidateBounds.maxY > bounds.minY;
+      if (overlaps) {
+        const topSpace = bounds.minY;
+        const bottomSpace = height - bounds.maxY;
+        const useTop = topSpace >= labelHeight + gap || topSpace >= bottomSpace;
+        boxX = THREE.MathUtils.clamp(
+          (bounds.minX + bounds.maxX) / 2,
+          labelWidth / 2 + 12,
+          width - labelWidth / 2 - 12
+        );
+        boxY = useTop
+          ? bounds.minY - gap - labelHeight / 2
+          : bounds.maxY + gap + labelHeight / 2;
+        boxY = THREE.MathUtils.clamp(
+          boxY,
+          Math.max(labelHeight / 2 + 12, height * 0.20),
+          height * 0.76
+        );
+      }
     }
     box.style.left = boxX + 'px';
     box.style.top = boxY + 'px';
-    const target = nearestRectEdge(bounds, boxX, boxY, 3);
-    const stageRect = stage.getBoundingClientRect();
-    const boxRect = box.getBoundingClientRect();
-    const labelBounds = {
-      minX: boxRect.left - stageRect.left,
-      minY: boxRect.top - stageRect.top,
-      maxX: boxRect.right - stageRect.left,
-      maxY: boxRect.bottom - stageRect.top,
-    };
-    const labelEdge = nearestRectEdge(labelBounds, target.x, target.y);
+    const target = surfaceAnchorFor(spec.part, boxX, boxY, width, height, bounds);
     line.setAttribute('x1', String(target.x));
     line.setAttribute('y1', String(target.y));
-    line.setAttribute('x2', String(labelEdge.x));
-    line.setAttribute('y2', String(labelEdge.y));
+    line.dataset.anchorX = String(target.x);
+    line.dataset.anchorY = String(target.y);
+    dot.setAttribute('cx', String(target.x));
+    dot.setAttribute('cy', String(target.y));
     line.dataset.targetBounds = [bounds.minX, bounds.minY, bounds.maxX, bounds.maxY]
       .map((value) => value.toFixed(2)).join(',');
+    // Set the first connector frame from the destination geometry immediately;
+    // the follower below then tracks the label's CSS easing frames.
+    const intendedLabelBounds = {
+      minX: boxX - labelWidth / 2,
+      minY: boxY - labelHeight / 2,
+      maxX: boxX + labelWidth / 2,
+      maxY: boxY + labelHeight / 2,
+    };
+    const intendedEdge = nearestRectEdge(intendedLabelBounds, target.x, target.y);
+    line.setAttribute('x2', String(intendedEdge.x));
+    line.setAttribute('y2', String(intendedEdge.y));
+    scheduleCalloutFollow();
   }
 }
 
@@ -809,7 +935,9 @@ if (renderer && !failed) {
       if (inView) requestRender();
       else {
         cancelAnimationFrame(rafId);
+        cancelAnimationFrame(calloutFollowRaf);
         rafId = 0;
+        calloutFollowRaf = 0;
         scrollAnimating = false;
         scrollFrameTime = 0;
       }
@@ -820,7 +948,9 @@ if (renderer && !failed) {
   document.addEventListener('visibilitychange', () => {
     if (document.hidden) {
       cancelAnimationFrame(rafId);
+      cancelAnimationFrame(calloutFollowRaf);
       rafId = 0;
+      calloutFollowRaf = 0;
       scrollAnimating = false;
       scrollFrameTime = 0;
     } else {
@@ -833,9 +963,11 @@ if (renderer && !failed) {
   window.addEventListener('pagehide', (event) => {
     if (event.persisted) return;
     cancelAnimationFrame(rafId);
+    cancelAnimationFrame(calloutFollowRaf);
     clearTimeout(scrubIdleTimer);
     document.body.classList.remove('cpv-scrubbing');
     rafId = 0;
+    calloutFollowRaf = 0;
     scrollAnimating = false;
     if (mixer) mixer.stopAllAction();
     if (renderer) renderer.dispose();
