@@ -1,7 +1,7 @@
 import * as THREE from 'three';
 import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
 
-const GLB_URL = 'assets/3d/flashlight-assembly-blender-candidate.glb?v=candidate-25';
+const GLB_URL = 'assets/3d/flashlight-assembly-blender-candidate.glb?v=candidate-26';
 const CLIP_PATTERN = /^ScrollSequence/;
 const EMBED_ROOT = document.querySelector('[data-cpv-embedded]');
 const HOME_EMBEDDED = Boolean(EMBED_ROOT);
@@ -29,6 +29,15 @@ const SHADOW_CASTERS = new Set([
   'led_left',
   'led_right',
   'switch',
+]);
+const HOME_MATERIAL_CONTRAST = new Map([
+  ['LedClear', 0x78978f],
+  ['LedDie', 0xd29f32],
+  ['BatteryFoil', 0xcbd2cd],
+  ['BatteryLead', 0x65736b],
+  ['SwitchPlastic', 0x929b94],
+  ['SolarFrame', 0xc7d1ca],
+  ['SolarScrew', 0xaeb9b1],
 ]);
 
 const canvas = document.getElementById('cpv-canvas');
@@ -58,6 +67,7 @@ poseEl.setAttribute('aria-hidden', 'true');
 
 const clamp01 = (v) => Math.max(0, Math.min(1, v));
 const easeInOutCubic = (t) => (t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2);
+const easeOutCubic = (t) => 1 - Math.pow(1 - t, 3);
 const reducedMotion = window.matchMedia?.('(prefers-reduced-motion: reduce)').matches ?? false;
 
 let renderer = null;
@@ -244,8 +254,21 @@ function portraitDistanceScale() {
   const halfHorizontal = Math.atan(Math.tan(halfVertical) * aspect);
   const fit = Math.sin(halfVertical) / Math.sin(halfHorizontal);
   const gate = clamp01((PORTRAIT_MAX_ASPECT - aspect) / PORTRAIT_MAX_ASPECT);
-  const blend = gate * gate * (3 - 2 * gate);
-  return Math.min(1 + (fit - 1) * blend, PORTRAIT_DISTANCE_CAP);
+  const blend = HOME_EMBEDDED
+    ? gate * (2 - gate)
+    : gate * gate * (3 - 2 * gate);
+  const cap = HOME_EMBEDDED ? 2.15 : PORTRAIT_DISTANCE_CAP;
+  return Math.min(1 + (fit - 1) * blend, cap);
+}
+
+function tuneHomepageMaterial(material) {
+  if (!material || !HOME_EMBEDDED) return;
+  const color = HOME_MATERIAL_CONTRAST.get(material.name);
+  if (color !== undefined && material.color) material.color.setHex(color);
+  if (material.name === 'LedClear') {
+    if ('roughness' in material) material.roughness = Math.max(material.roughness, 0.38);
+    if ('metalness' in material) material.metalness = Math.min(material.metalness, 0.08);
+  }
 }
 
 function homeWideFactor() {
@@ -282,7 +305,11 @@ function updateCamera(p) {
   let azim;
   let elev;
   if (p <= explosionEnd) {
-    const t = easeInOutCubic(clamp01(p / explosionEnd));
+    const normalized = clamp01(p / explosionEnd);
+    // On the homepage the parts begin separating before an ease-in camera
+    // has created enough room. Open the technical view early so small pieces
+    // never cross the title or leave the viewport mid-scrub.
+    const t = HOME_EMBEDDED ? easeOutCubic(normalized) : easeInOutCubic(normalized);
     center = closedFrame.center.clone().lerp(explodedFrame.center, t);
     dist = THREE.MathUtils.lerp(closedFrame.dist, explodedFrame.dist, t);
     azim = THREE.MathUtils.lerp(-0.55, 0.5, t);
@@ -908,6 +935,15 @@ if (renderer && !failed) {
     scene.add(root);
     root.traverse((o) => {
       if (o.isMesh) {
+        if (HOME_EMBEDDED) {
+          // These are small independently animated technical parts. Keeping
+          // them out of frustum heuristics prevents stale bounds from dropping
+          // an LED or wire for a frame during rapid camera/pose changes.
+          o.frustumCulled = false;
+          for (const material of Array.isArray(o.material) ? o.material : [o.material]) {
+            tuneHomepageMaterial(material);
+          }
+        }
         // Detail meshes still render normally, but excluding them from the
         // shadow pass avoids duplicating dozens of tiny draw calls per frame.
         o.castShadow = SHADOW_CASTERS.has(o.name);
