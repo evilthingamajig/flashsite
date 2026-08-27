@@ -18,8 +18,9 @@
   position:-webkit-sticky;
   position:sticky;
   top:0;
-  height:100svh;
-  min-height:min(600px,100svh);
+  height:100vh;
+  height:100dvh;
+  min-height:min(600px,100dvh);
   overflow:hidden;
   isolation:isolate;
   background:#fff;
@@ -71,7 +72,7 @@
 
 @media(max-width:760px){
   .cpv-home{height:240vh;min-height:1500px}
-  .cpv-home .cpv-stage{min-height:min(560px,100svh)}
+  .cpv-home .cpv-stage{min-height:min(560px,100dvh)}
   .cpv-home .cpv-head{top:clamp(82px,11svh,106px);width:90vw}
   .cpv-home .cpv-head h2{font-size:clamp(2.2rem,10.5vw,3.35rem)}
   .cpv-home .cpv-callout{width:min(12rem,42vw)}
