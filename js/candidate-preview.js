@@ -1,7 +1,7 @@
 import * as THREE from 'three';
 import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
 
-const GLB_URL = 'assets/3d/flashlight-assembly-blender-candidate.glb?v=candidate-13';
+const GLB_URL = 'assets/3d/flashlight-assembly-blender-candidate.glb?v=candidate-15';
 const CLIP_PATTERN = /^ScrollSequence/;
 if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
 // A full browser window can contain several times as many pixels as the
@@ -89,8 +89,8 @@ const calloutSpecs = [
 ];
 const calloutTargets = new Map();
 const calloutLines = new Map();
-const projection = new THREE.Vector3();
-const ledProjection = new THREE.Vector3();
+const projectedPartBox = new THREE.Box3();
+const projectedCorner = new THREE.Vector3();
 
 function setStatus(text) {
   if (statusEl) {
@@ -295,19 +295,53 @@ function buildCallouts(root) {
   updateCallouts(root);
 }
 
-function targetFor(root, part) {
-  if (part === 'led_pair') {
-    const left = root.getObjectByName('led_left');
-    const right = root.getObjectByName('led_right');
-    if (!left || !right) return null;
-    left.getWorldPosition(projection);
-    right.getWorldPosition(ledProjection);
-    return projection.clone().lerp(ledProjection, 0.5);
+function projectedBoundsFor(root, part, width, height) {
+  const objects = part === 'led_pair'
+    ? [root.getObjectByName('led_left'), root.getObjectByName('led_right')]
+    : [root.getObjectByName(part)];
+  if (objects.some((object) => !object)) return null;
+  projectedPartBox.makeEmpty();
+  for (const object of objects) projectedPartBox.expandByObject(object, true);
+  if (projectedPartBox.isEmpty()) return null;
+  let minX = Infinity;
+  let minY = Infinity;
+  let maxX = -Infinity;
+  let maxY = -Infinity;
+  for (const x of [projectedPartBox.min.x, projectedPartBox.max.x]) {
+    for (const y of [projectedPartBox.min.y, projectedPartBox.max.y]) {
+      for (const z of [projectedPartBox.min.z, projectedPartBox.max.z]) {
+        projectedCorner.set(x, y, z).project(camera);
+        const screenX = (projectedCorner.x * 0.5 + 0.5) * width;
+        const screenY = (-projectedCorner.y * 0.5 + 0.5) * height;
+        minX = Math.min(minX, screenX);
+        minY = Math.min(minY, screenY);
+        maxX = Math.max(maxX, screenX);
+        maxY = Math.max(maxY, screenY);
+      }
+    }
   }
-  const object = root.getObjectByName(part);
-  if (!object) return null;
-  object.getWorldPosition(projection);
-  return projection.clone();
+  return { minX, minY, maxX, maxY };
+}
+
+function nearestRectEdge(rect, x, y, inset = 0) {
+  const left = rect.minX + inset;
+  const right = rect.maxX - inset;
+  const top = rect.minY + inset;
+  const bottom = rect.maxY - inset;
+  const clampedX = THREE.MathUtils.clamp(x, left, right);
+  const clampedY = THREE.MathUtils.clamp(y, top, bottom);
+  if (x < left) return { x: left, y: clampedY };
+  if (x > right) return { x: right, y: clampedY };
+  if (y < top) return { x: clampedX, y: top };
+  if (y > bottom) return { x: clampedX, y: bottom };
+  const edges = [
+    { distance: x - left, x: left, y },
+    { distance: right - x, x: right, y },
+    { distance: y - top, x, y: top },
+    { distance: bottom - y, x, y: bottom },
+  ];
+  edges.sort((a, b) => a.distance - b.distance);
+  return edges[0];
 }
 
 function activeCalloutIndex(p) {
@@ -375,21 +409,69 @@ function updateCallouts(root = assetRoot) {
     // Only the visible label needs a world-matrix lookup, projection, and DOM
     // geometry update. Inactive labels stay mounted for their opacity fade.
     if (!active) continue;
-    const point = targetFor(root, spec.part);
-    if (!point) continue;
-    point.project(camera);
-    const targetX = (point.x * 0.5 + 0.5) * width;
-    const targetY = (-point.y * 0.5 + 0.5) * height;
-    // The side panels occupy the outer lanes. Keep labels in the two clear
-    // lanes between the reference panel, the model, and the parts panel.
-    const boxX = width * (mobile ? (spec.side === 'left' ? 0.22 : 0.78) : (spec.side === 'left' ? 0.35 : 0.52));
-    const boxY = height * slots[spec.row];
+    const bounds = projectedBoundsFor(root, spec.part, width, height);
+    if (!bounds) continue;
+    const labelWidth = box.offsetWidth || Math.min(208, width * 0.24);
+    const labelHeight = box.offsetHeight || 56;
+    let boxX;
+    let boxY;
+    if (mobile) {
+      boxX = width * (spec.side === 'left' ? 0.22 : 0.78);
+      boxY = height * slots[spec.row];
+    } else {
+      // Keep each active caption beside its actual projected silhouette. If
+      // the authored side has no room, flip to the clearer side automatically.
+      const gap = 22;
+      const leftSpace = bounds.minX;
+      const rightSpace = width - bounds.maxX;
+      if (leftSpace < labelWidth + gap && rightSpace < labelWidth + gap) {
+        // Wide subjects such as the enclosure can consume both side lanes.
+        // Put the caption above/below the silhouette instead of overlapping it.
+        const topSpace = bounds.minY;
+        const bottomSpace = height - bounds.maxY;
+        const useTop = topSpace >= labelHeight + gap || topSpace >= bottomSpace;
+        boxX = THREE.MathUtils.clamp(
+          (bounds.minX + bounds.maxX) / 2,
+          labelWidth / 2 + 12,
+          width - labelWidth / 2 - 12
+        );
+        boxY = useTop
+          ? bounds.minY - gap - labelHeight / 2
+          : bounds.maxY + gap + labelHeight / 2;
+      } else {
+        let side = spec.side;
+        if (side === 'left' && leftSpace < labelWidth + gap) side = 'right';
+        if (side === 'right' && rightSpace < labelWidth + gap) side = 'left';
+        boxX = side === 'left'
+          ? bounds.minX - gap - labelWidth / 2
+          : bounds.maxX + gap + labelWidth / 2;
+        boxY = (bounds.minY + bounds.maxY) / 2;
+      }
+      boxX = THREE.MathUtils.clamp(boxX, labelWidth / 2 + 12, width - labelWidth / 2 - 12);
+      boxY = THREE.MathUtils.clamp(
+        boxY,
+        Math.max(labelHeight / 2 + 12, height * 0.20),
+        height * 0.76
+      );
+    }
     box.style.left = boxX + 'px';
     box.style.top = boxY + 'px';
-    line.setAttribute('x1', String(targetX));
-    line.setAttribute('y1', String(targetY));
-    line.setAttribute('x2', String(boxX));
-    line.setAttribute('y2', String(boxY));
+    const target = nearestRectEdge(bounds, boxX, boxY, 3);
+    const stageRect = stage.getBoundingClientRect();
+    const boxRect = box.getBoundingClientRect();
+    const labelBounds = {
+      minX: boxRect.left - stageRect.left,
+      minY: boxRect.top - stageRect.top,
+      maxX: boxRect.right - stageRect.left,
+      maxY: boxRect.bottom - stageRect.top,
+    };
+    const labelEdge = nearestRectEdge(labelBounds, target.x, target.y);
+    line.setAttribute('x1', String(target.x));
+    line.setAttribute('y1', String(target.y));
+    line.setAttribute('x2', String(labelEdge.x));
+    line.setAttribute('y2', String(labelEdge.y));
+    line.dataset.targetBounds = [bounds.minX, bounds.minY, bounds.maxX, bounds.maxY]
+      .map((value) => value.toFixed(2)).join(',');
   }
 }
 
