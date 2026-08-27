@@ -5,6 +5,38 @@
   root.removeAttribute('aria-labelledby');
   root.setAttribute('aria-label', 'How the solar study light is built');
 
+  // Critical preloader presentation lives here as well as in CSS so a stale,
+  // delayed, or blocked stylesheet can never expose the screen-reader list as
+  // giant page content. The interactive module replaces this markup on start.
+  root.style.position = 'relative';
+  root.style.minHeight = '100svh';
+  root.style.overflow = 'hidden';
+  var runtime = root.querySelector('.ff-assembly-runtime');
+  if (runtime) {
+    var preloaderContent = getComputedStyle(runtime, '::before').content;
+    runtime.textContent = preloaderContent === 'none' || preloaderContent === 'normal'
+      ? 'Loading interactive assembly…'
+      : '';
+    runtime.style.minHeight = '100svh';
+    runtime.style.display = 'grid';
+    runtime.style.placeContent = 'center';
+    runtime.style.textAlign = 'center';
+    runtime.style.padding = '96px 20px 48px';
+  }
+  var accessible = root.querySelector('.ff-assembly-accessible');
+  if (accessible) {
+    accessible.style.position = 'absolute';
+    accessible.style.width = '1px';
+    accessible.style.height = '1px';
+    accessible.style.padding = '0';
+    accessible.style.margin = '-1px';
+    accessible.style.overflow = 'hidden';
+    accessible.style.clip = 'rect(0,0,0,0)';
+    accessible.style.clipPath = 'inset(50%)';
+    accessible.style.whiteSpace = 'nowrap';
+    accessible.style.border = '0';
+  }
+
   var started = false;
   var observer = null;
   function start() {
@@ -12,7 +44,7 @@
     started = true;
     if (observer) observer.disconnect();
     root.dataset.assemblyLoading = '';
-    import('./home-candidate-assembly.js?v=candidate-31').catch(function (err) {
+    import('./home-candidate-assembly.js?v=candidate-32').catch(function (err) {
       delete root.dataset.assemblyLoading;
       console.warn('Homepage assembly:', err);
     });
@@ -29,6 +61,20 @@
   } else {
     window.addEventListener('load', start, { once: true });
   }
+
+  // IntersectionObserver can be delayed by browser zoom, restored scroll
+  // positions, extensions, or a foreground tab that resumes mid-layout. Keep
+  // a tiny geometry fallback on real viewport changes so a visible assembly
+  // can never remain as its static preloader indefinitely.
+  function startIfNear() {
+    if (started) return;
+    var rect = root.getBoundingClientRect();
+    if (rect.top < window.innerHeight * 0.95 && rect.bottom > 0) start();
+  }
+  window.addEventListener('scroll', startIfNear, { passive: true });
+  window.addEventListener('resize', startIfNear, { passive: true });
+  window.addEventListener('pageshow', startIfNear, { once: true });
+  requestAnimationFrame(startIfNear);
 
   document.querySelectorAll('a[href="#assembly-sequence"]').forEach(function (link) {
     link.addEventListener('pointerenter', start, { once: true, passive: true });
