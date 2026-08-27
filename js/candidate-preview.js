@@ -1,7 +1,7 @@
 import * as THREE from 'three';
 import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
 
-const GLB_URL = 'assets/3d/flashlight-assembly-blender-candidate.glb?v=candidate-21';
+const GLB_URL = 'assets/3d/flashlight-assembly-blender-candidate.glb?v=candidate-22';
 const CLIP_PATTERN = /^ScrollSequence/;
 if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
 // A full browser window can contain several times as many pixels as the
