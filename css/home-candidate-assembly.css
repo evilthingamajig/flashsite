@@ -13,6 +13,10 @@
   background:var(--cpv-bg);
   color:var(--cpv-text);
   font-family:Lausanne,Arial,sans-serif;
+  /* .cpv-main's standalone preview clips overflow. On the homepage that
+     would make this non-scrolling section the sticky containing block, so
+     Chrome would move the stage away with the section instead of pinning it. */
+  overflow:visible;
 }
 .cpv-home .cpv-stage{
   position:-webkit-sticky;
