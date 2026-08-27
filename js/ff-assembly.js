@@ -1,4 +1,9 @@
 (function(){'use strict';
+if(!document.documentElement.classList.contains('ff-asm3d')){
+ document.documentElement.classList.add('ff-asm3d');
+ var style=document.createElement('link');style.rel='stylesheet';style.href='css/ff-assembly3d.css?v=site-22';document.head.appendChild(style);
+ import('./ff-assembly3d.js?v=site-22').catch(function(){document.documentElement.classList.add('ff-asm3d-failed');});
+}
 var ROOT='images/flashforward/assembly/cinematic-v3/';
 var src={anchor:ROOT+'assembled-anchor.webp',enclosure:ROOT+'enclosure-front.webp',lid:ROOT+'solar-lid-front.webp',battery:ROOT+'battery-front.webp',module:ROOT+'module-front.webp',leds:ROOT+'led-pair-front.webp'};
 var text={solar:['01 / DAYLIGHT IN','5V solar panel','Captures daylight to recharge the light.'],battery:['02 / POWER HELD','Rechargeable battery','Stores energy for study after dark.'],module:['03 / CHARGE CONTROLLED','Recharge module','Manages safe charging from the panel.'],leds:['04 / LIGHT OUT','Two LEDs','Turn stored energy into focused study light.'],enclosure:['05 / BUILT TO PROTECT','3D-printed enclosure','Shields every component.']};
