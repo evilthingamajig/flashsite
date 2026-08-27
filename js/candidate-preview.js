@@ -1,7 +1,7 @@
 import * as THREE from 'three';
 import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
 
-const GLB_URL = 'assets/3d/flashlight-assembly-blender-candidate.glb?v=candidate-26';
+const GLB_URL = 'assets/3d/flashlight-assembly-blender-candidate.glb?v=candidate-27';
 const CLIP_PATTERN = /^ScrollSequence/;
 const EMBED_ROOT = document.querySelector('[data-cpv-embedded]');
 const HOME_EMBEDDED = Boolean(EMBED_ROOT);
@@ -9,9 +9,9 @@ if (!HOME_EMBEDDED && 'scrollRestoration' in history) history.scrollRestoration 
 // A full browser window can contain several times as many pixels as the
 // embedded review pane. Bound both device-pixel ratio and total framebuffer
 // area so scrubbing remains responsive on large/high-DPI displays.
-const DPR_CAP = HOME_EMBEDDED ? 0.9 : 1.0;
-const MIN_RENDER_DPR = 0.75;
-const MAX_RENDER_PIXELS = HOME_EMBEDDED ? 1_000_000 : 1_500_000;
+const DPR_CAP = HOME_EMBEDDED ? 0.75 : 1.0;
+const MIN_RENDER_DPR = HOME_EMBEDDED ? 0.4 : 0.75;
+const MAX_RENDER_PIXELS = HOME_EMBEDDED ? 650_000 : 1_500_000;
 const SCRUB_IDLE_MS = 140;
 const SCROLL_DAMPING = HOME_EMBEDDED ? 24 : 18;
 const SCROLL_SNAP_EPSILON = 0.00035;
@@ -94,6 +94,11 @@ let renderQualityIndex = 0;
 let slowFrameScore = 0;
 let calloutFollowRaf = 0;
 let calloutFollowUntil = 0;
+let activeCalloutPart = '';
+let renderedCalloutIndex = -2;
+let lastUiPercent = -1;
+let lastUiPose = '';
+let lastUiButtonState = '';
 const calloutSpecs = [
   { part: 'enclosure', name: 'Case', cost: 'Cost: TBD', side: 'left', row: 0 },
   { part: 'solar_panel_placeholder', name: 'Solar panel', cost: 'Cost: TBD', side: 'left', row: 1 },
@@ -106,7 +111,7 @@ const calloutTargets = new Map();
 const calloutLines = new Map();
 const calloutDots = new Map();
 const calloutSurfaceSamples = new Map();
-const projectedPartBox = new THREE.Box3();
+const calloutLocalBounds = new Map();
 const projectedCorner = new THREE.Vector3();
 const projectedSurfacePoint = new THREE.Vector3();
 
@@ -149,7 +154,12 @@ function renderPixelRatio(w, h) {
   const deviceDpr = Math.min(window.devicePixelRatio || 1, DPR_CAP);
   const pixelBudgetDpr = Math.sqrt(MAX_RENDER_PIXELS / Math.max(1, w * h));
   const baseDpr = Math.max(MIN_RENDER_DPR, Math.min(deviceDpr, pixelBudgetDpr));
-  return Math.max(0.55, baseDpr * ADAPTIVE_DPR_STEPS[renderQualityIndex]);
+  const scrubScale = HOME_EMBEDDED && scrubQuality ? 0.78 : 1;
+  const absoluteFloor = HOME_EMBEDDED ? 0.38 : 0.55;
+  return Math.max(
+    absoluteFloor,
+    baseDpr * ADAPTIVE_DPR_STEPS[renderQualityIndex] * scrubScale
+  );
 }
 
 function applyRenderResolution() {
@@ -166,6 +176,9 @@ function setScrubQuality() {
   if (!scrubQuality) {
     scrubQuality = true;
     document.body.classList.add('cpv-scrubbing');
+    cancelAnimationFrame(calloutFollowRaf);
+    calloutFollowRaf = 0;
+    applyRenderResolution();
     // A frozen shadow map otherwise leaves detached gray silhouettes behind
     // moving parts. Hide the receiver while scrubbing; this is both cleaner
     // and cheaper than rebuilding the shadow map on every wheel event.
@@ -178,6 +191,8 @@ function setScrubQuality() {
     // settled pose instead of rebuilding the shadow map every scrub frame.
     if (shadowGround) shadowGround.visible = true;
     renderer.shadowMap.needsUpdate = true;
+    applyRenderResolution();
+    updateCallouts();
     requestRender();
   }, SCRUB_IDLE_MS);
 }
@@ -364,6 +379,7 @@ function buildCallouts(root) {
   calloutLines.clear();
   calloutDots.clear();
   calloutSurfaceSamples.clear();
+  calloutLocalBounds.clear();
   for (const spec of calloutSpecs) {
     const box = document.createElement('div');
     box.className = 'cpv-callout cpv-callout-' + spec.side;
@@ -393,10 +409,16 @@ function buildCallouts(root) {
       ? [root.getObjectByName('led_left'), root.getObjectByName('led_right')]
       : [root.getObjectByName(spec.part)];
     const samples = [];
+    const localBounds = [];
     for (const object of objects) {
       const positions = object?.geometry?.getAttribute('position');
       if (!object || !positions) continue;
-      const stride = Math.max(1, Math.ceil(positions.count / 320));
+      object.geometry.computeBoundingBox();
+      if (object.geometry.boundingBox) {
+        localBounds.push({ object, box: object.geometry.boundingBox.clone() });
+      }
+      const sampleLimit = HOME_EMBEDDED ? 128 : 320;
+      const stride = Math.max(1, Math.ceil(positions.count / sampleLimit));
       const points = [];
       for (let index = 0; index < positions.count; index += stride) {
         points.push(new THREE.Vector3().fromBufferAttribute(positions, index));
@@ -404,6 +426,7 @@ function buildCallouts(root) {
       samples.push({ object, points });
     }
     calloutSurfaceSamples.set(spec.part, samples);
+    calloutLocalBounds.set(spec.part, localBounds);
   }
   updateCallouts(root);
 }
@@ -429,27 +452,25 @@ function surfaceAnchorFor(part, labelX, labelY, width, height, fallbackBounds) {
 }
 
 function projectedBoundsFor(root, part, width, height) {
-  const objects = part === 'led_pair'
-    ? [root.getObjectByName('led_left'), root.getObjectByName('led_right')]
-    : [root.getObjectByName(part)];
-  if (objects.some((object) => !object)) return null;
-  projectedPartBox.makeEmpty();
-  for (const object of objects) projectedPartBox.expandByObject(object, true);
-  if (projectedPartBox.isEmpty()) return null;
+  const entries = calloutLocalBounds.get(part) || [];
+  if (!entries.length) return null;
   let minX = Infinity;
   let minY = Infinity;
   let maxX = -Infinity;
   let maxY = -Infinity;
-  for (const x of [projectedPartBox.min.x, projectedPartBox.max.x]) {
-    for (const y of [projectedPartBox.min.y, projectedPartBox.max.y]) {
-      for (const z of [projectedPartBox.min.z, projectedPartBox.max.z]) {
-        projectedCorner.set(x, y, z).project(camera);
-        const screenX = (projectedCorner.x * 0.5 + 0.5) * width;
-        const screenY = (-projectedCorner.y * 0.5 + 0.5) * height;
-        minX = Math.min(minX, screenX);
-        minY = Math.min(minY, screenY);
-        maxX = Math.max(maxX, screenX);
-        maxY = Math.max(maxY, screenY);
+  for (const { object, box } of entries) {
+    object.updateWorldMatrix(true, false);
+    for (const x of [box.min.x, box.max.x]) {
+      for (const y of [box.min.y, box.max.y]) {
+        for (const z of [box.min.z, box.max.z]) {
+          projectedCorner.set(x, y, z).applyMatrix4(object.matrixWorld).project(camera);
+          const screenX = (projectedCorner.x * 0.5 + 0.5) * width;
+          const screenY = (-projectedCorner.y * 0.5 + 0.5) * height;
+          minX = Math.min(minX, screenX);
+          minY = Math.min(minY, screenY);
+          maxX = Math.max(maxX, screenX);
+          maxY = Math.max(maxY, screenY);
+        }
       }
     }
   }
@@ -523,6 +544,9 @@ function scheduleCalloutFollow() {
 }
 
 function syncPartListHighlight(spec) {
+  const nextPart = spec?.part || '';
+  if (nextPart === activeCalloutPart) return;
+  activeCalloutPart = nextPart;
   for (const item of partListItems) {
     const match = spec !== null && item.dataset.cpvPart === spec.part;
     item.classList.toggle('is-active', match);
@@ -536,26 +560,29 @@ function updateCallouts(root = assetRoot) {
   const activeIndex = activeCalloutIndex(progress);
   const visible = activeIndex >= 0;
   const activeSpec = visible ? calloutSpecs[activeIndex] : null;
-  syncPartListHighlight(activeSpec);
-  calloutsEl.hidden = !visible;
-  leadersEl.hidden = !visible;
-  calloutsEl.style.display = visible ? '' : 'none';
-  leadersEl.style.display = visible ? 'block' : 'none';
-  if (!visible) {
+  const activeChanged = activeIndex !== renderedCalloutIndex;
+  if (activeChanged) {
+    renderedCalloutIndex = activeIndex;
+    syncPartListHighlight(activeSpec);
+    calloutsEl.hidden = !visible;
+    leadersEl.hidden = !visible;
+    calloutsEl.style.display = visible ? '' : 'none';
+    leadersEl.style.display = visible ? 'block' : 'none';
     for (const spec of calloutSpecs) {
       const box = calloutTargets.get(spec.part);
       const line = calloutLines.get(spec.part);
       const dot = calloutDots.get(spec.part);
+      const active = visible && spec === activeSpec;
       if (box) {
-        box.classList.remove('is-active');
-        box.style.display = 'none';
-        box.setAttribute('aria-hidden', 'true');
+        box.classList.toggle('is-active', active);
+        box.style.display = visible ? 'block' : 'none';
+        box.setAttribute('aria-hidden', String(!active));
       }
-      if (line) line.style.opacity = '0';
-      if (dot) dot.style.opacity = '0';
+      if (line) line.style.opacity = active ? '0.94' : '0';
+      if (dot) dot.style.opacity = active ? '1' : '0';
     }
-    return;
   }
+  if (!visible || !activeSpec) return;
   const width = stage.clientWidth || 1;
   const height = stage.clientHeight || 1;
   // Match the stylesheet breakpoint against the viewport, not the sticky
@@ -566,26 +593,21 @@ function updateCallouts(root = assetRoot) {
   // all three editorial label lanes above it so the active text never hides
   // behind the open list.
   const slots = mobile ? [0.30, 0.35, 0.40] : [0.24, 0.40, 0.56];
-  for (const [index, spec] of calloutSpecs.entries()) {
-    const box = calloutTargets.get(spec.part);
-    const line = calloutLines.get(spec.part);
-    const dot = calloutDots.get(spec.part);
-    if (!box || !line || !dot) continue;
-    const active = index === activeIndex;
-    box.classList.toggle('is-active', active);
-    // Keep inactive labels mounted so the CSS opacity transition can crossfade
-    // from one editorial caption to the next instead of snapping via display.
-    box.style.display = 'block';
-    box.setAttribute('aria-hidden', String(!active));
-    line.style.opacity = active ? '0.94' : '0';
-    dot.style.opacity = active ? '1' : '0';
-    // Only the visible label needs a world-matrix lookup, projection, and DOM
-    // geometry update. Inactive labels stay mounted for their opacity fade.
-    if (!active) continue;
+  const spec = activeSpec;
+  const box = calloutTargets.get(spec.part);
+  const line = calloutLines.get(spec.part);
+  const dot = calloutDots.get(spec.part);
+  if (!box || !line || !dot) return;
     const bounds = projectedBoundsFor(root, spec.part, width, height);
-    if (!bounds) continue;
-    const labelWidth = box.offsetWidth || Math.min(208, width * 0.24);
-    const labelHeight = box.offsetHeight || 56;
+    if (!bounds) return;
+    let labelWidth = Number(box.dataset.cpvWidth);
+    let labelHeight = Number(box.dataset.cpvHeight);
+    if (!Number.isFinite(labelWidth) || !Number.isFinite(labelHeight)) {
+      labelWidth = box.offsetWidth || Math.min(208, width * 0.24);
+      labelHeight = box.offsetHeight || 56;
+      box.dataset.cpvWidth = String(labelWidth);
+      box.dataset.cpvHeight = String(labelHeight);
+    }
     let boxX;
     let boxY;
     if (mobile) {
@@ -680,25 +702,41 @@ function updateCallouts(root = assetRoot) {
     const intendedEdge = nearestRectEdge(intendedLabelBounds, target.x, target.y);
     line.setAttribute('x2', String(intendedEdge.x));
     line.setAttribute('y2', String(intendedEdge.y));
-    scheduleCalloutFollow();
-  }
+    // During active scrubbing, follow only when the editorial caption changes.
+    // This preserves the quarter-second attachment animation without forcing a
+    // layout read for every WebGL frame.
+    if (activeChanged || !scrubQuality) scheduleCalloutFollow();
 }
 
 function updateProgressUI(p) {
   const pct = Math.round(p * 100);
   progressFill.style.transform = 'scaleX(' + p.toFixed(4) + ')';
-  progressLabel.textContent = 'scrub ' + String(pct).padStart(3, '0') + '%';
-  progressEl.setAttribute('aria-valuenow', String(pct));
   const pose = poseStateFor(p);
-  progressEl.setAttribute('aria-valuetext', pose + ' — ' + pct + '%');
-  poseEl.textContent = ' · ' + pose;
-  if (statusEl && !statusEl.contains(poseEl)) statusEl.appendChild(poseEl);
-  if (rangeEl && document.activeElement !== rangeEl) rangeEl.value = p.toFixed(3);
-  for (const button of poseButtons) {
-    const target = Number(button.dataset.cpvPose);
-    const active = target === 0 ? p <= 0.02 : target === 0.67 ? p >= 0.52 && p <= 0.82 : p >= 0.9;
-    button.setAttribute('aria-pressed', String(active));
+  const percentChanged = pct !== lastUiPercent;
+  const poseChanged = pose !== lastUiPose;
+  if (percentChanged) {
+    lastUiPercent = pct;
+    progressLabel.textContent = 'scrub ' + String(pct).padStart(3, '0') + '%';
+    progressEl.setAttribute('aria-valuenow', String(pct));
   }
+  if (percentChanged || poseChanged) {
+    progressEl.setAttribute('aria-valuetext', pose + ' — ' + pct + '%');
+  }
+  if (poseChanged) {
+    lastUiPose = pose;
+    poseEl.textContent = ' · ' + pose;
+    if (statusEl && !statusEl.contains(poseEl)) statusEl.appendChild(poseEl);
+  }
+  const buttonState = p <= 0.02 ? 'closed' : p >= 0.52 && p <= 0.82 ? 'exploded' : p >= 0.9 ? 'reassembled' : '';
+  if (buttonState !== lastUiButtonState) {
+    lastUiButtonState = buttonState;
+    for (const button of poseButtons) {
+      const target = Number(button.dataset.cpvPose);
+      const active = target === 0 ? p <= 0.02 : target === 0.67 ? p >= 0.52 && p <= 0.82 : p >= 0.9;
+      button.setAttribute('aria-pressed', String(active));
+    }
+  }
+  if (rangeEl && document.activeElement !== rangeEl) rangeEl.value = p.toFixed(3);
 }
 
 function authoredPoseProgress(p) {
@@ -821,6 +859,10 @@ function measureStage() {
   if (!stage || !renderer || !camera || failed) return;
   const w = stage.clientWidth || 1;
   const h = stage.clientHeight || 1;
+  for (const box of calloutTargets.values()) {
+    delete box.dataset.cpvWidth;
+    delete box.dataset.cpvHeight;
+  }
   applyRenderResolution();
   camera.aspect = w / h;
   camera.updateProjectionMatrix();
@@ -840,8 +882,9 @@ function computeFrames(root) {
   // checkpoint. Several parts reach their widest inspection offsets between
   // the named poses; omitting those bounds lets the assembly leave frame.
   const reviewBox = new THREE.Box3().makeEmpty();
-  for (let i = 0; i <= 24; i++) {
-    samplePose(i / 24);
+  const frameSamples = HOME_EMBEDDED ? 12 : 24;
+  for (let i = 0; i <= frameSamples; i++) {
+    samplePose(i / frameSamples);
     root.updateMatrixWorld(true);
     reviewBox.union(new THREE.Box3().setFromObject(root));
   }
@@ -887,7 +930,7 @@ function initScene() {
   const key = new THREE.DirectionalLight(0xffffff, 1.9);
   key.position.set(0.35, 0.7, 0.45);
   key.castShadow = true;
-  key.shadow.mapSize.set(512, 512);
+  key.shadow.mapSize.set(HOME_EMBEDDED ? 256 : 512, HOME_EMBEDDED ? 256 : 512);
   key.shadow.bias = -0.0002;
   key.shadow.camera.left = -0.15;
   key.shadow.camera.right = 0.15;
@@ -913,7 +956,12 @@ function initScene() {
 }
 
 try {
-  renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: true, powerPreference: 'high-performance' });
+  renderer = new THREE.WebGLRenderer({
+    canvas,
+    antialias: !HOME_EMBEDDED,
+    alpha: true,
+    powerPreference: 'high-performance',
+  });
 } catch (err) {
   showFallback('WebGL is unavailable in this browser.', err);
 }
