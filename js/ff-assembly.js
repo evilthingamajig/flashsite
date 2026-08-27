@@ -44,7 +44,7 @@
     started = true;
     if (observer) observer.disconnect();
     root.dataset.assemblyLoading = '';
-    import('./home-candidate-assembly.js?v=candidate-36').catch(function (err) {
+    import('./home-candidate-assembly.js?v=candidate-37').catch(function (err) {
       delete root.dataset.assemblyLoading;
       console.warn('Homepage assembly:', err);
     });
@@ -56,7 +56,7 @@
   if ('IntersectionObserver' in window) {
     observer = new IntersectionObserver(function (entries) {
       if (entries.some(function (entry) { return entry.isIntersecting; })) start();
-    }, { rootMargin: '0px 0px -18% 0px', threshold: 0.01 });
+    }, { rootMargin: '100% 0px 100% 0px', threshold: 0.01 });
     observer.observe(root);
   } else {
     window.addEventListener('load', start, { once: true });
@@ -69,12 +69,20 @@
   function startIfNear() {
     if (started) return;
     var rect = root.getBoundingClientRect();
-    if (rect.top < window.innerHeight * 0.95 && rect.bottom > 0) start();
+    if (rect.top < window.innerHeight * 1.5 && rect.bottom > -window.innerHeight * 0.5) start();
   }
   window.addEventListener('scroll', startIfNear, { passive: true });
   window.addEventListener('resize', startIfNear, { passive: true });
   window.addEventListener('pageshow', startIfNear, { once: true });
   requestAnimationFrame(startIfNear);
+  // Warm the viewer after the hero's first render. This avoids the former
+  // race where a quick first scroll reached an empty assembly before the
+  // model request had even begun, without blocking initial page paint.
+  if ('requestIdleCallback' in window) {
+    requestIdleCallback(startIfNear, { timeout: 1000 });
+  } else {
+    setTimeout(startIfNear, 500);
+  }
 
   document.querySelectorAll('a[href="#assembly-sequence"]').forEach(function (link) {
     link.addEventListener('pointerenter', start, { once: true, passive: true });
