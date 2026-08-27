@@ -1,60 +1,7 @@
-(function(){'use strict';
-if(!document.documentElement.classList.contains('ff-asm3d')&&document.querySelector('[data-assembly-sequence]')){
- import('./home-candidate-assembly.js?v=candidate-22').catch(function(err){console.warn('Candidate homepage assembly:',err);});
- return;
-}
-var ROOT='images/flashforward/assembly/cinematic-v3/';
-var src={anchor:ROOT+'assembled-anchor.webp',enclosure:ROOT+'enclosure-front.webp',lid:ROOT+'solar-lid-front.webp',battery:ROOT+'battery-front.webp',module:ROOT+'module-front.webp',leds:ROOT+'led-pair-front.webp'};
-var text={solar:['01 / DAYLIGHT IN','5V solar panel','Captures daylight to recharge the light.'],battery:['02 / POWER HELD','Rechargeable battery','Stores energy for study after dark.'],module:['03 / CHARGE CONTROLLED','Recharge module','Manages safe charging from the panel.'],leds:['04 / LIGHT OUT','Two LEDs','Turn stored energy into focused study light.'],enclosure:['05 / BUILT TO PROTECT','3D-printed enclosure','Shields every component.']};
-var burst={enclosure:[-28,-16,-6,2],lid:[28,-24,8,-5],battery:[24,20,7,-7],module:[-24,16,-8,6],leds:[0,24,12,-3]};
-var seat={enclosure:{x:0,y:5,z:10,scale:1,rz:0},battery:{x:-9,y:-4,z:0,scale:.30,rz:3},module:{x:11,y:-3,z:0,scale:.23,rz:-2},leds:{x:8.5,y:18,z:40,scale:.23,rz:-8},lid:{x:0,y:1,z:50,scale:.74,rz:0}};
-var soloStart={lid:.13,battery:.25,module:.37,leds:.49,enclosure:.61};
-var soloEnd={lid:.25,battery:.37,module:.49,leds:.61,enclosure:.73};
-var turns={lid:190,battery:-220,module:175,leds:-205,enclosure:185};
-var hotspots={solar:{pointX:.5,pointY:.5},battery:{pointX:.5,pointY:.56},module:{pointX:.5,pointY:.5},leds:{pointX:.5,pointY:.53},enclosure:{pointX:.5,pointY:.58}};
-function clamp(v){return Math.max(0,Math.min(1,v));}
-function smooth(v){v=clamp(v);return v*v*(3-2*v);}
-function lerp(a,b,t){return a+(b-a)*t;}
-function phase(p,start,end){return smooth((p-start)/.018)*(1-smooth((p-end)/.018));}
-function markup(){return '<div class="ff-assembly-shell"><div class="ff-assembly-stage" aria-label="Scroll-driven assembly of a solar study light"><div class="ff-assembly-visual" aria-hidden="true"><div class="ff-assembly-composition"><img class="ff-assembly-piece ff-assembly-anchor" data-piece="anchor" src="'+src.anchor+'" alt="" width="1254" height="1254" loading="lazy" decoding="async"><img class="ff-assembly-piece ff-assembly-enclosure" data-piece="enclosure" src="'+src.enclosure+'" alt="" width="1254" height="1254" loading="lazy" decoding="async"><div class="ff-assembly-interior"><img class="ff-assembly-piece" data-piece="battery" src="'+src.battery+'" alt="" width="1254" height="1254" loading="lazy" decoding="async"><img class="ff-assembly-piece" data-piece="module" src="'+src.module+'" alt="" width="1254" height="1254" loading="lazy" decoding="async"></div><img class="ff-assembly-piece ff-assembly-front-wall" data-piece="front-wall" src="'+src.enclosure+'" alt="" width="1254" height="1254" loading="lazy" decoding="async"><img class="ff-assembly-piece" data-piece="leds" src="'+src.leds+'" alt="" width="1254" height="1254" loading="lazy" decoding="async"><img class="ff-assembly-piece" data-piece="lid" src="'+src.lid+'" alt="" width="1536" height="1024" loading="lazy" decoding="async"><img class="ff-assembly-piece ff-assembly-final-anchor" data-piece="final-anchor" src="'+src.anchor+'" alt="" width="1254" height="1254" loading="lazy" decoding="async"></div><div class="ff-assembly-handoff" aria-hidden="true"></div></div><div class="ff-assembly-copy"><div class="ff-assembly-intro-copy"><p class="ff-assembly-eyebrow">How it is built</p><h2 id="assembly-heading">One light. Built to study.</h2><p>Scroll to see every part take its place.</p></div><article class="ff-assembly-callout" data-callout="solar"><span class="ff-assembly-leader" aria-hidden="true"></span><p class="ff-assembly-eyebrow">'+text.solar[0]+'</p><h3>'+text.solar[1]+'</h3><p>'+text.solar[2]+'</p></article><article class="ff-assembly-callout" data-callout="battery"><span class="ff-assembly-leader" aria-hidden="true"></span><p class="ff-assembly-eyebrow">'+text.battery[0]+'</p><h3>'+text.battery[1]+'</h3><p>'+text.battery[2]+'</p></article><article class="ff-assembly-callout" data-callout="module"><span class="ff-assembly-leader" aria-hidden="true"></span><p class="ff-assembly-eyebrow">'+text.module[0]+'</p><h3>'+text.module[1]+'</h3><p>'+text.module[2]+'</p></article><article class="ff-assembly-callout" data-callout="leds"><span class="ff-assembly-leader" aria-hidden="true"></span><p class="ff-assembly-eyebrow">'+text.leds[0]+'</p><h3>'+text.leds[1]+'</h3><p>'+text.leds[2]+'</p></article><article class="ff-assembly-callout" data-callout="enclosure"><span class="ff-assembly-leader" aria-hidden="true"></span><p class="ff-assembly-eyebrow">'+text.enclosure[0]+'</p><h3>'+text.enclosure[1]+'</h3><p>'+text.enclosure[2]+'</p></article><div class="ff-assembly-final-mark"><p class="ff-assembly-eyebrow">READY TO STUDY.</p></div></div></div><ol class="ff-assembly-accessible" aria-label="Assembly components"><li><strong>5V solar panel.</strong> Captures daylight to recharge the light.</li><li><strong>Rechargeable battery.</strong> Stores energy for study after dark.</li><li><strong>Recharge module.</strong> Manages safe charging from the panel.</li><li><strong>Two LEDs.</strong> Turn stored energy into focused study light.</li><li><strong>3D-printed enclosure.</strong> Shields every component.</li></ol></div>';}
-function init(section){
- if(document.documentElement.classList.contains('ff-asm3d'))return;
- if(!section||section.getAttribute('data-assembly-ready'))return;section.setAttribute('data-assembly-ready','true');section.innerHTML=markup();
- var stage=section.querySelector('.ff-assembly-stage'),composition=section.querySelector('.ff-assembly-composition'),handoff=section.querySelector('.ff-assembly-handoff'),anchor=section.querySelector('[data-piece="anchor"]'),intro=section.querySelector('.ff-assembly-intro-copy'),finalAnchor=section.querySelector('[data-piece="final-anchor"]'),frontWall=section.querySelector('[data-piece="front-wall"]'),finalMark=section.querySelector('.ff-assembly-final-mark'),callouts={},layers={};
- ['solar','battery','module','leds','enclosure'].forEach(function(id){callouts[id]=section.querySelector('[data-callout="'+id+'"]');});
- ['enclosure','battery','module','leds','lid'].forEach(function(id){layers[id]=section.querySelector('[data-piece="'+id+'"]');});
- function nav(active){document.body.classList.toggle('ff-assembly-active',active);}
- function setPiece(el,opacity,x,y,z,scale,rx,ry,rz,order,blur){if(!el)return;el.style.opacity=String(clamp(opacity));el.style.zIndex=String(order||2);el.style.filter=blur?'blur('+blur+'px)':'';el.style.transform='translate3d(calc(-50% + '+x+'%),calc(-50% + '+y+'%),'+z+'px) rotateX('+rx+'deg) rotateY('+ry+'deg) rotateZ('+rz+'deg) scale('+scale+')';}
- function soloState(id,p){var start=soloStart[id],end=soloEnd[id],solo=phase(p,start,end),entry=smooth((p-start)/.055),settle=smooth((p-(start+.035))/.035),turn=turns[id]||0,initial=burst[id],targetX=(id==='lid'||id==='module'||id==='enclosure')?8:-8,rx=lerp(id==='battery'?26:-24,0,settle),ry=lerp(id==='module'?28:-24,0,settle),rz=lerp(0,turn,entry);rz=lerp(rz,0,settle);return {solo:solo,settled:settle,x:lerp(initial[0],targetX,entry),y:lerp(initial[1],0,entry),z:78,scale:lerp(1.08,1.03,settle),rx:rx,ry:ry,rz:rz,blur:settle<.35?1.2:0};}
- function render(progress){
-  var p=clamp(progress),mobile=window.innerWidth<700,impact=smooth(p/.07),burstIn=smooth((p-.07)/.06),burstOut=1-smooth((p-.115)/.035),burstOpacity=burstIn*burstOut,assemblyBase=smooth((p-.73)/.04),batterySeat=smooth((p-.77)/.05),moduleSeat=smooth((p-.82)/.05),ledSeat=smooth((p-.88)/.02),lidSeat=smooth((p-.93)/.03),handoffIn=smooth((p-.945)/.008),handoffOut=smooth((p-.972)/.008),tableauFade=1-handoffIn,finalProgress=handoffOut,introProgress=smooth(p/.10),anchorSize=lerp(.66,1.02,introProgress),anchorY=lerp(20,0,introProgress);
-  handoff.style.opacity=String(handoffIn*(1-handoffOut));
-  setPiece(anchor,Math.max(0,1-burstIn)*(1-finalProgress),0,anchorY,60,lerp(.9,1.04,impact),0,0,lerp(0,-7,impact),60,0);
-  setPiece(finalAnchor,finalProgress,0,seat.enclosure.y,60,.72,0,0,0,60,0);
-  Object.keys(layers).forEach(function(id){var state=soloState(id,p),openX=burst[id][0],openY=burst[id][1],openRz=burst[id][3],opacity=burstOpacity*(1-state.solo);if(state.solo>0)opacity=Math.max(opacity,state.solo);var x=lerp(0,openX,burstIn),y=lerp(0,openY,burstIn),z=0,scale=1,rx=lerp(0,burst[id][2],burstIn),ry=lerp(0,burst[id][2],burstIn),rz=lerp(0,openRz,burstIn),order=2,blur=0;
-   if(state.solo>0){x=state.x;y=state.y;z=state.z;scale=state.scale;rx=state.rx;ry=state.ry;rz=state.rz;blur=state.blur;}
-   if(id==='enclosure'&&p>=.73){opacity=1;x=lerp(8,seat.enclosure.x,assemblyBase);y=lerp(3,seat.enclosure.y,assemblyBase);z=seat.enclosure.z;scale=1;rx=0;ry=0;rz=0;order=10;}
-   if(id==='battery'&&p>=.77){opacity=1;x=lerp(openX,seat.battery.x,batterySeat);y=lerp(openY,seat.battery.y,batterySeat);z=seat.battery.z;scale=lerp(1,seat.battery.scale,batterySeat);rx=0;ry=0;rz=lerp(0,seat.battery.rz,batterySeat);order=20;}
-   if(id==='module'&&p>=.82){opacity=1;x=lerp(openX,seat.module.x,moduleSeat);y=lerp(openY,seat.module.y,moduleSeat);z=seat.module.z;scale=lerp(1,seat.module.scale,moduleSeat);rx=0;ry=0;rz=lerp(0,seat.module.rz,moduleSeat);order=20;}
-   if(id==='leds'&&p>=.88){opacity=1;x=lerp(openX,seat.leds.x,ledSeat);y=lerp(openY,seat.leds.y,ledSeat);z=seat.leds.z;scale=lerp(.38,seat.leds.scale,ledSeat);rx=0;ry=0;rz=lerp(0,seat.leds.rz,ledSeat);order=40;}
-   if(id==='lid'&&p>=.93){opacity=1;x=lerp(28,seat.lid.x,lidSeat);y=lerp(-42,seat.lid.y,lidSeat);z=seat.lid.z;scale=lerp(1.06,seat.lid.scale,lidSeat);rx=lerp(18,0,lidSeat);ry=lerp(-28,0,lidSeat);rz=lerp(-14,0,lidSeat);order=50;}
-   setPiece(layers[id],opacity*tableauFade,x,y,z,scale,rx,ry,rz,order,blur);
+(function () {
+  'use strict';
+  if (!document.querySelector('[data-assembly-sequence]')) return;
+  import('./home-candidate-assembly.js?v=candidate-25').catch(function (err) {
+    console.warn('Homepage assembly:', err);
   });
-  setPiece(frontWall,(p>=.73?1:0)*tableauFade,seat.enclosure.x,seat.enclosure.y,30,1,0,0,0,30,0);
-  intro.classList.toggle('is-hidden',p>.105);finalMark.classList.toggle('is-active',p>=.97);
-  var active=null,chapterIds=['solar','battery','module','leds','enclosure'],chapterLayers={solar:'lid',battery:'battery',module:'module',leds:'leds',enclosure:'enclosure'};
-  chapterIds.some(function(id){var holdStart=soloStart[chapterLayers[id]]+.065,holdEnd=soloEnd[chapterLayers[id]]-.018;if(p>=holdStart&&p<=holdEnd){active=id;return true;}return false;});
-  chapterIds.forEach(function(id,i){var c=callouts[id],guide=hotspots[id],right=i%2===1,target=layers[chapterLayers[id]],cRect=c.getBoundingClientRect(),tRect=target&&target.getBoundingClientRect(),startX=mobile?cRect.width*.5:(right?-14:cRect.width+14),startY=mobile?-8:cRect.height*.56,endX=0,endY=0;
-   c.classList.toggle('is-active',active===id);c.classList.toggle('is-right',right);
-   if(tRect){endX=tRect.left+tRect.width*guide.pointX-(cRect.left+startX);endY=tRect.top+tRect.height*guide.pointY-(cRect.top+startY);}
-   c.style.setProperty('--leader-start-x',startX+'px');c.style.setProperty('--leader-start-y',startY+'px');c.style.setProperty('--leader-length',Math.max(24,Math.hypot(endX,endY))+'px');c.style.setProperty('--leader-angle',(Math.atan2(endY,endX)*180/Math.PI)+'deg');
-  });
- }
- var timeline=null,proxy={p:0},ticking=false,scrollHandler,resizeHandler,cleanupDone=false;
- function cleanup(){if(cleanupDone)return;cleanupDone=true;nav(false);if(timeline){if(timeline.scrollTrigger)timeline.scrollTrigger.kill();timeline.kill();timeline=null;}if(scrollHandler)window.removeEventListener('scroll',scrollHandler);if(resizeHandler)window.removeEventListener('resize',resizeHandler);}
- render(0);window.addEventListener('pagehide',cleanup,{once:true});
- if(window.gsap&&window.ScrollTrigger){window.gsap.registerPlugin(window.ScrollTrigger);timeline=window.gsap.timeline({scrollTrigger:{trigger:section,start:'top top',end:'bottom bottom',pin:stage,pinSpacing:false,scrub:.28,anticipatePin:1,invalidateOnRefresh:true,onEnter:function(){nav(true);},onLeave:function(){nav(false);},onEnterBack:function(){nav(true);},onLeaveBack:function(){nav(false);},onUpdate:function(){render(proxy.p)}}});timeline.to(proxy,{p:1,duration:1,ease:'none',onUpdate:function(){render(proxy.p)}});}
- else{scrollHandler=function(){if(ticking)return;ticking=true;requestAnimationFrame(function(){var r=section.getBoundingClientRect(),p=-r.top/Math.max(1,section.offsetHeight-window.innerHeight);nav(p>0&&p<1);render(p);ticking=false;});};resizeHandler=scrollHandler;window.addEventListener('scroll',scrollHandler,{passive:true});window.addEventListener('resize',resizeHandler);scrollHandler();}
- }
- if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',function(){init(document.querySelector('[data-assembly-sequence]'));},{once:true});else init(document.querySelector('[data-assembly-sequence]'));
 })();

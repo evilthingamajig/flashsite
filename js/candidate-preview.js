@@ -1,23 +1,26 @@
 import * as THREE from 'three';
 import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
 
-const GLB_URL = 'assets/3d/flashlight-assembly-blender-candidate.glb?v=candidate-22';
+const GLB_URL = 'assets/3d/flashlight-assembly-blender-candidate.glb?v=candidate-25';
 const CLIP_PATTERN = /^ScrollSequence/;
-if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+const EMBED_ROOT = document.querySelector('[data-cpv-embedded]');
+const HOME_EMBEDDED = Boolean(EMBED_ROOT);
+if (!HOME_EMBEDDED && 'scrollRestoration' in history) history.scrollRestoration = 'manual';
 // A full browser window can contain several times as many pixels as the
 // embedded review pane. Bound both device-pixel ratio and total framebuffer
 // area so scrubbing remains responsive on large/high-DPI displays.
-const DPR_CAP = 1.0;
+const DPR_CAP = HOME_EMBEDDED ? 0.9 : 1.0;
 const MIN_RENDER_DPR = 0.75;
-const MAX_RENDER_PIXELS = 1_500_000;
+const MAX_RENDER_PIXELS = HOME_EMBEDDED ? 1_000_000 : 1_500_000;
 const SCRUB_IDLE_MS = 140;
-const SCROLL_DAMPING = 18;
+const SCROLL_DAMPING = HOME_EMBEDDED ? 24 : 18;
 const SCROLL_SNAP_EPSILON = 0.00035;
 const ADAPTIVE_DPR_STEPS = [1, 0.85, 0.7];
-const SLOW_FRAME_MS = 22;
+const SLOW_FRAME_MS = HOME_EMBEDDED ? 18 : 22;
 const SLOW_FRAME_SCORE_LIMIT = 4;
 const FOV = 32;
-const HEADER_SAFE_SHIFT = 0.1;
+const REASSEMBLY_START = 0.8333333333;
+const ASSEMBLY_SETTLED_PROGRESS = 0.95;
 const SHADOW_CASTERS = new Set([
   'enclosure',
   'solar_panel_placeholder',
@@ -153,12 +156,17 @@ function setScrubQuality() {
   if (!scrubQuality) {
     scrubQuality = true;
     document.body.classList.add('cpv-scrubbing');
+    // A frozen shadow map otherwise leaves detached gray silhouettes behind
+    // moving parts. Hide the receiver while scrubbing; this is both cleaner
+    // and cheaper than rebuilding the shadow map on every wheel event.
+    if (shadowGround) shadowGround.visible = false;
   }
   scrubIdleTimer = window.setTimeout(() => {
     scrubQuality = false;
     document.body.classList.remove('cpv-scrubbing');
     // Shadows stay frozen while parts move; refresh them once at the final
     // settled pose instead of rebuilding the shadow map every scrub frame.
+    if (shadowGround) shadowGround.visible = true;
     renderer.shadowMap.needsUpdate = true;
     requestRender();
   }, SCRUB_IDLE_MS);
@@ -175,26 +183,36 @@ function tick(now) {
   let needsRender = dirty;
   dirty = false;
   if (scrollAnimating) {
-    const elapsedMs = scrollFrameTime ? now - scrollFrameTime : 1000 / 60;
-    const dt = Math.min(0.05, elapsedMs / 1000);
-    scrollFrameTime = now;
-    slowFrameScore = elapsedMs > SLOW_FRAME_MS
-      ? slowFrameScore + 1
-      : Math.max(0, slowFrameScore - 0.35);
-    if (slowFrameScore >= SLOW_FRAME_SCORE_LIMIT && renderQualityIndex < ADAPTIVE_DPR_STEPS.length - 1) {
-      renderQualityIndex += 1;
-      slowFrameScore = 0;
-      applyRenderResolution();
-      needsRender = true;
-    }
-    let next = THREE.MathUtils.damp(progress, scrollTarget, SCROLL_DAMPING, dt);
-    if (Math.abs(next - scrollTarget) <= SCROLL_SNAP_EPSILON) {
-      next = scrollTarget;
+    if (HOME_EMBEDDED) {
+      // Native/Lenis scroll can emit more than once between paints. Consume
+      // only the newest value once per animation frame so animation sampling,
+      // projection, layout and WebGL drawing cannot pile up in Chrome.
       scrollAnimating = false;
       scrollFrameTime = 0;
+      applyProgress(scrollTarget, false);
+      needsRender = true;
+    } else {
+      const elapsedMs = scrollFrameTime ? now - scrollFrameTime : 1000 / 60;
+      const dt = Math.min(0.05, elapsedMs / 1000);
+      scrollFrameTime = now;
+      slowFrameScore = elapsedMs > SLOW_FRAME_MS
+        ? slowFrameScore + 1
+        : Math.max(0, slowFrameScore - 0.35);
+      if (slowFrameScore >= SLOW_FRAME_SCORE_LIMIT && renderQualityIndex < ADAPTIVE_DPR_STEPS.length - 1) {
+        renderQualityIndex += 1;
+        slowFrameScore = 0;
+        applyRenderResolution();
+        needsRender = true;
+      }
+      let next = THREE.MathUtils.damp(progress, scrollTarget, SCROLL_DAMPING, dt);
+      if (Math.abs(next - scrollTarget) <= SCROLL_SNAP_EPSILON) {
+        next = scrollTarget;
+        scrollAnimating = false;
+        scrollFrameTime = 0;
+      }
+      applyProgress(next, false);
+      needsRender = true;
     }
-    applyProgress(next, false);
-    needsRender = true;
   }
   if (needsRender) renderer.render(scene, camera);
   if (scrollAnimating) startLoop();
@@ -230,10 +248,35 @@ function portraitDistanceScale() {
   return Math.min(1 + (fit - 1) * blend, PORTRAIT_DISTANCE_CAP);
 }
 
+function homeWideFactor() {
+  if (!HOME_EMBEDDED) return 0;
+  const aspect = camera ? camera.aspect : 1;
+  return clamp01((aspect - 0.95) / 1.05);
+}
+
+function homeDistanceScale() {
+  if (!HOME_EMBEDDED) return 1;
+  // Keep the product comfortably framed on phones, but use the extra width
+  // of a desktop stage instead of leaving the assembly thumbnail-sized.
+  return THREE.MathUtils.lerp(1.06, 0.94, homeWideFactor());
+}
+
+function headerSafeShift(p) {
+  if (!HOME_EMBEDDED) return 0.1;
+  // Keep separated parts below the headline. Once assembly is complete, a
+  // short desktop-only camera settle lifts the compact final product clear of
+  // the timeline without forcing the entire sequence to remain tiny.
+  const settle = easeInOutCubic(clamp01(
+    (p - ASSEMBLY_SETTLED_PROGRESS) / (1 - ASSEMBLY_SETTLED_PROGRESS)
+  ));
+  const wideShift = THREE.MathUtils.lerp(0.15, 0.075, settle);
+  return THREE.MathUtils.lerp(0.15, wideShift, homeWideFactor());
+}
+
 function updateCamera(p) {
   if (!closedFrame || !explodedFrame) return;
   const explosionEnd = 0.67;
-  const reassemblyStart = 0.8333333333;
+  const cameraSettleStart = HOME_EMBEDDED ? ASSEMBLY_SETTLED_PROGRESS : REASSEMBLY_START;
   let center;
   let dist;
   let azim;
@@ -244,7 +287,7 @@ function updateCamera(p) {
     dist = THREE.MathUtils.lerp(closedFrame.dist, explodedFrame.dist, t);
     azim = THREE.MathUtils.lerp(-0.55, 0.5, t);
     elev = THREE.MathUtils.lerp(0.62, 0.4, t);
-  } else if (p <= reassemblyStart) {
+  } else if (p <= cameraSettleStart) {
     // Keep the full exploded bounds in frame while the parts are still
     // separated. The authored reassembly does not begin until frame 100;
     // closing the camera before then makes the switch and its leader
@@ -257,26 +300,33 @@ function updateCamera(p) {
     // Settle into a distinct final three-quarter product angle. The target
     // and distance come from the measured closed frame, so this remains
     // deterministic when the supplied case dimensions change.
-    // Blender's authored parts return to their seats over frames 100–120,
-    // which is the final 1/6 of the 120-frame action. Reach the final camera
-    // at the same authored boundary, then hold it for the finished product.
-    const t = easeInOutCubic(clamp01((p - reassemblyStart) / (1 - reassemblyStart)));
+    // The standalone review follows Blender's authored camera boundary. On
+    // the homepage, the product finishes assembling first and the camera then
+    // settles over the final scroll interval so loose parts never cross text.
+    const t = easeInOutCubic(clamp01(
+      (p - cameraSettleStart) / (1 - cameraSettleStart)
+    ));
     center = explodedFrame.center.clone().lerp(closedFrame.center, t);
     dist = THREE.MathUtils.lerp(explodedFrame.dist, closedFrame.dist * 1.08, t);
     azim = THREE.MathUtils.lerp(0.5, -0.78, t);
     elev = THREE.MathUtils.lerp(0.4, 0.52, t);
   }
   dist *= portraitDistanceScale();
+  dist *= homeDistanceScale();
   // The title occupies the upper stage lane. Aim the camera slightly above
   // the assembly so the rendered product sits lower on screen and never
   // disappears behind the headline during intermediate inspection poses.
-  center.y += dist * HEADER_SAFE_SHIFT;
+  center.y += dist * headerSafeShift(p);
   camera.position.set(
     center.x + dist * Math.cos(elev) * Math.sin(azim),
     center.y + dist * Math.sin(elev),
     center.z + dist * Math.cos(elev) * Math.cos(azim)
   );
   camera.lookAt(center);
+  // Callout anchors are projected before the renderer's next draw. Refresh
+  // the camera matrices now so dots and lines follow this exact camera pose
+  // rather than lagging one frame behind (or projecting off-screen).
+  camera.updateMatrixWorld(true);
 }
 
 function buildCallouts(root) {
@@ -294,6 +344,12 @@ function buildCallouts(root) {
     box.innerHTML = '<span class="cpv-callout-name"></span><span class="cpv-callout-cost"></span>';
     box.querySelector('.cpv-callout-name').textContent = spec.name;
     box.querySelector('.cpv-callout-cost').textContent = spec.cost;
+    box.addEventListener('transitionend', (event) => {
+      if ((event.propertyName === 'left' || event.propertyName === 'top')
+        && box.classList.contains('is-active')) {
+        syncLeaderToMovingLabel(spec.part);
+      }
+    });
     calloutsEl.append(box);
     const line = document.createElementNS('http://www.w3.org/2000/svg', 'line');
     line.setAttribute('stroke-linecap', 'round');
@@ -618,6 +674,14 @@ function updateProgressUI(p) {
   }
 }
 
+function authoredPoseProgress(p) {
+  if (!HOME_EMBEDDED) return p;
+  if (p <= REASSEMBLY_START) return p;
+  const settleSpan = ASSEMBLY_SETTLED_PROGRESS - REASSEMBLY_START;
+  const t = clamp01((p - REASSEMBLY_START) / settleSpan);
+  return THREE.MathUtils.lerp(REASSEMBLY_START, 1, t);
+}
+
 function applyProgress(p, scheduleRender = true) {
   const nextProgress = clamp01(p);
   if (ready && hasAppliedProgress && Math.abs(nextProgress - progress) < 0.0005) return;
@@ -625,7 +689,7 @@ function applyProgress(p, scheduleRender = true) {
   if (ready) {
     hasAppliedProgress = true;
     setScrubQuality();
-    samplePose(progress);
+    samplePose(authoredPoseProgress(progress));
     updateCamera(progress);
     updateCallouts();
     updateProgressUI(progress);
@@ -633,9 +697,20 @@ function applyProgress(p, scheduleRender = true) {
   }
 }
 
+function scrollRange() {
+  if (HOME_EMBEDDED && EMBED_ROOT) {
+    const rect = EMBED_ROOT.getBoundingClientRect();
+    return {
+      start: window.scrollY + rect.top,
+      max: Math.max(1, EMBED_ROOT.offsetHeight - window.innerHeight),
+    };
+  }
+  return { start: 0, max: Math.max(1, document.documentElement.scrollHeight - window.innerHeight) };
+}
+
 function progressFromScroll() {
-  const max = Math.max(1, document.documentElement.scrollHeight - window.innerHeight);
-  return clamp01(window.scrollY / max);
+  const range = scrollRange();
+  return clamp01((window.scrollY - range.start) / range.max);
 }
 
 function computeProgressFromScroll() {
@@ -645,6 +720,14 @@ function computeProgressFromScroll() {
 
 function targetProgressFromScroll() {
   scrollTarget = progressFromScroll();
+  // The homepage already uses Lenis to smooth native scroll. Sampling that
+  // value directly avoids a second easing curve. The render loop coalesces
+  // repeated browser scroll events into one newest-value update per frame.
+  if (HOME_EMBEDDED) {
+    scrollAnimating = true;
+    startLoop();
+    return;
+  }
   if (reducedMotion) {
     scrollAnimating = false;
     applyProgress(scrollTarget);
@@ -656,10 +739,10 @@ function targetProgressFromScroll() {
 }
 
 function scrollToProgress(p) {
-  const max = Math.max(1, document.documentElement.scrollHeight - window.innerHeight);
+  const range = scrollRange();
   // The Three.js timeline owns visual interpolation. A second native smooth
   // scroll would create a competing timeline and replay intermediate poses.
-  window.scrollTo({ top: clamp01(p) * max, behavior: 'auto' });
+  window.scrollTo({ top: range.start + clamp01(p) * range.max, behavior: 'auto' });
 }
 
 function requestedReviewProgress() {
