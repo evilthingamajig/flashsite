@@ -27,7 +27,12 @@ const HOME_TIMELINE_TARGET_GAIN = 12;
 const HOME_TIMELINE_VELOCITY_DAMPING = 18;
 const HOME_FRAME_INTERVAL_MS = 1000 / 60;
 const CALLOUT_FOLLOW_INTERVAL_MS = 1000 / 60;
-const HOME_TIMELINE_SCROLL_FRACTION = 0.92;
+// Complete the authored motion well before sticky positioning releases. The
+// remaining runway is a visible end hold, not hidden animation time. This is
+// especially important after a large wheel/touchpad impulse: the time-based
+// follower can settle while the stage is still fully pinned.
+const HOME_TIMELINE_SCROLL_FRACTION = 0.68;
+const HOME_FORCE_SETTLE_FRACTION = 0.84;
 const ADAPTIVE_DPR_STEPS = [1, 0.85, 0.7];
 const SLOW_FRAME_MS = HOME_EMBEDDED ? 18 : 22;
 const SLOW_FRAME_SCORE_LIMIT = 4;
@@ -841,12 +846,14 @@ function applyProgress(p, scheduleRender = true, force = false) {
 function refreshScrollRange() {
   if (HOME_EMBEDDED && EMBED_ROOT) {
     const rect = EMBED_ROOT.getBoundingClientRect();
-    const stickyRunway = Math.max(1, EMBED_ROOT.offsetHeight - window.innerHeight);
+    const viewportHeight = window.visualViewport?.height || window.innerHeight;
+    const stickyRunway = Math.max(1, EMBED_ROOT.offsetHeight - viewportHeight);
     cachedScrollRange = {
       start: window.scrollY + rect.top,
       // Finish before the sticky section releases. The short final hold gives
       // the smoothed timeline room to settle even after a strong wheel flick.
       max: Math.max(1, stickyRunway * HOME_TIMELINE_SCROLL_FRACTION),
+      stickyRunway,
     };
     return cachedScrollRange;
   }
@@ -869,7 +876,22 @@ function computeProgressFromScroll() {
 }
 
 function targetProgressFromScroll() {
-  scrollTarget = progressFromScroll();
+  const range = scrollRange();
+  scrollTarget = clamp01((window.scrollY - range.start) / range.max);
+  // Never let the time-smoothed pose continue after the sticky stage starts
+  // leaving the viewport. The final part of the section is deliberately a
+  // hold zone; settle the last pose inside it and release only when complete.
+  if (HOME_EMBEDDED && range.stickyRunway) {
+    const runwayProgress = clamp01((window.scrollY - range.start) / range.stickyRunway);
+    if (runwayProgress >= HOME_FORCE_SETTLE_FRACTION && scrollTarget >= 1) {
+      scrollAnimating = false;
+      scrollVelocity = 0;
+      scrollFrameTime = 0;
+      scrollTarget = 1;
+      applyProgress(1);
+      return;
+    }
+  }
   if (reducedMotion) {
     scrollAnimating = false;
     scrollVelocity = 0;
