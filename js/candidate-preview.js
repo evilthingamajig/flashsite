@@ -17,14 +17,10 @@ const MAX_RENDER_PIXELS = HOME_EMBEDDED ? 2_400_000 : 1_500_000;
 const SCRUB_IDLE_MS = 140;
 const SCROLL_DAMPING = HOME_EMBEDDED ? 24 : 18;
 const SCROLL_SNAP_EPSILON = 0.00035;
-// Scroll chooses a destination; it does not directly choose playback speed.
-// A large wheel/touchpad flick therefore cannot skip across authored poses.
-// The full sequence takes at least ~0.67s, with eased starts, stops and reversals.
-// This mirrors a short numeric scrub: responsive without coupling pose sampling
-// directly to the size or frequency of wheel/touchpad events.
-const HOME_TIMELINE_MAX_SPEED = 1.5;
-const HOME_TIMELINE_TARGET_GAIN = 12;
-const HOME_TIMELINE_VELOCITY_DAMPING = 18;
+// Scroll chooses a destination and the renderer approaches it with a short
+// exponential ease. This absorbs uneven wheel/touchpad event timing while
+// staying responsive to reversals and scrollbar dragging.
+const HOME_SCROLL_DAMPING = 18;
 const HOME_FRAME_INTERVAL_MS = 1000 / 60;
 const CALLOUT_FOLLOW_INTERVAL_MS = 1000 / 60;
 // Complete the authored motion well before sticky positioning releases. The
@@ -32,7 +28,7 @@ const CALLOUT_FOLLOW_INTERVAL_MS = 1000 / 60;
 // especially important after a large wheel/touchpad impulse: the time-based
 // follower can settle while the stage is still fully pinned.
 const HOME_TIMELINE_SCROLL_FRACTION = 0.84;
-const HOME_FORCE_SETTLE_FRACTION = 0.94;
+const HOME_FORCE_SETTLE_FRACTION = 0.98;
 const ADAPTIVE_DPR_STEPS = [1, 0.85, 0.7];
 const SLOW_FRAME_MS = HOME_EMBEDDED ? 18 : 22;
 const SLOW_FRAME_SCORE_LIMIT = 4;
@@ -239,23 +235,16 @@ function tick(now) {
       const elapsedMs = scrollFrameTime ? now - scrollFrameTime : 1000 / 60;
       const dt = Math.min(0.05, elapsedMs / 1000);
       scrollFrameTime = now;
+      // Scroll position is the sole authority. Sample it on every accepted
+      // visual frame so native wheel/touch, scrollbar dragging, browser
+      // restoration, and third-party smooth scrolling cannot leave a stale
+      // event-derived target behind.
+      scrollTarget = progressFromScroll();
       const remaining = scrollTarget - progress;
-      const desiredVelocity = THREE.MathUtils.clamp(
-        remaining * HOME_TIMELINE_TARGET_GAIN,
-        -HOME_TIMELINE_MAX_SPEED,
-        HOME_TIMELINE_MAX_SPEED
-      );
-      scrollVelocity = THREE.MathUtils.damp(
-        scrollVelocity,
-        desiredVelocity,
-        HOME_TIMELINE_VELOCITY_DAMPING,
-        dt
-      );
-      let next = progress + scrollVelocity * dt;
-      const crossedTarget = remaining !== 0 && Math.sign(scrollTarget - next) !== Math.sign(remaining);
+      let next = THREE.MathUtils.damp(progress, scrollTarget, HOME_SCROLL_DAMPING, dt);
       const settled = Math.abs(remaining) <= SCROLL_SNAP_EPSILON
         || Math.abs(next - scrollTarget) <= SCROLL_SNAP_EPSILON;
-      if (crossedTarget || settled) {
+      if (settled) {
         next = scrollTarget;
         scrollAnimating = false;
         scrollVelocity = 0;
@@ -663,7 +652,10 @@ function updateCallouts(root = assetRoot) {
     let labelWidth = Number(box.dataset.cpvWidth);
     let labelHeight = Number(box.dataset.cpvHeight);
     if (!Number.isFinite(labelWidth) || !Number.isFinite(labelHeight)) {
-      labelWidth = box.offsetWidth || Math.min(208, width * 0.24);
+      // No-wrap names can be wider than their styled box. Use the actual
+      // painted width so long labels are clamped inside the viewport instead
+      // of being cut off at an edge.
+      labelWidth = Math.max(box.offsetWidth, box.scrollWidth) || Math.min(208, width * 0.24);
       labelHeight = box.offsetHeight || 56;
       box.dataset.cpvWidth = String(labelWidth);
       box.dataset.cpvHeight = String(labelHeight);
@@ -1115,6 +1107,9 @@ if (renderer && !failed) {
   // Scroll events only update a numeric target. The single render loop above
   // samples that target, advances the authored pose, and draws once per frame.
   window.addEventListener('scroll', targetProgressFromScroll, { passive: true });
+  if ('onscrollend' in window) {
+    window.addEventListener('scrollend', targetProgressFromScroll, { passive: true });
+  }
 
   window.addEventListener('resize', measureStage);
 
@@ -1192,8 +1187,12 @@ if (renderer && !failed) {
         scrollFrameTime = 0;
         finishScrubQuality();
       }
-    }, { threshold: 0 });
-    if (stage) io.observe(stage);
+    }, { threshold: 0, rootMargin: '100px 0px' });
+    // Observe the stationary runway on the homepage. Observing the sticky
+    // child lets fast scrolls toggle it out while its timeline still needs to
+    // settle, which used to stop the animation at arbitrary poses.
+    const visibilityTarget = HOME_EMBEDDED ? EMBED_ROOT : stage;
+    if (visibilityTarget) io.observe(visibilityTarget);
   }
 
   document.addEventListener('visibilitychange', () => {
