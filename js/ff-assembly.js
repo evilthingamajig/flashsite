@@ -12,7 +12,7 @@
     started = true;
     if (observer) observer.disconnect();
     root.dataset.assemblyLoading = '';
-    import('./home-candidate-assembly.js?v=candidate-28').catch(function (err) {
+    import('./home-candidate-assembly.js?v=candidate-29').catch(function (err) {
       delete root.dataset.assemblyLoading;
       console.warn('Homepage assembly:', err);
     });
