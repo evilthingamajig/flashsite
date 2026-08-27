@@ -231,10 +231,26 @@ const editorialSamples = [];
 for (const sample of [0.2, 0.32, 0.44, 0.56, 0.68, 0.8]) {
   await cdp.evaluate(`window.__ffCandidatePreview.setProgress(${sample}); undefined`);
   await new Promise((resolve) => setTimeout(resolve, 400));
-  editorialSamples.push(await cdp.evaluate(`({p:${sample}, active:[...document.querySelectorAll('.cpv-callout')].filter((el) => el.classList.contains('is-active')).length, lines:[...document.querySelectorAll('#cpv-leaders line')].filter((el) => el.style.opacity !== '0').length, partRows:[...document.querySelectorAll('#cpv-part-list li.is-active')].map((el) => el.dataset.cpvPart), partAria:[...document.querySelectorAll('#cpv-part-list [aria-current="step"]')].map((el) => el.dataset.cpvPart)})`));
+  editorialSamples.push(await cdp.evaluate(`(() => {
+    const activeBox = document.querySelector('.cpv-callout.is-active');
+    const activeLine = [...document.querySelectorAll('#cpv-leaders line')].find((el) => el.style.opacity !== '0');
+    const stage = document.querySelector('.cpv-stage').getBoundingClientRect();
+    const box = activeBox?.getBoundingClientRect();
+    const values = activeLine ? ['x1','y1','x2','y2'].map((name) => Number(activeLine.getAttribute(name))) : [];
+    const bounds = (activeLine?.dataset.targetBounds || '').split(',').map(Number);
+    const [x1,y1,x2,y2] = values;
+    const [minX,minY,maxX,maxY] = bounds;
+    const boxBounds = box ? [box.left-stage.left, box.top-stage.top, box.right-stage.left, box.bottom-stage.top] : [];
+    const [boxLeft,boxTop,boxRight,boxBottom] = boxBounds;
+    const targetInside = bounds.length === 4 && x1 >= minX-.2 && x1 <= maxX+.2 && y1 >= minY-.2 && y1 <= maxY+.2;
+    const labelEdge = boxBounds.length === 4 && Math.min(Math.abs(x2-boxLeft),Math.abs(x2-boxRight),Math.abs(y2-boxTop),Math.abs(y2-boxBottom)) < .7;
+    const labelClearsPart = boxBounds.length === 4 && (boxRight <= minX || boxLeft >= maxX || boxBottom <= minY || boxTop >= maxY);
+    return {p:${sample}, active:[...document.querySelectorAll('.cpv-callout')].filter((el) => el.classList.contains('is-active')).length, lines:[...document.querySelectorAll('#cpv-leaders line')].filter((el) => el.style.opacity !== '0').length, partRows:[...document.querySelectorAll('#cpv-part-list li.is-active')].map((el) => el.dataset.cpvPart), partAria:[...document.querySelectorAll('#cpv-part-list [aria-current="step"]')].map((el) => el.dataset.cpvPart), targetInside, labelEdge, labelClearsPart};
+  })()`));
 }
 const expectedPartRows = [['enclosure'], ['solar_panel_placeholder'], ['battery'], ['charge_module'], ['led_pair', 'led_pair'], ['switch']];
 check('editorial callouts sequence', editorialSamples.every((sample, index) => sample.active === 1 && sample.lines === 1 && JSON.stringify(sample.partRows) === JSON.stringify(expectedPartRows[index]) && JSON.stringify(sample.partAria) === JSON.stringify(expectedPartRows[index])), JSON.stringify(editorialSamples));
+check('editorial leaders touch the visible part and label edges without text overlap', editorialSamples.every((sample) => sample.targetInside && sample.labelEdge && sample.labelClearsPart), JSON.stringify(editorialSamples));
 for (const part of ['battery', 'charge_module']) {
   const a = closed?.partTransforms?.[part];
   const b = exploded?.partTransforms?.[part];
