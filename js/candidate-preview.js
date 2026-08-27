@@ -6,12 +6,14 @@ const CLIP_PATTERN = /^ScrollSequence/;
 const EMBED_ROOT = document.querySelector('[data-cpv-embedded]');
 const HOME_EMBEDDED = Boolean(EMBED_ROOT);
 if (!HOME_EMBEDDED && 'scrollRestoration' in history) history.scrollRestoration = 'manual';
-// A full browser window can contain several times as many pixels as the
-// embedded review pane. Bound both device-pixel ratio and total framebuffer
-// area so scrubbing remains responsive on large/high-DPI displays.
-const DPR_CAP = HOME_EMBEDDED ? 0.75 : 1.0;
-const MIN_RENDER_DPR = HOME_EMBEDDED ? 0.4 : 0.75;
-const MAX_RENDER_PIXELS = HOME_EMBEDDED ? 650_000 : 1_500_000;
+// Never upscale a sub-CSS-pixel framebuffer on the homepage. That shortcut
+// made the assembly visibly grainy, and resizing the drawing buffer at the
+// start/end of every scrub also introduced GPU allocation hitches. Keep a
+// stable, antialiased backing store: 1x on ordinary displays and up to 1.25x
+// on HiDPI screens, with a soft pixel budget that never drops below 1x.
+const DPR_CAP = HOME_EMBEDDED ? 1.25 : 1.0;
+const MIN_RENDER_DPR = HOME_EMBEDDED ? 1.0 : 0.75;
+const MAX_RENDER_PIXELS = HOME_EMBEDDED ? 2_400_000 : 1_500_000;
 const SCRUB_IDLE_MS = 140;
 const SCROLL_DAMPING = HOME_EMBEDDED ? 24 : 18;
 const SCROLL_SNAP_EPSILON = 0.00035;
@@ -99,6 +101,7 @@ let renderedCalloutIndex = -2;
 let lastUiPercent = -1;
 let lastUiPose = '';
 let lastUiButtonState = '';
+let cachedScrollRange = null;
 const calloutSpecs = [
   { part: 'enclosure', name: 'Case', cost: 'Cost: TBD', side: 'left', row: 0 },
   { part: 'solar_panel_placeholder', name: 'Solar panel', cost: 'Cost: TBD', side: 'left', row: 1 },
@@ -154,11 +157,11 @@ function renderPixelRatio(w, h) {
   const deviceDpr = Math.min(window.devicePixelRatio || 1, DPR_CAP);
   const pixelBudgetDpr = Math.sqrt(MAX_RENDER_PIXELS / Math.max(1, w * h));
   const baseDpr = Math.max(MIN_RENDER_DPR, Math.min(deviceDpr, pixelBudgetDpr));
-  const scrubScale = HOME_EMBEDDED && scrubQuality ? 0.78 : 1;
-  const absoluteFloor = HOME_EMBEDDED ? 0.38 : 0.55;
+  const absoluteFloor = HOME_EMBEDDED ? 1 : 0.55;
+  const adaptiveScale = HOME_EMBEDDED ? 1 : ADAPTIVE_DPR_STEPS[renderQualityIndex];
   return Math.max(
     absoluteFloor,
-    baseDpr * ADAPTIVE_DPR_STEPS[renderQualityIndex] * scrubScale
+    baseDpr * adaptiveScale
   );
 }
 
@@ -178,7 +181,6 @@ function setScrubQuality() {
     document.body.classList.add('cpv-scrubbing');
     cancelAnimationFrame(calloutFollowRaf);
     calloutFollowRaf = 0;
-    applyRenderResolution();
     // A frozen shadow map otherwise leaves detached gray silhouettes behind
     // moving parts. Hide the receiver while scrubbing; this is both cleaner
     // and cheaper than rebuilding the shadow map on every wheel event.
@@ -191,7 +193,6 @@ function setScrubQuality() {
     // settled pose instead of rebuilding the shadow map every scrub frame.
     if (shadowGround) shadowGround.visible = true;
     renderer.shadowMap.needsUpdate = true;
-    applyRenderResolution();
     updateCallouts();
     requestRender();
   }, SCRUB_IDLE_MS);
@@ -762,15 +763,21 @@ function applyProgress(p, scheduleRender = true) {
   }
 }
 
-function scrollRange() {
+function refreshScrollRange() {
   if (HOME_EMBEDDED && EMBED_ROOT) {
     const rect = EMBED_ROOT.getBoundingClientRect();
-    return {
+    cachedScrollRange = {
       start: window.scrollY + rect.top,
       max: Math.max(1, EMBED_ROOT.offsetHeight - window.innerHeight),
     };
+    return cachedScrollRange;
   }
-  return { start: 0, max: Math.max(1, document.documentElement.scrollHeight - window.innerHeight) };
+  cachedScrollRange = { start: 0, max: Math.max(1, document.documentElement.scrollHeight - window.innerHeight) };
+  return cachedScrollRange;
+}
+
+function scrollRange() {
+  return cachedScrollRange || refreshScrollRange();
 }
 
 function progressFromScroll() {
@@ -859,6 +866,7 @@ function measureStage() {
   if (!stage || !renderer || !camera || failed) return;
   const w = stage.clientWidth || 1;
   const h = stage.clientHeight || 1;
+  refreshScrollRange();
   for (const box of calloutTargets.values()) {
     delete box.dataset.cpvWidth;
     delete box.dataset.cpvHeight;
@@ -930,7 +938,7 @@ function initScene() {
   const key = new THREE.DirectionalLight(0xffffff, 1.9);
   key.position.set(0.35, 0.7, 0.45);
   key.castShadow = true;
-  key.shadow.mapSize.set(HOME_EMBEDDED ? 256 : 512, HOME_EMBEDDED ? 256 : 512);
+  key.shadow.mapSize.set(512, 512);
   key.shadow.bias = -0.0002;
   key.shadow.camera.left = -0.15;
   key.shadow.camera.right = 0.15;
@@ -958,7 +966,7 @@ function initScene() {
 try {
   renderer = new THREE.WebGLRenderer({
     canvas,
-    antialias: !HOME_EMBEDDED,
+    antialias: true,
     alpha: true,
     powerPreference: 'high-performance',
   });
@@ -970,13 +978,13 @@ if (renderer && !failed) {
   renderer.toneMapping = THREE.ACESFilmicToneMapping;
   renderer.toneMappingExposure = 1.08;
   renderer.shadowMap.enabled = true;
-  renderer.shadowMap.type = THREE.PCFShadowMap;
+  renderer.shadowMap.type = THREE.PCFSoftShadowMap;
   renderer.shadowMap.autoUpdate = false;
   renderer.shadowMap.needsUpdate = true;
 
   initScene();
 
-  new GLTFLoader().load(GLB_URL, (gltf) => {
+  new GLTFLoader().load(GLB_URL, async (gltf) => {
     if (failed) return;
     const root = gltf.scene;
     assetRoot = root;
@@ -1017,6 +1025,16 @@ if (renderer && !failed) {
     computeFrames(root);
     buildCallouts(root);
     measureStage();
+    // Compile every visible material after the lazy GLB load, before the user
+    // begins scrubbing. This moves one-time shader setup out of interaction.
+    try {
+      if (renderer.compileAsync) await renderer.compileAsync(scene, camera);
+      else renderer.compile(scene, camera);
+    } catch (err) {
+      // Compilation is an optional warm-up. Rendering can still compile the
+      // same programs normally if a browser rejects the parallel extension.
+      console.warn('Candidate preview shader warm-up:', err);
+    }
     ready = true;
     setStatus(
       clips.length
