@@ -17,6 +17,13 @@ const MAX_RENDER_PIXELS = HOME_EMBEDDED ? 2_400_000 : 1_500_000;
 const SCRUB_IDLE_MS = 140;
 const SCROLL_DAMPING = HOME_EMBEDDED ? 24 : 18;
 const SCROLL_SNAP_EPSILON = 0.00035;
+// Scroll chooses a destination; it does not directly choose playback speed.
+// A large wheel/touchpad flick therefore cannot skip across authored poses.
+// The full sequence takes at least ~1.25s, with eased starts, stops and reversals.
+const HOME_TIMELINE_MAX_SPEED = 0.8;
+const HOME_TIMELINE_TARGET_GAIN = 8;
+const HOME_TIMELINE_VELOCITY_DAMPING = 14;
+const HOME_FRAME_INTERVAL_MS = 1000 / 60;
 const ADAPTIVE_DPR_STEPS = [1, 0.85, 0.7];
 const SLOW_FRAME_MS = HOME_EMBEDDED ? 18 : 22;
 const SLOW_FRAME_SCORE_LIMIT = 4;
@@ -89,6 +96,8 @@ let rafId = 0;
 let scrollTarget = 0;
 let scrollFrameTime = 0;
 let scrollAnimating = false;
+let scrollVelocity = 0;
+let homeNextFrameTime = 0;
 let scrubQuality = false;
 let scrubIdleTimer = 0;
 let hasAppliedProgress = false;
@@ -144,6 +153,9 @@ function showFallback(reason, err) {
   rafId = 0;
   calloutFollowRaf = 0;
   scrollAnimating = false;
+  scrollVelocity = 0;
+  scrollFrameTime = 0;
+  clearTimeout(scrubIdleTimer);
   dirty = false;
   if (err) console.warn('Candidate preview:', err);
 }
@@ -173,9 +185,24 @@ function applyRenderResolution() {
   renderer.setSize(w, h, false);
 }
 
+function finishScrubQuality() {
+  clearTimeout(scrubIdleTimer);
+  scrubIdleTimer = 0;
+  if (!scrubQuality || !renderer || failed) return;
+  scrubQuality = false;
+  document.body.classList.remove('cpv-scrubbing');
+  // Shadows stay frozen while parts move; refresh them once at the final
+  // settled pose instead of rebuilding the shadow map every scrub frame.
+  if (shadowGround) shadowGround.visible = true;
+  renderer.shadowMap.needsUpdate = true;
+  if (inView && !document.hidden) {
+    updateCallouts();
+    requestRender();
+  }
+}
+
 function setScrubQuality() {
   if (!renderer || failed) return;
-  clearTimeout(scrubIdleTimer);
   if (!scrubQuality) {
     scrubQuality = true;
     document.body.classList.add('cpv-scrubbing');
@@ -186,16 +213,11 @@ function setScrubQuality() {
     // and cheaper than rebuilding the shadow map on every wheel event.
     if (shadowGround) shadowGround.visible = false;
   }
-  scrubIdleTimer = window.setTimeout(() => {
-    scrubQuality = false;
-    document.body.classList.remove('cpv-scrubbing');
-    // Shadows stay frozen while parts move; refresh them once at the final
-    // settled pose instead of rebuilding the shadow map every scrub frame.
-    if (shadowGround) shadowGround.visible = true;
-    renderer.shadowMap.needsUpdate = true;
-    updateCallouts();
-    requestRender();
-  }, SCRUB_IDLE_MS);
+  // The homepage follower has an authoritative settled state, so it restores
+  // quality directly instead of cancelling/recreating a timer every frame.
+  if (HOME_EMBEDDED && scrollAnimating) return;
+  clearTimeout(scrubIdleTimer);
+  scrubIdleTimer = window.setTimeout(finishScrubQuality, SCRUB_IDLE_MS);
 }
 
 function startLoop() {
@@ -206,16 +228,50 @@ function startLoop() {
 function tick(now) {
   rafId = 0;
   if (!inView || document.hidden || (!dirty && !scrollAnimating)) return;
+  // High-refresh displays can call rAF at 120–240 Hz. Keep animation time
+  // correct but run pose/layout/WebGL work at at most 60 Hz; the accumulated
+  // deadline avoids coupling playback speed to the monitor refresh rate.
+  if (HOME_EMBEDDED && scrollAnimating) {
+    if (homeNextFrameTime && now + 0.5 < homeNextFrameTime) {
+      startLoop();
+      return;
+    }
+    if (!homeNextFrameTime) homeNextFrameTime = now;
+    do homeNextFrameTime += HOME_FRAME_INTERVAL_MS;
+    while (homeNextFrameTime <= now);
+  }
   let needsRender = dirty;
   dirty = false;
   if (scrollAnimating) {
     if (HOME_EMBEDDED) {
-      // Native/Lenis scroll can emit more than once between paints. Consume
-      // only the newest value once per animation frame so animation sampling,
-      // projection, layout and WebGL drawing cannot pile up in Chrome.
-      scrollAnimating = false;
-      scrollFrameTime = 0;
-      applyProgress(scrollTarget, false);
+      const elapsedMs = scrollFrameTime ? now - scrollFrameTime : 1000 / 60;
+      const dt = Math.min(0.05, elapsedMs / 1000);
+      scrollFrameTime = now;
+      const remaining = scrollTarget - progress;
+      const desiredVelocity = THREE.MathUtils.clamp(
+        remaining * HOME_TIMELINE_TARGET_GAIN,
+        -HOME_TIMELINE_MAX_SPEED,
+        HOME_TIMELINE_MAX_SPEED
+      );
+      scrollVelocity = THREE.MathUtils.damp(
+        scrollVelocity,
+        desiredVelocity,
+        HOME_TIMELINE_VELOCITY_DAMPING,
+        dt
+      );
+      let next = progress + scrollVelocity * dt;
+      const crossedTarget = remaining !== 0 && Math.sign(scrollTarget - next) !== Math.sign(remaining);
+      const settled = Math.abs(remaining) <= SCROLL_SNAP_EPSILON
+        || Math.abs(next - scrollTarget) <= SCROLL_SNAP_EPSILON;
+      if (crossedTarget || settled) {
+        next = scrollTarget;
+        scrollAnimating = false;
+        scrollVelocity = 0;
+        scrollFrameTime = 0;
+        homeNextFrameTime = 0;
+      }
+      applyProgress(next, false, crossedTarget || settled);
+      if (!scrollAnimating) finishScrubQuality();
       needsRender = true;
     } else {
       const elapsedMs = scrollFrameTime ? now - scrollFrameTime : 1000 / 60;
@@ -236,7 +292,7 @@ function tick(now) {
         scrollAnimating = false;
         scrollFrameTime = 0;
       }
-      applyProgress(next, false);
+      applyProgress(next, false, !scrollAnimating);
       needsRender = true;
     }
   }
@@ -748,9 +804,9 @@ function authoredPoseProgress(p) {
   return THREE.MathUtils.lerp(REASSEMBLY_START, 1, t);
 }
 
-function applyProgress(p, scheduleRender = true) {
+function applyProgress(p, scheduleRender = true, force = false) {
   const nextProgress = clamp01(p);
-  if (ready && hasAppliedProgress && Math.abs(nextProgress - progress) < 0.0005) return;
+  if (!force && ready && hasAppliedProgress && Math.abs(nextProgress - progress) < 0.0005) return;
   progress = nextProgress;
   if (ready) {
     hasAppliedProgress = true;
@@ -792,20 +848,17 @@ function computeProgressFromScroll() {
 
 function targetProgressFromScroll() {
   scrollTarget = progressFromScroll();
-  // The homepage already uses Lenis to smooth native scroll. Sampling that
-  // value directly avoids a second easing curve. The render loop coalesces
-  // repeated browser scroll events into one newest-value update per frame.
-  if (HOME_EMBEDDED) {
-    scrollAnimating = true;
-    startLoop();
-    return;
-  }
   if (reducedMotion) {
     scrollAnimating = false;
+    scrollVelocity = 0;
+    scrollFrameTime = 0;
     applyProgress(scrollTarget);
     return;
   }
-  if (!scrollAnimating) scrollFrameTime = 0;
+  if (!scrollAnimating) {
+    scrollFrameTime = 0;
+    homeNextFrameTime = 0;
+  }
   scrollAnimating = Math.abs(progress - scrollTarget) > SCROLL_SNAP_EPSILON;
   if (scrollAnimating) startLoop();
 }
@@ -827,6 +880,7 @@ function requestedReviewProgress() {
 
 function restoreRequestedProgress(p) {
   scrollAnimating = false;
+  scrollVelocity = 0;
   scrollFrameTime = 0;
   scrollTarget = p;
   applyProgress(p);
@@ -1079,6 +1133,7 @@ if (renderer && !failed) {
   rangeEl?.addEventListener('input', () => {
     const next = clamp01(Number(rangeEl.value));
     scrollAnimating = false;
+    scrollVelocity = 0;
     scrollFrameTime = 0;
     scrollTarget = next;
     applyProgress(next);
@@ -1092,6 +1147,7 @@ if (renderer && !failed) {
   });
   resetEl?.addEventListener('click', () => {
     scrollAnimating = false;
+    scrollVelocity = 0;
     scrollFrameTime = 0;
     scrollTarget = 0;
     scrollToProgress(0);
@@ -1105,6 +1161,7 @@ if (renderer && !failed) {
     button.addEventListener('click', () => {
       const next = clamp01(Number(button.dataset.cpvPose));
       scrollAnimating = false;
+      scrollVelocity = 0;
       scrollFrameTime = 0;
       scrollTarget = next;
       applyProgress(next);
@@ -1117,14 +1174,19 @@ if (renderer && !failed) {
   if (typeof IntersectionObserver !== 'undefined') {
     const io = new IntersectionObserver((entries) => {
       inView = entries.some((entry) => entry.isIntersecting);
-      if (inView) requestRender();
+      if (inView) {
+        updateCallouts();
+        requestRender();
+      }
       else {
         cancelAnimationFrame(rafId);
         cancelAnimationFrame(calloutFollowRaf);
         rafId = 0;
         calloutFollowRaf = 0;
         scrollAnimating = false;
+        scrollVelocity = 0;
         scrollFrameTime = 0;
+        finishScrubQuality();
       }
     }, { threshold: 0 });
     if (stage) io.observe(stage);
@@ -1137,7 +1199,9 @@ if (renderer && !failed) {
       rafId = 0;
       calloutFollowRaf = 0;
       scrollAnimating = false;
+      scrollVelocity = 0;
       scrollFrameTime = 0;
+      finishScrubQuality();
     } else {
       scrollTarget = progressFromScroll();
       if (Math.abs(progress - scrollTarget) > SCROLL_SNAP_EPSILON) targetProgressFromScroll();
@@ -1154,6 +1218,8 @@ if (renderer && !failed) {
     rafId = 0;
     calloutFollowRaf = 0;
     scrollAnimating = false;
+    scrollVelocity = 0;
+    scrollFrameTime = 0;
     if (mixer) mixer.stopAllAction();
     if (renderer) renderer.dispose();
   });
@@ -1167,6 +1233,9 @@ window.__ffCandidatePreview = {
       clips: actions.length,
       duration,
       progress,
+      scrollTarget,
+      scrollVelocity,
+      scrollAnimating,
       activeCallout: activeCalloutIndex(progress) >= 0 ? calloutSpecs[activeCalloutIndex(progress)].part : null,
       renderPaused: !inView || document.hidden,
       cameraPosition: camera ? {

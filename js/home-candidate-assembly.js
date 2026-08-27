@@ -2,7 +2,7 @@ const legacy = document.querySelector('[data-assembly-sequence]');
 if (legacy) {
   const runtimePreload = document.createElement('link');
   runtimePreload.rel = 'modulepreload';
-  runtimePreload.href = 'js/candidate-preview.js?v=candidate-29';
+  runtimePreload.href = 'js/candidate-preview.js?v=candidate-30';
   document.head.appendChild(runtimePreload);
   const style = document.createElement('link');
   style.rel = 'stylesheet';
@@ -27,7 +27,7 @@ if (legacy) {
       <div class="cpv-progress" role="progressbar" aria-label="Assembly sequence progress" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" id="cpv-progress"><span class="cpv-progress-track" aria-hidden="true"><span class="cpv-progress-fill" id="cpv-progress-fill"></span><span class="cpv-chapter cpv-chapter-closed"><span>Closed</span></span><span class="cpv-chapter cpv-chapter-exploded"><span>Exploded review</span></span><span class="cpv-chapter cpv-chapter-reassembled"><span>Reassembled</span></span></span><span class="cpv-progress-label" id="cpv-progress-label">scrub 000%</span></div>
       <p class="cpv-status" id="cpv-status" role="status" aria-live="polite">Loading assembly…</p><div class="cpv-fallback" id="cpv-fallback" hidden><p class="cpv-eyebrow">3D assembly unavailable</p><p id="cpv-fallback-message">This assembly needs WebGL.</p></div>
     </div>`;
-  import('./candidate-preview.js?v=candidate-29').catch((err) => {
+  import('./candidate-preview.js?v=candidate-30').catch((err) => {
     document.body.classList.add('cpv-no3d');
     console.warn('Candidate homepage runtime:', err);
   });
