@@ -19,11 +19,15 @@ const SCROLL_DAMPING = HOME_EMBEDDED ? 24 : 18;
 const SCROLL_SNAP_EPSILON = 0.00035;
 // Scroll chooses a destination; it does not directly choose playback speed.
 // A large wheel/touchpad flick therefore cannot skip across authored poses.
-// The full sequence takes at least ~1.25s, with eased starts, stops and reversals.
-const HOME_TIMELINE_MAX_SPEED = 0.8;
-const HOME_TIMELINE_TARGET_GAIN = 8;
-const HOME_TIMELINE_VELOCITY_DAMPING = 14;
+// The full sequence takes at least ~0.67s, with eased starts, stops and reversals.
+// This mirrors a short numeric scrub: responsive without coupling pose sampling
+// directly to the size or frequency of wheel/touchpad events.
+const HOME_TIMELINE_MAX_SPEED = 1.5;
+const HOME_TIMELINE_TARGET_GAIN = 12;
+const HOME_TIMELINE_VELOCITY_DAMPING = 18;
 const HOME_FRAME_INTERVAL_MS = 1000 / 60;
+const CALLOUT_FOLLOW_INTERVAL_MS = 1000 / 60;
+const HOME_TIMELINE_SCROLL_FRACTION = 0.92;
 const ADAPTIVE_DPR_STEPS = [1, 0.85, 0.7];
 const SLOW_FRAME_MS = HOME_EMBEDDED ? 18 : 22;
 const SLOW_FRAME_SCORE_LIMIT = 4;
@@ -105,6 +109,7 @@ let renderQualityIndex = 0;
 let slowFrameScore = 0;
 let calloutFollowRaf = 0;
 let calloutFollowUntil = 0;
+let calloutFollowFrameTime = 0;
 let activeCalloutPart = '';
 let renderedCalloutIndex = -2;
 let lastUiPercent = -1;
@@ -270,7 +275,9 @@ function tick(now) {
         scrollFrameTime = 0;
         homeNextFrameTime = 0;
       }
-      applyProgress(next, false, crossedTarget || settled);
+      // This loop has already coalesced work to one accepted visual frame, so
+      // never discard its small final increments behind the general UI guard.
+      applyProgress(next, false, true);
       if (!scrollAnimating) finishScrubQuality();
       needsRender = true;
     } else {
@@ -292,7 +299,7 @@ function tick(now) {
         scrollAnimating = false;
         scrollFrameTime = 0;
       }
-      applyProgress(next, false, !scrollAnimating);
+      applyProgress(next, false, true);
       needsRender = true;
     }
   }
@@ -445,8 +452,7 @@ function buildCallouts(root) {
     box.querySelector('.cpv-callout-name').textContent = spec.name;
     box.querySelector('.cpv-callout-cost').textContent = spec.cost;
     box.addEventListener('transitionend', (event) => {
-      if ((event.propertyName === 'left' || event.propertyName === 'top')
-        && box.classList.contains('is-active')) {
+      if (event.propertyName === 'transform' && box.classList.contains('is-active')) {
         syncLeaderToMovingLabel(spec.part);
       }
     });
@@ -586,17 +592,27 @@ function syncLeaderToMovingLabel(part) {
 
 function followMovingCallout(now) {
   calloutFollowRaf = 0;
-  const active = calloutSpecs[activeCalloutIndex(progress)];
-  if (active) syncLeaderToMovingLabel(active.part);
+  if (!calloutFollowFrameTime || now - calloutFollowFrameTime >= CALLOUT_FOLLOW_INTERVAL_MS) {
+    calloutFollowFrameTime = now;
+    const active = calloutSpecs[activeCalloutIndex(progress)];
+    if (active) syncLeaderToMovingLabel(active.part);
+  }
   if (now < calloutFollowUntil) {
     calloutFollowRaf = requestAnimationFrame(followMovingCallout);
+  } else {
+    calloutFollowFrameTime = 0;
   }
 }
 
 function scheduleCalloutFollow() {
+  if (reducedMotion) {
+    const active = calloutSpecs[activeCalloutIndex(progress)];
+    if (active) syncLeaderToMovingLabel(active.part);
+    return;
+  }
   // The caption itself eases for 240 ms; keep the connector synchronized for
-  // a little longer so its text-end never trails behind the final CSS frame.
-  calloutFollowUntil = performance.now() + 420;
+  // one final frame so its text-end never trails behind the CSS transition.
+  calloutFollowUntil = performance.now() + 300;
   if (!calloutFollowRaf) calloutFollowRaf = requestAnimationFrame(followMovingCallout);
 }
 
@@ -737,8 +753,9 @@ function updateCallouts(root = assetRoot) {
         );
       }
     }
-    box.style.left = boxX + 'px';
-    box.style.top = boxY + 'px';
+    // Transform-only movement stays on the compositor instead of invalidating
+    // page layout on every projected label update.
+    box.style.transform = `translate3d(${boxX}px,${boxY}px,0) translate(-50%,-50%)`;
     const target = surfaceAnchorFor(spec.part, boxX, boxY, width, height, bounds);
     line.setAttribute('x1', String(target.x));
     line.setAttribute('y1', String(target.y));
@@ -762,7 +779,9 @@ function updateCallouts(root = assetRoot) {
     // During active scrubbing, follow only when the editorial caption changes.
     // This preserves the quarter-second attachment animation without forcing a
     // layout read for every WebGL frame.
-    if (activeChanged || !scrubQuality) scheduleCalloutFollow();
+    // During scrubbing the CSS transition is disabled, so label and leader
+    // share the exact projected destination without a layout-reading follower.
+    if (!scrubQuality) scheduleCalloutFollow();
 }
 
 function updateProgressUI(p) {
@@ -822,9 +841,12 @@ function applyProgress(p, scheduleRender = true, force = false) {
 function refreshScrollRange() {
   if (HOME_EMBEDDED && EMBED_ROOT) {
     const rect = EMBED_ROOT.getBoundingClientRect();
+    const stickyRunway = Math.max(1, EMBED_ROOT.offsetHeight - window.innerHeight);
     cachedScrollRange = {
       start: window.scrollY + rect.top,
-      max: Math.max(1, EMBED_ROOT.offsetHeight - window.innerHeight),
+      // Finish before the sticky section releases. The short final hold gives
+      // the smoothed timeline room to settle even after a strong wheel flick.
+      max: Math.max(1, stickyRunway * HOME_TIMELINE_SCROLL_FRACTION),
     };
     return cachedScrollRange;
   }
@@ -1177,8 +1199,11 @@ if (renderer && !failed) {
       if (inView) {
         updateCallouts();
         requestRender();
-      }
-      else {
+      } else {
+        // Synchronize once before pausing so layout-driven exits/re-entries can
+        // never reveal an abandoned intermediate pose.
+        scrollTarget = progressFromScroll();
+        applyProgress(scrollTarget, false, true);
         cancelAnimationFrame(rafId);
         cancelAnimationFrame(calloutFollowRaf);
         rafId = 0;
