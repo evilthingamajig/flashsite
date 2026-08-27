@@ -8,8 +8,8 @@
   --cpv-accent:var(--primary-color--primary-color-dark,#15803d);
   --cpv-accent-deep:#0b7f47;
   position:relative;
-  height:400vh;
-  min-height:2400px;
+  height:240vh;
+  min-height:1500px;
   background:var(--cpv-bg);
   color:var(--cpv-text);
   font-family:Lausanne,Arial,sans-serif;
@@ -19,7 +19,7 @@
   position:sticky;
   top:0;
   height:100svh;
-  min-height:600px;
+  min-height:min(600px,100svh);
   overflow:hidden;
   isolation:isolate;
   background:#fff;
@@ -39,7 +39,8 @@
 .cpv-home .cpv-leaders line{stroke:var(--cpv-accent-deep);stroke-width:2.75;stroke-dasharray:none;opacity:.94;transition:opacity .18s ease}
 .cpv-home .cpv-leader-dot{fill:var(--cpv-accent-deep);stroke:#fff;stroke-width:2.5;filter:drop-shadow(0 1px 2px rgba(21,27,23,.25));opacity:0;transition:opacity .18s ease}
 .cpv-home .cpv-callouts{position:absolute;inset:0;z-index:8;pointer-events:none}
-.cpv-home .cpv-callout{position:absolute;width:min(13rem,24vw);padding:0;transform:translate(-50%,-50%);line-height:.98;opacity:0;transition:opacity .18s ease,left .24s cubic-bezier(.22,.61,.36,1),top .24s cubic-bezier(.22,.61,.36,1)}
+.cpv-home .cpv-callout{position:absolute;left:0;top:0;width:min(13rem,24vw);padding:0;transform:translate3d(-200vw,-200vh,0) translate(-50%,-50%);line-height:.98;opacity:0;will-change:transform,opacity;transition:opacity .18s ease,transform .24s cubic-bezier(.22,.61,.36,1)}
+.cpv-scrubbing .cpv-home .cpv-callout{transition:opacity .12s ease}
 .cpv-home .cpv-callout.is-active{opacity:1}
 .cpv-home .cpv-callout-name,.cpv-home .cpv-callout-cost{display:block;white-space:nowrap}
 .cpv-home .cpv-callout-name{color:var(--cpv-text);font-size:clamp(1.35rem,2.15vw,2.15rem);font-weight:400;letter-spacing:-.04em;line-height:.96}
@@ -69,8 +70,8 @@
 .cpv-no3d .cpv-home .cpv-canvas{display:none}
 
 @media(max-width:760px){
-  .cpv-home{height:360vh;min-height:2200px}
-  .cpv-home .cpv-stage{min-height:560px}
+  .cpv-home{height:240vh;min-height:1500px}
+  .cpv-home .cpv-stage{min-height:min(560px,100svh)}
   .cpv-home .cpv-head{top:clamp(82px,11svh,106px);width:90vw}
   .cpv-home .cpv-head h2{font-size:clamp(2.2rem,10.5vw,3.35rem)}
   .cpv-home .cpv-callout{width:min(12rem,42vw)}
@@ -85,4 +86,4 @@
   .cpv-home .cpv-chapter-exploded span::after{content:"Review"}
   .cpv-home .cpv-chapter-reassembled span::after{content:"Final"}
 }
-@media(prefers-reduced-motion:reduce){.cpv-home .cpv-callout{transition:none}}
+@media(prefers-reduced-motion:reduce){.cpv-home .cpv-callout,.cpv-home .cpv-leaders line,.cpv-home .cpv-leader-dot{transition:none}}
