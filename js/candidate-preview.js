@@ -108,12 +108,12 @@ let lastUiPose = '';
 let lastUiButtonState = '';
 let cachedScrollRange = null;
 const calloutSpecs = [
-  { part: 'enclosure', name: 'Case', cost: 'Cost: TBD', side: 'left', row: 0 },
-  { part: 'solar_panel_placeholder', name: 'Solar panel', cost: 'Cost: TBD', side: 'left', row: 1 },
-  { part: 'battery', name: 'LiPo battery', cost: 'Cost: TBD', side: 'right', row: 0 },
-  { part: 'charge_module', name: 'TP4056 board', cost: 'Cost: TBD', side: 'right', row: 1 },
-  { part: 'led_pair', name: '5 mm LEDs', cost: 'Cost: TBD', side: 'right', row: 2 },
-  { part: 'switch', name: 'Slide switch', cost: 'Cost: TBD', side: 'right', row: 2 },
+  { part: 'enclosure', name: 'Case', cost: 'Estimated: $1.10', side: 'left', row: 0 },
+  { part: 'solar_panel_placeholder', name: 'Solar panel', cost: 'Estimated: $1.50', side: 'left', row: 1 },
+  { part: 'battery', name: 'LiPo battery', cost: 'Estimated: $1.65', side: 'right', row: 0 },
+  { part: 'charge_module', name: 'TP4056 board', cost: 'Estimated: $0.45', side: 'right', row: 1 },
+  { part: 'led_pair', name: '5 mm LEDs', cost: 'Estimated: $0.12', side: 'right', row: 2 },
+  { part: 'switch', name: 'Slide switch', cost: 'Estimated: $0.35', side: 'right', row: 2 },
 ];
 const calloutTargets = new Map();
 const calloutLines = new Map();
