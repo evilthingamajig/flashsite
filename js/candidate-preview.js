@@ -31,23 +31,14 @@ const CALLOUT_FOLLOW_INTERVAL_MS = 1000 / 60;
 // remaining runway is a visible end hold, not hidden animation time. This is
 // especially important after a large wheel/touchpad impulse: the time-based
 // follower can settle while the stage is still fully pinned.
-const HOME_TIMELINE_SCROLL_FRACTION = 0.68;
-const HOME_FORCE_SETTLE_FRACTION = 0.84;
+const HOME_TIMELINE_SCROLL_FRACTION = 0.84;
+const HOME_FORCE_SETTLE_FRACTION = 0.94;
 const ADAPTIVE_DPR_STEPS = [1, 0.85, 0.7];
 const SLOW_FRAME_MS = HOME_EMBEDDED ? 18 : 22;
 const SLOW_FRAME_SCORE_LIMIT = 4;
 const FOV = 32;
 const REASSEMBLY_START = 0.8333333333;
 const ASSEMBLY_SETTLED_PROGRESS = 0.95;
-const SHADOW_CASTERS = new Set([
-  'enclosure',
-  'solar_panel_placeholder',
-  'battery',
-  'charge_module',
-  'led_left',
-  'led_right',
-  'switch',
-]);
 const HOME_MATERIAL_CONTRAST = new Map([
   ['LedClear', 0x78978f],
   ['LedDie', 0xd29f32],
@@ -95,7 +86,6 @@ let actions = [];
 let duration = 0;
 let closedFrame = null;
 let explodedFrame = null;
-let shadowGround = null;
 let progress = 0;
 let ready = false;
 let failed = false;
@@ -201,10 +191,6 @@ function finishScrubQuality() {
   if (!scrubQuality || !renderer || failed) return;
   scrubQuality = false;
   document.body.classList.remove('cpv-scrubbing');
-  // Shadows stay frozen while parts move; refresh them once at the final
-  // settled pose instead of rebuilding the shadow map every scrub frame.
-  if (shadowGround) shadowGround.visible = true;
-  renderer.shadowMap.needsUpdate = true;
   if (inView && !document.hidden) {
     updateCallouts();
     requestRender();
@@ -218,10 +204,6 @@ function setScrubQuality() {
     document.body.classList.add('cpv-scrubbing');
     cancelAnimationFrame(calloutFollowRaf);
     calloutFollowRaf = 0;
-    // A frozen shadow map otherwise leaves detached gray silhouettes behind
-    // moving parts. Hide the receiver while scrubbing; this is both cleaner
-    // and cheaper than rebuilding the shadow map on every wheel event.
-    if (shadowGround) shadowGround.visible = false;
   }
   // The homepage follower has an authoritative settled state, so it restores
   // quality directly instead of cancelling/recreating a timer every frame.
@@ -791,17 +773,17 @@ function updateCallouts(root = assetRoot) {
 
 function updateProgressUI(p) {
   const pct = Math.round(p * 100);
-  progressFill.style.transform = 'scaleX(' + p.toFixed(4) + ')';
+  if (progressFill) progressFill.style.transform = 'scaleX(' + p.toFixed(4) + ')';
   const pose = poseStateFor(p);
   const percentChanged = pct !== lastUiPercent;
   const poseChanged = pose !== lastUiPose;
   if (percentChanged) {
     lastUiPercent = pct;
-    progressLabel.textContent = 'scrub ' + String(pct).padStart(3, '0') + '%';
-    progressEl.setAttribute('aria-valuenow', String(pct));
+    if (progressLabel) progressLabel.textContent = 'scrub ' + String(pct).padStart(3, '0') + '%';
+    progressEl?.setAttribute('aria-valuenow', String(pct));
   }
   if (percentChanged || poseChanged) {
-    progressEl.setAttribute('aria-valuetext', pose + ' — ' + pct + '%');
+    progressEl?.setAttribute('aria-valuetext', pose + ' — ' + pct + '%');
   }
   if (poseChanged) {
     lastUiPose = pose;
@@ -998,10 +980,6 @@ function computeFrames(root) {
   root.updateMatrixWorld(true);
   closedFrame = frameFor(closedBox);
   explodedFrame = frameFor(reviewBox);
-  if (shadowGround) {
-    shadowGround.position.y = closedBox.min.y - 0.004;
-    shadowGround.receiveShadow = true;
-  }
 }
 
 function studioEnvironment(scene) {
@@ -1035,15 +1013,6 @@ function initScene() {
   scene.add(new THREE.HemisphereLight(0xdfe8e2, 0x11150f, 0.85));
   const key = new THREE.DirectionalLight(0xffffff, 1.9);
   key.position.set(0.35, 0.7, 0.45);
-  key.castShadow = true;
-  key.shadow.mapSize.set(512, 512);
-  key.shadow.bias = -0.0002;
-  key.shadow.camera.left = -0.15;
-  key.shadow.camera.right = 0.15;
-  key.shadow.camera.top = 0.15;
-  key.shadow.camera.bottom = -0.15;
-  key.shadow.camera.near = 0.05;
-  key.shadow.camera.far = 2;
   scene.add(key);
   const rim = new THREE.DirectionalLight(0xbfe6d2, 0.6);
   rim.position.set(-0.5, 0.3, -0.6);
@@ -1052,13 +1021,6 @@ function initScene() {
   fill.position.set(-0.3, -0.2, 0.5);
   scene.add(fill);
 
-  shadowGround = new THREE.Mesh(
-    new THREE.PlaneGeometry(1.2, 1.2),
-    new THREE.ShadowMaterial({ opacity: 0.3 })
-  );
-  shadowGround.rotation.x = -Math.PI / 2;
-  shadowGround.receiveShadow = true;
-  scene.add(shadowGround);
 }
 
 try {
@@ -1075,10 +1037,7 @@ if (renderer && !failed) {
   renderer.outputColorSpace = THREE.SRGBColorSpace;
   renderer.toneMapping = THREE.ACESFilmicToneMapping;
   renderer.toneMappingExposure = 1.08;
-  renderer.shadowMap.enabled = true;
-  renderer.shadowMap.type = THREE.PCFSoftShadowMap;
-  renderer.shadowMap.autoUpdate = false;
-  renderer.shadowMap.needsUpdate = true;
+  renderer.shadowMap.enabled = false;
 
   initScene();
 
@@ -1098,10 +1057,8 @@ if (renderer && !failed) {
             tuneHomepageMaterial(material);
           }
         }
-        // Detail meshes still render normally, but excluding them from the
-        // shadow pass avoids duplicating dozens of tiny draw calls per frame.
-        o.castShadow = SHADOW_CASTERS.has(o.name);
-        o.receiveShadow = o.name === 'enclosure';
+        o.castShadow = false;
+        o.receiveShadow = false;
       }
     });
 

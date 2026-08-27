@@ -8,8 +8,8 @@
   --cpv-accent:var(--primary-color--primary-color-dark,#15803d);
   --cpv-accent-deep:#0b7f47;
   position:relative;
-  height:240vh;
-  min-height:1500px;
+  height:190vh;
+  min-height:1200px;
   background:var(--cpv-bg);
   color:var(--cpv-text);
   font-family:Lausanne,Arial,sans-serif;
@@ -42,7 +42,7 @@
 .cpv-home .cpv-canvas{position:absolute;inset:0;z-index:2;width:100%;height:100%;display:block}
 .cpv-home .cpv-leaders{position:absolute;inset:0;z-index:7;width:100%;height:100%;pointer-events:none;overflow:visible}
 .cpv-home .cpv-leaders line{stroke:var(--cpv-accent-deep);stroke-width:2.75;stroke-dasharray:none;opacity:.94;transition:opacity .18s ease}
-.cpv-home .cpv-leader-dot{fill:var(--cpv-accent-deep);stroke:#fff;stroke-width:2.5;filter:drop-shadow(0 1px 2px rgba(21,27,23,.25));opacity:0;transition:opacity .18s ease}
+.cpv-home .cpv-leader-dot{fill:var(--cpv-accent-deep);stroke:#fff;stroke-width:2.5;opacity:0;transition:opacity .18s ease}
 .cpv-home .cpv-callouts{position:absolute;inset:0;z-index:8;pointer-events:none}
 .cpv-home .cpv-callout{position:absolute;left:0;top:0;width:min(13rem,24vw);padding:0;transform:translate3d(-200vw,-200vh,0) translate(-50%,-50%);line-height:.98;opacity:0;will-change:transform,opacity;transition:opacity .18s ease,transform .24s cubic-bezier(.22,.61,.36,1)}
 .cpv-scrubbing .cpv-home .cpv-callout{transition:opacity .12s ease}
@@ -54,19 +54,6 @@
 .cpv-home .cpv-eyebrow{margin:0 0 12px;color:var(--cpv-accent);font-size:11px;font-weight:500;line-height:1.2;letter-spacing:.16em;text-transform:uppercase}
 .cpv-home .cpv-head h2{margin:0 0 10px;color:var(--cpv-text);font-size:clamp(2.6rem,4.2vw,4.8rem);font-weight:400;line-height:.96;letter-spacing:-.045em}
 .cpv-home .cpv-sub{margin:0;color:var(--cpv-muted);font-size:clamp(.95rem,1.3vw,1.15rem);line-height:1.3}
-.cpv-home .cpv-progress{position:absolute;left:0;right:0;bottom:0;z-index:10;display:flex;align-items:center;gap:14px;padding:14px clamp(20px,3vw,48px) 18px}
-.cpv-home .cpv-progress-track{position:relative;flex:1;height:2px;border-radius:2px;background:rgba(21,27,23,.12);overflow:visible}
-.cpv-home .cpv-progress-fill{position:absolute;inset:0;background:linear-gradient(90deg,var(--cpv-accent-deep),var(--cpv-accent));transform:scaleX(0);transform-origin:left center}
-.cpv-home .cpv-chapter{position:absolute;top:0;width:1px;height:2px;background:var(--cpv-muted);pointer-events:none}
-.cpv-home .cpv-chapter::after{content:"";position:absolute;top:6px;left:0;width:1px;height:4px;background:currentColor}
-.cpv-home .cpv-chapter span{position:absolute;top:14px;color:var(--cpv-muted);font-size:8px;line-height:1;letter-spacing:.1em;text-transform:uppercase;white-space:nowrap}
-.cpv-home .cpv-chapter-closed{left:0;color:var(--cpv-accent)}
-.cpv-home .cpv-chapter-closed span{left:0}
-.cpv-home .cpv-chapter-exploded{left:67%;color:var(--cpv-accent)}
-.cpv-home .cpv-chapter-exploded span{left:0;transform:translateX(-50%)}
-.cpv-home .cpv-chapter-reassembled{right:0;color:var(--cpv-accent)}
-.cpv-home .cpv-chapter-reassembled span{right:0}
-.cpv-home .cpv-progress-label{color:var(--cpv-muted);font-size:11px;letter-spacing:.14em;text-transform:uppercase;font-variant-numeric:tabular-nums;white-space:nowrap}
 .cpv-home .cpv-status{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
 .cpv-home .cpv-fallback{position:absolute;left:50%;top:50%;z-index:20;width:min(26rem,calc(100% - 32px));padding:26px;transform:translate(-50%,-50%);border:1px solid var(--cpv-line);border-radius:12px;background:#f5f5f5;text-align:center}
 .cpv-home .cpv-fallback[hidden]{display:none}
@@ -75,7 +62,7 @@
 .cpv-no3d .cpv-home .cpv-canvas{display:none}
 
 @media(max-width:760px){
-  .cpv-home{height:240vh;min-height:1500px}
+  .cpv-home{height:190vh;min-height:1200px}
   .cpv-home .cpv-stage{min-height:min(560px,100dvh)}
   .cpv-home .cpv-head{top:clamp(82px,11svh,106px);width:90vw}
   .cpv-home .cpv-head h2{font-size:clamp(2.2rem,10.5vw,3.35rem)}
@@ -83,12 +70,5 @@
   .cpv-home .cpv-callout-name{font-size:clamp(1.15rem,6vw,1.7rem)}
   .cpv-home .cpv-callout-cost{margin-top:7px;font-size:.8rem}
   .cpv-home .cpv-leaders line{stroke-width:3}
-  .cpv-home .cpv-progress{padding:12px 16px 18px}
-  .cpv-home .cpv-progress-label{font-size:9px}
-  .cpv-home .cpv-chapter span{font-size:7px;letter-spacing:.06em}
-  .cpv-home .cpv-chapter-exploded span,.cpv-home .cpv-chapter-reassembled span{font-size:0}
-  .cpv-home .cpv-chapter-exploded span::after,.cpv-home .cpv-chapter-reassembled span::after{font-size:7px;letter-spacing:.06em}
-  .cpv-home .cpv-chapter-exploded span::after{content:"Review"}
-  .cpv-home .cpv-chapter-reassembled span::after{content:"Final"}
 }
 @media(prefers-reduced-motion:reduce){.cpv-home .cpv-callout,.cpv-home .cpv-leaders line,.cpv-home .cpv-leader-dot{transition:none}}
