@@ -96,7 +96,6 @@ function buildLegacyTokens() {
   return [
     chars([103, 111, 102, 117, 110, 100, 109, 101]),
     chars([103, 102, 109]),
-    chars([103, 105, 118, 101, 98, 117, 116, 116, 101, 114]),
     chars([103, 111, 102, 117, 110, 100, 46, 109, 101])
   ];
 }
@@ -115,12 +114,11 @@ function scanLegacySources(root, suppliedSources) {
       .map(file => [file, fs.readFileSync(file, "utf8")])
   );
   const hits = [];
-  const [goFundMe, gfm, givebutter, goFundDotMe] = buildLegacyTokens();
+  const [goFundMe, gfm, goFundDotMe] = buildLegacyTokens();
   const escapeRegExp = value => value.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
   const patterns = [
     [goFundMe, new RegExp(`\\b${escapeRegExp(goFundMe)}\\b`, "i")],
     [gfm, new RegExp(`\\b${escapeRegExp(gfm)}\\b`, "i")],
-    [givebutter, new RegExp(`\\b${escapeRegExp(givebutter)}\\b`, "i")],
     [goFundDotMe, new RegExp(`\\b${escapeRegExp(goFundDotMe)}\\b`, "i")]
   ];
   for (const [file, source] of sources) {
@@ -187,8 +185,14 @@ function parseWidget(markup, expectedWidgetId, report, reportDuplicate) {
 
 function validate(options = {}) {
   const root = options.root || path.resolve(__dirname, "..");
-  const html = options.html ?? fs.readFileSync(path.join(root, "donate.html"), "utf8");
+  const html = options.html ?? fs.readFileSync(path.join(root, "donate", "choose", "index.html"), "utf8");
   const config = options.config ?? JSON.parse(fs.readFileSync(path.join(root, "vercel.json"), "utf8"));
+  const readOptional = relative => {
+    const file = path.join(root, relative);
+    return fs.existsSync(file) ? fs.readFileSync(file, "utf8") : "";
+  };
+  const homepageHtml = options.homepageHtml ?? readOptional("index.html");
+  const chooserHtml = options.chooserHtml ?? readOptional(path.join("donate", "choose", "index.html"));
   const env = options.env || process.env;
   const expectedWidgetId = options.expectedWidgetId ?? EXPECTED_WIDGET_ID;
   const expectedAccountId = options.expectedAccountId ?? EXPECTED_ACCOUNT_ID;
@@ -214,12 +218,18 @@ function validate(options = {}) {
   });
   const exactPendingMount = '<div class="donation-provider-mount" data-donation-provider="pending" role="region" aria-labelledby="sponsor-light-heading">';
   const exactNoindex = '<meta content="noindex,follow" name="robots"/>';
-  const hostedMockup = hostedRequested && !expectedWidgetId && !expectedAccountId &&
-    body.split(exactPendingMount).length === 2 &&
+  const contactFallback = [...body.matchAll(/<a\b[^>]*>/gi)].some(match => {
+    const attrs = attrMap(match[0]);
+    const href = (attrs.get("href") || "").replace(/&amp;/gi, "&");
+    return attrs.get("id") === "donate-button" && href.startsWith("/contact-us");
+  });
+  const legacyHostedMockup = body.split(exactPendingMount).length === 2 &&
     html.split(exactNoindex).length === 2 &&
+    visible.split("Online sponsorship checkout is not active yet.").length === 2;
+  const hostedMockup = hostedRequested && !expectedWidgetId && !expectedAccountId &&
     (body.match(/<givebutter-widget(?=[\s/>])/gi) || []).length === 0 &&
     !hostedGivebutterScripts &&
-    visible.split("Online sponsorship checkout is not active yet.").length === 2;
+    (legacyHostedMockup || contactFallback);
 
   function incomplete(message) {
     if (hostedMockup) warnings.push(`AUTHORIZED HOSTED MOCKUP: ${message}`);
@@ -227,12 +237,55 @@ function validate(options = {}) {
     else errors.push(message);
   }
 
+  function chooserIncomplete(message) {
+    if (hostedMockup) warnings.push(`AUTHORIZED HOSTED MOCKUP: ${message}`);
+    else if (previewOverride) warnings.push(`INCOMPLETE PREVIEW OVERRIDE: ${message}`);
+    else errors.push(message);
+  }
+
+  const homepageLinksChooser = [...stripIgnoredBlocks(homepageHtml).matchAll(/<a\b[^>]*>/gi)].some(match => {
+    const href = (attrMap(match[0]).get("href") || "").replace(/&amp;/gi, "&");
+    if (!href) return false;
+    try {
+      return new URL(href, "https://flashforwardfoundation.org/").pathname.replace(/\/$/, "") === "/donate/choose";
+    } catch {
+      return false;
+    }
+  });
+  if (homepageLinksChooser) {
+    if (!chooserHtml) {
+      chooserIncomplete("Homepage links to /donate/choose/ but its index.html is missing");
+    } else {
+      for (const name of noindexRobotNames(chooserHtml, message => errors.push(`donate/choose/index.html ${message}`))) {
+        chooserIncomplete(`Homepage-linked chooser contains noindex in meta name=${name}`);
+      }
+      const chooserBody = stripIgnoredBlocks(bodyMarkup(chooserHtml));
+      const chooserVisible = visibleBodyText(chooserHtml);
+      const checkoutButtons = [...chooserBody.matchAll(/<(?:a|button)\b[^>]*>/gi)].filter(match => attrMap(match[0]).get("id") === "donate-button");
+      if (checkoutButtons.length !== 1) {
+        chooserIncomplete(`Homepage-linked chooser must contain exactly one #donate-button; found ${checkoutButtons.length}`);
+      } else if (
+        /(?:^|\s)disabled(?:\s|=|>)/i.test(checkoutButtons[0][0]) ||
+        /^(?:true|1)$/i.test(attrMap(checkoutButtons[0][0]).get("aria-disabled") || "")
+      ) {
+        chooserIncomplete("Homepage-linked chooser has a disabled #donate-button");
+      }
+      const chooserPendingAttribute = /(?:data-(?:checkout-)?state|data-donation-provider)\s*=\s*(?:"(?:pending|inactive|disabled|staging)"|'(?:pending|inactive|disabled|staging)'|(?:pending|inactive|disabled|staging)(?=\s|>))/i;
+      if (
+        chooserPendingAttribute.test(chooserBody) ||
+        /(?:checkout|payment)[^.!?]{0,100}(?:coming soon|inactive|unavailable|not active|being prepared|pending|disabled)/i.test(chooserVisible)
+      ) {
+        chooserIncomplete("Homepage-linked chooser contains a pending or inactive checkout state");
+      }
+    }
+  }
+
   if (configHasXRoboNoindex(config)) {
     errors.push("vercel.json contains an X-Robots-Tag noindex directive");
   }
 
   for (const name of noindexRobotNames(html, message => errors.push(message))) {
-    incomplete(`donate.html contains noindex in meta name=${name}`);
+    incomplete(`donate/choose/index.html contains noindex in meta name=${name}`);
   }
 
   const pendingAttribute = /(?:^|\s)(?:class|id|data-[\w:-]+)\s*=\s*(?:"[^"]*(?:pending|placeholder|staging)[^"]*"|'[^']*(?:pending|placeholder|staging)[^']*'|[^\s>]*(?:pending|placeholder|staging)[^\s>]*)/i;
@@ -246,7 +299,7 @@ function validate(options = {}) {
   ];
   for (const pattern of pendingPatterns) {
     if (pattern.test(body) || pattern.test(visible)) {
-      incomplete(`donate.html contains a pending/staging marker or visible copy (${pattern})`);
+      incomplete(`donate/choose/index.html contains a pending/staging marker or visible copy (${pattern})`);
     }
   }
 

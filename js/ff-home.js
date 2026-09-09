@@ -8,6 +8,8 @@
   let menuAnimation = null;
   let previousScrollY = Math.max(0, window.scrollY);
   let scrollFrame = 0;
+  let navScrolled = null;
+  let navHidden = null;
 
   function setDropdown(entry, open) {
     entry.root.classList.toggle('w--open', open);
@@ -120,9 +122,14 @@
     scrollFrame = 0;
     const y = Math.max(0, window.scrollY);
     const movingDown = y > previousScrollY && y > 80;
-    for (const nav of navBars) {
-      nav.classList.toggle('scrolled', y > 50);
-      nav.style.transform = movingDown ? 'translateY(-100%)' : 'translateY(0)';
+    const nextScrolled = y > 50;
+    if (nextScrolled !== navScrolled || movingDown !== navHidden) {
+      for (const nav of navBars) {
+        if (nextScrolled !== navScrolled) nav.classList.toggle('scrolled', nextScrolled);
+        if (movingDown !== navHidden) nav.style.transform = movingDown ? 'translateY(-100%)' : 'translateY(0)';
+      }
+      navScrolled = nextScrolled;
+      navHidden = movingDown;
     }
     previousScrollY = y;
   }

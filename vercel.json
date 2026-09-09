@@ -12,6 +12,26 @@
   ],
   "redirects": [
     {
+      "source": "/ask-for-help",
+      "destination": "/contact-us",
+      "permanent": true
+    },
+    {
+      "source": "/ask-for-help.html",
+      "destination": "/contact-us",
+      "permanent": true
+    },
+    {
+      "source": "/donate",
+      "destination": "/donate/choose/",
+      "permanent": true
+    },
+    {
+      "source": "/donate.html",
+      "destination": "/donate/choose/",
+      "permanent": true
+    },
+    {
       "source": "/events",
       "destination": "/",
       "permanent": true

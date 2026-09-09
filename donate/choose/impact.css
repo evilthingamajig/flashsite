@@ -1,0 +1,100 @@
+@font-face{font-family:Lausanne;src:url('/fonts/667d8d81555e958a89e78dd3_TWKLausanne-400.woff2') format('woff2');font-weight:400;font-display:swap}
+@font-face{font-family:Lausanne;src:url('/fonts/667d8d81555e958a89e78dd7_TWKLausanne-500.woff2') format('woff2');font-weight:500;font-display:swap}
+:root{--green-950:#052e16;--green-900:#14532d;--green-700:#15803d;--green-600:#16a34a;--green-300:#86efac;--green-100:#dcfce7;--green-50:#f7fdf9;--white:#fff;--ink:#141009;--muted:#526057;--line:#d1e7d7}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:var(--white);color:var(--ink);font-family:Lausanne,Arial,sans-serif;line-height:1.45;-webkit-font-smoothing:antialiased}button,input{font:inherit}button,a{touch-action:manipulation}a{color:inherit;text-decoration:none}[hidden]{display:none!important}
+.skip-link{position:fixed;left:12px;top:12px;z-index:1000;padding:10px 14px;background:var(--white);color:var(--green-950);transform:translateY(-160%)}.skip-link:focus{transform:none}
+.site-header{height:76px;padding:0 clamp(20px,4vw,64px);display:flex;align-items:center;justify-content:space-between;background:var(--green-700);color:var(--white);border-bottom:1px solid rgba(255,255,255,.24)}.brand{display:flex;align-items:center;gap:10px;font-size:14px;font-weight:500}.brand img{object-fit:contain}.site-header nav{display:flex;align-items:center;gap:24px;font-size:14px}.header-cta{padding:11px 18px;border-radius:100px;background:var(--white);color:var(--green-900);font-weight:500}.header-cta:hover{background:var(--green-100)}
+.intro{padding:clamp(64px,7vw,96px) clamp(20px,7vw,110px) clamp(64px,7vw,88px);border-bottom:1px solid var(--line)}.intro h1{max-width:980px;margin:14px 0 24px;color:var(--green-950);font-size:clamp(2.8rem,5.8vw,5.75rem);line-height:.98;letter-spacing:-.045em;font-weight:400;text-wrap:balance}.intro-copy{max-width:680px;margin:0;color:var(--muted);font-size:clamp(1.05rem,1.6vw,1.35rem)}.eyebrow,.map-kicker,.panel-status{margin:0;color:var(--green-700);font-size:11px;line-height:1.2;font-weight:500;letter-spacing:.16em;text-transform:uppercase}
+.impact-builder{padding:clamp(38px,5vw,70px) clamp(14px,4vw,64px) clamp(64px,9vw,130px);background:var(--green-50)}.map-shell,.gift-builder{max-width:1400px;margin:auto;border:1px solid #b8ddc3;border-radius:10px;background:var(--white)}.map-shell{overflow:hidden}.map-toolbar{min-height:84px;padding:16px 20px;display:flex;align-items:center;justify-content:space-between;gap:24px;border-bottom:1px solid var(--line)}.map-toolbar>div>p:last-child{margin:5px 0 0;color:var(--muted);font-size:13px}.needed-most-button{flex:none;padding:10px 14px;display:flex;align-items:center;gap:10px;border:1px solid var(--green-700);border-radius:100px;background:var(--white);color:var(--green-900);cursor:pointer}.needed-most-button small{padding:3px 7px;border-radius:100px;background:var(--green-100);font-size:10px}.needed-most-button.is-active{background:var(--green-700);color:var(--white)}.needed-most-button.is-active small{background:rgba(255,255,255,.16);color:var(--white)}
+.map-viewport{position:relative;min-height:clamp(520px,55vw,760px);overflow:hidden;background:var(--green-900);cursor:default}.world-map-mount{position:absolute;inset:0;display:grid;place-items:center}.map-loading{color:var(--green-100)}.world-map-svg{width:96%;height:96%;overflow:visible}.world-map-svg .map-country{fill:#d8eee0;stroke:var(--green-900);stroke-width:1.1;vector-effect:non-scaling-stroke;transition:fill .16s ease,opacity .16s ease,filter .16s ease}.world-map-svg .is-partner-country{fill:var(--green-300);stroke:var(--white);stroke-width:2.2;cursor:pointer;filter:drop-shadow(0 0 5px rgba(134,239,172,.82))}.world-map-svg.has-country-focus .map-country{opacity:.22}.world-map-svg.has-country-focus .is-current{fill:#f3fff6;opacity:1;stroke:#fff;stroke-width:3.5;filter:drop-shadow(0 0 7px #86efac) drop-shadow(0 0 17px rgba(134,239,172,.9))}.world-map-svg .is-selected{stroke:#fff;stroke-dasharray:0}.world-map-svg .is-partner-country:focus-visible{outline:none;stroke:#faff00;stroke-width:5}.country-card{position:absolute;z-index:2;left:clamp(18px,4vw,58px);bottom:clamp(18px,4vw,48px);width:min(390px,calc(100% - 36px));padding:24px;border:1px solid rgba(255,255,255,.54);border-radius:8px;background:rgba(255,255,255,.96);box-shadow:0 14px 40px rgba(5,46,22,.28);backdrop-filter:blur(8px)}.country-card h2{margin:8px 0 10px;color:var(--green-950);font-size:clamp(2rem,3vw,3.2rem);line-height:1;letter-spacing:-.04em;font-weight:400}.country-summary{margin:0;color:var(--muted);font-size:14px}.impact-stats{display:grid;margin:20px 0 0;border-top:1px solid var(--line)}.impact-stats div{padding:12px 0;border-bottom:1px solid var(--line)}.impact-stats dt{color:#66756b;font-size:10px;letter-spacing:.1em;text-transform:uppercase}.impact-stats dd{margin:3px 0 0;color:var(--green-950);font-size:14px}.country-article-link{margin-top:18px;min-height:46px;padding:0 16px;display:flex;align-items:center;justify-content:space-between;border-radius:100px;background:var(--green-700);color:var(--white);font-size:13px;font-weight:500}.country-article-link:hover{background:var(--green-900)}.map-instructions,.map-credit{margin:0;padding:11px 20px;color:var(--muted);font-size:11px}.map-instructions{border-top:1px solid var(--line)}.map-credit{padding-top:0}.map-credit a{text-decoration:underline}.map-error{padding:24px;color:var(--white);text-align:center}.map-error button{margin:4px;padding:10px;border:1px solid var(--green-300);border-radius:100px;background:transparent;color:var(--white)}
+.gift-builder{margin-top:24px;padding:clamp(28px,4vw,54px)}.gift-heading-wrap{margin-bottom:32px}.gift-heading-wrap h2{margin:8px 0 0;color:var(--green-950);font-size:clamp(2rem,4vw,4.2rem);line-height:1;letter-spacing:-.045em;font-weight:400}.gift-controls{display:grid;grid-template-columns:1fr 1.35fr;gap:24px}fieldset{min-width:0;margin:0;padding:0;border:0}legend{margin-bottom:12px;color:var(--muted);font-size:12px;letter-spacing:.1em;text-transform:uppercase}.segmented-control,.quantity-control{display:flex;gap:5px;padding:5px;border:1px solid #bfd8c6;border-radius:100px;background:var(--green-50)}.segmented-control label{flex:1;cursor:pointer}.segmented-control input{position:absolute;opacity:0}.segmented-control span{min-height:50px;display:grid;place-items:center;align-content:center;gap:2px;border-radius:100px}.segmented-control strong{font-weight:500}.segmented-control small{color:var(--muted);font-size:10px}.segmented-control input:checked+span{background:var(--green-700);color:var(--white)}.segmented-control input:checked+span small{color:#d9fbe3}.quantity-control button,.custom-quantity{min-height:50px;border:0;border-radius:100px;background:transparent;color:var(--green-950)}.quantity-control button{flex:1;cursor:pointer}.quantity-control button:hover{background:var(--green-100)}.quantity-control button.is-active{background:var(--green-700);color:var(--white)}.custom-quantity{flex:1.4;padding:0 12px;display:flex;align-items:center;gap:7px;border-left:1px solid #bfd8c6}.custom-quantity span{color:var(--muted);font-size:11px}.custom-quantity input{width:100%;min-width:0;border:0;outline:0;background:transparent;color:var(--green-950);text-align:center}.gift-summary{margin-top:30px;padding-top:30px;display:flex;align-items:center;justify-content:space-between;gap:24px;border-top:1px solid var(--line)}.gift-summary>div{display:grid;grid-template-columns:auto auto;align-items:baseline;column-gap:14px}.gift-summary [data-gift-summary-label]{font-size:14px}.gift-summary [data-gift-summary-amount]{color:var(--green-700);font-size:32px;font-weight:400;letter-spacing:-.03em}.gift-summary [data-gift-summary-destination]{grid-column:1/-1;color:var(--muted)}.donate-button{min-height:56px;padding:0 22px;display:flex;align-items:center;justify-content:center;gap:24px;border-radius:100px;background:var(--green-600);color:var(--white);font-weight:500}.donate-button:hover{background:var(--green-700)}.checkout-note{max-width:760px;margin:18px 0 0;color:var(--muted);font-size:12px}
+.donor-updates{margin:-4px 0 32px;padding:22px 24px;border:1px solid #9acfa5;border-left:5px solid var(--green-700);background:#f1faf3}.donor-updates-kicker{margin:0 0 6px;color:var(--green-700);font-size:11px;font-weight:600;letter-spacing:.12em;text-transform:uppercase}.donor-updates h3{margin:0 0 6px;color:var(--green-950);font-size:clamp(1.55rem,2.6vw,2.35rem);line-height:1.05;font-weight:400;letter-spacing:-.025em}.donor-updates>p:last-child{max-width:690px;margin:0;color:#36553f;font-size:16px}
+.stories{padding:clamp(70px,8vw,110px) clamp(20px,5vw,76px);background:var(--white)}.section-heading{max-width:1240px;margin:0 auto 38px;display:grid;grid-template-columns:1.25fr .75fr;align-items:end;gap:40px}.section-heading h2{margin:9px 0 0;color:var(--green-950);font-size:clamp(2.5rem,5vw,5.8rem);line-height:.95;letter-spacing:-.05em;font-weight:400}.section-heading>p{margin:0;color:var(--muted)}.story-grid{max-width:1240px;margin:auto;display:grid;grid-template-columns:repeat(3,1fr);gap:16px}.story-card{min-width:0;overflow:hidden;border:1px solid #b8ddc3;border-radius:8px;background:var(--white)}.story-card:hover{border-color:var(--green-600)}.story-card-link{min-height:370px;padding:24px;display:flex;flex-direction:column}.story-card-mark{height:92px;margin-bottom:auto;display:flex;align-items:flex-start}.story-card-mark img{width:116px;height:72px;padding:10px;object-fit:contain;border:1px solid var(--line);border-radius:8px}.story-card-link>span{margin:28px 0 12px;color:var(--green-700);font-size:11px;letter-spacing:.12em;text-transform:uppercase}.story-card h3{margin:0 0 12px;color:var(--green-950);font-size:clamp(1.7rem,3vw,2.65rem);line-height:1.05;font-weight:400;letter-spacing:-.03em}.story-card p{margin:0;color:var(--muted)}.story-card strong{margin-top:24px;color:var(--green-700);font-size:13px;font-weight:500}
+footer{padding:34px clamp(20px,4vw,64px);display:flex;align-items:center;justify-content:space-between;gap:20px;background:var(--green-900);color:var(--white)}footer p{margin:0;color:#d2efda;font-size:12px}button:focus-visible,a:focus-visible,input:focus-visible{outline:2px solid var(--green-950);outline-offset:3px;box-shadow:0 0 0 5px var(--green-300)}.site-header a:focus-visible,footer a:focus-visible{outline-color:var(--white)}body:not([data-destination='greatest-need']) .story-grid{grid-template-columns:minmax(0,720px);justify-content:start}
+@media(max-width:900px){.gift-controls{grid-template-columns:1fr}.story-grid{grid-template-columns:1fr 1fr}.section-heading{grid-template-columns:1fr}.site-header nav>a:first-child{display:none}.map-viewport{min-height:620px}.world-map-mount{inset:0 0 210px}.world-map-svg{width:130%;max-width:none}.country-card{right:18px;left:18px;bottom:18px;width:auto}.country-summary{display:none}.impact-stats{grid-template-columns:1fr 1fr;gap:14px}.impact-stats div{border-bottom:0}}
+@media(max-width:680px){.site-header{height:66px;padding:0 16px}.site-header .brand img{width:36px;height:36px}.brand span{max-width:122px;line-height:1.05}.header-cta{padding:9px 13px}.intro{padding:62px 18px 52px}.intro h1{font-size:clamp(2.65rem,13vw,4.2rem)}.impact-builder{padding:20px 10px 70px}.map-toolbar{align-items:flex-start;flex-direction:column;gap:14px;padding:16px}.needed-most-button{width:auto;max-width:100%;min-height:48px;justify-content:space-between}.map-viewport{min-height:590px}.world-map-mount{inset:0 0 240px}.world-map-svg{width:100%;height:100%;transform:none}.country-card{padding:18px}.country-card h2{font-size:2rem}.impact-stats{grid-template-columns:1fr}.impact-stats div{padding:8px 0;border-bottom:1px solid var(--line)}.map-instructions{font-size:12px}.gift-builder{margin-top:14px;padding:26px 18px}.quantity-control{display:grid;grid-template-columns:repeat(3,1fr);border-radius:24px}.custom-quantity{grid-column:1/-1;border-top:1px solid #bfd8c6;border-left:0}.gift-summary{align-items:stretch;flex-direction:column}.gift-summary [data-gift-summary-destination]{overflow-wrap:anywhere}.donate-button{width:100%}.stories{padding-left:18px;padding-right:18px}.story-grid,body:not([data-destination='greatest-need']) .story-grid{grid-template-columns:1fr}.story-card-link{min-height:330px}footer{align-items:flex-start;flex-direction:column}}
+.map-viewport{background:#eef1ef}.world-map-svg .map-country:not(.is-partner-country){fill:#fff;stroke:#a9b7ad}.world-map-svg.has-country-focus .map-country:not(.is-current){fill:#cbd2cd;opacity:.72}
+.map-viewport{background:#fff}.world-map-svg .map-country:not(.is-partner-country){fill:#fff;stroke:#aeb8b1;opacity:1}.world-map-svg .is-partner-country{fill:#65b978;stroke:#14532d;filter:none}.world-map-svg.has-country-focus .map-country:not(.is-current){fill:#e4e7e5;stroke:#a2ada5;opacity:1;filter:none}.world-map-svg.has-country-focus .is-current{fill:#278b4a;stroke:#14532d;opacity:1;filter:none}.world-map-svg.has-country-focus .is-partner-country.is-selected,.world-map-svg.has-country-focus .is-current.is-selected{fill:#14532d;stroke:#052e16;opacity:1;filter:none}
+.map-shell{border-color:#e1e7e2}.map-viewport{background:#fff}.world-map-svg{width:92%;height:90%}.world-map-svg .map-country{fill:#fff;stroke:#d2d9d4;stroke-width:.45;opacity:1;filter:none;transition:fill .14s ease,stroke .14s ease}.world-map-svg .map-country:not(.is-partner-country){fill:#fff;stroke:#d2d9d4;stroke-width:.45}.world-map-svg .is-partner-country{fill:#9acfa5;stroke:#fff;stroke-width:.65;filter:none}.world-map-svg.has-country-focus .map-country:not(.is-current):not(.is-selected){fill:#f0f2f1;stroke:#d8ddda;stroke-width:.4;opacity:1}.world-map-svg.has-country-focus .is-current{fill:#3f9859;stroke:#fff;stroke-width:.8;opacity:1;filter:none}.world-map-svg.has-country-focus .is-partner-country.is-selected,.world-map-svg.has-country-focus .is-current.is-selected{fill:#14532d;stroke:#fff;stroke-width:.8;opacity:1;filter:none}.country-card{border-color:#e2e8e3;box-shadow:0 18px 55px rgba(5,46,22,.13)}
+.country-hit-target{fill:transparent;stroke:none;cursor:pointer;pointer-events:all}
+.haiti-inset{cursor:pointer;transition:opacity .14s ease}
+.haiti-inset-panel{fill:#fff;stroke:#b8ddc3;stroke-width:2;vector-effect:non-scaling-stroke;transition:fill .14s ease,stroke .14s ease}
+.haiti-inset-shape{fill:#65b978;stroke:#14532d;stroke-width:.8;vector-effect:non-scaling-stroke;transition:fill .14s ease}
+.haiti-inset-label{fill:#4d6b57;font-size:15px;font-weight:600;letter-spacing:2.2px}
+.haiti-inset-name{fill:#052e16;font-size:37px;font-weight:500;letter-spacing:-1px}
+.haiti-inset-leader{fill:none;stroke:#84b992;stroke-width:1.5;stroke-dasharray:5 5;vector-effect:non-scaling-stroke;pointer-events:none}
+.haiti-origin-ring{fill:rgba(101,185,120,.12);stroke:#278b4a;stroke-width:2;vector-effect:non-scaling-stroke;pointer-events:none}
+.world-map-svg.has-country-focus .haiti-inset:not(.is-current){opacity:.48}
+.haiti-inset.is-current .haiti-inset-panel{fill:#f1faf3;stroke:#3f9859}
+.haiti-inset.is-current .haiti-inset-shape{fill:#3f9859}
+.haiti-inset.is-selected .haiti-inset-panel{stroke:#14532d}
+.haiti-inset.is-selected .haiti-inset-shape{fill:#14532d}
+.haiti-inset:focus-visible{outline:none}
+.haiti-inset:focus-visible .haiti-inset-panel{stroke:#052e16;stroke-width:4}
+@media(max-width:680px){.map-viewport{min-height:0;display:grid;overflow:hidden}.world-map-mount{position:relative;inset:auto;height:300px;padding:8px}.world-map-svg{width:100%;height:100%;max-width:none;transform:none}.country-card{position:relative;right:auto;bottom:auto;left:auto;width:auto;margin:0 14px 14px;padding:18px}}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}.world-map-svg .map-country,.haiti-inset,.haiti-inset-panel,.haiti-inset-shape{transition:none}}
+
+/* Keep the entire world map readable. Destination details sit in their own
+   row instead of obscuring North and South America. */
+.map-viewport{min-height:0;display:grid;grid-template-rows:auto auto;overflow:hidden}
+.world-map-mount{position:relative;inset:auto;height:clamp(470px,43vw,640px)}
+.country-card{position:relative;right:auto;bottom:auto;left:auto;width:auto;margin:0;padding:24px 32px;border:0;border-top:1px solid var(--line);border-radius:0;background:var(--white);box-shadow:none;backdrop-filter:none}
+
+@media(min-width:901px){
+  .country-card{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(320px,.85fr);grid-template-rows:auto auto 1fr;column-gap:clamp(42px,6vw,90px);align-items:start;padding:30px clamp(28px,4vw,56px)}
+  .country-card .panel-status{grid-column:1;grid-row:1}
+  .country-card h2{grid-column:1;grid-row:2;margin-top:8px;max-width:720px}
+  .country-summary{grid-column:1;grid-row:3;max-width:650px}
+  .impact-stats{grid-column:2;grid-row:1 / span 2;margin:0}
+  .country-article-link{grid-column:2;grid-row:3;align-self:end}
+}
+
+@media(min-width:681px) and (max-width:900px){
+  .world-map-mount{height:440px}
+  .country-card{padding:24px}
+}
+
+@media(max-width:680px){
+  .world-map-mount{height:300px}
+  .country-card{margin:0;padding:18px}
+  .haiti-inset{display:none;transform:none}
+  .haiti-inset-label{font-size:34px;letter-spacing:4px}
+  .haiti-inset-name{font-size:70px;letter-spacing:-2px}
+  .desktop-map-help{display:none}
+
+  .world-map-svg{transition:transform .3s cubic-bezier(.22,1,.36,1)}
+  body[data-destination='haiti'] .world-map-svg{transform:scale(2.8);transform-origin:30.2% 48.5%}
+  body[data-destination='drc'] .world-map-svg{transform:scale(2.6);transform-origin:56% 55%}
+  body[data-destination='india'] .world-map-svg{transform:scale(2.15);transform-origin:72.5% 48%}
+  .mobile-map-labels{position:absolute;inset:0;z-index:4;pointer-events:none}
+  .mobile-map-label{position:absolute;z-index:1;min-width:108px;min-height:58px;padding:7px 9px;display:grid;grid-template-columns:28px minmax(0,1fr);align-items:center;gap:7px;border:1px solid #9acfa5;border-radius:8px;background:rgba(255,255,255,.97);box-shadow:0 5px 18px rgba(5,46,22,.12);color:var(--green-950);line-height:1.05;text-align:left;pointer-events:auto;transition:background .16s ease,border-color .16s ease,color .16s ease,transform .16s ease}
+  .mobile-map-label-icon{width:28px;height:34px;display:block;overflow:visible}
+  .mobile-map-label-shape{fill:#65b978;stroke:#14532d;stroke-width:1;vector-effect:non-scaling-stroke}
+  .mobile-map-label-copy{min-width:0;display:flex;flex-direction:column}
+  .mobile-map-label strong{font-size:13px;font-weight:500}
+  .mobile-map-label small{margin-top:3px;color:#56715e;font-size:9px}
+  .mobile-map-label.is-current{border-color:var(--green-700);background:var(--green-100)}
+  .mobile-map-label.is-selected{border-color:var(--green-900);background:var(--green-700);color:var(--white)}
+  .mobile-map-label.is-selected small{color:#e5f8ea}
+  .mobile-map-label.is-selected .mobile-map-label-shape{fill:#fff;stroke:#dcfce7}
+  .mobile-map-label:focus-visible{outline:3px solid var(--green-950);outline-offset:3px}
+  .mobile-map-label--haiti{left:30.2%;top:48.5%;transform:translate(-78%,-132%)}
+  .mobile-map-label--drc{left:56%;top:55%;transform:translate(-50%,42%)}
+  .mobile-map-label--india{left:72.5%;top:48%;transform:translate(-22%,-132%)}
+}
+
+@media(min-width:681px){.mobile-map-help{display:none}}
+
+@media(max-width:380px){
+  .site-header nav{gap:10px}
+  .site-header .brand span{max-width:92px;font-size:12px}
+  .header-cta{min-height:44px;display:flex;align-items:center;padding:8px 12px}
+  .impact-builder{padding-left:6px;padding-right:6px}
+  .map-toolbar{padding:14px}
+  .world-map-mount{height:276px;padding:4px}
+  .mobile-map-label{min-width:104px;grid-template-columns:26px minmax(0,1fr);gap:6px;padding-inline:8px}
+  .mobile-map-label-icon{width:26px;height:32px}
+  .country-card{padding:16px 14px}
+}
+
+@media(max-width:680px) and (prefers-reduced-motion:reduce){.world-map-svg{transition:none}}

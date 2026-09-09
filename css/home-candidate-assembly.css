@@ -8,7 +8,9 @@
   --cpv-accent:var(--primary-color--primary-color-dark,#15803d);
   --cpv-accent-deep:#0b7f47;
   position:relative;
-  height:190vh;
+  /* Match the standalone preview's effective three-viewport scrub distance.
+     The final 10% remains a short settled hold before sticky releases. */
+  height:430vh;
   min-height:1200px;
   background:var(--cpv-bg);
   color:var(--cpv-text);
@@ -62,7 +64,7 @@
 .cpv-no3d .cpv-home .cpv-canvas{display:none}
 
 @media(max-width:760px){
-  .cpv-home{height:190vh;min-height:1200px}
+  .cpv-home{height:390vh;min-height:1900px}
   .cpv-home .cpv-stage{min-height:min(560px,100dvh)}
   .cpv-home .cpv-head{top:clamp(82px,11svh,106px);width:90vw}
   .cpv-home .cpv-head h2{font-size:clamp(2.2rem,10.5vw,3.35rem)}

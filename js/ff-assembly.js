@@ -43,8 +43,10 @@
     if (started) return;
     started = true;
     if (observer) observer.disconnect();
+    window.removeEventListener('scroll', startIfNear);
+    window.removeEventListener('resize', startIfNear);
     root.dataset.assemblyLoading = '';
-    import('./home-candidate-assembly.js?v=candidate-38').catch(function (err) {
+    import('./home-candidate-assembly.js?v=candidate-47').catch(function (err) {
       delete root.dataset.assemblyLoading;
       console.warn('Homepage assembly:', err);
     });

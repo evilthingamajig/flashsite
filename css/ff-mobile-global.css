@@ -1,0 +1,34 @@
+/* Shared mobile usability safeguards. Keep these narrow and structural so
+   individual page designs can continue to own their visual treatment. */
+@media (max-width: 699px) {
+  .w-input,
+  .w-select,
+  .input-field,
+  input[type="text"],
+  input[type="email"],
+  input[type="tel"],
+  input[type="number"],
+  textarea,
+  select {
+    font-size: 16px;
+  }
+
+  .w-select,
+  select {
+    min-height: 44px;
+  }
+
+  .bio-sidebar {
+    max-width: 100vw;
+    overflow-x: hidden;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+  }
+
+  .form-close-wrapper,
+  .form-close-wrapper a,
+  .form-close-wrapper button {
+    min-width: 44px;
+    min-height: 44px;
+  }
+}

@@ -35,7 +35,6 @@ const tempRoots = [];
 function fixtureRoot({ html = validWidget, config = cleanConfig, files = {} } = {}) {
   const root = fs.mkdtempSync(path.join(os.tmpdir(), "verify-donate-launch-"));
   tempRoots.push(root);
-  fs.writeFileSync(path.join(root, "donate.html"), html, "utf8");
   fs.writeFileSync(path.join(root, "vercel.json"), JSON.stringify(config), "utf8");
   for (const [relative, contents] of Object.entries(files)) {
     const target = path.join(root, relative);
@@ -47,7 +46,7 @@ function fixtureRoot({ html = validWidget, config = cleanConfig, files = {} } = 
 
 function fixtureResult(options = {}) {
   const root = fixtureRoot(options);
-  return validate({ root, env: options.env || { VERCEL_ENV: "production" }, allowHostedMockup: options.allowHostedMockup === true, ...ids, ...(options.ids || {}) });
+  return validate({ root, html: options.html ?? validWidget, env: options.env || { VERCEL_ENV: "production" }, allowHostedMockup: options.allowHostedMockup === true, ...ids, ...(options.ids || {}) });
 }
 
 try {
@@ -110,6 +109,44 @@ try {
 
   const valid = fixtureResult({ env: { VERCEL_ENV: "production" } });
   assert.deepEqual(valid.errors, [], "multiline/order-independent valid widget must pass");
+
+  const linkedHomepage = '<a href="/donate/choose/">Choose where your gift goes</a>';
+  const draftChooser = `<!doctype html><html><head><meta name="robots" content="noindex,follow"></head><body>
+    <button id="donate-button" type="button" disabled>Secure checkout coming soon</button>
+    <p>Checkout stays inactive until campaign details are confirmed.</p>
+  </body></html>`;
+  const readyChooser = '<!doctype html><html><head></head><body><button id="donate-button" type="button">Donate securely</button></body></html>';
+  const linkedDraft = fixtureResult({ files: { "index.html": linkedHomepage, "donate/choose/index.html": draftChooser } });
+  assert.ok(linkedDraft.errors.some(error => /Homepage-linked chooser contains noindex/i.test(error)), "linked chooser: noindex gate");
+  assert.ok(linkedDraft.errors.some(error => /disabled #donate-button/i.test(error)), "linked chooser: disabled button gate");
+  assert.ok(linkedDraft.errors.some(error => /pending or inactive checkout state/i.test(error)), "linked chooser: pending copy gate");
+  const unlinkedDraft = fixtureResult({ files: { "index.html": '<a href="/donate">Donate</a>', "donate/choose/index.html": draftChooser } });
+  assert.deepEqual(unlinkedDraft.errors, [], "unlinked chooser draft must not block the legacy donation launch");
+  const linkedReady = fixtureResult({ files: { "index.html": linkedHomepage, "donate/choose/index.html": readyChooser } });
+  assert.deepEqual(linkedReady.errors, [], "homepage-linked ready chooser must pass its additional gate");
+  const linkedContactFallback = fixtureResult({ files: { "index.html": linkedHomepage, "donate/choose/index.html": '<!doctype html><body><a id="donate-button" href="/contact-us">Continue</a></body>' } });
+  assert.deepEqual(linkedContactFallback.errors, [], "homepage-linked chooser may use an enabled anchor action before provider launch");
+  const linkedPreview = fixtureResult({
+    env: { VERCEL_ENV: "preview", ALLOW_INCOMPLETE_DONATE_PREVIEW: "1" },
+    files: { "index.html": linkedHomepage, "donate/choose/index.html": draftChooser }
+  });
+  assert.deepEqual(linkedPreview.errors, [], "explicit preview override must allow a linked draft chooser");
+  assert.ok(linkedPreview.warnings.some(warning => /Homepage-linked chooser/i.test(warning)), "linked preview must warn about chooser gates");
+  const linkedHostedProduction = fixtureResult({
+    html: stagingWidget,
+    allowHostedMockup: true,
+    ids: { expectedWidgetId: "", expectedAccountId: "" },
+    files: { "index.html": linkedHomepage, "donate/choose/index.html": draftChooser }
+  });
+  assert.deepEqual(linkedHostedProduction.errors, [], "explicit hosted mockup flag must allow the linked contact-fallback chooser");
+  assert.ok(linkedHostedProduction.warnings.some(warning => /Homepage-linked chooser/i.test(warning)), "hosted linked chooser must retain visible gate warnings");
+  const linkedMissing = fixtureResult({ files: { "index.html": linkedHomepage } });
+  assert.ok(linkedMissing.errors.some(error => /index\.html is missing/i.test(error)), "linked chooser: missing route gate");
+  const ignoredHomepageLinks = fixtureResult({ files: { "index.html": '<!-- <a href="/donate/choose/">Commented</a> --><script>const sample = `<a href="/donate/choose/">Script sample</a>`;</script>' } });
+  assert.deepEqual(ignoredHomepageLinks.errors, [], "commented and scripted chooser links must not trigger the gate");
+  const ariaDisabledChooser = readyChooser.replace('type="button"', 'type="button" aria-disabled="true"');
+  const linkedAriaDisabled = fixtureResult({ files: { "index.html": linkedHomepage, "donate/choose/index.html": ariaDisabledChooser } });
+  assert.ok(linkedAriaDisabled.errors.some(error => /disabled #donate-button/i.test(error)), "linked chooser: aria-disabled gate");
 
   for (const amount of ["5.170", "05.17", "5.17e0"]) {
     const amountResult = fixtureResult({ html: validWidget.replace("5.17", amount) });
@@ -219,7 +256,7 @@ try {
   extensionFiles["legacy.html"] = `<p>${gfm}</p><p>${dotted}</p>`;
   const legacyRoot = fixtureRoot({ files: extensionFiles });
   const legacyHits = scanLegacySources(legacyRoot);
-  assert.equal(legacyHits.length, deployedExtensions.length * scannedDirectories.length + 3, "all deployable extensions/directories and fallback text must be scanned");
+  assert.equal(legacyHits.length, deployedExtensions.length * scannedDirectories.length + 2, "all deployable extensions/directories and legacy GoFundMe text must be scanned");
 
   console.log("verify-donate-launch self-tests passed");
 } finally {

@@ -1,4 +1,4 @@
-html.lenis { height: auto; } .lenis.lenis-smooth { scroll-behavior: auto; } .lenis.lenis-smooth [data-lenis-prevent] { overscroll-behavior: contain; } .lenis.lenis-stopped { overflow: hidden; } .nav-button-wrapper { transition: ease .2s; } .section-hero { position: relative; z-index: 5; } @media screen and (min-width: 992px) { .hide-nav-element { transform: translateY(-100px); } .scrolled .navbar-menu-wrapper { background-color: rgb(221 221 221 / 58%); } /* ///////// Unforgettable Adventures Section /////////*/ } .hero-sub-lines { padding: 10px 0; } .hero-overflow-hidden { margin: -20px 0; overflow: hidden; }
+html.lenis { height: auto; } .lenis.lenis-smooth { scroll-behavior: auto; } .lenis.lenis-smooth [data-lenis-prevent] { overscroll-behavior: contain; } .lenis.lenis-stopped { overflow: hidden; } .nav-button-wrapper { transition: ease .2s; } .section-hero { position: relative; z-index: 5; } @media screen and (min-width: 992px) { .hide-nav-element { transform: translateY(-100px); } .scrolled .navbar-menu-wrapper { background-color: rgb(221 221 221 / 58%); } /* ///////// Unforgettable Adventures Section /////////*/   } .hero-sub-lines { padding: 10px 0; } .hero-overflow-hidden { margin: -20px 0; overflow: hidden; }
 /* Flashlight glow: nav logo lights up green on hover */
 .nav-bar .nav-logo-link img { transition: filter .4s cubic-bezier(.22, 1, .36, 1); }
 .nav-bar .nav-logo-link:hover img,
@@ -61,4 +61,115 @@ html.lenis { height: auto; } .lenis.lenis-smooth { scroll-behavior: auto; } .len
   .hero-content-band .hero-button-wrapper { min-height: 96px; }
   .hero-content-band .hero-bridge { margin-bottom: 1.35rem !important; font-size: clamp(1rem, 4.4vw, 1.25rem); }
   .hero-paired-image-wrap figcaption { max-width: min(16rem, 68vw); bottom: 1rem; }
+}
+
+/* Final sponsor hero composition: equal image fields with a calm, readable
+   content surface that remains legible over both photographs. */
+.hero-paired-field {
+  grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+}
+.hero-paired-field::after {
+  background: rgba(8, 14, 10, .42) !important;
+}
+.hero-content-band .container.hero {
+  max-width: 760px !important;
+  padding: 0 !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  background: transparent !important;
+  box-shadow: none !important;
+  -webkit-backdrop-filter: none !important;
+  backdrop-filter: none !important;
+}
+.hero-content-band .hero-heading,
+.hero-content-band .hero-bridge {
+  text-shadow: 0 2px 18px rgba(0, 0, 0, .72) !important;
+}
+.hero-paired-image-wrap figcaption {
+  padding: 0 !important;
+  border-radius: 0 !important;
+  background: transparent !important;
+  text-shadow: 0 2px 16px rgba(0, 0, 0, .9) !important;
+}
+.hero-paired-image-wrap figcaption::before {
+  content: "";
+  width: 34px;
+  height: 2px;
+  margin-bottom: 5px;
+  display: block;
+  background: #22c55e;
+  box-shadow: 0 1px 8px rgba(0, 0, 0, .45);
+}
+.hero-paired-image-wrap:nth-child(2) figcaption::before {
+  margin-left: auto;
+}
+.hero-paired-image-wrap::after {
+  content: "";
+  position: absolute;
+  z-index: 2;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  height: 38%;
+  pointer-events: none;
+  background: linear-gradient(to top, rgba(3, 15, 8, .8) 0%, rgba(3, 15, 8, .42) 42%, transparent 100%);
+}
+@media (max-width: 699px) {
+  .hero-paired-field {
+    grid-template-columns: 1fr !important;
+    grid-template-rows: 1fr 1fr !important;
+  }
+  .hero-paired-field::after {
+    background: rgba(8, 14, 10, .46) !important;
+  }
+  .hero-content-band {
+    inset: 43% 0 auto !important;
+  }
+  html body.landing .hero-content-band .container.hero {
+    background: transparent !important;
+    box-shadow: none !important;
+    -webkit-backdrop-filter: none !important;
+    backdrop-filter: none !important;
+  }
+  .hero-paired-image-wrap figcaption {
+    max-width: min(17rem, 74vw) !important;
+  }
+  .hero-paired-image-wrap:first-child figcaption {
+    bottom: 72px !important;
+  }
+  .hero-paired-image-wrap:first-child::after {
+    top: 0;
+    bottom: auto;
+    height: 48%;
+    background: linear-gradient(to bottom, rgba(3, 15, 8, .76) 0%, rgba(3, 15, 8, .34) 48%, transparent 100%);
+  }
+  .hero-paired-image-wrap:nth-child(2)::after {
+    height: 42%;
+  }
+}
+/* Keep the two homepage hero actions visually centered as a matched pair. */
+.hero-content-band .hero-button-wrapper{align-items:stretch}
+.hero-content-band .hero-button-wrapper>a{width:280px;display:flex}
+.hero-content-band .hero-button-wrapper .button-base{width:100%;white-space:normal;text-align:center}
+@media(min-width:700px){.hero-content-band .hero-button-wrapper>a:first-child .button-base{max-width:280px;line-height:1.15}}
+
+/* Keep the homepage actions aligned with the green and white brand system on
+   larger screens as well as mobile. */
+@media(min-width:700px){
+  .hero-content-band .hero-button-wrapper .button-base.is-black{
+    background:#15803d!important;
+    color:#fff!important;
+  }
+  .hero-content-band .hero-button-wrapper .button-base.is-ghost{
+    border-color:#fff!important;
+    background:#fff!important;
+    color:#15803d!important;
+  }
+  .hero-content-band .hero-button-wrapper .button-base.is-black:hover{
+    background:#14532d!important;
+  }
+  .hero-content-band .hero-button-wrapper .button-base.is-ghost:hover{
+    background:#dcfce7!important;
+    color:#14532d!important;
+  }
 }

@@ -1,7 +1,7 @@
 import * as THREE from 'three';
 import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
 
-const GLB_URL = 'assets/3d/flashlight-assembly-blender-candidate.glb?v=candidate-27';
+const GLB_URL = 'assets/3d/flashlight-assembly-blender-candidate.glb?v=candidate-39';
 const CLIP_PATTERN = /^ScrollSequence/;
 const EMBED_ROOT = document.querySelector('[data-cpv-embedded]');
 const HOME_EMBEDDED = Boolean(EMBED_ROOT);
@@ -11,9 +11,9 @@ if (!HOME_EMBEDDED && 'scrollRestoration' in history) history.scrollRestoration 
 // start/end of every scrub also introduced GPU allocation hitches. Keep a
 // stable, antialiased backing store: 1x on ordinary displays and up to 1.25x
 // on HiDPI screens, with a soft pixel budget that never drops below 1x.
-const DPR_CAP = HOME_EMBEDDED ? 1.25 : 1.0;
-const MIN_RENDER_DPR = HOME_EMBEDDED ? 1.0 : 0.75;
-const MAX_RENDER_PIXELS = HOME_EMBEDDED ? 2_400_000 : 1_500_000;
+const DPR_CAP = 1.0;
+const MIN_RENDER_DPR = 0.75;
+const MAX_RENDER_PIXELS = 1_500_000;
 const SCRUB_IDLE_MS = 140;
 const SCROLL_DAMPING = HOME_EMBEDDED ? 24 : 18;
 const SCROLL_SNAP_EPSILON = 0.00035;
@@ -21,20 +21,23 @@ const SCROLL_SNAP_EPSILON = 0.00035;
 // exponential ease. This absorbs uneven wheel/touchpad event timing while
 // staying responsive to reversals and scrollbar dragging.
 const HOME_SCROLL_DAMPING = 18;
-const HOME_FRAME_INTERVAL_MS = 1000 / 60;
 const CALLOUT_FOLLOW_INTERVAL_MS = 1000 / 60;
 // Complete the authored motion well before sticky positioning releases. The
 // remaining runway is a visible end hold, not hidden animation time. This is
 // especially important after a large wheel/touchpad impulse: the time-based
 // follower can settle while the stage is still fully pinned.
-const HOME_TIMELINE_SCROLL_FRACTION = 0.84;
+const HOME_TIMELINE_SCROLL_FRACTION = 0.90;
 const HOME_FORCE_SETTLE_FRACTION = 0.98;
 const ADAPTIVE_DPR_STEPS = [1, 0.85, 0.7];
 const SLOW_FRAME_MS = HOME_EMBEDDED ? 18 : 22;
 const SLOW_FRAME_SCORE_LIMIT = 4;
 const FOV = 32;
 const REASSEMBLY_START = 0.8333333333;
-const ASSEMBLY_SETTLED_PROGRESS = 0.95;
+// The solar lid is the last authored part to move. Its insertion begins at
+// Blender frame 115 of 120, so the homepage camera must not announce or frame
+// a completed product before this point.
+const ASSEMBLY_SETTLED_PROGRESS = 115 / 120;
+const ASSEMBLY_COMPLETE_PROGRESS = 0.999;
 const HOME_MATERIAL_CONTRAST = new Map([
   ['LedClear', 0x78978f],
   ['LedDie', 0xd29f32],
@@ -74,6 +77,10 @@ const clamp01 = (v) => Math.max(0, Math.min(1, v));
 const easeInOutCubic = (t) => (t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2);
 const easeOutCubic = (t) => 1 - Math.pow(1 - t, 3);
 const reducedMotion = window.matchMedia?.('(prefers-reduced-motion: reduce)').matches ?? false;
+const VIRTUAL_WHEEL_SUPPORTED = HOME_EMBEDDED
+  && !reducedMotion
+  && (window.matchMedia?.('(min-width: 992px)').matches ?? false)
+  && (window.matchMedia?.('(pointer: fine)').matches ?? false);
 
 let renderer = null;
 let mixer = null;
@@ -92,7 +99,6 @@ let scrollTarget = 0;
 let scrollFrameTime = 0;
 let scrollAnimating = false;
 let scrollVelocity = 0;
-let homeNextFrameTime = 0;
 let scrubQuality = false;
 let scrubIdleTimer = 0;
 let hasAppliedProgress = false;
@@ -101,19 +107,23 @@ let slowFrameScore = 0;
 let calloutFollowRaf = 0;
 let calloutFollowUntil = 0;
 let calloutFollowFrameTime = 0;
+let lastCalloutProjectionTime = 0;
 let activeCalloutPart = '';
 let renderedCalloutIndex = -2;
 let lastUiPercent = -1;
 let lastUiPose = '';
 let lastUiButtonState = '';
 let cachedScrollRange = null;
+let virtualWheelActive = false;
+let virtualWheelEdgeLatch = 0;
+let virtualWheelAnchorY = 0;
 const calloutSpecs = [
-  { part: 'enclosure', name: 'Case', cost: 'Estimated: $1.10', side: 'left', row: 0 },
-  { part: 'solar_panel_placeholder', name: 'Solar panel', cost: 'Estimated: $1.50', side: 'left', row: 1 },
-  { part: 'battery', name: 'LiPo battery', cost: 'Estimated: $1.65', side: 'right', row: 0 },
-  { part: 'charge_module', name: 'TP4056 board', cost: 'Estimated: $0.45', side: 'right', row: 1 },
-  { part: 'led_pair', name: '5 mm LEDs', cost: 'Estimated: $0.12', side: 'right', row: 2 },
-  { part: 'switch', name: 'Slide switch', cost: 'Estimated: $0.35', side: 'right', row: 2 },
+  { part: 'enclosure', name: 'Case', cost: '$1.10', side: 'left', row: 0 },
+  { part: 'solar_panel_placeholder', name: 'Solar panel', cost: '$1.50', side: 'left', row: 1 },
+  { part: 'battery', name: 'LiPo battery', cost: '$1.65', side: 'right', row: 0 },
+  { part: 'charge_module', name: 'TP4056 board', cost: '$0.45', side: 'right', row: 1 },
+  { part: 'led_pair', name: '5 mm LEDs', cost: '$0.12', side: 'right', row: 2 },
+  { part: 'switch', name: 'Slide switch', cost: '$0.35', side: 'right', row: 2 },
 ];
 const calloutTargets = new Map();
 const calloutLines = new Map();
@@ -132,7 +142,7 @@ function setStatus(text) {
 
 function poseStateFor(p) {
   if (p <= 0) return 'Closed';
-  if (p >= 0.9) return 'Reassembled';
+  if (p >= ASSEMBLY_COMPLETE_PROGRESS) return 'Reassembled';
   if (p >= 0.52 && p <= 0.82) return 'Exploded';
   return 'Scrubbing';
 }
@@ -165,8 +175,8 @@ function renderPixelRatio(w, h) {
   const deviceDpr = Math.min(window.devicePixelRatio || 1, DPR_CAP);
   const pixelBudgetDpr = Math.sqrt(MAX_RENDER_PIXELS / Math.max(1, w * h));
   const baseDpr = Math.max(MIN_RENDER_DPR, Math.min(deviceDpr, pixelBudgetDpr));
-  const absoluteFloor = HOME_EMBEDDED ? 1 : 0.55;
-  const adaptiveScale = HOME_EMBEDDED ? 1 : ADAPTIVE_DPR_STEPS[renderQualityIndex];
+  const absoluteFloor = HOME_EMBEDDED ? 0.75 : 0.55;
+  const adaptiveScale = ADAPTIVE_DPR_STEPS[renderQualityIndex];
   return Math.max(
     absoluteFloor,
     baseDpr * adaptiveScale
@@ -177,7 +187,11 @@ function applyRenderResolution() {
   if (!stage || !renderer || failed) return;
   const w = stage.clientWidth || 1;
   const h = stage.clientHeight || 1;
-  renderer.setPixelRatio(renderPixelRatio(w, h));
+  const nextDpr = renderPixelRatio(w, h);
+  const canvasWidth = Math.round(w * nextDpr);
+  const canvasHeight = Math.round(h * nextDpr);
+  if (canvas.width === canvasWidth && canvas.height === canvasHeight) return;
+  renderer.setPixelRatio(nextDpr);
   renderer.setSize(w, h, false);
 }
 
@@ -216,18 +230,6 @@ function startLoop() {
 function tick(now) {
   rafId = 0;
   if (!inView || document.hidden || (!dirty && !scrollAnimating)) return;
-  // High-refresh displays can call rAF at 120–240 Hz. Keep animation time
-  // correct but run pose/layout/WebGL work at at most 60 Hz; the accumulated
-  // deadline avoids coupling playback speed to the monitor refresh rate.
-  if (HOME_EMBEDDED && scrollAnimating) {
-    if (homeNextFrameTime && now + 0.5 < homeNextFrameTime) {
-      startLoop();
-      return;
-    }
-    if (!homeNextFrameTime) homeNextFrameTime = now;
-    do homeNextFrameTime += HOME_FRAME_INTERVAL_MS;
-    while (homeNextFrameTime <= now);
-  }
   let needsRender = dirty;
   dirty = false;
   if (scrollAnimating) {
@@ -235,11 +237,20 @@ function tick(now) {
       const elapsedMs = scrollFrameTime ? now - scrollFrameTime : 1000 / 60;
       const dt = Math.min(0.05, elapsedMs / 1000);
       scrollFrameTime = now;
-      // Scroll position is the sole authority. Sample it on every accepted
-      // visual frame so native wheel/touch, scrollbar dragging, browser
-      // restoration, and third-party smooth scrolling cannot leave a stale
-      // event-derived target behind.
-      scrollTarget = progressFromScroll();
+      slowFrameScore = elapsedMs > SLOW_FRAME_MS
+        ? slowFrameScore + 1
+        : Math.max(0, slowFrameScore - 0.35);
+      if (slowFrameScore >= SLOW_FRAME_SCORE_LIMIT && renderQualityIndex < ADAPTIVE_DPR_STEPS.length - 1) {
+        renderQualityIndex += 1;
+        slowFrameScore = 0;
+        applyRenderResolution();
+      }
+      // Native scrolling remains authoritative for touch, keyboard and the
+      // scrollbar. While the desktop pinned chapter owns a wheel gesture,
+      // however, the numeric target is authoritative. The page is stationary
+      // until the pose reaches an edge, so Chrome cannot present compositor
+      // scroll one frame ahead of the imperative WebGL scene.
+      if (!virtualWheelActive) scrollTarget = progressFromScroll();
       const remaining = scrollTarget - progress;
       let next = THREE.MathUtils.damp(progress, scrollTarget, HOME_SCROLL_DAMPING, dt);
       const settled = Math.abs(remaining) <= SCROLL_SNAP_EPSILON
@@ -249,12 +260,13 @@ function tick(now) {
         scrollAnimating = false;
         scrollVelocity = 0;
         scrollFrameTime = 0;
-        homeNextFrameTime = 0;
       }
       // This loop has already coalesced work to one accepted visual frame, so
       // never discard its small final increments behind the general UI guard.
       applyProgress(next, false, true);
-      if (!scrollAnimating) finishScrubQuality();
+      if (!scrollAnimating) {
+        finishScrubQuality();
+      }
       needsRender = true;
     } else {
       const elapsedMs = scrollFrameTime ? now - scrollFrameTime : 1000 / 60;
@@ -632,6 +644,14 @@ function updateCallouts(root = assetRoot) {
     }
   }
   if (!visible || !activeSpec) return;
+  // Label projection walks geometry and updates several DOM/SVG nodes. The
+  // 3D scene can still follow every display frame, while editorial labels are
+  // refreshed at 30 Hz during active scrubbing. This keeps Chrome's main
+  // thread inside its frame budget without making the model itself stutter.
+  const projectionNow = performance.now();
+  if (HOME_EMBEDDED && scrubQuality && !activeChanged
+      && projectionNow - lastCalloutProjectionTime < 1000 / 30) return;
+  lastCalloutProjectionTime = projectionNow;
   const width = stage.clientWidth || 1;
   const height = stage.clientHeight || 1;
   // Match the stylesheet breakpoint against the viewport, not the sticky
@@ -782,12 +802,12 @@ function updateProgressUI(p) {
     poseEl.textContent = ' · ' + pose;
     if (statusEl && !statusEl.contains(poseEl)) statusEl.appendChild(poseEl);
   }
-  const buttonState = p <= 0.02 ? 'closed' : p >= 0.52 && p <= 0.82 ? 'exploded' : p >= 0.9 ? 'reassembled' : '';
+  const buttonState = p <= 0.02 ? 'closed' : p >= 0.52 && p <= 0.82 ? 'exploded' : p >= ASSEMBLY_COMPLETE_PROGRESS ? 'reassembled' : '';
   if (buttonState !== lastUiButtonState) {
     lastUiButtonState = buttonState;
     for (const button of poseButtons) {
       const target = Number(button.dataset.cpvPose);
-      const active = target === 0 ? p <= 0.02 : target === 0.67 ? p >= 0.52 && p <= 0.82 : p >= 0.9;
+      const active = target === 0 ? p <= 0.02 : target === 0.67 ? p >= 0.52 && p <= 0.82 : p >= ASSEMBLY_COMPLETE_PROGRESS;
       button.setAttribute('aria-pressed', String(active));
     }
   }
@@ -795,11 +815,11 @@ function updateProgressUI(p) {
 }
 
 function authoredPoseProgress(p) {
-  if (!HOME_EMBEDDED) return p;
-  if (p <= REASSEMBLY_START) return p;
-  const settleSpan = ASSEMBLY_SETTLED_PROGRESS - REASSEMBLY_START;
-  const t = clamp01((p - REASSEMBLY_START) / settleSpan);
-  return THREE.MathUtils.lerp(REASSEMBLY_START, 1, t);
+  // Keep the embedded homepage on the same linear authored timeline as the
+  // standalone preview. The previous homepage-only remap accelerated the
+  // final reassembly by roughly 40%, which read as dropped frames even when
+  // Chrome was rendering every frame on time.
+  return p;
 }
 
 function applyProgress(p, scheduleRender = true, force = false) {
@@ -850,6 +870,14 @@ function computeProgressFromScroll() {
 }
 
 function targetProgressFromScroll() {
+  if (virtualWheelActive) {
+    // A scrollbar drag, keyboard command or script is allowed to take native
+    // control back immediately. Ordinary virtual wheel frames leave scrollY
+    // fixed at the takeover anchor and therefore continue to be ignored.
+    if (Math.abs(window.scrollY - virtualWheelAnchorY) <= 1) return;
+    virtualWheelActive = false;
+    virtualWheelEdgeLatch = 0;
+  }
   const range = scrollRange();
   scrollTarget = clamp01((window.scrollY - range.start) / range.max);
   // Never let the time-smoothed pose continue after the sticky stage starts
@@ -875,10 +903,94 @@ function targetProgressFromScroll() {
   }
   if (!scrollAnimating) {
     scrollFrameTime = 0;
-    homeNextFrameTime = 0;
   }
   scrollAnimating = Math.abs(progress - scrollTarget) > SCROLL_SNAP_EPSILON;
   if (scrollAnimating) startLoop();
+}
+
+function normalizedWheelDelta(event) {
+  let delta = event.deltaY;
+  if (event.deltaMode === WheelEvent.DOM_DELTA_LINE) delta *= 16;
+  if (event.deltaMode === WheelEvent.DOM_DELTA_PAGE) delta *= window.innerHeight;
+  return THREE.MathUtils.clamp(delta, -160, 160);
+}
+
+function pinnedStageIsActive() {
+  if (!EMBED_ROOT) return false;
+  const rect = EMBED_ROOT.getBoundingClientRect();
+  const viewportHeight = window.visualViewport?.height || window.innerHeight;
+  return rect.top <= 1 && rect.bottom >= viewportHeight - 1;
+}
+
+function handlePinnedWheel(event) {
+  if (!VIRTUAL_WHEEL_SUPPORTED || !ready || failed || !inView || event.ctrlKey) return;
+  if (Math.abs(event.deltaX) > Math.abs(event.deltaY)) return;
+  if (event.target instanceof Element
+    && event.target.closest('a,button,input,select,textarea,[contenteditable="true"]')) return;
+  const delta = normalizedWheelDelta(event);
+  if (!delta) return;
+  const direction = Math.sign(delta);
+  const pinned = pinnedStageIsActive();
+  if (virtualWheelEdgeLatch) {
+    if (!pinned) virtualWheelEdgeLatch = 0;
+    else if (direction === virtualWheelEdgeLatch) return;
+    else virtualWheelEdgeLatch = 0;
+  }
+  if (!pinned) return;
+
+  const range = scrollRange();
+  const pageProgress = clamp01((window.scrollY - range.start) / range.max);
+  const base = virtualWheelActive ? scrollTarget : pageProgress;
+  const virtualPixels = base * range.max;
+  const boundedPixels = THREE.MathUtils.clamp(virtualPixels + delta, 0, range.max);
+  const consumed = boundedPixels - virtualPixels;
+  const residual = delta - consumed;
+
+  if (!virtualWheelActive && consumed === 0) {
+    virtualWheelEdgeLatch = direction;
+    return;
+  }
+
+  event.preventDefault();
+  if (!virtualWheelActive) {
+    virtualWheelActive = true;
+    virtualWheelAnchorY = window.scrollY;
+    // Take over from the exact native-scroll frame currently on screen. This
+    // one-time handoff prevents inherited damping from creating a visible
+    // jump as the pinned interaction begins.
+    scrollTarget = pageProgress;
+    applyProgress(pageProgress, false, true);
+  }
+  scrollTarget = clamp01(boundedPixels / range.max);
+
+  if (Math.abs(residual) > 0.01) {
+    const endpoint = direction > 0 ? 1 : 0;
+    scrollTarget = endpoint;
+    scrollAnimating = false;
+    scrollFrameTime = 0;
+    applyProgress(endpoint, false, true);
+    requestRender();
+    virtualWheelActive = false;
+    virtualWheelEdgeLatch = direction;
+    // The native page did not move while the WebGL chapter consumed earlier
+    // wheel input. Rejoin it at the exact timeline edge, then carry only the
+    // unconsumed part of this gesture into the hold/adjacent page content.
+    window.scrollTo({
+      top: range.start + endpoint * range.max + residual,
+      behavior: 'auto',
+    });
+    finishScrubQuality();
+    return;
+  }
+
+  // The document is frozen during this gesture, so the wheel sample itself is
+  // the authoritative playhead. Apply it immediately and draw once on the
+  // next animation frame. Retaining the native-scroll damping here recreated
+  // the very lag this mode is intended to remove in external Chrome.
+  scrollAnimating = false;
+  scrollFrameTime = 0;
+  applyProgress(scrollTarget, false, true);
+  requestRender();
 }
 
 function scrollToProgress(p) {
@@ -1044,7 +1156,6 @@ if (renderer && !failed) {
           // These are small independently animated technical parts. Keeping
           // them out of frustum heuristics prevents stale bounds from dropping
           // an LED or wire for a frame during rapid camera/pose changes.
-          o.frustumCulled = false;
           for (const material of Array.isArray(o.material) ? o.material : [o.material]) {
             tuneHomepageMaterial(material);
           }
@@ -1107,11 +1218,29 @@ if (renderer && !failed) {
   // Scroll events only update a numeric target. The single render loop above
   // samples that target, advances the authored pose, and draws once per frame.
   window.addEventListener('scroll', targetProgressFromScroll, { passive: true });
+  stage?.addEventListener('wheel', handlePinnedWheel, { passive: false });
   if ('onscrollend' in window) {
     window.addEventListener('scrollend', targetProgressFromScroll, { passive: true });
   }
 
-  window.addEventListener('resize', measureStage);
+  window.addEventListener('resize', () => {
+    virtualWheelActive = false;
+    virtualWheelEdgeLatch = 0;
+    measureStage();
+  });
+
+  window.addEventListener('keydown', (event) => {
+    if (!virtualWheelActive) return;
+    if (!['ArrowUp', 'ArrowDown', 'PageUp', 'PageDown', 'Home', 'End', ' '].includes(event.key)) return;
+    if (event.target instanceof Element
+      && event.target.closest('input,select,textarea,[contenteditable="true"]')) return;
+    const range = scrollRange();
+    virtualWheelActive = false;
+    virtualWheelEdgeLatch = 0;
+    // Rejoin native scroll at the pose currently on screen before the browser
+    // applies the key's normal scrolling behavior.
+    window.scrollTo({ top: range.start + scrollTarget * range.max, behavior: 'auto' });
+  }, { capture: true });
 
   window.addEventListener('pageshow', () => {
     const requested = requestedReviewProgress();
@@ -1183,6 +1312,8 @@ if (renderer && !failed) {
         rafId = 0;
         calloutFollowRaf = 0;
         scrollAnimating = false;
+        virtualWheelActive = false;
+        virtualWheelEdgeLatch = 0;
         scrollVelocity = 0;
         scrollFrameTime = 0;
         finishScrubQuality();
@@ -1202,6 +1333,8 @@ if (renderer && !failed) {
       rafId = 0;
       calloutFollowRaf = 0;
       scrollAnimating = false;
+      virtualWheelActive = false;
+      virtualWheelEdgeLatch = 0;
       scrollVelocity = 0;
       scrollFrameTime = 0;
       finishScrubQuality();
@@ -1253,6 +1386,10 @@ window.__ffCandidatePreview = {
         height: renderer.domElement.height,
       } : null,
       scrubQuality,
+      virtualWheelSupported: VIRTUAL_WHEEL_SUPPORTED,
+      virtualWheelActive,
+      virtualWheelEdgeLatch,
+      virtualWheelAnchorY,
       scrubBackdropDisabled: document.body.classList.contains('cpv-scrubbing'),
       panelBackdrop: partsEl ? getComputedStyle(partsEl).backdropFilter : null,
       actionTimes: actions.map((action) => Number(action.time.toFixed(4))),
