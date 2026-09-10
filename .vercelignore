@@ -16,3 +16,5 @@ assets/3d/textures/
 assets/3d/textures/**
 css/ff-assembly3d.css
 js/ff-assembly3d.js
+
+.env*

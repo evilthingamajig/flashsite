@@ -109,3 +109,5 @@
 !/js/vendor/three/three.module.js
 !/js/vendor/three/addons/loaders/GLTFLoader.js
 !/js/vendor/three/addons/utils/BufferGeometryUtils.js
+.vercel
+.env*
