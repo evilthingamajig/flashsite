@@ -1,52 +1,29 @@
 import * as THREE from 'three';
 import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
 
-const GLB_URL = 'assets/3d/flashlight-assembly-blender-candidate.glb?v=candidate-39';
+const GLB_URL = 'assets/3d/flashlight-assembly-blender-candidate.glb?v=refined-20260909a';
 const CLIP_PATTERN = /^ScrollSequence/;
 const EMBED_ROOT = document.querySelector('[data-cpv-embedded]');
 const HOME_EMBEDDED = Boolean(EMBED_ROOT);
 if (!HOME_EMBEDDED && 'scrollRestoration' in history) history.scrollRestoration = 'manual';
-// Never upscale a sub-CSS-pixel framebuffer on the homepage. That shortcut
-// made the assembly visibly grainy, and resizing the drawing buffer at the
-// start/end of every scrub also introduced GPU allocation hitches. Keep a
-// stable, antialiased backing store: 1x on ordinary displays and up to 1.25x
-// on HiDPI screens, with a soft pixel budget that never drops below 1x.
-const DPR_CAP = 1.0;
-const MIN_RENDER_DPR = 0.75;
-const MAX_RENDER_PIXELS = 1_500_000;
+// Allocate a stable drawing buffer on resize only. The pixel budget caps very
+// large desktop canvases while the 1x floor keeps edges crisp during motion.
+const DPR_CAP = 1.5;
+const MIN_RENDER_DPR = 1;
+const MAX_RENDER_PIXELS = 2_400_000;
 const SCRUB_IDLE_MS = 140;
-const SCROLL_DAMPING = HOME_EMBEDDED ? 24 : 18;
+const SCROLL_DAMPING = HOME_EMBEDDED ? 28 : 18;
 const SCROLL_SNAP_EPSILON = 0.00035;
-// Scroll chooses a destination and the renderer approaches it with a short
-// exponential ease. This absorbs uneven wheel/touchpad event timing while
-// staying responsive to reversals and scrollbar dragging.
-const HOME_SCROLL_DAMPING = 18;
-const CALLOUT_FOLLOW_INTERVAL_MS = 1000 / 60;
 // Complete the authored motion well before sticky positioning releases. The
 // remaining runway is a visible end hold, not hidden animation time. This is
 // especially important after a large wheel/touchpad impulse: the time-based
 // follower can settle while the stage is still fully pinned.
 const HOME_TIMELINE_SCROLL_FRACTION = 0.90;
 const HOME_FORCE_SETTLE_FRACTION = 0.98;
-const ADAPTIVE_DPR_STEPS = [1, 0.85, 0.7];
-const SLOW_FRAME_MS = HOME_EMBEDDED ? 18 : 22;
-const SLOW_FRAME_SCORE_LIMIT = 4;
 const FOV = 32;
 const REASSEMBLY_START = 0.8333333333;
-// The solar lid is the last authored part to move. Its insertion begins at
-// Blender frame 115 of 120, so the homepage camera must not announce or frame
-// a completed product before this point.
-const ASSEMBLY_SETTLED_PROGRESS = 115 / 120;
-const ASSEMBLY_COMPLETE_PROGRESS = 0.999;
-const HOME_MATERIAL_CONTRAST = new Map([
-  ['LedClear', 0x78978f],
-  ['LedDie', 0xd29f32],
-  ['BatteryFoil', 0xcbd2cd],
-  ['BatteryLead', 0x65736b],
-  ['SwitchPlastic', 0x929b94],
-  ['SolarFrame', 0xc7d1ca],
-  ['SolarScrew', 0xaeb9b1],
-]);
+const CAMERA_SETTLE_START_PROGRESS = 108 / 120;
+const ASSEMBLY_COMPLETE_PROGRESS = 114 / 120;
 
 const canvas = document.getElementById('cpv-canvas');
 const stage = canvas?.parentElement ?? null;
@@ -77,10 +54,6 @@ const clamp01 = (v) => Math.max(0, Math.min(1, v));
 const easeInOutCubic = (t) => (t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2);
 const easeOutCubic = (t) => 1 - Math.pow(1 - t, 3);
 const reducedMotion = window.matchMedia?.('(prefers-reduced-motion: reduce)').matches ?? false;
-const VIRTUAL_WHEEL_SUPPORTED = HOME_EMBEDDED
-  && !reducedMotion
-  && (window.matchMedia?.('(min-width: 992px)').matches ?? false)
-  && (window.matchMedia?.('(pointer: fine)').matches ?? false);
 
 let renderer = null;
 let mixer = null;
@@ -98,15 +71,9 @@ let rafId = 0;
 let scrollTarget = 0;
 let scrollFrameTime = 0;
 let scrollAnimating = false;
-let scrollVelocity = 0;
 let scrubQuality = false;
 let scrubIdleTimer = 0;
 let hasAppliedProgress = false;
-let renderQualityIndex = 0;
-let slowFrameScore = 0;
-let calloutFollowRaf = 0;
-let calloutFollowUntil = 0;
-let calloutFollowFrameTime = 0;
 let lastCalloutProjectionTime = 0;
 let activeCalloutPart = '';
 let renderedCalloutIndex = -2;
@@ -114,9 +81,7 @@ let lastUiPercent = -1;
 let lastUiPose = '';
 let lastUiButtonState = '';
 let cachedScrollRange = null;
-let virtualWheelActive = false;
-let virtualWheelEdgeLatch = 0;
-let virtualWheelAnchorY = 0;
+let stageMetrics = { width: 1, height: 1, mobile: window.innerWidth < 760 };
 const calloutSpecs = [
   { part: 'enclosure', name: 'Case', cost: '$1.10', side: 'left', row: 0 },
   { part: 'solar_panel_placeholder', name: 'Solar panel', cost: '$1.50', side: 'left', row: 1 },
@@ -128,10 +93,8 @@ const calloutSpecs = [
 const calloutTargets = new Map();
 const calloutLines = new Map();
 const calloutDots = new Map();
-const calloutSurfaceSamples = new Map();
 const calloutLocalBounds = new Map();
 const projectedCorner = new THREE.Vector3();
-const projectedSurfacePoint = new THREE.Vector3();
 
 function setStatus(text) {
   if (statusEl) {
@@ -155,11 +118,8 @@ function showFallback(reason, err) {
   if (fallbackMessage && reason) fallbackMessage.textContent = reason + ' The parts list stays available beside this notice.';
   setStatus('Preview unavailable.');
   cancelAnimationFrame(rafId);
-  cancelAnimationFrame(calloutFollowRaf);
   rafId = 0;
-  calloutFollowRaf = 0;
   scrollAnimating = false;
-  scrollVelocity = 0;
   scrollFrameTime = 0;
   clearTimeout(scrubIdleTimer);
   dirty = false;
@@ -174,19 +134,12 @@ function requestRender() {
 function renderPixelRatio(w, h) {
   const deviceDpr = Math.min(window.devicePixelRatio || 1, DPR_CAP);
   const pixelBudgetDpr = Math.sqrt(MAX_RENDER_PIXELS / Math.max(1, w * h));
-  const baseDpr = Math.max(MIN_RENDER_DPR, Math.min(deviceDpr, pixelBudgetDpr));
-  const absoluteFloor = HOME_EMBEDDED ? 0.75 : 0.55;
-  const adaptiveScale = ADAPTIVE_DPR_STEPS[renderQualityIndex];
-  return Math.max(
-    absoluteFloor,
-    baseDpr * adaptiveScale
-  );
+  return Math.max(MIN_RENDER_DPR, Math.min(deviceDpr, pixelBudgetDpr));
 }
 
 function applyRenderResolution() {
   if (!stage || !renderer || failed) return;
-  const w = stage.clientWidth || 1;
-  const h = stage.clientHeight || 1;
+  const { width: w, height: h } = stageMetrics;
   const nextDpr = renderPixelRatio(w, h);
   const canvasWidth = Math.round(w * nextDpr);
   const canvasHeight = Math.round(h * nextDpr);
@@ -212,8 +165,6 @@ function setScrubQuality() {
   if (!scrubQuality) {
     scrubQuality = true;
     document.body.classList.add('cpv-scrubbing');
-    cancelAnimationFrame(calloutFollowRaf);
-    calloutFollowRaf = 0;
   }
   // The homepage follower has an authoritative settled state, so it restores
   // quality directly instead of cancelling/recreating a timer every frame.
@@ -233,63 +184,23 @@ function tick(now) {
   let needsRender = dirty;
   dirty = false;
   if (scrollAnimating) {
-    if (HOME_EMBEDDED) {
-      const elapsedMs = scrollFrameTime ? now - scrollFrameTime : 1000 / 60;
-      const dt = Math.min(0.05, elapsedMs / 1000);
-      scrollFrameTime = now;
-      slowFrameScore = elapsedMs > SLOW_FRAME_MS
-        ? slowFrameScore + 1
-        : Math.max(0, slowFrameScore - 0.35);
-      if (slowFrameScore >= SLOW_FRAME_SCORE_LIMIT && renderQualityIndex < ADAPTIVE_DPR_STEPS.length - 1) {
-        renderQualityIndex += 1;
-        slowFrameScore = 0;
-        applyRenderResolution();
-      }
-      // Native scrolling remains authoritative for touch, keyboard and the
-      // scrollbar. While the desktop pinned chapter owns a wheel gesture,
-      // however, the numeric target is authoritative. The page is stationary
-      // until the pose reaches an edge, so Chrome cannot present compositor
-      // scroll one frame ahead of the imperative WebGL scene.
-      if (!virtualWheelActive) scrollTarget = progressFromScroll();
-      const remaining = scrollTarget - progress;
-      let next = THREE.MathUtils.damp(progress, scrollTarget, HOME_SCROLL_DAMPING, dt);
-      const settled = Math.abs(remaining) <= SCROLL_SNAP_EPSILON
-        || Math.abs(next - scrollTarget) <= SCROLL_SNAP_EPSILON;
-      if (settled) {
-        next = scrollTarget;
-        scrollAnimating = false;
-        scrollVelocity = 0;
-        scrollFrameTime = 0;
-      }
-      // This loop has already coalesced work to one accepted visual frame, so
-      // never discard its small final increments behind the general UI guard.
-      applyProgress(next, false, true);
-      if (!scrollAnimating) {
-        finishScrubQuality();
-      }
-      needsRender = true;
-    } else {
-      const elapsedMs = scrollFrameTime ? now - scrollFrameTime : 1000 / 60;
-      const dt = Math.min(0.05, elapsedMs / 1000);
-      scrollFrameTime = now;
-      slowFrameScore = elapsedMs > SLOW_FRAME_MS
-        ? slowFrameScore + 1
-        : Math.max(0, slowFrameScore - 0.35);
-      if (slowFrameScore >= SLOW_FRAME_SCORE_LIMIT && renderQualityIndex < ADAPTIVE_DPR_STEPS.length - 1) {
-        renderQualityIndex += 1;
-        slowFrameScore = 0;
-        applyRenderResolution();
-        needsRender = true;
-      }
-      let next = THREE.MathUtils.damp(progress, scrollTarget, SCROLL_DAMPING, dt);
-      if (Math.abs(next - scrollTarget) <= SCROLL_SNAP_EPSILON) {
-        next = scrollTarget;
-        scrollAnimating = false;
-        scrollFrameTime = 0;
-      }
-      applyProgress(next, false, true);
-      needsRender = true;
+    const elapsedMs = scrollFrameTime ? now - scrollFrameTime : 1000 / 60;
+    const dt = Math.min(0.05, elapsedMs / 1000);
+    scrollFrameTime = now;
+    // Native scroll is the sole input owner. Refreshing the numeric target is
+    // layout-free because the runway geometry is cached on resize.
+    if (HOME_EMBEDDED) scrollTarget = progressFromScroll();
+    let next = reducedMotion
+      ? scrollTarget
+      : THREE.MathUtils.damp(progress, scrollTarget, SCROLL_DAMPING, dt);
+    if (Math.abs(next - scrollTarget) <= SCROLL_SNAP_EPSILON) {
+      next = scrollTarget;
+      scrollAnimating = false;
+      scrollFrameTime = 0;
     }
+    applyProgress(next, false, true);
+    if (!scrollAnimating) finishScrubQuality();
+    needsRender = true;
   }
   if (needsRender) renderer.render(scene, camera);
   if (scrollAnimating) startLoop();
@@ -328,45 +239,39 @@ function portraitDistanceScale() {
   return Math.min(1 + (fit - 1) * blend, cap);
 }
 
-function tuneHomepageMaterial(material) {
-  if (!material || !HOME_EMBEDDED) return;
-  const color = HOME_MATERIAL_CONTRAST.get(material.name);
-  if (color !== undefined && material.color) material.color.setHex(color);
-  if (material.name === 'LedClear') {
-    if ('roughness' in material) material.roughness = Math.max(material.roughness, 0.38);
-    if ('metalness' in material) material.metalness = Math.min(material.metalness, 0.08);
-  }
-}
-
 function homeWideFactor() {
   if (!HOME_EMBEDDED) return 0;
   const aspect = camera ? camera.aspect : 1;
-  return clamp01((aspect - 0.95) / 1.05);
+  return clamp01((aspect - 0.95) / 0.65);
 }
 
 function homeDistanceScale() {
   if (!HOME_EMBEDDED) return 1;
   // Keep the product comfortably framed on phones, but use the extra width
   // of a desktop stage instead of leaving the assembly thumbnail-sized.
-  return THREE.MathUtils.lerp(1.06, 0.94, homeWideFactor());
+  return THREE.MathUtils.lerp(1.06, 0.98, homeWideFactor());
 }
 
 function headerSafeShift(p) {
   if (!HOME_EMBEDDED) return 0.1;
-  // Keep separated parts below the headline. Once assembly is complete, a
-  // short desktop-only camera settle lifts the compact final product clear of
-  // the timeline without forcing the entire sequence to remain tiny.
+  // The compact closed product can sit near 60% of the viewport with a clear
+  // lower margin. Ease into the deeper title-safe lane as parts separate.
+  const inspection = easeInOutCubic(clamp01(p / 0.14));
+  const inspectionShift = THREE.MathUtils.lerp(0.06, 0.15, inspection);
+  // Once assembly is complete, a short camera settle lifts the final product
+  // clear of the timeline without forcing the entire sequence to remain tiny.
   const settle = easeInOutCubic(clamp01(
-    (p - ASSEMBLY_SETTLED_PROGRESS) / (1 - ASSEMBLY_SETTLED_PROGRESS)
+    (p - CAMERA_SETTLE_START_PROGRESS) / (ASSEMBLY_COMPLETE_PROGRESS - CAMERA_SETTLE_START_PROGRESS)
   ));
-  const wideShift = THREE.MathUtils.lerp(0.15, 0.075, settle);
+  const wideShift = THREE.MathUtils.lerp(inspectionShift, 0.075, settle);
   return THREE.MathUtils.lerp(0.15, wideShift, homeWideFactor());
 }
 
 function updateCamera(p) {
   if (!closedFrame || !explodedFrame) return;
   const explosionEnd = 0.67;
-  const cameraSettleStart = HOME_EMBEDDED ? ASSEMBLY_SETTLED_PROGRESS : REASSEMBLY_START;
+  const cameraSettleStart = HOME_EMBEDDED ? CAMERA_SETTLE_START_PROGRESS : REASSEMBLY_START;
+  const cameraSettleEnd = HOME_EMBEDDED ? ASSEMBLY_COMPLETE_PROGRESS : 1;
   let center;
   let dist;
   let azim;
@@ -398,7 +303,7 @@ function updateCamera(p) {
     // the homepage, the product finishes assembling first and the camera then
     // settles over the final scroll interval so loose parts never cross text.
     const t = easeInOutCubic(clamp01(
-      (p - cameraSettleStart) / (1 - cameraSettleStart)
+      (p - cameraSettleStart) / (cameraSettleEnd - cameraSettleStart)
     ));
     center = explodedFrame.center.clone().lerp(closedFrame.center, t);
     dist = THREE.MathUtils.lerp(explodedFrame.dist, closedFrame.dist * 1.08, t);
@@ -423,6 +328,34 @@ function updateCamera(p) {
   camera.updateMatrixWorld(true);
 }
 
+function cacheCalloutLabelSizes() {
+  if (!calloutsEl) return;
+  const wasHidden = calloutsEl.hidden;
+  const previousDisplay = calloutsEl.style.display;
+  const previousVisibility = calloutsEl.style.visibility;
+  const boxDisplays = [];
+  calloutsEl.hidden = false;
+  calloutsEl.style.display = 'block';
+  calloutsEl.style.visibility = 'hidden';
+  for (const box of calloutTargets.values()) {
+    boxDisplays.push([box, box.style.display]);
+    box.style.display = 'block';
+  }
+  const measurements = boxDisplays.map(([box]) => ({
+    box,
+    width: Math.max(box.offsetWidth, box.scrollWidth),
+    height: box.offsetHeight,
+  }));
+  for (const { box, width, height } of measurements) {
+    box.dataset.cpvWidth = String(width || 208);
+    box.dataset.cpvHeight = String(height || 56);
+  }
+  for (const [box, display] of boxDisplays) box.style.display = display;
+  calloutsEl.hidden = wasHidden;
+  calloutsEl.style.display = previousDisplay;
+  calloutsEl.style.visibility = previousVisibility;
+}
+
 function buildCallouts(root) {
   if (!calloutsEl || !leadersEl) return;
   calloutsEl.replaceChildren();
@@ -430,20 +363,17 @@ function buildCallouts(root) {
   calloutTargets.clear();
   calloutLines.clear();
   calloutDots.clear();
-  calloutSurfaceSamples.clear();
   calloutLocalBounds.clear();
   for (const spec of calloutSpecs) {
     const box = document.createElement('div');
     box.className = 'cpv-callout cpv-callout-' + spec.side;
+    // Position changes share the WebGL frame; only opacity eases. This keeps
+    // labels and SVG connectors attached without a second layout-reading RAF.
+    box.style.transitionProperty = 'opacity';
     box.dataset.part = spec.part;
     box.innerHTML = '<span class="cpv-callout-name"></span><span class="cpv-callout-cost"></span>';
     box.querySelector('.cpv-callout-name').textContent = spec.name;
     box.querySelector('.cpv-callout-cost').textContent = spec.cost;
-    box.addEventListener('transitionend', (event) => {
-      if (event.propertyName === 'transform' && box.classList.contains('is-active')) {
-        syncLeaderToMovingLabel(spec.part);
-      }
-    });
     calloutsEl.append(box);
     const line = document.createElementNS('http://www.w3.org/2000/svg', 'line');
     line.setAttribute('stroke-linecap', 'round');
@@ -459,47 +389,68 @@ function buildCallouts(root) {
     const objects = spec.part === 'led_pair'
       ? [root.getObjectByName('led_left'), root.getObjectByName('led_right')]
       : [root.getObjectByName(spec.part)];
-    const samples = [];
     const localBounds = [];
     for (const object of objects) {
-      const positions = object?.geometry?.getAttribute('position');
-      if (!object || !positions) continue;
-      object.geometry.computeBoundingBox();
-      if (object.geometry.boundingBox) {
-        localBounds.push({ object, box: object.geometry.boundingBox.clone() });
-      }
-      const sampleLimit = HOME_EMBEDDED ? 128 : 320;
-      const stride = Math.max(1, Math.ceil(positions.count / sampleLimit));
-      const points = [];
-      for (let index = 0; index < positions.count; index += stride) {
-        points.push(new THREE.Vector3().fromBufferAttribute(positions, index));
-      }
-      samples.push({ object, points });
+      if (!object) continue;
+      object.traverse((mesh) => {
+        if (!mesh.isMesh || !mesh.geometry) return;
+        if (spec.part === 'switch') {
+          const materials = Array.isArray(mesh.material) ? mesh.material : [mesh.material];
+          if (!materials.some((material) => material?.name === 'SwitchPlastic')) return;
+        }
+        mesh.geometry.computeBoundingBox();
+        if (!mesh.geometry.boundingBox) return;
+        const bounds = mesh.geometry.boundingBox;
+        const corners = [];
+        for (const x of [bounds.min.x, bounds.max.x]) {
+          for (const y of [bounds.min.y, bounds.max.y]) {
+            for (const z of [bounds.min.z, bounds.max.z]) {
+              corners.push(new THREE.Vector3(x, y, z));
+            }
+          }
+        }
+        // Cache a bounded sample of real surface vertices once. A projected
+        // bounding rectangle can include empty space (especially the slider).
+        const positions = mesh.geometry.attributes.position;
+        const surfacePoints = [];
+        const stride = Math.max(1, Math.ceil(positions.count / 64));
+        for (let vertex = 0; vertex < positions.count; vertex += stride) {
+          surfacePoints.push(new THREE.Vector3().fromBufferAttribute(positions, vertex));
+        }
+        if (spec.part === 'switch') {
+          // The rail also extends inside the case. Attach to the outward grip,
+          // not the nearest hidden rail edge behind the enclosure wall.
+          surfacePoints.splice(0, surfacePoints.length, new THREE.Vector3(
+            (bounds.min.x + bounds.max.x) / 2,
+            (bounds.min.y + bounds.max.y) / 2,
+            bounds.max.z
+          ));
+        }
+        localBounds.push({ object: mesh, corners, surfacePoints });
+      });
     }
-    calloutSurfaceSamples.set(spec.part, samples);
     calloutLocalBounds.set(spec.part, localBounds);
   }
+  cacheCalloutLabelSizes();
   updateCallouts(root);
 }
 
-function surfaceAnchorFor(part, labelX, labelY, width, height, fallbackBounds) {
-  let best = null;
-  let bestDistance = Infinity;
-  for (const sample of calloutSurfaceSamples.get(part) || []) {
-    sample.object.updateWorldMatrix(true, false);
-    for (const localPoint of sample.points) {
-      projectedSurfacePoint.copy(localPoint).applyMatrix4(sample.object.matrixWorld).project(camera);
-      if (projectedSurfacePoint.z < -1 || projectedSurfacePoint.z > 1) continue;
-      const x = (projectedSurfacePoint.x * 0.5 + 0.5) * width;
-      const y = (-projectedSurfacePoint.y * 0.5 + 0.5) * height;
-      const distance = (x - labelX) ** 2 + (y - labelY) ** 2;
-      if (distance < bestDistance) {
-        bestDistance = distance;
-        best = { x, y };
+function nearestProjectedSurfacePoint(part, target, width, height) {
+  let nearest = target;
+  let minimumDistance = Infinity;
+  for (const { object, surfacePoints } of calloutLocalBounds.get(part) || []) {
+    for (const point of surfacePoints) {
+      projectedCorner.copy(point).applyMatrix4(object.matrixWorld).project(camera);
+      const x = (projectedCorner.x * 0.5 + 0.5) * width;
+      const y = (-projectedCorner.y * 0.5 + 0.5) * height;
+      const distance = (x - target.x) ** 2 + (y - target.y) ** 2;
+      if (distance < minimumDistance) {
+        minimumDistance = distance;
+        nearest = { x, y };
       }
     }
   }
-  return best || nearestRectEdge(fallbackBounds, labelX, labelY, 3);
+  return nearest;
 }
 
 function projectedBoundsFor(root, part, width, height) {
@@ -509,20 +460,15 @@ function projectedBoundsFor(root, part, width, height) {
   let minY = Infinity;
   let maxX = -Infinity;
   let maxY = -Infinity;
-  for (const { object, box } of entries) {
-    object.updateWorldMatrix(true, false);
-    for (const x of [box.min.x, box.max.x]) {
-      for (const y of [box.min.y, box.max.y]) {
-        for (const z of [box.min.z, box.max.z]) {
-          projectedCorner.set(x, y, z).applyMatrix4(object.matrixWorld).project(camera);
-          const screenX = (projectedCorner.x * 0.5 + 0.5) * width;
-          const screenY = (-projectedCorner.y * 0.5 + 0.5) * height;
-          minX = Math.min(minX, screenX);
-          minY = Math.min(minY, screenY);
-          maxX = Math.max(maxX, screenX);
-          maxY = Math.max(maxY, screenY);
-        }
-      }
+  for (const { object, corners } of entries) {
+    for (const corner of corners) {
+      projectedCorner.copy(corner).applyMatrix4(object.matrixWorld).project(camera);
+      const screenX = (projectedCorner.x * 0.5 + 0.5) * width;
+      const screenY = (-projectedCorner.y * 0.5 + 0.5) * height;
+      minX = Math.min(minX, screenX);
+      minY = Math.min(minY, screenY);
+      maxX = Math.max(maxX, screenX);
+      maxY = Math.max(maxY, screenY);
     }
   }
   return { minX, minY, maxX, maxY };
@@ -551,57 +497,13 @@ function nearestRectEdge(rect, x, y, inset = 0) {
 
 function activeCalloutIndex(p) {
   const annotationStart = 0.16;
-  const annotationEnd = 0.88;
+  // Editorial inspection ends before the first returning part begins its
+  // authored route, so connectors never chase reassembling components.
+  const annotationEnd = 82 / 120;
   const annotationSpan = (annotationEnd - annotationStart) / calloutSpecs.length;
   return p >= annotationStart && p <= annotationEnd
     ? Math.min(calloutSpecs.length - 1, Math.floor((p - annotationStart) / annotationSpan))
     : -1;
-}
-
-function syncLeaderToMovingLabel(part) {
-  if (!stage) return;
-  const box = calloutTargets.get(part);
-  const line = calloutLines.get(part);
-  if (!box || !line || !box.classList.contains('is-active')) return;
-  const target = { x: Number(line.dataset.anchorX), y: Number(line.dataset.anchorY) };
-  if (!Number.isFinite(target.x) || !Number.isFinite(target.y)) return;
-  const stageRect = stage.getBoundingClientRect();
-  const boxRect = box.getBoundingClientRect();
-  const labelBounds = {
-    minX: boxRect.left - stageRect.left,
-    minY: boxRect.top - stageRect.top,
-    maxX: boxRect.right - stageRect.left,
-    maxY: boxRect.bottom - stageRect.top,
-  };
-  const labelEdge = nearestRectEdge(labelBounds, target.x, target.y);
-  line.setAttribute('x2', String(labelEdge.x));
-  line.setAttribute('y2', String(labelEdge.y));
-}
-
-function followMovingCallout(now) {
-  calloutFollowRaf = 0;
-  if (!calloutFollowFrameTime || now - calloutFollowFrameTime >= CALLOUT_FOLLOW_INTERVAL_MS) {
-    calloutFollowFrameTime = now;
-    const active = calloutSpecs[activeCalloutIndex(progress)];
-    if (active) syncLeaderToMovingLabel(active.part);
-  }
-  if (now < calloutFollowUntil) {
-    calloutFollowRaf = requestAnimationFrame(followMovingCallout);
-  } else {
-    calloutFollowFrameTime = 0;
-  }
-}
-
-function scheduleCalloutFollow() {
-  if (reducedMotion) {
-    const active = calloutSpecs[activeCalloutIndex(progress)];
-    if (active) syncLeaderToMovingLabel(active.part);
-    return;
-  }
-  // The caption itself eases for 240 ms; keep the connector synchronized for
-  // one final frame so its text-end never trails behind the CSS transition.
-  calloutFollowUntil = performance.now() + 300;
-  if (!calloutFollowRaf) calloutFollowRaf = requestAnimationFrame(followMovingCallout);
 }
 
 function syncPartListHighlight(spec) {
@@ -652,12 +554,10 @@ function updateCallouts(root = assetRoot) {
   if (HOME_EMBEDDED && scrubQuality && !activeChanged
       && projectionNow - lastCalloutProjectionTime < 1000 / 30) return;
   lastCalloutProjectionTime = projectionNow;
-  const width = stage.clientWidth || 1;
-  const height = stage.clientHeight || 1;
+  const { width, height, mobile } = stageMetrics;
   // Match the stylesheet breakpoint against the viewport, not the sticky
   // stage width (the vertical scrollbar can make the latter slightly smaller
   // and incorrectly switch a desktop review into mobile lanes).
-  const mobile = window.innerWidth < 760;
   // On narrow screens the parts list occupies the lower review lane. Keep
   // all three editorial label lanes above it so the active text never hides
   // behind the open list.
@@ -671,20 +571,23 @@ function updateCallouts(root = assetRoot) {
     if (!bounds) return;
     let labelWidth = Number(box.dataset.cpvWidth);
     let labelHeight = Number(box.dataset.cpvHeight);
-    if (!Number.isFinite(labelWidth) || !Number.isFinite(labelHeight)) {
-      // No-wrap names can be wider than their styled box. Use the actual
-      // painted width so long labels are clamped inside the viewport instead
-      // of being cut off at an edge.
-      labelWidth = Math.max(box.offsetWidth, box.scrollWidth) || Math.min(208, width * 0.24);
-      labelHeight = box.offsetHeight || 56;
-      box.dataset.cpvWidth = String(labelWidth);
-      box.dataset.cpvHeight = String(labelHeight);
-    }
+    if (!Number.isFinite(labelWidth) || labelWidth <= 0) labelWidth = Math.min(208, width * 0.24);
+    if (!Number.isFinite(labelHeight) || labelHeight <= 0) labelHeight = 56;
     let boxX;
     let boxY;
     if (mobile) {
-      boxX = width * (spec.side === 'left' ? 0.22 : 0.78);
-      boxY = height * slots[spec.row];
+      // A fixed left/right percentage clipped wide labels on narrow phones
+      // and left very long leaders. Place the label beside the actual pose.
+      boxX = THREE.MathUtils.clamp(
+        (bounds.minX + bounds.maxX) / 2,
+        labelWidth / 2 + 12, width - labelWidth / 2 - 12
+      );
+      const above = bounds.minY - 20 - labelHeight / 2;
+      const below = bounds.maxY + 20 + labelHeight / 2;
+      boxY = THREE.MathUtils.clamp(
+        above >= height * 0.31 ? above : below,
+        height * 0.31, height - labelHeight / 2 - 20
+      );
     } else {
       // Keep each active caption beside its actual projected silhouette. If
       // the authored side has no room, flip to the clearer side automatically.
@@ -755,7 +658,9 @@ function updateCallouts(root = assetRoot) {
     // Transform-only movement stays on the compositor instead of invalidating
     // page layout on every projected label update.
     box.style.transform = `translate3d(${boxX}px,${boxY}px,0) translate(-50%,-50%)`;
-    const target = surfaceAnchorFor(spec.part, boxX, boxY, width, height, bounds);
+    const target = nearestProjectedSurfacePoint(
+      spec.part, nearestRectEdge(bounds, boxX, boxY, 3), width, height
+    );
     line.setAttribute('x1', String(target.x));
     line.setAttribute('y1', String(target.y));
     line.dataset.anchorX = String(target.x);
@@ -775,12 +680,6 @@ function updateCallouts(root = assetRoot) {
     const intendedEdge = nearestRectEdge(intendedLabelBounds, target.x, target.y);
     line.setAttribute('x2', String(intendedEdge.x));
     line.setAttribute('y2', String(intendedEdge.y));
-    // During active scrubbing, follow only when the editorial caption changes.
-    // This preserves the quarter-second attachment animation without forcing a
-    // layout read for every WebGL frame.
-    // During scrubbing the CSS transition is disabled, so label and leader
-    // share the exact projected destination without a layout-reading follower.
-    if (!scrubQuality) scheduleCalloutFollow();
 }
 
 function updateProgressUI(p) {
@@ -830,6 +729,7 @@ function applyProgress(p, scheduleRender = true, force = false) {
     hasAppliedProgress = true;
     setScrubQuality();
     samplePose(authoredPoseProgress(progress));
+    assetRoot?.updateMatrixWorld(true);
     updateCamera(progress);
     updateCallouts();
     updateProgressUI(progress);
@@ -870,14 +770,6 @@ function computeProgressFromScroll() {
 }
 
 function targetProgressFromScroll() {
-  if (virtualWheelActive) {
-    // A scrollbar drag, keyboard command or script is allowed to take native
-    // control back immediately. Ordinary virtual wheel frames leave scrollY
-    // fixed at the takeover anchor and therefore continue to be ignored.
-    if (Math.abs(window.scrollY - virtualWheelAnchorY) <= 1) return;
-    virtualWheelActive = false;
-    virtualWheelEdgeLatch = 0;
-  }
   const range = scrollRange();
   scrollTarget = clamp01((window.scrollY - range.start) / range.max);
   // Never let the time-smoothed pose continue after the sticky stage starts
@@ -887,7 +779,6 @@ function targetProgressFromScroll() {
     const runwayProgress = clamp01((window.scrollY - range.start) / range.stickyRunway);
     if (runwayProgress >= HOME_FORCE_SETTLE_FRACTION && scrollTarget >= 1) {
       scrollAnimating = false;
-      scrollVelocity = 0;
       scrollFrameTime = 0;
       scrollTarget = 1;
       applyProgress(1);
@@ -896,7 +787,6 @@ function targetProgressFromScroll() {
   }
   if (reducedMotion) {
     scrollAnimating = false;
-    scrollVelocity = 0;
     scrollFrameTime = 0;
     applyProgress(scrollTarget);
     return;
@@ -906,91 +796,6 @@ function targetProgressFromScroll() {
   }
   scrollAnimating = Math.abs(progress - scrollTarget) > SCROLL_SNAP_EPSILON;
   if (scrollAnimating) startLoop();
-}
-
-function normalizedWheelDelta(event) {
-  let delta = event.deltaY;
-  if (event.deltaMode === WheelEvent.DOM_DELTA_LINE) delta *= 16;
-  if (event.deltaMode === WheelEvent.DOM_DELTA_PAGE) delta *= window.innerHeight;
-  return THREE.MathUtils.clamp(delta, -160, 160);
-}
-
-function pinnedStageIsActive() {
-  if (!EMBED_ROOT) return false;
-  const rect = EMBED_ROOT.getBoundingClientRect();
-  const viewportHeight = window.visualViewport?.height || window.innerHeight;
-  return rect.top <= 1 && rect.bottom >= viewportHeight - 1;
-}
-
-function handlePinnedWheel(event) {
-  if (!VIRTUAL_WHEEL_SUPPORTED || !ready || failed || !inView || event.ctrlKey) return;
-  if (Math.abs(event.deltaX) > Math.abs(event.deltaY)) return;
-  if (event.target instanceof Element
-    && event.target.closest('a,button,input,select,textarea,[contenteditable="true"]')) return;
-  const delta = normalizedWheelDelta(event);
-  if (!delta) return;
-  const direction = Math.sign(delta);
-  const pinned = pinnedStageIsActive();
-  if (virtualWheelEdgeLatch) {
-    if (!pinned) virtualWheelEdgeLatch = 0;
-    else if (direction === virtualWheelEdgeLatch) return;
-    else virtualWheelEdgeLatch = 0;
-  }
-  if (!pinned) return;
-
-  const range = scrollRange();
-  const pageProgress = clamp01((window.scrollY - range.start) / range.max);
-  const base = virtualWheelActive ? scrollTarget : pageProgress;
-  const virtualPixels = base * range.max;
-  const boundedPixels = THREE.MathUtils.clamp(virtualPixels + delta, 0, range.max);
-  const consumed = boundedPixels - virtualPixels;
-  const residual = delta - consumed;
-
-  if (!virtualWheelActive && consumed === 0) {
-    virtualWheelEdgeLatch = direction;
-    return;
-  }
-
-  event.preventDefault();
-  if (!virtualWheelActive) {
-    virtualWheelActive = true;
-    virtualWheelAnchorY = window.scrollY;
-    // Take over from the exact native-scroll frame currently on screen. This
-    // one-time handoff prevents inherited damping from creating a visible
-    // jump as the pinned interaction begins.
-    scrollTarget = pageProgress;
-    applyProgress(pageProgress, false, true);
-  }
-  scrollTarget = clamp01(boundedPixels / range.max);
-
-  if (Math.abs(residual) > 0.01) {
-    const endpoint = direction > 0 ? 1 : 0;
-    scrollTarget = endpoint;
-    scrollAnimating = false;
-    scrollFrameTime = 0;
-    applyProgress(endpoint, false, true);
-    requestRender();
-    virtualWheelActive = false;
-    virtualWheelEdgeLatch = direction;
-    // The native page did not move while the WebGL chapter consumed earlier
-    // wheel input. Rejoin it at the exact timeline edge, then carry only the
-    // unconsumed part of this gesture into the hold/adjacent page content.
-    window.scrollTo({
-      top: range.start + endpoint * range.max + residual,
-      behavior: 'auto',
-    });
-    finishScrubQuality();
-    return;
-  }
-
-  // The document is frozen during this gesture, so the wheel sample itself is
-  // the authoritative playhead. Apply it immediately and draw once on the
-  // next animation frame. Retaining the native-scroll damping here recreated
-  // the very lag this mode is intended to remove in external Chrome.
-  scrollAnimating = false;
-  scrollFrameTime = 0;
-  applyProgress(scrollTarget, false, true);
-  requestRender();
 }
 
 function scrollToProgress(p) {
@@ -1010,7 +815,6 @@ function requestedReviewProgress() {
 
 function restoreRequestedProgress(p) {
   scrollAnimating = false;
-  scrollVelocity = 0;
   scrollFrameTime = 0;
   scrollTarget = p;
   applyProgress(p);
@@ -1050,11 +854,9 @@ function measureStage() {
   if (!stage || !renderer || !camera || failed) return;
   const w = stage.clientWidth || 1;
   const h = stage.clientHeight || 1;
+  stageMetrics = { width: w, height: h, mobile: window.innerWidth < 760 };
   refreshScrollRange();
-  for (const box of calloutTargets.values()) {
-    delete box.dataset.cpvWidth;
-    delete box.dataset.cpvHeight;
-  }
+  cacheCalloutLabelSizes();
   applyRenderResolution();
   camera.aspect = w / h;
   camera.updateProjectionMatrix();
@@ -1152,14 +954,6 @@ if (renderer && !failed) {
     scene.add(root);
     root.traverse((o) => {
       if (o.isMesh) {
-        if (HOME_EMBEDDED) {
-          // These are small independently animated technical parts. Keeping
-          // them out of frustum heuristics prevents stale bounds from dropping
-          // an LED or wire for a frame during rapid camera/pose changes.
-          for (const material of Array.isArray(o.material) ? o.material : [o.material]) {
-            tuneHomepageMaterial(material);
-          }
-        }
         o.castShadow = false;
         o.receiveShadow = false;
       }
@@ -1218,29 +1012,13 @@ if (renderer && !failed) {
   // Scroll events only update a numeric target. The single render loop above
   // samples that target, advances the authored pose, and draws once per frame.
   window.addEventListener('scroll', targetProgressFromScroll, { passive: true });
-  stage?.addEventListener('wheel', handlePinnedWheel, { passive: false });
   if ('onscrollend' in window) {
     window.addEventListener('scrollend', targetProgressFromScroll, { passive: true });
   }
 
   window.addEventListener('resize', () => {
-    virtualWheelActive = false;
-    virtualWheelEdgeLatch = 0;
     measureStage();
   });
-
-  window.addEventListener('keydown', (event) => {
-    if (!virtualWheelActive) return;
-    if (!['ArrowUp', 'ArrowDown', 'PageUp', 'PageDown', 'Home', 'End', ' '].includes(event.key)) return;
-    if (event.target instanceof Element
-      && event.target.closest('input,select,textarea,[contenteditable="true"]')) return;
-    const range = scrollRange();
-    virtualWheelActive = false;
-    virtualWheelEdgeLatch = 0;
-    // Rejoin native scroll at the pose currently on screen before the browser
-    // applies the key's normal scrolling behavior.
-    window.scrollTo({ top: range.start + scrollTarget * range.max, behavior: 'auto' });
-  }, { capture: true });
 
   window.addEventListener('pageshow', () => {
     const requested = requestedReviewProgress();
@@ -1258,7 +1036,6 @@ if (renderer && !failed) {
   rangeEl?.addEventListener('input', () => {
     const next = clamp01(Number(rangeEl.value));
     scrollAnimating = false;
-    scrollVelocity = 0;
     scrollFrameTime = 0;
     scrollTarget = next;
     applyProgress(next);
@@ -1272,7 +1049,6 @@ if (renderer && !failed) {
   });
   resetEl?.addEventListener('click', () => {
     scrollAnimating = false;
-    scrollVelocity = 0;
     scrollFrameTime = 0;
     scrollTarget = 0;
     scrollToProgress(0);
@@ -1286,7 +1062,6 @@ if (renderer && !failed) {
     button.addEventListener('click', () => {
       const next = clamp01(Number(button.dataset.cpvPose));
       scrollAnimating = false;
-      scrollVelocity = 0;
       scrollFrameTime = 0;
       scrollTarget = next;
       applyProgress(next);
@@ -1295,6 +1070,13 @@ if (renderer && !failed) {
     });
   }
   if (stage && typeof ResizeObserver !== 'undefined') new ResizeObserver(measureStage).observe(stage);
+  document.fonts?.ready.then(() => {
+    cacheCalloutLabelSizes();
+    if (ready && inView && !document.hidden) {
+      updateCallouts();
+      requestRender();
+    }
+  });
 
   if (typeof IntersectionObserver !== 'undefined') {
     const io = new IntersectionObserver((entries) => {
@@ -1308,13 +1090,8 @@ if (renderer && !failed) {
         scrollTarget = progressFromScroll();
         applyProgress(scrollTarget, false, true);
         cancelAnimationFrame(rafId);
-        cancelAnimationFrame(calloutFollowRaf);
         rafId = 0;
-        calloutFollowRaf = 0;
         scrollAnimating = false;
-        virtualWheelActive = false;
-        virtualWheelEdgeLatch = 0;
-        scrollVelocity = 0;
         scrollFrameTime = 0;
         finishScrubQuality();
       }
@@ -1329,13 +1106,8 @@ if (renderer && !failed) {
   document.addEventListener('visibilitychange', () => {
     if (document.hidden) {
       cancelAnimationFrame(rafId);
-      cancelAnimationFrame(calloutFollowRaf);
       rafId = 0;
-      calloutFollowRaf = 0;
       scrollAnimating = false;
-      virtualWheelActive = false;
-      virtualWheelEdgeLatch = 0;
-      scrollVelocity = 0;
       scrollFrameTime = 0;
       finishScrubQuality();
     } else {
@@ -1348,13 +1120,10 @@ if (renderer && !failed) {
   window.addEventListener('pagehide', (event) => {
     if (event.persisted) return;
     cancelAnimationFrame(rafId);
-    cancelAnimationFrame(calloutFollowRaf);
     clearTimeout(scrubIdleTimer);
     document.body.classList.remove('cpv-scrubbing');
     rafId = 0;
-    calloutFollowRaf = 0;
     scrollAnimating = false;
-    scrollVelocity = 0;
     scrollFrameTime = 0;
     if (mixer) mixer.stopAllAction();
     if (renderer) renderer.dispose();
@@ -1370,7 +1139,6 @@ window.__ffCandidatePreview = {
       duration,
       progress,
       scrollTarget,
-      scrollVelocity,
       scrollAnimating,
       activeCallout: activeCalloutIndex(progress) >= 0 ? calloutSpecs[activeCalloutIndex(progress)].part : null,
       renderPaused: !inView || document.hidden,
@@ -1380,16 +1148,20 @@ window.__ffCandidatePreview = {
         z: Number(camera.position.z.toFixed(4)),
       } : null,
       renderPixelRatio: renderer ? Number(renderer.getPixelRatio().toFixed(3)) : null,
-      renderQualityScale: ADAPTIVE_DPR_STEPS[renderQualityIndex],
+      renderQualityScale: 1,
       renderSize: renderer ? {
         width: renderer.domElement.width,
         height: renderer.domElement.height,
       } : null,
+      renderStats: renderer ? {
+        frame: renderer.info.render.frame,
+        calls: renderer.info.render.calls,
+        triangles: renderer.info.render.triangles,
+        lines: renderer.info.render.lines,
+        points: renderer.info.render.points,
+      } : null,
       scrubQuality,
-      virtualWheelSupported: VIRTUAL_WHEEL_SUPPORTED,
-      virtualWheelActive,
-      virtualWheelEdgeLatch,
-      virtualWheelAnchorY,
+      inputMode: 'native-scroll',
       scrubBackdropDisabled: document.body.classList.contains('cpv-scrubbing'),
       panelBackdrop: partsEl ? getComputedStyle(partsEl).backdropFilter : null,
       actionTimes: actions.map((action) => Number(action.time.toFixed(4))),
