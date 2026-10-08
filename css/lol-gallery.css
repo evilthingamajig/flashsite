@@ -1,0 +1,1458 @@
+.R-lol-gallery {
+  --wp--preset--aspect-ratio--square: 1;
+  --wp--preset--aspect-ratio--4-3: 4/3;
+  --wp--preset--aspect-ratio--3-4: 3/4;
+  --wp--preset--aspect-ratio--3-2: 3/2;
+  --wp--preset--aspect-ratio--2-3: 2/3;
+  --wp--preset--aspect-ratio--16-9: 16/9;
+  --wp--preset--aspect-ratio--9-16: 9/16;
+  --wp--preset--color--black: #000;
+  --wp--preset--color--cyan-bluish-gray: #abb8c3;
+  --wp--preset--color--white: #fff;
+  --wp--preset--color--pale-pink: #21613d;
+  --wp--preset--color--vivid-red: #21613d;
+  --wp--preset--color--luminous-vivid-orange: #21613d;
+  --wp--preset--color--luminous-vivid-amber: #21613d;
+  --wp--preset--color--light-green-cyan: #21613d;
+  --wp--preset--color--vivid-green-cyan: #21613d;
+  --wp--preset--color--pale-cyan-blue: #21613d;
+  --wp--preset--color--vivid-cyan-blue: #21613d;
+  --wp--preset--color--vivid-purple: #21613d;
+  --wp--preset--gradient--vivid-cyan-blue-to-vivid-purple: linear-gradient(135deg,#21613d 0%,#21613d 100%);
+  --wp--preset--gradient--light-green-cyan-to-vivid-green-cyan: linear-gradient(135deg,#21613d 0%,#21613d 100%);
+  --wp--preset--gradient--luminous-vivid-amber-to-luminous-vivid-orange: linear-gradient(135deg,#21613d 0%,#21613d 100%);
+  --wp--preset--gradient--luminous-vivid-orange-to-vivid-red: linear-gradient(135deg,#21613d 0%,#21613d 100%);
+  --wp--preset--gradient--very-light-gray-to-cyan-bluish-gray: linear-gradient(135deg,#eee 0%,#a9b8c3 100%);
+  --wp--preset--gradient--cool-to-warm-spectrum: linear-gradient(135deg,#d3d3d3 0%,#21613d 20%,#21613d 40%,#21613d 60%,#21613d 80%,#f2f2f2 100%);
+  --wp--preset--gradient--blush-light-purple: linear-gradient(135deg,#dcdcdc 0%,#21613d 100%);
+  --wp--preset--gradient--blush-bordeaux: linear-gradient(135deg,#d6d6d6 0%,#21613d 50%,#173b28 100%);
+  --wp--preset--gradient--luminous-dusk: linear-gradient(135deg,#d3d3d3 0%,#21613d 50%,#2b704b 100%);
+  --wp--preset--gradient--pale-ocean: linear-gradient(135deg,#f4f4f4 0%,#d9d9d9 50%,#21613d 100%);
+  --wp--preset--gradient--electric-grass: linear-gradient(135deg,#e9e9e9 0%,#21613d 100%);
+  --wp--preset--gradient--midnight: linear-gradient(135deg,#0f281a 0%,#21613d 100%);
+  --wp--preset--font-size--small: 13px;
+  --wp--preset--font-size--medium: 20px;
+  --wp--preset--font-size--large: 36px;
+  --wp--preset--font-size--x-large: 42px;
+  --wp--preset--spacing--20: .44rem;
+  --wp--preset--spacing--30: .67rem;
+  --wp--preset--spacing--40: 1rem;
+  --wp--preset--spacing--50: 1.5rem;
+  --wp--preset--spacing--60: 2.25rem;
+  --wp--preset--spacing--70: 3.38rem;
+  --wp--preset--spacing--80: 5.06rem;
+  --wp--preset--shadow--natural: 6px 6px 9px #0003;
+  --wp--preset--shadow--deep: 12px 12px 50px #0006;
+  --wp--preset--shadow--sharp: 6px 6px 0px #0003;
+  --wp--preset--shadow--outlined: 6px 6px 0px -3px #fff, 6px 6px #000;
+  --wp--preset--shadow--crisp: 6px 6px 0px #000;
+}
+
+.R-lol-gallery :where(body) {
+  margin: 0;
+}
+
+.R-lol-gallery {
+  padding: 0;
+}
+
+.R-lol-gallery {
+  -webkit-text-size-adjust: 100%;
+  line-height: 1.15;
+}
+
+.R-lol-gallery *, .R-lol-gallery :after, .R-lol-gallery :before {
+  box-sizing: border-box;
+}
+
+.R-lol-gallery {
+  color: #333;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background-color: #fff;
+  margin: 0;
+  font-family: "Source Sans 3", "Source Sans Pro", Arial, sans-serif;
+  font-size: 1rem;
+  font-weight: 400;
+  line-height: 1.5;
+}
+
+.R-lol-gallery h1, .R-lol-gallery h6 {
+  color: inherit;
+  margin-block: .5rem 1rem;
+  font-family: inherit;
+  font-weight: 500;
+  line-height: 1.2;
+}
+
+.R-lol-gallery h1 {
+  font-size: 2.5rem;
+}
+
+.R-lol-gallery h6 {
+  font-size: 1rem;
+}
+
+.R-lol-gallery p {
+  margin-block: 0 .9rem;
+}
+
+.R-lol-gallery a {
+  color: #21613d;
+  background-color: #0000;
+  text-decoration: none;
+}
+
+.R-lol-gallery a:active, .R-lol-gallery a:hover {
+  color: #18402a;
+}
+
+.R-lol-gallery a:not([href]):not([tabindex]), .R-lol-gallery a:not([href]):not([tabindex]):focus, .R-lol-gallery a:not([href]):not([tabindex]):hover {
+  color: inherit;
+  text-decoration: none;
+}
+
+.R-lol-gallery a:not([href]):not([tabindex]):focus {
+  outline: 0;
+}
+
+.R-lol-gallery b, .R-lol-gallery strong {
+  font-weight: bolder;
+}
+
+.R-lol-gallery img {
+  border-style: none;
+  max-width: 100%;
+  height: auto;
+}
+
+.R-lol-gallery [hidden] {
+  display: none;
+}
+
+@media print {
+  .R-lol-gallery *, .R-lol-gallery :after, .R-lol-gallery :before {
+    color: #000 !important;
+    box-shadow: none !important;
+    text-shadow: none !important;
+    background: none !important;
+  }
+
+  .R-lol-gallery a, .R-lol-gallery a:visited {
+    text-decoration: underline;
+  }
+
+  .R-lol-gallery a[href]:after {
+    content: " (" attr(href) ")";
+  }
+
+  .R-lol-gallery a[href^="#"]:after {
+    content: "";
+  }
+
+  .R-lol-gallery img {
+    -moz-column-break-inside: avoid;
+    break-inside: avoid;
+  }
+
+   .R-lol-gallery p {
+    orphans: 3;
+    widows: 3;
+  }
+}
+
+.R-lol-gallery label {
+  vertical-align: middle;
+  line-height: 1;
+  display: inline-block;
+}
+
+.R-lol-gallery button, .R-lol-gallery input {
+  margin: 0;
+  font-family: inherit;
+  font-size: 1rem;
+  line-height: 1.5;
+}
+
+ .R-lol-gallery input[type="email"], .R-lol-gallery input[type="search"], .R-lol-gallery input[type="text"] {
+  border: 1px solid #666;
+  border-radius: 3px;
+  width: 100%;
+  padding: .5rem 1rem;
+  transition: all .3s;
+}
+
+ .R-lol-gallery input[type="email"]:focus, .R-lol-gallery input[type="search"]:focus, .R-lol-gallery input[type="text"]:focus {
+  border-color: #333;
+}
+
+.R-lol-gallery button, .R-lol-gallery input {
+  overflow: visible;
+}
+
+.R-lol-gallery button {
+  text-transform: none;
+}
+
+.R-lol-gallery [type="button"], .R-lol-gallery [type="submit"], .R-lol-gallery button {
+  -webkit-appearance: button;
+  width: auto;
+}
+
+.R-lol-gallery [type="button"]::-moz-focus-inner, .R-lol-gallery [type="submit"]::-moz-focus-inner, .R-lol-gallery button::-moz-focus-inner {
+  border-style: none;
+  padding: 0;
+}
+
+.R-lol-gallery [type="button"]:-moz-focusring, .R-lol-gallery [type="submit"]:-moz-focusring, .R-lol-gallery button:-moz-focusring {
+  outline: 1px dotted buttontext;
+}
+
+.R-lol-gallery [type="button"], .R-lol-gallery [type="submit"], .R-lol-gallery button {
+  color: #21613d;
+  text-align: center;
+  white-space: nowrap;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  user-select: none;
+  background-color: #0000;
+  border: 1px solid #21613d;
+  border-radius: 3px;
+  padding: .5rem 1rem;
+  font-size: 1rem;
+  font-weight: 400;
+  transition: all .3s;
+  display: inline-block;
+}
+
+.R-lol-gallery [type="button"]:focus, .R-lol-gallery [type="submit"]:focus, .R-lol-gallery button:focus {
+  outline: 5px auto -webkit-focus-ring-color;
+}
+
+.R-lol-gallery [type="button"]:focus, .R-lol-gallery [type="button"]:hover, .R-lol-gallery [type="submit"]:focus, .R-lol-gallery [type="submit"]:hover, .R-lol-gallery button:focus, .R-lol-gallery button:hover {
+  color: #fff;
+  background-color: #21613d;
+  text-decoration: none;
+}
+
+.R-lol-gallery [type="button"]:not(:disabled), .R-lol-gallery [type="submit"]:not(:disabled), .R-lol-gallery button:not(:disabled) {
+  cursor: pointer;
+}
+
+.R-lol-gallery fieldset {
+  padding: .35em .75em .625em;
+}
+
+.R-lol-gallery [type="search"] {
+  -webkit-appearance: textfield;
+  outline-offset: -2px;
+}
+
+.R-lol-gallery [type="search"]::-webkit-search-decoration {
+  -webkit-appearance: none;
+}
+
+.R-lol-gallery ::-webkit-file-upload-button {
+  -webkit-appearance: button;
+  font: inherit;
+}
+
+.R-lol-gallery table {
+  border-spacing: 0;
+  border-collapse: collapse;
+  background-color: #0000;
+  width: 100%;
+  margin-block-end: 15px;
+  font-size: .9em;
+}
+
+@media (width <= 767px) {
+  .R-lol-gallery table table {
+    font-size: .8em;
+  }
+}
+
+ .R-lol-gallery li, .R-lol-gallery ul {
+  vertical-align: baseline;
+  background: none;
+  border: 0;
+  outline: 0;
+  margin-block: 0;
+  font-size: 100%;
+}
+
+ .R-lol-gallery .page-content a {
+  text-decoration: underline;
+}
+
+ .R-lol-gallery:not([class*="elementor-page-"]) .site-main {
+  width: 100%;
+  margin-inline: auto;
+}
+
+@media (width <= 575px) {
+   .R-lol-gallery:not([class*="elementor-page-"]) .site-main {
+    padding-inline: 10px;
+  }
+}
+
+@media (width >= 576px) {
+   .R-lol-gallery:not([class*="elementor-page-"]) .site-main {
+    max-width: 500px;
+  }
+}
+
+@media (width >= 768px) {
+   .R-lol-gallery:not([class*="elementor-page-"]) .site-main {
+    max-width: 600px;
+  }
+}
+
+@media (width >= 992px) {
+   .R-lol-gallery:not([class*="elementor-page-"]) .site-main {
+    max-width: 800px;
+  }
+}
+
+@media (width >= 1200px) {
+   .R-lol-gallery:not([class*="elementor-page-"]) .site-main {
+    max-width: 1140px;
+  }
+}
+
+.R-lol-gallery .site-header .header-inner .site-branding.show-logo .site-title, .R-lol-gallery .site-header .header-inner .site-branding.show-title .site-logo {
+  display: none !important;
+}
+
+.R-lol-gallery .site-footer .footer-inner .site-branding.show-logo .site-title, .R-lol-gallery .site-footer .footer-inner .site-branding.show-title .site-logo {
+  display: none !important;
+}
+
+.R-lol-gallery .site-navigation-toggle-holder.elementor-active .site-navigation-toggle i:before {
+  content: "";
+}
+
+.R-lol-gallery .site-navigation-toggle-holder.elementor-active + .site-navigation-dropdown {
+  max-height: 100vh;
+  transform: scaleY(1);
+}
+
+.R-lol-gallery .site-navigation-dropdown ul.menu li.elementor-active > ul > li {
+  max-height: 100vh;
+  transform: scaleY(1);
+}
+
+.R-lol-gallery .elementor-editor-active .elementor-popup-modal {
+  background-color: initial;
+}
+
+.R-lol-gallery .dialog-type-alert .dialog-buttons-wrapper .dialog-button:active, .R-lol-gallery .dialog-type-confirm .dialog-buttons-wrapper .dialog-button:active {
+  background-color: var(--e-a-btn-bg-active);
+}
+
+.R-lol-gallery .dialog-type-alert .dialog-buttons-wrapper .dialog-button.e-accent:active, .R-lol-gallery .dialog-type-alert .dialog-buttons-wrapper .dialog-button.go-pro:active, .R-lol-gallery .dialog-type-confirm .dialog-buttons-wrapper .dialog-button.e-accent:active, .R-lol-gallery .dialog-type-confirm .dialog-buttons-wrapper .dialog-button.go-pro:active {
+  background-color: var(--e-a-btn-bg-accent-active);
+}
+
+.R-lol-gallery .elementor *, .R-lol-gallery .elementor :after, .R-lol-gallery .elementor :before {
+  box-sizing: border-box;
+}
+
+.R-lol-gallery .elementor a {
+  box-shadow: none;
+  text-decoration: none;
+}
+
+.R-lol-gallery .elementor img {
+  max-width: 100%;
+  height: auto;
+  box-shadow: none;
+  border: none;
+  border-radius: 0;
+}
+
+ .R-lol-gallery .elementor video {
+  border: none;
+  width: 100%;
+  max-width: 100%;
+  margin: 0;
+  line-height: 1;
+}
+
+ .R-lol-gallery .elementor .elementor-background-slideshow {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+.R-lol-gallery .elementor .elementor-background-slideshow {
+  z-index: 0;
+}
+
+.R-lol-gallery .elementor .elementor-background-slideshow__slide__image {
+  background-position: 50%;
+  background-size: cover;
+  width: 100%;
+  height: 100%;
+}
+
+.R-lol-gallery .elementor-element {
+  --flex-direction: initial;
+  --flex-wrap: initial;
+  --justify-content: initial;
+  --align-items: initial;
+  --align-content: initial;
+  --gap: initial;
+  --flex-basis: initial;
+  --flex-grow: initial;
+  --flex-shrink: initial;
+  --order: initial;
+  --align-self: initial;
+  flex-basis: var(--flex-basis);
+  flex-grow: var(--flex-grow);
+  flex-shrink: var(--flex-shrink);
+  order: var(--order);
+  align-self: var(--align-self);
+}
+
+.R-lol-gallery .elementor-element:where(.e-con-full, .elementor-widget) {
+  flex-direction: var(--flex-direction);
+  flex-wrap: var(--flex-wrap);
+  justify-content: var(--justify-content);
+  align-items: var(--align-items);
+  align-content: var(--align-content);
+  gap: var(--gap);
+}
+
+.R-lol-gallery .elementor-ken-burns--active {
+  transition-duration: 20s;
+}
+
+.R-lol-gallery .elementor-ken-burns--active.elementor-ken-burns--out {
+  transform: scale(1);
+}
+
+.R-lol-gallery .elementor-ken-burns--active.elementor-ken-burns--in {
+  transform: scale(1.3);
+}
+
+.R-lol-gallery .elementor-widget {
+  position: relative;
+}
+
+.R-lol-gallery .elementor-widget:not(:last-child) {
+  margin-bottom: 20px;
+}
+
+ .R-lol-gallery .elementor-widget:not(:last-child).elementor-widget__width-initial {
+  margin-bottom: 0;
+}
+
+.R-lol-gallery .e-con {
+  --border-radius: 0;
+  --border-top-width: 0px;
+  --border-right-width: 0px;
+  --border-bottom-width: 0px;
+  --border-left-width: 0px;
+  --border-style: initial;
+  --border-color: initial;
+  --container-widget-width: 100%;
+  --container-widget-height: initial;
+  --container-widget-flex-grow: 0;
+  --container-widget-align-self: initial;
+  --content-width: min(100%,var(--container-max-width, 1140px));
+  --width: 100%;
+  --min-height: initial;
+  --height: auto;
+  --text-align: initial;
+  --margin-top: 0px;
+  --margin-right: 0px;
+  --margin-bottom: 0px;
+  --margin-left: 0px;
+  --padding-top: var(--container-default-padding-top, 10px);
+  --padding-right: var(--container-default-padding-right, 10px);
+  --padding-bottom: var(--container-default-padding-bottom, 10px);
+  --padding-left: var(--container-default-padding-left, 10px);
+  --position: relative;
+  --z-index: revert;
+  --overflow: visible;
+  --gap: var(--widgets-spacing, 20px);
+  --overlay-mix-blend-mode: initial;
+  --overlay-opacity: 1;
+  --overlay-transition: .3s;
+  --e-con-grid-template-columns: repeat(3,1fr);
+  --e-con-grid-template-rows: repeat(2,1fr);
+  position: var(--position);
+  width: var(--width);
+  min-width: 0;
+  min-height: var(--min-height);
+  height: var(--height);
+  border-radius: var(--border-radius);
+  z-index: var(--z-index);
+  overflow: var(--overflow);
+  transition: background var(--background-transition, .3s),border var(--border-transition, .3s),box-shadow var(--border-transition, .3s),transform var(--e-con-transform-transition-duration, .4s);
+  --margin-block-start: var(--margin-top);
+  --margin-block-end: var(--margin-bottom);
+  --margin-inline-start: var(--margin-left);
+  --margin-inline-end: var(--margin-right);
+  --padding-inline-start: var(--padding-left);
+  --padding-inline-end: var(--padding-right);
+  --padding-block-start: var(--padding-top);
+  --padding-block-end: var(--padding-bottom);
+  --border-block-start-width: var(--border-top-width);
+  --border-block-end-width: var(--border-bottom-width);
+  --border-inline-start-width: var(--border-left-width);
+  --border-inline-end-width: var(--border-right-width);
+  margin-block-start: var(--margin-block-start);
+  margin-block-end: var(--margin-block-end);
+  margin-inline-start: var(--margin-inline-start);
+  margin-inline-end: var(--margin-inline-end);
+  padding-inline-start: var(--padding-inline-start);
+  padding-inline-end: var(--padding-inline-end);
+}
+
+.R-lol-gallery .e-con.e-flex {
+  --flex-direction: column;
+  --flex-basis: auto;
+  --flex-grow: 0;
+  --flex-shrink: 1;
+  flex: var(--flex-grow) var(--flex-shrink) var(--flex-basis);
+}
+
+.R-lol-gallery .e-con-full, .R-lol-gallery .e-con > .e-con-inner {
+  text-align: var(--text-align);
+  padding-block-start: var(--padding-block-start);
+  padding-block-end: var(--padding-block-end);
+}
+
+.R-lol-gallery .e-con-full.e-flex, .R-lol-gallery .e-con.e-flex > .e-con-inner {
+  flex-direction: var(--flex-direction);
+}
+
+.R-lol-gallery .e-con, .R-lol-gallery .e-con > .e-con-inner {
+  display: var(--display);
+}
+
+.R-lol-gallery .e-con-boxed.e-flex {
+  flex-flow: column;
+  place-content: normal;
+  align-items: normal;
+}
+
+.R-lol-gallery .e-con-boxed {
+  text-align: initial;
+  gap: initial;
+}
+
+.R-lol-gallery .e-con.e-flex > .e-con-inner {
+  flex-wrap: var(--flex-wrap);
+  justify-content: var(--justify-content);
+  align-items: var(--align-items);
+  align-content: var(--align-content);
+  flex: auto;
+  align-self: auto;
+}
+
+.R-lol-gallery .e-con > .e-con-inner {
+  gap: var(--gap);
+  width: 100%;
+  max-width: var(--content-width);
+  height: 100%;
+  margin: 0 auto;
+  padding-inline: 0;
+}
+
+.R-lol-gallery :is( [data-elementor-id]) > .e-con {
+  --margin-left: auto;
+  --margin-right: auto;
+  max-width: min(100%,var(--width));
+}
+
+.R-lol-gallery .e-con .elementor-widget.elementor-widget {
+  margin-block-end: 0;
+}
+
+.R-lol-gallery .e-con:before, .R-lol-gallery .e-con > .elementor-background-slideshow:before {
+  content: var(--background-overlay);
+  mix-blend-mode: var(--overlay-mix-blend-mode);
+  opacity: var(--overlay-opacity);
+  transition: var(--overlay-transition, .3s);
+  border-radius: var(--border-radius);
+  border-style: var(--border-style);
+  border-color: var(--border-color);
+  border-block-start-width: var(--border-block-start-width);
+  border-inline-end-width: var(--border-inline-end-width);
+  border-block-end-width: var(--border-block-end-width);
+  border-inline-start-width: var(--border-inline-start-width);
+  top: calc(0px - var(--border-top-width));
+  left: calc(0px - var(--border-left-width));
+  width: max(100% + var(--border-left-width) + var(--border-right-width),100%);
+  height: max(100% + var(--border-top-width) + var(--border-bottom-width),100%);
+  display: block;
+  position: absolute;
+}
+
+.R-lol-gallery .e-con:before {
+  transition: background var(--overlay-transition, .3s),border-radius var(--border-transition, .3s),opacity var(--overlay-transition, .3s);
+}
+
+.R-lol-gallery .e-con > .elementor-background-slideshow {
+  border-radius: var(--border-radius);
+  border-style: var(--border-style);
+  border-color: var(--border-color);
+  border-block-start-width: var(--border-block-start-width);
+  border-inline-end-width: var(--border-inline-end-width);
+  border-block-end-width: var(--border-block-end-width);
+  border-inline-start-width: var(--border-inline-start-width);
+  top: calc(0px - var(--border-top-width));
+  left: calc(0px - var(--border-left-width));
+  width: max(100% + var(--border-left-width) + var(--border-right-width),100%);
+  height: max(100% + var(--border-top-width) + var(--border-bottom-width),100%);
+}
+
+.R-lol-gallery :is(.e-con, .e-con > .e-con-inner) > .elementor-background-slideshow:before {
+  z-index: 2;
+}
+
+.R-lol-gallery .e-con .elementor-widget {
+  min-width: 0;
+}
+
+.R-lol-gallery .e-con > .e-con-inner > .elementor-widget > .elementor-widget-container, .R-lol-gallery .e-con > .elementor-widget > .elementor-widget-container {
+  height: 100%;
+}
+
+.R-lol-gallery .e-con.e-con > .e-con-inner > .elementor-widget, .R-lol-gallery .elementor.elementor .e-con > .elementor-widget {
+  max-width: 100%;
+}
+
+@media (width <= 767px) {
+  .R-lol-gallery .e-con.e-flex {
+    --width: 100%;
+    --flex-wrap: wrap;
+  }
+}
+
+.R-lol-gallery .elementor-element .elementor-widget-container {
+  transition: background .3s,border .3s,border-radius .3s,box-shadow .3s,transform var(--e-transform-transition-duration, .4s);
+}
+
+.R-lol-gallery .elementor-element {
+  --swiper-theme-color: #000;
+  --swiper-navigation-size: 44px;
+  --swiper-pagination-bullet-size: 6px;
+  --swiper-pagination-bullet-horizontal-gap: 6px;
+}
+
+.R-lol-gallery .elementor-slideshow__counter {
+  color: currentColor;
+  width: max-content;
+  font-size: .75em;
+}
+
+.R-lol-gallery .elementor-slideshow__footer, .R-lol-gallery .elementor-slideshow__header {
+  width: 100%;
+  padding: 15px 20px;
+  transition: all .3s;
+  position: absolute;
+  left: 0;
+}
+
+.R-lol-gallery .elementor-slideshow__footer {
+  color: var(--lightbox-text-color);
+}
+
+.R-lol-gallery .elementor-slideshow__header {
+  color: var(--lightbox-ui-color);
+  font-size: var(--lightbox-header-icons-size);
+  z-index: 10;
+  flex-direction: row-reverse;
+  align-items: center;
+  padding-inline: 1em 2.6em;
+  display: flex;
+  top: 0;
+}
+
+.R-lol-gallery .elementor-slideshow__header > i, .R-lol-gallery .elementor-slideshow__header > svg {
+  cursor: pointer;
+  margin: 0 .35em;
+  padding: .25em;
+}
+
+.R-lol-gallery .elementor-slideshow__header > i {
+  font-size: inherit;
+}
+
+.R-lol-gallery .elementor-slideshow__header > i:hover {
+  color: var(--lightbox-ui-color-hover);
+}
+
+.R-lol-gallery .elementor-slideshow__header > svg {
+  box-sizing: content-box;
+  fill: var(--lightbox-ui-color);
+  width: 1em;
+  height: 1em;
+}
+
+.R-lol-gallery .elementor-slideshow__header > svg:hover {
+  fill: var(--lightbox-ui-color-hover);
+}
+
+.R-lol-gallery .elementor-slideshow__header .elementor-slideshow__counter {
+  margin-inline-end: auto;
+}
+
+.R-lol-gallery .elementor-slideshow__header .elementor-icon-share {
+  z-index: 5;
+}
+
+.R-lol-gallery .elementor-slideshow__share-menu {
+  background-color: #0000;
+  width: 0;
+  height: 0;
+  transition: background-color .4s;
+  position: absolute;
+  overflow: hidden;
+}
+
+.R-lol-gallery .elementor-slideshow__share-menu .elementor-slideshow__share-links a {
+  color: #0c0d0e;
+}
+
+.R-lol-gallery .elementor-slideshow__share-links {
+  opacity: 0;
+  transform-origin: 90% 10%;
+  background-color: #fff;
+  border-radius: 3px;
+  min-width: 200px;
+  padding: 14px 20px;
+  transition: all .25s .1s;
+  display: block;
+  position: absolute;
+  top: 3em;
+  right: 2.8em;
+  transform: scale(0);
+  box-shadow: 0 4px 15px #0000004d;
+}
+
+.R-lol-gallery .elementor-slideshow__share-links a {
+  text-align: start;
+  color: #3f444b;
+  opacity: 0;
+  font-size: 12px;
+  line-height: 2.5;
+  transition: opacity .5s .1s;
+  display: block;
+}
+
+.R-lol-gallery .elementor-slideshow__share-links a:hover {
+  color: #000;
+}
+
+.R-lol-gallery .elementor-slideshow__share-links a i, .R-lol-gallery .elementor-slideshow__share-links a svg {
+  margin-inline-end: .75em;
+}
+
+.R-lol-gallery .elementor-slideshow__share-links a i {
+  font-size: 1.25em;
+}
+
+.R-lol-gallery .elementor-slideshow__share-links a svg {
+  width: 1.25em;
+  height: 1.25em;
+}
+
+.R-lol-gallery .elementor-slideshow__share-links:before {
+  content: "";
+  border: .45em solid #0000;
+  border-bottom-color: #fff;
+  display: block;
+  position: absolute;
+  top: 1px;
+  right: .5em;
+  transform: translateY(-100%) scaleX(.7);
+}
+
+.R-lol-gallery .elementor-slideshow__footer {
+  z-index: 5;
+  position: fixed;
+  bottom: 0;
+}
+
+.R-lol-gallery .elementor-slideshow__description, .R-lol-gallery .elementor-slideshow__title {
+  margin: 0;
+}
+
+.R-lol-gallery .elementor-slideshow__title {
+  font-size: 16px;
+  font-weight: 700;
+}
+
+.R-lol-gallery .elementor-slideshow__description {
+  font-size: 14px;
+}
+
+.R-lol-gallery .elementor-slideshow--ui-hidden .elementor-slideshow__footer, .R-lol-gallery .elementor-slideshow--ui-hidden .elementor-slideshow__header {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.R-lol-gallery .elementor-slideshow--ui-hidden .elementor-swiper-button-next, .R-lol-gallery .elementor-slideshow--ui-hidden .elementor-swiper-button-prev {
+  opacity: 0;
+}
+
+.R-lol-gallery .elementor-slideshow--fullscreen-mode .elementor-video-container {
+  width: 100%;
+}
+
+.R-lol-gallery .elementor-slideshow--zoom-mode .elementor-slideshow__footer, .R-lol-gallery .elementor-slideshow--zoom-mode .elementor-slideshow__header {
+  background-color: #00000080;
+}
+
+.R-lol-gallery .elementor-slideshow--zoom-mode .elementor-swiper-button-next, .R-lol-gallery .elementor-slideshow--zoom-mode .elementor-swiper-button-prev {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.R-lol-gallery .elementor-slideshow--share-mode .elementor-slideshow__share-menu {
+  opacity: 1;
+  cursor: default;
+  background-color: #00000080;
+  width: 100vw;
+  height: 100vh;
+  top: 0;
+  left: 0;
+}
+
+.R-lol-gallery .elementor-slideshow--share-mode .elementor-slideshow__share-links {
+  transform: scale(1);
+}
+
+.R-lol-gallery .elementor-slideshow--share-mode .elementor-slideshow__share-links, .R-lol-gallery .elementor-slideshow--share-mode .elementor-slideshow__share-links a {
+  opacity: 1;
+}
+
+.R-lol-gallery .elementor-slideshow--share-mode .elementor-slideshow__share-links .eicon-twitter {
+  color: #21613d;
+}
+
+.R-lol-gallery .elementor-slideshow--share-mode .elementor-slideshow__share-links .eicon-facebook {
+  color: #276644;
+}
+
+.R-lol-gallery .elementor-slideshow--share-mode .elementor-slideshow__share-links .eicon-pinterest {
+  color: #286a47;
+}
+
+.R-lol-gallery .elementor-slideshow--share-mode .elementor-slideshow__share-links .eicon-download-bold {
+  color: #9da5ae;
+}
+
+.R-lol-gallery .elementor-slideshow--share-mode .elementor-slideshow__share-links .e-eicon-twitter {
+  fill: #21613d;
+}
+
+.R-lol-gallery .elementor-slideshow--share-mode .elementor-slideshow__share-links .e-eicon-facebook {
+  fill: #276644;
+}
+
+.R-lol-gallery .elementor-slideshow--share-mode .elementor-slideshow__share-links .e-eicon-pinterest {
+  fill: #286a47;
+}
+
+.R-lol-gallery .elementor-slideshow--share-mode .elementor-slideshow__share-links .e-eicon-download-bold {
+  fill: #9da5ae;
+}
+
+.R-lol-gallery .elementor-slideshow--share-mode .eicon-share-arrow {
+  z-index: 2;
+}
+
+@media (width <= 767px) {
+
+  .R-lol-gallery .elementor .elementor-hidden-mobile {
+    display: none;
+  }
+}
+
+@media (width >= 768px) and (width <= 1024px) {
+  .R-lol-gallery .elementor .elementor-hidden-tablet {
+    display: none;
+  }
+}
+
+.R-lol-gallery .elementor-widget-n-tabs .e-n-tabs-heading.e-scroll-active {
+  position: relative;
+}
+
+.R-lol-gallery .elementor-widget-n-tabs .e-n-tabs-heading.e-scroll-active:before {
+  content: "";
+  z-index: 2;
+  position: absolute;
+  inset-block: 0;
+  inset-inline: -1000vw;
+}
+
+.R-lol-gallery .elementor-widget-n-tabs .e-n-tab-title[aria-selected="true"][class*="elementor-animation-"]:active {
+  animation: initial;
+  transform: none;
+}
+
+.R-lol-gallery .elementor-widget-n-tabs [data-touch-mode="true"] .e-n-tab-title[aria-selected="false"]:hover[class*="elementor-animation-"]:active {
+  animation: initial;
+  transform: none;
+}
+
+.R-lol-gallery .elementor-widget-n-accordion .e-n-accordion-item[open] .e-n-accordion-item-title {
+  color: var(--n-accordion-title-active-color);
+  margin-block-end: var(--n-accordion-item-title-distance-from-content);
+}
+
+.R-lol-gallery .elementor-widget-n-accordion .e-n-accordion-item[open] .e-n-accordion-item-title-icon .e-opened {
+  display: flex;
+}
+
+.R-lol-gallery .elementor-widget-n-accordion .e-n-accordion-item[open] .e-n-accordion-item-title-icon .e-closed {
+  display: none;
+}
+
+.R-lol-gallery .elementor-widget-n-accordion .e-n-accordion-item[open] .e-n-accordion-item-title-icon span > i {
+  color: var(--n-accordion-icon-active-color);
+}
+
+.R-lol-gallery .elementor-widget-n-accordion .e-n-accordion-item[open] .e-n-accordion-item-title-icon span > svg {
+  fill: var(--n-accordion-icon-active-color);
+}
+
+.R-lol-gallery .elementor-widget-n-accordion .e-n-accordion-item .e-n-accordion-item-title-icon .e-opened {
+  display: none;
+}
+
+.R-lol-gallery.elementor-kit-6 {
+  --e-global-color-primary: #19422c;
+  --e-global-color-secondary: #21613d;
+  --e-global-color-text: #000;
+  --e-global-color-accent: #f5f5f5;
+  --e-global-typography-primary-font-family: "Source Sans 3", "Source Sans Pro", Arial, sans-serif;
+  --e-global-typography-primary-font-weight: 500;
+  --e-global-typography-secondary-font-family: "Source Sans 3", "Source Sans Pro", Arial, sans-serif;
+  --e-global-typography-secondary-font-weight: 400;
+  --e-global-typography-text-font-family: "Source Sans 3", "Source Sans Pro", Arial, sans-serif;
+  --e-global-typography-text-font-weight: 400;
+  --e-global-typography-accent-font-family: "Source Sans 3", "Source Sans Pro", Arial, sans-serif;
+  --e-global-typography-accent-font-weight: 500;
+  font-family: "Source Sans 3", "Source Sans Pro", Arial, sans-serif;
+}
+
+.R-lol-gallery .e-con {
+  --container-max-width: 1300px;
+}
+
+.R-lol-gallery .elementor-widget:not(:last-child) {
+  margin-block-end: 20px;
+}
+
+.R-lol-gallery .elementor-element {
+  --widgets-spacing: 20px 20px;
+}
+
+@media (width <= 1024px) {
+
+  .R-lol-gallery .e-con {
+    --container-max-width: 1024px;
+  }
+}
+
+@media (width <= 767px) {
+
+  .R-lol-gallery .e-con {
+    --container-max-width: 767px;
+  }
+}
+
+.R-lol-gallery {
+  --swiper-theme-color: #21613d;
+}
+
+.R-lol-gallery {
+  --swiper-navigation-size: 44px;
+}
+
+.R-lol-gallery .swiper-pagination-bullets-dynamic .swiper-pagination-bullet-active, .R-lol-gallery .swiper-pagination-bullets-dynamic .swiper-pagination-bullet-active-main {
+  transform: scale(1);
+}
+
+.R-lol-gallery .swiper-pagination-bullets-dynamic .swiper-pagination-bullet-active-prev {
+  transform: scale(.66);
+}
+
+.R-lol-gallery .swiper-pagination-bullets-dynamic .swiper-pagination-bullet-active-prev-prev {
+  transform: scale(.33);
+}
+
+.R-lol-gallery .swiper-pagination-bullets-dynamic .swiper-pagination-bullet-active-next {
+  transform: scale(.66);
+}
+
+.R-lol-gallery .swiper-pagination-bullets-dynamic .swiper-pagination-bullet-active-next-next {
+  transform: scale(.33);
+}
+
+.R-lol-gallery .swiper-pagination-bullet-active {
+  opacity: var(--swiper-pagination-bullet-opacity, 1);
+  background: var(--swiper-pagination-color, var(--swiper-theme-color));
+}
+
+.R-lol-gallery .swiper-fade .swiper-slide-active, .R-lol-gallery .swiper-fade .swiper-slide-active .swiper-slide-active {
+  pointer-events: auto;
+}
+
+.R-lol-gallery .swiper-cube .swiper-slide-active, .R-lol-gallery .swiper-cube .swiper-slide-active .swiper-slide-active {
+  pointer-events: auto;
+}
+
+.R-lol-gallery .swiper-cube .swiper-slide-active {
+  pointer-events: auto;
+  visibility: visible;
+}
+
+.R-lol-gallery .swiper-flip .swiper-slide-active, .R-lol-gallery .swiper-flip .swiper-slide-active .swiper-slide-active {
+  pointer-events: auto;
+}
+
+.R-lol-gallery .elementor-animated-content {
+  --translate: 0,0;
+}
+
+.R-lol-gallery .elementor-editor-active .elementor.elementor-edit-mode .elementor-widget.elementor-global-widget:hover {
+  outline: 1px solid var(--e-p-border-global);
+}
+
+.R-lol-gallery .elementor-editor-active .elementor.elementor-edit-mode .elementor-global-widget .elementor-editor-widget-settings {
+  background-color: var(--e-p-border-global);
+}
+
+.R-lol-gallery .elementor-editor-active .elementor.elementor-edit-mode .elementor-global-widget .elementor-editor-widget-settings .elementor-editor-element-setting {
+  background-color: var(--e-p-border-global);
+  color: var(--e-p-border-global-invert);
+}
+
+.R-lol-gallery .elementor-editor-active .elementor.elementor-edit-mode .elementor-global-widget .elementor-editor-widget-settings .elementor-editor-element-setting:hover {
+  background-color: var(--e-p-border-global-hover);
+}
+
+.R-lol-gallery .elementor-editor-active .elementor.elementor-edit-mode .elementor-global-widget .elementor-editor-widget-settings .elementor-editor-element-setting.elementor-editor-element-save {
+  display: none;
+}
+
+.R-lol-gallery .elementor-sticky--active {
+  z-index: 99;
+}
+
+.R-lol-gallery .e-con.elementor-sticky--active {
+  z-index: var(--z-index, 99);
+}
+
+.R-lol-gallery .elementor-widget-heading .elementor-heading-title {
+  color: var(--e-global-color-primary);
+  font-family: var(--e-global-typography-primary-font-family), Sans-serif;
+  font-weight: var(--e-global-typography-primary-font-weight);
+}
+
+ .R-lol-gallery .elementor-widget-text-editor {
+  color: var(--e-global-color-text);
+  font-family: var(--e-global-typography-text-font-family), Sans-serif;
+  font-weight: var(--e-global-typography-text-font-weight);
+}
+
+.R-lol-gallery .elementor-widget-tabs .elementor-tab-title.elementor-active, .R-lol-gallery .elementor-widget-tabs .elementor-tab-title.elementor-active a {
+  color: var(--e-global-color-accent);
+}
+
+.R-lol-gallery .elementor-widget-accordion .elementor-active .elementor-accordion-icon, .R-lol-gallery .elementor-widget-accordion .elementor-active .elementor-accordion-title {
+  color: var(--e-global-color-accent);
+}
+
+.R-lol-gallery .elementor-widget-accordion .elementor-active .elementor-accordion-icon svg {
+  fill: var(--e-global-color-accent);
+}
+
+.R-lol-gallery .elementor-widget-toggle .elementor-tab-title.elementor-active a, .R-lol-gallery .elementor-widget-toggle .elementor-tab-title.elementor-active .elementor-toggle-icon {
+  color: var(--e-global-color-accent);
+}
+
+.R-lol-gallery .elementor-widget-portfolio .elementor-portfolio__filter.elementor-active {
+  color: var(--e-global-color-primary);
+}
+
+.R-lol-gallery .elementor-widget-gallery {
+  --galleries-title-color-normal: var(--e-global-color-primary);
+  --galleries-title-color-hover: var(--e-global-color-secondary);
+  --galleries-pointer-bg-color-hover: var(--e-global-color-accent);
+  --gallery-title-color-active: var(--e-global-color-secondary);
+  --galleries-pointer-bg-color-active: var(--e-global-color-accent);
+}
+
+ .R-lol-gallery .elementor-widget-nav-menu .elementor-nav-menu--main .elementor-item.elementor-item-active {
+  color: var(--e-global-color-accent);
+  fill: var(--e-global-color-accent);
+}
+
+.R-lol-gallery .elementor-509 .elementor-element.elementor-element-8f6dca6 {
+  --display: flex;
+  --min-height: 65vh;
+  --flex-direction: row;
+  --container-widget-width: calc(( 1 - var(--container-widget-flex-grow) ) * 100%);
+  --container-widget-height: 100%;
+  --container-widget-flex-grow: 1;
+  --container-widget-align-self: stretch;
+  --align-items: flex-end;
+  --flex-wrap: wrap;
+  --background-transition: .3s;
+  --overlay-opacity: 1;
+}
+
+.R-lol-gallery .elementor-509 .elementor-element.elementor-element-8f6dca6:not(.elementor-motion-effects-element-type-background) {
+  background-image: url("/ref/lol-gallery/assets/25048a1d8c9a.webp");
+  background-position: center;
+  background-size: cover;
+}
+
+.R-lol-gallery .elementor-509 .elementor-element.elementor-element-8f6dca6:before, .R-lol-gallery .elementor-509 .elementor-element.elementor-element-8f6dca6 > .elementor-background-slideshow:before, .R-lol-gallery .elementor-509 .elementor-element.elementor-element-8f6dca6 > .e-con-inner > .elementor-background-slideshow:before {
+  --background-overlay: "";
+  background-color: #0000;
+  background-image: linear-gradient(#000000ba 0%, #19422c 100%);
+}
+
+.R-lol-gallery .elementor-509 .elementor-element.elementor-element-8f6dca6, .R-lol-gallery .elementor-509 .elementor-element.elementor-element-8f6dca6:before {
+  --border-transition: .3s;
+}
+
+.R-lol-gallery .elementor-509 .elementor-element.elementor-element-b9671c7 {
+  --display: flex;
+  --background-transition: .3s;
+}
+
+.R-lol-gallery .elementor-509 .elementor-element.elementor-element-c0225fe {
+  text-align: left;
+  width: var(--container-widget-width, 95%);
+  --container-widget-width: 95%;
+  --container-widget-flex-grow: 0;
+  max-width: 95%;
+}
+
+.R-lol-gallery .elementor-509 .elementor-element.elementor-element-c0225fe .elementor-heading-title {
+  color: #fff;
+  text-shadow: 0 7px 27px #0000002e;
+  font-family: "Source Sans 3", "Source Sans Pro", Arial, sans-serif;
+  font-size: 80px;
+  font-weight: 500;
+  line-height: 73px;
+}
+
+.R-lol-gallery .elementor-509 .elementor-element.elementor-element-c0225fe.elementor-element {
+  --align-self: flex-start;
+}
+
+.R-lol-gallery .elementor-509 .elementor-element.elementor-element-a6263bb {
+  color: #fff;
+}
+
+.R-lol-gallery .elementor-509 .elementor-element.elementor-element-70dc982 {
+  --display: flex;
+  --background-transition: .3s;
+}
+
+.R-lol-gallery .elementor-509 .elementor-element.elementor-element-11bd266 {
+  --display: flex;
+  --flex-direction: column;
+  --container-widget-width: 100%;
+  --container-widget-height: initial;
+  --container-widget-flex-grow: 0;
+  --container-widget-align-self: initial;
+  --background-transition: .3s;
+  --margin-top: 60px;
+  --margin-bottom: 60px;
+  --margin-left: 0px;
+  --margin-right: 0px;
+}
+
+.R-lol-gallery .elementor-509 .elementor-element.elementor-element-2b13f04 {
+  --image-border-radius: 8px;
+  --image-transition-duration: .8s;
+  --overlay-transition-duration: .8s;
+  --content-text-align: center;
+  --content-padding: 20px;
+  --content-transition-duration: .8s;
+  --content-transition-delay: .8s;
+}
+
+.R-lol-gallery .elementor-509 .elementor-element.elementor-element-2b13f04 .e-gallery-item:hover .elementor-gallery-item__overlay, .R-lol-gallery .elementor-509 .elementor-element.elementor-element-2b13f04 .e-gallery-item:focus .elementor-gallery-item__overlay {
+  background-color: #00000080;
+}
+
+.R-lol-gallery {
+  --page-title-display: none;
+}
+
+.R-lol-gallery.elementor-page-509:not(.elementor-motion-effects-element-type-background) {
+  background-color: var(--e-global-color-primary);
+}
+
+@media (width >= 768px) {
+  .R-lol-gallery .elementor-509 .elementor-element.elementor-element-b9671c7 {
+    --width: 52%;
+  }
+
+  .R-lol-gallery .elementor-509 .elementor-element.elementor-element-70dc982 {
+    --width: 44%;
+  }
+}
+
+@media (width <= 767px) {
+  .R-lol-gallery .elementor-509 .elementor-element.elementor-element-8f6dca6:not(.elementor-motion-effects-element-type-background) {
+    background-position: -356px -17px;
+    background-repeat: no-repeat;
+    background-size: cover;
+  }
+
+  .R-lol-gallery .elementor-509 .elementor-element.elementor-element-c0225fe .elementor-heading-title {
+    font-size: 40px;
+    line-height: 1.2em;
+  }
+}
+
+ .R-lol-gallery .elementor-107 .elementor-element.elementor-element-083053e .elementor-nav-menu--main .elementor-item.elementor-item-active {
+  color: var(--e-global-color-secondary);
+  fill: var(--e-global-color-secondary);
+}
+
+ .R-lol-gallery .elementor-150 .elementor-element.elementor-element-338a1ea > .elementor-background-slideshow:before, .R-lol-gallery .elementor-150 .elementor-element.elementor-element-338a1ea > .e-con-inner > .elementor-background-slideshow:before {
+  --background-overlay: "";
+  background-color: var(--e-global-color-text);
+}
+
+.R-lol-gallery .e-con.e-parent:nth-of-type(n+4):not(.e-lazyloaded):not(.e-no-lazyload), .R-lol-gallery .e-con.e-parent:nth-of-type(n+4):not(.e-lazyloaded):not(.e-no-lazyload) * {
+  background-image: none !important;
+}
+
+@media screen and (height <= 1024px) {
+  .R-lol-gallery .e-con.e-parent:nth-of-type(n+3):not(.e-lazyloaded):not(.e-no-lazyload), .R-lol-gallery .e-con.e-parent:nth-of-type(n+3):not(.e-lazyloaded):not(.e-no-lazyload) * {
+    background-image: none !important;
+  }
+}
+
+@media screen and (height <= 640px) {
+  .R-lol-gallery .e-con.e-parent:nth-of-type(n+2):not(.e-lazyloaded):not(.e-no-lazyload), .R-lol-gallery .e-con.e-parent:nth-of-type(n+2):not(.e-lazyloaded):not(.e-no-lazyload) * {
+    background-image: none !important;
+  }
+}
+
+.R-lol-gallery .e-gallery-container {
+  flex-wrap: wrap;
+  display: flex;
+  position: relative;
+}
+
+.R-lol-gallery .e-gallery-container:not(.e-gallery-grid) {
+  transition: padding-bottom var(--animation-duration);
+}
+
+.R-lol-gallery .e-gallery-item {
+  transition-property: all;
+  transition-duration: var(--animation-duration);
+  flex-grow: 0;
+  flex-shrink: 0;
+  position: relative;
+}
+
+.R-lol-gallery .e-gallery-image {
+  transform-origin: top;
+  width: 100%;
+  transition: var(--animation-duration);
+  background-position: center;
+  background-size: cover;
+}
+
+.R-lol-gallery .e-gallery-grid:not(.e-gallery--animated) {
+  grid-gap: var(--vgap) var(--hgap);
+  grid-template-columns: repeat(var(--columns), 1fr);
+  display: grid;
+}
+
+.R-lol-gallery .e-gallery-grid .e-gallery-image {
+  padding-bottom: var(--aspect-ratio);
+}
+
+.R-lol-gallery .e-gallery--lazyload .e-gallery-image:not(.e-gallery-image-loaded) {
+  filter: opacity(0);
+  transform: scale(.5);
+}
+
+@keyframes hide-scroll {
+  0%, to {
+    overflow: hidden;
+  }
+}
+
+.R-lol-gallery .elementor-item-active:after, .R-lol-gallery .elementor-item-active:before {
+  transform: scale(1);
+}
+
+.R-lol-gallery .e--pointer-framed.e--animation-draw .elementor-item-active:after, .R-lol-gallery .e--pointer-framed.e--animation-draw .elementor-item-active:before {
+  width: 100%;
+  height: 100%;
+}
+
+.R-lol-gallery .e--pointer-framed.e--animation-draw .elementor-item-active:before {
+  transition: opacity 20ms, height .1s, width .1s .1s;
+}
+
+.R-lol-gallery .e--pointer-framed.e--animation-draw .elementor-item-active:after {
+  transition: opacity 20ms .2s, height .1s .2s, width .1s .3s;
+}
+
+.R-lol-gallery .e--pointer-framed.e--animation-corners .elementor-item-active:after, .R-lol-gallery .e--pointer-framed.e--animation-corners .elementor-item-active:before {
+  width: 100%;
+  height: 100%;
+  transition: opacity 2ms, width .4s, height .4s;
+}
+
+.R-lol-gallery .e--pointer-background .elementor-item-active {
+  color: #fff;
+}
+
+.R-lol-gallery .e--pointer-background.e--animation-grow .elementor-item-active:before {
+  opacity: 1;
+  transform: scale(1);
+}
+
+.R-lol-gallery .e--pointer-background.e--animation-shrink .elementor-item-active:before {
+  transition: opacity .15s, transform .4s;
+}
+
+.R-lol-gallery .e--pointer-background.e--animation-shutter-in-vertical .elementor-item-active:before {
+  bottom: 50%;
+}
+
+.R-lol-gallery .e--pointer-background.e--animation-shutter-in-vertical .elementor-item-active:after {
+  top: 50%;
+}
+
+.R-lol-gallery .e--pointer-background.e--animation-shutter-in-horizontal .elementor-item-active:before {
+  left: 50%;
+}
+
+.R-lol-gallery .e--pointer-background.e--animation-shutter-in-horizontal .elementor-item-active:after {
+  right: 50%;
+}
+
+ .R-lol-gallery .elementor-nav-menu ul ul a:active {
+  border-left: 16px solid #0000;
+}
+
+ .R-lol-gallery .elementor-nav-menu ul ul ul a:active {
+  border-left: 24px solid #0000;
+}
+
+ .R-lol-gallery .elementor-nav-menu ul ul ul ul a:active {
+  border-left: 32px solid #0000;
+}
+
+ .R-lol-gallery .elementor-nav-menu ul ul ul ul ul a:active {
+  border-left: 40px solid #0000;
+}
+
+.R-lol-gallery .elementor-nav-menu--dropdown .elementor-item.elementor-item-active, .R-lol-gallery .elementor-sub-item.elementor-item-active {
+  color: #fff;
+  background-color: #3f444b;
+}
+
+.R-lol-gallery .elementor-menu-toggle.elementor-active .elementor-menu-toggle__icon--open {
+  display: none;
+}
+
+ .R-lol-gallery span.elementor-menu-toggle__icon--open {
+  line-height: 1;
+}
+
+.R-lol-gallery .elementor-nav-menu--toggle .elementor-menu-toggle.elementor-active + .elementor-nav-menu__container {
+  max-height: var(--menu-height);
+  animation: .3s backwards hide-scroll;
+  transform: scaleY(1);
+}
+
+.R-lol-gallery .elementor-heading-title {
+  margin: 0;
+  padding: 0;
+  line-height: 1;
+}
+
+.R-lol-gallery .elementor-widget-heading .elementor-heading-title[class*="elementor-size-"] > a {
+  color: inherit;
+  font-size: inherit;
+  line-height: inherit;
+}
+
+.R-lol-gallery .elementor-gallery__container {
+  min-height: 1px;
+}
+
+.R-lol-gallery .elementor-gallery-item {
+  border: solid var(--image-border-width) var(--image-border-color);
+  border-radius: var(--image-border-radius);
+  text-decoration: none;
+  display: block;
+  position: relative;
+  overflow: hidden;
+}
+
+ .R-lol-gallery .elementor-gallery-item__overlay {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+.R-lol-gallery .elementor-gallery-item__overlay {
+  mix-blend-mode: var(--overlay-mix-blend-mode);
+  transition-duration: var(--overlay-transition-duration);
+  transition-property: mix-blend-mode, transform, opacity, background-color;
+}
+
+.R-lol-gallery .elementor-gallery-item__image.e-gallery-image {
+  transition-duration: var(--image-transition-duration);
+  transition-property: filter, transform;
+}
+
+.R-lol-gallery .elementor-gallery__titles-container:not(.e--pointer-framed) .elementor-item.elementor-item-active:after, .R-lol-gallery .elementor-gallery__titles-container:not(.e--pointer-framed) .elementor-item.elementor-item-active:before {
+  background-color: var(--galleries-pointer-bg-color-active);
+}
+
+.R-lol-gallery .elementor-gallery__titles-container.e--pointer-framed .elementor-item.elementor-item-active:after, .R-lol-gallery .elementor-gallery__titles-container.e--pointer-framed .elementor-item.elementor-item-active:before {
+  border-color: var(--galleries-pointer-bg-color-active);
+}
+
+.R-lol-gallery .elementor-gallery-title--active {
+  color: #495157;
+}
+
+.R-lol-gallery .e-gallery-item.elementor-gallery-item {
+  transition-property: all;
+}
+
+.R-lol-gallery a.elementor-item.elementor-gallery-title.elementor-item-active {
+  color: var(--galleries-title-color-hover);
+}
+
+.R-lol-gallery a.elementor-item.elementor-gallery-title.elementor-item-active {
+  color: var(--gallery-title-color-active);
+}
+
+.R-lol-gallery .e-con-inner > .elementor-widget-gallery, .R-lol-gallery .e-con > .elementor-widget-gallery {
+  width: var(--container-widget-width);
+  --flex-grow: var(--container-widget-flex-grow);
+}

@@ -1,7 +1,7 @@
 User-agent: *
 Allow: /
 
-# Public program, partner, and nonprofit information may be crawled.
+# Explicitly allow AI and LLM crawlers for AIO (Artificial Intelligence Optimization)
 User-agent: GPTBot
 Allow: /
 

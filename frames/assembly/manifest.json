@@ -1,0 +1,13 @@
+{
+  "frames": 72,
+  "desktop": {
+    "dir": "d",
+    "width": 1280,
+    "height": 960
+  },
+  "mobile": {
+    "dir": "m",
+    "width": 720,
+    "height": 720
+  }
+}

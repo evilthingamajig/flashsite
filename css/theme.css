@@ -1,0 +1,57 @@
+/* Flash Forward theme layer (step 9). The build already remaps every reference color to a green of the same
+   brightness and unifies fonts. This file sets the few surfaces that carry the brand: dark green and white. */
+:root { --ff-green: #21613d; --ff-green-deep: #173e2b; --ff-green-ink: #0e2e1f; --ff-tint: #edf5f0; }
+
+/* Header */
+.ff-shell.ff-shell.ff-shell #main_header .btn-orange,
+.ff-shell.ff-shell.ff-shell #main_header .covidbtn .donate { background: var(--ff-green-deep) !important; border-color: var(--ff-green-deep) !important; color: #fff !important; }
+.ff-shell.ff-shell.ff-shell #main_header .btn-orange:hover,
+.ff-shell.ff-shell.ff-shell #main_header .covidbtn .donate:hover { background: var(--ff-green) !important; }
+.ff-shell.ff-shell.ff-shell #main_header .main-navigation { background: var(--ff-green-deep) !important; }
+.ff-shell.ff-shell.ff-shell #main_header .main-navigation .navigation ul.menu > li > a,
+.ff-shell.ff-shell.ff-shell #main_header .main-navigation .navigation ul.menu > li::after,
+.ff-shell.ff-shell.ff-shell #main_header .main-navigation .navigation ul.menu > li::before { color: #fff !important; }
+.ff-shell.ff-shell.ff-shell #main_header .main-navigation .navigation ul.menu > li.watch-the-documentary { background: #fff !important; border: 1px solid #fff; }
+.ff-shell.ff-shell.ff-shell #main_header .main-navigation .navigation ul.menu > li.watch-the-documentary > a,
+.ff-shell.ff-shell.ff-shell #main_header .main-navigation .navigation ul.menu > li.watch-the-documentary::before { color: var(--ff-green-deep) !important; background: #fff !important; }
+.ff-shell.ff-shell.ff-shell #main_header .main-navigation .navigation ul.menu > li > ul a { color: var(--ff-green-deep) !important; }
+.ff-shell.ff-shell.ff-shell #main_header .main-navigation .navigation ul.menu > li > ul a:hover { background: var(--ff-tint); }
+.ff-shell #edit-submit-search-solr {
+  background: var(--ff-green-ink) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='2.5' stroke-linecap='round'%3E%3Ccircle cx='10.5' cy='10.5' r='6.5'/%3E%3Cpath d='m16 16 5 5'/%3E%3C/svg%3E") center / 16px no-repeat !important;
+}
+
+body .ff-shell.ff-shell.ff-shell #main_header .main-navigation .navigation ul.menu > li > a::after { color: #fff !important; }
+body .ff-shell.ff-shell.ff-shell #main_header .main-navigation .navigation ul.menu > li > ul a { text-transform: none !important; }
+
+/* Footer */
+.ff-shell #footer.footer, .ff-shell .below-footer { background: var(--ff-green-deep) !important; color: #e3efe7 !important; }
+.ff-shell .below-footer { border-top: 1px solid rgba(255, 255, 255, .15); background: var(--ff-green-ink) !important; }
+.ff-shell #footer h6 { color: #fff !important; }
+.ff-shell #footer a, .ff-shell .below-footer a { color: #e3efe7 !important; }
+.ff-shell #footer a:hover, .ff-shell .below-footer a:hover { color: #fff !important; text-decoration: underline; }
+.ff-shell #footer .footer-address a { overflow-wrap: anywhere; }
+.ff-shell #footer .hs-input { background: transparent !important; border-color: rgba(255, 255, 255, .55) !important; color: #fff !important; }
+.ff-shell #footer .hs-input::placeholder { color: #cfe3d6; }
+.ff-shell #footer .hs-button { background: #fff !important; color: var(--ff-green-deep) !important; border-color: #fff !important; }
+
+@media (max-width: 1129px) {
+  .ff-shell.ff-shell.ff-shell #main_header .main-navigation.is-open,
+  .ff-shell.ff-shell.ff-shell #main_header .main-navigation.is-open nav.navigation,
+  .ff-shell.ff-shell.ff-shell #main_header .main-navigation.is-open .navigation ul,
+  .ff-shell.ff-shell.ff-shell #main_header .main-navigation.is-open .navigation li { background: var(--ff-green-deep) !important; border-color: rgba(255, 255, 255, .14) !important; }
+  .ff-shell.ff-shell.ff-shell #main_header .main-navigation.is-open .navigation ul.menu > li > ul a { color: #e3efe7 !important; }
+  .ff-shell.ff-shell.ff-shell #main_header .main-navigation.is-open .navigation ul.menu > li > ul a:hover { background: transparent; color: #fff !important; }
+}
+
+/* Text that sits on a photo stays white; a dark green accent would vanish into the photo. */
+.ff-main .hero-banner-v2 .hero-headline .emphasize { color: #fff !important; }
+
+/* Donate light picker: the selected choice is dark green with white text, the rest light grey. */
+.ff-main [data-donate] .label-amount { color: var(--ff-green-deep) !important; -webkit-text-fill-color: var(--ff-green-deep) !important; }
+.ff-main [data-donate] .label-amount > a { background-color: #e9e9e9 !important; }
+.ff-main [data-donate] .label-amount.is-active { color: #fff !important; -webkit-text-fill-color: #fff !important; }
+.ff-main [data-donate] .label-amount.is-active > a { background-color: var(--ff-green-deep) !important; }
+.ff-main [data-donate] [data-donate-link] { background: var(--ff-green-deep) !important; border-color: var(--ff-green-deep) !important; color: #fff !important; }
+
+/* PIH sets a 300px minimum on the map legend below 500px, which overflows a 320px phone. */
+.ff-main .map-legend .map-key { min-width: 0 !important; }

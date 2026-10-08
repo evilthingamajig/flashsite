@@ -1,0 +1,44 @@
+/* Unscoped glue between the scraped shell and the scraped page bodies. Keep this file small. */
+html { scroll-behavior: auto; }
+body.ff { margin: 0; padding: 0; background: #fff; }
+.ff-skip { position: absolute; left: -9999px; top: 0; z-index: 1000; padding: 10px 16px; background: #fff; color: #000; }
+.ff-skip:focus { left: 8px; top: 8px; }
+.ff-main { display: block; }
+.ff-main img, .ff-main video { max-width: 100%; }
+.visually-hidden { position: absolute !important; width: 1px; height: 1px; overflow: hidden; clip: rect(1px, 1px, 1px, 1px); white-space: nowrap; }
+
+/* Logo: the scraped header expected one wide logo image; ours is the mark plus the name. */
+.ff-logo { display: inline-flex; align-items: center; gap: 10px; text-decoration: none !important; }
+.ff-logo img { width: auto !important; height: 52px !important; }
+.ff-logo-text { font-weight: 700; font-size: 17px; line-height: 1.1; color: #173e2b; letter-spacing: .01em; white-space: nowrap; }
+@media (max-width: 600px) { .ff-logo img { height: 40px !important; } .ff-logo-text { font-size: 14px; } }
+.ff-logo-footer img { height: 64px !important; }
+.ff-logo-footer .ff-logo-text { color: #fff; font-size: 19px; }
+
+/* Shell dropdowns: the original opened these with JavaScript. */
+.ff-shell #main_header .navigation ul.menu > li { position: relative; }
+.ff-shell #main_header .navigation ul.menu > li > ul { display: none; position: absolute; left: 0; top: 100%; z-index: 50; min-width: 230px; margin: 0; padding: 6px 0; list-style: none; background: #fff; box-shadow: 0 6px 18px rgba(0, 0, 0, .15); }
+.ff-shell #main_header .navigation ul.menu > li:hover > ul,
+.ff-shell #main_header .navigation ul.menu > li:focus-within > ul { display: block; }
+.ff-shell #main_header .navigation ul.menu > li > ul a { color: #173e2b; }
+
+/* Generic behaviours driven by site.js */
+[data-accordion-item]:not(.is-open) [data-accordion-panel] { display: none; }
+[data-tab-panel]:not(.is-open) { display: none; }
+
+@media (max-width: 1129px) {
+  .ff-shell #main_header .main-navigation { display: none; }
+  .ff-shell #main_header .main-navigation.is-open { display: block; }
+  .ff-shell #main_header .main-navigation.is-open ul.menu { display: block; height: auto; }
+  /* The original menu is a JS slide-in drawer; open it in place instead. */
+  .ff-shell #main_header .main-navigation.is-open .region-navigation { display: block; }
+  .ff-shell #main_header .main-navigation.is-open nav.navigation { position: static !important; transform: none !important; left: auto !important; right: auto !important; width: 100% !important; height: auto !important; overflow: visible !important; }
+  .ff-shell #main_header .main-navigation.is-open ul.menu > li { display: block; float: none; width: 100%; }
+  .ff-shell #main_header .main-navigation.is-open ul.menu > li > ul { display: block; position: static; box-shadow: none; padding-left: 16px; background: transparent; }
+}
+
+/* pih.org heroes put the photo at z-index:-1; keep it above the page background. */
+.ff-main .hero-banner-v2 { isolation: isolate; }
+
+/* Some reference accordions hide panels in their own CSS; an opened item always shows its panel. */
+[data-accordion-item].is-open [data-accordion-panel] { display: block !important; }
