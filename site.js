@@ -49,3 +49,16 @@
     });
   }
 })();
+
+// News index tag filter
+(function(){
+  var grid=document.getElementById('ff-newsgrid');if(!grid)return;
+  var chips=document.querySelectorAll('.ff-chiprow .ff-chip');
+  chips.forEach(function(c){c.addEventListener('click',function(){
+    chips.forEach(function(x){x.classList.remove('is-active')});c.classList.add('is-active');
+    var t=c.getAttribute('data-filter');
+    grid.querySelectorAll('[data-tag]').forEach(function(card){
+      card.style.display=(t==='all'||card.getAttribute('data-tag')===t)?'':'none';
+    });
+  });});
+})();
