@@ -2,13 +2,8 @@
 // data-toggle="#id"            click toggles .is-open on #id
 // data-accordion-trigger       inside [data-accordion-item]; toggles .is-open on the item
 // data-tab="#panel"            inside [data-tabs]; opens that [data-tab-panel], closes its siblings
-// data-lights="n"              sets the light count for [data-donate-link] (Every.org checkout)
-// data-frequency="once|monthly"
 // #ff-search-form / #ff-search-results on /search/
 (() => {
-  const LIGHT_CENTS = 517; // one light, parts only (site/lib/facts.ts)
-  const EVERY_ORG = 'https://www.every.org/flash-forward-foundation';
-
   document.addEventListener('click', (e) => {
     const toggle = e.target.closest('[data-toggle]');
     if (toggle) {
@@ -34,29 +29,7 @@
       group.querySelectorAll('[data-tab-panel]').forEach((p) => p.classList.toggle('is-open', p.matches(tab.dataset.tab)));
       return;
     }
-    const choice = e.target.closest('[data-lights], [data-frequency]');
-    if (choice) {
-      e.preventDefault();
-      const form = choice.closest('[data-donate]') || document;
-      const attr = choice.hasAttribute('data-lights') ? 'data-lights' : 'data-frequency';
-      form.querySelectorAll(`[${attr}]`).forEach((b) => b.classList.toggle('is-active', b === choice));
-      updateDonate(form);
-    }
   });
-
-  function updateDonate(form) {
-    const lights = Math.min(100, Math.max(1, parseInt(form.querySelector('[data-lights].is-active')?.dataset.lights || '1', 10)));
-    const monthly = form.querySelector('[data-frequency].is-active')?.dataset.frequency === 'monthly';
-    const amount = ((lights * LIGHT_CENTS) / 100).toFixed(2);
-    const params = new URLSearchParams({
-      amount,
-      frequency: monthly ? 'MONTHLY' : 'ONCE',
-      designation: `${lights} solar study light${lights === 1 ? '' : 's'}${monthly ? ' every month' : ''}`,
-    });
-    form.querySelectorAll('[data-donate-link]').forEach((a) => { a.href = `${EVERY_ORG}?${params}#donate`; });
-    form.querySelectorAll('[data-donate-amount]').forEach((el) => { el.textContent = `$${amount}`; });
-  }
-  document.querySelectorAll('[data-donate]').forEach(updateDonate);
 
   // Every form returns to /contact/?sent=1 after FormSubmit accepts it.
   const sent = document.getElementById('ff-sent');

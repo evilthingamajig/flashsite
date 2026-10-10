@@ -55,3 +55,66 @@ body .ff-shell.ff-shell.ff-shell #main_header .main-navigation .navigation ul.me
 
 /* PIH sets a 300px minimum on the map legend below 500px, which overflows a 320px phone. */
 .ff-main .map-legend .map-key { min-width: 0 !important; }
+
+/* Givebutter embed placeholder on /donate/ */
+.ff-embed-slot { max-width: 720px; margin: 24px auto; }
+.ff-embed-panel { border: 2px dashed var(--ff-green-deep, #19422c); padding: 32px 28px; text-align: center; background: #f4f7f5; }
+.ff-embed-panel .ff-embed-title { margin-top: 0; }
+.ff-embed-panel .ff-embed-prices { font-weight: 600; }
+
+/* Document links on /nonprofit-status/ */
+.ff-doc-row { display: flex; flex-wrap: wrap; gap: 12px; }
+.ff-doc-btn { display: inline-block; border: 1px solid var(--ff-green-deep, #19422c); color: var(--ff-green-deep, #19422c); padding: 12px 18px; font-weight: 700; text-decoration: none; }
+.ff-doc-btn:hover { background: var(--ff-green-deep, #19422c); color: #fff; }
+
+/* Other-partner logo row on /our-work/where/ */
+.ff-partner-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; margin-top: 16px; }
+.ff-partner-card img { width: 100%; aspect-ratio: 16/9; object-fit: contain; background: #fff; border: 1px solid #e2e6e3; display: block; }
+.ff-partner-card p { margin-top: 8px; }
+@media (max-width: 767px) { .ff-partner-row { grid-template-columns: 1fr; } }
+
+/* Green donation CTA band: white text on the dark green background */
+.block-pattern--donation-cta .wp-block-heading,
+.block-pattern--donation-cta .wp-block-paragraph,
+.wp-block-cover .wp-block-cover__inner-container .wp-block-heading[style*="#21613d"],
+.inline-donation-module.block-pattern--donation-cta h2,
+.inline-donation-module.block-pattern--donation-cta p { color: #fff !important; }
+
+/* Featured news card: darken the image behind the overlay title */
+.card-v2--featured .card-header--overlay { background: linear-gradient(180deg, rgba(0,0,0,.15) 0%, rgba(0,0,0,.65) 100%); }
+.card-v2--featured .card-title { text-shadow: 0 1px 3px rgba(0,0,0,.6); }
+
+/* Card and grid images keep a fixed ratio instead of stretching */
+.card-featured-image, .featured-image-wrapper img { aspect-ratio: 3/2; object-fit: cover; width: 100%; height: auto; display: block; }
+.card .card-media img { aspect-ratio: 4/3; object-fit: cover; width: 100%; height: auto; display: block; }
+
+/* Green donation CTA band: readable button */
+.block-pattern--donation-cta button[type="submit"],
+.block-pattern--donation-cta .inlineForm__InlineDonationWrapper-sc-xm6rh6-0 button { background: #fff !important; color: #123120 !important; border: 2px solid #fff !important; }
+.block-pattern--donation-cta button[type="submit"]:hover { background: transparent !important; color: #fff !important; }
+
+/* "In The Field" / three-up card excerpts use the site sans, not the large serif */
+.dr-block-manual-post-item__excerpt { font-family: 'Source Sans 3', 'Source Sans Pro', sans-serif !important; font-size: 1rem !important; line-height: 1.5 !important; }
+
+/* Side-by-side list: arrows only on items that are actually links */
+.block-pattern--side-by-side-medium-list li:not(:has(a)):after { display: none !important; }
+
+/* Homepage stat row: 4-up on desktop, 2x2 tablet, stacked mobile */
+.carousel-of-statistics .stat-carousel { flex-wrap: wrap !important; }
+.carousel-of-statistics .stat-carousel .stat-slide { margin-top: 16px !important; }
+
+/* Featured news card: stronger scrim so the overlay title reads */
+.card-v2--featured .card-header--overlay { background: linear-gradient(180deg, rgba(15,45,30,0) 30%, rgba(15,45,30,.92) 100%) !important; }
+
+/* "What Drives Us" group photo: cap the size */
+.img__mission-center img { max-width: 720px; width: 100%; height: auto; aspect-ratio: 16/9; object-fit: cover; display: block; margin: 0 auto; }
+
+/* Donate page: tighten the space above the Contact CTA */
+.R-shc-donate .nmc-block--cta .content { padding: 48px 0 !important; }
+
+/* Featured news card: hero image + solid dark-green title bar */
+.card-v2--featured { position: relative; min-height: 480px; background-image: var(--hero-image); background-size: cover; background-position: center; }
+.card-v2--featured .card-v2__link { display: block; position: absolute; inset: 0; }
+.card-v2--featured .card-header--overlay { position: absolute !important; left: 0; right: 0; bottom: 0; top: auto; height: auto; background: var(--ff-green-deep, #19422c) !important; padding: 18px 24px; }
+.card-v2--featured .card-v2__content { display: block; }
+.card-v2--featured .card-title, .card-v2--featured .card-date { color: #fff !important; text-shadow: none; }

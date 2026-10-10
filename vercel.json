@@ -12,6 +12,46 @@
   ],
   "redirects": [
     {
+      "source": "/news/how-a-light-is-built",
+      "destination": "/our-work/how-we-build/",
+      "permanent": true
+    },
+    {
+      "source": "/news/how-a-light-is-built/",
+      "destination": "/our-work/how-we-build/",
+      "permanent": true
+    },
+    {
+      "source": "/news/light-cost",
+      "destination": "/our-work/the-light/",
+      "permanent": true
+    },
+    {
+      "source": "/news/light-cost/",
+      "destination": "/our-work/the-light/",
+      "permanent": true
+    },
+    {
+      "source": "/news/internship-note",
+      "destination": "/get-involved/internship/",
+      "permanent": true
+    },
+    {
+      "source": "/news/internship-note/",
+      "destination": "/get-involved/internship/",
+      "permanent": true
+    },
+    {
+      "source": "/news/electricity-figure",
+      "destination": "/news/why-study-lights/",
+      "permanent": true
+    },
+    {
+      "source": "/news/electricity-figure/",
+      "destination": "/news/why-study-lights/",
+      "permanent": true
+    },
+    {
       "source": "/mission",
       "destination": "/about/",
       "permanent": true
