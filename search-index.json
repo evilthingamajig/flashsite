@@ -30,11 +30,6 @@
     "description": "Answers about the Flash Forward study light, where the lights go, donating, volunteering and internships, and the organization."
   },
   {
-    "url": "/get-involved/apply/",
-    "title": "How to Apply",
-    "description": "How to apply to volunteer or take an unpaid student placement with Flash Forward Foundation, and the application form."
-  },
-  {
     "url": "/get-involved/",
     "title": "Get Involved",
     "description": "Sponsor a solar study light, volunteer, intern, follow Flash Forward online or partner with the team."
@@ -43,11 +38,6 @@
     "url": "/get-involved/internship/",
     "title": "Internship Program",
     "description": "Unpaid student internship at Flash Forward Foundation: named tracks, a term you propose, and how to apply."
-  },
-  {
-    "url": "/get-involved/volunteer/",
-    "title": "Volunteer",
-    "description": "Volunteer tracks at Flash Forward Foundation: building, outreach, communications, fundraising and STEM activities, plus a sign-up form."
   },
   {
     "url": "/impact/",

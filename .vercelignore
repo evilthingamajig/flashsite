@@ -20,5 +20,3 @@ js/ff-assembly3d.js
 .env*
 ref/
 ref/**
-frames/
-frames/**

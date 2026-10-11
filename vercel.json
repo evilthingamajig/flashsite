@@ -240,6 +240,26 @@
       "source": "/donate/choose/stories/:slug/",
       "destination": "/our-work/partners/:slug/",
       "permanent": true
+    },
+    {
+      "source": "/get-involved/volunteer",
+      "destination": "/get-involved/internship/",
+      "permanent": true
+    },
+    {
+      "source": "/get-involved/volunteer/",
+      "destination": "/get-involved/internship/",
+      "permanent": true
+    },
+    {
+      "source": "/get-involved/apply",
+      "destination": "/get-involved/internship/",
+      "permanent": true
+    },
+    {
+      "source": "/get-involved/apply/",
+      "destination": "/get-involved/internship/",
+      "permanent": true
     }
   ],
   "headers": [
