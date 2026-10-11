@@ -4156,33 +4156,6 @@
   content: "";
 }
 
-@font-face {
-  font-family: Line Awesome Brands;
-  font-style: normal;
-  font-weight: 400;
-  font-display: auto;
-  src: url("/ref/gw-volunteer/assets/a693ba288955.eot");
-  src: url("/ref/gw-volunteer/assets/c73a7d4ed6ef.eot") format("embedded-opentype"), url("/ref/gw-volunteer/assets/52feb2419d2e.woff2") format("woff2"), url("/ref/gw-volunteer/assets/d4d139f7856b.woff") format("woff"), url("/ref/gw-volunteer/assets/b4be4e8be774.ttf") format("truetype"), url("/ref/gw-volunteer/assets/597c386a1ceb.svg") format("svg");
-}
-
-@font-face {
-  font-family: Line Awesome Free;
-  font-style: normal;
-  font-weight: 400;
-  font-display: auto;
-  src: url("/ref/gw-volunteer/assets/a8c877ef976d.eot");
-  src: url("/ref/gw-volunteer/assets/d9ace4050ca3.eot") format("embedded-opentype"), url("/ref/gw-volunteer/assets/502230e304e5.woff2") format("woff2"), url("/ref/gw-volunteer/assets/ed351bac392b.woff") format("woff"), url("/ref/gw-volunteer/assets/311966faae82.ttf") format("truetype"), url("/ref/gw-volunteer/assets/380c9c732344.svg") format("svg");
-}
-
-@font-face {
-  font-family: Line Awesome Free;
-  font-style: normal;
-  font-weight: 900;
-  font-display: auto;
-  src: url("/ref/gw-volunteer/assets/39df6a0fbfcb.eot");
-  src: url("/ref/gw-volunteer/assets/0ee7c970c5cc.eot") format("embedded-opentype"), url("/ref/gw-volunteer/assets/241ef600e3d8.woff2") format("woff2"), url("/ref/gw-volunteer/assets/03f1163c67d1.woff") format("woff"), url("/ref/gw-volunteer/assets/79899fa77827.ttf") format("truetype"), url("/ref/gw-volunteer/assets/2370c38fca16.svg") format("svg");
-}
-
 .R-gw-volunteer .la.la-folder-open-o {
   font-family: Line Awesome Free;
   font-weight: 400;
@@ -4261,14 +4234,6 @@
 
 .R-gw-volunteer .icofont-folder-open:before {
   content: "";
-}
-
-@font-face {
-  font-family: themify;
-  src: url("/ref/gw-volunteer/assets/664f16d8a6a4.eot");
-  src: url("https://genesysworks.org/wp-content/plugins/skyboot-custom-icons-for-elementor/assets/css/.../fonts/themify.eot?#iefix-fvbane") format("embedded-opentype"), url("/ref/gw-volunteer/assets/b51a2c32e3d9.woff") format("woff"), url("/ref/gw-volunteer/assets/3553671056e8.ttf") format("truetype"), url("/ref/gw-volunteer/assets/2819a2b8cf36.svg") format("svg");
-  font-weight: normal;
-  font-style: normal;
 }
 
 .R-gw-volunteer [class^="ti-"], .R-gw-volunteer [class*=" ti-"] {
@@ -4390,26 +4355,9 @@
   overflow: visible;
 }
 
-@font-face {
-  font-family: "Font Awesome 5 Free";
-  font-style: normal;
-  font-weight: 900;
-  font-display: block;
-  src: url("/ref/gw-volunteer/assets/c5e503104b73.eot");
-  src: url("/ref/gw-volunteer/assets/862317754882.eot") format("embedded-opentype"), url("/ref/gw-volunteer/assets/9dc9f005ab5a.woff2") format("woff2"), url("/ref/gw-volunteer/assets/a348aa12c606.woff") format("woff"), url("/ref/gw-volunteer/assets/ef0cd8035554.ttf") format("truetype"), url("/ref/gw-volunteer/assets/bf19515db9fc.svg") format("svg");
-}
-
 .R-gw-volunteer .fa {
   font-family: "Font Awesome 5 Free";
   font-weight: 900;
-}
-
-@font-face {
-  font-family: simple-line-icons;
-  src: url("/ref/gw-volunteer/assets/46f45398d436.eot");
-  src: url("/ref/gw-volunteer/assets/2fbe70524491.eot") format("embedded-opentype"), url("/ref/gw-volunteer/assets/10a577fe6f1f.woff2") format("woff2"), url("/ref/gw-volunteer/assets/771581b7d9e2.ttf") format("truetype"), url("/ref/gw-volunteer/assets/78c2595b6319.woff") format("woff"), url("/ref/gw-volunteer/assets/0589f4ba073e.svg") format("svg");
-  font-weight: normal;
-  font-style: normal;
 }
 
  .R-gw-volunteer .icon-envelope-open, .R-gw-volunteer .icon-book-open, .R-gw-volunteer .icon-lock-open {
@@ -4434,14 +4382,6 @@
 
 .R-gw-volunteer .icon-lock-open:before {
   content: "";
-}
-
-@font-face {
-  font-family: ElegantIcons;
-  src: url("/ref/gw-volunteer/assets/8357ec99a58f.eot");
-  src: url("/ref/gw-volunteer/assets/65ab8064d39d.eot") format("embedded-opentype"), url("/ref/gw-volunteer/assets/290ec8a20d7f.woff") format("woff"), url("/ref/gw-volunteer/assets/4526f8296b35.ttf") format("truetype"), url("/ref/gw-volunteer/assets/887c70ca9f7c.svg") format("svg");
-  font-weight: 400;
-  font-style: normal;
 }
 
  .R-gw-volunteer .icon_folder-open, .R-gw-volunteer .icon_folder-open_alt, .R-gw-volunteer .icon_lock-open, .R-gw-volunteer .icon_lock-open_alt {
@@ -4469,15 +4409,6 @@
 
 .R-gw-volunteer .icon_lock-open:before {
   content: "";
-}
-
-@font-face {
-  font-family: "Font Awesome 5 Brands";
-  font-style: normal;
-  font-weight: 400;
-  font-display: block;
-  src: url("/ref/gw-volunteer/assets/0cc7fab6112b.eot");
-  src: url("/ref/gw-volunteer/assets/14be95332301.eot") format("embedded-opentype"), url("/ref/gw-volunteer/assets/998cb666fa51.woff2") format("woff2"), url("/ref/gw-volunteer/assets/fb65458ffdab.woff") format("woff"), url("/ref/gw-volunteer/assets/39e9e617648b.ttf") format("truetype"), url("/ref/gw-volunteer/assets/119202c36dac.svg") format("svg");
 }
 
 .R-gw-volunteer .fab {

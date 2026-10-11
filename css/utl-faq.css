@@ -8,15 +8,6 @@
   visibility: hidden;
 }
 
-@font-face {
-  font-family: shopengine;
-  src: url("/ref/utl-faq/assets/6b697901fbf6.woff");
-  src: url("/ref/utl-faq/assets/6b697901fbf6.woff") format("woff");
-  font-weight: 400;
-  font-style: normal;
-  font-display: swap;
-}
-
 .R-utl-faq .shopengine-icon, .R-utl-faq .shopengine-widget-icon {
   speak: never;
   font-variant: normal;
@@ -913,22 +904,6 @@
 
  .R-utl-faq [hidden] {
   display: none;
-}
-
-@font-face {
-  font-family: star;
-  src: url("/ref/utl-faq/assets/ff53b234f7f5.eot");
-  src: url("/ref/utl-faq/assets/d906d0c7b4b5.eot") format("embedded-opentype"), url("/ref/utl-faq/assets/8a7a2c8842f6.woff") format("woff"), url("/ref/utl-faq/assets/d25bee796eef.ttf") format("truetype"), url("/ref/utl-faq/assets/dcc11f1eab4f.svg") format("svg");
-  font-weight: 400;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: WooCommerce;
-  src: url("/ref/utl-faq/assets/f6150d5c8526.eot");
-  src: url("/ref/utl-faq/assets/66962ce29362.eot") format("embedded-opentype"), url("/ref/utl-faq/assets/1f31dd604461.woff") format("woff"), url("/ref/utl-faq/assets/3f39e4650181.ttf") format("truetype"), url("/ref/utl-faq/assets/cd1daaacad86.svg") format("svg");
-  font-weight: 400;
-  font-display: swap;
 }
 
 .R-utl-faq .shopengine-widget .shopengine-thankyou-address-details .woocommerce-customer-details h2.woocommerce-column__title, .R-utl-faq .shopengine-widget .shopengine-thankyou-order-confirm table thead th {
@@ -11477,36 +11452,9 @@
   overflow: visible;
 }
 
-@font-face {
-  font-family: "Font Awesome 5 Brands";
-  font-style: normal;
-  font-weight: 400;
-  font-display: swap;
-  src: url("/ref/utl-faq/assets/4aa103ac1580.eot");
-  src: url("/ref/utl-faq/assets/503e57831bdc.eot") format("embedded-opentype"), url("/ref/utl-faq/assets/c8c6b79d0984.woff2") format("woff2"), url("/ref/utl-faq/assets/69926041f052.woff") format("woff"), url("/ref/utl-faq/assets/c672ab32728d.ttf") format("truetype"), url("/ref/utl-faq/assets/b7afecb7b51d.svg") format("svg");
-}
-
 .R-utl-faq .fab {
   font-family: "Font Awesome 5 Brands";
   font-weight: 400;
-}
-
-@font-face {
-  font-family: "Font Awesome 5 Free";
-  font-style: normal;
-  font-weight: 400;
-  font-display: swap;
-  src: url("/ref/utl-faq/assets/54070376544f.eot");
-  src: url("/ref/utl-faq/assets/8d4648ad7387.eot") format("embedded-opentype"), url("/ref/utl-faq/assets/bdb071824808.woff2") format("woff2"), url("/ref/utl-faq/assets/971e0ee60fb4.woff") format("woff"), url("/ref/utl-faq/assets/6301cf2ea846.ttf") format("truetype"), url("/ref/utl-faq/assets/941fea6ee5d7.svg") format("svg");
-}
-
-@font-face {
-  font-family: "Font Awesome 5 Free";
-  font-style: normal;
-  font-weight: 900;
-  font-display: swap;
-  src: url("/ref/utl-faq/assets/858fe36e5067.eot");
-  src: url("/ref/utl-faq/assets/31fdd2d4de4c.eot") format("embedded-opentype"), url("/ref/utl-faq/assets/0114a784ad49.woff2") format("woff2"), url("/ref/utl-faq/assets/b44f24deb5bb.woff") format("woff"), url("/ref/utl-faq/assets/377137ae61d7.ttf") format("truetype"), url("/ref/utl-faq/assets/f2ba91cbd84a.svg") format("svg");
 }
 
 .R-utl-faq .fa {
@@ -11662,22 +11610,6 @@
   --wc-form-border-width: 1px;
   --wc-destructive: #2c744e;
   --wc-card-border-radius: 8px;
-}
-
-@font-face {
-  font-display: swap;
-  font-family: star;
-  src: url("/ref/utl-faq/assets/0fe6fdda2db1.woff2") format("woff2"), url("/ref/utl-faq/assets/02b24ae64b07.woff") format("woff"), url("/ref/utl-faq/assets/4e6ac76a93c5.ttf") format("truetype");
-  font-weight: 400;
-  font-style: normal;
-}
-
-@font-face {
-  font-display: swap;
-  font-family: WooCommerce;
-  src: url("/ref/utl-faq/assets/0fe6fdda2db1.woff2") format("woff2"), url("/ref/utl-faq/assets/02b24ae64b07.woff") format("woff"), url("/ref/utl-faq/assets/4e6ac76a93c5.ttf") format("truetype");
-  font-weight: 400;
-  font-style: normal;
 }
 
 .R-utl-faq .woocommerce form .form-row :-moz-placeholder-shown {

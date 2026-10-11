@@ -791,6 +791,11 @@ body .R-self-about #page-container .et_pb_section a.et_pb_button { color: var(--
 .ff-main .row:has(.main-content.contact) { margin-left: 0; margin-right: 0; }
 .ff-main .row:has(.main-content.contact) > [class*="col-"] { padding-left: 0; padding-right: 0; }
 .ff-main .region-content form, .ff-main .region-content form p { display: block !important; width: 100% !important; text-align: left !important; }
+/* Contact icons: the scraped FA4/FA6-Pro faces are gone; point glyphs at the FA6 Free from cdnjs */
+.ff-main .fa { font-family: "Font Awesome 6 Free"; font-weight: 900; }
+.ff-main .fa-map-marker::before { content: "\f3c5"; }
+.ff-main .fa-envelope::before { content: "\f0e0"; }
+.ff-main .gform_wrapper .gform_footer::after { font-family: "Font Awesome 6 Free" !important; font-weight: 900; }
 .ff-main.R-utl-finance h3.wsite-content-title { text-transform: none !important; letter-spacing: 0 !important; color: var(--ff-green-deep) !important; font-family: Merriweather, Georgia, serif !important; font-size: 1.25rem !important; margin: 0 0 12px !important; }
 .ff-main .ff-panel { background: #fff; border: 1px solid var(--ff-line); border-radius: 6px; padding: 24px; margin-bottom: 24px; }
 .ff-main .ff-doc-row { display: flex; flex-wrap: wrap; gap: 12px; margin: 0; }
