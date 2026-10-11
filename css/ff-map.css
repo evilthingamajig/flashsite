@@ -63,3 +63,18 @@
 .haiti-inset.is-current .haiti-inset-shape { fill: #3f9859; }
 .haiti-inset.is-selected .haiti-inset-shape { fill: var(--ff-green-deep); }
 .haiti-inset-name { fill: var(--ff-green-deep); }
+
+/* Round E map: land, partners, selection, hover (E5) */
+.world-map-svg .map-country { fill: #D5E2DA; stroke: #fff; stroke-width: .5; }
+.world-map-svg .is-partner-country { fill: var(--ff-green); stroke: #fff; stroke-width: .6; }
+.world-map-svg .is-partner-country:hover { fill: var(--ff-green-deep); opacity: .85; }
+.world-map-svg.has-country-focus .map-country:not(.is-partner-country) { fill: #D5E2DA; stroke: #fff; }
+.world-map-svg.has-country-focus .is-current { fill: var(--ff-green-deep); opacity: .85; }
+.world-map-svg .map-country.is-selected { fill: var(--ff-green-deep); opacity: 1; }
+.ff-map-mount { min-height: 420px; }
+.ff-map-card { margin-top: 24px; border-top: 1px solid var(--ff-line); border-radius: 6px; }
+.ff-map-card .impact-stats > div { border-left: 3px solid var(--ff-green); }
+.ff-map-card .impact-stats strong { font-size: 1.5rem !important; white-space: normal; line-height: 1.2; overflow-wrap: anywhere; }
+.ff-map-view { border: 0; }
+.ff-map-card .ff-wrap, .ff-map-card { box-sizing: border-box; }
+.ff-map-card .impact-stats { grid-template-columns: repeat(3, minmax(0,1fr)); }

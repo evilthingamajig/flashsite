@@ -3,7 +3,7 @@
 (function () {
   'use strict';
   const destinations = {
-    'greatest-need': {name:'Where it is needed most',status:'Flash Forward selection',summary:'Choose any of the three partner destinations, or let Flash Forward direct the gift across Haiti, India and DR Congo.',partner:'Flash Forward chooses',lights:'72',learning:'~432',article:'/our-work/where/',articleLabel:'See where the lights go'},
+    'greatest-need': {name:'Where it is needed most',status:'Flash Forward selection',summary:'Choose any of the three partner destinations, or let Flash Forward direct the gift across Haiti, India and DR Congo.',partner:'All three',lights:'72',learning:'~432',article:'/our-work/where/',articleLabel:'See where the lights go'},
     haiti: {iso:'ht',name:'Haiti',partner:'Brighten Haiti',status:'Partner destination',summary:'Flash Forward delivered 42 solar study lights to Haiti through its work with Brighten Haiti, which brings solar power and training to schools and communities.',lights:'42',learning:'~252',article:'/our-work/partners/brighten-haiti/',articleLabel:'Visit the Brighten Haiti page'},
     drc: {iso:'cd',name:'DR Congo',partner:'Malaika',status:'Partner destination',summary:'Malaika connects education with health and community programs in Kalebuka, DR Congo. Flash Forward delivered 15 lights.',lights:'15',learning:'~90',article:'/our-work/partners/malaika/',articleLabel:'Visit the Malaika page'},
     india: {iso:'in',name:'India',partner:'Loksadhana',status:'Partner destination',summary:'Loksadhana expands education, skills and health work in rural Maharashtra. Flash Forward delivered 15 lights.',lights:'15',learning:'~90',article:'/our-work/partners/loksadhana/',articleLabel:'Visit the Loksadhana page'}

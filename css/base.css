@@ -15,27 +15,9 @@ body.ff { margin: 0; padding: 0; background: #fff; }
 .ff-logo-footer img { height: 64px !important; }
 .ff-logo-footer .ff-logo-text { color: #fff; font-size: 19px; }
 
-/* Shell dropdowns: the original opened these with JavaScript. */
-.main-navigation .navigation ul.menu > li { position: relative; }
-.main-navigation .navigation ul.menu > li > ul { display: none; position: absolute; left: 0; top: 100%; z-index: 50; min-width: 230px; margin: 0; padding: 6px 0; list-style: none; background: #fff; box-shadow: 0 6px 18px rgba(0, 0, 0, .15); }
-.main-navigation .navigation ul.menu > li:hover > ul,
-.main-navigation .navigation ul.menu > li:focus-within > ul { display: block; }
-.main-navigation .navigation ul.menu > li > ul a { color: #173e2b; }
-
 /* Generic behaviours driven by site.js */
 [data-accordion-item]:not(.is-open) [data-accordion-panel] { display: none; }
 [data-tab-panel]:not(.is-open) { display: none; }
-
-@media (max-width: 1129px) {
-  .main-navigation { display: none; }
-  .main-navigation.is-open { display: block; }
-  .main-navigation.is-open ul.menu { display: block; height: auto; }
-  /* The original menu is a JS slide-in drawer; open it in place instead. */
-  .main-navigation.is-open .region-navigation { display: block; }
-  .main-navigation.is-open nav.navigation { position: static !important; transform: none !important; left: auto !important; right: auto !important; width: 100% !important; height: auto !important; overflow: visible !important; }
-  .main-navigation.is-open ul.menu > li { display: block; float: none; width: 100%; }
-  .main-navigation.is-open ul.menu > li > ul { display: block; position: static; box-shadow: none; padding-left: 16px; background: transparent; }
-}
 
 /* pih.org heroes put the photo at z-index:-1; keep it above the page background. */
 .ff-main .hero-banner-v2 { isolation: isolate; }

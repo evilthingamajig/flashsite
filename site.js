@@ -72,16 +72,16 @@
     var btns=[].slice.call(b.querySelectorAll('[data-quantity]'));
     var custom=b.querySelector('[data-custom-quantity]');
     var freqs=[].slice.call(b.querySelectorAll('input[type=radio][name=frequency]'));
-    var sum=b.parentElement.querySelector('#gift-summary');
-    var mail=b.parentElement.querySelector('#gift-mailto');
     function freq(){var c=freqs.find(function(i){return i.checked});return c?c.value:'once'}
     function render(){
       var recurring=freq()==='monthly';
       var amt=(LIGHT*qty).toFixed(2);
-      var txt=qty+' '+(qty===1?'light':'lights')+' · '+(recurring?'monthly':'one time')+' · $'+amt+(recurring?'/mo':'')+' · Destination: '+(labels[dest]||labels['greatest-need']);
-      if(sum)sum.textContent=txt;
-      if(mail)mail.href='mailto:about@flashforwardfoundation.org?subject='+encodeURIComponent('Sponsor '+qty+' '+(qty===1?'light':'lights')+' — '+txt);
-      var pref=document.getElementById('dest-pref');if(pref)pref.textContent=labels[dest]||labels['greatest-need'];
+      var name=labels[dest]||labels['greatest-need'];
+      var line=(recurring?'Monthly':'One time')+' · '+qty+' '+(qty===1?'light':'lights');
+      var gl=document.getElementById('gift-line');if(gl)gl.textContent=line;
+      var gt=document.getElementById('gift-total');if(gt)gt.textContent='$'+amt+(recurring?'/mo':'');
+      var pref=document.getElementById('dest-pref');if(pref)pref.textContent=name;
+      var note=document.getElementById('dest-pref-note');if(note)note.textContent=name;
     }
     function pick(btn){qty=Number(btn.dataset.quantity);if(custom)custom.value='';
       btns.forEach(function(i){i.classList.toggle('is-active',i===btn);i.setAttribute('aria-pressed',String(i===btn))});render()}
@@ -158,4 +158,15 @@
   window.addEventListener('resize',resize);
   window.addEventListener('scroll',onScroll,{passive:true});
   draw(1);onScroll();
+})();
+
+// Mobile menu toggle for the site header
+(function(){
+  var t=document.querySelector('.ff-nav__toggle');
+  if(!t)return;
+  t.addEventListener('click',function(){
+    var nav=document.getElementById(t.getAttribute('aria-controls'));
+    var open=nav.classList.toggle('is-open');
+    t.setAttribute('aria-expanded',String(open));
+  });
 })();
