@@ -902,3 +902,46 @@ body .R-self-about #page-container .et_pb_section a.et_pb_button { color: var(--
 .ff-main .ff-also .ff-logotile { width: 140px !important; height: 72px !important; padding: 8px !important; box-sizing: border-box; display: flex !important; align-items: center; justify-content: center; margin: 0 auto 10px; }
 .ff-main .ff-also .ff-logotile > img { width: 100% !important; height: 100% !important; object-fit: contain !important; max-width: none !important; max-height: none !important; }
 .ff-main .ff-also .ff-logotile p { display: none; }
+
+/* G-A homepage */
+/* Partner rows: one bordered row per partner spanning the content grid */
+.ff-main .ff-prowlist { border-top: 1px solid var(--ff-line); }
+.ff-main .ff-prow { display: grid; grid-template-columns: 260px 140px minmax(0, 1fr) auto; gap: 32px; align-items: center; padding: 28px 0; border-bottom: 1px solid var(--ff-line); }
+.ff-main .ff-prow__photo { position: relative; aspect-ratio: 16 / 9; }
+.ff-main .ff-prow__photo > img { width: 100% !important; height: 100%; object-fit: cover; display: block; border-radius: 6px; }
+.ff-main .ff-prow__logo { width: 140px; height: 48px; background: #fff; border: 1px solid var(--ff-line); border-radius: 4px; padding: 6px; object-fit: contain; box-sizing: border-box; }
+.ff-main .ff-prow__name { font-weight: 700; font-size: 1.0625rem; color: var(--ff-ink); margin: 0; }
+.ff-main .ff-prow__meta { color: var(--ff-muted); font-size: .8125rem; text-transform: uppercase; letter-spacing: .05em; margin: 4px 0 0; }
+.ff-main .ff-prow__text { color: var(--ff-muted); font-size: .9375rem; margin: 8px 0 0; }
+.ff-main .ff-prow__side { text-align: right; }
+.ff-main .ff-prow__num { font-family: Merriweather, Georgia, serif; font-weight: 900; font-size: 1.875rem; line-height: 1.1; color: var(--ff-green-deep); margin: 0; }
+.ff-main .ff-prow__cap { color: var(--ff-muted); font-size: .8125rem; margin: 4px 0 12px; }
+@media (max-width: 900px) {
+  .ff-main .ff-prow { grid-template-columns: 1fr; gap: 18px; }
+  .ff-main .ff-prow__side { text-align: left; }
+  .ff-main .ff-prow__cap { margin-bottom: 8px; }
+}
+/* News section head: heading left, "All news" link right */
+.ff-main .ff-newshead { display: flex; justify-content: space-between; align-items: baseline; gap: 16px; flex-wrap: wrap; }
+.ff-main .ff-newshead .ff-h2 { margin-bottom: 0 !important; }
+/* Featured story: tall photo + deep-green panel */
+.ff-main .ff-spot { display: grid; grid-template-columns: minmax(0, 3fr) minmax(0, 2fr); margin-top: 24px; border-radius: 6px; overflow: hidden; text-decoration: none; }
+.ff-main .ff-spot__media { position: relative; display: block; min-height: 500px; }
+.ff-main .ff-spot__media > img { position: absolute; inset: 0; width: 100% !important; height: 100%; object-fit: cover; display: block; }
+.ff-main .ff-spot__panel { display: flex; flex-direction: column; justify-content: center; background: var(--ff-green-deep); padding: 48px 44px; }
+.ff-main .ff-spot__kicker { font-family: 'Source Sans 3', sans-serif; font-size: .75rem; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: rgba(255,255,255,.75); }
+.ff-main .ff-spot__title { font-family: Merriweather, Georgia, serif; font-weight: 900; font-size: clamp(1.5rem, 2.6vw, 2rem); line-height: 1.25; color: #fff; margin-top: 12px; }
+.ff-main .ff-spot__quote { font-family: Merriweather, Georgia, serif; font-size: 1.0625rem; line-height: 1.55; color: rgba(255,255,255,.92); margin-top: 22px; }
+.ff-main .ff-spot__cite { color: rgba(255,255,255,.7); font-size: .875rem; margin-top: 6px; }
+.ff-main .ff-spot__cta { color: #fff; font-weight: 700; margin-top: 26px; }
+.ff-main .ff-spot:hover .ff-spot__cta { text-decoration: underline; }
+@media (max-width: 900px) {
+  .ff-main .ff-spot { grid-template-columns: 1fr; }
+  .ff-main .ff-spot__media { min-height: 0; aspect-ratio: 16 / 10; }
+  .ff-main .ff-spot__panel { padding: 32px 28px; }
+}
+/* Story cards under the featured story */
+.ff-main .ff-storycards { margin-top: 24px; }
+.ff-main a.ff-storycard { text-decoration: none; color: var(--ff-ink); }
+.ff-main a.ff-storycard:hover { border-color: var(--ff-green); }
+.ff-main .ff-storycard .ff-card__photo { aspect-ratio: 16 / 10; }
