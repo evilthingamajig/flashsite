@@ -176,3 +176,34 @@
     t.setAttribute('aria-expanded',String(open));
   });
 })();
+
+// Count-up animation for [data-countup] figures
+(function(){
+  var els=[].slice.call(document.querySelectorAll('[data-countup]'));
+  if(!els.length)return;
+  if(window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches)return;
+  if(!('IntersectionObserver' in window))return;
+  function render(el,v){el.textContent=(el.getAttribute('data-prefix')||'')+v;}
+  var io=new IntersectionObserver(function(entries){
+    entries.forEach(function(en){
+      if(!en.isIntersecting)return;
+      io.unobserve(en.target);
+      var el=en.target;
+      var target=parseInt(el.getAttribute('data-countup'),10)||0;
+      var t0=performance.now(),dur=1600;
+      function frame(t){
+        var p=Math.min(1,(t-t0)/dur);
+        var e=1-Math.pow(1-p,3);
+        render(el,Math.round(target*e));
+        if(p<1)requestAnimationFrame(frame);else render(el,target);
+      }
+      requestAnimationFrame(frame);
+    });
+  },{threshold:.4});
+  els.forEach(function(el){
+    var r=el.getBoundingClientRect();
+    if(r.bottom>0&&r.top<window.innerHeight)return;
+    render(el,0);
+    io.observe(el);
+  });
+})();
