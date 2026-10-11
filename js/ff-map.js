@@ -139,7 +139,7 @@
     const scale = Math.min(shapeBox.width / bounds.width, shapeBox.height / bounds.height);
     const group = make('g', {
       class:'haiti-inset', role:'button', tabindex:'0',
-      'aria-label':'Choose Haiti, enlarged map view'
+      'aria-label':'ENLARGED VIEW Haiti, choose Haiti (enlarged map view)'
     });
     group.dataset.destination = 'haiti';
     group.appendChild(make('path', {
@@ -157,6 +157,7 @@
     group.appendChild(make('text', {
       class:'haiti-inset-label', x:String(panel.x + (compactMap ? 40 : 24)), y:String(panel.y + (compactMap ? 53 : 31)), 'aria-hidden':'true'
     }, 'ENLARGED VIEW'));
+    group.appendChild(document.createTextNode(' '));
     const enlarged = haiti.cloneNode(true);
     enlarged.removeAttribute('id');
     enlarged.removeAttribute('role');
@@ -186,7 +187,7 @@
       button.type = 'button';
       button.className = `mobile-map-label mobile-map-label--${key}`;
       button.dataset.destination = key;
-      button.setAttribute('aria-label', `Choose ${item.name}`);
+      button.setAttribute('aria-label', `${item.name} ${item.partner}, choose this destination`);
       button.setAttribute('aria-pressed', 'false');
       if (sourcePath) {
         const bounds = sourcePath.getBBox();
@@ -212,7 +213,7 @@
       name.textContent = item.name;
       const partner = document.createElement('small');
       partner.textContent = item.partner;
-      copy.append(name, partner);
+      copy.append(name, ' ', partner);
       button.appendChild(copy);
       bindDestinationControl(button, key);
       layer.appendChild(button);
