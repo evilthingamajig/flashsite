@@ -12,6 +12,17 @@
   ],
   "redirects": [
     {
+      "source": "/:path*",
+      "has": [
+        {
+          "type": "host",
+          "value": "www.flashforwardfoundation.org"
+        }
+      ],
+      "destination": "https://flashforwardfoundation.org/:path*",
+      "permanent": true
+    },
+    {
       "source": "/news/how-a-light-is-built",
       "destination": "/our-work/how-we-build/",
       "permanent": true
