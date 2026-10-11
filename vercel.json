@@ -94,32 +94,32 @@
     },
     {
       "source": "/volunteering",
-      "destination": "/get-involved/volunteer/",
+      "destination": "/get-involved/internship/",
       "permanent": true
     },
     {
       "source": "/volunteering.html",
-      "destination": "/get-involved/volunteer/",
+      "destination": "/get-involved/internship/",
       "permanent": true
     },
     {
       "source": "/volunteer-adventures",
-      "destination": "/get-involved/volunteer/",
+      "destination": "/get-involved/internship/",
       "permanent": true
     },
     {
       "source": "/volunteer-adventures.html",
-      "destination": "/get-involved/volunteer/",
+      "destination": "/get-involved/internship/",
       "permanent": true
     },
     {
       "source": "/volunteer",
-      "destination": "/get-involved/volunteer/",
+      "destination": "/get-involved/internship/",
       "permanent": true
     },
     {
       "source": "/volunteer.html",
-      "destination": "/get-involved/volunteer/",
+      "destination": "/get-involved/internship/",
       "permanent": true
     },
     {
@@ -144,12 +144,12 @@
     },
     {
       "source": "/donate-equipment",
-      "destination": "/donate/#equipment",
+      "destination": "/get-involved/",
       "permanent": true
     },
     {
       "source": "/donate-equipment.html",
-      "destination": "/donate/#equipment",
+      "destination": "/get-involved/",
       "permanent": true
     },
     {
