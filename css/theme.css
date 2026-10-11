@@ -231,6 +231,7 @@ a:focus-visible, button:focus-visible { outline: 3px solid var(--ff-sun); outlin
 .ff-main .ff-photorow { display: grid !important; grid-template-columns: repeat(4, 1fr); gap: 16px; }
 .ff-main .ff-photorow figure { margin: 0 !important; }
 .ff-main .ff-photorow img { width: 100% !important; aspect-ratio: 4/3; object-fit: cover; border-radius: 6px; display: block; }
+.ff-main .ff-photorow--portrait img { aspect-ratio: 3/4; }
 .ff-main .ff-photorow figcaption { font-size: .8125rem; color: var(--ff-muted); margin-top: 6px; }
 @media (max-width: 900px) {
   .ff-main .ff-photorow { grid-template-columns: repeat(2, 1fr); }
@@ -245,6 +246,8 @@ a:focus-visible, button:focus-visible { outline: 3px solid var(--ff-sun); outlin
 /* Split strip */
 .ff-main .ff-split { display: grid !important; grid-template-columns: 1fr 1fr; gap: 48px; align-items: center; }
 .ff-main .ff-split img { width: 100% !important; aspect-ratio: 16/10; object-fit: cover; border-radius: 6px; display: block; }
+.ff-main .ff-split img.ff-split__img--portrait { aspect-ratio: 4/5; }
+.ff-main .ff-split img.ff-split__img--square { aspect-ratio: 1/1; }
 @media (max-width: 900px) {
   .ff-main .ff-split { grid-template-columns: 1fr; }
 }
@@ -721,6 +724,7 @@ body .R-self-about #page-container .et_pb_section a.et_pb_button { color: var(--
 .ff-main .ff-pagehead .ff-sun { z-index: 0; }
 .ff-main .ff-pagehead__split { display: grid; grid-template-columns: minmax(0,1fr) minmax(0,480px); gap: 48px; align-items: center; }
 .ff-main .ff-pagehead__media img { width: 100%; aspect-ratio: 16/10; object-fit: cover; border-radius: 8px; display: block; }
+.ff-main .ff-pagehead__media--contain img { object-fit: contain; background: #fff; border: 1px solid #E2E2E2; }
 .ff-main .ff-pagehead__chip { display: inline-flex; background: #fff; border-radius: 8px; padding: 10px 14px; margin-bottom: 18px; }
 .ff-main .ff-pagehead__chip img { height: 48px; width: auto; display: block; }
 @media (max-width: 600px) { .ff-main .ff-pagehead .ff-wrap { padding-right: 120px !important; } }
@@ -847,6 +851,7 @@ body .R-self-about #page-container .et_pb_section a.et_pb_button { color: var(--
 .ff-main .ff-part__photo { aspect-ratio: 4 / 3; padding: 24px; min-height: 0; }
 .ff-main .ff-part__photo > img { width: 100%; height: 100%; object-fit: contain; max-height: none; }
 .ff-main .ff-gallery--three { display: grid; grid-template-columns: repeat(3, minmax(0,1fr)); gap: 20px; }
+.ff-main .ff-gallery--three img { width: 100%; aspect-ratio: 3/4; object-fit: cover; object-position: center; }
 @media (max-width: 760px) { .ff-main .ff-gallery--three { grid-template-columns: 1fr; } }
 .ff-main .ff-cardrow--two { grid-template-columns: repeat(2, minmax(0,1fr)); }
 @media (max-width: 760px) { .ff-main .ff-cardrow--two { grid-template-columns: 1fr; } }
@@ -1116,3 +1121,19 @@ body .R-self-about #page-container .et_pb_section a.et_pb_button { color: var(--
     max-width: none;
   }
 }
+
+/* Photo focal points */
+.ff-main img[src*="packagedlights."] { object-position: 50% 62%; }
+.ff-main img[src*="student-with-flashlight-2"] { object-position: 50% 38%; }
+.ff-main img[src*="flashlightinshippingcontainer."] { object-position: 50% 57%; }
+.ff-main img[src*="malaika/students-3"] { object-position: 50% 15%; }
+.ff-main img[src*="solar-panel-tops."] { object-position: 50% 45%; }
+.ff-main img[src*="robotics-event-booth."] { object-position: 50% 30%; }
+.ff-main img[src*="assembly-lights."] { object-position: 50% 40%; }
+.ff-main img[src*="assembling-screwing-lights."] { object-position: 50% 45%; }
+.ff-main img[src*="student-with-flashlight-3"]:not(.ff-home-hero__photo img) { object-position: 50% 30%; }
+.ff-main img[src*="student-with-flashlight-1"] { object-position: 50% 35%; }
+.ff-main img[src*="loksadhana/skilling-1"] { object-position: 50% 90%; }
+.ff-main img[src*="handoverflashlightsglowing."] { object-position: 50% 43%; }
+.ff-main img[src*="flashlight-units."] { object-position: 50% 55%; }
+.ff-main img[src*="flashlight-internals-charging-board."] { object-position: 50% 65%; }
