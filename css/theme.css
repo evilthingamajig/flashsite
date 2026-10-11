@@ -917,9 +917,20 @@ body .R-self-about #page-container .et_pb_section a.et_pb_button { color: var(--
 .ff-main a.ff-essay-card .ff-essay-cap { display: block; margin-top: 10px; font-size: .8125rem; font-weight: 700; color: var(--ff-ink); }
 .ff-main a.ff-feature--story .ff-feature__img img { height: auto !important; max-height: 480px; aspect-ratio: 4 / 3; object-fit: cover; object-position: 50% 30%; }
 .ff-main .ff-team-row { grid-template-columns: 260px minmax(0,1fr); gap: 32px; }
-.ff-main .ff-team-cards { grid-template-columns: repeat(auto-fill, minmax(200px, 240px)); gap: 20px; }
-.ff-main .ff-team-cards .ff-card { width: 100%; max-width: 240px; }
+.ff-main .ff-team-cards { grid-template-columns: repeat(auto-fill, minmax(180px, 200px)); gap: 20px; }
+.ff-main .ff-team-cards .ff-card { width: 100%; max-width: 200px; }
+.ff-main .ff-team-cards .ff-card__title { font-size: 1rem !important; }
 @media (max-width: 860px) { .ff-main .ff-team-row { grid-template-columns: 1fr; } }
+.ff-main .ff-team-row--lead { grid-template-columns: 1fr; }
+.ff-main .ff-team-row--lead .ff-team-head { max-width: 640px; }
+.ff-main .ff-team-row--lead .ff-team-head .ff-h2 { font-size: clamp(2rem, 3.2vw, 2.625rem) !important; }
+.ff-main .ff-team-row--lead .ff-team-cards { grid-template-columns: repeat(3, minmax(0,1fr)); gap: 24px; }
+.ff-main .ff-team-row--lead .ff-team-cards .ff-card { max-width: none; }
+.ff-main .ff-team-row--lead .ff-team-cards .ff-card__title { font-size: 1.25rem !important; }
+@media (max-width: 600px) {
+  .ff-main .ff-team-row--lead .ff-team-cards { grid-template-columns: 1fr; }
+  .ff-main .ff-team-cards { grid-template-columns: repeat(2, minmax(0,1fr)); gap: 12px; }
+}
 .ff-main .ff-parts { grid-template-columns: repeat(5, minmax(0,1fr)); counter-reset: part; }
 .ff-main .ff-parts > .ff-card, .ff-main .ff-parts > .ff-card:nth-child(4), .ff-main .ff-parts > .ff-card:nth-child(5) { grid-column: auto; }
 .ff-main .ff-parts > .ff-card { counter-increment: part; }
