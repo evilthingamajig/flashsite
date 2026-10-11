@@ -945,3 +945,141 @@ body .R-self-about #page-container .et_pb_section a.et_pb_button { color: var(--
 .ff-main a.ff-storycard { text-decoration: none; color: var(--ff-ink); }
 .ff-main a.ff-storycard:hover { border-color: var(--ff-green); }
 .ff-main .ff-storycard .ff-card__photo { aspect-ratio: 16 / 10; }
+
+/* Partners rows (PoP-style; VAR_7: partners section mapped onto the Pencils of Promise "Our Programs" pattern.
+   Centered serif head + lede + small map link, then alternating full-width
+   50/50 rows: large photo (approx 1.2:1) opposite a text column with logo,
+   big heading, meta line, description and a yellow accent link. */
+
+/* Section head: centered kicker (theme .ff-kicker), H2 (theme .ff-h2) and lede. */
+.ff-main .ffpartners-head {
+  max-width: 640px;
+  margin: 0 auto !important;
+  text-align: center;
+}
+.ff-main .ffpartners-head .ff-lede {
+  margin-left: auto !important;
+  margin-right: auto !important;
+}
+.ff-main .ffpartners-map {
+  margin: -8px 0 0 !important;
+}
+.ff-main .ffpartners-map .ff-link-more {
+  font-size: .9375rem;
+}
+
+/* Rows */
+.ff-main .ffpartners-rows {
+  margin-top: 72px;
+}
+.ff-main .ffpartners-row {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  column-gap: 72px;
+  align-items: center;
+}
+.ff-main .ffpartners-row + .ffpartners-row {
+  margin-top: 88px;
+}
+.ff-main .ffpartners-row--alt .ffpartners-media {
+  order: 2;
+}
+
+/* Photo half */
+.ff-main .ffpartners-media {
+  position: relative;
+  margin: 0 !important;
+}
+.ff-main .ffpartners-media > img {
+  display: block;
+  width: 100% !important;
+  height: auto !important;
+  aspect-ratio: 6 / 5;
+  object-fit: cover;
+  border-radius: 6px;
+}
+.ff-main .ffpartners-credit {
+  position: absolute;
+  right: 8px;
+  bottom: 8px;
+  z-index: 2;
+  background: rgba(0, 0, 0, .55);
+  color: #fff !important;
+  font-size: .6875rem;
+  line-height: 1.4;
+  padding: 2px 6px;
+  border-radius: 3px;
+}
+
+/* Text half */
+.ff-main .ffpartners-logo {
+  display: block;
+  height: 40px !important;
+  width: auto;
+  max-width: 220px;
+  object-fit: contain;
+  object-position: left center;
+  background: #fff;
+  border: 1px solid var(--ff-line);
+  border-radius: 4px;
+  padding: 5px 12px;
+  box-sizing: content-box;
+  margin: 0 0 20px !important;
+}
+.ff-main .ffpartners h3.ffpartners-name {
+  font-family: Merriweather, Georgia, serif !important;
+  font-weight: 900 !important;
+  font-size: clamp(1.5rem, 2.2vw, 1.875rem) !important;
+  line-height: 1.25 !important;
+  color: var(--ff-green-deep) !important;
+  -webkit-text-fill-color: var(--ff-green-deep) !important;
+  margin: 0 0 6px !important;
+}
+.ff-main .ffpartners-meta {
+  font-size: .8125rem !important;
+  font-weight: 700 !important;
+  letter-spacing: .07em;
+  text-transform: uppercase;
+  color: var(--ff-muted) !important;
+  margin: 0 0 16px !important;
+}
+.ff-main .ffpartners-desc {
+  color: var(--ff-muted) !important;
+  font-size: 1.0625rem !important;
+  line-height: 1.65;
+  max-width: 32rem;
+  margin: 0 !important;
+}
+.ff-main .ffpartners-cta {
+  display: inline-block;
+  margin-top: 26px;
+  font-weight: 700 !important;
+  font-size: .9375rem;
+  letter-spacing: .05em;
+  text-transform: uppercase;
+  color: var(--ff-green) !important;
+  -webkit-text-fill-color: var(--ff-green) !important;
+  text-decoration: none !important;
+}
+.ff-main .ffpartners-cta:hover {
+  text-decoration: underline !important;
+}
+
+@media (max-width: 900px) {
+  .ff-main .ffpartners-rows {
+    margin-top: 56px;
+  }
+  .ff-main .ffpartners-row {
+    grid-template-columns: 1fr;
+    row-gap: 28px;
+  }
+  .ff-main .ffpartners-row + .ffpartners-row {
+    margin-top: 64px;
+  }
+  .ff-main .ffpartners-row--alt .ffpartners-media {
+    order: 0;
+  }
+  .ff-main .ffpartners-desc {
+    max-width: none;
+  }
+}
