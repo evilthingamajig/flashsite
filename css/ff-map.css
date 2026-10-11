@@ -4,10 +4,10 @@
 .world-map-svg .map-country { fill: #fff; stroke: var(--ff-line); stroke-width: .45; transition: fill .14s ease, stroke .14s ease; }
 .world-map-svg .is-partner-country { fill: var(--ff-green); stroke: #fff; stroke-width: .65; cursor: pointer; }
 .world-map-svg .is-partner-country:focus-visible { outline: none; stroke: var(--ff-green-deep); stroke-width: 1.4; }
-.world-map-svg.has-country-focus .map-country:not(.is-partner-country) { fill: var(--ff-land); stroke: var(--ff-line); }
+.world-map-svg.has-country-focus .map-country:not(.is-partner-country) { fill: var(--ff-map-land); stroke: var(--ff-line); }
 .world-map-svg.has-country-focus .is-current { fill: #3f9859; stroke: #fff; stroke-width: .8; }
 .world-map-svg .map-country.is-selected { fill: var(--ff-green-deep); stroke: #fff; stroke-width: .8; }
-.world-map-svg .workshop-marker { fill: var(--ff-sun); stroke: var(--ff-green-deep); stroke-width: 1; }
+.world-map-svg .workshop-marker { fill: var(--ff-gold); stroke: var(--ff-green-deep); stroke-width: 1; }
 .country-hit-target { fill: transparent; stroke: none; cursor: pointer; pointer-events: all; }
 .haiti-inset { cursor: pointer; transition: opacity .14s ease; }
 .haiti-inset-panel { fill: #fff; stroke: var(--ff-line); stroke-width: 2; vector-effect: non-scaling-stroke; }
@@ -15,21 +15,21 @@
 .haiti-inset-label { fill: var(--ff-muted); font-size: 15px; font-weight: 600; letter-spacing: 2.2px; }
 .haiti-inset-name { fill: var(--ff-green-deep); font-size: 37px; font-weight: 500; }
 .haiti-inset-leader { fill: none; stroke: var(--ff-green); stroke-width: 1.5; stroke-dasharray: 5 5; vector-effect: non-scaling-stroke; pointer-events: none; }
-.haiti-origin-ring { fill: rgba(30,107,69,.12); stroke: var(--ff-green); stroke-width: 2; vector-effect: non-scaling-stroke; pointer-events: none; }
+.haiti-origin-ring { fill: rgba(0,0,0,.07); stroke: var(--ff-green); stroke-width: 2; vector-effect: non-scaling-stroke; pointer-events: none; }
 .world-map-svg.has-country-focus .haiti-inset:not(.is-current) { opacity: .48; }
-.haiti-inset.is-current .haiti-inset-panel { fill: var(--ff-green-tint); stroke: var(--ff-green); }
+.haiti-inset.is-current .haiti-inset-panel { fill: var(--ff-mist); stroke: var(--ff-green); }
 .haiti-inset.is-current .haiti-inset-shape { fill: var(--ff-green-deep); }
 .haiti-inset.is-selected .haiti-inset-panel { stroke: var(--ff-green-deep); }
 .haiti-inset.is-selected .haiti-inset-shape { fill: var(--ff-green-deep); }
 .haiti-inset:focus-visible { outline: none; }
 .haiti-inset:focus-visible .haiti-inset-panel { stroke: var(--ff-green-deep); stroke-width: 4; }
-.ff-map-card { border: 1px solid var(--ff-line); border-top: 0; border-radius: 0 0 6px 6px; background: #fff; padding: 24px 28px; box-shadow: 0 8px 24px rgba(15,61,42,.08); }
+.ff-map-card { border: 1px solid var(--ff-line); border-top: 0; border-radius: 0 0 6px 6px; background: #fff; padding: 24px 28px; box-shadow: 0 8px 24px rgba(0,0,0,.064); }
 .ff-map-card .panel-status { color: var(--ff-green); font-size: .75rem; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; margin: 0; }
 .ff-map-card :is(h2,h3) { font-family: Merriweather, Georgia, serif !important; color: var(--ff-green-deep) !important; font-size: 1.5rem !important; margin: 6px 0 8px !important; }
 .ff-main .ff-section .ff-map-card h2 { font-family: 'Source Sans 3', sans-serif !important; font-weight: 700 !important; font-size: 1.15rem !important; line-height: 1.3 !important; letter-spacing: -.016em; color: var(--ff-ink) !important; margin: 0 0 8px !important; }
 .ff-map-card .country-summary { color: var(--ff-muted); margin: 0 0 16px; }
 .ff-map-card .impact-stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin: 0 0 14px; }
-.ff-map-card .impact-stats > div { border-left: 3px solid var(--ff-sun); padding-left: 12px; }
+.ff-map-card .impact-stats > div { border-left: 3px solid var(--ff-gold); padding-left: 12px; }
 .ff-map-card .impact-stats strong { display: block; font-family: Merriweather, Georgia, serif; font-size: 1.3rem; color: var(--ff-green-deep); }
 .ff-map-card .impact-stats span { color: var(--ff-muted); font-size: .8125rem; }
 .map-error { padding: 40px; text-align: center; }
@@ -37,13 +37,13 @@
 .mobile-map-labels { display: none; }
 @media (max-width: 680px) {
   .mobile-map-labels { position: absolute; inset: 0; z-index: 4; pointer-events: none; display: block; }
-  .mobile-map-label { position: absolute; z-index: 1; min-width: 108px; min-height: 58px; padding: 7px 9px; display: grid; grid-template-columns: 28px minmax(0,1fr); align-items: center; gap: 7px; border: 1px solid var(--ff-green); border-radius: 8px; background: rgba(255,255,255,.97); box-shadow: 0 5px 18px rgba(15,61,42,.12); color: var(--ff-ink); line-height: 1.05; text-align: left; pointer-events: auto; }
+  .mobile-map-label { position: absolute; z-index: 1; min-width: 108px; min-height: 58px; padding: 7px 9px; display: grid; grid-template-columns: 28px minmax(0,1fr); align-items: center; gap: 7px; border: 1px solid var(--ff-green); border-radius: 8px; background: rgba(255,255,255,.97); box-shadow: 0 5px 18px rgba(0,0,0,.096); color: var(--ff-ink); line-height: 1.05; text-align: left; pointer-events: auto; }
   .mobile-map-label-icon { width: 28px; height: 34px; display: block; overflow: visible; }
   .mobile-map-label-shape { fill: var(--ff-green); stroke: var(--ff-green-deep); stroke-width: 1; vector-effect: non-scaling-stroke; }
   .mobile-map-label-copy { min-width: 0; display: flex; flex-direction: column; }
   .mobile-map-label strong { font-size: 13px; font-weight: 600; }
   .mobile-map-label small { margin-top: 3px; color: var(--ff-muted); font-size: 9px; }
-  .mobile-map-label.is-current { border-color: var(--ff-green); background: var(--ff-green-tint); }
+  .mobile-map-label.is-current { border-color: var(--ff-green); background: var(--ff-mist); }
   .mobile-map-label.is-selected { border-color: var(--ff-green-deep); background: var(--ff-green); color: #fff; }
   .mobile-map-label.is-selected small { color: rgba(255,255,255,.85); }
   .mobile-map-label.is-selected .mobile-map-label-shape { fill: #fff; stroke: rgba(255,255,255,.85); }
@@ -66,10 +66,10 @@
 .haiti-inset-name { fill: var(--ff-green-deep); }
 
 /* Round E map: land, partners, selection, hover (E5) */
-.world-map-svg .map-country { fill: var(--ff-land); stroke: #fff; stroke-width: .5; }
+.world-map-svg .map-country { fill: var(--ff-map-land); stroke: #fff; stroke-width: .5; }
 .world-map-svg .is-partner-country { fill: var(--ff-green); stroke: #fff; stroke-width: .6; }
 .world-map-svg .is-partner-country:hover { fill: var(--ff-green-deep); opacity: .85; }
-.world-map-svg.has-country-focus .map-country:not(.is-partner-country) { fill: var(--ff-land); stroke: #fff; }
+.world-map-svg.has-country-focus .map-country:not(.is-partner-country) { fill: var(--ff-map-land); stroke: #fff; }
 .world-map-svg.has-country-focus .is-current { fill: var(--ff-green-deep); opacity: .85; }
 .world-map-svg .map-country.is-selected { fill: var(--ff-green-deep); opacity: 1; }
 .ff-map-mount { min-height: 420px; }

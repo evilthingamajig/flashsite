@@ -3842,7 +3842,7 @@
 
 .R-pih-home .callout.success {
   color: #222;
-  background-color: #e1faea;
+  background-color: #EEEEEE;
 }
 
 .R-pih-home .callout.small {
@@ -5847,7 +5847,7 @@
 
   .R-pih-home #main_header {
     z-index: 99;
-    border-bottom: 1px solid #d9d6ce;
+    border-bottom: 1px solid #D6D6D6;
     width: 100%;
     margin: 0;
     padding: 10px 0;
