@@ -114,7 +114,7 @@
     ctx.clearRect(0,0,cw,ch);
     var sr=sec.getBoundingClientRect();
     var stotal=sr.height-window.innerHeight;
-    var p=stotal>0?Math.min(1,Math.max(0,-sr.top/stotal)):1;
+    var p=reduced?1:(stotal>0?Math.min(1,Math.max(0,-sr.top/stotal)):1);
     var img=imgs[current-1];
     if(img&&img.complete&&img.naturalWidth){
       var s=Math.min(cw/img.naturalWidth,ch/img.naturalHeight);
