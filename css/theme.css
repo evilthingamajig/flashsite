@@ -87,9 +87,10 @@ body, .ff-main { background: var(--ff-white); color: var(--ff-ink); }
 @media (max-width: 767px) {
   .ff-main .ff-section { padding: 64px 0; }
 }
-/* Consecutive sections share one gap: drop the first's bottom padding, keep the second's top padding so tinted/dark blocks keep internal space */
-.ff-main .ff-section:not(.ff-section--dark):has(+ .ff-section:not(.ff-section--dark)),
-.ff-main .ff-section--dark:has(+ .ff-section--dark) { padding-bottom: 0; }
+/* Consecutive same-background sections share one gap instead of double padding */
+.ff-main .ff-section:not(.ff-section--mist):not(.ff-section--dark) + .ff-section:not(.ff-section--mist):not(.ff-section--dark),
+.ff-main .ff-section--mist + .ff-section--mist,
+.ff-main .ff-section--dark + .ff-section--dark { padding-top: 0; }
 .ff-main .ff-wrap { max-width: 1152px !important; margin: 0 auto !important; padding: 0 24px !important; }
 @media (max-width: 767px) {
   .ff-main .ff-wrap { padding: 0 18px !important; }
@@ -801,7 +802,7 @@ body .R-self-about #page-container .et_pb_section a.et_pb_button { color: var(--
 .ff-main .ff-pagehead__chip { display: inline-flex; background: #fff; border-radius: 8px; padding: 10px 14px; margin-bottom: 18px; }
 .ff-main .ff-pagehead__chip img { height: 48px; width: auto; display: block; }
 @media (max-width: 767px) {
-  .ff-main .ff-pagehead { padding: 48px 0 40px; }
+  .ff-main .ff-pagehead { padding: 48px 0; }
   .ff-main .ff-pagehead h1 { font-size: 2rem; }
   .ff-main .ff-pagehead__split { grid-template-columns: 1fr; gap: 28px; }
 }
@@ -831,7 +832,7 @@ body .R-self-about #page-container .et_pb_section a.et_pb_button { color: var(--
 .ff-main .ff-kicker { color: var(--ff-green); }
 
 /* Homepage (Round D): full-bleed hero, why light, numbers row, partner cards */
-.ff-main .ff-home-hero { position: relative; overflow: hidden; display: grid; grid-template-columns: minmax(0,1fr) clamp(370px, 30vw, 388px); gap: 40px; background: var(--ff-green-deep); color: #fff; padding: 0 max(24px, calc((100vw - 1152px) / 2 + 24px)); }
+.ff-main .ff-home-hero { position: relative; overflow: hidden; display: grid; grid-template-columns: minmax(0,1fr) clamp(370px, 30vw, 388px); gap: 40px; background: var(--ff-green-deep); color: #fff; padding: 0 max(24px, calc((100vw - 1152px) / 2 + 24px)) 12px; }
 .ff-main .ff-home-hero__text { display: flex; align-items: center; padding: 64px 0; }
 .ff-main .ff-home-hero__inner { max-width: 540px; position: relative; z-index: 1; }
 .ff-main .ff-home-hero .ff-kicker { color: rgba(255,255,255,.75); }
@@ -922,7 +923,7 @@ body .R-self-about #page-container .et_pb_section a.et_pb_button { color: var(--
 .ff-main .container:has(.main-content.contact) .breadcrumbs { padding-left: 24px; }
 .ff-main .contact .wpb_text_column.block_shadow { padding: 28px !important; }
 .ff-main .contact .site-addr p .fa { display: flex !important; align-items: center; justify-content: center; line-height: 1; }
-.ff-main .contact .entry-socials a i { align-items: center; }
+.ff-main .contact .entry-socials a i { display: flex !important; align-items: center; justify-content: center; }
 .ff-main .main-content.contact .gform_title { text-align: left !important; }
 .ff-main .contact .gform_fields input.large, .ff-main .contact .gform_fields select.large, .ff-main .contact .gform_fields textarea.large, .ff-main .contact .gfield { width: 100%; max-width: 100%; box-sizing: border-box; }
 @media (max-width: 600px) {
@@ -1019,7 +1020,7 @@ body .R-self-about #page-container .et_pb_section a.et_pb_button { color: var(--
 @media (max-width: 760px) { .ff-main .ff-parts { grid-template-columns: repeat(2, minmax(0,1fr)); } }
 @media (max-width: 600px) { .ff-main .ff-parts { grid-template-columns: 1fr; } }
 .ff-main .ff-parts .ff-part__photo { padding: 0; }
-.ff-main .ff-parts .ff-part__photo > img { padding: 0; width: 80% !important; height: 80%; object-fit: contain; }
+.ff-main .ff-parts .ff-part__photo > img { padding: 0; width: auto !important; height: auto; max-width: 80%; max-height: 80%; object-fit: contain; aspect-ratio: auto; }
 .ff-main .ff-gift-card__row { display: flex; justify-content: space-between; align-items: baseline; gap: 16px; margin: 0 0 12px; padding-bottom: 12px; border-bottom: 1px solid var(--ff-line); }
 .ff-main .ff-gift-card__label { color: var(--ff-muted); font-size: .875rem; }
 .ff-main .ff-gift-card__value { color: var(--ff-ink); font-weight: 700; text-align: right; }
