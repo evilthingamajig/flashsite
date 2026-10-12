@@ -119,9 +119,19 @@ const unopt = (src) => {
 };
 
 const report = [];
+const ldData = JSON.parse(readFileSync(join(ROOT, 'tools/ld.json')));
+
+const BASE = 'https://flashforwardfoundation.org';
+const LD_ORG = {"@type":"NGO","@id":BASE+"/#org","name":"Flash Forward Foundation","alternateName":"Flash Forward","url":BASE+"/","logo":{"@type":"ImageObject","url":BASE+"/images/brand/mark-green.png"},"description":"Student-run 501(c)(3) nonprofit in Bellevue, Washington that builds $5.17 solar study lights for students without electricity.","foundingDate":"2024","foundingLocation":{"@type":"Place","name":"Bellevue, Washington"},"nonprofitStatus":"https://schema.org/Nonprofit501c3","taxID":"39-3605570","email":"about@flashforwardfoundation.org","address":{"@type":"PostalAddress","streetAddress":"1402 153rd Pl SE","addressLocality":"Bellevue","addressRegion":"WA","postalCode":"98007","addressCountry":"US"},"areaServed":["Haiti","India","Democratic Republic of the Congo"],"sameAs":["https://www.instagram.com/flashforwardfoundation/"]};
+const LD_SITE = {"@type":"WebSite","@id":BASE+"/#website","name":"Flash Forward Foundation","url":BASE+"/","publisher":{"@id":BASE+"/#org"},"inLanguage":"en","potentialAction":{"@type":"SearchAction","target":{"@type":"EntryPoint","urlTemplate":BASE+"/search/?q={search_term_string}"},"query-input":"required name=search_term_string"}};
+const CRUMB_LABELS = {'/our-work/':'Our Work','/get-involved/':'Get Involved','/about/':'Our Story','/news/':'News & Notes'};
+const FAQ_PAGES = new Set(['/faq/','/donate/','/get-involved/','/get-involved/internship/','/news/why-study-lights/']);
+const unent = (t) => t.replace(/&amp;/g,'&').replace(/&rsquo;/g,'\u2019').replace(/&lsquo;/g,'\u2018').replace(/&ldquo;/g,'\u201c').replace(/&rdquo;/g,'\u201d').replace(/&ndash;/g,'\u2013').replace(/&mdash;/g,'\u2014').replace(/&nbsp;/g,'\xa0').replace(/&#039;/g,"'").replace(/<[^>]+>/g,'').trim();
+
 for (const file of pages.sort()) {
   const rel = urlPath(file);
   let html = readFileSync(file, 'utf8');
+  html = html.replace(/<!--ff:ld-->[\s\S]*?<!--\/ff:ld-->|<script type="application\/ld\+json">[\s\S]*?<\/script>/g, '');
 
   let list;
   const marker = html.match(/<!--ff:css ([^>]*)-->/);
@@ -298,6 +308,42 @@ for (const file of pages.sort()) {
   html = html.replace(/(<link rel="apple-touch-icon"[^>]*>)/, `$1\n${FONT_PRELOAD}\n${cssBlock}`);
 
   html = rewriteFamilies(html);
+
+  const h1text = unent((html.match(/<h1[^>]*>([\s\S]*?)<\/h1>/) || [])[1] || title);
+  const canonUrl = canon || (BASE + rel);
+  const graph = [JSON.parse(JSON.stringify(LD_ORG)), JSON.parse(JSON.stringify(LD_SITE))];
+  if (rel === '/donate/') graph[0].potentialAction = {"@type":"DonateAction","target":BASE+"/donate/","recipient":{"@id":BASE+"/#org"}};
+  if (rel !== '/') {
+    const parts = rel.split('/').filter(Boolean);
+    const items = [{"@type":"ListItem","position":1,"name":"Home","item":BASE+"/"}];
+    let pos = 2;
+    for (let i = 1; i < parts.length; i++) {
+      const p = '/' + parts.slice(0, i).join('/') + '/';
+      const f = join(ROOT, p, 'index.html');
+      if (!existsSync(f)) continue;
+      const ah1 = CRUMB_LABELS[p] || unent(((readFileSync(f, 'utf8').match(/<h1[^>]*>([\s\S]*?)<\/h1>/) || [])[1] || p));
+      items.push({"@type":"ListItem","position":pos++,"name":ah1,"item":BASE+p});
+    }
+    items.push({"@type":"ListItem","position":pos,"name":h1text,"item":canonUrl});
+    graph.push({"@type":"BreadcrumbList","itemListElement":items});
+  }
+  if (isArticle) {
+    const dp = (ldData[rel] || {}).datePublished;
+    if (dp) graph.push({"@type":"NewsArticle","@id":canonUrl+'#article',"headline":h1text,"description":desc,"image":[ogImg],"datePublished":dp,"dateModified":"2026-10-11","author":{"@type":"Organization","@id":BASE+"/#org","name":"Flash Forward Foundation","url":BASE+"/about/team/"},"publisher":{"@id":BASE+"/#org"},"mainEntityOfPage":canonUrl,"inLanguage":"en"});
+  }
+  if (rel === '/about/team/') {
+    for (const m of html.matchAll(/<div class="ff-card" id="([\w-]+)">[\s\S]*?<img[^>]*src="([^"]+)"[\s\S]*?ff-card__title">([^<]+)<[\s\S]*?ff-card__meta">([^<]+)</g))
+      graph.push({"@type":"Person","@id":BASE+"/about/team/#"+m[1],"name":unent(m[3]),"jobTitle":unent(m[4]),"image":BASE+m[2],"worksFor":{"@id":BASE+"/#org"}});
+  }
+  if (FAQ_PAGES.has(rel)) {
+    const qa = [];
+    for (const m of html.matchAll(/<(?:details|div) class="ff-faq"[\s\S]*?(?:<summary>([\s\S]*?)<\/summary>|<h3>([\s\S]*?)<\/h3>)[\s\S]*?<p>([\s\S]*?)<\/p>/g))
+      qa.push({"@type":"Question","name":unent(m[1]||m[2]),"acceptedAnswer":{"@type":"Answer","text":unent(m[3])}});
+    if (qa.length) graph.push({"@type":"FAQPage","mainEntity":qa});
+  }
+  if (rel === '/') graph.push({"@type":"WebPage","@id":BASE+"/#webpage","url":BASE+"/","name":title,"about":{"@id":BASE+"/#org"},"isPartOf":{"@id":BASE+"/#website"}});
+  const ldDoc = {"@context":"https://schema.org","@graph":graph};
+  html = html.replace('</head>', `<!--ff:ld--><script type="application/ld+json">${JSON.stringify(ldDoc)}</script><!--/ff:ld-->\n</head>`);
   writeFileSync(file, html);
   report.push({ page: rel, cssBytes: Buffer.byteLength(min) });
 }

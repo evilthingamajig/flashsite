@@ -1,177 +1,177 @@
 [
- {
-  "url": "/about/",
-  "title": "About Us",
-  "description": "Flash Forward Foundation is a student-run nonprofit in Bellevue, WA that builds $5.17 solar study lights so students without electricity can study after dark."
- },
- {
-  "url": "/about/team/",
-  "title": "Our Team",
-  "description": "The six student interns who lead Flash Forward Foundation, with their roles."
- },
- {
-  "url": "/accessibility/",
-  "title": "Accessibility",
-  "description": "How the Flash Forward Foundation website is built for keyboard, screen reader and zoom users, and how to report a page that is hard to use."
- },
- {
-  "url": "/contact/",
-  "title": "Contact",
-  "description": "Contact Flash Forward Foundation in Bellevue, WA by email, Instagram or Discord, or send a message through the contact form."
- },
- {
-  "url": "/donate/",
-  "title": "Sponsor a Light",
-  "description": "Sponsor a Flash Forward solar study light. One light is $5.17 in parts; student interns build the lights for free."
- },
- {
-  "url": "/faq/",
-  "title": "Frequently Asked Questions",
-  "description": "Answers about the Flash Forward study light, where the lights go, donating and internships, and the organization."
- },
- {
-  "url": "/get-involved/",
-  "title": "Get Involved",
-  "description": "Three ways to help Flash Forward Foundation: sponsor a $5.17 solar study light, join the student team as an intern, or partner with us to request lights."
- },
- {
-  "url": "/get-involved/internship/",
-  "title": "Internship Program",
-  "description": "Unpaid student internship at Flash Forward Foundation: named tracks, a term you propose, and how to apply."
- },
- {
-  "url": "/impact/",
-  "title": "Our Impact",
-  "description": "Flash Forward's program record: 72 solar study lights delivered to 3 partners in Haiti, India and the DR Congo, $5.17 in parts per light."
- },
- {
-  "url": "/",
-  "title": "Solar study lights, built by students",
-  "description": "Flash Forward Foundation is a student-run nonprofit in Bellevue, WA. Student interns build $5.17 solar study lights for students who have no electricity at home."
- },
- {
-  "url": "/news/founded/",
-  "title": "Founded by students in Bellevue",
-  "description": "The organization began in 2024 as a student project and built its first solar study light prototype that year."
- },
- {
-  "url": "/news/",
-  "title": "News and notes",
-  "description": "News from Flash Forward Foundation: study light deliveries to Haiti, India and DR Congo, student solar workshops, partner stories and nonprofit updates."
- },
- {
-  "url": "/news/irs-recognition/",
-  "title": "IRS recognizes Flash Forward Foundation as a public charity",
-  "description": "The IRS recognized the organization as a 501(c)(3) public charity, effective August 5, 2025."
- },
- {
-  "url": "/news/program-record/",
-  "title": "72 study lights delivered to partners in Haiti, India and the DR Congo",
-  "description": "All 72 solar study lights built by student interns have been delivered to partners in Haiti, India and the DR Congo."
- },
- {
-  "url": "/nonprofit-status/",
-  "title": "Nonprofit Status",
-  "description": "Flash Forward Foundation is a 501(c)(3) public charity, EIN 39-3605570, exempt since August 5, 2025. IRS letters, Publication 78 listing and Form 990 status."
- },
- {
-  "url": "/our-work/how-we-build/",
-  "title": "How a Light Is Built",
-  "description": "The workshop steps student interns use to print, assemble, test and pack a Flash Forward solar study light."
- },
- {
-  "url": "/our-work/",
-  "title": "Our Work",
-  "description": "How Flash Forward Foundation builds solar study lights and sends them through partner organizations."
- },
- {
-  "url": "/our-work/partners/brighten-haiti/",
-  "title": "Brighten Haiti",
-  "description": "Brighten Haiti (Haiti): 42 lights delivered. Brings solar power to schools, hospitals and families across Haiti through Solar4Schools."
- },
- {
-  "url": "/our-work/partners/loksadhana/",
-  "title": "Loksadhana",
-  "description": "Loksadhana (India): 15 lights delivered. A charitable trust in Maharashtra advancing rural education, women’s empowerment and health."
- },
- {
-  "url": "/our-work/partners/malaika/",
-  "title": "Malaika",
-  "description": "Malaika (DR Congo): 15 lights delivered. Empowers girls and communities in the Democratic Republic of the Congo through education, health and clean water."
- },
- {
-  "url": "/our-work/photos-and-videos/",
-  "title": "Photos and Videos",
-  "description": "Photos and videos from the Flash Forward workshop: printing, assembly, finished lights, and students with their lights."
- },
- {
-  "url": "/our-work/the-light/",
-  "title": "The Study Light",
-  "description": "A solar study light built by student interns: what it is, what is inside, and where it goes."
- },
- {
-  "url": "/our-work/where/",
-  "title": "Where the Lights Go",
-  "description": "Flash Forward's partner record: 72 solar study lights delivered to three partners in Haiti, India and the DR Congo."
- },
- {
-  "url": "/privacy/",
-  "title": "Privacy Policy",
-  "description": "How Flash Forward Foundation collects, uses, and protects information from donors, interns, partners, applicants, and website visitors."
- },
- {
-  "url": "/search/",
-  "title": "Search",
-  "description": "Find a Flash Forward Foundation page by words in its title or summary."
- },
- {
-  "url": "/site-map/",
-  "title": "Site Map",
-  "description": "Every page on the Flash Forward Foundation website in one list: our work, the study light, partners, giving, the team, news, policies and contact."
- },
- {
-  "url": "/terms/",
-  "title": "Terms and Conditions",
-  "description": "Terms governing the Flash Forward Foundation website, donations, internship participation, and programs."
- },
- {
-  "url": "/news/why-study-lights/",
-  "title": "Why a solar study light",
-  "description": "What a $5.17 solar study light does after sunset, and why the lights go through local partners."
- },
- {
-  "url": "/news/solar-workshops/",
-  "title": "Teaching solar energy: four student workshops",
-  "description": "About 100 students across 4 hands-on workshops where the team teaches how solar charging works and how the light is assembled."
- },
- {
-  "url": "/news/start-a-fundraiser/",
-  "title": "Start a fundraiser for study lights",
-  "description": "How to run a group fundraiser for Flash Forward study lights: $5.17 covers the parts for one light, and student interns build them for free."
- },
- {
-  "url": "/news/brighten-haiti-student-essays/",
-  "title": "In their own words: students in Dumas, Haiti, on solar power",
-  "description": "26 students at a school in Dumas, Haiti served by Brighten Haiti wrote essays about school before and after solar power."
- },
- {
-  "url": "/news/brighten-haiti-42-lights/",
-  "title": "42 study lights for Brighten Haiti",
-  "description": "Flash Forward delivered 42 solar study lights to Haiti through Brighten Haiti, adding an estimated 252 learning hours each day."
- },
- {
-  "url": "/news/loksadhana-15-lights/",
-  "title": "15 study lights for rural Maharashtra",
-  "description": "Fifteen Flash Forward study lights support Loksadhana’s work across rural Maharashtra."
- },
- {
-  "url": "/news/malaika-15-lights/",
-  "title": "15 study lights for Malaika’s school in Kalebuka",
-  "description": "Fifteen Flash Forward study lights support Malaika’s education work in Kalebuka, DR Congo."
- },
- {
-  "url": "/news/hand-delivered-in-india/",
-  "title": "Hand-delivered: lights for students in India",
-  "description": "Sanjay Gopi hand-delivered Flash Forward study lights to students during a trip to India."
- }
+  {
+    "url": "/about/",
+    "title": "About Us: A Student-Run Nonprofit in Bellevue, WA | Flash Forward",
+    "description": "Founded by Bellevue students in 2024 and recognized as a 501(c)(3) in August 2025, Flash Forward builds solar study lights for students who study after dark."
+  },
+  {
+    "url": "/about/team/",
+    "title": "Our Team",
+    "description": "The six student interns who lead Flash Forward Foundation, with their roles."
+  },
+  {
+    "url": "/accessibility/",
+    "title": "Accessibility",
+    "description": "How the Flash Forward Foundation website is built for keyboard, screen reader and zoom users, and how to report a page that is hard to use."
+  },
+  {
+    "url": "/contact/",
+    "title": "Contact",
+    "description": "Contact Flash Forward Foundation in Bellevue, WA by email, Instagram or Discord, or send a message through the contact form."
+  },
+  {
+    "url": "/donate/",
+    "title": "Sponsor a Solar Study Light for $5.17 | Flash Forward Foundation",
+    "description": "$5.17 buys the parts for one solar study light for a student with no electricity. Choose Haiti, India or DR Congo. Tax-deductible, EIN 39-3605570."
+  },
+  {
+    "url": "/faq/",
+    "title": "FAQ: Solar Study Lights, Donations & Internships | Flash Forward",
+    "description": "How long a light lasts, who receives one, whether gifts are tax-deductible and how internships work. Answers from the Flash Forward Foundation team."
+  },
+  {
+    "url": "/get-involved/",
+    "title": "Get Involved: Student Internships in Bellevue | Flash Forward",
+    "description": "Sponsor a $5.17 solar study light, join our student internship in Bellevue, WA, or partner with us to request lights. Three ways students and families can help."
+  },
+  {
+    "url": "/get-involved/internship/",
+    "title": "Student Nonprofit Internship in Bellevue, WA | Flash Forward",
+    "description": "Unpaid internship for high school and college students at a Bellevue 501(c)(3): pick a department track, learn from experienced executives and apply online."
+  },
+  {
+    "url": "/impact/",
+    "title": "Our Impact: 72 Solar Lights, 3 Countries | Flash Forward",
+    "description": "72 study lights delivered through Brighten Haiti, Loksadhana and Malaika, an estimated 432 study hours a day, and about 100 students in our solar workshops."
+  },
+  {
+    "url": "/",
+    "title": "Solar Study Lights for Students | Flash Forward Foundation",
+    "description": "Student-run 501(c)(3) in Bellevue, WA. Our student interns build $5.17 solar study lights for students without electricity: 72 delivered to Haiti, India and DR Congo."
+  },
+  {
+    "url": "/news/founded/",
+    "title": "Founded by students in Bellevue",
+    "description": "The organization began in 2024 as a student project and built its first solar study light prototype that year."
+  },
+  {
+    "url": "/news/",
+    "title": "News and notes",
+    "description": "News from Flash Forward Foundation: study light deliveries to Haiti, India and DR Congo, student solar workshops, partner stories and nonprofit updates."
+  },
+  {
+    "url": "/news/irs-recognition/",
+    "title": "IRS Recognizes Flash Forward as a 501(c)(3) Public Charity",
+    "description": "Flash Forward Foundation is a 501(c)(3) public charity effective August 5, 2025 (EIN 39-3605570). What recognition means for donors and partners."
+  },
+  {
+    "url": "/news/program-record/",
+    "title": "72 Study Lights Delivered to Haiti, India and DR Congo",
+    "description": "As of October 2026, student interns built and delivered 72 solar study lights: 42 to Brighten Haiti, 15 to Loksadhana and 15 to Malaika."
+  },
+  {
+    "url": "/nonprofit-status/",
+    "title": "501(c)(3) Status & EIN 39-3605570 | Flash Forward Foundation",
+    "description": "Flash Forward Foundation is an IRS-recognized 501(c)(3) public charity (509(a)(2)), effective August 5, 2025. EIN, determination letter and Form 990 status."
+  },
+  {
+    "url": "/our-work/how-we-build/",
+    "title": "How to Build a Solar Study Light, Step by Step | Flash Forward",
+    "description": "How our student interns solder, assemble, test and pack each solar study light in Bellevue, WA, with photos of the workshop. Apply to join the internship."
+  },
+  {
+    "url": "/our-work/",
+    "title": "Our Work",
+    "description": "How Flash Forward Foundation builds solar study lights and sends them through partner organizations."
+  },
+  {
+    "url": "/our-work/partners/brighten-haiti/",
+    "title": "Brighten Haiti Partnership: Solar Study Lights | Flash Forward",
+    "description": "How 42 Flash Forward solar study lights reach students in Haiti through Brighten Haiti, which brings solar power to schools through Solar4Schools."
+  },
+  {
+    "url": "/our-work/partners/loksadhana/",
+    "title": "Loksadhana",
+    "description": "Loksadhana (India): 15 lights delivered. A charitable trust in Maharashtra advancing rural education, women\u2019s empowerment and health."
+  },
+  {
+    "url": "/our-work/partners/malaika/",
+    "title": "Malaika",
+    "description": "Malaika (DR Congo): 15 lights delivered. Empowers girls and communities in the Democratic Republic of the Congo through education, health and clean water."
+  },
+  {
+    "url": "/our-work/photos-and-videos/",
+    "title": "Photos and Videos",
+    "description": "Photos and videos from the Flash Forward workshop: printing, assembly, finished lights, and students with their lights."
+  },
+  {
+    "url": "/our-work/the-light/",
+    "title": "The $5.17 Solar Study Lamp: Parts, Cost & Specs | Flash Forward",
+    "description": "A ~500 mAh battery, a solar panel and two LEDs: about 7 hours of sun gives up to ~12 hours of light. See what each part of our $5.17 study light costs."
+  },
+  {
+    "url": "/our-work/where/",
+    "title": "Where the Lights Go",
+    "description": "Flash Forward's partner record: 72 solar study lights delivered to three partners in Haiti, India and the DR Congo."
+  },
+  {
+    "url": "/privacy/",
+    "title": "Privacy Policy",
+    "description": "How Flash Forward Foundation collects, uses, and protects information from donors, interns, partners, applicants, and website visitors."
+  },
+  {
+    "url": "/search/",
+    "title": "Search",
+    "description": "Find a Flash Forward Foundation page by words in its title or summary."
+  },
+  {
+    "url": "/site-map/",
+    "title": "Site Map",
+    "description": "Every page on the Flash Forward Foundation website in one list: our work, the study light, partners, giving, the team, news, policies and contact."
+  },
+  {
+    "url": "/terms/",
+    "title": "Terms and Conditions",
+    "description": "Terms governing the Flash Forward Foundation website, donations, internship participation, and programs."
+  },
+  {
+    "url": "/news/why-study-lights/",
+    "title": "Energy Poverty and Education: Why a Solar Study Light",
+    "description": "655 million people lacked electricity in 2024 (Tracking SDG7 2026). Here is why studying stops at sunset and how a $5.17 solar light buys back hours."
+  },
+  {
+    "url": "/news/solar-workshops/",
+    "title": "Teaching solar energy: four student workshops",
+    "description": "About 100 students across 4 hands-on workshops where the team teaches how solar charging works and how the light is assembled."
+  },
+  {
+    "url": "/news/start-a-fundraiser/",
+    "title": "Start a fundraiser for study lights",
+    "description": "How to run a group fundraiser for Flash Forward study lights: $5.17 covers the parts for one light, and student interns build them for free."
+  },
+  {
+    "url": "/news/brighten-haiti-student-essays/",
+    "title": "In their own words: students in Dumas, Haiti, on solar power",
+    "description": "26 students at a school in Dumas, Haiti served by Brighten Haiti wrote essays about school before and after solar power."
+  },
+  {
+    "url": "/news/brighten-haiti-42-lights/",
+    "title": "42 study lights for Brighten Haiti",
+    "description": "Flash Forward delivered 42 solar study lights to Haiti through Brighten Haiti, adding an estimated 252 learning hours each day."
+  },
+  {
+    "url": "/news/loksadhana-15-lights/",
+    "title": "15 study lights for rural Maharashtra",
+    "description": "Fifteen Flash Forward study lights support Loksadhana\u2019s work across rural Maharashtra."
+  },
+  {
+    "url": "/news/malaika-15-lights/",
+    "title": "15 study lights for Malaika\u2019s school in Kalebuka",
+    "description": "Fifteen Flash Forward study lights support Malaika\u2019s education work in Kalebuka, DR Congo."
+  },
+  {
+    "url": "/news/hand-delivered-in-india/",
+    "title": "Hand-delivered: lights for students in India",
+    "description": "Sanjay Gopi hand-delivered Flash Forward study lights to students during a trip to India."
+  }
 ]
