@@ -4,7 +4,7 @@
   "img": "/images/opt/students/student-with-flashlight-3.w800.d053dee0.webp",
   "text": "",
   "size": 200596,
-  "t": 388,
+  "t": 224,
   "vp": "1440x900"
  },
  "/about/": {
@@ -12,7 +12,7 @@
   "img": null,
   "text": "Flash Forward Foundation is a student-ru",
   "size": 80131,
-  "t": 116,
+  "t": 124,
   "vp": "390x844"
  },
  "/about/team/": {
@@ -20,7 +20,7 @@
   "img": null,
   "text": "Student executives and interns run the w",
   "size": 39088,
-  "t": 164,
+  "t": 132,
   "vp": "390x844"
  },
  "/accessibility/": {
@@ -28,15 +28,15 @@
   "img": null,
   "text": "This website is meant to be readable as ",
   "size": 63206,
-  "t": 172,
+  "t": 140,
   "vp": "390x844"
  },
  "/contact/": {
   "el": "P.",
   "img": null,
   "text": "Have a question about the lights, the in",
-  "size": 9150,
-  "t": 244,
+  "size": 24225,
+  "t": 232,
   "vp": "390x844"
  },
  "/donate/": {
@@ -44,7 +44,7 @@
   "img": null,
   "text": "$5.17 pays for the parts of one solar st",
   "size": 69738,
-  "t": 196,
+  "t": 184,
   "vp": "390x844"
  },
  "/faq/": {
@@ -52,7 +52,7 @@
   "img": null,
   "text": "Flash Forward Foundation is a student-ru",
   "size": 68112,
-  "t": 112,
+  "t": 116,
   "vp": "390x844"
  },
  "/get-involved/": {
@@ -60,7 +60,7 @@
   "img": "/images/opt/build/packagedlights.w600.e0c41ddb.webp",
   "text": "",
   "size": 69635,
-  "t": 124,
+  "t": 120,
   "vp": "390x844"
  },
  "/get-involved/internship/": {
@@ -68,7 +68,7 @@
   "img": "/images/opt/build/soldering-electronics.w638.ec2eb488.webp",
   "text": "",
   "size": 172800,
-  "t": 136,
+  "t": 144,
   "vp": "1440x900"
  },
  "/impact/": {
@@ -76,15 +76,15 @@
   "img": "/images/opt/students/student-with-flashlight-1.w800.85ac48ab.webp",
   "text": "",
   "size": 86022,
-  "t": 128,
+  "t": 164,
   "vp": "390x844"
  },
  "/news/": {
   "el": "IMG.",
   "img": "/images/opt/partners/brighten-haiti/photo-1.w800.c22ad59a.webp",
   "text": "",
-  "size": 93810,
-  "t": 128,
+  "size": 93987,
+  "t": 136,
   "vp": "390x844"
  },
  "/news/brighten-haiti-42-lights/": {
@@ -108,7 +108,7 @@
   "img": "/images/opt/build/flashfinishedworkshop.w800.8f267722.webp",
   "text": "",
   "size": 78322,
-  "t": 104,
+  "t": 180,
   "vp": "390x844"
  },
  "/news/hand-delivered-in-india/": {
@@ -116,7 +116,7 @@
   "img": "/images/opt/students/student-with-flashlight-3.w800.d053dee0.webp",
   "text": "",
   "size": 93810,
-  "t": 128,
+  "t": 120,
   "vp": "390x844"
  },
  "/news/irs-recognition/": {
@@ -124,7 +124,7 @@
   "img": "/images/brand/og-image.jpg",
   "text": "",
   "size": 78178,
-  "t": 104,
+  "t": 112,
   "vp": "390x844"
  },
  "/news/loksadhana-15-lights/": {
@@ -132,7 +132,7 @@
   "img": "/images/opt/partners/loksadhana/class-3.w757.7a660b1f.webp",
   "text": "",
   "size": 93987,
-  "t": 136,
+  "t": 132,
   "vp": "390x844"
  },
  "/news/malaika-15-lights/": {
@@ -140,7 +140,7 @@
   "img": "/images/opt/partners/malaika/school-1.w800.770a6871.webp",
   "text": "",
   "size": 91686,
-  "t": 116,
+  "t": 120,
   "vp": "390x844"
  },
  "/news/program-record/": {
@@ -148,15 +148,15 @@
   "img": "/images/opt/build/packagedlights.w600.e0c41ddb.webp",
   "text": "",
   "size": 78234,
-  "t": 108,
+  "t": 148,
   "vp": "390x844"
  },
  "/news/solar-workshops/": {
   "el": "IMG.",
-  "img": "/images/opt/build/robotics-event-booth.w360.5f8d7607.webp",
+  "img": "/images/opt/build/peopleworkingonflash.w800.71b99741.webp",
   "text": "",
   "size": 78322,
-  "t": 104,
+  "t": 132,
   "vp": "390x844"
  },
  "/news/start-a-fundraiser/": {
@@ -164,15 +164,15 @@
   "img": "/images/opt/build/packagedlights.w600.e0c41ddb.webp",
   "text": "",
   "size": 78167,
-  "t": 100,
+  "t": 148,
   "vp": "390x844"
  },
  "/news/why-study-lights/": {
   "el": "IMG.",
-  "img": "/images/opt/light/assembled-anchor.w800.ecbaecc8.webp",
+  "img": "/images/opt/light/assembled-anchor.w800.4ab8fe1f.webp",
   "text": "",
   "size": 88804,
-  "t": 128,
+  "t": 148,
   "vp": "1440x900"
  },
  "/nonprofit-status/": {
@@ -180,7 +180,7 @@
   "img": null,
   "text": "Flash Forward Foundation is an IRS-recog",
   "size": 70092,
-  "t": 88,
+  "t": 92,
   "vp": "390x844"
  },
  "/our-work/": {
@@ -188,15 +188,15 @@
   "img": "/images/opt/build/flashlight-units.w600.8ddbc6b1.webp",
   "text": "",
   "size": 101682,
-  "t": 124,
+  "t": 160,
   "vp": "1440x900"
  },
  "/our-work/how-we-build/": {
-  "el": "IMG.",
+  "el": "IMG.ff-split__img--square",
   "img": "/images/opt/build/soldering-electronics.w638.ec2eb488.webp",
   "text": "",
-  "size": 70385,
-  "t": 144,
+  "size": 83483,
+  "t": 180,
   "vp": "390x844"
  },
  "/our-work/partners/brighten-haiti/": {
@@ -204,7 +204,7 @@
   "img": "/images/opt/partners/brighten-haiti/photo-1.w800.c22ad59a.webp",
   "text": "",
   "size": 78173,
-  "t": 176,
+  "t": 188,
   "vp": "390x844"
  },
  "/our-work/partners/loksadhana/": {
@@ -212,7 +212,7 @@
   "img": "/images/opt/partners/loksadhana/class-1.w800.15fbc8d4.webp",
   "text": "",
   "size": 78322,
-  "t": 132,
+  "t": 136,
   "vp": "390x844"
  },
  "/our-work/partners/malaika/": {
@@ -220,7 +220,7 @@
   "img": "/images/opt/partners/malaika/students-3.w800.e56f14b9.webp",
   "text": "",
   "size": 78322,
-  "t": 128,
+  "t": 184,
   "vp": "390x844"
  },
  "/our-work/photos-and-videos/": {
@@ -228,15 +228,15 @@
   "img": "/images/opt/build/flashlight-build-timelapse-poster.w800.3f553dd0.webp",
   "text": "",
   "size": 49997,
-  "t": 132,
+  "t": 200,
   "vp": "1440x900"
  },
  "/our-work/the-light/": {
   "el": "IMG.",
-  "img": "/images/opt/frames/assembly/poster-d.w800.705b2605.webp",
+  "img": "/images/opt/frames/assembly/poster-d.w800.6a38c549.webp",
   "text": "",
   "size": 93810,
-  "t": 140,
+  "t": 144,
   "vp": "390x844"
  },
  "/our-work/where/": {
@@ -244,7 +244,7 @@
   "img": null,
   "text": "As of October 2026, all 72 Flash Forward",
   "size": 68950,
-  "t": 132,
+  "t": 136,
   "vp": "390x844"
  },
  "/privacy/": {
@@ -252,15 +252,15 @@
   "img": null,
   "text": "Explore Legal Information",
   "size": 12920,
-  "t": 144,
+  "t": 140,
   "vp": "390x844"
  },
  "/search/": {
   "el": "P.ff-footer__mission",
   "img": null,
   "text": "A student-run 501(c)(3) nonprofit in Bel",
-  "size": 29574,
-  "t": 112,
+  "size": 27666,
+  "t": 120,
   "vp": "390x844"
  },
  "/site-map/": {
@@ -268,7 +268,7 @@
   "img": null,
   "text": "Explore This Website",
   "size": 10512,
-  "t": 324,
+  "t": 140,
   "vp": "390x844"
  },
  "/terms/": {
@@ -276,7 +276,7 @@
   "img": null,
   "text": "Terms and Conditions",
   "size": 14120,
-  "t": 176,
+  "t": 156,
   "vp": "390x844"
  }
 }
