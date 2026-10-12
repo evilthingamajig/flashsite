@@ -136,12 +136,20 @@
     ctx.setTransform(dpr,0,0,dpr,0,0);
     draw(current);
   }
-  for(var n=1;n<=FRAMES;n++)(function(k){
-    var img=new Image();
-    img.src='/frames/assembly/'+dir+'/'+String(k).padStart(4,'0')+'.webp';
-    img.onload=function(){if(k===1||k===FRAMES)draw(current)};
-    imgs[k-1]=img;
-  })(n);
+  function loadFrames(){
+    for(var n=1;n<=FRAMES;n++)(function(k){
+      var img=new Image();
+      img.src='/frames/assembly/'+dir+'/'+String(k).padStart(4,'0')+'.webp';
+      img.onload=function(){if(k===1||k===FRAMES)draw(current)};
+      imgs[k-1]=img;
+    })(n);
+  }
+  if('IntersectionObserver' in window){
+    var asmIO=new IntersectionObserver(function(es){
+      es.forEach(function(e){if(e.isIntersecting){asmIO.disconnect();loadFrames()}});
+    },{rootMargin:'600px 0px'});
+    asmIO.observe(sec);
+  }else loadFrames();
   if(reduced){
     window.setTimeout(function(){resize();draw(FRAMES);},400);
     document.querySelectorAll('.ff-asm__cap').forEach(function(c){c.classList.add('is-on')});
@@ -190,12 +198,17 @@
       io.unobserve(en.target);
       var el=en.target;
       var target=parseInt(el.getAttribute('data-countup'),10)||0;
+      render(el,target);
+      var finalW=el.getBoundingClientRect().width;
+      el.style.minWidth=Math.ceil(finalW)+'px';
+      render(el,0);
       var t0=performance.now(),dur=1600;
       function frame(t){
         var p=Math.min(1,(t-t0)/dur);
         var e=1-Math.pow(1-p,3);
         render(el,Math.round(target*e));
-        if(p<1)requestAnimationFrame(frame);else render(el,target);
+        if(p<1)requestAnimationFrame(frame);
+        else{render(el,target);el.style.minWidth='';}
       }
       requestAnimationFrame(frame);
     });
@@ -206,4 +219,15 @@
     render(el,0);
     io.observe(el);
   });
+})();
+/* Lazy video posters: attach poster when the video nears the viewport */
+(function(){
+  var vids=[].slice.call(document.querySelectorAll('video[data-poster]'));
+  if(!vids.length)return;
+  var attach=function(v){v.poster=v.getAttribute('data-poster');v.removeAttribute('data-poster');};
+  if(!('IntersectionObserver' in window)){vids.forEach(attach);return;}
+  var io=new IntersectionObserver(function(entries){
+    entries.forEach(function(en){if(en.isIntersecting){io.unobserve(en.target);attach(en.target);}});
+  },{rootMargin:'300px 0px'});
+  vids.forEach(function(v){io.observe(v);});
 })();

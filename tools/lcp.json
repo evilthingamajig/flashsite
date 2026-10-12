@@ -1,0 +1,247 @@
+{
+ "/": {
+  "el": "IMG.",
+  "img": "/images/opt/students/student-with-flashlight-3.w800.d053dee0.webp",
+  "text": "",
+  "size": 190320,
+  "t": 232
+ },
+ "/about/": {
+  "el": "P.ff-lede",
+  "img": null,
+  "text": "For a student without electricity, the s",
+  "size": 39648,
+  "t": 120
+ },
+ "/about/team/": {
+  "el": "P.ff-lede",
+  "img": null,
+  "text": "Student executives and interns run the w",
+  "size": 39088,
+  "t": 120
+ },
+ "/accessibility/": {
+  "el": "P.",
+  "img": null,
+  "text": "This website is meant to be readable as ",
+  "size": 63954,
+  "t": 204
+ },
+ "/contact/": {
+  "el": "P.",
+  "img": null,
+  "text": "Have a question about the lights, the in",
+  "size": 9150,
+  "t": 180
+ },
+ "/donate/": {
+  "el": "P.",
+  "img": null,
+  "text": "Pick a partner destination, or let Flash",
+  "size": 35208,
+  "t": 160
+ },
+ "/faq/": {
+  "el": "H1.",
+  "img": null,
+  "text": "Frequently asked questions",
+  "size": 20867,
+  "t": 108
+ },
+ "/get-involved/": {
+  "el": "IMG.",
+  "img": "/images/build/packagedlights.webp",
+  "text": "",
+  "size": 69630,
+  "t": 148
+ },
+ "/get-involved/internship/": {
+  "el": "IMG.",
+  "img": "/images/build/soldering-electronics.jpg",
+  "text": "",
+  "size": 93987,
+  "t": 124
+ },
+ "/impact/": {
+  "el": "IMG.",
+  "img": "/images/opt/students/student-with-flashlight-1.w800.85ac48ab.webp",
+  "text": "",
+  "size": 126732,
+  "t": 148
+ },
+ "/news/": {
+  "el": "IMG.",
+  "img": "/images/opt/partners/brighten-haiti/photo-1.w800.c22ad59a.webp",
+  "text": "",
+  "size": 93810,
+  "t": 128
+ },
+ "/news/brighten-haiti-42-lights/": {
+  "el": "IMG.",
+  "img": "/images/build/assembly-lights.webp",
+  "text": "",
+  "size": 93810,
+  "t": 136
+ },
+ "/news/brighten-haiti-student-essays/": {
+  "el": "P.ff-lede",
+  "img": null,
+  "text": "26 students at Institution Sainte Bernad",
+  "size": 68904,
+  "t": 116
+ },
+ "/news/founded/": {
+  "el": "IMG.",
+  "img": "/images/opt/build/flashfinishedworkshop.w800.8f267722.webp",
+  "text": "",
+  "size": 78173,
+  "t": 116
+ },
+ "/news/hand-delivered-in-india/": {
+  "el": "IMG.",
+  "img": "/images/opt/students/student-with-flashlight-3.w800.d053dee0.webp",
+  "text": "",
+  "size": 93810,
+  "t": 128
+ },
+ "/news/irs-recognition/": {
+  "el": "IMG.",
+  "img": "/images/brand/og-image.jpg",
+  "text": "",
+  "size": 78322,
+  "t": 120
+ },
+ "/news/loksadhana-15-lights/": {
+  "el": "IMG.",
+  "img": "/images/partners/loksadhana/class-3.webp",
+  "text": "",
+  "size": 93810,
+  "t": 144
+ },
+ "/news/malaika-15-lights/": {
+  "el": "IMG.",
+  "img": "/images/opt/partners/malaika/school-1.w800.770a6871.webp",
+  "text": "",
+  "size": 93987,
+  "t": 128
+ },
+ "/news/program-record/": {
+  "el": "IMG.",
+  "img": "/images/build/packagedlights.webp",
+  "text": "",
+  "size": 78173,
+  "t": 116
+ },
+ "/news/solar-workshops/": {
+  "el": "IMG.",
+  "img": "/images/build/robotics-event-booth.webp",
+  "text": "",
+  "size": 78173,
+  "t": 108
+ },
+ "/news/start-a-fundraiser/": {
+  "el": "IMG.",
+  "img": "/images/build/packagedlights.webp",
+  "text": "",
+  "size": 78234,
+  "t": 120
+ },
+ "/news/why-study-lights/": {
+  "el": "IMG.",
+  "img": "/images/opt/light/assembled-anchor.w800.4ab8fe1f.webp",
+  "text": "",
+  "size": 48142,
+  "t": 124
+ },
+ "/nonprofit-status/": {
+  "el": "P.ff-lede",
+  "img": null,
+  "text": "Flash Forward Foundation is recognized b",
+  "size": 29382,
+  "t": 84
+ },
+ "/our-work/": {
+  "el": "P.ff-lede",
+  "img": null,
+  "text": "Flash Forward designs, builds and delive",
+  "size": 38192,
+  "t": 112
+ },
+ "/our-work/how-we-build/": {
+  "el": "IMG.",
+  "img": "/images/build/soldering-electronics.jpg",
+  "text": "",
+  "size": 70412,
+  "t": 160
+ },
+ "/our-work/partners/brighten-haiti/": {
+  "el": "IMG.",
+  "img": "/images/opt/partners/brighten-haiti/photo-1.w800.c22ad59a.webp",
+  "text": "",
+  "size": 78173,
+  "t": 196
+ },
+ "/our-work/partners/loksadhana/": {
+  "el": "IMG.",
+  "img": "/images/opt/partners/loksadhana/class-1.w800.15fbc8d4.webp",
+  "text": "",
+  "size": 78322,
+  "t": 140
+ },
+ "/our-work/partners/malaika/": {
+  "el": "IMG.",
+  "img": "/images/opt/partners/malaika/students-3.w800.e56f14b9.webp",
+  "text": "",
+  "size": 78322,
+  "t": 140
+ },
+ "/our-work/photos-and-videos/": {
+  "el": "P.ff-lede",
+  "img": null,
+  "text": "Student interns build every Flash Forwar",
+  "size": 38295,
+  "t": 156
+ },
+ "/our-work/the-light/": {
+  "el": "IMG.",
+  "img": "/frames/assembly/poster-d.webp",
+  "text": "",
+  "size": 93987,
+  "t": 172
+ },
+ "/our-work/where/": {
+  "el": "P.ff-lede",
+  "img": null,
+  "text": "All 72 study lights have been delivered ",
+  "size": 49560,
+  "t": 152
+ },
+ "/privacy/": {
+  "el": "H2.",
+  "img": null,
+  "text": "Explore Legal Information",
+  "size": 12920,
+  "t": 152
+ },
+ "/search/": {
+  "el": "P.ff-footer__mission",
+  "img": null,
+  "text": "A student-run 501(c)(3) nonprofit in Bel",
+  "size": 30225,
+  "t": 152
+ },
+ "/site-map/": {
+  "el": "H2.",
+  "img": null,
+  "text": "Explore This Website",
+  "size": 10512,
+  "t": 112
+ },
+ "/terms/": {
+  "el": "H1.",
+  "img": null,
+  "text": "Terms and Conditions",
+  "size": 14120,
+  "t": 136
+ }
+}

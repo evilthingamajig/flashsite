@@ -1,0 +1,70 @@
+[
+ {
+  "page": "/our-work/photos-and-videos/",
+  "idx": 0,
+  "poster": "/images/build/flashlight-build-timelapse-poster-2.webp",
+  "w": {
+   "1440x900": 835,
+   "1024x768": 637,
+   "768x1024": 467,
+   "390x844": 342
+  },
+  "t": {
+   "1440x900": 1196,
+   "1024x768": 1111,
+   "768x1024": 1069,
+   "390x844": 1731
+  }
+ },
+ {
+  "page": "/our-work/photos-and-videos/",
+  "idx": 1,
+  "poster": "/images/build/3d-print-timelapse-compressed-poster.webp",
+  "w": {
+   "1440x900": 315,
+   "1024x768": 315,
+   "768x1024": 233,
+   "390x844": 332
+  },
+  "t": {
+   "1440x900": 1196,
+   "1024x768": 1111,
+   "768x1024": 1069,
+   "390x844": 1976
+  }
+ },
+ {
+  "page": "/our-work/photos-and-videos/",
+  "idx": 2,
+  "poster": "/images/build/demo-v1-flashlight-compressed-poster.webp",
+  "w": {
+   "1440x900": 315,
+   "1024x768": 315,
+   "768x1024": 315,
+   "390x844": 332
+  },
+  "t": {
+   "1440x900": 2761,
+   "1024x768": 2534,
+   "768x1024": 2233,
+   "390x844": 4460
+  }
+ },
+ {
+  "page": "/our-work/photos-and-videos/",
+  "idx": 3,
+  "poster": "/images/build/donate-video-poster.webp",
+  "w": {
+   "1440x900": 853,
+   "1024x768": 853,
+   "768x1024": 720,
+   "390x844": 342
+  },
+  "t": {
+   "1440x900": 5014,
+   "1024x768": 4560,
+   "768x1024": 4127,
+   "390x844": 8168
+  }
+ }
+]

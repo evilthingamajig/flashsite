@@ -1,0 +1,4754 @@
+[
+ {
+  "page": "/about/",
+  "idx": 0,
+  "src": "/images/brand/mark-green-104.png",
+  "orig": "/images/brand/mark-green-104.png",
+  "nw": 71,
+  "nh": 104,
+  "par": "ff-logo",
+  "cls": "",
+  "w": {
+   "1440x900": 36,
+   "1024x768": 36,
+   "768x1024": 36,
+   "390x844": 27
+  },
+  "t": {
+   "1440x900": 16,
+   "1024x768": 16,
+   "768x1024": 16,
+   "390x844": 22
+  }
+ },
+ {
+  "page": "/about/",
+  "idx": 1,
+  "src": "/images/opt/students/student-with-flashlight-1.w800.85ac48ab.webp",
+  "orig": "/images/opt/students/student-with-flashlight-1.w800.85ac48ab.webp",
+  "nw": 590,
+  "nh": 560,
+  "par": "",
+  "cls": "",
+  "w": {
+   "1440x900": 528,
+   "1024x768": 464,
+   "768x1024": 720,
+   "390x844": 354
+  },
+  "t": {
+   "1440x900": 1208,
+   "1024x768": 1197,
+   "768x1024": 1413,
+   "390x844": 1675
+  }
+ },
+ {
+  "page": "/about/",
+  "idx": 2,
+  "src": "/images/build/soldering-electronics.jpg",
+  "orig": "/images/build/soldering-electronics.jpg",
+  "nw": 590,
+  "nh": 333,
+  "par": "",
+  "cls": "",
+  "w": {
+   "1440x900": 528,
+   "1024x768": 464,
+   "768x1024": 720,
+   "390x844": 354
+  },
+  "t": {
+   "1440x900": 1660,
+   "1024x768": 1601,
+   "768x1024": 2009,
+   "390x844": 1997
+  }
+ },
+ {
+  "page": "/about/",
+  "idx": 3,
+  "src": "/images/brand/mark-paper-88.png",
+  "orig": "/images/brand/mark-paper-88.png",
+  "nw": 60,
+  "nh": 88,
+  "par": "ff-logo",
+  "cls": "ff-footer__mark",
+  "w": {
+   "1440x900": 35,
+   "1024x768": 35,
+   "768x1024": 35,
+   "390x844": 27
+  },
+  "t": {
+   "1440x900": 3645,
+   "1024x768": 3529,
+   "768x1024": 4627,
+   "390x844": 4425
+  }
+ },
+ {
+  "page": "/about/team/",
+  "idx": 0,
+  "src": "/images/brand/mark-green-104.png",
+  "orig": "/images/brand/mark-green-104.png",
+  "nw": 71,
+  "nh": 104,
+  "par": "ff-logo",
+  "cls": "",
+  "w": {
+   "1440x900": 36,
+   "1024x768": 36,
+   "768x1024": 36,
+   "390x844": 27
+  },
+  "t": {
+   "1440x900": 16,
+   "1024x768": 16,
+   "768x1024": 16,
+   "390x844": 22
+  }
+ },
+ {
+  "page": "/about/team/",
+  "idx": 1,
+  "src": "/images/team/romirchekuri.webp",
+  "orig": "/images/team/romirchekuri.webp",
+  "nw": 417,
+  "nh": 417,
+  "par": "ff-card__photo",
+  "cls": "",
+  "w": {
+   "1440x900": 350,
+   "1024x768": 307,
+   "768x1024": 222,
+   "390x844": 352
+  },
+  "t": {
+   "1440x900": 811,
+   "1024x768": 800,
+   "768x1024": 799,
+   "390x844": 784
+  }
+ },
+ {
+  "page": "/about/team/",
+  "idx": 2,
+  "src": "/images/team/sree-v2.webp",
+  "orig": "/images/team/sree-v2.webp",
+  "nw": 417,
+  "nh": 390,
+  "par": "ff-card__photo",
+  "cls": "",
+  "w": {
+   "1440x900": 350,
+   "1024x768": 307,
+   "768x1024": 222,
+   "390x844": 352
+  },
+  "t": {
+   "1440x900": 811,
+   "1024x768": 800,
+   "768x1024": 799,
+   "390x844": 1390
+  }
+ },
+ {
+  "page": "/about/team/",
+  "idx": 3,
+  "src": "/images/team/andy-v2.webp",
+  "orig": "/images/team/andy-v2.webp",
+  "nw": 417,
+  "nh": 515,
+  "par": "ff-card__photo",
+  "cls": "",
+  "w": {
+   "1440x900": 350,
+   "1024x768": 307,
+   "768x1024": 222,
+   "390x844": 352
+  },
+  "t": {
+   "1440x900": 811,
+   "1024x768": 800,
+   "768x1024": 799,
+   "390x844": 2021
+  }
+ },
+ {
+  "page": "/about/team/",
+  "idx": 4,
+  "src": "/images/team/tuck.webp",
+  "orig": "/images/team/tuck.webp",
+  "nw": 259,
+  "nh": 259,
+  "par": "ff-card__photo",
+  "cls": "",
+  "w": {
+   "1440x900": 198,
+   "1024x768": 198,
+   "768x1024": 198,
+   "390x844": 169
+  },
+  "t": {
+   "1440x900": 1529,
+   "1024x768": 1499,
+   "768x1024": 1604,
+   "390x844": 2857
+  }
+ },
+ {
+  "page": "/about/team/",
+  "idx": 5,
+  "src": "/images/team/aidan-v2.webp",
+  "orig": "/images/team/aidan-v2.webp",
+  "nw": 259,
+  "nh": 259,
+  "par": "ff-card__photo",
+  "cls": "",
+  "w": {
+   "1440x900": 198,
+   "1024x768": 198,
+   "768x1024": 198,
+   "390x844": 169
+  },
+  "t": {
+   "1440x900": 2132,
+   "1024x768": 2103,
+   "768x1024": 2351,
+   "390x844": 3637
+  }
+ },
+ {
+  "page": "/about/team/",
+  "idx": 6,
+  "src": "/images/team/sanjay.webp",
+  "orig": "/images/team/sanjay.webp",
+  "nw": 259,
+  "nh": 353,
+  "par": "ff-card__photo",
+  "cls": "",
+  "w": {
+   "1440x900": 198,
+   "1024x768": 198,
+   "768x1024": 198,
+   "390x844": 169
+  },
+  "t": {
+   "1440x900": 2132,
+   "1024x768": 2103,
+   "768x1024": 2351,
+   "390x844": 3637
+  }
+ },
+ {
+  "page": "/about/team/",
+  "idx": 7,
+  "src": "/images/brand/mark-paper-88.png",
+  "orig": "/images/brand/mark-paper-88.png",
+  "nw": 60,
+  "nh": 88,
+  "par": "ff-logo",
+  "cls": "ff-footer__mark",
+  "w": {
+   "1440x900": 35,
+   "1024x768": 35,
+   "768x1024": 35,
+   "390x844": 27
+  },
+  "t": {
+   "1440x900": 2987,
+   "1024x768": 2957,
+   "768x1024": 3205,
+   "390x844": 4573
+  }
+ },
+ {
+  "page": "/accessibility/",
+  "idx": 0,
+  "src": "/images/brand/mark-green-104.png",
+  "orig": "/images/brand/mark-green-104.png",
+  "nw": 71,
+  "nh": 104,
+  "par": "ff-logo",
+  "cls": "",
+  "w": {
+   "1440x900": 36,
+   "1024x768": 36,
+   "768x1024": 36,
+   "390x844": 27
+  },
+  "t": {
+   "1440x900": 16,
+   "1024x768": 16,
+   "768x1024": 16,
+   "390x844": 22
+  }
+ },
+ {
+  "page": "/accessibility/",
+  "idx": 1,
+  "src": "/images/brand/mark-paper-88.png",
+  "orig": "/images/brand/mark-paper-88.png",
+  "nw": 60,
+  "nh": 88,
+  "par": "ff-logo",
+  "cls": "ff-footer__mark",
+  "w": {
+   "1440x900": 35,
+   "1024x768": 35,
+   "768x1024": 35,
+   "390x844": 27
+  },
+  "t": {
+   "1440x900": 845,
+   "1024x768": 899,
+   "768x1024": 899,
+   "390x844": 987
+  }
+ },
+ {
+  "page": "/contact/",
+  "idx": 0,
+  "src": "/images/brand/mark-green-104.png",
+  "orig": "/images/brand/mark-green-104.png",
+  "nw": 71,
+  "nh": 104,
+  "par": "ff-logo",
+  "cls": "",
+  "w": {
+   "1440x900": 36,
+   "1024x768": 36,
+   "768x1024": 36,
+   "390x844": 27
+  },
+  "t": {
+   "1440x900": 16,
+   "1024x768": 16,
+   "768x1024": 16,
+   "390x844": 22
+  }
+ },
+ {
+  "page": "/contact/",
+  "idx": 1,
+  "src": "/images/brand/mark-paper-88.png",
+  "orig": "/images/brand/mark-paper-88.png",
+  "nw": 60,
+  "nh": 88,
+  "par": "ff-logo",
+  "cls": "ff-footer__mark",
+  "w": {
+   "1440x900": 35,
+   "1024x768": 35,
+   "768x1024": 35,
+   "390x844": 27
+  },
+  "t": {
+   "1440x900": 1300,
+   "1024x768": 1300,
+   "768x1024": 1300,
+   "390x844": 1529
+  }
+ },
+ {
+  "page": "/donate/",
+  "idx": 0,
+  "src": "/images/brand/mark-green-104.png",
+  "orig": "/images/brand/mark-green-104.png",
+  "nw": 71,
+  "nh": 104,
+  "par": "ff-logo",
+  "cls": "",
+  "w": {
+   "1440x900": 36,
+   "1024x768": 36,
+   "768x1024": 36,
+   "390x844": 27
+  },
+  "t": {
+   "1440x900": 16,
+   "1024x768": 16,
+   "768x1024": 16,
+   "390x844": 22
+  }
+ },
+ {
+  "page": "/donate/",
+  "idx": 1,
+  "src": "/images/brand/mark-paper-88.png",
+  "orig": "/images/brand/mark-paper-88.png",
+  "nw": 60,
+  "nh": 88,
+  "par": "ff-logo",
+  "cls": "ff-footer__mark",
+  "w": {
+   "1440x900": 35,
+   "1024x768": 35,
+   "768x1024": 35,
+   "390x844": 27
+  },
+  "t": {
+   "1440x900": 3002,
+   "1024x768": 2983,
+   "768x1024": 3548,
+   "390x844": 3995
+  }
+ },
+ {
+  "page": "/faq/",
+  "idx": 0,
+  "src": "/images/brand/mark-green-104.png",
+  "orig": "/images/brand/mark-green-104.png",
+  "nw": 71,
+  "nh": 104,
+  "par": "ff-logo",
+  "cls": "",
+  "w": {
+   "1440x900": 36,
+   "1024x768": 36,
+   "768x1024": 36,
+   "390x844": 27
+  },
+  "t": {
+   "1440x900": 16,
+   "1024x768": 16,
+   "768x1024": 16,
+   "390x844": 22
+  }
+ },
+ {
+  "page": "/faq/",
+  "idx": 1,
+  "src": "/images/brand/mark-paper-88.png",
+  "orig": "/images/brand/mark-paper-88.png",
+  "nw": 60,
+  "nh": 88,
+  "par": "ff-logo",
+  "cls": "ff-footer__mark",
+  "w": {
+   "1440x900": 35,
+   "1024x768": 35,
+   "768x1024": 35,
+   "390x844": 27
+  },
+  "t": {
+   "1440x900": 1801,
+   "1024x768": 1758,
+   "768x1024": 1758,
+   "390x844": 2398
+  }
+ },
+ {
+  "page": "/get-involved/",
+  "idx": 0,
+  "src": "/images/brand/mark-green-104.png",
+  "orig": "/images/brand/mark-green-104.png",
+  "nw": 71,
+  "nh": 104,
+  "par": "ff-logo",
+  "cls": "",
+  "w": {
+   "1440x900": 36,
+   "1024x768": 36,
+   "768x1024": 36,
+   "390x844": 27
+  },
+  "t": {
+   "1440x900": 16,
+   "1024x768": 16,
+   "768x1024": 16,
+   "390x844": 22
+  }
+ },
+ {
+  "page": "/get-involved/",
+  "idx": 1,
+  "src": "/images/build/packagedlights.webp",
+  "orig": "/images/build/packagedlights.webp",
+  "nw": 417,
+  "nh": 557,
+  "par": "ff-card__photo",
+  "cls": "",
+  "w": {
+   "1440x900": 350,
+   "1024x768": 307,
+   "768x1024": 718,
+   "390x844": 352
+  },
+  "t": {
+   "1440x900": 478,
+   "1024x768": 478,
+   "768x1024": 478,
+   "390x844": 449
+  }
+ },
+ {
+  "page": "/get-involved/",
+  "idx": 2,
+  "src": "/images/opt/build/garage-build-session.w800.9779620a.webp",
+  "orig": "/images/opt/build/garage-build-session.w800.9779620a.webp",
+  "nw": 417,
+  "nh": 266,
+  "par": "ff-card__photo",
+  "cls": "",
+  "w": {
+   "1440x900": 350,
+   "1024x768": 307,
+   "768x1024": 718,
+   "390x844": 352
+  },
+  "t": {
+   "1440x900": 478,
+   "1024x768": 478,
+   "768x1024": 1082,
+   "390x844": 871
+  }
+ },
+ {
+  "page": "/get-involved/",
+  "idx": 3,
+  "src": "/images/opt/partners/malaika/students-2.w800.0cc11674.webp",
+  "orig": "/images/opt/partners/malaika/students-2.w800.0cc11674.webp",
+  "nw": 417,
+  "nh": 278,
+  "par": "ff-card__photo",
+  "cls": "",
+  "w": {
+   "1440x900": 350,
+   "1024x768": 307,
+   "768x1024": 718,
+   "390x844": 352
+  },
+  "t": {
+   "1440x900": 478,
+   "1024x768": 478,
+   "768x1024": 1688,
+   "390x844": 1296
+  }
+ },
+ {
+  "page": "/get-involved/",
+  "idx": 4,
+  "src": "/images/brand/mark-paper-88.png",
+  "orig": "/images/brand/mark-paper-88.png",
+  "nw": 60,
+  "nh": 88,
+  "par": "ff-logo",
+  "cls": "ff-footer__mark",
+  "w": {
+   "1440x900": 35,
+   "1024x768": 35,
+   "768x1024": 35,
+   "390x844": 27
+  },
+  "t": {
+   "1440x900": 1117,
+   "1024x768": 1117,
+   "768x1024": 2511,
+   "390x844": 1936
+  }
+ },
+ {
+  "page": "/get-involved/internship/",
+  "idx": 0,
+  "src": "/images/brand/mark-green-104.png",
+  "orig": "/images/brand/mark-green-104.png",
+  "nw": 71,
+  "nh": 104,
+  "par": "ff-logo",
+  "cls": "",
+  "w": {
+   "1440x900": 36,
+   "1024x768": 36,
+   "768x1024": 36,
+   "390x844": 27
+  },
+  "t": {
+   "1440x900": 16,
+   "1024x768": 16,
+   "768x1024": 16,
+   "390x844": 22
+  }
+ },
+ {
+  "page": "/get-involved/internship/",
+  "idx": 1,
+  "src": "/images/build/soldering-electronics.jpg",
+  "orig": "/images/build/soldering-electronics.jpg",
+  "nw": 547,
+  "nh": 308,
+  "par": "",
+  "cls": "",
+  "w": {
+   "1440x900": 480,
+   "1024x768": 480,
+   "768x1024": 480,
+   "390x844": 354
+  },
+  "t": {
+   "1440x900": 209,
+   "1024x768": 209,
+   "768x1024": 296,
+   "390x844": 549
+  }
+ },
+ {
+  "page": "/get-involved/internship/",
+  "idx": 2,
+  "src": "/images/brand/mark-paper-88.png",
+  "orig": "/images/brand/mark-paper-88.png",
+  "nw": 60,
+  "nh": 88,
+  "par": "ff-logo",
+  "cls": "ff-footer__mark",
+  "w": {
+   "1440x900": 35,
+   "1024x768": 35,
+   "768x1024": 35,
+   "390x844": 27
+  },
+  "t": {
+   "1440x900": 3083,
+   "1024x768": 3096,
+   "768x1024": 4041,
+   "390x844": 4525
+  }
+ },
+ {
+  "page": "/impact/",
+  "idx": 0,
+  "src": "/images/brand/mark-green-104.png",
+  "orig": "/images/brand/mark-green-104.png",
+  "nw": 71,
+  "nh": 104,
+  "par": "ff-logo",
+  "cls": "",
+  "w": {
+   "1440x900": 36,
+   "1024x768": 36,
+   "768x1024": 36,
+   "390x844": 27
+  },
+  "t": {
+   "1440x900": 16,
+   "1024x768": 16,
+   "768x1024": 16,
+   "390x844": 22
+  }
+ },
+ {
+  "page": "/impact/",
+  "idx": 1,
+  "src": "/images/opt/students/student-with-flashlight-1.w800.85ac48ab.webp",
+  "orig": "/images/opt/students/student-with-flashlight-1.w800.85ac48ab.webp",
+  "nw": 532,
+  "nh": 506,
+  "par": "ff-impopen__photo",
+  "cls": "",
+  "w": {
+   "1440x900": 475,
+   "1024x768": 418,
+   "768x1024": 720,
+   "390x844": 354
+  },
+  "t": {
+   "1440x900": 209,
+   "1024x768": 209,
+   "768x1024": 426,
+   "390x844": 486
+  }
+ },
+ {
+  "page": "/impact/",
+  "idx": 2,
+  "src": "/images/opt/partners/brighten-haiti/photo-2.w800.04a59a8d.webp",
+  "orig": "/images/opt/partners/brighten-haiti/photo-2.w800.04a59a8d.webp",
+  "nw": 590,
+  "nh": 442,
+  "par": "ff-imp__prow-photo",
+  "cls": "",
+  "w": {
+   "1440x900": 528,
+   "1024x768": 464,
+   "768x1024": 720,
+   "390x844": 354
+  },
+  "t": {
+   "1440x900": 1938,
+   "1024x768": 1817,
+   "768x1024": 2633,
+   "390x844": 2332
+  }
+ },
+ {
+  "page": "/impact/",
+  "idx": 3,
+  "src": "/images/opt/partners/loksadhana/class-1.w800.15fbc8d4.webp",
+  "orig": "/images/opt/partners/loksadhana/class-1.w800.15fbc8d4.webp",
+  "nw": 590,
+  "nh": 324,
+  "par": "ff-imp__prow-photo",
+  "cls": "",
+  "w": {
+   "1440x900": 528,
+   "1024x768": 464,
+   "768x1024": 720,
+   "390x844": 354
+  },
+  "t": {
+   "1440x900": 2390,
+   "1024x768": 2221,
+   "768x1024": 3476,
+   "390x844": 2926
+  }
+ },
+ {
+  "page": "/impact/",
+  "idx": 4,
+  "src": "/images/opt/partners/malaika/school-2.w800.bd47db9f.webp",
+  "orig": "/images/opt/partners/malaika/school-2.w800.bd47db9f.webp",
+  "nw": 590,
+  "nh": 392,
+  "par": "ff-imp__prow-photo",
+  "cls": "",
+  "w": {
+   "1440x900": 528,
+   "1024x768": 464,
+   "768x1024": 720,
+   "390x844": 354
+  },
+  "t": {
+   "1440x900": 2842,
+   "1024x768": 2625,
+   "768x1024": 4319,
+   "390x844": 3520
+  }
+ },
+ {
+  "page": "/impact/",
+  "idx": 5,
+  "src": "/images/opt/partners/coec-nigeria.w800.dc25ec94.webp",
+  "orig": "/images/opt/partners/coec-nigeria.w800.dc25ec94.webp",
+  "nw": 187,
+  "nh": 186,
+  "par": "ff-logotile",
+  "cls": "",
+  "w": {
+   "1440x900": 122,
+   "1024x768": 122,
+   "768x1024": 122,
+   "390x844": 122
+  },
+  "t": {
+   "1440x900": 3354,
+   "1024x768": 3089,
+   "768x1024": 5196,
+   "390x844": 4149
+  }
+ },
+ {
+  "page": "/impact/",
+  "idx": 6,
+  "src": "/images/partners/rethread.jpg",
+  "orig": "/images/partners/rethread.jpg",
+  "nw": 187,
+  "nh": 82,
+  "par": "ff-logotile",
+  "cls": "",
+  "w": {
+   "1440x900": 122,
+   "1024x768": 122,
+   "768x1024": 122,
+   "390x844": 122
+  },
+  "t": {
+   "1440x900": 3354,
+   "1024x768": 3089,
+   "768x1024": 5196,
+   "390x844": 4247
+  }
+ },
+ {
+  "page": "/impact/",
+  "idx": 7,
+  "src": "/images/partners/bsrea.png",
+  "orig": "/images/partners/bsrea.png",
+  "nw": 187,
+  "nh": 145,
+  "par": "ff-logotile",
+  "cls": "",
+  "w": {
+   "1440x900": 122,
+   "1024x768": 122,
+   "768x1024": 122,
+   "390x844": 122
+  },
+  "t": {
+   "1440x900": 3354,
+   "1024x768": 3089,
+   "768x1024": 5196,
+   "390x844": 4345
+  }
+ },
+ {
+  "page": "/impact/",
+  "idx": 8,
+  "src": "/images/opt/build/flashfinishedworkshop.w800.8f267722.webp",
+  "orig": "/images/opt/build/flashfinishedworkshop.w800.8f267722.webp",
+  "nw": 590,
+  "nh": 442,
+  "par": "ff-wrap ff-teaser",
+  "cls": "",
+  "w": {
+   "1440x900": 528,
+   "1024x768": 464,
+   "768x1024": 720,
+   "390x844": 354
+  },
+  "t": {
+   "1440x900": 4287,
+   "1024x768": 4011,
+   "768x1024": 6267,
+   "390x844": 5447
+  }
+ },
+ {
+  "page": "/impact/",
+  "idx": 9,
+  "src": "/images/brand/mark-paper-88.png",
+  "orig": "/images/brand/mark-paper-88.png",
+  "nw": 60,
+  "nh": 88,
+  "par": "ff-logo",
+  "cls": "ff-footer__mark",
+  "w": {
+   "1440x900": 35,
+   "1024x768": 35,
+   "768x1024": 35,
+   "390x844": 27
+  },
+  "t": {
+   "1440x900": 5496,
+   "1024x768": 5149,
+   "768x1024": 7930,
+   "390x844": 6959
+  }
+ },
+ {
+  "page": "/",
+  "idx": 0,
+  "src": "/images/brand/mark-green-104.png",
+  "orig": "/images/brand/mark-green-104.png",
+  "nw": 71,
+  "nh": 104,
+  "par": "ff-logo",
+  "cls": "",
+  "w": {
+   "1440x900": 36,
+   "1024x768": 36,
+   "768x1024": 36,
+   "390x844": 27
+  },
+  "t": {
+   "1440x900": 16,
+   "1024x768": 16,
+   "768x1024": 16,
+   "390x844": 22
+  }
+ },
+ {
+  "page": "/",
+  "idx": 1,
+  "src": "/images/opt/students/student-with-flashlight-3.w800.d053dee0.webp",
+  "orig": "/images/opt/students/student-with-flashlight-3.w800.d053dee0.webp",
+  "nw": 633,
+  "nh": 845,
+  "par": "ff-home-hero__photo",
+  "cls": "",
+  "w": {
+   "1440x900": 562,
+   "1024x768": 479,
+   "768x1024": 768,
+   "390x844": 390
+  },
+  "t": {
+   "1440x900": 137,
+   "1024x768": 137,
+   "768x1024": 137,
+   "390x844": 137
+  }
+ },
+ {
+  "page": "/",
+  "idx": 2,
+  "src": "/images/opt/partners/malaika/school-2.w800.bd47db9f.webp",
+  "orig": "/images/opt/partners/malaika/school-2.w800.bd47db9f.webp",
+  "nw": 1166,
+  "nh": 775,
+  "par": "ff-why__photo",
+  "cls": "",
+  "w": {
+   "1440x900": 1104,
+   "1024x768": 976,
+   "768x1024": 720,
+   "390x844": 354
+  },
+  "t": {
+   "1440x900": 1162,
+   "1024x768": 1049,
+   "768x1024": 1765,
+   "390x844": 1495
+  }
+ },
+ {
+  "page": "/",
+  "idx": 3,
+  "src": "/images/opt/partners/brighten-haiti/photo-1.w800.c22ad59a.webp",
+  "orig": "/images/opt/partners/brighten-haiti/photo-1.w800.c22ad59a.webp",
+  "nw": 576,
+  "nh": 432,
+  "par": "ffpartners-media",
+  "cls": "",
+  "w": {
+   "1440x900": 516,
+   "1024x768": 452,
+   "768x1024": 720,
+   "390x844": 354
+  },
+  "t": {
+   "1440x900": 2536,
+   "1024x768": 2437,
+   "768x1024": 3138,
+   "390x844": 2757
+  }
+ },
+ {
+  "page": "/",
+  "idx": 4,
+  "src": "/images/partners/brighten-haiti.webp",
+  "orig": "/images/partners/brighten-haiti.webp",
+  "nw": 158,
+  "nh": 102,
+  "par": "ffpartners-body",
+  "cls": "ffpartners-logo",
+  "w": {
+   "1440x900": 88,
+   "1024x768": 88,
+   "768x1024": 88,
+   "390x844": 88
+  },
+  "t": {
+   "1440x900": 2623,
+   "1024x768": 2501,
+   "768x1024": 3766,
+   "390x844": 3080
+  }
+ },
+ {
+  "page": "/",
+  "idx": 5,
+  "src": "/images/opt/partners/loksadhana/class-1.w800.15fbc8d4.webp",
+  "orig": "/images/opt/partners/loksadhana/class-1.w800.15fbc8d4.webp",
+  "nw": 576,
+  "nh": 316,
+  "par": "ffpartners-media",
+  "cls": "",
+  "w": {
+   "1440x900": 516,
+   "1024x768": 452,
+   "768x1024": 720,
+   "390x844": 354
+  },
+  "t": {
+   "1440x900": 3054,
+   "1024x768": 2902,
+   "768x1024": 4051,
+   "390x844": 3393
+  }
+ },
+ {
+  "page": "/",
+  "idx": 6,
+  "src": "/images/partners/loksadhana.webp",
+  "orig": "/images/partners/loksadhana.webp",
+  "nw": 129,
+  "nh": 129,
+  "par": "ffpartners-body",
+  "cls": "ffpartners-logo",
+  "w": {
+   "1440x900": 66,
+   "1024x768": 66,
+   "768x1024": 66,
+   "390x844": 66
+  },
+  "t": {
+   "1440x900": 3155,
+   "1024x768": 2980,
+   "768x1024": 4679,
+   "390x844": 3716
+  }
+ },
+ {
+  "page": "/",
+  "idx": 7,
+  "src": "/images/opt/partners/malaika/students-2.w800.0cc11674.webp",
+  "orig": "/images/opt/partners/malaika/students-2.w800.0cc11674.webp",
+  "nw": 576,
+  "nh": 384,
+  "par": "ffpartners-media",
+  "cls": "",
+  "w": {
+   "1440x900": 516,
+   "1024x768": 452,
+   "768x1024": 720,
+   "390x844": 354
+  },
+  "t": {
+   "1440x900": 3572,
+   "1024x768": 3367,
+   "768x1024": 4964,
+   "390x844": 4029
+  }
+ },
+ {
+  "page": "/",
+  "idx": 8,
+  "src": "/images/partners/malaika.jpg",
+  "orig": "/images/partners/malaika.jpg",
+  "nw": 172,
+  "nh": 81,
+  "par": "ffpartners-body",
+  "cls": "ffpartners-logo",
+  "w": {
+   "1440x900": 111,
+   "1024x768": 111,
+   "768x1024": 111,
+   "390x844": 111
+  },
+  "t": {
+   "1440x900": 3673,
+   "1024x768": 3444,
+   "768x1024": 5592,
+   "390x844": 4352
+  }
+ },
+ {
+  "page": "/",
+  "idx": 9,
+  "src": "/images/opt/partners/brighten-haiti/photo-1.w800.c22ad59a.webp",
+  "orig": "/images/opt/partners/brighten-haiti/photo-1.w800.c22ad59a.webp",
+  "nw": 576,
+  "nh": 432,
+  "par": "ff-spot__media",
+  "cls": "",
+  "w": {
+   "1440x900": 662,
+   "1024x768": 586,
+   "768x1024": 720,
+   "390x844": 354
+  },
+  "t": {
+   "1440x900": 4297,
+   "1024x768": 4028,
+   "768x1024": 6098,
+   "390x844": 4862
+  }
+ },
+ {
+  "page": "/",
+  "idx": 10,
+  "src": "/images/build/packagedlights.webp",
+  "orig": "/images/build/packagedlights.webp",
+  "nw": 417,
+  "nh": 557,
+  "par": "ff-card__photo",
+  "cls": "",
+  "w": {
+   "1440x900": 350,
+   "1024x768": 307,
+   "768x1024": 718,
+   "390x844": 352
+  },
+  "t": {
+   "1440x900": 4822,
+   "1024x768": 4553,
+   "768x1024": 6853,
+   "390x844": 5444
+  }
+ },
+ {
+  "page": "/",
+  "idx": 11,
+  "src": "/images/partners/loksadhana/class-4.webp",
+  "orig": "/images/partners/loksadhana/class-4.webp",
+  "nw": 417,
+  "nh": 291,
+  "par": "ff-card__photo",
+  "cls": "",
+  "w": {
+   "1440x900": 350,
+   "1024x768": 307,
+   "768x1024": 718,
+   "390x844": 352
+  },
+  "t": {
+   "1440x900": 4822,
+   "1024x768": 4553,
+   "768x1024": 7491,
+   "390x844": 5854
+  }
+ },
+ {
+  "page": "/",
+  "idx": 12,
+  "src": "/images/opt/students/student-with-flashlight-1.w800.85ac48ab.webp",
+  "orig": "/images/opt/students/student-with-flashlight-1.w800.85ac48ab.webp",
+  "nw": 417,
+  "nh": 396,
+  "par": "ff-card__photo",
+  "cls": "",
+  "w": {
+   "1440x900": 350,
+   "1024x768": 307,
+   "768x1024": 718,
+   "390x844": 352
+  },
+  "t": {
+   "1440x900": 4822,
+   "1024x768": 4553,
+   "768x1024": 8129,
+   "390x844": 6264
+  }
+ },
+ {
+  "page": "/",
+  "idx": 13,
+  "src": "/images/opt/build/flashfinishedworkshop.w800.8f267722.webp",
+  "orig": "/images/opt/build/flashfinishedworkshop.w800.8f267722.webp",
+  "nw": 590,
+  "nh": 442,
+  "par": "ff-wrap ff-split",
+  "cls": "",
+  "w": {
+   "1440x900": 528,
+   "1024x768": 464,
+   "768x1024": 720,
+   "390x844": 354
+  },
+  "t": {
+   "1440x900": 5428,
+   "1024x768": 5132,
+   "768x1024": 8936,
+   "390x844": 6806
+  }
+ },
+ {
+  "page": "/",
+  "idx": 14,
+  "src": "/images/brand/mark-paper-88.png",
+  "orig": "/images/brand/mark-paper-88.png",
+  "nw": 60,
+  "nh": 88,
+  "par": "ff-logo",
+  "cls": "ff-footer__mark",
+  "w": {
+   "1440x900": 35,
+   "1024x768": 35,
+   "768x1024": 35,
+   "390x844": 27
+  },
+  "t": {
+   "1440x900": 5911,
+   "1024x768": 5575,
+   "768x1024": 9795,
+   "390x844": 7523
+  }
+ },
+ {
+  "page": "/news/brighten-haiti-42-lights/",
+  "idx": 0,
+  "src": "/images/brand/mark-green-104.png",
+  "orig": "/images/brand/mark-green-104.png",
+  "nw": 71,
+  "nh": 104,
+  "par": "ff-logo",
+  "cls": "",
+  "w": {
+   "1440x900": 36,
+   "1024x768": 36,
+   "768x1024": 36,
+   "390x844": 27
+  },
+  "t": {
+   "1440x900": 16,
+   "1024x768": 16,
+   "768x1024": 16,
+   "390x844": 22
+  }
+ },
+ {
+  "page": "/news/brighten-haiti-42-lights/",
+  "idx": 1,
+  "src": "/images/build/assembly-lights.webp",
+  "orig": "/images/build/assembly-lights.webp",
+  "nw": 547,
+  "nh": 972,
+  "par": "",
+  "cls": "",
+  "w": {
+   "1440x900": 480,
+   "1024x768": 480,
+   "768x1024": 480,
+   "390x844": 354
+  },
+  "t": {
+   "1440x900": 209,
+   "1024x768": 209,
+   "768x1024": 254,
+   "390x844": 475
+  }
+ },
+ {
+  "page": "/news/brighten-haiti-42-lights/",
+  "idx": 2,
+  "src": "/images/opt/partners/brighten-haiti/photo-1.w800.c22ad59a.webp",
+  "orig": "/images/opt/partners/brighten-haiti/photo-1.w800.c22ad59a.webp",
+  "nw": 417,
+  "nh": 313,
+  "par": "ff-card__photo",
+  "cls": "",
+  "w": {
+   "1440x900": 350,
+   "1024x768": 307,
+   "768x1024": 718,
+   "390x844": 352
+  },
+  "t": {
+   "1440x900": 2097,
+   "1024x768": 2086,
+   "768x1024": 2432,
+   "390x844": 2960
+  }
+ },
+ {
+  "page": "/news/brighten-haiti-42-lights/",
+  "idx": 3,
+  "src": "/images/build/assembling-screwing-lights.webp",
+  "orig": "/images/build/assembling-screwing-lights.webp",
+  "nw": 417,
+  "nh": 742,
+  "par": "ff-card__photo",
+  "cls": "",
+  "w": {
+   "1440x900": 350,
+   "1024x768": 307,
+   "768x1024": 718,
+   "390x844": 352
+  },
+  "t": {
+   "1440x900": 2097,
+   "1024x768": 2086,
+   "768x1024": 2951,
+   "390x844": 3301
+  }
+ },
+ {
+  "page": "/news/brighten-haiti-42-lights/",
+  "idx": 4,
+  "src": "/images/partners/loksadhana/programs-1.webp",
+  "orig": "/images/partners/loksadhana/programs-1.webp",
+  "nw": 417,
+  "nh": 254,
+  "par": "ff-card__photo",
+  "cls": "",
+  "w": {
+   "1440x900": 350,
+   "1024x768": 307,
+   "768x1024": 718,
+   "390x844": 352
+  },
+  "t": {
+   "1440x900": 2097,
+   "1024x768": 2086,
+   "768x1024": 3470,
+   "390x844": 3643
+  }
+ },
+ {
+  "page": "/news/brighten-haiti-42-lights/",
+  "idx": 5,
+  "src": "/images/brand/mark-paper-88.png",
+  "orig": "/images/brand/mark-paper-88.png",
+  "nw": 60,
+  "nh": 88,
+  "par": "ff-logo",
+  "cls": "ff-footer__mark",
+  "w": {
+   "1440x900": 35,
+   "1024x768": 35,
+   "768x1024": 35,
+   "390x844": 27
+  },
+  "t": {
+   "1440x900": 2565,
+   "1024x768": 2559,
+   "768x1024": 4116,
+   "390x844": 4053
+  }
+ },
+ {
+  "page": "/news/brighten-haiti-student-essays/",
+  "idx": 0,
+  "src": "/images/brand/mark-green-104.png",
+  "orig": "/images/brand/mark-green-104.png",
+  "nw": 71,
+  "nh": 104,
+  "par": "ff-logo",
+  "cls": "",
+  "w": {
+   "1440x900": 36,
+   "1024x768": 36,
+   "768x1024": 36,
+   "390x844": 27
+  },
+  "t": {
+   "1440x900": 16,
+   "1024x768": 16,
+   "768x1024": 16,
+   "390x844": 22
+  }
+ },
+ {
+  "page": "/news/brighten-haiti-student-essays/",
+  "idx": 1,
+  "src": "/images/essays/20-keysha-7th.webp",
+  "orig": "/images/essays/20-keysha-7th.webp",
+  "nw": 547,
+  "nh": 208,
+  "par": "",
+  "cls": "",
+  "w": {
+   "1440x900": 480,
+   "1024x768": 480,
+   "768x1024": 480,
+   "390x844": 354
+  },
+  "t": {
+   "1440x900": 236,
+   "1024x768": 251,
+   "768x1024": 514,
+   "390x844": 598
+  }
+ },
+ {
+  "page": "/news/brighten-haiti-student-essays/",
+  "idx": 2,
+  "src": "/images/essays/02-mitchcaila-7th.webp",
+  "orig": "/images/essays/02-mitchcaila-7th.webp",
+  "nw": 388,
+  "nh": 216,
+  "par": "",
+  "cls": "",
+  "w": {
+   "1440x900": 329,
+   "1024x768": 286,
+   "768x1024": 324,
+   "390x844": 328
+  },
+  "t": {
+   "1440x900": 1536,
+   "1024x768": 1589,
+   "768x1024": 2693,
+   "390x844": 2698
+  }
+ },
+ {
+  "page": "/news/brighten-haiti-student-essays/",
+  "idx": 3,
+  "src": "/images/essays/04-saintina-8th.webp",
+  "orig": "/images/essays/04-saintina-8th.webp",
+  "nw": 388,
+  "nh": 166,
+  "par": "",
+  "cls": "",
+  "w": {
+   "1440x900": 329,
+   "1024x768": 286,
+   "768x1024": 324,
+   "390x844": 328
+  },
+  "t": {
+   "1440x900": 1764,
+   "1024x768": 1794,
+   "768x1024": 2919,
+   "390x844": 2927
+  }
+ },
+ {
+  "page": "/news/brighten-haiti-student-essays/",
+  "idx": 4,
+  "src": "/images/essays/05-milanda-6th.webp",
+  "orig": "/images/essays/05-milanda-6th.webp",
+  "nw": 388,
+  "nh": 234,
+  "par": "",
+  "cls": "",
+  "w": {
+   "1440x900": 329,
+   "1024x768": 286,
+   "768x1024": 324,
+   "390x844": 328
+  },
+  "t": {
+   "1440x900": 1536,
+   "1024x768": 1589,
+   "768x1024": 3104,
+   "390x844": 3114
+  }
+ },
+ {
+  "page": "/news/brighten-haiti-student-essays/",
+  "idx": 5,
+  "src": "/images/essays/01-tamisade-ns2.webp",
+  "orig": "/images/essays/01-tamisade-ns2.webp",
+  "nw": 388,
+  "nh": 330,
+  "par": "",
+  "cls": "",
+  "w": {
+   "1440x900": 329,
+   "1024x768": 286,
+   "768x1024": 324,
+   "390x844": 328
+  },
+  "t": {
+   "1440x900": 1780,
+   "1024x768": 1808,
+   "768x1024": 2693,
+   "390x844": 3358
+  }
+ },
+ {
+  "page": "/news/brighten-haiti-student-essays/",
+  "idx": 6,
+  "src": "/images/essays/07-hudson-9th.webp",
+  "orig": "/images/essays/07-hudson-9th.webp",
+  "nw": 388,
+  "nh": 200,
+  "par": "",
+  "cls": "",
+  "w": {
+   "1440x900": 329,
+   "1024x768": 286,
+   "768x1024": 324,
+   "390x844": 328
+  },
+  "t": {
+   "1440x900": 1536,
+   "1024x768": 1589,
+   "768x1024": 3015,
+   "390x844": 3683
+  }
+ },
+ {
+  "page": "/news/brighten-haiti-student-essays/",
+  "idx": 7,
+  "src": "/images/essays/09-djinaieka-7th.webp",
+  "orig": "/images/essays/09-djinaieka-7th.webp",
+  "nw": 388,
+  "nh": 105,
+  "par": "",
+  "cls": "",
+  "w": {
+   "1440x900": 329,
+   "1024x768": 286,
+   "768x1024": 324,
+   "390x844": 328
+  },
+  "t": {
+   "1440x900": 1751,
+   "1024x768": 1783,
+   "768x1024": 3228,
+   "390x844": 3898
+  }
+ },
+ {
+  "page": "/news/brighten-haiti-student-essays/",
+  "idx": 8,
+  "src": "/images/build/flashlight-units-group.webp",
+  "orig": "/images/build/flashlight-units-group.webp",
+  "nw": 417,
+  "nh": 417,
+  "par": "ff-card__photo",
+  "cls": "",
+  "w": {
+   "1440x900": 350,
+   "1024x768": 307,
+   "768x1024": 718,
+   "390x844": 352
+  },
+  "t": {
+   "1440x900": 2768,
+   "1024x768": 2749,
+   "768x1024": 4103,
+   "390x844": 4851
+  }
+ },
+ {
+  "page": "/news/brighten-haiti-student-essays/",
+  "idx": 9,
+  "src": "/images/opt/students/student-with-flashlight-3.w800.d053dee0.webp",
+  "orig": "/images/opt/students/student-with-flashlight-3.w800.d053dee0.webp",
+  "nw": 417,
+  "nh": 556,
+  "par": "ff-card__photo",
+  "cls": "",
+  "w": {
+   "1440x900": 350,
+   "1024x768": 307,
+   "768x1024": 718,
+   "390x844": 352
+  },
+  "t": {
+   "1440x900": 2768,
+   "1024x768": 2749,
+   "768x1024": 4621,
+   "390x844": 5163
+  }
+ },
+ {
+  "page": "/news/brighten-haiti-student-essays/",
+  "idx": 10,
+  "src": "/images/opt/partners/malaika/students-3.w800.e56f14b9.webp",
+  "orig": "/images/opt/partners/malaika/students-3.w800.e56f14b9.webp",
+  "nw": 417,
+  "nh": 625,
+  "par": "ff-card__photo",
+  "cls": "",
+  "w": {
+   "1440x900": 350,
+   "1024x768": 307,
+   "768x1024": 718,
+   "390x844": 352
+  },
+  "t": {
+   "1440x900": 2768,
+   "1024x768": 2749,
+   "768x1024": 5140,
+   "390x844": 5505
+  }
+ },
+ {
+  "page": "/news/brighten-haiti-student-essays/",
+  "idx": 11,
+  "src": "/images/brand/mark-paper-88.png",
+  "orig": "/images/brand/mark-paper-88.png",
+  "nw": 60,
+  "nh": 88,
+  "par": "ff-logo",
+  "cls": "ff-footer__mark",
+  "w": {
+   "1440x900": 35,
+   "1024x768": 35,
+   "768x1024": 35,
+   "390x844": 27
+  },
+  "t": {
+   "1440x900": 3237,
+   "1024x768": 3193,
+   "768x1024": 5787,
+   "390x844": 5943
+  }
+ },
+ {
+  "page": "/news/founded/",
+  "idx": 0,
+  "src": "/images/brand/mark-green-104.png",
+  "orig": "/images/brand/mark-green-104.png",
+  "nw": 71,
+  "nh": 104,
+  "par": "ff-logo",
+  "cls": "",
+  "w": {
+   "1440x900": 36,
+   "1024x768": 36,
+   "768x1024": 36,
+   "390x844": 27
+  },
+  "t": {
+   "1440x900": 16,
+   "1024x768": 16,
+   "768x1024": 16,
+   "390x844": 22
+  }
+ },
+ {
+  "page": "/news/founded/",
+  "idx": 1,
+  "src": "/images/opt/build/flashfinishedworkshop.w800.8f267722.webp",
+  "orig": "/images/opt/build/flashfinishedworkshop.w800.8f267722.webp",
+  "nw": 547,
+  "nh": 410,
+  "par": "ff-pagehead__media",
+  "cls": "",
+  "w": {
+   "1440x900": 480,
+   "1024x768": 480,
+   "768x1024": 480,
+   "390x844": 354
+  },
+  "t": {
+   "1440x900": 209,
+   "1024x768": 209,
+   "768x1024": 293,
+   "390x844": 467
+  }
+ },
+ {
+  "page": "/news/founded/",
+  "idx": 2,
+  "src": "/images/brand/mark-paper-88.png",
+  "orig": "/images/brand/mark-paper-88.png",
+  "nw": 60,
+  "nh": 88,
+  "par": "ff-logo",
+  "cls": "ff-footer__mark",
+  "w": {
+   "1440x900": 35,
+   "1024x768": 35,
+   "768x1024": 35,
+   "390x844": 27
+  },
+  "t": {
+   "1440x900": 1991,
+   "1024x768": 1836,
+   "768x1024": 1930,
+   "390x844": 2508
+  }
+ },
+ {
+  "page": "/news/hand-delivered-in-india/",
+  "idx": 0,
+  "src": "/images/brand/mark-green-104.png",
+  "orig": "/images/brand/mark-green-104.png",
+  "nw": 71,
+  "nh": 104,
+  "par": "ff-logo",
+  "cls": "",
+  "w": {
+   "1440x900": 36,
+   "1024x768": 36,
+   "768x1024": 36,
+   "390x844": 27
+  },
+  "t": {
+   "1440x900": 16,
+   "1024x768": 16,
+   "768x1024": 16,
+   "390x844": 22
+  }
+ },
+ {
+  "page": "/news/hand-delivered-in-india/",
+  "idx": 1,
+  "src": "/images/opt/students/student-with-flashlight-3.w800.d053dee0.webp",
+  "orig": "/images/opt/students/student-with-flashlight-3.w800.d053dee0.webp",
+  "nw": 547,
+  "nh": 729,
+  "par": "",
+  "cls": "",
+  "w": {
+   "1440x900": 480,
+   "1024x768": 480,
+   "768x1024": 480,
+   "390x844": 354
+  },
+  "t": {
+   "1440x900": 209,
+   "1024x768": 209,
+   "768x1024": 238,
+   "390x844": 454
+  }
+ },
+ {
+  "page": "/news/hand-delivered-in-india/",
+  "idx": 2,
+  "src": "/images/opt/students/student-with-flashlight-1.w800.85ac48ab.webp",
+  "orig": "/images/opt/students/student-with-flashlight-1.w800.85ac48ab.webp",
+  "nw": 604,
+  "nh": 574,
+  "par": "",
+  "cls": "",
+  "w": {
+   "1440x900": 544,
+   "1024x768": 480,
+   "768x1024": 352,
+   "390x844": 169
+  },
+  "t": {
+   "1440x900": 1344,
+   "1024x768": 1344,
+   "768x1024": 1542,
+   "390x844": 1775
+  }
+ },
+ {
+  "page": "/news/hand-delivered-in-india/",
+  "idx": 3,
+  "src": "/images/students/student-with-flashlight-2.jpg",
+  "orig": "/images/students/student-with-flashlight-2.jpg",
+  "nw": 604,
+  "nh": 806,
+  "par": "",
+  "cls": "",
+  "w": {
+   "1440x900": 544,
+   "1024x768": 480,
+   "768x1024": 352,
+   "390x844": 169
+  },
+  "t": {
+   "1440x900": 1344,
+   "1024x768": 1344,
+   "768x1024": 1542,
+   "390x844": 1775
+  }
+ },
+ {
+  "page": "/news/hand-delivered-in-india/",
+  "idx": 4,
+  "src": "/images/partners/loksadhana/class-4.webp",
+  "orig": "/images/partners/loksadhana/class-4.webp",
+  "nw": 417,
+  "nh": 291,
+  "par": "ff-card__photo",
+  "cls": "",
+  "w": {
+   "1440x900": 350,
+   "1024x768": 307,
+   "768x1024": 718,
+   "390x844": 352
+  },
+  "t": {
+   "1440x900": 2361,
+   "1024x768": 2265,
+   "768x1024": 2293,
+   "390x844": 2218
+  }
+ },
+ {
+  "page": "/news/hand-delivered-in-india/",
+  "idx": 5,
+  "src": "/images/build/assembly-lights.webp",
+  "orig": "/images/build/assembly-lights.webp",
+  "nw": 417,
+  "nh": 742,
+  "par": "ff-card__photo",
+  "cls": "",
+  "w": {
+   "1440x900": 350,
+   "1024x768": 307,
+   "768x1024": 718,
+   "390x844": 352
+  },
+  "t": {
+   "1440x900": 2361,
+   "1024x768": 2265,
+   "768x1024": 2812,
+   "390x844": 2530
+  }
+ },
+ {
+  "page": "/news/hand-delivered-in-india/",
+  "idx": 6,
+  "src": "/images/opt/partners/brighten-haiti/photo-1.w800.c22ad59a.webp",
+  "orig": "/images/opt/partners/brighten-haiti/photo-1.w800.c22ad59a.webp",
+  "nw": 417,
+  "nh": 313,
+  "par": "ff-card__photo",
+  "cls": "",
+  "w": {
+   "1440x900": 350,
+   "1024x768": 307,
+   "768x1024": 718,
+   "390x844": 352
+  },
+  "t": {
+   "1440x900": 2361,
+   "1024x768": 2265,
+   "768x1024": 3330,
+   "390x844": 2872
+  }
+ },
+ {
+  "page": "/news/hand-delivered-in-india/",
+  "idx": 7,
+  "src": "/images/brand/mark-paper-88.png",
+  "orig": "/images/brand/mark-paper-88.png",
+  "nw": 60,
+  "nh": 88,
+  "par": "ff-logo",
+  "cls": "ff-footer__mark",
+  "w": {
+   "1440x900": 35,
+   "1024x768": 35,
+   "768x1024": 35,
+   "390x844": 27
+  },
+  "t": {
+   "1440x900": 2830,
+   "1024x768": 2739,
+   "768x1024": 3977,
+   "390x844": 3310
+  }
+ },
+ {
+  "page": "/news/",
+  "idx": 0,
+  "src": "/images/brand/mark-green-104.png",
+  "orig": "/images/brand/mark-green-104.png",
+  "nw": 71,
+  "nh": 104,
+  "par": "ff-logo",
+  "cls": "",
+  "w": {
+   "1440x900": 36,
+   "1024x768": 36,
+   "768x1024": 36,
+   "390x844": 27
+  },
+  "t": {
+   "1440x900": 16,
+   "1024x768": 16,
+   "768x1024": 16,
+   "390x844": 22
+  }
+ },
+ {
+  "page": "/news/",
+  "idx": 1,
+  "src": "/images/opt/partners/brighten-haiti/photo-1.w800.c22ad59a.webp",
+  "orig": "/images/opt/partners/brighten-haiti/photo-1.w800.c22ad59a.webp",
+  "nw": 691,
+  "nh": 518,
+  "par": "ff-feature__img",
+  "cls": "",
+  "w": {
+   "1440x900": 621,
+   "1024x768": 546,
+   "768x1024": 720,
+   "390x844": 354
+  },
+  "t": {
+   "1440x900": 527,
+   "1024x768": 527,
+   "768x1024": 527,
+   "390x844": 482
+  }
+ },
+ {
+  "page": "/news/",
+  "idx": 2,
+  "src": "/images/build/packagedlights.webp",
+  "orig": "/images/build/packagedlights.webp",
+  "nw": 316,
+  "nh": 423,
+  "par": "ff-card__photo",
+  "cls": "",
+  "w": {
+   "1440x900": 256,
+   "1024x768": 224,
+   "768x1024": 346,
+   "390x844": 163
+  },
+  "t": {
+   "1440x900": 1260,
+   "1024x768": 1194,
+   "768x1024": 1503,
+   "390x844": 1238
+  }
+ },
+ {
+  "page": "/news/",
+  "idx": 3,
+  "src": "/images/partners/loksadhana/class-4.webp",
+  "orig": "/images/partners/loksadhana/class-4.webp",
+  "nw": 316,
+  "nh": 221,
+  "par": "ff-card__photo",
+  "cls": "",
+  "w": {
+   "1440x900": 256,
+   "1024x768": 224,
+   "768x1024": 346,
+   "390x844": 163
+  },
+  "t": {
+   "1440x900": 1260,
+   "1024x768": 1194,
+   "768x1024": 1503,
+   "390x844": 1238
+  }
+ },
+ {
+  "page": "/news/",
+  "idx": 4,
+  "src": "/images/opt/partners/malaika/students-3.w800.e56f14b9.webp",
+  "orig": "/images/opt/partners/malaika/students-3.w800.e56f14b9.webp",
+  "nw": 316,
+  "nh": 474,
+  "par": "ff-card__photo",
+  "cls": "",
+  "w": {
+   "1440x900": 256,
+   "1024x768": 224,
+   "768x1024": 346,
+   "390x844": 163
+  },
+  "t": {
+   "1440x900": 1260,
+   "1024x768": 1194,
+   "768x1024": 1889,
+   "390x844": 1579
+  }
+ },
+ {
+  "page": "/news/",
+  "idx": 5,
+  "src": "/images/opt/students/student-with-flashlight-1.w800.85ac48ab.webp",
+  "orig": "/images/opt/students/student-with-flashlight-1.w800.85ac48ab.webp",
+  "nw": 316,
+  "nh": 300,
+  "par": "ff-card__photo",
+  "cls": "",
+  "w": {
+   "1440x900": 256,
+   "1024x768": 224,
+   "768x1024": 346,
+   "390x844": 163
+  },
+  "t": {
+   "1440x900": 1260,
+   "1024x768": 1194,
+   "768x1024": 1889,
+   "390x844": 1579
+  }
+ },
+ {
+  "page": "/news/",
+  "idx": 6,
+  "src": "/images/build/solar-panel-tops.webp",
+  "orig": "/images/build/solar-panel-tops.webp",
+  "nw": 417,
+  "nh": 907,
+  "par": "ff-card__photo",
+  "cls": "",
+  "w": {
+   "1440x900": 350,
+   "1024x768": 307,
+   "768x1024": 718,
+   "390x844": 352
+  },
+  "t": {
+   "1440x900": 1896,
+   "1024x768": 1800,
+   "768x1024": 2535,
+   "390x844": 2175
+  }
+ },
+ {
+  "page": "/news/",
+  "idx": 7,
+  "src": "/images/build/robotics-event-booth.webp",
+  "orig": "/images/build/robotics-event-booth.webp",
+  "nw": 417,
+  "nh": 742,
+  "par": "ff-card__photo",
+  "cls": "",
+  "w": {
+   "1440x900": 350,
+   "1024x768": 307,
+   "768x1024": 718,
+   "390x844": 352
+  },
+  "t": {
+   "1440x900": 1896,
+   "1024x768": 1800,
+   "768x1024": 3132,
+   "390x844": 2566
+  }
+ },
+ {
+  "page": "/news/",
+  "idx": 8,
+  "src": "/images/build/bubble-wrapped-units.jpg",
+  "orig": "/images/build/bubble-wrapped-units.jpg",
+  "nw": 417,
+  "nh": 556,
+  "par": "ff-card__photo",
+  "cls": "",
+  "w": {
+   "1440x900": 350,
+   "1024x768": 307,
+   "768x1024": 718,
+   "390x844": 352
+  },
+  "t": {
+   "1440x900": 1896,
+   "1024x768": 1800,
+   "768x1024": 3728,
+   "390x844": 2957
+  }
+ },
+ {
+  "page": "/news/",
+  "idx": 9,
+  "src": "/images/brand/mark-paper-88.png",
+  "orig": "/images/brand/mark-paper-88.png",
+  "nw": 60,
+  "nh": 88,
+  "par": "ff-logo",
+  "cls": "ff-footer__mark",
+  "w": {
+   "1440x900": 35,
+   "1024x768": 35,
+   "768x1024": 35,
+   "390x844": 27
+  },
+  "t": {
+   "1440x900": 2877,
+   "1024x768": 2776,
+   "768x1024": 5263,
+   "390x844": 4219
+  }
+ },
+ {
+  "page": "/news/irs-recognition/",
+  "idx": 0,
+  "src": "/images/brand/mark-green-104.png",
+  "orig": "/images/brand/mark-green-104.png",
+  "nw": 71,
+  "nh": 104,
+  "par": "ff-logo",
+  "cls": "",
+  "w": {
+   "1440x900": 36,
+   "1024x768": 36,
+   "768x1024": 36,
+   "390x844": 27
+  },
+  "t": {
+   "1440x900": 16,
+   "1024x768": 16,
+   "768x1024": 16,
+   "390x844": 22
+  }
+ },
+ {
+  "page": "/news/irs-recognition/",
+  "idx": 1,
+  "src": "/images/brand/og-image.jpg",
+  "orig": "/images/brand/og-image.jpg",
+  "nw": 1200,
+  "nh": 630,
+  "par": "ff-pagehead__media",
+  "cls": "",
+  "w": {
+   "1440x900": 480,
+   "1024x768": 480,
+   "768x1024": 480,
+   "390x844": 354
+  },
+  "t": {
+   "1440x900": 209,
+   "1024x768": 209,
+   "768x1024": 358,
+   "390x844": 503
+  }
+ },
+ {
+  "page": "/news/irs-recognition/",
+  "idx": 2,
+  "src": "/images/brand/mark-paper-88.png",
+  "orig": "/images/brand/mark-paper-88.png",
+  "nw": 60,
+  "nh": 88,
+  "par": "ff-logo",
+  "cls": "ff-footer__mark",
+  "w": {
+   "1440x900": 35,
+   "1024x768": 35,
+   "768x1024": 35,
+   "390x844": 27
+  },
+  "t": {
+   "1440x900": 2088,
+   "1024x768": 1918,
+   "768x1024": 2021,
+   "390x844": 2719
+  }
+ },
+ {
+  "page": "/news/loksadhana-15-lights/",
+  "idx": 0,
+  "src": "/images/brand/mark-green-104.png",
+  "orig": "/images/brand/mark-green-104.png",
+  "nw": 71,
+  "nh": 104,
+  "par": "ff-logo",
+  "cls": "",
+  "w": {
+   "1440x900": 36,
+   "1024x768": 36,
+   "768x1024": 36,
+   "390x844": 27
+  },
+  "t": {
+   "1440x900": 16,
+   "1024x768": 16,
+   "768x1024": 16,
+   "390x844": 22
+  }
+ },
+ {
+  "page": "/news/loksadhana-15-lights/",
+  "idx": 1,
+  "src": "/images/partners/loksadhana/class-3.webp",
+  "orig": "/images/partners/loksadhana/class-3.webp",
+  "nw": 547,
+  "nh": 304,
+  "par": "",
+  "cls": "",
+  "w": {
+   "1440x900": 480,
+   "1024x768": 480,
+   "768x1024": 480,
+   "390x844": 354
+  },
+  "t": {
+   "1440x900": 209,
+   "1024x768": 209,
+   "768x1024": 267,
+   "390x844": 475
+  }
+ },
+ {
+  "page": "/news/loksadhana-15-lights/",
+  "idx": 2,
+  "src": "/images/opt/partners/loksadhana/class-1.w800.15fbc8d4.webp",
+  "orig": "/images/opt/partners/loksadhana/class-1.w800.15fbc8d4.webp",
+  "nw": 590,
+  "nh": 324,
+  "par": "",
+  "cls": "",
+  "w": {
+   "1440x900": 528,
+   "1024x768": 464,
+   "768x1024": 720,
+   "390x844": 354
+  },
+  "t": {
+   "1440x900": 1157,
+   "1024x768": 1157,
+   "768x1024": 1694,
+   "390x844": 1917
+  }
+ },
+ {
+  "page": "/news/loksadhana-15-lights/",
+  "idx": 3,
+  "src": "/images/students/student-with-flashlight-2.jpg",
+  "orig": "/images/students/student-with-flashlight-2.jpg",
+  "nw": 417,
+  "nh": 556,
+  "par": "ff-card__photo",
+  "cls": "",
+  "w": {
+   "1440x900": 350,
+   "1024x768": 307,
+   "768x1024": 718,
+   "390x844": 352
+  },
+  "t": {
+   "1440x900": 2135,
+   "1024x768": 2084,
+   "768x1024": 2837,
+   "390x844": 2852
+  }
+ },
+ {
+  "page": "/news/loksadhana-15-lights/",
+  "idx": 4,
+  "src": "/images/build/flashlight-units.webp",
+  "orig": "/images/build/flashlight-units.webp",
+  "nw": 417,
+  "nh": 556,
+  "par": "ff-card__photo",
+  "cls": "",
+  "w": {
+   "1440x900": 350,
+   "1024x768": 307,
+   "768x1024": 718,
+   "390x844": 352
+  },
+  "t": {
+   "1440x900": 2135,
+   "1024x768": 2084,
+   "768x1024": 3356,
+   "390x844": 3193
+  }
+ },
+ {
+  "page": "/news/loksadhana-15-lights/",
+  "idx": 5,
+  "src": "/images/opt/partners/malaika/students-1.w800.48558531.webp",
+  "orig": "/images/opt/partners/malaika/students-1.w800.48558531.webp",
+  "nw": 417,
+  "nh": 278,
+  "par": "ff-card__photo",
+  "cls": "",
+  "w": {
+   "1440x900": 350,
+   "1024x768": 307,
+   "768x1024": 718,
+   "390x844": 352
+  },
+  "t": {
+   "1440x900": 2135,
+   "1024x768": 2084,
+   "768x1024": 3875,
+   "390x844": 3535
+  }
+ },
+ {
+  "page": "/news/loksadhana-15-lights/",
+  "idx": 6,
+  "src": "/images/brand/mark-paper-88.png",
+  "orig": "/images/brand/mark-paper-88.png",
+  "nw": 60,
+  "nh": 88,
+  "par": "ff-logo",
+  "cls": "ff-footer__mark",
+  "w": {
+   "1440x900": 35,
+   "1024x768": 35,
+   "768x1024": 35,
+   "390x844": 27
+  },
+  "t": {
+   "1440x900": 2603,
+   "1024x768": 2557,
+   "768x1024": 4521,
+   "390x844": 3973
+  }
+ },
+ {
+  "page": "/news/malaika-15-lights/",
+  "idx": 0,
+  "src": "/images/brand/mark-green-104.png",
+  "orig": "/images/brand/mark-green-104.png",
+  "nw": 71,
+  "nh": 104,
+  "par": "ff-logo",
+  "cls": "",
+  "w": {
+   "1440x900": 36,
+   "1024x768": 36,
+   "768x1024": 36,
+   "390x844": 27
+  },
+  "t": {
+   "1440x900": 16,
+   "1024x768": 16,
+   "768x1024": 16,
+   "390x844": 22
+  }
+ },
+ {
+  "page": "/news/malaika-15-lights/",
+  "idx": 1,
+  "src": "/images/opt/partners/malaika/school-1.w800.770a6871.webp",
+  "orig": "/images/opt/partners/malaika/school-1.w800.770a6871.webp",
+  "nw": 547,
+  "nh": 365,
+  "par": "",
+  "cls": "",
+  "w": {
+   "1440x900": 480,
+   "1024x768": 480,
+   "768x1024": 480,
+   "390x844": 354
+  },
+  "t": {
+   "1440x900": 209,
+   "1024x768": 209,
+   "768x1024": 305,
+   "390x844": 540
+  }
+ },
+ {
+  "page": "/news/malaika-15-lights/",
+  "idx": 2,
+  "src": "/images/opt/partners/malaika/students-2.w800.0cc11674.webp",
+  "orig": "/images/opt/partners/malaika/students-2.w800.0cc11674.webp",
+  "nw": 590,
+  "nh": 394,
+  "par": "",
+  "cls": "",
+  "w": {
+   "1440x900": 528,
+   "1024x768": 464,
+   "768x1024": 720,
+   "390x844": 354
+  },
+  "t": {
+   "1440x900": 1157,
+   "1024x768": 1157,
+   "768x1024": 1769,
+   "390x844": 1955
+  }
+ },
+ {
+  "page": "/news/malaika-15-lights/",
+  "idx": 3,
+  "src": "/images/build/handoverflashlightsglowing.webp",
+  "orig": "/images/build/handoverflashlightsglowing.webp",
+  "nw": 417,
+  "nh": 908,
+  "par": "ff-card__photo",
+  "cls": "",
+  "w": {
+   "1440x900": 350,
+   "1024x768": 307,
+   "768x1024": 718,
+   "390x844": 352
+  },
+  "t": {
+   "1440x900": 2089,
+   "1024x768": 2038,
+   "768x1024": 2838,
+   "390x844": 2787
+  }
+ },
+ {
+  "page": "/news/malaika-15-lights/",
+  "idx": 4,
+  "src": "/images/opt/partners/brighten-haiti/photo-1.w800.c22ad59a.webp",
+  "orig": "/images/opt/partners/brighten-haiti/photo-1.w800.c22ad59a.webp",
+  "nw": 417,
+  "nh": 313,
+  "par": "ff-card__photo",
+  "cls": "",
+  "w": {
+   "1440x900": 350,
+   "1024x768": 307,
+   "768x1024": 718,
+   "390x844": 352
+  },
+  "t": {
+   "1440x900": 2089,
+   "1024x768": 2038,
+   "768x1024": 3357,
+   "390x844": 3129
+  }
+ },
+ {
+  "page": "/news/malaika-15-lights/",
+  "idx": 5,
+  "src": "/images/partners/loksadhana/class-3.webp",
+  "orig": "/images/partners/loksadhana/class-3.webp",
+  "nw": 417,
+  "nh": 232,
+  "par": "ff-card__photo",
+  "cls": "",
+  "w": {
+   "1440x900": 350,
+   "1024x768": 307,
+   "768x1024": 718,
+   "390x844": 352
+  },
+  "t": {
+   "1440x900": 2089,
+   "1024x768": 2038,
+   "768x1024": 3876,
+   "390x844": 3470
+  }
+ },
+ {
+  "page": "/news/malaika-15-lights/",
+  "idx": 6,
+  "src": "/images/brand/mark-paper-88.png",
+  "orig": "/images/brand/mark-paper-88.png",
+  "nw": 60,
+  "nh": 88,
+  "par": "ff-logo",
+  "cls": "ff-footer__mark",
+  "w": {
+   "1440x900": 35,
+   "1024x768": 35,
+   "768x1024": 35,
+   "390x844": 27
+  },
+  "t": {
+   "1440x900": 2557,
+   "1024x768": 2511,
+   "768x1024": 4522,
+   "390x844": 3880
+  }
+ },
+ {
+  "page": "/news/program-record/",
+  "idx": 0,
+  "src": "/images/brand/mark-green-104.png",
+  "orig": "/images/brand/mark-green-104.png",
+  "nw": 71,
+  "nh": 104,
+  "par": "ff-logo",
+  "cls": "",
+  "w": {
+   "1440x900": 36,
+   "1024x768": 36,
+   "768x1024": 36,
+   "390x844": 27
+  },
+  "t": {
+   "1440x900": 16,
+   "1024x768": 16,
+   "768x1024": 16,
+   "390x844": 22
+  }
+ },
+ {
+  "page": "/news/program-record/",
+  "idx": 1,
+  "src": "/images/build/packagedlights.webp",
+  "orig": "/images/build/packagedlights.webp",
+  "nw": 547,
+  "nh": 730,
+  "par": "ff-pagehead__media",
+  "cls": "",
+  "w": {
+   "1440x900": 480,
+   "1024x768": 480,
+   "768x1024": 480,
+   "390x844": 354
+  },
+  "t": {
+   "1440x900": 209,
+   "1024x768": 231,
+   "768x1024": 403,
+   "390x844": 548
+  }
+ },
+ {
+  "page": "/news/program-record/",
+  "idx": 2,
+  "src": "/images/brand/mark-paper-88.png",
+  "orig": "/images/brand/mark-paper-88.png",
+  "nw": 60,
+  "nh": 88,
+  "par": "ff-logo",
+  "cls": "ff-footer__mark",
+  "w": {
+   "1440x900": 35,
+   "1024x768": 35,
+   "768x1024": 35,
+   "390x844": 27
+  },
+  "t": {
+   "1440x900": 2322,
+   "1024x768": 2165,
+   "768x1024": 2302,
+   "390x844": 2953
+  }
+ },
+ {
+  "page": "/news/solar-workshops/",
+  "idx": 0,
+  "src": "/images/brand/mark-green-104.png",
+  "orig": "/images/brand/mark-green-104.png",
+  "nw": 71,
+  "nh": 104,
+  "par": "ff-logo",
+  "cls": "",
+  "w": {
+   "1440x900": 36,
+   "1024x768": 36,
+   "768x1024": 36,
+   "390x844": 27
+  },
+  "t": {
+   "1440x900": 16,
+   "1024x768": 16,
+   "768x1024": 16,
+   "390x844": 22
+  }
+ },
+ {
+  "page": "/news/solar-workshops/",
+  "idx": 1,
+  "src": "/images/build/robotics-event-booth.webp",
+  "orig": "/images/build/robotics-event-booth.webp",
+  "nw": 547,
+  "nh": 972,
+  "par": "ff-pagehead__media",
+  "cls": "",
+  "w": {
+   "1440x900": 480,
+   "1024x768": 480,
+   "768x1024": 480,
+   "390x844": 354
+  },
+  "t": {
+   "1440x900": 209,
+   "1024x768": 209,
+   "768x1024": 330,
+   "390x844": 483
+  }
+ },
+ {
+  "page": "/news/solar-workshops/",
+  "idx": 2,
+  "src": "/images/brand/mark-paper-88.png",
+  "orig": "/images/brand/mark-paper-88.png",
+  "nw": 60,
+  "nh": 88,
+  "par": "ff-logo",
+  "cls": "ff-footer__mark",
+  "w": {
+   "1440x900": 35,
+   "1024x768": 35,
+   "768x1024": 35,
+   "390x844": 27
+  },
+  "t": {
+   "1440x900": 1932,
+   "1024x768": 1782,
+   "768x1024": 1913,
+   "390x844": 2380
+  }
+ },
+ {
+  "page": "/news/start-a-fundraiser/",
+  "idx": 0,
+  "src": "/images/brand/mark-green-104.png",
+  "orig": "/images/brand/mark-green-104.png",
+  "nw": 71,
+  "nh": 104,
+  "par": "ff-logo",
+  "cls": "",
+  "w": {
+   "1440x900": 36,
+   "1024x768": 36,
+   "768x1024": 36,
+   "390x844": 27
+  },
+  "t": {
+   "1440x900": 16,
+   "1024x768": 16,
+   "768x1024": 16,
+   "390x844": 22
+  }
+ },
+ {
+  "page": "/news/start-a-fundraiser/",
+  "idx": 1,
+  "src": "/images/build/packagedlights.webp",
+  "orig": "/images/build/packagedlights.webp",
+  "nw": 547,
+  "nh": 730,
+  "par": "ff-pagehead__media",
+  "cls": "",
+  "w": {
+   "1440x900": 480,
+   "1024x768": 480,
+   "768x1024": 480,
+   "390x844": 354
+  },
+  "t": {
+   "1440x900": 209,
+   "1024x768": 209,
+   "768x1024": 284,
+   "390x844": 446
+  }
+ },
+ {
+  "page": "/news/start-a-fundraiser/",
+  "idx": 2,
+  "src": "/images/brand/mark-paper-88.png",
+  "orig": "/images/brand/mark-paper-88.png",
+  "nw": 60,
+  "nh": 88,
+  "par": "ff-logo",
+  "cls": "ff-footer__mark",
+  "w": {
+   "1440x900": 35,
+   "1024x768": 35,
+   "768x1024": 35,
+   "390x844": 27
+  },
+  "t": {
+   "1440x900": 2409,
+   "1024x768": 2199,
+   "768x1024": 2226,
+   "390x844": 2776
+  }
+ },
+ {
+  "page": "/news/why-study-lights/",
+  "idx": 0,
+  "src": "/images/brand/mark-green-104.png",
+  "orig": "/images/brand/mark-green-104.png",
+  "nw": 71,
+  "nh": 104,
+  "par": "ff-logo",
+  "cls": "",
+  "w": {
+   "1440x900": 36,
+   "1024x768": 36,
+   "768x1024": 36,
+   "390x844": 27
+  },
+  "t": {
+   "1440x900": 16,
+   "1024x768": 16,
+   "768x1024": 16,
+   "390x844": 22
+  }
+ },
+ {
+  "page": "/news/why-study-lights/",
+  "idx": 1,
+  "src": "/images/opt/light/assembled-anchor.w800.4ab8fe1f.webp",
+  "orig": "/images/opt/light/assembled-anchor.w800.4ab8fe1f.webp",
+  "nw": 547,
+  "nh": 547,
+  "par": "ff-pagehead__media ff-pagehead__media--contain",
+  "cls": "",
+  "w": {
+   "1440x900": 480,
+   "1024x768": 480,
+   "768x1024": 480,
+   "390x844": 354
+  },
+  "t": {
+   "1440x900": 209,
+   "1024x768": 209,
+   "768x1024": 255,
+   "390x844": 467
+  }
+ },
+ {
+  "page": "/news/why-study-lights/",
+  "idx": 2,
+  "src": "/images/brand/mark-paper-88.png",
+  "orig": "/images/brand/mark-paper-88.png",
+  "nw": 60,
+  "nh": 88,
+  "par": "ff-logo",
+  "cls": "ff-footer__mark",
+  "w": {
+   "1440x900": 35,
+   "1024x768": 35,
+   "768x1024": 35,
+   "390x844": 27
+  },
+  "t": {
+   "1440x900": 2192,
+   "1024x768": 2002,
+   "768x1024": 1983,
+   "390x844": 2628
+  }
+ },
+ {
+  "page": "/nonprofit-status/",
+  "idx": 0,
+  "src": "/images/brand/mark-green-104.png",
+  "orig": "/images/brand/mark-green-104.png",
+  "nw": 71,
+  "nh": 104,
+  "par": "ff-logo",
+  "cls": "",
+  "w": {
+   "1440x900": 36,
+   "1024x768": 36,
+   "768x1024": 36,
+   "390x844": 27
+  },
+  "t": {
+   "1440x900": 16,
+   "1024x768": 16,
+   "768x1024": 16,
+   "390x844": 22
+  }
+ },
+ {
+  "page": "/nonprofit-status/",
+  "idx": 1,
+  "src": "/images/brand/mark-paper-88.png",
+  "orig": "/images/brand/mark-paper-88.png",
+  "nw": 60,
+  "nh": 88,
+  "par": "ff-logo",
+  "cls": "ff-footer__mark",
+  "w": {
+   "1440x900": 35,
+   "1024x768": 35,
+   "768x1024": 35,
+   "390x844": 27
+  },
+  "t": {
+   "1440x900": 1271,
+   "1024x768": 1260,
+   "768x1024": 1326,
+   "390x844": 1575
+  }
+ },
+ {
+  "page": "/our-work/how-we-build/",
+  "idx": 0,
+  "src": "/images/brand/mark-green-104.png",
+  "orig": "/images/brand/mark-green-104.png",
+  "nw": 71,
+  "nh": 104,
+  "par": "ff-logo",
+  "cls": "",
+  "w": {
+   "1440x900": 36,
+   "1024x768": 36,
+   "768x1024": 36,
+   "390x844": 27
+  },
+  "t": {
+   "1440x900": 16,
+   "1024x768": 16,
+   "768x1024": 16,
+   "390x844": 22
+  }
+ },
+ {
+  "page": "/our-work/how-we-build/",
+  "idx": 1,
+  "src": "/images/build/soldering-electronics.jpg",
+  "orig": "/images/build/soldering-electronics.jpg",
+  "nw": 590,
+  "nh": 333,
+  "par": "",
+  "cls": "",
+  "w": {
+   "1440x900": 528,
+   "1024x768": 464,
+   "768x1024": 720,
+   "390x844": 354
+  },
+  "t": {
+   "1440x900": 546,
+   "1024x768": 546,
+   "768x1024": 546,
+   "390x844": 515
+  }
+ },
+ {
+  "page": "/our-work/how-we-build/",
+  "idx": 2,
+  "src": "/images/build/assembling-screwing-lights.webp",
+  "orig": "/images/build/assembling-screwing-lights.webp",
+  "nw": 590,
+  "nh": 1049,
+  "par": "",
+  "cls": "ff-split__img--portrait",
+  "w": {
+   "1440x900": 528,
+   "1024x768": 464,
+   "768x1024": 720,
+   "390x844": 354
+  },
+  "t": {
+   "1440x900": 1036,
+   "1024x768": 1000,
+   "768x1024": 1618,
+   "390x844": 1373
+  }
+ },
+ {
+  "page": "/our-work/how-we-build/",
+  "idx": 3,
+  "src": "/images/build/flashlight-units-group.webp",
+  "orig": "/images/build/flashlight-units-group.webp",
+  "nw": 590,
+  "nh": 590,
+  "par": "",
+  "cls": "ff-split__img--square",
+  "w": {
+   "1440x900": 528,
+   "1024x768": 464,
+   "768x1024": 720,
+   "390x844": 354
+  },
+  "t": {
+   "1440x900": 1889,
+   "1024x768": 1773,
+   "768x1024": 2711,
+   "390x844": 1944
+  }
+ },
+ {
+  "page": "/our-work/how-we-build/",
+  "idx": 4,
+  "src": "/images/build/bubble-wrapped-units.jpg",
+  "orig": "/images/build/bubble-wrapped-units.jpg",
+  "nw": 590,
+  "nh": 787,
+  "par": "",
+  "cls": "ff-split__img--portrait",
+  "w": {
+   "1440x900": 528,
+   "1024x768": 464,
+   "768x1024": 720,
+   "390x844": 354
+  },
+  "t": {
+   "1440x900": 2610,
+   "1024x768": 2430,
+   "768x1024": 4098,
+   "390x844": 2929
+  }
+ },
+ {
+  "page": "/our-work/how-we-build/",
+  "idx": 5,
+  "src": "/images/brand/mark-paper-88.png",
+  "orig": "/images/brand/mark-paper-88.png",
+  "nw": 60,
+  "nh": 88,
+  "par": "ff-logo",
+  "cls": "ff-footer__mark",
+  "w": {
+   "1440x900": 35,
+   "1024x768": 35,
+   "768x1024": 35,
+   "390x844": 27
+  },
+  "t": {
+   "1440x900": 3765,
+   "1024x768": 3495,
+   "768x1024": 5482,
+   "390x844": 3786
+  }
+ },
+ {
+  "page": "/our-work/",
+  "idx": 0,
+  "src": "/images/brand/mark-green-104.png",
+  "orig": "/images/brand/mark-green-104.png",
+  "nw": 71,
+  "nh": 104,
+  "par": "ff-logo",
+  "cls": "",
+  "w": {
+   "1440x900": 36,
+   "1024x768": 36,
+   "768x1024": 36,
+   "390x844": 27
+  },
+  "t": {
+   "1440x900": 16,
+   "1024x768": 16,
+   "768x1024": 16,
+   "390x844": 22
+  }
+ },
+ {
+  "page": "/our-work/",
+  "idx": 1,
+  "src": "/images/build/flashlight-units.webp",
+  "orig": "/images/build/flashlight-units.webp",
+  "nw": 604,
+  "nh": 806,
+  "par": "ff-card__photo",
+  "cls": "",
+  "w": {
+   "1440x900": 538,
+   "1024x768": 474,
+   "768x1024": 346,
+   "390x844": 163
+  },
+  "t": {
+   "1440x900": 624,
+   "1024x768": 624,
+   "768x1024": 624,
+   "390x844": 584
+  }
+ },
+ {
+  "page": "/our-work/",
+  "idx": 2,
+  "src": "/images/build/soldering-electronics.jpg",
+  "orig": "/images/build/soldering-electronics.jpg",
+  "nw": 604,
+  "nh": 341,
+  "par": "ff-card__photo",
+  "cls": "",
+  "w": {
+   "1440x900": 538,
+   "1024x768": 474,
+   "768x1024": 346,
+   "390x844": 163
+  },
+  "t": {
+   "1440x900": 624,
+   "1024x768": 624,
+   "768x1024": 624,
+   "390x844": 584
+  }
+ },
+ {
+  "page": "/our-work/",
+  "idx": 3,
+  "src": "/images/opt/partners/malaika/students-1.w800.48558531.webp",
+  "orig": "/images/opt/partners/malaika/students-1.w800.48558531.webp",
+  "nw": 604,
+  "nh": 403,
+  "par": "ff-card__photo",
+  "cls": "",
+  "w": {
+   "1440x900": 538,
+   "1024x768": 474,
+   "768x1024": 346,
+   "390x844": 163
+  },
+  "t": {
+   "1440x900": 1131,
+   "1024x768": 1095,
+   "768x1024": 1047,
+   "390x844": 1004
+  }
+ },
+ {
+  "page": "/our-work/",
+  "idx": 4,
+  "src": "/images/opt/build/flashfinishedworkshop.w800.8f267722.webp",
+  "orig": "/images/opt/build/flashfinishedworkshop.w800.8f267722.webp",
+  "nw": 604,
+  "nh": 453,
+  "par": "ff-card__photo",
+  "cls": "",
+  "w": {
+   "1440x900": 538,
+   "1024x768": 474,
+   "768x1024": 346,
+   "390x844": 163
+  },
+  "t": {
+   "1440x900": 1131,
+   "1024x768": 1095,
+   "768x1024": 1047,
+   "390x844": 1004
+  }
+ },
+ {
+  "page": "/our-work/",
+  "idx": 5,
+  "src": "/images/brand/mark-paper-88.png",
+  "orig": "/images/brand/mark-paper-88.png",
+  "nw": 60,
+  "nh": 88,
+  "par": "ff-logo",
+  "cls": "ff-footer__mark",
+  "w": {
+   "1440x900": 35,
+   "1024x768": 35,
+   "768x1024": 35,
+   "390x844": 27
+  },
+  "t": {
+   "1440x900": 1820,
+   "1024x768": 1748,
+   "768x1024": 1652,
+   "390x844": 1579
+  }
+ },
+ {
+  "page": "/our-work/partners/brighten-haiti/",
+  "idx": 0,
+  "src": "/images/brand/mark-green-104.png",
+  "orig": "/images/brand/mark-green-104.png",
+  "nw": 71,
+  "nh": 104,
+  "par": "ff-logo",
+  "cls": "",
+  "w": {
+   "1440x900": 36,
+   "1024x768": 36,
+   "768x1024": 36,
+   "390x844": 27
+  },
+  "t": {
+   "1440x900": 16,
+   "1024x768": 16,
+   "768x1024": 16,
+   "390x844": 22
+  }
+ },
+ {
+  "page": "/our-work/partners/brighten-haiti/",
+  "idx": 1,
+  "src": "/images/partners/brighten-haiti.webp",
+  "orig": "/images/partners/brighten-haiti.webp",
+  "nw": 144,
+  "nh": 93,
+  "par": "ff-pagehead__chip",
+  "cls": "",
+  "w": {
+   "1440x900": 74,
+   "1024x768": 74,
+   "768x1024": 74,
+   "390x844": 74
+  },
+  "t": {
+   "1440x900": 223,
+   "1024x768": 223,
+   "768x1024": 219,
+   "390x844": 195
+  }
+ },
+ {
+  "page": "/our-work/partners/brighten-haiti/",
+  "idx": 2,
+  "src": "/images/opt/partners/brighten-haiti/photo-1.w800.c22ad59a.webp",
+  "orig": "/images/opt/partners/brighten-haiti/photo-1.w800.c22ad59a.webp",
+  "nw": 547,
+  "nh": 410,
+  "par": "",
+  "cls": "",
+  "w": {
+   "1440x900": 480,
+   "1024x768": 480,
+   "768x1024": 480,
+   "390x844": 354
+  },
+  "t": {
+   "1440x900": 209,
+   "1024x768": 209,
+   "768x1024": 285,
+   "390x844": 581
+  }
+ },
+ {
+  "page": "/our-work/partners/brighten-haiti/",
+  "idx": 3,
+  "src": "/images/opt/partners/brighten-haiti/solar4schools-1.w800.a5748064.webp",
+  "orig": "/images/opt/partners/brighten-haiti/solar4schools-1.w800.a5748064.webp",
+  "nw": 417,
+  "nh": 313,
+  "par": "ff-card__photo",
+  "cls": "",
+  "w": {
+   "1440x900": 350,
+   "1024x768": 307,
+   "768x1024": 718,
+   "390x844": 352
+  },
+  "t": {
+   "1440x900": 1892,
+   "1024x768": 1927,
+   "768x1024": 2134,
+   "390x844": 2536
+  }
+ },
+ {
+  "page": "/our-work/partners/brighten-haiti/",
+  "idx": 4,
+  "src": "/images/opt/partners/brighten-haiti/apprentices-1.w800.bc37157e.webp",
+  "orig": "/images/opt/partners/brighten-haiti/apprentices-1.w800.bc37157e.webp",
+  "nw": 417,
+  "nh": 313,
+  "par": "ff-card__photo",
+  "cls": "",
+  "w": {
+   "1440x900": 350,
+   "1024x768": 307,
+   "768x1024": 718,
+   "390x844": 352
+  },
+  "t": {
+   "1440x900": 1892,
+   "1024x768": 1927,
+   "768x1024": 2737,
+   "390x844": 3028
+  }
+ },
+ {
+  "page": "/our-work/partners/brighten-haiti/",
+  "idx": 5,
+  "src": "/images/opt/partners/brighten-haiti/reuse-1.w800.dded30cf.webp",
+  "orig": "/images/opt/partners/brighten-haiti/reuse-1.w800.dded30cf.webp",
+  "nw": 417,
+  "nh": 274,
+  "par": "ff-card__photo",
+  "cls": "",
+  "w": {
+   "1440x900": 350,
+   "1024x768": 307,
+   "768x1024": 718,
+   "390x844": 352
+  },
+  "t": {
+   "1440x900": 1892,
+   "1024x768": 1927,
+   "768x1024": 3316,
+   "390x844": 3473
+  }
+ },
+ {
+  "page": "/our-work/partners/brighten-haiti/",
+  "idx": 6,
+  "src": "/images/opt/partners/brighten-haiti/photo-1.w800.c22ad59a.webp",
+  "orig": "/images/opt/partners/brighten-haiti/photo-1.w800.c22ad59a.webp",
+  "nw": 547,
+  "nh": 410,
+  "par": "ff-card__photo",
+  "cls": "",
+  "w": {
+   "1440x900": 350,
+   "1024x768": 307,
+   "768x1024": 718,
+   "390x844": 352
+  },
+  "t": {
+   "1440x900": 6422,
+   "1024x768": 6745,
+   "768x1024": 9572,
+   "390x844": 12575
+  }
+ },
+ {
+  "page": "/our-work/partners/brighten-haiti/",
+  "idx": 7,
+  "src": "/images/build/packagedlights.webp",
+  "orig": "/images/build/packagedlights.webp",
+  "nw": 417,
+  "nh": 557,
+  "par": "ff-card__photo",
+  "cls": "",
+  "w": {
+   "1440x900": 350,
+   "1024x768": 307,
+   "768x1024": 718,
+   "390x844": 352
+  },
+  "t": {
+   "1440x900": 6422,
+   "1024x768": 6745,
+   "768x1024": 10127,
+   "390x844": 12948
+  }
+ },
+ {
+  "page": "/our-work/partners/brighten-haiti/",
+  "idx": 8,
+  "src": "/images/build/bubble-wrapped-units.jpg",
+  "orig": "/images/build/bubble-wrapped-units.jpg",
+  "nw": 417,
+  "nh": 556,
+  "par": "ff-card__photo",
+  "cls": "",
+  "w": {
+   "1440x900": 350,
+   "1024x768": 307,
+   "768x1024": 718,
+   "390x844": 352
+  },
+  "t": {
+   "1440x900": 6422,
+   "1024x768": 6745,
+   "768x1024": 10681,
+   "390x844": 13321
+  }
+ },
+ {
+  "page": "/our-work/partners/brighten-haiti/",
+  "idx": 9,
+  "src": "/images/brand/mark-paper-88.png",
+  "orig": "/images/brand/mark-paper-88.png",
+  "nw": 60,
+  "nh": 88,
+  "par": "ff-logo",
+  "cls": "ff-footer__mark",
+  "w": {
+   "1440x900": 35,
+   "1024x768": 35,
+   "768x1024": 35,
+   "390x844": 27
+  },
+  "t": {
+   "1440x900": 6922,
+   "1024x768": 7249,
+   "768x1024": 11364,
+   "390x844": 13790
+  }
+ },
+ {
+  "page": "/our-work/partners/loksadhana/",
+  "idx": 0,
+  "src": "/images/brand/mark-green-104.png",
+  "orig": "/images/brand/mark-green-104.png",
+  "nw": 71,
+  "nh": 104,
+  "par": "ff-logo",
+  "cls": "",
+  "w": {
+   "1440x900": 36,
+   "1024x768": 36,
+   "768x1024": 36,
+   "390x844": 27
+  },
+  "t": {
+   "1440x900": 16,
+   "1024x768": 16,
+   "768x1024": 16,
+   "390x844": 22
+  }
+ },
+ {
+  "page": "/our-work/partners/loksadhana/",
+  "idx": 1,
+  "src": "/images/partners/loksadhana.webp",
+  "orig": "/images/partners/loksadhana.webp",
+  "nw": 115,
+  "nh": 115,
+  "par": "ff-pagehead__chip",
+  "cls": "",
+  "w": {
+   "1440x900": 48,
+   "1024x768": 48,
+   "768x1024": 48,
+   "390x844": 48
+  },
+  "t": {
+   "1440x900": 219,
+   "1024x768": 219,
+   "768x1024": 219,
+   "390x844": 195
+  }
+ },
+ {
+  "page": "/our-work/partners/loksadhana/",
+  "idx": 2,
+  "src": "/images/opt/partners/loksadhana/class-1.w800.15fbc8d4.webp",
+  "orig": "/images/opt/partners/loksadhana/class-1.w800.15fbc8d4.webp",
+  "nw": 547,
+  "nh": 300,
+  "par": "",
+  "cls": "",
+  "w": {
+   "1440x900": 480,
+   "1024x768": 480,
+   "768x1024": 480,
+   "390x844": 354
+  },
+  "t": {
+   "1440x900": 219,
+   "1024x768": 219,
+   "768x1024": 291,
+   "390x844": 609
+  }
+ },
+ {
+  "page": "/our-work/partners/loksadhana/",
+  "idx": 3,
+  "src": "/images/opt/partners/loksadhana/school-1.w800.321edb8b.webp",
+  "orig": "/images/opt/partners/loksadhana/school-1.w800.321edb8b.webp",
+  "nw": 417,
+  "nh": 271,
+  "par": "ff-card__photo",
+  "cls": "",
+  "w": {
+   "1440x900": 350,
+   "1024x768": 307,
+   "768x1024": 718,
+   "390x844": 352
+  },
+  "t": {
+   "1440x900": 1969,
+   "1024x768": 2004,
+   "768x1024": 2202,
+   "390x844": 2649
+  }
+ },
+ {
+  "page": "/our-work/partners/loksadhana/",
+  "idx": 4,
+  "src": "/images/partners/loksadhana/skilling-1.webp",
+  "orig": "/images/partners/loksadhana/skilling-1.webp",
+  "nw": 417,
+  "nh": 459,
+  "par": "ff-card__photo",
+  "cls": "",
+  "w": {
+   "1440x900": 350,
+   "1024x768": 307,
+   "768x1024": 718,
+   "390x844": 352
+  },
+  "t": {
+   "1440x900": 1969,
+   "1024x768": 2004,
+   "768x1024": 2805,
+   "390x844": 3141
+  }
+ },
+ {
+  "page": "/our-work/partners/loksadhana/",
+  "idx": 5,
+  "src": "/images/opt/partners/loksadhana/community-1.w800.bcf261e6.webp",
+  "orig": "/images/opt/partners/loksadhana/community-1.w800.bcf261e6.webp",
+  "nw": 417,
+  "nh": 326,
+  "par": "ff-card__photo",
+  "cls": "",
+  "w": {
+   "1440x900": 350,
+   "1024x768": 307,
+   "768x1024": 718,
+   "390x844": 352
+  },
+  "t": {
+   "1440x900": 1969,
+   "1024x768": 2004,
+   "768x1024": 3431,
+   "390x844": 3658
+  }
+ },
+ {
+  "page": "/our-work/partners/loksadhana/",
+  "idx": 6,
+  "src": "/images/partners/loksadhana/class-3.webp",
+  "orig": "/images/partners/loksadhana/class-3.webp",
+  "nw": 331,
+  "nh": 184,
+  "par": "",
+  "cls": "",
+  "w": {
+   "1440x900": 264,
+   "1024x768": 232,
+   "768x1024": 352,
+   "390x844": 169
+  },
+  "t": {
+   "1440x900": 3326,
+   "1024x768": 3363,
+   "768x1024": 4854,
+   "390x844": 4907
+  }
+ },
+ {
+  "page": "/our-work/partners/loksadhana/",
+  "idx": 7,
+  "src": "/images/opt/partners/loksadhana/class-6.w800.ed7f9744.webp",
+  "orig": "/images/opt/partners/loksadhana/class-6.w800.ed7f9744.webp",
+  "nw": 331,
+  "nh": 168,
+  "par": "",
+  "cls": "",
+  "w": {
+   "1440x900": 264,
+   "1024x768": 232,
+   "768x1024": 352,
+   "390x844": 169
+  },
+  "t": {
+   "1440x900": 3326,
+   "1024x768": 3363,
+   "768x1024": 4854,
+   "390x844": 4907
+  }
+ },
+ {
+  "page": "/our-work/partners/loksadhana/",
+  "idx": 8,
+  "src": "/images/partners/loksadhana/programs-1.webp",
+  "orig": "/images/partners/loksadhana/programs-1.webp",
+  "nw": 331,
+  "nh": 201,
+  "par": "",
+  "cls": "",
+  "w": {
+   "1440x900": 264,
+   "1024x768": 232,
+   "768x1024": 352,
+   "390x844": 169
+  },
+  "t": {
+   "1440x900": 3326,
+   "1024x768": 3363,
+   "768x1024": 5159,
+   "390x844": 5075
+  }
+ },
+ {
+  "page": "/our-work/partners/loksadhana/",
+  "idx": 9,
+  "src": "/images/build/packagedlights.webp",
+  "orig": "/images/build/packagedlights.webp",
+  "nw": 417,
+  "nh": 557,
+  "par": "ff-card__photo",
+  "cls": "",
+  "w": {
+   "1440x900": 350,
+   "1024x768": 307,
+   "768x1024": 718,
+   "390x844": 352
+  },
+  "t": {
+   "1440x900": 3842,
+   "1024x768": 3844,
+   "768x1024": 5730,
+   "390x844": 5445
+  }
+ },
+ {
+  "page": "/our-work/partners/loksadhana/",
+  "idx": 10,
+  "src": "/images/students/student-with-flashlight-2.jpg",
+  "orig": "/images/students/student-with-flashlight-2.jpg",
+  "nw": 417,
+  "nh": 556,
+  "par": "ff-card__photo",
+  "cls": "",
+  "w": {
+   "1440x900": 350,
+   "1024x768": 307,
+   "768x1024": 718,
+   "390x844": 352
+  },
+  "t": {
+   "1440x900": 3842,
+   "1024x768": 3844,
+   "768x1024": 6249,
+   "390x844": 5758
+  }
+ },
+ {
+  "page": "/our-work/partners/loksadhana/",
+  "idx": 11,
+  "src": "/images/opt/partners/loksadhana/class-6.w800.ed7f9744.webp",
+  "orig": "/images/opt/partners/loksadhana/class-6.w800.ed7f9744.webp",
+  "nw": 331,
+  "nh": 168,
+  "par": "ff-card__photo",
+  "cls": "",
+  "w": {
+   "1440x900": 350,
+   "1024x768": 307,
+   "768x1024": 718,
+   "390x844": 352
+  },
+  "t": {
+   "1440x900": 3842,
+   "1024x768": 3844,
+   "768x1024": 6768,
+   "390x844": 6099
+  }
+ },
+ {
+  "page": "/our-work/partners/loksadhana/",
+  "idx": 12,
+  "src": "/images/brand/mark-paper-88.png",
+  "orig": "/images/brand/mark-paper-88.png",
+  "nw": 60,
+  "nh": 88,
+  "par": "ff-logo",
+  "cls": "ff-footer__mark",
+  "w": {
+   "1440x900": 35,
+   "1024x768": 35,
+   "768x1024": 35,
+   "390x844": 27
+  },
+  "t": {
+   "1440x900": 4310,
+   "1024x768": 4317,
+   "768x1024": 7414,
+   "390x844": 6538
+  }
+ },
+ {
+  "page": "/our-work/partners/malaika/",
+  "idx": 0,
+  "src": "/images/brand/mark-green-104.png",
+  "orig": "/images/brand/mark-green-104.png",
+  "nw": 71,
+  "nh": 104,
+  "par": "ff-logo",
+  "cls": "",
+  "w": {
+   "1440x900": 36,
+   "1024x768": 36,
+   "768x1024": 36,
+   "390x844": 27
+  },
+  "t": {
+   "1440x900": 16,
+   "1024x768": 16,
+   "768x1024": 16,
+   "390x844": 22
+  }
+ },
+ {
+  "page": "/our-work/partners/malaika/",
+  "idx": 1,
+  "src": "/images/partners/malaika.jpg",
+  "orig": "/images/partners/malaika.jpg",
+  "nw": 172,
+  "nh": 81,
+  "par": "ff-pagehead__chip",
+  "cls": "",
+  "w": {
+   "1440x900": 102,
+   "1024x768": 102,
+   "768x1024": 102,
+   "390x844": 102
+  },
+  "t": {
+   "1440x900": 219,
+   "1024x768": 219,
+   "768x1024": 219,
+   "390x844": 195
+  }
+ },
+ {
+  "page": "/our-work/partners/malaika/",
+  "idx": 2,
+  "src": "/images/opt/partners/malaika/students-3.w800.e56f14b9.webp",
+  "orig": "/images/opt/partners/malaika/students-3.w800.e56f14b9.webp",
+  "nw": 547,
+  "nh": 820,
+  "par": "",
+  "cls": "",
+  "w": {
+   "1440x900": 480,
+   "1024x768": 480,
+   "768x1024": 480,
+   "390x844": 354
+  },
+  "t": {
+   "1440x900": 219,
+   "1024x768": 219,
+   "768x1024": 291,
+   "390x844": 609
+  }
+ },
+ {
+  "page": "/our-work/partners/malaika/",
+  "idx": 3,
+  "src": "/images/opt/partners/malaika/school-3.w800.24f404dd.webp",
+  "orig": "/images/opt/partners/malaika/school-3.w800.24f404dd.webp",
+  "nw": 417,
+  "nh": 278,
+  "par": "ff-card__photo",
+  "cls": "",
+  "w": {
+   "1440x900": 350,
+   "1024x768": 307,
+   "768x1024": 718,
+   "390x844": 352
+  },
+  "t": {
+   "1440x900": 1913,
+   "1024x768": 1942,
+   "768x1024": 2118,
+   "390x844": 2539
+  }
+ },
+ {
+  "page": "/our-work/partners/malaika/",
+  "idx": 4,
+  "src": "/images/opt/partners/malaika/community-center.w800.42dca1c2.webp",
+  "orig": "/images/opt/partners/malaika/community-center.w800.42dca1c2.webp",
+  "nw": 417,
+  "nh": 313,
+  "par": "ff-card__photo",
+  "cls": "",
+  "w": {
+   "1440x900": 350,
+   "1024x768": 307,
+   "768x1024": 718,
+   "390x844": 352
+  },
+  "t": {
+   "1440x900": 1913,
+   "1024x768": 1942,
+   "768x1024": 2697,
+   "390x844": 2960
+  }
+ },
+ {
+  "page": "/our-work/partners/malaika/",
+  "idx": 5,
+  "src": "/images/opt/partners/malaika/sports.w800.a36f15fb.webp",
+  "orig": "/images/opt/partners/malaika/sports.w800.a36f15fb.webp",
+  "nw": 417,
+  "nh": 313,
+  "par": "ff-card__photo",
+  "cls": "",
+  "w": {
+   "1440x900": 350,
+   "1024x768": 307,
+   "768x1024": 718,
+   "390x844": 352
+  },
+  "t": {
+   "1440x900": 1913,
+   "1024x768": 1942,
+   "768x1024": 3275,
+   "390x844": 3381
+  }
+ },
+ {
+  "page": "/our-work/partners/malaika/",
+  "idx": 6,
+  "src": "/images/opt/partners/malaika/vocational.w800.19a38e84.webp",
+  "orig": "/images/opt/partners/malaika/vocational.w800.19a38e84.webp",
+  "nw": 417,
+  "nh": 278,
+  "par": "ff-card__photo",
+  "cls": "",
+  "w": {
+   "1440x900": 350,
+   "1024x768": 307,
+   "768x1024": 718,
+   "390x844": 352
+  },
+  "t": {
+   "1440x900": 2333,
+   "1024x768": 2362,
+   "768x1024": 3854,
+   "390x844": 3801
+  }
+ },
+ {
+  "page": "/our-work/partners/malaika/",
+  "idx": 7,
+  "src": "/images/opt/partners/malaika/farm.w800.dfaa3acd.webp",
+  "orig": "/images/opt/partners/malaika/farm.w800.dfaa3acd.webp",
+  "nw": 417,
+  "nh": 278,
+  "par": "ff-card__photo",
+  "cls": "",
+  "w": {
+   "1440x900": 350,
+   "1024x768": 307,
+   "768x1024": 718,
+   "390x844": 352
+  },
+  "t": {
+   "1440x900": 2333,
+   "1024x768": 2362,
+   "768x1024": 4433,
+   "390x844": 4246
+  }
+ },
+ {
+  "page": "/our-work/partners/malaika/",
+  "idx": 8,
+  "src": "/images/opt/partners/malaika/water.w800.c443c7ee.webp",
+  "orig": "/images/opt/partners/malaika/water.w800.c443c7ee.webp",
+  "nw": 417,
+  "nh": 313,
+  "par": "ff-card__photo",
+  "cls": "",
+  "w": {
+   "1440x900": 350,
+   "1024x768": 307,
+   "768x1024": 718,
+   "390x844": 352
+  },
+  "t": {
+   "1440x900": 2333,
+   "1024x768": 2362,
+   "768x1024": 5011,
+   "390x844": 4667
+  }
+ },
+ {
+  "page": "/our-work/partners/malaika/",
+  "idx": 9,
+  "src": "/images/opt/partners/malaika/students-1.w800.48558531.webp",
+  "orig": "/images/opt/partners/malaika/students-1.w800.48558531.webp",
+  "nw": 331,
+  "nh": 220,
+  "par": "",
+  "cls": "",
+  "w": {
+   "1440x900": 264,
+   "1024x768": 232,
+   "768x1024": 352,
+   "390x844": 169
+  },
+  "t": {
+   "1440x900": 3617,
+   "1024x768": 3601,
+   "768x1024": 6410,
+   "390x844": 5892
+  }
+ },
+ {
+  "page": "/our-work/partners/malaika/",
+  "idx": 10,
+  "src": "/images/opt/partners/malaika/school-1.w800.770a6871.webp",
+  "orig": "/images/opt/partners/malaika/school-1.w800.770a6871.webp",
+  "nw": 331,
+  "nh": 220,
+  "par": "",
+  "cls": "",
+  "w": {
+   "1440x900": 264,
+   "1024x768": 232,
+   "768x1024": 352,
+   "390x844": 169
+  },
+  "t": {
+   "1440x900": 3617,
+   "1024x768": 3601,
+   "768x1024": 6410,
+   "390x844": 5892
+  }
+ },
+ {
+  "page": "/our-work/partners/malaika/",
+  "idx": 11,
+  "src": "/images/opt/partners/malaika/school-2.w800.bd47db9f.webp",
+  "orig": "/images/opt/partners/malaika/school-2.w800.bd47db9f.webp",
+  "nw": 331,
+  "nh": 220,
+  "par": "",
+  "cls": "",
+  "w": {
+   "1440x900": 264,
+   "1024x768": 232,
+   "768x1024": 352,
+   "390x844": 169
+  },
+  "t": {
+   "1440x900": 3617,
+   "1024x768": 3601,
+   "768x1024": 6715,
+   "390x844": 6060
+  }
+ },
+ {
+  "page": "/our-work/partners/malaika/",
+  "idx": 12,
+  "src": "/images/build/bubble-wrapped-units.jpg",
+  "orig": "/images/build/bubble-wrapped-units.jpg",
+  "nw": 417,
+  "nh": 556,
+  "par": "ff-card__photo",
+  "cls": "",
+  "w": {
+   "1440x900": 350,
+   "1024x768": 307,
+   "768x1024": 718,
+   "390x844": 352
+  },
+  "t": {
+   "1440x900": 4133,
+   "1024x768": 4082,
+   "768x1024": 7286,
+   "390x844": 6430
+  }
+ },
+ {
+  "page": "/our-work/partners/malaika/",
+  "idx": 13,
+  "src": "/images/build/flashlight-units-group.webp",
+  "orig": "/images/build/flashlight-units-group.webp",
+  "nw": 417,
+  "nh": 417,
+  "par": "ff-card__photo",
+  "cls": "",
+  "w": {
+   "1440x900": 350,
+   "1024x768": 307,
+   "768x1024": 718,
+   "390x844": 352
+  },
+  "t": {
+   "1440x900": 4133,
+   "1024x768": 4082,
+   "768x1024": 7805,
+   "390x844": 6771
+  }
+ },
+ {
+  "page": "/our-work/partners/malaika/",
+  "idx": 14,
+  "src": "/images/opt/partners/brighten-haiti/photo-1.w800.c22ad59a.webp",
+  "orig": "/images/opt/partners/brighten-haiti/photo-1.w800.c22ad59a.webp",
+  "nw": 417,
+  "nh": 313,
+  "par": "ff-card__photo",
+  "cls": "",
+  "w": {
+   "1440x900": 350,
+   "1024x768": 307,
+   "768x1024": 718,
+   "390x844": 352
+  },
+  "t": {
+   "1440x900": 4133,
+   "1024x768": 4082,
+   "768x1024": 8323,
+   "390x844": 7113
+  }
+ },
+ {
+  "page": "/our-work/partners/malaika/",
+  "idx": 15,
+  "src": "/images/brand/mark-paper-88.png",
+  "orig": "/images/brand/mark-paper-88.png",
+  "nw": 60,
+  "nh": 88,
+  "par": "ff-logo",
+  "cls": "ff-footer__mark",
+  "w": {
+   "1440x900": 35,
+   "1024x768": 35,
+   "768x1024": 35,
+   "390x844": 27
+  },
+  "t": {
+   "1440x900": 4602,
+   "1024x768": 4555,
+   "768x1024": 8970,
+   "390x844": 7551
+  }
+ },
+ {
+  "page": "/our-work/photos-and-videos/",
+  "idx": 0,
+  "src": "/images/brand/mark-green-104.png",
+  "orig": "/images/brand/mark-green-104.png",
+  "nw": 71,
+  "nh": 104,
+  "par": "ff-logo",
+  "cls": "",
+  "w": {
+   "1440x900": 36,
+   "1024x768": 36,
+   "768x1024": 36,
+   "390x844": 27
+  },
+  "t": {
+   "1440x900": 16,
+   "1024x768": 16,
+   "768x1024": 16,
+   "390x844": 22
+  }
+ },
+ {
+  "page": "/our-work/photos-and-videos/",
+  "idx": 1,
+  "src": "/images/opt/build/flashlight-build-timelapse-poster.w800.3f553dd0.webp",
+  "orig": "/images/opt/build/flashlight-build-timelapse-poster.w800.3f553dd0.webp",
+  "nw": 475,
+  "nh": 267,
+  "par": "",
+  "cls": "",
+  "w": {
+   "1440x900": 411,
+   "1024x768": 312,
+   "768x1024": 227,
+   "390x844": 342
+  },
+  "t": {
+   "1440x900": 778,
+   "1024x768": 767,
+   "768x1024": 767,
+   "390x844": 756
+  }
+ },
+ {
+  "page": "/our-work/photos-and-videos/",
+  "idx": 2,
+  "src": "/images/opt/build/flashlight-internals-charging-board.w800.58b432af.webp",
+  "orig": "/images/opt/build/flashlight-internals-charging-board.w800.58b432af.webp",
+  "nw": 475,
+  "nh": 633,
+  "par": "",
+  "cls": "",
+  "w": {
+   "1440x900": 411,
+   "1024x768": 312,
+   "768x1024": 227,
+   "390x844": 342
+  },
+  "t": {
+   "1440x900": 778,
+   "1024x768": 767,
+   "768x1024": 767,
+   "390x844": 1065
+  }
+ },
+ {
+  "page": "/our-work/photos-and-videos/",
+  "idx": 3,
+  "src": "/images/opt/build/garage-build-session.w800.9779620a.webp",
+  "orig": "/images/opt/build/garage-build-session.w800.9779620a.webp",
+  "nw": 475,
+  "nh": 302,
+  "par": "",
+  "cls": "",
+  "w": {
+   "1440x900": 411,
+   "1024x768": 312,
+   "768x1024": 227,
+   "390x844": 342
+  },
+  "t": {
+   "1440x900": 778,
+   "1024x768": 767,
+   "768x1024": 767,
+   "390x844": 1374
+  }
+ },
+ {
+  "page": "/our-work/photos-and-videos/",
+  "idx": 4,
+  "src": "/images/build/handoverflashlightsglowing-3x4.webp",
+  "orig": "/images/build/handoverflashlightsglowing-3x4.webp",
+  "nw": 475,
+  "nh": 634,
+  "par": "",
+  "cls": "",
+  "w": {
+   "1440x900": 411,
+   "1024x768": 312,
+   "768x1024": 227,
+   "390x844": 342
+  },
+  "t": {
+   "1440x900": 2104,
+   "1024x768": 2009,
+   "768x1024": 1822,
+   "390x844": 2886
+  }
+ },
+ {
+  "page": "/our-work/photos-and-videos/",
+  "idx": 5,
+  "src": "/images/build/flashlight-units.webp",
+  "orig": "/images/build/flashlight-units.webp",
+  "nw": 475,
+  "nh": 633,
+  "par": "",
+  "cls": "",
+  "w": {
+   "1440x900": 411,
+   "1024x768": 312,
+   "768x1024": 227,
+   "390x844": 342
+  },
+  "t": {
+   "1440x900": 2104,
+   "1024x768": 2009,
+   "768x1024": 1822,
+   "390x844": 3394
+  }
+ },
+ {
+  "page": "/our-work/photos-and-videos/",
+  "idx": 6,
+  "src": "/images/build/flashlightinshippingcontainer.webp",
+  "orig": "/images/build/flashlightinshippingcontainer.webp",
+  "nw": 475,
+  "nh": 844,
+  "par": "",
+  "cls": "",
+  "w": {
+   "1440x900": 411,
+   "1024x768": 312,
+   "768x1024": 227,
+   "390x844": 342
+  },
+  "t": {
+   "1440x900": 2104,
+   "1024x768": 2009,
+   "768x1024": 1822,
+   "390x844": 3903
+  }
+ },
+ {
+  "page": "/our-work/photos-and-videos/",
+  "idx": 7,
+  "src": "/images/opt/students/student-with-flashlight-3.w800.d053dee0.webp",
+  "orig": "/images/opt/students/student-with-flashlight-3.w800.d053dee0.webp",
+  "nw": 475,
+  "nh": 633,
+  "par": "",
+  "cls": "",
+  "w": {
+   "1440x900": 411,
+   "1024x768": 312,
+   "768x1024": 227,
+   "390x844": 342
+  },
+  "t": {
+   "1440x900": 3670,
+   "1024x768": 3432,
+   "768x1024": 3131,
+   "390x844": 5369
+  }
+ },
+ {
+  "page": "/our-work/photos-and-videos/",
+  "idx": 8,
+  "src": "/images/opt/students/student-with-flashlight-1.w800.85ac48ab.webp",
+  "orig": "/images/opt/students/student-with-flashlight-1.w800.85ac48ab.webp",
+  "nw": 475,
+  "nh": 451,
+  "par": "",
+  "cls": "",
+  "w": {
+   "1440x900": 411,
+   "1024x768": 312,
+   "768x1024": 227,
+   "390x844": 342
+  },
+  "t": {
+   "1440x900": 3670,
+   "1024x768": 3432,
+   "768x1024": 3131,
+   "390x844": 5878
+  }
+ },
+ {
+  "page": "/our-work/photos-and-videos/",
+  "idx": 9,
+  "src": "/images/students/student-with-flashlight-2.jpg",
+  "orig": "/images/students/student-with-flashlight-2.jpg",
+  "nw": 475,
+  "nh": 633,
+  "par": "",
+  "cls": "",
+  "w": {
+   "1440x900": 411,
+   "1024x768": 312,
+   "768x1024": 227,
+   "390x844": 342
+  },
+  "t": {
+   "1440x900": 3670,
+   "1024x768": 3432,
+   "768x1024": 3131,
+   "390x844": 6386
+  }
+ },
+ {
+  "page": "/our-work/photos-and-videos/",
+  "idx": 10,
+  "src": "/images/opt/build/flashfinishedworkshop.w800.8f267722.webp",
+  "orig": "/images/opt/build/flashfinishedworkshop.w800.8f267722.webp",
+  "nw": 475,
+  "nh": 356,
+  "par": "",
+  "cls": "",
+  "w": {
+   "1440x900": 411,
+   "1024x768": 312,
+   "768x1024": 227,
+   "390x844": 342
+  },
+  "t": {
+   "1440x900": 4597,
+   "1024x768": 4217,
+   "768x1024": 3825,
+   "390x844": 7192
+  }
+ },
+ {
+  "page": "/our-work/photos-and-videos/",
+  "idx": 11,
+  "src": "/images/opt/build/peopleworkingonflash.w800.71b99741.webp",
+  "orig": "/images/opt/build/peopleworkingonflash.w800.71b99741.webp",
+  "nw": 475,
+  "nh": 356,
+  "par": "",
+  "cls": "",
+  "w": {
+   "1440x900": 411,
+   "1024x768": 312,
+   "768x1024": 227,
+   "390x844": 342
+  },
+  "t": {
+   "1440x900": 4597,
+   "1024x768": 4217,
+   "768x1024": 3825,
+   "390x844": 7501
+  }
+ },
+ {
+  "page": "/our-work/photos-and-videos/",
+  "idx": 12,
+  "src": "/images/build/robotics-event-booth.webp",
+  "orig": "/images/build/robotics-event-booth.webp",
+  "nw": 475,
+  "nh": 844,
+  "par": "",
+  "cls": "",
+  "w": {
+   "1440x900": 411,
+   "1024x768": 312,
+   "768x1024": 227,
+   "390x844": 342
+  },
+  "t": {
+   "1440x900": 4597,
+   "1024x768": 4217,
+   "768x1024": 3825,
+   "390x844": 7810
+  }
+ },
+ {
+  "page": "/our-work/photos-and-videos/",
+  "idx": 13,
+  "src": "/images/brand/mark-paper-88.png",
+  "orig": "/images/brand/mark-paper-88.png",
+  "nw": 60,
+  "nh": 88,
+  "par": "ff-logo",
+  "cls": "ff-footer__mark",
+  "w": {
+   "1440x900": 35,
+   "1024x768": 35,
+   "768x1024": 35,
+   "390x844": 27
+  },
+  "t": {
+   "1440x900": 5723,
+   "1024x768": 5269,
+   "768x1024": 4761,
+   "390x844": 8567
+  }
+ },
+ {
+  "page": "/our-work/the-light/",
+  "idx": 0,
+  "src": "/images/brand/mark-green-104.png",
+  "orig": "/images/brand/mark-green-104.png",
+  "nw": 71,
+  "nh": 104,
+  "par": "ff-logo",
+  "cls": "",
+  "w": {
+   "1440x900": 36,
+   "1024x768": 36,
+   "768x1024": 36,
+   "390x844": 27
+  },
+  "t": {
+   "1440x900": 16,
+   "1024x768": 16,
+   "768x1024": 16,
+   "390x844": 22
+  }
+ },
+ {
+  "page": "/our-work/the-light/",
+  "idx": 1,
+  "src": "/images/opt/frames/assembly/poster-d.w800.6a38c549.webp",
+  "orig": "/images/opt/frames/assembly/poster-d.w800.6a38c549.webp",
+  "nw": 480,
+  "nh": 360,
+  "par": "",
+  "cls": "",
+  "w": {
+   "1440x900": 480,
+   "1024x768": 480,
+   "768x1024": 480,
+   "390x844": 354
+  },
+  "t": {
+   "1440x900": 209,
+   "1024x768": 209,
+   "768x1024": 264,
+   "390x844": 503
+  }
+ },
+ {
+  "page": "/our-work/the-light/",
+  "idx": 2,
+  "src": "/images/light/cad/case.webp",
+  "orig": "/images/light/cad/case.webp",
+  "nw": 216,
+  "nh": 198,
+  "par": "ff-card__photo ff-part__photo",
+  "cls": "",
+  "w": {
+   "1440x900": 152,
+   "1024x768": 259,
+   "768x1024": 174,
+   "390x844": 115
+  },
+  "t": {
+   "1440x900": 3193,
+   "1024x768": 2839,
+   "768x1024": 3615,
+   "390x844": 2843
+  }
+ },
+ {
+  "page": "/our-work/the-light/",
+  "idx": 3,
+  "src": "/images/light/cad/part-a.webp",
+  "orig": "/images/light/cad/part-a.webp",
+  "nw": 216,
+  "nh": 124,
+  "par": "ff-card__photo ff-part__photo",
+  "cls": "",
+  "w": {
+   "1440x900": 152,
+   "1024x768": 259,
+   "768x1024": 174,
+   "390x844": 115
+  },
+  "t": {
+   "1440x900": 3193,
+   "1024x768": 2839,
+   "768x1024": 3615,
+   "390x844": 2843
+  }
+ },
+ {
+  "page": "/our-work/the-light/",
+  "idx": 4,
+  "src": "/images/light/cad/part-c.webp",
+  "orig": "/images/light/cad/part-c.webp",
+  "nw": 215,
+  "nh": 118,
+  "par": "ff-card__photo ff-part__photo",
+  "cls": "",
+  "w": {
+   "1440x900": 152,
+   "1024x768": 259,
+   "768x1024": 174,
+   "390x844": 115
+  },
+  "t": {
+   "1440x900": 3193,
+   "1024x768": 2839,
+   "768x1024": 3615,
+   "390x844": 3193
+  }
+ },
+ {
+  "page": "/our-work/the-light/",
+  "idx": 5,
+  "src": "/images/light/cad/panel.webp",
+  "orig": "/images/light/cad/panel.webp",
+  "nw": 216,
+  "nh": 96,
+  "par": "ff-card__photo ff-part__photo",
+  "cls": "",
+  "w": {
+   "1440x900": 152,
+   "1024x768": 259,
+   "768x1024": 174,
+   "390x844": 115
+  },
+  "t": {
+   "1440x900": 3193,
+   "1024x768": 3221,
+   "768x1024": 3956,
+   "390x844": 3193
+  }
+ },
+ {
+  "page": "/our-work/the-light/",
+  "idx": 6,
+  "src": "/images/build/flashlight-units.webp",
+  "orig": "/images/build/flashlight-units.webp",
+  "nw": 417,
+  "nh": 556,
+  "par": "",
+  "cls": "",
+  "w": {
+   "1440x900": 355,
+   "1024x768": 312,
+   "768x1024": 227,
+   "390x844": 354
+  },
+  "t": {
+   "1440x900": 4622,
+   "1024x768": 4674,
+   "768x1024": 5633,
+   "390x844": 5051
+  }
+ },
+ {
+  "page": "/our-work/the-light/",
+  "idx": 7,
+  "src": "/images/opt/build/flashlight-internals-charging-board.w800.58b432af.webp",
+  "orig": "/images/opt/build/flashlight-internals-charging-board.w800.58b432af.webp",
+  "nw": 417,
+  "nh": 556,
+  "par": "",
+  "cls": "",
+  "w": {
+   "1440x900": 355,
+   "1024x768": 312,
+   "768x1024": 227,
+   "390x844": 354
+  },
+  "t": {
+   "1440x900": 4622,
+   "1024x768": 4674,
+   "768x1024": 5633,
+   "390x844": 5543
+  }
+ },
+ {
+  "page": "/our-work/the-light/",
+  "idx": 8,
+  "src": "/images/build/handoverflashlightsglowing-3x4.webp",
+  "orig": "/images/build/handoverflashlightsglowing-3x4.webp",
+  "nw": 417,
+  "nh": 557,
+  "par": "",
+  "cls": "",
+  "w": {
+   "1440x900": 355,
+   "1024x768": 312,
+   "768x1024": 227,
+   "390x844": 354
+  },
+  "t": {
+   "1440x900": 4622,
+   "1024x768": 4674,
+   "768x1024": 5633,
+   "390x844": 6035
+  }
+ },
+ {
+  "page": "/our-work/the-light/",
+  "idx": 9,
+  "src": "/images/build/soldering-electronics.jpg",
+  "orig": "/images/build/soldering-electronics.jpg",
+  "nw": 604,
+  "nh": 341,
+  "par": "ff-card__photo",
+  "cls": "",
+  "w": {
+   "1440x900": 538,
+   "1024x768": 474,
+   "768x1024": 346,
+   "390x844": 352
+  },
+  "t": {
+   "1440x900": 5387,
+   "1024x768": 5371,
+   "768x1024": 6217,
+   "390x844": 6725
+  }
+ },
+ {
+  "page": "/our-work/the-light/",
+  "idx": 10,
+  "src": "/images/build/handoverflashlightsglowing.webp",
+  "orig": "/images/build/handoverflashlightsglowing.webp",
+  "nw": 604,
+  "nh": 1316,
+  "par": "ff-card__photo",
+  "cls": "",
+  "w": {
+   "1440x900": 538,
+   "1024x768": 474,
+   "768x1024": 346,
+   "390x844": 352
+  },
+  "t": {
+   "1440x900": 5387,
+   "1024x768": 5371,
+   "768x1024": 6217,
+   "390x844": 7074
+  }
+ },
+ {
+  "page": "/our-work/the-light/",
+  "idx": 11,
+  "src": "/images/brand/mark-paper-88.png",
+  "orig": "/images/brand/mark-paper-88.png",
+  "nw": 60,
+  "nh": 88,
+  "par": "ff-logo",
+  "cls": "ff-footer__mark",
+  "w": {
+   "1440x900": 35,
+   "1024x768": 35,
+   "768x1024": 35,
+   "390x844": 27
+  },
+  "t": {
+   "1440x900": 5968,
+   "1024x768": 5916,
+   "768x1024": 6689,
+   "390x844": 7518
+  }
+ },
+ {
+  "page": "/our-work/where/",
+  "idx": 0,
+  "src": "/images/brand/mark-green-104.png",
+  "orig": "/images/brand/mark-green-104.png",
+  "nw": 71,
+  "nh": 104,
+  "par": "ff-logo",
+  "cls": "",
+  "w": {
+   "1440x900": 36,
+   "1024x768": 36,
+   "768x1024": 36,
+   "390x844": 27
+  },
+  "t": {
+   "1440x900": 16,
+   "1024x768": 16,
+   "768x1024": 16,
+   "390x844": 22
+  }
+ },
+ {
+  "page": "/our-work/where/",
+  "idx": 1,
+  "src": "/images/partners/brighten-haiti.webp",
+  "orig": "/images/partners/brighten-haiti.webp",
+  "nw": 172,
+  "nh": 111,
+  "par": "ff-logotile",
+  "cls": "",
+  "w": {
+   "1440x900": 102,
+   "1024x768": 102,
+   "768x1024": 102,
+   "390x844": 102
+  },
+  "t": {
+   "1440x900": 1446,
+   "1024x768": 1435,
+   "768x1024": 1435,
+   "390x844": 1443
+  }
+ },
+ {
+  "page": "/our-work/where/",
+  "idx": 2,
+  "src": "/images/partners/loksadhana.webp",
+  "orig": "/images/partners/loksadhana.webp",
+  "nw": 172,
+  "nh": 172,
+  "par": "ff-logotile",
+  "cls": "",
+  "w": {
+   "1440x900": 102,
+   "1024x768": 102,
+   "768x1024": 102,
+   "390x844": 102
+  },
+  "t": {
+   "1440x900": 1559,
+   "1024x768": 1548,
+   "768x1024": 1548,
+   "390x844": 1626
+  }
+ },
+ {
+  "page": "/our-work/where/",
+  "idx": 3,
+  "src": "/images/partners/malaika.jpg",
+  "orig": "/images/partners/malaika.jpg",
+  "nw": 172,
+  "nh": 81,
+  "par": "ff-logotile",
+  "cls": "",
+  "w": {
+   "1440x900": 102,
+   "1024x768": 102,
+   "768x1024": 102,
+   "390x844": 102
+  },
+  "t": {
+   "1440x900": 1672,
+   "1024x768": 1661,
+   "768x1024": 1661,
+   "390x844": 1808
+  }
+ },
+ {
+  "page": "/our-work/where/",
+  "idx": 4,
+  "src": "/images/opt/partners/coec-nigeria.w800.dc25ec94.webp",
+  "orig": "/images/opt/partners/coec-nigeria.w800.dc25ec94.webp",
+  "nw": 187,
+  "nh": 186,
+  "par": "ff-logotile",
+  "cls": "",
+  "w": {
+   "1440x900": 122,
+   "1024x768": 122,
+   "768x1024": 122,
+   "390x844": 122
+  },
+  "t": {
+   "1440x900": 1939,
+   "1024x768": 1917,
+   "768x1024": 1917,
+   "390x844": 2134
+  }
+ },
+ {
+  "page": "/our-work/where/",
+  "idx": 5,
+  "src": "/images/partners/rethread.jpg",
+  "orig": "/images/partners/rethread.jpg",
+  "nw": 187,
+  "nh": 82,
+  "par": "ff-logotile",
+  "cls": "",
+  "w": {
+   "1440x900": 122,
+   "1024x768": 122,
+   "768x1024": 122,
+   "390x844": 122
+  },
+  "t": {
+   "1440x900": 1939,
+   "1024x768": 1917,
+   "768x1024": 1917,
+   "390x844": 2232
+  }
+ },
+ {
+  "page": "/our-work/where/",
+  "idx": 6,
+  "src": "/images/partners/bsrea.png",
+  "orig": "/images/partners/bsrea.png",
+  "nw": 187,
+  "nh": 145,
+  "par": "ff-logotile",
+  "cls": "",
+  "w": {
+   "1440x900": 122,
+   "1024x768": 122,
+   "768x1024": 122,
+   "390x844": 122
+  },
+  "t": {
+   "1440x900": 1939,
+   "1024x768": 1917,
+   "768x1024": 1917,
+   "390x844": 2330
+  }
+ },
+ {
+  "page": "/our-work/where/",
+  "idx": 7,
+  "src": "/images/brand/mark-paper-88.png",
+  "orig": "/images/brand/mark-paper-88.png",
+  "nw": 60,
+  "nh": 88,
+  "par": "ff-logo",
+  "cls": "ff-footer__mark",
+  "w": {
+   "1440x900": 35,
+   "1024x768": 35,
+   "768x1024": 35,
+   "390x844": 27
+  },
+  "t": {
+   "1440x900": 2549,
+   "1024x768": 2517,
+   "768x1024": 3023,
+   "390x844": 3410
+  }
+ },
+ {
+  "page": "/privacy/",
+  "idx": 0,
+  "src": "/images/brand/mark-green-104.png",
+  "orig": "/images/brand/mark-green-104.png",
+  "nw": 71,
+  "nh": 104,
+  "par": "ff-logo",
+  "cls": "",
+  "w": {
+   "1440x900": 36,
+   "1024x768": 36,
+   "768x1024": 36,
+   "390x844": 27
+  },
+  "t": {
+   "1440x900": 16,
+   "1024x768": 16,
+   "768x1024": 16,
+   "390x844": 22
+  }
+ },
+ {
+  "page": "/privacy/",
+  "idx": 1,
+  "src": "/images/brand/mark-paper-88.png",
+  "orig": "/images/brand/mark-paper-88.png",
+  "nw": 60,
+  "nh": 88,
+  "par": "ff-logo",
+  "cls": "ff-footer__mark",
+  "w": {
+   "1440x900": 35,
+   "1024x768": 35,
+   "768x1024": 35,
+   "390x844": 27
+  },
+  "t": {
+   "1440x900": 4104,
+   "1024x768": 4239,
+   "768x1024": 4632,
+   "390x844": 6385
+  }
+ },
+ {
+  "page": "/search/",
+  "idx": 0,
+  "src": "/images/brand/mark-green-104.png",
+  "orig": "/images/brand/mark-green-104.png",
+  "nw": 71,
+  "nh": 104,
+  "par": "ff-logo",
+  "cls": "",
+  "w": {
+   "1440x900": 36,
+   "1024x768": 36,
+   "768x1024": 36,
+   "390x844": 27
+  },
+  "t": {
+   "1440x900": 16,
+   "1024x768": 16,
+   "768x1024": 16,
+   "390x844": 22
+  }
+ },
+ {
+  "page": "/search/",
+  "idx": 1,
+  "src": "/images/brand/mark-paper-88.png",
+  "orig": "/images/brand/mark-paper-88.png",
+  "nw": 60,
+  "nh": 88,
+  "par": "ff-logo",
+  "cls": "ff-footer__mark",
+  "w": {
+   "1440x900": 35,
+   "1024x768": 35,
+   "768x1024": 35,
+   "390x844": 27
+  },
+  "t": {
+   "1440x900": 864,
+   "1024x768": 864,
+   "768x1024": 864,
+   "390x844": 800
+  }
+ },
+ {
+  "page": "/site-map/",
+  "idx": 0,
+  "src": "/images/brand/mark-green-104.png",
+  "orig": "/images/brand/mark-green-104.png",
+  "nw": 71,
+  "nh": 104,
+  "par": "ff-logo",
+  "cls": "",
+  "w": {
+   "1440x900": 36,
+   "1024x768": 36,
+   "768x1024": 36,
+   "390x844": 27
+  },
+  "t": {
+   "1440x900": 16,
+   "1024x768": 16,
+   "768x1024": 16,
+   "390x844": 22
+  }
+ },
+ {
+  "page": "/site-map/",
+  "idx": 1,
+  "src": "/images/brand/mark-paper-88.png",
+  "orig": "/images/brand/mark-paper-88.png",
+  "nw": 60,
+  "nh": 88,
+  "par": "ff-logo",
+  "cls": "ff-footer__mark",
+  "w": {
+   "1440x900": 35,
+   "1024x768": 35,
+   "768x1024": 35,
+   "390x844": 27
+  },
+  "t": {
+   "1440x900": 2703,
+   "1024x768": 2703,
+   "768x1024": 2691,
+   "390x844": 2768
+  }
+ },
+ {
+  "page": "/terms/",
+  "idx": 0,
+  "src": "/images/brand/mark-green-104.png",
+  "orig": "/images/brand/mark-green-104.png",
+  "nw": 71,
+  "nh": 104,
+  "par": "ff-logo",
+  "cls": "",
+  "w": {
+   "1440x900": 36,
+   "1024x768": 36,
+   "768x1024": 36,
+   "390x844": 27
+  },
+  "t": {
+   "1440x900": 16,
+   "1024x768": 16,
+   "768x1024": 16,
+   "390x844": 22
+  }
+ },
+ {
+  "page": "/terms/",
+  "idx": 1,
+  "src": "/images/brand/mark-paper-88.png",
+  "orig": "/images/brand/mark-paper-88.png",
+  "nw": 60,
+  "nh": 88,
+  "par": "ff-logo",
+  "cls": "ff-footer__mark",
+  "w": {
+   "1440x900": 35,
+   "1024x768": 35,
+   "768x1024": 35,
+   "390x844": 27
+  },
+  "t": {
+   "1440x900": 5706,
+   "1024x768": 5976,
+   "768x1024": 6558,
+   "390x844": 9256
+  }
+ }
+]
