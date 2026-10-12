@@ -50,7 +50,11 @@ for src0 in sorted(sources):
     path = ROOT + src
     if not os.path.exists(path):
         continue
-    im = Image.open(path).convert('RGB')
+    im = Image.open(path)
+    if im.mode in ('RGBA', 'LA') or (im.mode in ('P', 'PA') and 'transparency' in im.info):
+        im = im.convert('RGBA')
+    else:
+        im = im.convert('RGB')
     nw, nh = im.size
     outs = []
     stem, _ = os.path.splitext(os.path.basename(src))
