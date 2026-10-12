@@ -275,6 +275,7 @@ a:focus-visible, button:focus-visible { outline: 3px solid var(--ff-green-deep);
 .ff-main .ff-galrow img { display: block; width: 100%; object-fit: cover; border-radius: 6px; }
 .ff-main .ff-galrow--43 img { aspect-ratio: 4/3; }
 .ff-main .ff-galrow--34 img { aspect-ratio: 3/4; }
+.ff-main .ff-galrow--two { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 .ff-main .ff-galrow figcaption, .ff-main .ff-galvids figcaption { font-size: .9375rem; color: var(--ff-muted); margin-top: 10px; }
 .ff-main .ff-galcat__vlab { margin-top: 40px !important; margin-bottom: 16px !important; }
 .ff-main .ff-galvids { display: grid; gap: 20px; align-items: start; }
