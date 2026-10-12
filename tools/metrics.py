@@ -1,4 +1,4 @@
-"""Measure rendered <img>/<video> boxes on each page at 1440x900, 1024x768, 768x1024 and 390x844.
+"""Measure rendered <img>/<video> boxes on each page at 1440x900, 1024x768, 900x900, 768x1024 and 390x844.
 Writes tools/img-metrics.json consumed by build.mjs."""
 import json, re, sys, glob, os
 from playwright.sync_api import sync_playwright
@@ -30,7 +30,7 @@ out = {}
 vids = {}
 with sync_playwright() as p:
     b = p.chromium.launch()
-    for w, h in ((1440, 900), (1024, 768), (768, 1024), (390, 844)):
+    for w, h in ((1440, 900), (1024, 768), (900, 900), (768, 1024), (390, 844)):
         key = f'{w}x{h}'
         pg = b.new_page(viewport={'width': w, 'height': h})
         for u in pages:

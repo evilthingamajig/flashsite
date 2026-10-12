@@ -820,7 +820,7 @@ body .R-self-about #page-container .et_pb_section a.et_pb_button { color: var(--
 .ff-main .ff-home-hero__text { display: flex; align-items: center; padding: 64px 0; }
 .ff-main .ff-home-hero__inner { max-width: 540px; position: relative; z-index: 1; }
 .ff-main .ff-home-hero .ff-kicker { color: rgba(255,255,255,.75); }
-.ff-main .ff-home-hero h1 { font-family: Merriweather, Georgia, serif; font-weight: 900; font-size: clamp(2.25rem, 4vw, 3.5rem); line-height: 1.12; color: #fff; margin: 8px 0 20px; }
+.ff-main .ff-home-hero h1 { font-family: Merriweather, Georgia, serif; font-weight: 900; font-size: clamp(2.25rem, 4vw, 3.5rem); line-height: 1.12; color: #fff; margin: 8px 0 20px; text-wrap: balance; }
 .ff-main .ff-home-hero__lede { color: rgba(255,255,255,.85); font-size: 1.125rem; margin: 0 0 28px; }
 .ff-main .ff-home-hero .ff-btnrow { display: flex; flex-wrap: wrap; gap: 12px; }
 .ff-main .ff-home-hero__photo { position: relative; margin: 0; padding: 48px 0 40px; align-self: center; }
@@ -830,7 +830,7 @@ body .R-self-about #page-container .et_pb_section a.et_pb_button { color: var(--
   .ff-main .ff-home-hero { grid-template-columns: 1fr; gap: 0; }
   .ff-main .ff-home-hero__text { padding: 48px 0 40px; }
   .ff-main .ff-home-hero__photo { padding: 0 0 40px; }
-  .ff-main .ff-home-hero__photo img { aspect-ratio: 4/5; object-position: center 20%; }
+  .ff-main .ff-home-hero__photo img { aspect-ratio: 4/5; object-position: center 92%; }
 }
 
 /* Why light */

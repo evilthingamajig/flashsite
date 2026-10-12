@@ -131,7 +131,8 @@ const unent = (t) => t.replace(/&amp;/g,'&').replace(/&rsquo;/g,'\u2019').replac
 for (const file of pages.sort()) {
   const rel = urlPath(file);
   let html = readFileSync(file, 'utf8');
-  html = html.replace(/<!--ff:ld-->[\s\S]*?<!--\/ff:ld-->|<script type="application\/ld\+json">[\s\S]*?<\/script>/g, '');
+  html = html.replace(/<!--ff:ld-->[\s\S]*?<!--\/ff:ld-->\n?|<script type="application\/ld\+json">[\s\S]*?<\/script>\n?/g, '');
+  html = html.replace(/\n{3,}<\/head>/, '\n\n</head>');
 
   let list;
   const marker = html.match(/<!--ff:css ([^>]*)-->/);
@@ -185,7 +186,8 @@ for (const file of pages.sort()) {
     if (!met) return '100vw';
     const segs = [
       ['(max-width: 767px)', met.w['390x844'], 390],
-      ['(max-width: 1023px)', met.w['768x1024'], 768],
+      ['(max-width: 899px)', met.w['768x1024'], 768],
+      ['(max-width: 1023px)', met.w['900x900'], 900],
       ['(max-width: 1439px)', met.w['1024x768'], 1024],
       [null, met.w['1440x900'], 1440],
     ].filter(([, meas]) => meas != null && meas > 0);
