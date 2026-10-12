@@ -2,7 +2,7 @@
  {
   "page": "/our-work/photos-and-videos/",
   "idx": 0,
-  "poster": "/images/build/flashlight-build-timelapse-poster-2.webp",
+  "poster": "/images/opt/build/flashlight-build-timelapse-poster-2.w1200.55e99cdd.webp",
   "w": {
    "1440x900": 835,
    "1024x768": 637,
@@ -19,7 +19,7 @@
  {
   "page": "/our-work/photos-and-videos/",
   "idx": 1,
-  "poster": "/images/build/3d-print-timelapse-compressed-poster.webp",
+  "poster": "/images/opt/build/3d-print-timelapse-compressed-poster.w480.8aba3124.webp",
   "w": {
    "1440x900": 315,
    "1024x768": 315,
@@ -36,7 +36,7 @@
  {
   "page": "/our-work/photos-and-videos/",
   "idx": 2,
-  "poster": "/images/build/demo-v1-flashlight-compressed-poster.webp",
+  "poster": "/images/opt/build/demo-v1-flashlight-compressed-poster.w480.46483d99.webp",
   "w": {
    "1440x900": 315,
    "1024x768": 315,
@@ -53,7 +53,7 @@
  {
   "page": "/our-work/photos-and-videos/",
   "idx": 3,
-  "poster": "/images/build/donate-video-poster.webp",
+  "poster": "/images/opt/build/donate-video-poster.w1200.69831827.webp",
   "w": {
    "1440x900": 853,
    "1024x768": 853,

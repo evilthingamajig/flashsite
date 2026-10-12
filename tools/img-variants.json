@@ -1,4 +1,22 @@
 {
+ "/images/build/3d-print-timelapse-compressed-poster.webp": {
+  "nw": 1080,
+  "nh": 1920,
+  "v": [
+   {
+    "w": 480,
+    "src": "/images/opt/build/3d-print-timelapse-compressed-poster.w480.8aba3124.webp"
+   },
+   {
+    "w": 800,
+    "src": "/images/opt/build/3d-print-timelapse-compressed-poster.w800.2fa9d740.webp"
+   },
+   {
+    "w": 1080,
+    "src": "/images/opt/build/3d-print-timelapse-compressed-poster.w1080.44614bc3.webp"
+   }
+  ]
+ },
  "/images/build/assembling-screwing-lights.webp": {
   "nw": 450,
   "nh": 800,
@@ -26,6 +44,122 @@
    {
     "w": 360,
     "src": "/images/opt/build/bubble-wrapped-units.w360.dae7ddb8.webp"
+   }
+  ]
+ },
+ "/images/build/demo-v1-flashlight-compressed-poster.webp": {
+  "nw": 720,
+  "nh": 1280,
+  "v": [
+   {
+    "w": 480,
+    "src": "/images/opt/build/demo-v1-flashlight-compressed-poster.w480.46483d99.webp"
+   },
+   {
+    "w": 720,
+    "src": "/images/opt/build/demo-v1-flashlight-compressed-poster.w720.ba459089.webp"
+   }
+  ]
+ },
+ "/images/build/donate-video-poster.webp": {
+  "nw": 1280,
+  "nh": 720,
+  "v": [
+   {
+    "w": 480,
+    "src": "/images/opt/build/donate-video-poster.w480.defb7f24.webp"
+   },
+   {
+    "w": 800,
+    "src": "/images/opt/build/donate-video-poster.w800.86eddf7e.webp"
+   },
+   {
+    "w": 1200,
+    "src": "/images/opt/build/donate-video-poster.w1200.69831827.webp"
+   },
+   {
+    "w": 1280,
+    "src": "/images/opt/build/donate-video-poster.w1280.09264d6b.webp"
+   }
+  ]
+ },
+ "/images/build/flashfinishedworkshop.webp": {
+  "nw": 1068,
+  "nh": 801,
+  "v": [
+   {
+    "w": 480,
+    "src": "/images/opt/build/flashfinishedworkshop.w480.1593c9f6.webp"
+   },
+   {
+    "w": 800,
+    "src": "/images/opt/build/flashfinishedworkshop.w800.8f267722.webp"
+   },
+   {
+    "w": 1068,
+    "src": "/images/opt/build/flashfinishedworkshop.w1068.4a224355.webp"
+   }
+  ]
+ },
+ "/images/build/flashlight-build-timelapse-poster-2.webp": {
+  "nw": 1280,
+  "nh": 720,
+  "v": [
+   {
+    "w": 480,
+    "src": "/images/opt/build/flashlight-build-timelapse-poster-2.w480.7a558067.webp"
+   },
+   {
+    "w": 800,
+    "src": "/images/opt/build/flashlight-build-timelapse-poster-2.w800.187f8e70.webp"
+   },
+   {
+    "w": 1200,
+    "src": "/images/opt/build/flashlight-build-timelapse-poster-2.w1200.55e99cdd.webp"
+   },
+   {
+    "w": 1280,
+    "src": "/images/opt/build/flashlight-build-timelapse-poster-2.w1280.5257786b.webp"
+   }
+  ]
+ },
+ "/images/build/flashlight-build-timelapse-poster.webp": {
+  "nw": 1280,
+  "nh": 720,
+  "v": [
+   {
+    "w": 480,
+    "src": "/images/opt/build/flashlight-build-timelapse-poster.w480.443ba598.webp"
+   },
+   {
+    "w": 800,
+    "src": "/images/opt/build/flashlight-build-timelapse-poster.w800.3f553dd0.webp"
+   },
+   {
+    "w": 1200,
+    "src": "/images/opt/build/flashlight-build-timelapse-poster.w1200.153b73cb.webp"
+   },
+   {
+    "w": 1280,
+    "src": "/images/opt/build/flashlight-build-timelapse-poster.w1280.c0ad8105.webp"
+   }
+  ]
+ },
+ "/images/build/flashlight-internals-charging-board.webp": {
+  "nw": 1200,
+  "nh": 1600,
+  "v": [
+   {
+    "w": 480,
+    "src": "/images/opt/build/flashlight-internals-charging-board.w480.08e36166.webp"
+   },
+   {
+    "w": 800,
+    "src": "/images/opt/build/flashlight-internals-charging-board.w800.58b432af.webp"
+   },
+   {
+    "w": 1200,
+    "src": "/images/opt/build/flashlight-internals-charging-board.w1200.4c7f1884.webp"
    }
   ]
  },
@@ -67,6 +201,24 @@
    }
   ]
  },
+ "/images/build/garage-build-session.webp": {
+  "nw": 1140,
+  "nh": 726,
+  "v": [
+   {
+    "w": 480,
+    "src": "/images/opt/build/garage-build-session.w480.06f36cf9.webp"
+   },
+   {
+    "w": 800,
+    "src": "/images/opt/build/garage-build-session.w800.9779620a.webp"
+   },
+   {
+    "w": 1140,
+    "src": "/images/opt/build/garage-build-session.w1140.44cb706a.webp"
+   }
+  ]
+ },
  "/images/build/handoverflashlightsglowing-3x4.webp": {
   "nw": 368,
   "nh": 491,
@@ -98,6 +250,24 @@
    {
     "w": 600,
     "src": "/images/opt/build/packagedlights.w600.e0c41ddb.webp"
+   }
+  ]
+ },
+ "/images/build/peopleworkingonflash.webp": {
+  "nw": 1068,
+  "nh": 801,
+  "v": [
+   {
+    "w": 480,
+    "src": "/images/opt/build/peopleworkingonflash.w480.5a49d179.webp"
+   },
+   {
+    "w": 800,
+    "src": "/images/opt/build/peopleworkingonflash.w800.71b99741.webp"
+   },
+   {
+    "w": 1068,
+    "src": "/images/opt/build/peopleworkingonflash.w1068.48c4b042.webp"
    }
   ]
  },
@@ -237,6 +407,50 @@
    }
   ]
  },
+ "/frames/assembly/poster-d.webp": {
+  "nw": 1280,
+  "nh": 960,
+  "v": [
+   {
+    "w": 480,
+    "src": "/images/opt/frames/assembly/poster-d.w480.9007f0ab.webp"
+   },
+   {
+    "w": 800,
+    "src": "/images/opt/frames/assembly/poster-d.w800.705b2605.webp"
+   },
+   {
+    "w": 1200,
+    "src": "/images/opt/frames/assembly/poster-d.w1200.649f0aa3.webp"
+   },
+   {
+    "w": 1280,
+    "src": "/images/opt/frames/assembly/poster-d.w1280.0cdacc39.webp"
+   }
+  ]
+ },
+ "/images/light/assembled-anchor.webp": {
+  "nw": 1254,
+  "nh": 1254,
+  "v": [
+   {
+    "w": 480,
+    "src": "/images/opt/light/assembled-anchor.w480.60d2227f.webp"
+   },
+   {
+    "w": 800,
+    "src": "/images/opt/light/assembled-anchor.w800.ecbaecc8.webp"
+   },
+   {
+    "w": 1200,
+    "src": "/images/opt/light/assembled-anchor.w1200.a09c4cc7.webp"
+   },
+   {
+    "w": 1254,
+    "src": "/images/opt/light/assembled-anchor.w1254.47f0ca84.webp"
+   }
+  ]
+ },
  "/images/light/cad/case.webp": {
   "nw": 736,
   "nh": 678,
@@ -285,217 +499,13 @@
    }
   ]
  },
- "/images/build/3d-print-timelapse-compressed-poster.webp": {
-  "nw": 1080,
-  "nh": 1920,
+ "/images/partners/brighten-haiti.webp": {
+  "nw": 218,
+  "nh": 141,
   "v": [
    {
-    "w": 480,
-    "src": "/images/opt/build/3d-print-timelapse-compressed-poster.w480.8aba3124.webp"
-   },
-   {
-    "w": 800,
-    "src": "/images/opt/build/3d-print-timelapse-compressed-poster.w800.2fa9d740.webp"
-   },
-   {
-    "w": 1080,
-    "src": "/images/opt/build/3d-print-timelapse-compressed-poster.w1080.44614bc3.webp"
-   }
-  ]
- },
- "/images/build/demo-v1-flashlight-compressed-poster.webp": {
-  "nw": 720,
-  "nh": 1280,
-  "v": [
-   {
-    "w": 480,
-    "src": "/images/opt/build/demo-v1-flashlight-compressed-poster.w480.46483d99.webp"
-   },
-   {
-    "w": 720,
-    "src": "/images/opt/build/demo-v1-flashlight-compressed-poster.w720.ba459089.webp"
-   }
-  ]
- },
- "/images/build/donate-video-poster.webp": {
-  "nw": 1280,
-  "nh": 720,
-  "v": [
-   {
-    "w": 480,
-    "src": "/images/opt/build/donate-video-poster.w480.defb7f24.webp"
-   },
-   {
-    "w": 800,
-    "src": "/images/opt/build/donate-video-poster.w800.86eddf7e.webp"
-   },
-   {
-    "w": 1200,
-    "src": "/images/opt/build/donate-video-poster.w1200.69831827.webp"
-   },
-   {
-    "w": 1280,
-    "src": "/images/opt/build/donate-video-poster.w1280.09264d6b.webp"
-   }
-  ]
- },
- "/images/build/flashfinishedworkshop.webp": {
-  "nw": 1068,
-  "nh": 801,
-  "v": [
-   {
-    "w": 480,
-    "src": "/images/opt/build/flashfinishedworkshop.w480.1593c9f6.webp"
-   },
-   {
-    "w": 800,
-    "src": "/images/opt/build/flashfinishedworkshop.w800.8f267722.webp"
-   },
-   {
-    "w": 1068,
-    "src": "/images/opt/build/flashfinishedworkshop.w1068.4a224355.webp"
-   }
-  ]
- },
- "/images/build/flashlight-build-timelapse-poster-2.webp": {
-  "nw": 1280,
-  "nh": 720,
-  "v": [
-   {
-    "w": 480,
-    "src": "/images/opt/build/flashlight-build-timelapse-poster-2.w480.7a558067.webp"
-   },
-   {
-    "w": 800,
-    "src": "/images/opt/build/flashlight-build-timelapse-poster-2.w800.187f8e70.webp"
-   },
-   {
-    "w": 1200,
-    "src": "/images/opt/build/flashlight-build-timelapse-poster-2.w1200.55e99cdd.webp"
-   },
-   {
-    "w": 1280,
-    "src": "/images/opt/build/flashlight-build-timelapse-poster-2.w1280.5257786b.webp"
-   }
-  ]
- },
- "/images/build/flashlight-build-timelapse-poster.webp": {
-  "nw": 1280,
-  "nh": 720,
-  "v": [
-   {
-    "w": 480,
-    "src": "/images/opt/build/flashlight-build-timelapse-poster.w480.443ba598.webp"
-   },
-   {
-    "w": 800,
-    "src": "/images/opt/build/flashlight-build-timelapse-poster.w800.3f553dd0.webp"
-   },
-   {
-    "w": 1200,
-    "src": "/images/opt/build/flashlight-build-timelapse-poster.w1200.153b73cb.webp"
-   },
-   {
-    "w": 1280,
-    "src": "/images/opt/build/flashlight-build-timelapse-poster.w1280.c0ad8105.webp"
-   }
-  ]
- },
- "/images/build/flashlight-internals-charging-board.webp": {
-  "nw": 1200,
-  "nh": 1600,
-  "v": [
-   {
-    "w": 480,
-    "src": "/images/opt/build/flashlight-internals-charging-board.w480.08e36166.webp"
-   },
-   {
-    "w": 800,
-    "src": "/images/opt/build/flashlight-internals-charging-board.w800.58b432af.webp"
-   },
-   {
-    "w": 1200,
-    "src": "/images/opt/build/flashlight-internals-charging-board.w1200.4c7f1884.webp"
-   }
-  ]
- },
- "/images/build/garage-build-session.webp": {
-  "nw": 1140,
-  "nh": 726,
-  "v": [
-   {
-    "w": 480,
-    "src": "/images/opt/build/garage-build-session.w480.06f36cf9.webp"
-   },
-   {
-    "w": 800,
-    "src": "/images/opt/build/garage-build-session.w800.9779620a.webp"
-   },
-   {
-    "w": 1140,
-    "src": "/images/opt/build/garage-build-session.w1140.44cb706a.webp"
-   }
-  ]
- },
- "/images/build/peopleworkingonflash.webp": {
-  "nw": 1068,
-  "nh": 801,
-  "v": [
-   {
-    "w": 480,
-    "src": "/images/opt/build/peopleworkingonflash.w480.5a49d179.webp"
-   },
-   {
-    "w": 800,
-    "src": "/images/opt/build/peopleworkingonflash.w800.71b99741.webp"
-   },
-   {
-    "w": 1068,
-    "src": "/images/opt/build/peopleworkingonflash.w1068.48c4b042.webp"
-   }
-  ]
- },
- "/frames/assembly/poster-d.webp": {
-  "nw": 1280,
-  "nh": 960,
-  "v": [
-   {
-    "w": 480,
-    "src": "/images/opt/frames/assembly/poster-d.w480.9007f0ab.webp"
-   },
-   {
-    "w": 800,
-    "src": "/images/opt/frames/assembly/poster-d.w800.705b2605.webp"
-   },
-   {
-    "w": 1200,
-    "src": "/images/opt/frames/assembly/poster-d.w1200.649f0aa3.webp"
-   },
-   {
-    "w": 1280,
-    "src": "/images/opt/frames/assembly/poster-d.w1280.0cdacc39.webp"
-   }
-  ]
- },
- "/images/light/assembled-anchor.webp": {
-  "nw": 1254,
-  "nh": 1254,
-  "v": [
-   {
-    "w": 480,
-    "src": "/images/opt/light/assembled-anchor.w480.60d2227f.webp"
-   },
-   {
-    "w": 800,
-    "src": "/images/opt/light/assembled-anchor.w800.ecbaecc8.webp"
-   },
-   {
-    "w": 1200,
-    "src": "/images/opt/light/assembled-anchor.w1200.a09c4cc7.webp"
-   },
-   {
-    "w": 1254,
-    "src": "/images/opt/light/assembled-anchor.w1254.47f0ca84.webp"
+    "w": 218,
+    "src": "/images/opt/partners/brighten-haiti.w218.aec242e0.webp"
    }
   ]
  },
@@ -605,6 +615,16 @@
    }
   ]
  },
+ "/images/partners/bsrea.png": {
+  "nw": 464,
+  "nh": 360,
+  "v": [
+   {
+    "w": 464,
+    "src": "/images/opt/partners/bsrea.w464.206a93f7.webp"
+   }
+  ]
+ },
  "/images/partners/coec-nigeria.jpg": {
   "nw": 834,
   "nh": 828,
@@ -623,6 +643,20 @@
    }
   ]
  },
+ "/images/partners/loksadhana.webp": {
+  "nw": 512,
+  "nh": 512,
+  "v": [
+   {
+    "w": 480,
+    "src": "/images/opt/partners/loksadhana.w480.d76421a9.webp"
+   },
+   {
+    "w": 512,
+    "src": "/images/opt/partners/loksadhana.w512.fdf949a9.webp"
+   }
+  ]
+ },
  "/images/partners/loksadhana/class-1.webp": {
   "nw": 918,
   "nh": 505,
@@ -638,6 +672,34 @@
    {
     "w": 918,
     "src": "/images/opt/partners/loksadhana/class-1.w918.542c1c6f.webp"
+   }
+  ]
+ },
+ "/images/partners/loksadhana/class-3.webp": {
+  "nw": 757,
+  "nh": 421,
+  "v": [
+   {
+    "w": 480,
+    "src": "/images/opt/partners/loksadhana/class-3.w480.0bcbf5d8.webp"
+   },
+   {
+    "w": 757,
+    "src": "/images/opt/partners/loksadhana/class-3.w757.7a660b1f.webp"
+   }
+  ]
+ },
+ "/images/partners/loksadhana/class-4.webp": {
+  "nw": 676,
+  "nh": 472,
+  "v": [
+   {
+    "w": 480,
+    "src": "/images/opt/partners/loksadhana/class-4.w480.6c7c7323.webp"
+   },
+   {
+    "w": 676,
+    "src": "/images/opt/partners/loksadhana/class-4.w676.2674bed8.webp"
    }
   ]
  },
@@ -681,6 +743,20 @@
    }
   ]
  },
+ "/images/partners/loksadhana/programs-1.webp": {
+  "nw": 522,
+  "nh": 318,
+  "v": [
+   {
+    "w": 480,
+    "src": "/images/opt/partners/loksadhana/programs-1.w480.5c6d9843.webp"
+   },
+   {
+    "w": 522,
+    "src": "/images/opt/partners/loksadhana/programs-1.w522.02b81b40.webp"
+   }
+  ]
+ },
  "/images/partners/loksadhana/school-1.webp": {
   "nw": 1024,
   "nh": 665,
@@ -696,6 +772,34 @@
    {
     "w": 1024,
     "src": "/images/opt/partners/loksadhana/school-1.w1024.de51fa43.webp"
+   }
+  ]
+ },
+ "/images/partners/loksadhana/skilling-1.webp": {
+  "nw": 746,
+  "nh": 820,
+  "v": [
+   {
+    "w": 480,
+    "src": "/images/opt/partners/loksadhana/skilling-1.w480.df92739f.webp"
+   },
+   {
+    "w": 746,
+    "src": "/images/opt/partners/loksadhana/skilling-1.w746.5587818b.webp"
+   }
+  ]
+ },
+ "/images/partners/malaika.jpg": {
+  "nw": 782,
+  "nh": 369,
+  "v": [
+   {
+    "w": 480,
+    "src": "/images/opt/partners/malaika.w480.59bb89c2.webp"
+   },
+   {
+    "w": 782,
+    "src": "/images/opt/partners/malaika.w782.7b4828d7.webp"
    }
   ]
  },
@@ -929,6 +1033,16 @@
    }
   ]
  },
+ "/images/partners/rethread.jpg": {
+  "nw": 141,
+  "nh": 62,
+  "v": [
+   {
+    "w": 141,
+    "src": "/images/opt/partners/rethread.w141.90a81f8d.webp"
+   }
+  ]
+ },
  "/images/students/student-with-flashlight-1.jpg": {
   "nw": 1151,
   "nh": 1094,
@@ -947,6 +1061,20 @@
    }
   ]
  },
+ "/images/students/student-with-flashlight-2.jpg": {
+  "nw": 768,
+  "nh": 1024,
+  "v": [
+   {
+    "w": 480,
+    "src": "/images/opt/students/student-with-flashlight-2.w480.2a509e6c.webp"
+   },
+   {
+    "w": 768,
+    "src": "/images/opt/students/student-with-flashlight-2.w768.a5424da9.webp"
+   }
+  ]
+ },
  "/images/students/student-with-flashlight-3.jpg": {
   "nw": 1200,
   "nh": 1600,
@@ -962,134 +1090,6 @@
    {
     "w": 1200,
     "src": "/images/opt/students/student-with-flashlight-3.w1200.cfb3f87a.webp"
-   }
-  ]
- },
- "/images/partners/brighten-haiti.webp": {
-  "nw": 218,
-  "nh": 141,
-  "v": [
-   {
-    "w": 218,
-    "src": "/images/opt/partners/brighten-haiti.w218.aec242e0.webp"
-   }
-  ]
- },
- "/images/partners/bsrea.png": {
-  "nw": 464,
-  "nh": 360,
-  "v": [
-   {
-    "w": 464,
-    "src": "/images/opt/partners/bsrea.w464.206a93f7.webp"
-   }
-  ]
- },
- "/images/partners/loksadhana.webp": {
-  "nw": 512,
-  "nh": 512,
-  "v": [
-   {
-    "w": 480,
-    "src": "/images/opt/partners/loksadhana.w480.d76421a9.webp"
-   },
-   {
-    "w": 512,
-    "src": "/images/opt/partners/loksadhana.w512.fdf949a9.webp"
-   }
-  ]
- },
- "/images/partners/loksadhana/class-3.webp": {
-  "nw": 757,
-  "nh": 421,
-  "v": [
-   {
-    "w": 480,
-    "src": "/images/opt/partners/loksadhana/class-3.w480.0bcbf5d8.webp"
-   },
-   {
-    "w": 757,
-    "src": "/images/opt/partners/loksadhana/class-3.w757.7a660b1f.webp"
-   }
-  ]
- },
- "/images/partners/loksadhana/class-4.webp": {
-  "nw": 676,
-  "nh": 472,
-  "v": [
-   {
-    "w": 480,
-    "src": "/images/opt/partners/loksadhana/class-4.w480.6c7c7323.webp"
-   },
-   {
-    "w": 676,
-    "src": "/images/opt/partners/loksadhana/class-4.w676.2674bed8.webp"
-   }
-  ]
- },
- "/images/partners/loksadhana/programs-1.webp": {
-  "nw": 522,
-  "nh": 318,
-  "v": [
-   {
-    "w": 480,
-    "src": "/images/opt/partners/loksadhana/programs-1.w480.5c6d9843.webp"
-   },
-   {
-    "w": 522,
-    "src": "/images/opt/partners/loksadhana/programs-1.w522.02b81b40.webp"
-   }
-  ]
- },
- "/images/partners/loksadhana/skilling-1.webp": {
-  "nw": 746,
-  "nh": 820,
-  "v": [
-   {
-    "w": 480,
-    "src": "/images/opt/partners/loksadhana/skilling-1.w480.df92739f.webp"
-   },
-   {
-    "w": 746,
-    "src": "/images/opt/partners/loksadhana/skilling-1.w746.5587818b.webp"
-   }
-  ]
- },
- "/images/partners/malaika.jpg": {
-  "nw": 782,
-  "nh": 369,
-  "v": [
-   {
-    "w": 480,
-    "src": "/images/opt/partners/malaika.w480.59bb89c2.webp"
-   },
-   {
-    "w": 782,
-    "src": "/images/opt/partners/malaika.w782.7b4828d7.webp"
-   }
-  ]
- },
- "/images/partners/rethread.jpg": {
-  "nw": 141,
-  "nh": 62,
-  "v": [
-   {
-    "w": 141,
-    "src": "/images/opt/partners/rethread.w141.90a81f8d.webp"
-   }
-  ]
- },
- "/images/students/student-with-flashlight-2.jpg": {
-  "nw": 768,
-  "nh": 1024,
-  "v": [
-   {
-    "w": 480,
-    "src": "/images/opt/students/student-with-flashlight-2.w480.2a509e6c.webp"
-   },
-   {
-    "w": 768,
-    "src": "/images/opt/students/student-with-flashlight-2.w768.a5424da9.webp"
    }
   ]
  },

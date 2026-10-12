@@ -46,8 +46,8 @@
  {
   "page": "/about/",
   "idx": 2,
-  "src": "/images/build/soldering-electronics.jpg",
-  "orig": "/images/build/soldering-electronics.jpg",
+  "src": "/images/opt/build/soldering-electronics.w638.ec2eb488.webp",
+  "orig": "/images/opt/build/soldering-electronics.w638.ec2eb488.webp",
   "nw": 590,
   "nh": 333,
   "par": "",
@@ -112,8 +112,8 @@
  {
   "page": "/about/team/",
   "idx": 1,
-  "src": "/images/team/romirchekuri.webp",
-  "orig": "/images/team/romirchekuri.webp",
+  "src": "/images/opt/team/romirchekuri.w660.240f9781.webp",
+  "orig": "/images/opt/team/romirchekuri.w660.240f9781.webp",
   "nw": 417,
   "nh": 417,
   "par": "ff-card__photo",
@@ -125,17 +125,17 @@
    "390x844": 352
   },
   "t": {
-   "1440x900": 811,
-   "1024x768": 800,
-   "768x1024": 799,
-   "390x844": 784
+   "1440x900": 819,
+   "1024x768": 808,
+   "768x1024": 791,
+   "390x844": 776
   }
  },
  {
   "page": "/about/team/",
   "idx": 2,
-  "src": "/images/team/sree-v2.webp",
-  "orig": "/images/team/sree-v2.webp",
+  "src": "/images/opt/team/sree-v2.w660.eb3595db.webp",
+  "orig": "/images/opt/team/sree-v2.w660.eb3595db.webp",
   "nw": 417,
   "nh": 390,
   "par": "ff-card__photo",
@@ -147,17 +147,17 @@
    "390x844": 352
   },
   "t": {
-   "1440x900": 811,
-   "1024x768": 800,
-   "768x1024": 799,
-   "390x844": 1390
+   "1440x900": 819,
+   "1024x768": 808,
+   "768x1024": 791,
+   "390x844": 1382
   }
  },
  {
   "page": "/about/team/",
   "idx": 3,
-  "src": "/images/team/andy-v2.webp",
-  "orig": "/images/team/andy-v2.webp",
+  "src": "/images/opt/team/andy-v2.w535.eba0222a.webp",
+  "orig": "/images/opt/team/andy-v2.w535.eba0222a.webp",
   "nw": 417,
   "nh": 515,
   "par": "ff-card__photo",
@@ -169,76 +169,76 @@
    "390x844": 352
   },
   "t": {
-   "1440x900": 811,
-   "1024x768": 800,
-   "768x1024": 799,
-   "390x844": 2021
+   "1440x900": 819,
+   "1024x768": 808,
+   "768x1024": 791,
+   "390x844": 2013
   }
  },
  {
   "page": "/about/team/",
   "idx": 4,
-  "src": "/images/team/tuck.webp",
-  "orig": "/images/team/tuck.webp",
+  "src": "/images/opt/team/tuck.w660.e3504e1a.webp",
+  "orig": "/images/opt/team/tuck.w660.e3504e1a.webp",
   "nw": 259,
   "nh": 259,
   "par": "ff-card__photo",
   "cls": "",
   "w": {
-   "1440x900": 198,
-   "1024x768": 198,
-   "768x1024": 198,
-   "390x844": 169
+   "1440x900": 350,
+   "1024x768": 307,
+   "768x1024": 222,
+   "390x844": 352
   },
   "t": {
-   "1440x900": 1529,
-   "1024x768": 1499,
-   "768x1024": 1604,
-   "390x844": 2857
+   "1440x900": 1698,
+   "1024x768": 1658,
+   "768x1024": 1588,
+   "390x844": 2841
   }
  },
  {
   "page": "/about/team/",
   "idx": 5,
-  "src": "/images/team/aidan-v2.webp",
-  "orig": "/images/team/aidan-v2.webp",
+  "src": "/images/opt/team/aidan-v2.w660.8dcdb202.webp",
+  "orig": "/images/opt/team/aidan-v2.w660.8dcdb202.webp",
   "nw": 259,
   "nh": 259,
   "par": "ff-card__photo",
   "cls": "",
   "w": {
-   "1440x900": 198,
-   "1024x768": 198,
-   "768x1024": 198,
-   "390x844": 169
+   "1440x900": 350,
+   "1024x768": 307,
+   "768x1024": 222,
+   "390x844": 352
   },
   "t": {
-   "1440x900": 2132,
-   "1024x768": 2103,
-   "768x1024": 2351,
-   "390x844": 3637
+   "1440x900": 2530,
+   "1024x768": 2460,
+   "768x1024": 2333,
+   "390x844": 3648
   }
  },
  {
   "page": "/about/team/",
   "idx": 6,
-  "src": "/images/team/sanjay.webp",
-  "orig": "/images/team/sanjay.webp",
+  "src": "/images/opt/team/sanjay.w484.0940c2d9.webp",
+  "orig": "/images/opt/team/sanjay.w484.0940c2d9.webp",
   "nw": 259,
   "nh": 353,
   "par": "ff-card__photo",
   "cls": "",
   "w": {
-   "1440x900": 198,
-   "1024x768": 198,
-   "768x1024": 198,
-   "390x844": 169
+   "1440x900": 350,
+   "1024x768": 307,
+   "768x1024": 222,
+   "390x844": 352
   },
   "t": {
-   "1440x900": 2132,
-   "1024x768": 2103,
-   "768x1024": 2351,
-   "390x844": 3637
+   "1440x900": 2530,
+   "1024x768": 2460,
+   "768x1024": 2333,
+   "390x844": 4254
   }
  },
  {
@@ -257,10 +257,10 @@
    "390x844": 27
   },
   "t": {
-   "1440x900": 2987,
-   "1024x768": 2957,
-   "768x1024": 3205,
-   "390x844": 4573
+   "1440x900": 3453,
+   "1024x768": 3340,
+   "768x1024": 3176,
+   "390x844": 5218
   }
  },
  {
@@ -392,7 +392,7 @@
    "1440x900": 3002,
    "1024x768": 2983,
    "768x1024": 3548,
-   "390x844": 3995
+   "390x844": 4018
   }
  },
  {
@@ -464,8 +464,8 @@
  {
   "page": "/get-involved/",
   "idx": 1,
-  "src": "/images/build/packagedlights.webp",
-  "orig": "/images/build/packagedlights.webp",
+  "src": "/images/opt/build/packagedlights.w600.e0c41ddb.webp",
+  "orig": "/images/opt/build/packagedlights.w600.e0c41ddb.webp",
   "nw": 417,
   "nh": 557,
   "par": "ff-card__photo",
@@ -574,8 +574,8 @@
  {
   "page": "/get-involved/internship/",
   "idx": 1,
-  "src": "/images/build/soldering-electronics.jpg",
-  "orig": "/images/build/soldering-electronics.jpg",
+  "src": "/images/opt/build/soldering-electronics.w638.ec2eb488.webp",
+  "orig": "/images/opt/build/soldering-electronics.w638.ec2eb488.webp",
   "nw": 547,
   "nh": 308,
   "par": "",
@@ -750,8 +750,8 @@
  {
   "page": "/impact/",
   "idx": 6,
-  "src": "/images/partners/rethread.jpg",
-  "orig": "/images/partners/rethread.jpg",
+  "src": "/images/opt/partners/rethread.w141.90a81f8d.webp",
+  "orig": "/images/opt/partners/rethread.w141.90a81f8d.webp",
   "nw": 187,
   "nh": 82,
   "par": "ff-logotile",
@@ -772,8 +772,8 @@
  {
   "page": "/impact/",
   "idx": 7,
-  "src": "/images/partners/bsrea.png",
-  "orig": "/images/partners/bsrea.png",
+  "src": "/images/opt/partners/bsrea.w464.206a93f7.webp",
+  "orig": "/images/opt/partners/bsrea.w464.206a93f7.webp",
   "nw": 187,
   "nh": 145,
   "par": "ff-logotile",
@@ -867,16 +867,16 @@
   "par": "ff-home-hero__photo",
   "cls": "",
   "w": {
-   "1440x900": 562,
-   "1024x768": 479,
-   "768x1024": 768,
-   "390x844": 390
+   "1440x900": 388,
+   "1024x768": 370,
+   "768x1024": 720,
+   "390x844": 342
   },
   "t": {
-   "1440x900": 137,
-   "1024x768": 137,
-   "768x1024": 137,
-   "390x844": 137
+   "1440x900": 185,
+   "1024x768": 185,
+   "768x1024": 488,
+   "390x844": 643
   }
  },
  {
@@ -895,10 +895,10 @@
    "390x844": 354
   },
   "t": {
-   "1440x900": 1162,
-   "1024x768": 1049,
-   "768x1024": 1765,
-   "390x844": 1495
+   "1440x900": 1055,
+   "1024x768": 1020,
+   "768x1024": 1730,
+   "390x844": 1490
   }
  },
  {
@@ -917,17 +917,17 @@
    "390x844": 354
   },
   "t": {
-   "1440x900": 2536,
-   "1024x768": 2437,
-   "768x1024": 3138,
-   "390x844": 2757
+   "1440x900": 2429,
+   "1024x768": 2409,
+   "768x1024": 3102,
+   "390x844": 2752
   }
  },
  {
   "page": "/",
   "idx": 4,
-  "src": "/images/partners/brighten-haiti.webp",
-  "orig": "/images/partners/brighten-haiti.webp",
+  "src": "/images/opt/partners/brighten-haiti.w218.aec242e0.webp",
+  "orig": "/images/opt/partners/brighten-haiti.w218.aec242e0.webp",
   "nw": 158,
   "nh": 102,
   "par": "ffpartners-body",
@@ -939,10 +939,10 @@
    "390x844": 88
   },
   "t": {
-   "1440x900": 2623,
-   "1024x768": 2501,
-   "768x1024": 3766,
-   "390x844": 3080
+   "1440x900": 2516,
+   "1024x768": 2473,
+   "768x1024": 3730,
+   "390x844": 3075
   }
  },
  {
@@ -961,17 +961,17 @@
    "390x844": 354
   },
   "t": {
-   "1440x900": 3054,
-   "1024x768": 2902,
-   "768x1024": 4051,
-   "390x844": 3393
+   "1440x900": 2947,
+   "1024x768": 2874,
+   "768x1024": 4016,
+   "390x844": 3388
   }
  },
  {
   "page": "/",
   "idx": 6,
-  "src": "/images/partners/loksadhana.webp",
-  "orig": "/images/partners/loksadhana.webp",
+  "src": "/images/opt/partners/loksadhana.w512.fdf949a9.webp",
+  "orig": "/images/opt/partners/loksadhana.w512.fdf949a9.webp",
   "nw": 129,
   "nh": 129,
   "par": "ffpartners-body",
@@ -983,10 +983,10 @@
    "390x844": 66
   },
   "t": {
-   "1440x900": 3155,
-   "1024x768": 2980,
-   "768x1024": 4679,
-   "390x844": 3716
+   "1440x900": 3048,
+   "1024x768": 2951,
+   "768x1024": 4644,
+   "390x844": 3711
   }
  },
  {
@@ -1005,17 +1005,17 @@
    "390x844": 354
   },
   "t": {
-   "1440x900": 3572,
-   "1024x768": 3367,
-   "768x1024": 4964,
-   "390x844": 4029
+   "1440x900": 3465,
+   "1024x768": 3338,
+   "768x1024": 4929,
+   "390x844": 4024
   }
  },
  {
   "page": "/",
   "idx": 8,
-  "src": "/images/partners/malaika.jpg",
-  "orig": "/images/partners/malaika.jpg",
+  "src": "/images/opt/partners/malaika.w782.7b4828d7.webp",
+  "orig": "/images/opt/partners/malaika.w782.7b4828d7.webp",
   "nw": 172,
   "nh": 81,
   "par": "ffpartners-body",
@@ -1027,10 +1027,10 @@
    "390x844": 111
   },
   "t": {
-   "1440x900": 3673,
-   "1024x768": 3444,
-   "768x1024": 5592,
-   "390x844": 4352
+   "1440x900": 3566,
+   "1024x768": 3416,
+   "768x1024": 5557,
+   "390x844": 4347
   }
  },
  {
@@ -1049,17 +1049,17 @@
    "390x844": 354
   },
   "t": {
-   "1440x900": 4297,
-   "1024x768": 4028,
-   "768x1024": 6098,
-   "390x844": 4862
+   "1440x900": 4190,
+   "1024x768": 4000,
+   "768x1024": 6063,
+   "390x844": 4857
   }
  },
  {
   "page": "/",
   "idx": 10,
-  "src": "/images/build/packagedlights.webp",
-  "orig": "/images/build/packagedlights.webp",
+  "src": "/images/opt/build/packagedlights.w600.e0c41ddb.webp",
+  "orig": "/images/opt/build/packagedlights.w600.e0c41ddb.webp",
   "nw": 417,
   "nh": 557,
   "par": "ff-card__photo",
@@ -1071,17 +1071,17 @@
    "390x844": 352
   },
   "t": {
-   "1440x900": 4822,
-   "1024x768": 4553,
-   "768x1024": 6853,
-   "390x844": 5444
+   "1440x900": 4715,
+   "1024x768": 4525,
+   "768x1024": 6817,
+   "390x844": 5439
   }
  },
  {
   "page": "/",
   "idx": 11,
-  "src": "/images/partners/loksadhana/class-4.webp",
-  "orig": "/images/partners/loksadhana/class-4.webp",
+  "src": "/images/opt/partners/loksadhana/class-4.w676.2674bed8.webp",
+  "orig": "/images/opt/partners/loksadhana/class-4.w676.2674bed8.webp",
   "nw": 417,
   "nh": 291,
   "par": "ff-card__photo",
@@ -1093,10 +1093,10 @@
    "390x844": 352
   },
   "t": {
-   "1440x900": 4822,
-   "1024x768": 4553,
-   "768x1024": 7491,
-   "390x844": 5854
+   "1440x900": 4715,
+   "1024x768": 4525,
+   "768x1024": 7456,
+   "390x844": 5849
   }
  },
  {
@@ -1115,10 +1115,10 @@
    "390x844": 352
   },
   "t": {
-   "1440x900": 4822,
-   "1024x768": 4553,
-   "768x1024": 8129,
-   "390x844": 6264
+   "1440x900": 4715,
+   "1024x768": 4525,
+   "768x1024": 8094,
+   "390x844": 6259
   }
  },
  {
@@ -1137,10 +1137,10 @@
    "390x844": 354
   },
   "t": {
-   "1440x900": 5428,
-   "1024x768": 5132,
-   "768x1024": 8936,
-   "390x844": 6806
+   "1440x900": 5320,
+   "1024x768": 5103,
+   "768x1024": 8900,
+   "390x844": 6801
   }
  },
  {
@@ -1159,10 +1159,10 @@
    "390x844": 27
   },
   "t": {
-   "1440x900": 5911,
-   "1024x768": 5575,
-   "768x1024": 9795,
-   "390x844": 7523
+   "1440x900": 5803,
+   "1024x768": 5546,
+   "768x1024": 9760,
+   "390x844": 7518
   }
  },
  {
@@ -1190,8 +1190,8 @@
  {
   "page": "/news/brighten-haiti-42-lights/",
   "idx": 1,
-  "src": "/images/build/assembly-lights.webp",
-  "orig": "/images/build/assembly-lights.webp",
+  "src": "/images/opt/build/assembly-lights.w450.1e836158.webp",
+  "orig": "/images/opt/build/assembly-lights.w450.1e836158.webp",
   "nw": 547,
   "nh": 972,
   "par": "",
@@ -1234,8 +1234,8 @@
  {
   "page": "/news/brighten-haiti-42-lights/",
   "idx": 3,
-  "src": "/images/build/assembling-screwing-lights.webp",
-  "orig": "/images/build/assembling-screwing-lights.webp",
+  "src": "/images/opt/build/assembling-screwing-lights.w450.787ae66f.webp",
+  "orig": "/images/opt/build/assembling-screwing-lights.w450.787ae66f.webp",
   "nw": 417,
   "nh": 742,
   "par": "ff-card__photo",
@@ -1256,8 +1256,8 @@
  {
   "page": "/news/brighten-haiti-42-lights/",
   "idx": 4,
-  "src": "/images/partners/loksadhana/programs-1.webp",
-  "orig": "/images/partners/loksadhana/programs-1.webp",
+  "src": "/images/opt/partners/loksadhana/programs-1.w522.02b81b40.webp",
+  "orig": "/images/opt/partners/loksadhana/programs-1.w522.02b81b40.webp",
   "nw": 417,
   "nh": 254,
   "par": "ff-card__photo",
@@ -1322,8 +1322,8 @@
  {
   "page": "/news/brighten-haiti-student-essays/",
   "idx": 1,
-  "src": "/images/essays/20-keysha-7th.webp",
-  "orig": "/images/essays/20-keysha-7th.webp",
+  "src": "/images/opt/essays/20-keysha-7th.w726.0f1785af.webp",
+  "orig": "/images/opt/essays/20-keysha-7th.w726.0f1785af.webp",
   "nw": 547,
   "nh": 208,
   "par": "",
@@ -1344,8 +1344,8 @@
  {
   "page": "/news/brighten-haiti-student-essays/",
   "idx": 2,
-  "src": "/images/essays/02-mitchcaila-7th.webp",
-  "orig": "/images/essays/02-mitchcaila-7th.webp",
+  "src": "/images/opt/essays/02-mitchcaila-7th.w741.65b06632.webp",
+  "orig": "/images/opt/essays/02-mitchcaila-7th.w741.65b06632.webp",
   "nw": 388,
   "nh": 216,
   "par": "",
@@ -1366,8 +1366,8 @@
  {
   "page": "/news/brighten-haiti-student-essays/",
   "idx": 3,
-  "src": "/images/essays/04-saintina-8th.webp",
-  "orig": "/images/essays/04-saintina-8th.webp",
+  "src": "/images/opt/essays/04-saintina-8th.w493.a788570a.webp",
+  "orig": "/images/opt/essays/04-saintina-8th.w493.a788570a.webp",
   "nw": 388,
   "nh": 166,
   "par": "",
@@ -1388,8 +1388,8 @@
  {
   "page": "/news/brighten-haiti-student-essays/",
   "idx": 4,
-  "src": "/images/essays/05-milanda-6th.webp",
-  "orig": "/images/essays/05-milanda-6th.webp",
+  "src": "/images/opt/essays/05-milanda-6th.w738.6f0b504b.webp",
+  "orig": "/images/opt/essays/05-milanda-6th.w738.6f0b504b.webp",
   "nw": 388,
   "nh": 234,
   "par": "",
@@ -1410,8 +1410,8 @@
  {
   "page": "/news/brighten-haiti-student-essays/",
   "idx": 5,
-  "src": "/images/essays/01-tamisade-ns2.webp",
-  "orig": "/images/essays/01-tamisade-ns2.webp",
+  "src": "/images/opt/essays/01-tamisade-ns2.w483.e3357a29.webp",
+  "orig": "/images/opt/essays/01-tamisade-ns2.w483.e3357a29.webp",
   "nw": 388,
   "nh": 330,
   "par": "",
@@ -1432,8 +1432,8 @@
  {
   "page": "/news/brighten-haiti-student-essays/",
   "idx": 6,
-  "src": "/images/essays/07-hudson-9th.webp",
-  "orig": "/images/essays/07-hudson-9th.webp",
+  "src": "/images/opt/essays/07-hudson-9th.w738.304721ff.webp",
+  "orig": "/images/opt/essays/07-hudson-9th.w738.304721ff.webp",
   "nw": 388,
   "nh": 200,
   "par": "",
@@ -1454,8 +1454,8 @@
  {
   "page": "/news/brighten-haiti-student-essays/",
   "idx": 7,
-  "src": "/images/essays/09-djinaieka-7th.webp",
-  "orig": "/images/essays/09-djinaieka-7th.webp",
+  "src": "/images/opt/essays/09-djinaieka-7th.w742.e505d9c2.webp",
+  "orig": "/images/opt/essays/09-djinaieka-7th.w742.e505d9c2.webp",
   "nw": 388,
   "nh": 105,
   "par": "",
@@ -1476,8 +1476,8 @@
  {
   "page": "/news/brighten-haiti-student-essays/",
   "idx": 8,
-  "src": "/images/build/flashlight-units-group.webp",
-  "orig": "/images/build/flashlight-units-group.webp",
+  "src": "/images/opt/build/flashlight-units-group.w502.854c6d16.webp",
+  "orig": "/images/opt/build/flashlight-units-group.w502.854c6d16.webp",
   "nw": 417,
   "nh": 417,
   "par": "ff-card__photo",
@@ -1696,8 +1696,8 @@
  {
   "page": "/news/hand-delivered-in-india/",
   "idx": 3,
-  "src": "/images/students/student-with-flashlight-2.jpg",
-  "orig": "/images/students/student-with-flashlight-2.jpg",
+  "src": "/images/opt/students/student-with-flashlight-2.w768.a5424da9.webp",
+  "orig": "/images/opt/students/student-with-flashlight-2.w768.a5424da9.webp",
   "nw": 604,
   "nh": 806,
   "par": "",
@@ -1718,8 +1718,8 @@
  {
   "page": "/news/hand-delivered-in-india/",
   "idx": 4,
-  "src": "/images/partners/loksadhana/class-4.webp",
-  "orig": "/images/partners/loksadhana/class-4.webp",
+  "src": "/images/opt/partners/loksadhana/class-4.w676.2674bed8.webp",
+  "orig": "/images/opt/partners/loksadhana/class-4.w676.2674bed8.webp",
   "nw": 417,
   "nh": 291,
   "par": "ff-card__photo",
@@ -1740,8 +1740,8 @@
  {
   "page": "/news/hand-delivered-in-india/",
   "idx": 5,
-  "src": "/images/build/assembly-lights.webp",
-  "orig": "/images/build/assembly-lights.webp",
+  "src": "/images/opt/build/assembly-lights.w450.1e836158.webp",
+  "orig": "/images/opt/build/assembly-lights.w450.1e836158.webp",
   "nw": 417,
   "nh": 742,
   "par": "ff-card__photo",
@@ -1850,8 +1850,8 @@
  {
   "page": "/news/",
   "idx": 2,
-  "src": "/images/build/packagedlights.webp",
-  "orig": "/images/build/packagedlights.webp",
+  "src": "/images/opt/build/packagedlights.w600.e0c41ddb.webp",
+  "orig": "/images/opt/build/packagedlights.w600.e0c41ddb.webp",
   "nw": 316,
   "nh": 423,
   "par": "ff-card__photo",
@@ -1872,8 +1872,8 @@
  {
   "page": "/news/",
   "idx": 3,
-  "src": "/images/partners/loksadhana/class-4.webp",
-  "orig": "/images/partners/loksadhana/class-4.webp",
+  "src": "/images/opt/partners/loksadhana/class-4.w676.2674bed8.webp",
+  "orig": "/images/opt/partners/loksadhana/class-4.w676.2674bed8.webp",
   "nw": 316,
   "nh": 221,
   "par": "ff-card__photo",
@@ -1938,8 +1938,8 @@
  {
   "page": "/news/",
   "idx": 6,
-  "src": "/images/build/solar-panel-tops.webp",
-  "orig": "/images/build/solar-panel-tops.webp",
+  "src": "/images/opt/build/solar-panel-tops.w736.2751c9b8.webp",
+  "orig": "/images/opt/build/solar-panel-tops.w736.2751c9b8.webp",
   "nw": 417,
   "nh": 907,
   "par": "ff-card__photo",
@@ -1960,8 +1960,8 @@
  {
   "page": "/news/",
   "idx": 7,
-  "src": "/images/build/robotics-event-booth.webp",
-  "orig": "/images/build/robotics-event-booth.webp",
+  "src": "/images/opt/build/robotics-event-booth.w360.5f8d7607.webp",
+  "orig": "/images/opt/build/robotics-event-booth.w360.5f8d7607.webp",
   "nw": 417,
   "nh": 742,
   "par": "ff-card__photo",
@@ -1982,8 +1982,8 @@
  {
   "page": "/news/",
   "idx": 8,
-  "src": "/images/build/bubble-wrapped-units.jpg",
-  "orig": "/images/build/bubble-wrapped-units.jpg",
+  "src": "/images/opt/build/bubble-wrapped-units.w360.dae7ddb8.webp",
+  "orig": "/images/opt/build/bubble-wrapped-units.w360.dae7ddb8.webp",
   "nw": 417,
   "nh": 556,
   "par": "ff-card__photo",
@@ -2114,8 +2114,8 @@
  {
   "page": "/news/loksadhana-15-lights/",
   "idx": 1,
-  "src": "/images/partners/loksadhana/class-3.webp",
-  "orig": "/images/partners/loksadhana/class-3.webp",
+  "src": "/images/opt/partners/loksadhana/class-3.w757.7a660b1f.webp",
+  "orig": "/images/opt/partners/loksadhana/class-3.w757.7a660b1f.webp",
   "nw": 547,
   "nh": 304,
   "par": "",
@@ -2158,8 +2158,8 @@
  {
   "page": "/news/loksadhana-15-lights/",
   "idx": 3,
-  "src": "/images/students/student-with-flashlight-2.jpg",
-  "orig": "/images/students/student-with-flashlight-2.jpg",
+  "src": "/images/opt/students/student-with-flashlight-2.w768.a5424da9.webp",
+  "orig": "/images/opt/students/student-with-flashlight-2.w768.a5424da9.webp",
   "nw": 417,
   "nh": 556,
   "par": "ff-card__photo",
@@ -2180,8 +2180,8 @@
  {
   "page": "/news/loksadhana-15-lights/",
   "idx": 4,
-  "src": "/images/build/flashlight-units.webp",
-  "orig": "/images/build/flashlight-units.webp",
+  "src": "/images/opt/build/flashlight-units.w600.8ddbc6b1.webp",
+  "orig": "/images/opt/build/flashlight-units.w600.8ddbc6b1.webp",
   "nw": 417,
   "nh": 556,
   "par": "ff-card__photo",
@@ -2312,8 +2312,8 @@
  {
   "page": "/news/malaika-15-lights/",
   "idx": 3,
-  "src": "/images/build/handoverflashlightsglowing.webp",
-  "orig": "/images/build/handoverflashlightsglowing.webp",
+  "src": "/images/opt/build/handoverflashlightsglowing.w368.0e2455e7.webp",
+  "orig": "/images/opt/build/handoverflashlightsglowing.w368.0e2455e7.webp",
   "nw": 417,
   "nh": 908,
   "par": "ff-card__photo",
@@ -2356,8 +2356,8 @@
  {
   "page": "/news/malaika-15-lights/",
   "idx": 5,
-  "src": "/images/partners/loksadhana/class-3.webp",
-  "orig": "/images/partners/loksadhana/class-3.webp",
+  "src": "/images/opt/partners/loksadhana/class-3.w757.7a660b1f.webp",
+  "orig": "/images/opt/partners/loksadhana/class-3.w757.7a660b1f.webp",
   "nw": 417,
   "nh": 232,
   "par": "ff-card__photo",
@@ -2422,8 +2422,8 @@
  {
   "page": "/news/program-record/",
   "idx": 1,
-  "src": "/images/build/packagedlights.webp",
-  "orig": "/images/build/packagedlights.webp",
+  "src": "/images/opt/build/packagedlights.w600.e0c41ddb.webp",
+  "orig": "/images/opt/build/packagedlights.w600.e0c41ddb.webp",
   "nw": 547,
   "nh": 730,
   "par": "ff-pagehead__media",
@@ -2488,8 +2488,8 @@
  {
   "page": "/news/solar-workshops/",
   "idx": 1,
-  "src": "/images/build/robotics-event-booth.webp",
-  "orig": "/images/build/robotics-event-booth.webp",
+  "src": "/images/opt/build/robotics-event-booth.w360.5f8d7607.webp",
+  "orig": "/images/opt/build/robotics-event-booth.w360.5f8d7607.webp",
   "nw": 547,
   "nh": 972,
   "par": "ff-pagehead__media",
@@ -2554,8 +2554,8 @@
  {
   "page": "/news/start-a-fundraiser/",
   "idx": 1,
-  "src": "/images/build/packagedlights.webp",
-  "orig": "/images/build/packagedlights.webp",
+  "src": "/images/opt/build/packagedlights.w600.e0c41ddb.webp",
+  "orig": "/images/opt/build/packagedlights.w600.e0c41ddb.webp",
   "nw": 547,
   "nh": 730,
   "par": "ff-pagehead__media",
@@ -2620,8 +2620,8 @@
  {
   "page": "/news/why-study-lights/",
   "idx": 1,
-  "src": "/images/opt/light/assembled-anchor.w800.4ab8fe1f.webp",
-  "orig": "/images/opt/light/assembled-anchor.w800.4ab8fe1f.webp",
+  "src": "/images/opt/light/assembled-anchor.w800.ecbaecc8.webp",
+  "orig": "/images/opt/light/assembled-anchor.w800.ecbaecc8.webp",
   "nw": 547,
   "nh": 547,
   "par": "ff-pagehead__media ff-pagehead__media--contain",
@@ -2730,8 +2730,8 @@
  {
   "page": "/our-work/how-we-build/",
   "idx": 1,
-  "src": "/images/build/soldering-electronics.jpg",
-  "orig": "/images/build/soldering-electronics.jpg",
+  "src": "/images/opt/build/soldering-electronics.w638.ec2eb488.webp",
+  "orig": "/images/opt/build/soldering-electronics.w638.ec2eb488.webp",
   "nw": 590,
   "nh": 333,
   "par": "",
@@ -2752,8 +2752,8 @@
  {
   "page": "/our-work/how-we-build/",
   "idx": 2,
-  "src": "/images/build/assembling-screwing-lights.webp",
-  "orig": "/images/build/assembling-screwing-lights.webp",
+  "src": "/images/opt/build/assembling-screwing-lights.w450.787ae66f.webp",
+  "orig": "/images/opt/build/assembling-screwing-lights.w450.787ae66f.webp",
   "nw": 590,
   "nh": 1049,
   "par": "",
@@ -2774,8 +2774,8 @@
  {
   "page": "/our-work/how-we-build/",
   "idx": 3,
-  "src": "/images/build/flashlight-units-group.webp",
-  "orig": "/images/build/flashlight-units-group.webp",
+  "src": "/images/opt/build/flashlight-units-group.w502.854c6d16.webp",
+  "orig": "/images/opt/build/flashlight-units-group.w502.854c6d16.webp",
   "nw": 590,
   "nh": 590,
   "par": "",
@@ -2796,8 +2796,8 @@
  {
   "page": "/our-work/how-we-build/",
   "idx": 4,
-  "src": "/images/build/bubble-wrapped-units.jpg",
-  "orig": "/images/build/bubble-wrapped-units.jpg",
+  "src": "/images/opt/build/bubble-wrapped-units.w360.dae7ddb8.webp",
+  "orig": "/images/opt/build/bubble-wrapped-units.w360.dae7ddb8.webp",
   "nw": 590,
   "nh": 787,
   "par": "",
@@ -2862,8 +2862,8 @@
  {
   "page": "/our-work/",
   "idx": 1,
-  "src": "/images/build/flashlight-units.webp",
-  "orig": "/images/build/flashlight-units.webp",
+  "src": "/images/opt/build/flashlight-units.w600.8ddbc6b1.webp",
+  "orig": "/images/opt/build/flashlight-units.w600.8ddbc6b1.webp",
   "nw": 604,
   "nh": 806,
   "par": "ff-card__photo",
@@ -2884,8 +2884,8 @@
  {
   "page": "/our-work/",
   "idx": 2,
-  "src": "/images/build/soldering-electronics.jpg",
-  "orig": "/images/build/soldering-electronics.jpg",
+  "src": "/images/opt/build/soldering-electronics.w638.ec2eb488.webp",
+  "orig": "/images/opt/build/soldering-electronics.w638.ec2eb488.webp",
   "nw": 604,
   "nh": 341,
   "par": "ff-card__photo",
@@ -2994,8 +2994,8 @@
  {
   "page": "/our-work/partners/brighten-haiti/",
   "idx": 1,
-  "src": "/images/partners/brighten-haiti.webp",
-  "orig": "/images/partners/brighten-haiti.webp",
+  "src": "/images/opt/partners/brighten-haiti.w218.aec242e0.webp",
+  "orig": "/images/opt/partners/brighten-haiti.w218.aec242e0.webp",
   "nw": 144,
   "nh": 93,
   "par": "ff-pagehead__chip",
@@ -3126,8 +3126,8 @@
  {
   "page": "/our-work/partners/brighten-haiti/",
   "idx": 7,
-  "src": "/images/build/packagedlights.webp",
-  "orig": "/images/build/packagedlights.webp",
+  "src": "/images/opt/build/packagedlights.w600.e0c41ddb.webp",
+  "orig": "/images/opt/build/packagedlights.w600.e0c41ddb.webp",
   "nw": 417,
   "nh": 557,
   "par": "ff-card__photo",
@@ -3148,8 +3148,8 @@
  {
   "page": "/our-work/partners/brighten-haiti/",
   "idx": 8,
-  "src": "/images/build/bubble-wrapped-units.jpg",
-  "orig": "/images/build/bubble-wrapped-units.jpg",
+  "src": "/images/opt/build/bubble-wrapped-units.w360.dae7ddb8.webp",
+  "orig": "/images/opt/build/bubble-wrapped-units.w360.dae7ddb8.webp",
   "nw": 417,
   "nh": 556,
   "par": "ff-card__photo",
@@ -3214,8 +3214,8 @@
  {
   "page": "/our-work/partners/loksadhana/",
   "idx": 1,
-  "src": "/images/partners/loksadhana.webp",
-  "orig": "/images/partners/loksadhana.webp",
+  "src": "/images/opt/partners/loksadhana.w512.fdf949a9.webp",
+  "orig": "/images/opt/partners/loksadhana.w512.fdf949a9.webp",
   "nw": 115,
   "nh": 115,
   "par": "ff-pagehead__chip",
@@ -3280,8 +3280,8 @@
  {
   "page": "/our-work/partners/loksadhana/",
   "idx": 4,
-  "src": "/images/partners/loksadhana/skilling-1.webp",
-  "orig": "/images/partners/loksadhana/skilling-1.webp",
+  "src": "/images/opt/partners/loksadhana/skilling-1.w746.5587818b.webp",
+  "orig": "/images/opt/partners/loksadhana/skilling-1.w746.5587818b.webp",
   "nw": 417,
   "nh": 459,
   "par": "ff-card__photo",
@@ -3324,8 +3324,8 @@
  {
   "page": "/our-work/partners/loksadhana/",
   "idx": 6,
-  "src": "/images/partners/loksadhana/class-3.webp",
-  "orig": "/images/partners/loksadhana/class-3.webp",
+  "src": "/images/opt/partners/loksadhana/class-3.w757.7a660b1f.webp",
+  "orig": "/images/opt/partners/loksadhana/class-3.w757.7a660b1f.webp",
   "nw": 331,
   "nh": 184,
   "par": "",
@@ -3368,8 +3368,8 @@
  {
   "page": "/our-work/partners/loksadhana/",
   "idx": 8,
-  "src": "/images/partners/loksadhana/programs-1.webp",
-  "orig": "/images/partners/loksadhana/programs-1.webp",
+  "src": "/images/opt/partners/loksadhana/programs-1.w522.02b81b40.webp",
+  "orig": "/images/opt/partners/loksadhana/programs-1.w522.02b81b40.webp",
   "nw": 331,
   "nh": 201,
   "par": "",
@@ -3390,8 +3390,8 @@
  {
   "page": "/our-work/partners/loksadhana/",
   "idx": 9,
-  "src": "/images/build/packagedlights.webp",
-  "orig": "/images/build/packagedlights.webp",
+  "src": "/images/opt/build/packagedlights.w600.e0c41ddb.webp",
+  "orig": "/images/opt/build/packagedlights.w600.e0c41ddb.webp",
   "nw": 417,
   "nh": 557,
   "par": "ff-card__photo",
@@ -3412,8 +3412,8 @@
  {
   "page": "/our-work/partners/loksadhana/",
   "idx": 10,
-  "src": "/images/students/student-with-flashlight-2.jpg",
-  "orig": "/images/students/student-with-flashlight-2.jpg",
+  "src": "/images/opt/students/student-with-flashlight-2.w768.a5424da9.webp",
+  "orig": "/images/opt/students/student-with-flashlight-2.w768.a5424da9.webp",
   "nw": 417,
   "nh": 556,
   "par": "ff-card__photo",
@@ -3500,8 +3500,8 @@
  {
   "page": "/our-work/partners/malaika/",
   "idx": 1,
-  "src": "/images/partners/malaika.jpg",
-  "orig": "/images/partners/malaika.jpg",
+  "src": "/images/opt/partners/malaika.w782.7b4828d7.webp",
+  "orig": "/images/opt/partners/malaika.w782.7b4828d7.webp",
   "nw": 172,
   "nh": 81,
   "par": "ff-pagehead__chip",
@@ -3679,7 +3679,7 @@
   "src": "/images/opt/partners/malaika/students-1.w800.48558531.webp",
   "orig": "/images/opt/partners/malaika/students-1.w800.48558531.webp",
   "nw": 331,
-  "nh": 220,
+  "nh": 221,
   "par": "",
   "cls": "",
   "w": {
@@ -3742,8 +3742,8 @@
  {
   "page": "/our-work/partners/malaika/",
   "idx": 12,
-  "src": "/images/build/bubble-wrapped-units.jpg",
-  "orig": "/images/build/bubble-wrapped-units.jpg",
+  "src": "/images/opt/build/bubble-wrapped-units.w360.dae7ddb8.webp",
+  "orig": "/images/opt/build/bubble-wrapped-units.w360.dae7ddb8.webp",
   "nw": 417,
   "nh": 556,
   "par": "ff-card__photo",
@@ -3764,8 +3764,8 @@
  {
   "page": "/our-work/partners/malaika/",
   "idx": 13,
-  "src": "/images/build/flashlight-units-group.webp",
-  "orig": "/images/build/flashlight-units-group.webp",
+  "src": "/images/opt/build/flashlight-units-group.w502.854c6d16.webp",
+  "orig": "/images/opt/build/flashlight-units-group.w502.854c6d16.webp",
   "nw": 417,
   "nh": 417,
   "par": "ff-card__photo",
@@ -3918,8 +3918,8 @@
  {
   "page": "/our-work/photos-and-videos/",
   "idx": 4,
-  "src": "/images/build/handoverflashlightsglowing-3x4.webp",
-  "orig": "/images/build/handoverflashlightsglowing-3x4.webp",
+  "src": "/images/opt/build/handoverflashlightsglowing-3x4.w368.db2c418f.webp",
+  "orig": "/images/opt/build/handoverflashlightsglowing-3x4.w368.db2c418f.webp",
   "nw": 475,
   "nh": 634,
   "par": "",
@@ -3940,8 +3940,8 @@
  {
   "page": "/our-work/photos-and-videos/",
   "idx": 5,
-  "src": "/images/build/flashlight-units.webp",
-  "orig": "/images/build/flashlight-units.webp",
+  "src": "/images/opt/build/flashlight-units.w600.8ddbc6b1.webp",
+  "orig": "/images/opt/build/flashlight-units.w600.8ddbc6b1.webp",
   "nw": 475,
   "nh": 633,
   "par": "",
@@ -3962,8 +3962,8 @@
  {
   "page": "/our-work/photos-and-videos/",
   "idx": 6,
-  "src": "/images/build/flashlightinshippingcontainer.webp",
-  "orig": "/images/build/flashlightinshippingcontainer.webp",
+  "src": "/images/opt/build/flashlightinshippingcontainer.w450.9c099c74.webp",
+  "orig": "/images/opt/build/flashlightinshippingcontainer.w450.9c099c74.webp",
   "nw": 475,
   "nh": 844,
   "par": "",
@@ -4028,8 +4028,8 @@
  {
   "page": "/our-work/photos-and-videos/",
   "idx": 9,
-  "src": "/images/students/student-with-flashlight-2.jpg",
-  "orig": "/images/students/student-with-flashlight-2.jpg",
+  "src": "/images/opt/students/student-with-flashlight-2.w768.a5424da9.webp",
+  "orig": "/images/opt/students/student-with-flashlight-2.w768.a5424da9.webp",
   "nw": 475,
   "nh": 633,
   "par": "",
@@ -4094,8 +4094,8 @@
  {
   "page": "/our-work/photos-and-videos/",
   "idx": 12,
-  "src": "/images/build/robotics-event-booth.webp",
-  "orig": "/images/build/robotics-event-booth.webp",
+  "src": "/images/opt/build/robotics-event-booth.w360.5f8d7607.webp",
+  "orig": "/images/opt/build/robotics-event-booth.w360.5f8d7607.webp",
   "nw": 475,
   "nh": 844,
   "par": "",
@@ -4160,10 +4160,10 @@
  {
   "page": "/our-work/the-light/",
   "idx": 1,
-  "src": "/images/opt/frames/assembly/poster-d.w800.6a38c549.webp",
-  "orig": "/images/opt/frames/assembly/poster-d.w800.6a38c549.webp",
-  "nw": 480,
-  "nh": 360,
+  "src": "/images/opt/frames/assembly/poster-d.w800.705b2605.webp",
+  "orig": "/images/opt/frames/assembly/poster-d.w800.705b2605.webp",
+  "nw": 547,
+  "nh": 410,
   "par": "",
   "cls": "",
   "w": {
@@ -4182,8 +4182,8 @@
  {
   "page": "/our-work/the-light/",
   "idx": 2,
-  "src": "/images/light/cad/case.webp",
-  "orig": "/images/light/cad/case.webp",
+  "src": "/images/opt/light/cad/case.w736.b34bf894.webp",
+  "orig": "/images/opt/light/cad/case.w736.b34bf894.webp",
   "nw": 216,
   "nh": 198,
   "par": "ff-card__photo ff-part__photo",
@@ -4204,8 +4204,8 @@
  {
   "page": "/our-work/the-light/",
   "idx": 3,
-  "src": "/images/light/cad/part-a.webp",
-  "orig": "/images/light/cad/part-a.webp",
+  "src": "/images/opt/light/cad/part-a.w193.1387857c.webp",
+  "orig": "/images/opt/light/cad/part-a.w193.1387857c.webp",
   "nw": 216,
   "nh": 124,
   "par": "ff-card__photo ff-part__photo",
@@ -4226,8 +4226,8 @@
  {
   "page": "/our-work/the-light/",
   "idx": 4,
-  "src": "/images/light/cad/part-c.webp",
-  "orig": "/images/light/cad/part-c.webp",
+  "src": "/images/opt/light/cad/part-c.w227.bd164d52.webp",
+  "orig": "/images/opt/light/cad/part-c.w227.bd164d52.webp",
   "nw": 215,
   "nh": 118,
   "par": "ff-card__photo ff-part__photo",
@@ -4248,8 +4248,8 @@
  {
   "page": "/our-work/the-light/",
   "idx": 5,
-  "src": "/images/light/cad/panel.webp",
-  "orig": "/images/light/cad/panel.webp",
+  "src": "/images/opt/light/cad/panel.w629.ed60658e.webp",
+  "orig": "/images/opt/light/cad/panel.w629.ed60658e.webp",
   "nw": 216,
   "nh": 96,
   "par": "ff-card__photo ff-part__photo",
@@ -4270,8 +4270,8 @@
  {
   "page": "/our-work/the-light/",
   "idx": 6,
-  "src": "/images/build/flashlight-units.webp",
-  "orig": "/images/build/flashlight-units.webp",
+  "src": "/images/opt/build/flashlight-units.w600.8ddbc6b1.webp",
+  "orig": "/images/opt/build/flashlight-units.w600.8ddbc6b1.webp",
   "nw": 417,
   "nh": 556,
   "par": "",
@@ -4314,8 +4314,8 @@
  {
   "page": "/our-work/the-light/",
   "idx": 8,
-  "src": "/images/build/handoverflashlightsglowing-3x4.webp",
-  "orig": "/images/build/handoverflashlightsglowing-3x4.webp",
+  "src": "/images/opt/build/handoverflashlightsglowing-3x4.w368.db2c418f.webp",
+  "orig": "/images/opt/build/handoverflashlightsglowing-3x4.w368.db2c418f.webp",
   "nw": 417,
   "nh": 557,
   "par": "",
@@ -4336,8 +4336,8 @@
  {
   "page": "/our-work/the-light/",
   "idx": 9,
-  "src": "/images/build/soldering-electronics.jpg",
-  "orig": "/images/build/soldering-electronics.jpg",
+  "src": "/images/opt/build/soldering-electronics.w638.ec2eb488.webp",
+  "orig": "/images/opt/build/soldering-electronics.w638.ec2eb488.webp",
   "nw": 604,
   "nh": 341,
   "par": "ff-card__photo",
@@ -4358,8 +4358,8 @@
  {
   "page": "/our-work/the-light/",
   "idx": 10,
-  "src": "/images/build/handoverflashlightsglowing.webp",
-  "orig": "/images/build/handoverflashlightsglowing.webp",
+  "src": "/images/opt/build/handoverflashlightsglowing.w368.0e2455e7.webp",
+  "orig": "/images/opt/build/handoverflashlightsglowing.w368.0e2455e7.webp",
   "nw": 604,
   "nh": 1316,
   "par": "ff-card__photo",
@@ -4424,8 +4424,8 @@
  {
   "page": "/our-work/where/",
   "idx": 1,
-  "src": "/images/partners/brighten-haiti.webp",
-  "orig": "/images/partners/brighten-haiti.webp",
+  "src": "/images/opt/partners/brighten-haiti.w218.aec242e0.webp",
+  "orig": "/images/opt/partners/brighten-haiti.w218.aec242e0.webp",
   "nw": 172,
   "nh": 111,
   "par": "ff-logotile",
@@ -4446,8 +4446,8 @@
  {
   "page": "/our-work/where/",
   "idx": 2,
-  "src": "/images/partners/loksadhana.webp",
-  "orig": "/images/partners/loksadhana.webp",
+  "src": "/images/opt/partners/loksadhana.w512.fdf949a9.webp",
+  "orig": "/images/opt/partners/loksadhana.w512.fdf949a9.webp",
   "nw": 172,
   "nh": 172,
   "par": "ff-logotile",
@@ -4468,8 +4468,8 @@
  {
   "page": "/our-work/where/",
   "idx": 3,
-  "src": "/images/partners/malaika.jpg",
-  "orig": "/images/partners/malaika.jpg",
+  "src": "/images/opt/partners/malaika.w782.7b4828d7.webp",
+  "orig": "/images/opt/partners/malaika.w782.7b4828d7.webp",
   "nw": 172,
   "nh": 81,
   "par": "ff-logotile",
@@ -4512,8 +4512,8 @@
  {
   "page": "/our-work/where/",
   "idx": 5,
-  "src": "/images/partners/rethread.jpg",
-  "orig": "/images/partners/rethread.jpg",
+  "src": "/images/opt/partners/rethread.w141.90a81f8d.webp",
+  "orig": "/images/opt/partners/rethread.w141.90a81f8d.webp",
   "nw": 187,
   "nh": 82,
   "par": "ff-logotile",
@@ -4534,8 +4534,8 @@
  {
   "page": "/our-work/where/",
   "idx": 6,
-  "src": "/images/partners/bsrea.png",
-  "orig": "/images/partners/bsrea.png",
+  "src": "/images/opt/partners/bsrea.w464.206a93f7.webp",
+  "orig": "/images/opt/partners/bsrea.w464.206a93f7.webp",
   "nw": 187,
   "nh": 145,
   "par": "ff-logotile",

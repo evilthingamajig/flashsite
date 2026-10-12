@@ -805,22 +805,21 @@ body .R-self-about #page-container .et_pb_section a.et_pb_button { color: var(--
 .ff-main .ff-kicker { color: var(--ff-green); }
 
 /* Homepage (Round D): full-bleed hero, why light, numbers row, partner cards */
-.ff-main .ff-home-hero { position: relative; overflow: hidden; display: grid; grid-template-columns: minmax(0,1fr) auto; min-height: min(640px, 82vh); background: var(--ff-green-deep); color: #fff; }
-.ff-main .ff-home-hero__text { display: flex; align-items: center; padding: 80px 48px 80px max(24px, calc((100vw - 1152px) / 2 + 24px)); }
-.ff-main .ff-home-hero__inner { max-width: 500px; position: relative; z-index: 1; }
+.ff-main .ff-home-hero { position: relative; overflow: hidden; display: grid; grid-template-columns: minmax(0,1fr) clamp(370px, 30vw, 388px); gap: 40px; background: var(--ff-green-deep); color: #fff; padding: 0 max(24px, calc((100vw - 1152px) / 2 + 24px)); }
+.ff-main .ff-home-hero__text { display: flex; align-items: center; padding: 64px 0; }
+.ff-main .ff-home-hero__inner { max-width: 540px; position: relative; z-index: 1; }
 .ff-main .ff-home-hero .ff-kicker { color: rgba(255,255,255,.75); }
 .ff-main .ff-home-hero h1 { font-family: Merriweather, Georgia, serif; font-weight: 900; font-size: clamp(2.25rem, 4vw, 3.5rem); line-height: 1.12; color: #fff; margin: 8px 0 20px; }
 .ff-main .ff-home-hero__lede { color: rgba(255,255,255,.85); font-size: 1.125rem; margin: 0 0 28px; }
 .ff-main .ff-home-hero .ff-btnrow { display: flex; flex-wrap: wrap; gap: 12px; }
-.ff-main .ff-home-hero__photo { position: relative; margin: 0; }
-.ff-main .ff-home-hero__photo img { display: block; height: clamp(520px, 78vh, 720px); width: auto; aspect-ratio: 4/5; object-fit: cover; object-position: 50% 100%; }
-.ff-main .ff-home-hero__photo figcaption { max-width: none; color: rgba(255,255,255,.8); font-size: .8125rem; text-align: left; padding: 12px 24px; }
-@media (max-width: 900px) {
-  .ff-main .ff-home-hero { grid-template-columns: 1fr; min-height: 0; }
-  .ff-main .ff-home-hero__photo { order: -1; }
-  .ff-main .ff-home-hero__photo img { height: auto; width: 100%; }
-  .ff-main .ff-home-hero__text { padding: 32px; }
-  .ff-main .ff-home-hero__photo figcaption { padding: 12px 32px; }
+.ff-main .ff-home-hero__photo { position: relative; margin: 0; padding: 48px 0 40px; align-self: center; }
+.ff-main .ff-home-hero__photo img { display: block; width: 100%; aspect-ratio: 3/4; object-fit: cover; object-position: center 60%; }
+.ff-main .ff-home-hero__photo figcaption { color: rgba(255,255,255,.85); font-size: .875rem; text-align: left; padding: 12px 0 0; }
+@media (max-width: 899px) {
+  .ff-main .ff-home-hero { grid-template-columns: 1fr; gap: 0; }
+  .ff-main .ff-home-hero__text { padding: 48px 0 40px; }
+  .ff-main .ff-home-hero__photo { padding: 0 0 40px; }
+  .ff-main .ff-home-hero__photo img { aspect-ratio: 4/5; }
 }
 
 /* Why light */
@@ -939,13 +938,15 @@ body .R-self-about #page-container .et_pb_section a.et_pb_button { color: var(--
 .ff-main .ff-gift-card .ff-embed-slot { margin-top: 16px; }
 .ff-main .ff-gift-card #needed-most-button[hidden] { display: none; }
 .ff-main .ff-team { margin-top: 56px; }
-.ff-main .ff-team-row { display: grid; grid-template-columns: 280px minmax(0,1fr); gap: 40px; padding: 56px 0; border-top: 1px solid var(--ff-line); }
+.ff-main .ff-team-row { display: grid; grid-template-columns: 1fr; gap: 40px; padding: 56px 0; border-top: 1px solid var(--ff-line); }
 .ff-main .ff-team-row:first-child { border-top: 0; padding-top: 0; }
+.ff-main .ff-team-head { max-width: 640px; }
 .ff-main .ff-team-head .ff-h2 { margin-top: 6px; }
-.ff-main .ff-team-cards { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 260px)); gap: 24px; }
-.ff-main .ff-team-cards .ff-card { width: 260px; }
+.ff-main .ff-team-cards { display: grid; grid-template-columns: repeat(3, minmax(0,1fr)); gap: 24px; }
+.ff-main .ff-team-cards .ff-card { max-width: none; }
+.ff-main .ff-team-cards .ff-card__title { font-size: 1.25rem !important; }
 .ff-main .ff-team-row .ff-joinpanel { margin-top: 24px; }
-@media (max-width: 860px) { .ff-main .ff-team-row { grid-template-columns: 1fr; gap: 24px; } }
+@media (max-width: 860px) { .ff-main .ff-team-row { gap: 24px; } }
 .ff-main .ff-part__photo { aspect-ratio: 4 / 3; }
 .ff-main .ff-part__photo > img { padding: 24px; box-sizing: border-box; }
 .ff-main .ff-cardrow--four { grid-template-columns: repeat(4, minmax(0,1fr)); }
@@ -972,20 +973,9 @@ body .R-self-about #page-container .et_pb_section a.et_pb_button { color: var(--
 .ff-main a.ff-feature--story figcaption.ff-photocredit { color: #fff; background: #0f3d2a; }
 .ff-main a.ff-essay-card .ff-essay-cap { display: block; margin-top: 10px; font-size: .8125rem; font-weight: 700; color: var(--ff-ink); }
 .ff-main a.ff-feature--story .ff-feature__img img { height: auto !important; max-height: 480px; aspect-ratio: 4 / 3; object-fit: cover; object-position: 50% 30%; }
-.ff-main .ff-team-row { grid-template-columns: 260px minmax(0,1fr); gap: 32px; }
-.ff-main .ff-team-cards { grid-template-columns: repeat(auto-fill, minmax(180px, 200px)); gap: 20px; }
-.ff-main .ff-team-cards .ff-card { width: 100%; max-width: 200px; }
-.ff-main .ff-team-cards .ff-card__title { font-size: 1rem !important; }
-@media (max-width: 860px) { .ff-main .ff-team-row { grid-template-columns: 1fr; } }
-.ff-main .ff-team-row--lead { grid-template-columns: 1fr; }
-.ff-main .ff-team-row--lead .ff-team-head { max-width: 640px; }
 .ff-main .ff-team-row--lead .ff-team-head .ff-h2 { font-size: clamp(2rem, 3.2vw, 2.625rem) !important; }
-.ff-main .ff-team-row--lead .ff-team-cards { grid-template-columns: repeat(3, minmax(0,1fr)); gap: 24px; }
-.ff-main .ff-team-row--lead .ff-team-cards .ff-card { max-width: none; }
-.ff-main .ff-team-row--lead .ff-team-cards .ff-card__title { font-size: 1.25rem !important; }
 @media (max-width: 600px) {
-  .ff-main .ff-team-row--lead .ff-team-cards { grid-template-columns: 1fr; }
-  .ff-main .ff-team-cards { grid-template-columns: repeat(2, minmax(0,1fr)); gap: 12px; }
+  .ff-main .ff-team-cards { grid-template-columns: 1fr; }
 }
 .ff-main .ff-parts { grid-template-columns: repeat(5, minmax(0,1fr)); counter-reset: part; }
 .ff-main .ff-parts > .ff-card, .ff-main .ff-parts > .ff-card:nth-child(4), .ff-main .ff-parts > .ff-card:nth-child(5) { grid-column: auto; }
