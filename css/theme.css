@@ -999,6 +999,7 @@ body .R-self-about #page-container .et_pb_section a.et_pb_button { color: var(--
 .ff-main a.ff-feature--story .ff-feature__img .ff-photocredit { position: absolute; left: 12px; bottom: 12px; }
 .ff-main a.ff-feature--story .ff-feature__img figcaption.ff-photocredit { background: rgba(0,0,0,.6); color: #fff; padding: 4px 8px; border-radius: 3px; font-size: .75rem; }
 @media (max-width: 767px) { .ff-main .nmc-block.alignfull { width: 100% !important; max-width: 100vw; margin-left: 0 !important; margin-right: 0 !important; box-sizing: border-box; } }
+@media (min-width: 768px) and (max-width: 840px) { .ff-main .nmc-block.alignfull { max-width: 100%; box-sizing: border-box; } }
 .ff-main .ff-map-view .ff-map-mount svg.world-map-svg { height: 100% !important; width: auto !important; max-height: 420px; max-width: 100%; }
 .ff-main .ff-map-view .ff-map-mount { min-height: 420px !important; }
 .ff-main a.ff-feature--story figcaption.ff-photocredit { color: #fff; background: #0f3d2a; }
