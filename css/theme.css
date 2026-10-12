@@ -832,7 +832,7 @@ body .R-self-about #page-container .et_pb_section a.et_pb_button { color: var(--
 .ff-main .ff-kicker { color: var(--ff-green); }
 
 /* Homepage (Round D): full-bleed hero, why light, numbers row, partner cards */
-.ff-main .ff-home-hero { position: relative; overflow: hidden; display: grid; grid-template-columns: minmax(0,1fr) clamp(370px, 30vw, 388px); gap: 40px; background: var(--ff-green-deep); color: #fff; padding: 0 max(24px, calc((100vw - 1152px) / 2 + 24px)) 12px; }
+.ff-main .ff-home-hero { position: relative; overflow: hidden; display: grid; grid-template-columns: minmax(0,1fr) clamp(370px, 30vw, 388px); gap: 40px; background: var(--ff-green-deep); color: #fff; padding: 0 max(24px, calc((100vw - 1152px) / 2 + 24px)); }
 .ff-main .ff-home-hero__text { display: flex; align-items: center; padding: 64px 0; }
 .ff-main .ff-home-hero__inner { max-width: 540px; position: relative; z-index: 1; }
 .ff-main .ff-home-hero .ff-kicker { color: rgba(255,255,255,.75); }
@@ -845,7 +845,7 @@ body .R-self-about #page-container .et_pb_section a.et_pb_button { color: var(--
 @media (max-width: 899px) {
   .ff-main .ff-home-hero { grid-template-columns: 1fr; gap: 0; }
   .ff-main .ff-home-hero__text { padding: 48px 0 40px; }
-  .ff-main .ff-home-hero__photo { padding: 0 0 40px; }
+  .ff-main .ff-home-hero__photo { padding: 0 0 52px; }
   .ff-main .ff-home-hero__photo img { aspect-ratio: 4/5; object-position: center 92%; }
 }
 
