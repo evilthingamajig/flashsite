@@ -919,7 +919,7 @@ body .R-self-about #page-container .et_pb_section a.et_pb_button { color: var(--
 .ff-main .row:has(.main-content.contact) > [class*="col-"] { padding-left: 0; padding-right: 0; }
 .ff-main .region-content form, .ff-main .region-content form p { display: block !important; width: 100% !important; text-align: left !important; }
 /* Contact page polish: aligned breadcrumb, padded info card, centred icon glyphs */
-.ff-main .contact .breadcrumbs { padding-left: 24px; }
+.ff-main .container:has(.main-content.contact) .breadcrumbs { padding-left: 24px; }
 .ff-main .contact .wpb_text_column.block_shadow { padding: 28px !important; }
 .ff-main .contact .site-addr p .fa { display: flex !important; align-items: center; justify-content: center; line-height: 1; }
 .ff-main .contact .entry-socials a i { align-items: center; }
