@@ -124,7 +124,7 @@ const ldData = JSON.parse(readFileSync(join(ROOT, 'tools/ld.json')));
 const BASE = 'https://flashforwardfoundation.org';
 const LD_ORG = {"@type":"NGO","@id":BASE+"/#org","name":"Flash Forward Foundation","alternateName":"Flash Forward","url":BASE+"/","logo":{"@type":"ImageObject","url":BASE+"/images/brand/mark-green.png"},"description":"Student-run 501(c)(3) nonprofit in Bellevue, Washington that builds $5.17 solar study lights for students without electricity.","foundingDate":"2024","foundingLocation":{"@type":"Place","name":"Bellevue, Washington"},"nonprofitStatus":"https://schema.org/Nonprofit501c3","taxID":"39-3605570","email":"about@flashforwardfoundation.org","address":{"@type":"PostalAddress","streetAddress":"1402 153rd Pl SE","addressLocality":"Bellevue","addressRegion":"WA","postalCode":"98007","addressCountry":"US"},"areaServed":["Haiti","India","Democratic Republic of the Congo"],"sameAs":["https://www.instagram.com/flashforwardfoundation/"]};
 const LD_SITE = {"@type":"WebSite","@id":BASE+"/#website","name":"Flash Forward Foundation","url":BASE+"/","publisher":{"@id":BASE+"/#org"},"inLanguage":"en","potentialAction":{"@type":"SearchAction","target":{"@type":"EntryPoint","urlTemplate":BASE+"/search/?q={search_term_string}"},"query-input":"required name=search_term_string"}};
-const CRUMB_LABELS = {'/our-work/':'Our Work','/get-involved/':'Get Involved','/about/':'Our Story','/news/':'News & Notes'};
+const CRUMB_LABELS = {'/our-work/':'Our Work','/get-involved/':'Get Involved','/about/':'Our Story','/news/':'News & Notes','/guides/':'Student Guides'};
 const FAQ_PAGES = new Set(['/faq/','/donate/','/get-involved/','/get-involved/internship/','/news/why-study-lights/']);
 const unent = (t) => t.replace(/&amp;/g,'&').replace(/&rsquo;/g,'\u2019').replace(/&lsquo;/g,'\u2018').replace(/&ldquo;/g,'\u201c').replace(/&rdquo;/g,'\u201d').replace(/&ndash;/g,'\u2013').replace(/&mdash;/g,'\u2014').replace(/&nbsp;/g,'\xa0').replace(/&#039;/g,"'").replace(/<[^>]+>/g,'').trim();
 
@@ -337,7 +337,10 @@ for (const file of pages.sort()) {
     for (const m of html.matchAll(/<div class="ff-card" id="([\w-]+)">[\s\S]*?<img[^>]*src="([^"]+)"[\s\S]*?ff-card__title">([^<]+)<[\s\S]*?ff-card__meta">([^<]+)</g))
       graph.push({"@type":"Person","@id":BASE+"/about/team/#"+m[1],"name":unent(m[3]),"jobTitle":unent(m[4]),"image":BASE+m[2],"worksFor":{"@id":BASE+"/#org"}});
   }
-  if (FAQ_PAGES.has(rel)) {
+  if (rel.startsWith('/guides/') && rel !== '/guides/') {
+    graph.push({"@type":"Article","@id":canonUrl+'#article',"headline":h1text,"description":desc,"image":[ogImg],"datePublished":"2026-10-12","dateModified":"2026-10-12","author":{"@type":"Organization","@id":BASE+"/#org","name":"Flash Forward Foundation","url":BASE+"/about/team/"},"publisher":{"@id":BASE+"/#org"},"mainEntityOfPage":canonUrl,"inLanguage":"en"});
+  }
+  if (FAQ_PAGES.has(rel) || rel.startsWith('/internships/') || (rel.startsWith('/guides/') && rel !== '/guides/')) {
     const qa = [];
     for (const m of html.matchAll(/<(?:details|div) class="ff-faq"[\s\S]*?(?:<summary>([\s\S]*?)<\/summary>|<h3>([\s\S]*?)<\/h3>)[\s\S]*?<p>([\s\S]*?)<\/p>/g))
       qa.push({"@type":"Question","name":unent(m[1]||m[2]),"acceptedAnswer":{"@type":"Answer","text":unent(m[3])}});

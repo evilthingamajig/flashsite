@@ -278,5 +278,37 @@
   "size": 14120,
   "t": 156,
   "vp": "390x844"
+ },
+ "/internships/marketing/": {
+  "el": "IMG.",
+  "img": "/images/opt/build/flashfinishedworkshop.w800.8f267722.webp",
+  "text": "",
+  "size": 172800,
+  "t": 144,
+  "vp": "1440x900"
+ },
+ "/internships/partnerships-operations/": {
+  "el": "IMG.",
+  "img": "/images/opt/build/packagedlights.w600.e0c41ddb.webp",
+  "text": "",
+  "size": 172800,
+  "t": 144,
+  "vp": "1440x900"
+ },
+ "/internships/fundraising/": {
+  "el": "IMG.",
+  "img": "/images/opt/students/student-with-flashlight-1.w800.85ac48ab.webp",
+  "text": "",
+  "size": 172800,
+  "t": 144,
+  "vp": "1440x900"
+ },
+ "/internships/remote/": {
+  "el": "IMG.",
+  "img": "/images/opt/build/peopleworkingonflash.w800.71b99741.webp",
+  "text": "",
+  "size": 172800,
+  "t": 144,
+  "vp": "1440x900"
  }
 }
