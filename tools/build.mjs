@@ -26,7 +26,7 @@ const variants = JSON.parse(readFileSync(join(ROOT, 'tools/img-variants.json')))
 const lcpMap = existsSync(join(ROOT, 'tools/lcp.json')) ? JSON.parse(readFileSync(join(ROOT, 'tools/lcp.json'))) : {};
 const ogMap = existsSync(join(ROOT, 'tools/og-map.json')) ? JSON.parse(readFileSync(join(ROOT, 'tools/og-map.json'))) : {};
 
-const urlPath = (f) => f.replace(ROOT, '').replace(/\/index\.html$/, '/') || '/';
+const urlPath = (f) => f.replace(ROOT, '').replace(/\\/g, '/').replace(/\/index\.html$/, '/') || '/';
 const escRe = (s) => s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
 
 const FA = {

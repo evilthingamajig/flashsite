@@ -273,3 +273,61 @@
   color: var(--ff-green-deep); font-weight: 600; font-size: .875rem; text-decoration: none;
 }
 .ff-main .fft-pills a:hover, .ff-main .fft-pills a.is-current { background: var(--ff-green-deep); color: #fff; }
+
+/* ================= fft-apply: on-page internship application ================= */
+.ff-main .fft-apply[hidden] { display: none !important; }
+.ff-main .fft-apply__grid { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); gap: 48px; align-items: start; }
+.ff-main .fft-apply__lede { color: var(--ff-muted); font-size: 1.0625rem; line-height: 1.6; margin: 0 0 20px !important; }
+.ff-main .fft-apply__facts { list-style: none; margin: 0 !important; padding: 0 !important; border-top: 1px solid var(--ff-line); }
+.ff-main .fft-apply__facts li { position: relative; padding: 12px 0 12px 22px; border-bottom: 1px solid var(--ff-line); color: var(--ff-ink); font-weight: 600; margin: 0; }
+.ff-main .fft-apply__facts li::before { content: ""; position: absolute; left: 0; top: 50%; width: 10px; height: 3px; background: var(--ff-gold); }
+.ff-main .fft-apply__panel { background: #fff; border: 1px solid var(--ff-line); border-top: 2px solid var(--ff-gold); border-radius: 6px; padding: 32px; }
+.ff-main .fft-apply__row { display: grid; grid-template-columns: 1fr 1fr; gap: 0 20px; }
+.ff-main .fft-field { margin: 0 0 20px; padding: 0; border: 0; min-width: 0; }
+.ff-main .fft-field__label { display: block; font-weight: 700; font-size: .9375rem; color: var(--ff-ink); margin: 0 0 6px; padding: 0; }
+.ff-main .fft-field__hint { color: var(--ff-muted); font-size: .875rem; margin: -2px 0 6px !important; }
+.ff-main .fft-field__err { color: #A1261B; font-size: .875rem; font-weight: 600; margin: 6px 0 0 !important; }
+.ff-main .fft-field__err:empty { display: none; }
+.ff-main .fft-apply input[type="text"], .ff-main .fft-apply input[type="email"], .ff-main .fft-apply select, .ff-main .fft-apply textarea {
+  display: block; width: 100%; box-sizing: border-box; min-height: 46px; padding: 10px 12px; margin: 0;
+  font: 400 1rem/1.4 'Source Sans 3', 'Source Sans 3 Fallback', sans-serif; color: var(--ff-ink);
+  background: #fff; border: 1px solid var(--ff-line-strong); border-radius: 4px; box-shadow: none;
+}
+.ff-main .fft-apply textarea { min-height: 110px; resize: vertical; }
+.ff-main .fft-apply input:focus-visible, .ff-main .fft-apply select:focus-visible, .ff-main .fft-apply textarea:focus-visible { outline: 2px solid var(--ff-green); outline-offset: 1px; border-color: var(--ff-green); }
+.ff-main .fft-field.is-invalid input, .ff-main .fft-field.is-invalid select, .ff-main .fft-field.is-invalid textarea, .ff-main .fft-field.is-invalid .fft-drop { border-color: #A1261B; }
+.ff-main .fft-tracks { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.ff-main .fft-track { position: relative; display: block; padding: 12px 14px 12px 40px; border: 1px solid var(--ff-line-strong); border-radius: 6px; cursor: pointer; background: #fff; }
+.ff-main .fft-track input { position: absolute; left: 14px; top: 15px; width: 16px; height: 16px; margin: 0; accent-color: var(--ff-green-deep); }
+.ff-main .fft-track__name { display: block; font-weight: 700; color: var(--ff-green-deep); line-height: 1.3; }
+.ff-main .fft-track__text { display: block; color: var(--ff-muted); font-size: .875rem; line-height: 1.35; margin-top: 2px; }
+.ff-main .fft-track:has(input:checked) { border-color: var(--ff-green-deep); box-shadow: inset 0 0 0 1px var(--ff-green-deep); }
+.ff-main .fft-track:has(input:focus-visible) { outline: 2px solid var(--ff-green); outline-offset: 2px; }
+.ff-main .fft-drop { position: relative; display: block; padding: 22px 16px; text-align: center; border: 1px dashed var(--ff-line-strong); border-radius: 6px; background: #FAFAF7; cursor: pointer; }
+.ff-main .fft-drop input { position: absolute; inset: 0; width: 100%; height: 100%; opacity: 0; cursor: pointer; }
+.ff-main .fft-drop.is-over, .ff-main .fft-drop:has(input:focus-visible) { border-color: var(--ff-green-deep); background: #fff; }
+.ff-main .fft-drop.is-filled { border-style: solid; border-color: var(--ff-green-deep); }
+.ff-main .fft-drop__text { display: block; font-weight: 600; color: var(--ff-ink); }
+.ff-main .fft-drop__text u { color: var(--ff-green-deep); text-decoration-color: var(--ff-gold); text-underline-offset: 3px; }
+.ff-main .fft-drop__hint { display: block; color: var(--ff-muted); font-size: .875rem; margin-top: 4px; }
+.ff-main .fft-hp { position: absolute !important; left: -9999px; width: 1px; height: 1px; overflow: hidden; }
+.ff-main .fft-apply__check { margin: 4px 0 12px; }
+.ff-main .fft-apply__check:empty { display: none; }
+.ff-main .fft-apply__msg { color: #A1261B; font-weight: 600; margin: 0 0 12px !important; }
+.ff-main .fft-apply__msg:empty { display: none; }
+.ff-main .fft-apply .ff-btn.fft-apply__submit { width: 100%; min-height: 50px; font-size: 1rem; background: var(--ff-green-deep); color: #fff !important; border: 2px solid var(--ff-green-deep); cursor: pointer; }
+.ff-main .fft-apply .ff-btn.fft-apply__submit:hover { background: #fff; color: var(--ff-green-deep) !important; }
+.ff-main .fft-apply .ff-btn.fft-apply__submit:disabled { opacity: .6; cursor: progress; }
+.ff-main .fft-apply__donetitle { font-family: Merriweather, Georgia, serif; font-size: 1.5rem; color: var(--ff-green-deep); margin: 0 0 10px !important; }
+.ff-main .fft-apply__done p { color: var(--ff-ink); margin: 0 !important; }
+.ff-main .fft-apply__done:focus { outline: none; }
+@media (max-width: 899px) {
+  .ff-main .fft-apply__grid { grid-template-columns: 1fr; gap: 24px; }
+  .ff-main .fft-apply__facts { display: flex; flex-wrap: wrap; gap: 8px; border: 0; }
+  .ff-main .fft-apply__facts li { border: 1px solid var(--ff-line); border-radius: 999px; padding: 6px 14px; font-size: .875rem; }
+  .ff-main .fft-apply__facts li::before { display: none; }
+}
+@media (max-width: 560px) {
+  .ff-main .fft-apply__panel { padding: 22px 18px; }
+  .ff-main .fft-apply__row, .ff-main .fft-tracks { grid-template-columns: 1fr; }
+}

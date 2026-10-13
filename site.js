@@ -231,3 +231,126 @@
   },{rootMargin:'300px 0px'});
   vids.forEach(function(v){io.observe(v);});
 })();
+
+// Internship application. Apply buttons ([data-apply]) point at the Google Form until /api/apply
+// reports it is configured; then the on-page form (#apply) opens and the buttons jump to it.
+// GA4 events: apply_click (any Apply button), apply_start (first field touched), apply_submit (accepted).
+(function(){
+  function ga(name,params){if(typeof gtag==='function')gtag('event',name,params)}
+  var sec=document.getElementById('apply');
+  var form=sec&&sec.querySelector('[data-apply-form]');
+  var qsTrack=new URLSearchParams(location.search).get('track')||'';
+  function track(){
+    var c=form&&form.querySelector('input[name=track]:checked');
+    return (c&&c.dataset.track)||(sec&&sec.dataset.track)||qsTrack||'general';
+  }
+  document.addEventListener('click',function(e){
+    var a=e.target.closest('[data-apply],a[href*="docs.google.com/forms"]');
+    if(a)ga('apply_click',{track:track(),link_url:a.href});
+  });
+  if(!form)return;
+
+  var KEY='ff-apply-draft',MAX=4*1024*1024,EXT=/\.(pdf|docx?)$/i;
+  var msg=form.querySelector('.fft-apply__msg'),btn=form.querySelector('[type=submit]');
+  var drop=form.querySelector('.fft-drop'),file=form.querySelector('input[type=file]');
+  var dropText=form.querySelector('[data-drop-text]'),dropDefault=dropText.innerHTML;
+  var widget=null,siteKey='';
+
+  fetch('/api/apply',{cache:'no-store'}).then(function(r){return r.json()}).then(function(s){
+    if(!s.ready)return;
+    siteKey=s.siteKey;
+    sec.hidden=false;
+    document.querySelectorAll('[data-apply]').forEach(function(a){a.href='#apply';a.removeAttribute('target');a.removeAttribute('rel')});
+    form.elements._t.value=String(Date.now());
+    restore();
+    var pre=sec.dataset.track||qsTrack;
+    var r=pre&&form.querySelector('input[name=track][data-track="'+pre+'"]');
+    if(r&&!form.querySelector('input[name=track]:checked'))r.checked=true;
+    if(location.hash==='#apply')sec.scrollIntoView();
+  }).catch(function(){});
+
+  // Turnstile loads on first interaction so it costs nothing for visitors who only read the page.
+  function loadCheck(){
+    if(widget!==null||!siteKey)return;widget=0;
+    window.ffTurnstile=function(){widget=turnstile.render(form.querySelector('[data-turnstile]'),{sitekey:siteKey,appearance:'interaction-only'})};
+    var s=document.createElement('script');s.src='https://challenges.cloudflare.com/turnstile/v0/api.js?onload=ffTurnstile&render=explicit';s.async=true;document.head.appendChild(s);
+  }
+  var started=false;
+  form.addEventListener('focusin',function(){loadCheck();if(!started){started=true;ga('apply_start',{track:track()})}});
+
+  function save(){
+    var d={};
+    [].forEach.call(form.elements,function(el){
+      if(!el.name||el.type==='file'||el.type==='hidden'||el.name==='website')return;
+      if(el.type==='radio'){if(el.checked)d[el.name]=el.value}else d[el.name]=el.value;
+    });
+    try{localStorage.setItem(KEY,JSON.stringify(d))}catch(e){}
+  }
+  function restore(){
+    var d;try{d=JSON.parse(localStorage.getItem(KEY)||'null')}catch(e){}
+    if(!d)return;
+    Object.keys(d).forEach(function(k){
+      var els=form.querySelectorAll('[name="'+k+'"]');
+      els.forEach(function(el){if(el.type==='radio')el.checked=el.value===d[k];else el.value=d[k]});
+    });
+  }
+  form.addEventListener('input',function(e){save();clear(e.target.closest('[data-field]'))});
+  form.addEventListener('change',function(e){save();clear(e.target.closest('[data-field]'))});
+
+  function setErr(name,text){
+    var f=form.querySelector('[data-field="'+name+'"]');if(!f)return;
+    f.classList.add('is-invalid');
+    var p=f.querySelector('.fft-field__err');if(p)p.textContent=text;
+  }
+  function clear(f){if(!f)return;f.classList.remove('is-invalid');var p=f.querySelector('.fft-field__err');if(p)p.textContent=''}
+
+  function showFile(){
+    var f=file.files[0];
+    drop.classList.toggle('is-filled',!!f);
+    dropText.innerHTML=f?'':dropDefault;
+    if(f)dropText.textContent=f.name;
+  }
+  file.addEventListener('change',showFile);
+  ['dragenter','dragover'].forEach(function(t){drop.addEventListener(t,function(){drop.classList.add('is-over')})});
+  ['dragleave','drop'].forEach(function(t){drop.addEventListener(t,function(){drop.classList.remove('is-over')})});
+
+  function check(){
+    var ok=true;
+    form.querySelectorAll('[data-field]').forEach(clear);
+    [].forEach.call(form.elements,function(el){
+      if(!el.name||el.type==='file'||el.type==='radio'||el.validity.valid)return;
+      ok=false;setErr(el.name,el.validity.valueMissing?'Required':el.type==='email'?'Enter a valid email':'Check this field');
+    });
+    if(!form.querySelector('input[name=track]:checked')){ok=false;setErr('track','Pick a track, or "Not sure yet"')}
+    var f=file.files[0];
+    if(!f){ok=false;setErr('resume','Add your resume')}
+    else if(!EXT.test(f.name)){ok=false;setErr('resume','Use a PDF or Word file')}
+    else if(f.size>MAX){ok=false;setErr('resume','Resume must be 4 MB or smaller')}
+    return ok;
+  }
+
+  form.addEventListener('submit',function(e){
+    e.preventDefault();
+    msg.textContent='';
+    if(!check()){var bad=form.querySelector('.is-invalid input,.is-invalid select,.is-invalid textarea');if(bad)bad.focus();return}
+    btn.disabled=true;btn.textContent='Sending…';
+    fetch('/api/apply',{method:'POST',body:new FormData(form)}).then(function(r){return r.json().catch(function(){return{ok:false}})}).then(function(res){
+      if(res.ok){
+        var t=track();
+        ga('apply_submit',{track:t});
+        if(typeof plausible==='function')plausible('Apply Submit',{props:{track:t}});
+        try{localStorage.removeItem(KEY)}catch(e){}
+        form.hidden=true;
+        var done=sec.querySelector('.fft-apply__done');done.hidden=false;done.focus();
+        return;
+      }
+      if(res.fields)Object.keys(res.fields).forEach(function(k){setErr(k,res.fields[k])});
+      msg.textContent=res.message||'Something went wrong. Please try again.';
+      throw 0;
+    }).catch(function(){
+      if(!msg.textContent)msg.textContent='Could not reach the server. Check your connection and try again.';
+      btn.disabled=false;btn.textContent='Submit application';
+      if(window.turnstile&&widget)turnstile.reset(widget);
+    });
+  });
+})();
