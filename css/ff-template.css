@@ -331,3 +331,11 @@
   .ff-main .fft-apply__panel { padding: 22px 18px; }
   .ff-main .fft-apply__row, .ff-main .fft-tracks { grid-template-columns: 1fr; }
 }
+.ff-main .fft-apply__panel:has(.fft-apply__embed:not([hidden])) { padding: 0; overflow: hidden; }
+.ff-main .fft-apply__embed[hidden] { display: none; }
+.ff-main .fft-apply__embedbar { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 10px 16px; padding: 16px 20px; border-bottom: 1px solid var(--ff-line); background: #FAFAF7; }
+.ff-main .fft-apply__embedbar p { margin: 0 !important; color: var(--ff-muted); font-size: .9375rem; }
+.ff-main .fft-apply .ff-btn.fft-apply__newtab { background: #fff; color: var(--ff-green-deep) !important; border: 2px solid var(--ff-green-deep); min-height: 44px; display: inline-flex; align-items: center; }
+.ff-main .fft-apply .ff-btn.fft-apply__newtab:hover { background: var(--ff-green-deep); color: #fff !important; }
+.ff-main .fft-apply__embed iframe { display: block; width: 100%; height: 1200px; border: 0; background: #fff; }
+@media (max-width: 560px) { .ff-main .fft-apply__embed iframe { height: 1400px; } .ff-main .fft-apply .ff-btn.fft-apply__newtab { width: 100%; justify-content: center; } }

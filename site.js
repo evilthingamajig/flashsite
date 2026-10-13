@@ -232,8 +232,10 @@
   vids.forEach(function(v){io.observe(v);});
 })();
 
-// Internship application. Apply buttons ([data-apply]) point at the Google Form until /api/apply
-// reports it is configured; then the on-page form (#apply) opens and the buttons jump to it.
+// Internship application (#apply). Until /api/apply reports it is configured, the section shows the
+// Google Form in an iframe; then it switches to the site's own form. Elements carry data-apply-mode.
+// Embed mode can't see inside the iframe, so apply_submit {method:'iframe_estimate'} fires when the
+// iframe loads past the form's last page (data-form-pages); check it against the Form's response count.
 // GA4 events, in funnel order: apply_view (form on screen), apply_start (first field touched),
 // apply_field {field, step} (each question first answered), apply_resume_added, apply_submit_attempt,
 // apply_submit (accepted). Also apply_click (any Apply button), apply_error {reason} and
@@ -259,22 +261,43 @@
   var dropText=form.querySelector('[data-drop-text]'),dropDefault=dropText.innerHTML;
   var widget=null,siteKey='';
 
-  fetch('/api/apply',{cache:'no-store'}).then(function(r){return r.json()}).then(function(s){
-    if(!s.ready)return;
+  function viewed(name){
+    if(!('IntersectionObserver' in window))return;
+    var seen=new IntersectionObserver(function(es){if(es[0].isIntersecting){seen.disconnect();ga(name,{track:track()})}},{threshold:.25});
+    seen.observe(sec.querySelector('.fft-apply__panel'));
+  }
+  function embed(){
+    var ifr=sec.querySelector('[data-apply-mode=embed] iframe');if(!ifr)return;
+    var pages=Number(ifr.dataset.formPages)||1,loads=0,sent=false;
+    ifr.addEventListener('load',function(){
+      loads++;
+      if(loads<2)return;
+      ga('apply_form_progress',{track:track(),load:loads});
+      if(sent||loads!==pages+1)return;
+      sent=true;
+      try{if(sessionStorage.getItem('ff-apply-sent'))return;sessionStorage.setItem('ff-apply-sent','1')}catch(e){}
+      ga('apply_submit',{track:track(),method:'iframe_estimate'});
+      if(typeof plausible==='function')plausible('Apply Submit',{props:{track:track()}});
+    });
+    // Focus moving into the iframe is the only sign someone started the embedded form.
+    window.addEventListener('blur',function(){
+      if(document.activeElement===ifr&&!started){started=true;ga('apply_start',{track:track(),method:'iframe'})}
+    });
+    ifr.src=ifr.dataset.src;
+    viewed('apply_embed_view');
+  }
+  fetch('/api/apply',{cache:'no-store'}).then(function(r){return r.json()}).catch(function(){return{}}).then(function(s){
+    if(!s.ready){embed();return}
     siteKey=s.siteKey;
-    sec.hidden=false;
-    document.querySelectorAll('[data-apply]').forEach(function(a){a.href='#apply';a.removeAttribute('target');a.removeAttribute('rel')});
+    sec.querySelectorAll('[data-apply-mode]').forEach(function(el){el.hidden=el.dataset.applyMode!=='form'});
     form.elements._t.value=String(Date.now());
     restore();
     var pre=sec.dataset.track||qsTrack;
     var r=pre&&form.querySelector('input[name=track][data-track="'+pre+'"]');
     if(r&&!form.querySelector('input[name=track]:checked'))r.checked=true;
     if(location.hash==='#apply')sec.scrollIntoView();
-    if('IntersectionObserver' in window){
-      var seen=new IntersectionObserver(function(es){if(es[0].isIntersecting){seen.disconnect();ga('apply_view',{track:track()})}},{threshold:.25});
-      seen.observe(form);
-    }
-  }).catch(function(){});
+    viewed('apply_view');
+  });
 
   // Turnstile loads on first interaction so it costs nothing for visitors who only read the page.
   function loadCheck(){
