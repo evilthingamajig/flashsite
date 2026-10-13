@@ -238,7 +238,7 @@
 // iframe loads past the form's last page (data-form-pages); check it against the Form's response count.
 // GA4 events, in funnel order: apply_view (form on screen), apply_start (first field touched),
 // apply_field {field, step} (each question first answered), apply_resume_added, apply_submit_attempt,
-// apply_submit (accepted). Also apply_click (any Apply button), apply_error {reason} and
+// apply_submit (accepted). Also apply_click (on-page Apply button), apply_newtab (Google Form opened in a tab), apply_error {reason} and
 // apply_abandon {last_field, fields_done} when someone who started leaves without submitting.
 (function(){
   function ga(name,params){if(typeof gtag==='function')gtag('event',name,params)}
@@ -251,7 +251,10 @@
   }
   document.addEventListener('click',function(e){
     var a=e.target.closest('[data-apply],a[href*="docs.google.com/forms"]');
-    if(a)ga('apply_click',{track:track(),link_url:a.href});
+    if(!a)return;
+    // Opening the Google Form itself is real intent; an on-page Apply button only scrolls to #apply.
+    if(a.href.indexOf('docs.google.com/forms')>-1)ga('apply_newtab',{track:track()});
+    else ga('apply_click',{track:track()});
   });
   if(!form)return;
 
