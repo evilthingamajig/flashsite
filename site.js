@@ -234,7 +234,10 @@
 
 // Internship application. Apply buttons ([data-apply]) point at the Google Form until /api/apply
 // reports it is configured; then the on-page form (#apply) opens and the buttons jump to it.
-// GA4 events: apply_click (any Apply button), apply_start (first field touched), apply_submit (accepted).
+// GA4 events, in funnel order: apply_view (form on screen), apply_start (first field touched),
+// apply_field {field, step} (each question first answered), apply_resume_added, apply_submit_attempt,
+// apply_submit (accepted). Also apply_click (any Apply button), apply_error {reason} and
+// apply_abandon {last_field, fields_done} when someone who started leaves without submitting.
 (function(){
   function ga(name,params){if(typeof gtag==='function')gtag('event',name,params)}
   var sec=document.getElementById('apply');
@@ -267,6 +270,10 @@
     var r=pre&&form.querySelector('input[name=track][data-track="'+pre+'"]');
     if(r&&!form.querySelector('input[name=track]:checked'))r.checked=true;
     if(location.hash==='#apply')sec.scrollIntoView();
+    if('IntersectionObserver' in window){
+      var seen=new IntersectionObserver(function(es){if(es[0].isIntersecting){seen.disconnect();ga('apply_view',{track:track()})}},{threshold:.25});
+      seen.observe(form);
+    }
   }).catch(function(){});
 
   // Turnstile loads on first interaction so it costs nothing for visitors who only read the page.
@@ -275,8 +282,27 @@
     window.ffTurnstile=function(){widget=turnstile.render(form.querySelector('[data-turnstile]'),{sitekey:siteKey,appearance:'interaction-only'})};
     var s=document.createElement('script');s.src='https://challenges.cloudflare.com/turnstile/v0/api.js?onload=ffTurnstile&render=explicit';s.async=true;document.head.appendChild(s);
   }
-  var started=false;
-  form.addEventListener('focusin',function(){loadCheck();if(!started){started=true;ga('apply_start',{track:track()})}});
+  var started=false,submitted=false,lastField='',done={};
+  var order=[].map.call(form.querySelectorAll('[data-field]'),function(f){return f.dataset.field});
+  form.addEventListener('focusin',function(e){
+    loadCheck();
+    var f=e.target.closest('[data-field]');if(f)lastField=f.dataset.field;
+    if(!started){started=true;ga('apply_start',{track:track()})}
+  });
+  // A question counts as answered the first time it holds a valid value.
+  function answered(el){
+    var f=el.closest('[data-field]');if(!f)return;
+    var name=f.dataset.field;
+    if(done[name]||!el.value||(el.type==='radio'&&!el.checked)||(el.validity&&!el.validity.valid))return;
+    done[name]=true;
+    if(name==='resume')ga('apply_resume_added',{track:track(),file_type:(el.files[0].name.split('.').pop()||'').toLowerCase()});
+    else ga('apply_field',{track:track(),field:name,step:order.indexOf(name)+1});
+  }
+  form.addEventListener('change',function(e){answered(e.target)});
+  form.addEventListener('focusout',function(e){answered(e.target)});
+  window.addEventListener('pagehide',function(){
+    if(started&&!submitted)ga('apply_abandon',{track:track(),last_field:lastField,fields_done:Object.keys(done).length,transport_type:'beacon'});
+  });
 
   function save(){
     var d={};
@@ -332,23 +358,29 @@
   form.addEventListener('submit',function(e){
     e.preventDefault();
     msg.textContent='';
-    if(!check()){var bad=form.querySelector('.is-invalid input,.is-invalid select,.is-invalid textarea');if(bad)bad.focus();return}
+    ga('apply_submit_attempt',{track:track()});
+    if(!check()){
+      ga('apply_error',{track:track(),reason:'invalid:'+[].map.call(form.querySelectorAll('.is-invalid'),function(f){return f.dataset.field}).join(',')});
+      var bad=form.querySelector('.is-invalid input,.is-invalid select,.is-invalid textarea');if(bad)bad.focus();return
+    }
     btn.disabled=true;btn.textContent='Sending…';
     fetch('/api/apply',{method:'POST',body:new FormData(form)}).then(function(r){return r.json().catch(function(){return{ok:false}})}).then(function(res){
       if(res.ok){
         var t=track();
+        submitted=true;
         ga('apply_submit',{track:t});
         if(typeof plausible==='function')plausible('Apply Submit',{props:{track:t}});
         try{localStorage.removeItem(KEY)}catch(e){}
         form.hidden=true;
-        var done=sec.querySelector('.fft-apply__done');done.hidden=false;done.focus();
+        var thanks=sec.querySelector('.fft-apply__done');thanks.hidden=false;thanks.focus();
         return;
       }
+      ga('apply_error',{track:track(),reason:res.error||'server'});
       if(res.fields)Object.keys(res.fields).forEach(function(k){setErr(k,res.fields[k])});
       msg.textContent=res.message||'Something went wrong. Please try again.';
       throw 0;
     }).catch(function(){
-      if(!msg.textContent)msg.textContent='Could not reach the server. Check your connection and try again.';
+      if(!msg.textContent){ga('apply_error',{track:track(),reason:'network'});msg.textContent='Could not reach the server. Check your connection and try again.'}
       btn.disabled=false;btn.textContent='Submit application';
       if(window.turnstile&&widget)turnstile.reset(widget);
     });
