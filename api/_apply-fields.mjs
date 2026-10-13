@@ -13,5 +13,5 @@ export const FIELDS = [
 ];
 export const RESUME_ENTRY = ''; // short-answer question that receives the Drive link
 export const KEY_ENTRY = ''; // short-answer question that receives SUBMIT_KEY
-export const PAGE_COUNT = 1; // sections in the Google Form
+export const PAGE_COUNT = 5; // sections in the Google Form
 export const COLLECTS_EMAIL = false; // true if the form's "Collect email addresses" is "Responder input"
