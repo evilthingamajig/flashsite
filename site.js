@@ -242,6 +242,9 @@
 // apply_abandon {last_field, fields_done} when someone who started leaves without submitting.
 (function(){
   function ga(name,params){if(typeof gtag==='function')gtag('event',name,params)}
+  // Google Ads conversions (AW-18497426447 is configured in the gtag snippet build.mjs injects).
+  var ADS={opened:'AW-18497426447/5orUCIvUkJwdEI-oofRE',submitted:'AW-18497426447/foYiCI7UkJwdEI-oofRE'};
+  function adsConv(k){if(typeof gtag==='function')gtag('event','conversion',{send_to:ADS[k]})}
   var sec=document.getElementById('apply');
   var form=sec&&sec.querySelector('[data-apply-form]');
   var qsTrack=new URLSearchParams(location.search).get('track')||'';
@@ -253,7 +256,7 @@
     var a=e.target.closest('[data-apply],a[href*="docs.google.com/forms"]');
     if(!a)return;
     // Opening the Google Form itself is real intent; an on-page Apply button only scrolls to #apply.
-    if(a.href.indexOf('docs.google.com/forms')>-1)ga('apply_newtab',{track:track()});
+    if(a.href.indexOf('docs.google.com/forms')>-1){ga('apply_newtab',{track:track()});adsConv('opened')}
     else ga('apply_click',{track:track()});
   });
   if(!form)return;
@@ -279,7 +282,7 @@
       if(sent||loads!==pages+1)return;
       sent=true;
       try{if(sessionStorage.getItem('ff-apply-sent'))return;sessionStorage.setItem('ff-apply-sent','1')}catch(e){}
-      ga('apply_submit',{track:track(),method:'iframe_estimate'});
+      ga('apply_submit',{track:track(),method:'iframe_estimate'});adsConv('submitted');
       if(typeof plausible==='function')plausible('Apply Submit',{props:{track:track()}});
     });
     // Focus moving into the iframe is the only sign someone started the embedded form.
@@ -394,7 +397,7 @@
       if(res.ok){
         var t=track();
         submitted=true;
-        ga('apply_submit',{track:t});
+        ga('apply_submit',{track:t});adsConv('submitted');
         if(typeof plausible==='function')plausible('Apply Submit',{props:{track:t}});
         try{localStorage.removeItem(KEY)}catch(e){}
         form.hidden=true;

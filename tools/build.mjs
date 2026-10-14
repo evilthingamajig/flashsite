@@ -88,7 +88,7 @@ for (const f of readdirSync(join(ROOT, 'js'))) {
   if (/(site|script|ff-map)\.[0-9a-f]{8}\.js$/.test(f) && ![jsSite, jsScript, jsMap].includes(`/js/${f}`)) rmSync(join(ROOT, 'js', f));
 }
 
-const GATAG = `<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag('js',new Date());gtag('config','G-38F7LJZ8ST');</script>
+const GATAG = `<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag('js',new Date());gtag('config','G-38F7LJZ8ST');gtag('config','AW-18497426447');</script>
 <script>(function(){var u='https://www.googletagmanager.com/gtag/js?id=G-38F7LJZ8ST';var done=false;function load(){if(done)return;done=true;var s=document.createElement('script');s.async=true;s.src=u;document.head.appendChild(s)}if('requestIdleCallback' in window)requestIdleCallback(load,{timeout:3500});else window.setTimeout(load,3500);['pointerdown','keydown','scroll'].forEach(function(e){window.addEventListener(e,load,{once:true,passive:true,capture:true})})})();</script>`;
 
 const FONT_PRELOAD = `<link rel="preload" as="font" type="font/woff2" href="${fonts['sourcesans3-400']}" crossorigin><link rel="preload" as="font" type="font/woff2" href="${fonts['merriweather-900']}" crossorigin><link rel="preload" as="font" type="font/woff2" href="${fonts['merriweather-700']}" crossorigin>`;
@@ -271,6 +271,9 @@ for (const file of pages.sort()) {
   }
 
   html = html.replace(/<script>window\.addEventListener\('load',function\(\)\{var s=document\.createElement\('script'\);s\.async=true;s\.src='https:\/\/www\.googletagmanager\.com\/gtag\/js\?id=G-38F7LJZ8ST';document\.head\.appendChild\(s\)\}\);<\/script>\s*<script>window\.dataLayer[\s\S]*?<\/script>/, GATAG);
+
+  // Re-sync pages that already carry the lazy gtag snippet with the current GATAG (e.g. new config IDs).
+  html = html.replace(/<script>window\.dataLayer=window\.dataLayer\|\|\[\];function gtag\(\)[^<]*<\/script>\s*<script>\(function\(\)\{var u='https:\/\/www\.googletagmanager[^<]*<\/script>/, () => GATAG);
 
   html = html.replace(/<script src="\/site\.js" defer><\/script>|<script defer src="\/site\.js"><\/script>/g, `<script src="${jsSite}" defer></script>`);
   html = html.replace(/<script defer data-domain="([^"]+)" src="\/js\/script\.js"><\/script>/g, `<script defer data-domain="$1" src="${jsScript}"></script>`);
