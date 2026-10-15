@@ -4,6 +4,7 @@
   "buildCommand": "exit 0",
   "outputDirectory": ".",
   "cleanUrls": true,
+  "trailingSlash": true,
   "rewrites": [
     {
       "source": "/api/event",
@@ -274,6 +275,31 @@
     }
   ],
   "headers": [
+    {
+      "source": "/(.*)",
+      "headers": [
+        {
+          "key": "X-Content-Type-Options",
+          "value": "nosniff"
+        },
+        {
+          "key": "X-Frame-Options",
+          "value": "SAMEORIGIN"
+        },
+        {
+          "key": "Referrer-Policy",
+          "value": "strict-origin-when-cross-origin"
+        },
+        {
+          "key": "Permissions-Policy",
+          "value": "camera=(), microphone=(), geolocation=(), usb=()"
+        },
+        {
+          "key": "Cross-Origin-Opener-Policy",
+          "value": "same-origin-allow-popups"
+        }
+      ]
+    },
     {
       "source": "/(.*)\\.(woff|woff2|otf|ttf|eot)",
       "headers": [

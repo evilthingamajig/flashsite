@@ -334,14 +334,14 @@ for (const file of pages.sort()) {
   }
   if (isArticle) {
     const dp = (ldData[rel] || {}).datePublished;
-    if (dp) graph.push({"@type":"NewsArticle","@id":canonUrl+'#article',"headline":h1text,"description":desc,"image":[ogImg],"datePublished":dp,"dateModified":"2026-10-11","author":{"@type":"Organization","@id":BASE+"/#org","name":"Flash Forward Foundation","url":BASE+"/about/team/"},"publisher":{"@id":BASE+"/#org"},"mainEntityOfPage":canonUrl,"inLanguage":"en"});
+    if (dp) graph.push({"@type":"NewsArticle","@id":canonUrl+'#article',"headline":h1text,"description":desc,"image":[ogImg],"datePublished":dp,"dateModified":"2026-10-11","author":{"@type":"NGO","@id":BASE+"/#org","name":"Flash Forward Foundation","url":BASE+"/about/team/"},"publisher":{"@id":BASE+"/#org"},"mainEntityOfPage":canonUrl,"inLanguage":"en"});
   }
   if (rel === '/about/team/') {
     for (const m of html.matchAll(/<div class="ff-card" id="([\w-]+)">[\s\S]*?<img[^>]*src="([^"]+)"[\s\S]*?ff-card__title">([^<]+)<[\s\S]*?ff-card__meta">([^<]+)</g))
       graph.push({"@type":"Person","@id":BASE+"/about/team/#"+m[1],"name":unent(m[3]),"jobTitle":unent(m[4]),"image":BASE+m[2],"worksFor":{"@id":BASE+"/#org"}});
   }
   if (rel.startsWith('/guides/') && rel !== '/guides/') {
-    graph.push({"@type":"Article","@id":canonUrl+'#article',"headline":h1text,"description":desc,"image":[ogImg],"datePublished":"2026-10-12","dateModified":"2026-10-12","author":{"@type":"Organization","@id":BASE+"/#org","name":"Flash Forward Foundation","url":BASE+"/about/team/"},"publisher":{"@id":BASE+"/#org"},"mainEntityOfPage":canonUrl,"inLanguage":"en"});
+    graph.push({"@type":"Article","@id":canonUrl+'#article',"headline":h1text,"description":desc,"image":[ogImg],"datePublished":"2026-10-12","dateModified":"2026-10-12","author":{"@type":"NGO","@id":BASE+"/#org","name":"Flash Forward Foundation","url":BASE+"/about/team/"},"publisher":{"@id":BASE+"/#org"},"mainEntityOfPage":canonUrl,"inLanguage":"en"});
   }
   if (FAQ_PAGES.has(rel) || rel.startsWith('/internships/') || (rel.startsWith('/guides/') && rel !== '/guides/')) {
     const qa = [];
