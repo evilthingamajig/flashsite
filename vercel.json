@@ -4,7 +4,6 @@
   "buildCommand": "exit 0",
   "outputDirectory": ".",
   "cleanUrls": true,
-  "trailingSlash": true,
   "rewrites": [
     {
       "source": "/api/event",
@@ -271,6 +270,11 @@
     {
       "source": "/get-involved/apply/",
       "destination": "/get-involved/internship/",
+      "permanent": true
+    },
+    {
+      "source": "/:path((?!api/|_vercel/)[^.]*[^./])",
+      "destination": "/:path/",
       "permanent": true
     }
   ],
