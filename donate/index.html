@@ -124,13 +124,43 @@
 <span class="ff-qty-custom"><input type="number" min="1" max="100" placeholder="Custom" data-custom-quantity aria-label="Custom number of lights"></span>
 </div></fieldset>
 </form></div></div><aside class="ff-gift-card" aria-label="Your gift"><button type="button" id="needed-most-button" class="ff-link-more" hidden>Where it's needed most</button><p class="ff-gift-card__row"><span class="ff-gift-card__label">Destination</span><span id="dest-pref" class="ff-gift-card__value">Where it's needed most</span></p><p class="ff-gift-card__row"><span class="ff-gift-card__label">Gift</span><span id="gift-line" class="ff-gift-card__value">One time · 1 light</span></p><p class="ff-gift-card__row ff-gift-card__row--total"><span class="ff-gift-card__label">Total</span><span id="gift-total" class="ff-gift-card__amount">$5.17</span></p><div id="givebutter-embed" class="ff-embed-slot">
-<!-- Givebutter widget goes here: replace this panel's contents with the <givebutter-widget> embed -->
-<div class="ff-embed-panel">
-<h2 class="ff-embed-title">Online giving opens soon</h2>
-<p>The secure donation form (Givebutter) is being set up and will be on this page shortly.</p>
-
-</div>
-</div><p class="ff-gift-card__note">Your destination preference: <strong id="dest-pref-note">Where it's needed most</strong>. Add it in the note field when the form opens.</p></aside></div></section><section class="ff-section ff-section--rule"><div class="ff-wrap">
+<!-- Givebutter form widget: campaign "Solar Study Lights for Students" (BKSCSC). Library script is in <head>. -->
+<givebutter-widget id="L0ywAo" align="center" frequency="once" amount="5.17" fund="73949"></givebutter-widget>
+<noscript><p><a href="https://givebutter.com/fund-solar-light-for-off-grid-students-bkscsc">Give securely on Givebutter</a></p></noscript>
+</div><p class="ff-gift-card__note">Your destination: <strong id="dest-pref-note">Where it's needed most</strong>. It's pre-selected as the fund in the form above, and you can change it there.</p></aside>
+<script>
+// Mirror the gift builder (frequency, light count, destination) into the Givebutter widget.
+// Givebutter only pre-selects options that exist on the campaign: amounts are the 1/3/5/10/20/50-light
+// presets ($5.17 each) and funds use Givebutter's numeric fund IDs. The widget has no update API, so it is re-created.
+(function(){
+  var slot=document.getElementById('givebutter-embed');if(!slot)return;
+  var LIGHT=5.17,PRESETS=[1,3,5,10,20,50];
+  var FUNDS={'greatest-need':'73949',haiti:'73950',india:'73951',drc:'73952'};
+  var dest=document.body.dataset.destination||'greatest-need',last='',timer;
+  function state(){
+    var f=document.querySelector('[data-gift-builder] input[name=frequency]:checked');
+    var c=document.querySelector('[data-custom-quantity]');
+    var a=document.querySelector('[data-gift-builder] [data-quantity].is-active');
+    var q=c&&c.value?Number(c.value):(a?Number(a.dataset.quantity):1);
+    return {frequency:f&&f.value==='monthly'?'monthly':'once',amount:PRESETS.indexOf(q)>-1?(LIGHT*q).toFixed(2):'',fund:FUNDS[dest]||FUNDS['greatest-need']};
+  }
+  function render(){
+    var s=state(),key=s.frequency+'|'+s.amount+'|'+s.fund;if(key===last)return;last=key;
+    var w=document.createElement('givebutter-widget');
+    w.setAttribute('id','L0ywAo');w.setAttribute('align','center');
+    w.setAttribute('frequency',s.frequency);w.setAttribute('fund',s.fund);
+    if(s.amount)w.setAttribute('amount',s.amount);
+    var old=slot.querySelector('givebutter-widget');
+    if(old)old.replaceWith(w);else slot.prepend(w);
+  }
+  function soon(){clearTimeout(timer);timer=setTimeout(render,250)}
+  last='once|5.17|73949';
+  document.addEventListener('click',function(e){if(e.target.closest('[data-gift-builder] [data-quantity]'))soon()});
+  document.addEventListener('change',function(e){if(e.target.matches('[data-gift-builder] input[name=frequency]'))soon()});
+  document.addEventListener('input',function(e){if(e.target.matches('[data-custom-quantity]'))soon()});
+  document.addEventListener('flash:destinationchange',function(e){if(e.detail&&FUNDS[e.detail.destination]){dest=e.detail.destination;soon()}});
+})();
+</script></div></section><section class="ff-section ff-section--rule"><div class="ff-wrap">
 <div class="fft-head">
 <div>
 <p class="ff-kicker">More</p>
