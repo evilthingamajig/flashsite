@@ -415,3 +415,25 @@
     });
   });
 })();
+
+// Donation conversions (/donate/). The Givebutter widget library reports to the page's gtag():
+// add_to_cart when a donor starts the form, begin_checkout at the payment step, and purchase
+// {value, currency, transaction_id} when the gift completes. GA4 gets those as they are; this forwards
+// begin_checkout and purchase to the Google Ads conversion actions "FF Donation Started" and "FF Donation".
+(function(){
+  if(!document.querySelector('givebutter-widget')||typeof window.gtag!=='function')return;
+  var ADS={purchase:'AW-18497426447/4VKdCKjb8rkdEI-oofRE',begin_checkout:'AW-18497426447/9tntCJ-Y_LkdEI-oofRE'};
+  var orig=window.gtag,sent={};
+  window.gtag=function(type,name,p){
+    orig.apply(this,arguments);
+    if(type!=='event'||!ADS[name])return;
+    p=p||{};
+    var key=name+':'+(p.transaction_id||'');
+    if(sent[key])return;sent[key]=1;
+    if(name==='purchase'){
+      var c={send_to:ADS.purchase,value:Number(p.value)||5.17,currency:p.currency||'USD'};
+      if(p.transaction_id)c.transaction_id=String(p.transaction_id);
+      orig('event','conversion',c);
+    }else orig('event','conversion',{send_to:ADS.begin_checkout});
+  };
+})();
