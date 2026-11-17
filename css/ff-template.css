@@ -527,3 +527,7 @@
   .ff-footer .ff-footer__cols { grid-template-columns: 1fr 1fr; gap: 24px 16px; padding: 28px 0; }
   .ff-footer .ff-footer__col--contact { grid-column: 1 / -1; }
 }
+/* Donate: on one-column layouts the form sits below the destination picker, so the page head links straight to it. */
+.ff-main .ff-donate-jump { display: none; }
+.ff-main #give { scroll-margin-top: 84px; }
+@media (max-width: 900px) { .ff-main .ff-donate-jump { display: block; margin: 18px 0 0; } .ff-main .ff-donate-jump .ff-btn { display: block; text-align: center; } }
