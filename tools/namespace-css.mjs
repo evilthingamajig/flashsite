@@ -23,6 +23,7 @@ let css = fs.readFileSync(rawPath, 'utf8');
 
 // Drop @charset / @import fonts that fight FF fonts (keep urls we may need later)
 css = css.replace(/@charset[^;]+;/gi, '');
+css = css.replace(/@import\s+url\([^)]+\)\s*;/gi, '/* @import stripped */');
 
 function prefixSelectorList(selectors) {
   return selectors
