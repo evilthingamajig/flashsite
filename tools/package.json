@@ -5,6 +5,7 @@
   "dependencies": {
     "esbuild": "0.28.2",
     "lightningcss": "1.33.0",
+    "puppeteer-core": "^23.11.1",
     "purgecss": "8.0.0"
   }
 }
