@@ -63,37 +63,115 @@
   });});
 })();
 
-// Gift builder (donate page)
+// Donate: One-time | Study Circle + amount chips + destination → Givebutter widget
 (function(){
   var LIGHT=5.17;
-  var labels={'greatest-need':"Where it's needed most",haiti:'Haiti (Brighten Haiti)',india:'India (Loksadhana)',drc:'DR Congo (Malaika)'};
-  document.querySelectorAll('[data-gift-builder]').forEach(function(b){
-    var qty=1,dest=b.dataset.destination||document.body.dataset.destination||'greatest-need';
-    var btns=[].slice.call(b.querySelectorAll('[data-quantity]'));
-    var custom=b.querySelector('[data-custom-quantity]');
-    var freqs=[].slice.call(b.querySelectorAll('input[type=radio][name=frequency]'));
-    function freq(){var c=freqs.find(function(i){return i.checked});return c?c.value:'once'}
-    function render(){
-      var recurring=freq()==='monthly';
-      var amt=(LIGHT*qty).toFixed(2);
-      var name=labels[dest]||labels['greatest-need'];
-      var line=(recurring?'Monthly':'One time')+' · '+qty+' '+(qty===1?'light':'lights');
-      var gl=document.getElementById('gift-line');if(gl)gl.textContent=line;
-      var gt=document.getElementById('gift-total');if(gt)gt.textContent='$'+amt+(recurring?'/mo':'');
-      var pref=document.getElementById('dest-pref');if(pref)pref.textContent=name;
-      var note=document.getElementById('dest-pref-note');if(note)note.textContent=name;
-    }
-    function pick(btn){qty=Number(btn.dataset.quantity);if(custom)custom.value='';
-      btns.forEach(function(i){i.classList.toggle('is-active',i===btn);i.setAttribute('aria-pressed',String(i===btn))});render()}
-    btns.forEach(function(i){i.addEventListener('click',function(){pick(i)})});
-    freqs.forEach(function(i){i.addEventListener('change',render)});
-    if(custom)custom.addEventListener('input',function(){
-      if(custom.value==='')return;qty=Math.max(1,Math.min(100,Math.floor(Number(custom.value)||1)));custom.value=String(qty);
-      btns.forEach(function(i){i.classList.remove('is-active');i.setAttribute('aria-pressed','false')});render()});
-    document.addEventListener('flash:destinationchange',function(e){
-      if(e.detail&&labels[e.detail.destination]){dest=e.detail.destination;render()}});
-    render();
+  var FUNDS={'greatest-need':'73949',haiti:'73950',india:'73951',drc:'73952'};
+  var LABELS={'greatest-need':'Greatest need',haiti:'Haiti (Brighten Haiti)',india:'India (Loksadhana)',drc:'DR Congo (Malaika)'};
+  var slot=document.getElementById('givebutter-embed');
+  if(!slot&&!document.querySelector('[data-donate-freq]'))return;
+  var qty=1,freq='once',dest='greatest-need';
+  var params=new URLSearchParams(location.search);
+  if(params.get('destination')&&FUNDS[params.get('destination')])dest=params.get('destination');
+  if(location.hash==='#study-circle')freq='monthly';
+
+  function mountWidget(){
+    if(!slot)return;
+    var w=document.createElement('givebutter-widget');
+    w.setAttribute('id','L0ywAo');
+    w.setAttribute('align','center');
+    w.setAttribute('frequency',freq);
+    w.setAttribute('amount',(LIGHT*qty).toFixed(2));
+    w.setAttribute('fund',FUNDS[dest]||FUNDS['greatest-need']);
+    var old=slot.querySelector('givebutter-widget');
+    if(old)old.replaceWith(w);else slot.prepend(w);
+  }
+  function render(){
+    var amt=(LIGHT*qty).toFixed(2);
+    var gt=document.getElementById('gift-total');
+    if(gt)gt.textContent='$'+amt+(freq==='monthly'?'/mo':'');
+    var note=document.getElementById('dest-pref-note');
+    if(note)note.textContent=LABELS[dest]||LABELS['greatest-need'];
+    var fl=document.querySelector('[data-freq-label]');
+    if(fl)fl.textContent=freq==='monthly'?'Study Circle':'One-time';
+    document.querySelectorAll('[data-donate-freq] [data-freq]').forEach(function(b){
+      b.classList.toggle('is-active',b.getAttribute('data-freq')===freq);
+    });
+    document.querySelectorAll('[data-donate-amounts] [data-qty]').forEach(function(b){
+      b.classList.toggle('is-active',Number(b.getAttribute('data-qty'))===qty);
+    });
+    document.querySelectorAll('[data-destination-card]').forEach(function(b){
+      b.classList.toggle('is-selected',b.getAttribute('data-destination-card')===dest);
+    });
+    mountWidget();
+  }
+  document.querySelectorAll('[data-donate-freq] [data-freq]').forEach(function(b){
+    b.addEventListener('click',function(){freq=b.getAttribute('data-freq');render()});
   });
+  document.querySelectorAll('[data-donate-amounts] [data-qty]').forEach(function(b){
+    b.addEventListener('click',function(){qty=Number(b.getAttribute('data-qty'))||1;render()});
+  });
+  document.querySelectorAll('[data-destination-card]').forEach(function(b){
+    b.addEventListener('click',function(){
+      dest=b.getAttribute('data-destination-card');
+      document.dispatchEvent(new CustomEvent('flash:destinationchange',{detail:{destination:dest}}));
+      render();
+    });
+  });
+  document.addEventListener('flash:destinationchange',function(e){
+    if(e.detail&&FUNDS[e.detail.destination]){dest=e.detail.destination;render()}
+  });
+  // Legacy gift-builder hooks (if present)
+  document.querySelectorAll('[data-gift-builder]').forEach(function(b){
+    b.querySelectorAll('[data-quantity]').forEach(function(btn){
+      btn.addEventListener('click',function(){qty=Number(btn.dataset.quantity)||1;render()});
+    });
+  });
+  render();
+})();
+
+// Pathway step reveal on scroll
+(function(){
+  var steps=[].slice.call(document.querySelectorAll('[data-pathway-step]'));
+  if(!steps.length)return;
+  if(window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches){
+    steps.forEach(function(s){s.classList.add('is-in','is-active')});return;
+  }
+  if(!('IntersectionObserver' in window)){steps.forEach(function(s){s.classList.add('is-in','is-active')});return}
+  var io=new IntersectionObserver(function(entries){
+    entries.forEach(function(en){
+      if(!en.isIntersecting)return;
+      var list=en.target.parentElement?[].slice.call(en.target.parentElement.querySelectorAll('[data-pathway-step]')):steps;
+      list.forEach(function(step,i){
+        window.setTimeout(function(){
+          step.classList.add('is-in');
+          if(i===0)step.classList.add('is-active');
+        },i*80);
+      });
+      io.disconnect();
+    });
+  },{threshold:0.25});
+  io.observe(steps[0]);
+})();
+
+// Impact Stories filter chips
+(function(){
+  var grid=document.getElementById('ff-storygrid');if(!grid)return;
+  var chips=document.querySelectorAll('[data-story-filters] .ff-filter');
+  chips.forEach(function(c){c.addEventListener('click',function(){
+    chips.forEach(function(x){x.classList.remove('is-active')});c.classList.add('is-active');
+    var t=c.getAttribute('data-filter');
+    grid.querySelectorAll('[data-type]').forEach(function(row){
+      row.style.display=(t==='all'||row.getAttribute('data-type')===t)?'':'none';
+    });
+  });});
+})();
+
+// Sticky nav border on scroll
+(function(){
+  var nav=document.querySelector('.ff-nav');if(!nav)return;
+  var on=function(){nav.classList.toggle('is-scrolled',window.scrollY>8)};
+  on();window.addEventListener('scroll',on,{passive:true});
 })();
 
 // Scroll-scrubbed CAD assembly (the-light page)

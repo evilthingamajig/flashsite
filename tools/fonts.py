@@ -13,18 +13,25 @@ os.makedirs(RAW, exist_ok=True)
 os.makedirs(OUT, exist_ok=True)
 
 UA = {'User-Agent': 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36'}
-URL = ('https://fonts.googleapis.com/css2?'
-       'family=Merriweather:wght@400;700;900&family=Source+Sans+3:ital,wght@0,400;0,600;0,700;1,400&display=swap')
+URL = (
+    'https://fonts.googleapis.com/css2?'
+    'family=Syne:wght@700;800&'
+    'family=Figtree:ital,wght@0,400;0,500;0,600;0,700;1,400&'
+    'family=Newsreader:ital,wght@1,500&display=swap'
+)
 
 req = urllib.request.Request(URL, headers=UA)
 css = urllib.request.urlopen(req).read().decode()
 
-blocks = re.findall(r'/\* (\S+) \*/\s*@font-face\s*{[^}]*font-family:\s*\'([^\']+)\'[^}]*font-style:\s*(\w+)[^}]*font-weight:\s*(\d+)[^}]*src:\s*url\(([^)]+)\)[^}]*unicode-range:\s*([^;}]+)', css)
+blocks = re.findall(
+    r'/\* (\S+) \*/\s*@font-face\s*{[^}]*font-family:\s*\'([^\']+)\'[^}]*font-style:\s*(\w+)[^}]*font-weight:\s*(\d+)[^}]*src:\s*url\(([^)]+)\)[^}]*unicode-range:\s*([^;}]+)',
+    css,
+)
 raws = {}
 for subset, fam, style, w, url, ur in blocks:
     if subset != 'latin':
         continue
-    key = fam + '-' + style
+    key = f'{fam}-{style}-{w}'
     if key in raws:
         continue
     fn = os.path.join(RAW, key + '.woff2')
@@ -34,7 +41,7 @@ for subset, fam, style, w, url, ur in blocks:
 
 # charset: printable ASCII + typographic punctuation + every non-ASCII char on the pages
 chars = set(range(0x20, 0x7F))
-chars.update(ord(c) for c in '–—‘’“”…·→•©×¹²')
+chars.update(ord(c) for c in '–—‘’“”…·→•©×¹²≈')
 for f in glob.glob(ROOT + '/**/index.html', recursive=True):
     if '/ref/' in f:
         continue
@@ -57,12 +64,30 @@ def process(src, dst, pin=None):
     f.save(dst)
     print(os.path.basename(dst), os.path.getsize(dst), 'bytes')
 
-for w in (400, 700, 900):
-    process(raws['Merriweather-normal'], os.path.join(OUT, f'merriweather-{w}.woff2'), {'wght': w})
-for w in (400, 600, 700):
-    process(raws['Source Sans 3-normal'], os.path.join(OUT, f'sourcesans3-{w}.woff2'), {'wght': w})
-process(raws['Source Sans 3-italic'], os.path.join(OUT, 'sourcesans3-italic.woff2'), {'wght': 400})
+# Clear old Merriweather / Source Sans outputs so build.mjs does not keep stale faces
+for old in glob.glob(os.path.join(OUT, '*.woff2')):
+    os.remove(old)
 
-for name in ('merriweather-900', 'sourcesans3-400'):
-    f = TTFont(os.path.join(OUT, name + '.woff2'))
-    print(f'{name}: upm={f["head"].unitsPerEm} asc={f["hhea"].ascent} desc={f["hhea"].descent} lg={f["hhea"].lineGap}')
+for w in (700, 800):
+    src = raws.get(f'Syne-normal-{w}') or raws.get('Syne-normal-700')
+    process(src, os.path.join(OUT, f'syne-{w}.woff2'), {'wght': w})
+
+for w in (400, 500, 600, 700):
+    process(raws['Figtree-normal-400'] if f'Figtree-normal-{w}' not in raws else raws[f'Figtree-normal-{w}'],
+            os.path.join(OUT, f'figtree-{w}.woff2'), {'wght': w})
+
+# Figtree italic 400
+ital = raws.get('Figtree-italic-400')
+if ital:
+    process(ital, os.path.join(OUT, 'figtree-italic.woff2'), {'wght': 400})
+
+# Newsreader italic 500 for pull quotes
+nr = raws.get('Newsreader-italic-500') or raws.get('Newsreader-italic-400')
+if nr:
+    process(nr, os.path.join(OUT, 'newsreader-italic.woff2'), {'wght': 500})
+
+for name in ('syne-800', 'figtree-400'):
+    path = os.path.join(OUT, name + '.woff2')
+    if os.path.exists(path):
+        f = TTFont(path)
+        print(f'{name}: upm={f["head"].unitsPerEm} asc={f["hhea"].ascent} desc={f["hhea"].descent} lg={f["hhea"].lineGap}')
