@@ -1,78 +1,101 @@
-/* Abridged stitch pages: FF brand surfaces, no peer color fights */
+/* Abridged pages — New Story tokens (cyan / navy / Barlow / Mint) */
 .ff-abridge {
-  --ff-green-deep: #0F3D2A;
-  --ff-green: #1E6B45;
-  --ff-ink: #1B1F1D;
-  --ff-muted: #55615B;
-  --ff-white: #FFFFFF;
-  --ff-cream: #F7F6F2;
-  --ff-line: #E2E2E2;
+  --ff-green-deep: #1a1a1a;
+  --ff-green: #00bae0;
+  --ff-ink: #333333;
+  --ff-muted: #4d595c;
+  --ff-white: #ffffff;
+  --ff-cream: #f0f6f7;
+  --ff-line: rgba(51, 51, 51, 0.12);
+  --ff-navy: #003e50;
+  --ff-display: "Mint Grotesk Display", "Barlow", system-ui, sans-serif;
+  --ff-body: "Barlow", system-ui, sans-serif;
 }
 .ff-abridge {
   background: var(--ff-white);
   color: var(--ff-ink);
-  font-family: "Source Sans 3", "Source Sans Pro", system-ui, sans-serif;
+  font-family: var(--ff-body);
 }
 .ff-abridge h1,
 .ff-abridge h2,
 .ff-abridge h3 {
-  font-family: Merriweather, Georgia, serif;
+  font-family: var(--ff-display);
+  font-weight: 800;
   color: var(--ff-green-deep);
-  line-height: 1.2;
+  line-height: 1.15;
+  letter-spacing: -0.02em;
   margin: 0 0 0.5rem;
 }
-.ff-abridge p { color: var(--ff-muted); line-height: 1.55; margin: 0 0 1rem; }
-.ff-abridge a { color: var(--ff-green); }
+.ff-abridge p { color: var(--ff-muted); line-height: 1.6; margin: 0 0 1rem; }
+.ff-abridge a { color: var(--ff-navy); }
 
 .ff-abridge__hero {
   position: relative;
-  min-height: min(70vh, 640px);
+  min-height: min(72vh, 680px);
   display: grid;
   align-items: end;
   color: #fff;
-  background: #0a1f16 center/cover no-repeat;
+  background: #003e50 center/cover no-repeat;
+  border-radius: 0 0 24px 24px;
+  margin: 0.75rem 0.75rem 0;
+  overflow: hidden;
 }
 .ff-abridge__hero::after {
   content: "";
   position: absolute;
   inset: 0;
-  background: linear-gradient(180deg, rgba(15,61,42,.25) 0%, rgba(15,61,42,.78) 100%);
+  background: linear-gradient(
+    105deg,
+    rgba(0, 62, 80, 0.78) 0%,
+    rgba(0, 62, 80, 0.4) 48%,
+    rgba(0, 0, 0, 0.18) 100%
+  );
 }
 .ff-abridge__hero-inner {
   position: relative;
   z-index: 1;
   padding: clamp(2rem, 6vw, 4.5rem) clamp(1.25rem, 4vw, 3rem);
-  max-width: 40rem;
+  max-width: 42rem;
 }
 .ff-abridge .ff-abridge__hero h1,
 .ff-abridge__hero h1 {
   color: #fff !important;
-  font-size: clamp(2rem, 5vw, 3.25rem);
-  text-shadow: 0 1px 2px rgba(0,0,0,.35);
+  font-size: clamp(2.4rem, 6vw, 4.5rem);
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.25);
 }
 .ff-abridge .ff-abridge__hero p,
 .ff-abridge__hero p {
-  color: rgba(255,255,255,.92) !important;
-  font-size: 1.125rem;
+  color: rgba(255, 255, 255, 0.92) !important;
+  font-size: 1.2rem;
 }
 
 .ff-abridge__band {
-  padding: clamp(2.5rem, 6vw, 4rem) clamp(1.25rem, 4vw, 3rem);
+  padding: clamp(2.75rem, 6vw, 4.5rem) clamp(1.25rem, 4vw, 3rem);
   max-width: 1100px;
   margin: 0 auto;
 }
 .ff-abridge__band--cream { background: var(--ff-cream); max-width: none; }
+.ff-abridge__band--navy {
+  background: var(--ff-navy);
+  max-width: none;
+  color: #fff;
+}
+.ff-abridge__band--navy h2,
+.ff-abridge__band--navy h3 { color: #fff !important; }
+.ff-abridge__band--navy p { color: rgba(255, 255, 255, 0.85) !important; }
 .ff-abridge__band--cream > .ff-abridge__inner,
+.ff-abridge__band--navy > .ff-abridge__inner,
 .ff-abridge__band > .ff-abridge__inner { max-width: 1100px; margin: 0 auto; }
 
 .ff-abridge__kicker {
   text-transform: uppercase;
-  letter-spacing: .06em;
-  font-size: .75rem;
+  letter-spacing: 0.14em;
+  font-size: 0.75rem;
   font-weight: 700;
   color: var(--ff-green);
-  margin-bottom: .5rem;
+  margin-bottom: 0.5rem;
 }
+.ff-abridge__hero .ff-abridge__kicker { color: var(--ff-green); }
 
 .ff-abridge__grid {
   display: grid;
@@ -81,36 +104,48 @@
   margin-top: 1.5rem;
 }
 .ff-abridge__card {
-  background: #fff;
+  background: var(--ff-cream);
   border: 1px solid var(--ff-line);
-  padding: 1.25rem 1.25rem 1.5rem;
+  border-radius: 16px;
+  padding: 1.5rem 1.35rem 1.65rem;
 }
-.ff-abridge__card h3 { font-size: 1.25rem; }
+.ff-abridge__card h3 { font-size: 1.35rem; }
 .ff-abridge__card p { margin-bottom: 1.25rem; }
 
 .ff-abridge__btn {
   display: inline-block;
-  padding: .65rem 1.15rem;
-  background: var(--ff-green-deep);
-  color: #fff !important;
+  padding: 0.7rem 1.55rem;
+  background: var(--ff-green);
+  color: #1a1a1a !important;
   text-decoration: none;
-  font-weight: 600;
+  font-family: var(--ff-display);
+  font-weight: 700;
   border-radius: 999px;
+  border: 2px solid transparent;
+}
+.ff-abridge__btn:hover {
+  background: #1a1a1a;
+  color: #fff !important;
 }
 .ff-abridge__btn--ghost {
   background: transparent;
-  color: var(--ff-green-deep) !important;
-  border: 1.5px solid var(--ff-green-deep);
+  color: #1a1a1a !important;
+  border: 2px solid #1a1a1a;
 }
-.ff-abridge__btn-row { display: flex; flex-wrap: wrap; gap: .75rem; margin-top: 1rem; }
+.ff-abridge__hero .ff-abridge__btn--ghost {
+  color: #fff !important;
+  border-color: #fff;
+}
+.ff-abridge__btn-row { display: flex; flex-wrap: wrap; gap: 0.75rem; margin-top: 1.15rem; }
 
 .ff-abridge__stat {
-  font-family: Merriweather, Georgia, serif;
-  font-size: clamp(1.75rem, 4vw, 2.5rem);
-  color: var(--ff-green-deep);
+  font-family: var(--ff-display);
+  font-weight: 800;
+  font-size: clamp(1.85rem, 4vw, 2.75rem);
+  color: var(--ff-navy);
   margin: 0;
 }
-.ff-abridge__stat-label { color: var(--ff-muted); margin: .25rem 0 0; }
+.ff-abridge__stat-label { color: var(--ff-muted); margin: 0.25rem 0 0; }
 
 .ff-abridge__media {
   width: 100%;
@@ -118,6 +153,7 @@
   object-fit: cover;
   display: block;
   background: #ddd;
+  border-radius: 16px;
 }
 .ff-abridge__story-card .ff-abridge__media { margin-bottom: 1rem; }
 
@@ -129,6 +165,7 @@
 }
 @media (max-width: 800px) {
   .ff-abridge__split { grid-template-columns: 1fr; }
+  .ff-abridge__hero { margin: 0.5rem 0.5rem 0; border-radius: 0 0 16px 16px; }
 }
 
 .ff-abridge__list {
@@ -136,4 +173,10 @@
   padding-left: 1.15rem;
   color: var(--ff-muted);
 }
-.ff-abridge__list li { margin-bottom: .5rem; }
+.ff-abridge__list li { margin-bottom: 0.5rem; }
+
+.ff-abridge__hero .ff-abridge__lede {
+  color: rgba(255, 255, 255, 0.94) !important;
+  font-size: 1.2rem;
+  max-width: 36rem;
+}
