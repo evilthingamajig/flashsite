@@ -24,10 +24,13 @@ const PRIORITY = new Set([
   '/impact/', '/impact/outcomes/', '/impact/reports/',
   '/impact-stories/', '/impact-stories/malaika/', '/impact-stories/brighten-haiti/', '/impact-stories/loksadhana/',
   '/join/', '/join/internships/', '/join/open-roles/', '/join/apply/',
+  '/join/open-roles/coo/', '/join/open-roles/cpo/', '/join/open-roles/cfo/',
+  '/join/open-roles/director-partnerships/', '/join/open-roles/director-marketing/', '/join/open-roles/director-fundraising/',
+  '/internships/marketing/', '/internships/partnerships-operations/', '/internships/fundraising/', '/internships/remote/',
   '/get-involved/', '/get-involved/ambassadors/', '/get-involved/partners/',
   '/get-involved/partners/assembly/', '/get-involved/partners/distribution/',
   '/get-involved/internship/', '/donate/', '/about/', '/about/team/',
-  '/nonprofit-status/', '/faq/', '/contact/',
+  '/nonprofit-status/', '/faq/', '/contact/', '/privacy/', '/terms/', '/site-map/', '/guides/',
 ]);
 
 const urlPath = (f) => f.replace(ROOT, '').replace(/\\/g, '/').replace(/\/index\.html$/, '/') || '/';
@@ -170,26 +173,5 @@ for (const file of walk(ROOT)) {
   console.log('patched', rel);
 }
 
-// Internship track pages — short rewrite headers
-for (const track of [
-  ['marketing', 'Marketing & Communications', 'Social campaigns, writing, design and video. Marketing course available.'],
-  ['partnerships-operations', 'Partnerships & Operations', 'Partner pipelines and delivery ops — not soldering workshops.'],
-  ['fundraising', 'Fundraising & Development', 'Grants, sponsors, and Study Circle stewardship.'],
-  ['remote', 'Remote Internships', 'All internship tracks are remote-friendly. Engineering is not listed on site for v1.'],
-]) {
-  const rel = `/internships/${track[0]}/`;
-  writeFileSync(join(ROOT, 'internships', track[0], 'index.html'), page({
-    title: `${track[1]} Internship | Flash Forward`,
-    description: `${track[1]} unpaid internship at Flash Forward Foundation. ${track[2]}`,
-    canonical: rel,
-    active: 'join',
-    main: pagehead('Join · Internships', track[1], track[2])
-      + `<section class="ff-section"><div class="ff-wrap ff-prose">
-<p>Unpaid. Remote-friendly. Apply through the shared Join funnel with a track picker.</p>
-<div class="ff-btnrow"><a class="ff-btn ff-btn--primary" href="/join/apply/?track=${track[0] === 'remote' ? '' : track[0]}">Apply</a><a class="ff-btn ff-btn--ghost" href="/join/internships/">All tracks</a></div>
-</div></section>`,
-  }));
-  console.log('track', rel);
-}
-
+// Internship track + open-role detail pages are written by sree-pass.mjs (rich boilerplate).
 console.log('secondary patch done');

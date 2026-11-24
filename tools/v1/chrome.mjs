@@ -28,7 +28,6 @@ export function nav(active = '') {
 <div class="ff-wrap ff-nav__row">
 <a href="/" class="ff-logo"><img src="/images/brand/mark-green-104.png" alt="" width="71" height="104"><span class="ff-logo-text">Flash Forward<br>Foundation</span></a>
 <button type="button" class="ff-nav__toggle" aria-controls="site-nav" aria-expanded="false" aria-label="Open menu"><i class="fa-solid fa-bars" aria-hidden="true"></i></button>
-<a class="ff-nav__donate" href="/donate/">Donate</a>
 <ul class="ff-nav__list">
 <li class="ff-nav__item${a('model')}"><a href="/our-model/">Our Model</a>
 <ul>
@@ -68,6 +67,7 @@ export function nav(active = '') {
 <li><a href="/contact/">Contact</a></li>
 </ul></li>
 </ul>
+<a class="ff-nav__donate" href="/donate/">Donate</a>
 </div>
 </nav>
 `;

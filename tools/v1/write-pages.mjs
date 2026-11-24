@@ -40,7 +40,7 @@ const APPLY_FORM = `<section class="ff-section" id="apply"><div class="ff-wrap">
 <div class="fft-tracks">
 <label class="fft-track"><input type="radio" name="track" value="Marketing &amp; Communications" data-track="marketing" required><span class="fft-track__name">Internship · Marketing</span><span class="fft-track__text">Campaigns, writing, design, video</span></label>
 <label class="fft-track"><input type="radio" name="track" value="Partnerships &amp; Operations" data-track="partnerships-operations" required><span class="fft-track__name">Internship · Partnerships &amp; Ops</span><span class="fft-track__text">Partner pipelines and delivery</span></label>
-<label class="fft-track"><input type="radio" name="track" value="Fundraising &amp; Development" data-track="fundraising" required><span class="fft-track__name">Internship · Fundraising</span><span class="fft-track__text">Grants, sponsors, Study Circle</span></label>
+<label class="fft-track"><input type="radio" name="track" value="Fundraising &amp; Growth" data-track="fundraising" required><span class="fft-track__name">Internship · Fundraising &amp; Growth</span><span class="fft-track__text">Grants, sponsors, Study Circle</span></label>
 <label class="fft-track"><input type="radio" name="track" value="Ambassador" data-track="ambassador" required><span class="fft-track__name">Ambassador</span><span class="fft-track__text">Awareness, connections, content, peer fundraise</span></label>
 <label class="fft-track"><input type="radio" name="track" value="Open role" data-track="opening" required><span class="fft-track__name">Open leadership role</span><span class="fft-track__text">COO, CPO, CFO, or Director seat</span></label>
 <label class="fft-track"><input type="radio" name="track" value="Not sure yet" data-track="" required><span class="fft-track__name">Not sure yet</span><span class="fft-track__text">We will help you choose</span></label>
@@ -469,7 +469,7 @@ out('/join/', page({
 <div class="ff-paths">
 <a class="ff-path" href="/internships/marketing/"><p class="ff-path__title">Marketing</p><p class="ff-path__text">Campaigns, writing, design, video. Course available.</p></a>
 <a class="ff-path" href="/internships/partnerships-operations/"><p class="ff-path__title">Partnerships &amp; Ops</p><p class="ff-path__text">Assembly and distribution partner pipelines.</p></a>
-<a class="ff-path" href="/internships/fundraising/"><p class="ff-path__title">Fundraising</p><p class="ff-path__text">Grants, sponsors, Study Circle stewardship.</p></a>
+<a class="ff-path" href="/internships/fundraising/"><p class="ff-path__title">Fundraising &amp; Growth</p><p class="ff-path__text">Grants, sponsors, Study Circle stewardship.</p></a>
 </div>
 <p style="margin-top:16px;color:var(--ff-muted);font-size:var(--ff-text-small)">Engineering internship is not listed on the public site for v1.</p>
 </div></section>
@@ -497,7 +497,7 @@ out('/join/internships/', page({
 <div class="ff-paths">
 <a class="ff-path" href="/internships/marketing/"><p class="ff-path__title">Marketing &amp; Communications</p><p class="ff-path__text">Social, writing, design, video.</p></a>
 <a class="ff-path" href="/internships/partnerships-operations/"><p class="ff-path__title">Partnerships &amp; Operations</p><p class="ff-path__text">Partner orgs and delivery ops.</p></a>
-<a class="ff-path" href="/internships/fundraising/"><p class="ff-path__title">Fundraising &amp; Development</p><p class="ff-path__text">Grants, sponsors, monthly giving.</p></a>
+<a class="ff-path" href="/internships/fundraising/"><p class="ff-path__title">Fundraising &amp; Growth</p><p class="ff-path__text">Grants, sponsors, monthly giving.</p></a>
 </div>
 <div class="ff-btnrow"><a class="ff-btn ff-btn--primary" href="/join/apply/">Apply to intern</a></div>
 </div></section>`,
