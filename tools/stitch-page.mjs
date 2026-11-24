@@ -8,7 +8,7 @@
  *     --target impact/index.html \
  *     --shell about/index.html \
  *     --title "Impact — Flash Forward" \
- *     --css-list "pih-home.css,oaf-impact.css,base.css,theme.css,ff-template.css,contrast.css" \
+ *     --css-list "ff.css,oaf-impact.css" \
  *     [--trim-watts] \
  *     [--body-class ff-page-impact]
  *
@@ -34,11 +34,11 @@ function has(name) {
 
 const slug = arg('slug');
 const targetRel = arg('target');
-const shellRel = arg('shell', 'about/index.html');
+const shellRel = arg('shell', 'index.html');
 const title = arg('title');
 const cssList = arg(
   'css-list',
-  `pih-home.css,${slug}.css,base.css,theme.css,ff-template.css,contrast.css`,
+  `ff.css,${slug}.css,ff-peer-green.css`,
 );
 const bodyClass = arg('body-class', `ff ff-page-${slug}`);
 const canonical = arg('canonical', '');
@@ -122,7 +122,19 @@ const repls = [
   [/The Spring/gi, 'Study Circle'],
   [/100%\s*Model/gi, 'Trust Model'],
 ];
+
 for (const [re, to] of repls) mainHtml = mainHtml.replace(re, to);
+
+// Promote lazy data-src → src; strip peer video embeds
+mainHtml = mainHtml.replace(/<img([^>]*?)\sdata-src=["']([^"']+)["']/gi, (m, attrs, src) => {
+  if (/\ssrc=["']/.test(attrs)) return m.replace(/\sdata-src=["'][^"']+["']/, '');
+  return `<img${attrs} src="${src}"`;
+});
+mainHtml = mainHtml.replace(/<(iframe|video)[^>]*>[\s\S]*?<\/\1>/gi, (m) => {
+  if (/youtube|youtu\.be|vimeo|jerryrig|wistia/i.test(m)) return '<!-- peer video removed -->';
+  return m;
+});
+
 
 const hidePeerChrome = `
 <style>

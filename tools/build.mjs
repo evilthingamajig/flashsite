@@ -58,22 +58,15 @@ for (const f of readdirSync(join(ROOT, 'fonts'))) {
   if (!Object.values(fonts).includes(`/fonts/${f}`)) rmSync(join(ROOT, 'fonts', f));
 }
 const FONT_CSS = [
-  `@font-face{font-family:"Merriweather";src:url("${fonts['merriweather-900']}") format("woff2");font-weight:900;font-style:normal;font-display:swap}`,
-  `@font-face{font-family:"Merriweather";src:url("${fonts['merriweather-700']}") format("woff2");font-weight:700;font-style:normal;font-display:swap}`,
-  `@font-face{font-family:"Merriweather";src:url("${fonts['merriweather-400']}") format("woff2");font-weight:400;font-style:normal;font-display:swap}`,
-  `@font-face{font-family:"Source Sans 3";src:url("${fonts['sourcesans3-400']}") format("woff2");font-weight:400;font-style:normal;font-display:swap}`,
-  `@font-face{font-family:"Source Sans 3";src:url("${fonts['sourcesans3-600']}") format("woff2");font-weight:600;font-style:normal;font-display:swap}`,
-  `@font-face{font-family:"Source Sans 3";src:url("${fonts['sourcesans3-700']}") format("woff2");font-weight:700;font-style:normal;font-display:swap}`,
-  `@font-face{font-family:"Source Sans 3";src:url("${fonts['sourcesans3-italic']}") format("woff2");font-weight:400;font-style:italic;font-display:swap}`,
-  `@font-face{font-family:"Merriweather Fallback";src:local("Liberation Serif"),local("Georgia");font-display:swap;font-weight:400;font-style:normal;size-adjust:115.9%;ascent-override:84.9%;descent-override:23.55%;line-gap-override:0%}`,
-  `@font-face{font-family:"Merriweather Fallback";src:local("Liberation Serif Bold"),local("Georgia Bold");font-display:swap;font-weight:700;font-style:normal;size-adjust:116.3%;ascent-override:84.61%;descent-override:23.47%;line-gap-override:0%}`,
-  `@font-face{font-family:"Merriweather Fallback";src:local("Liberation Serif Bold"),local("Georgia Bold");font-display:swap;font-weight:900;font-style:normal;size-adjust:119.2%;ascent-override:82.55%;descent-override:22.9%;line-gap-override:0%}`,
-  `@font-face{font-family:"Source Sans 3 Fallback";src:local("Liberation Sans"),local(Arial);font-display:swap;font-weight:400;font-style:normal;size-adjust:95.7%;ascent-override:107.0%;descent-override:41.8%;line-gap-override:0%}`,
-  `@font-face{font-family:"Source Sans 3 Fallback";src:local("Liberation Sans Bold"),local("Arial Bold");font-display:swap;font-weight:600;font-style:normal;size-adjust:86.8%;ascent-override:117.97%;descent-override:46.08%;line-gap-override:0%}`,
-  `@font-face{font-family:"Source Sans 3 Fallback";src:local("Liberation Sans Bold"),local("Arial Bold");font-display:swap;font-weight:700;font-style:normal;size-adjust:93.1%;ascent-override:109.99%;descent-override:42.96%;line-gap-override:0%}`,
-  `@font-face{font-family:"Source Sans 3 Fallback";src:local("Liberation Sans Italic"),local("Arial Italic");font-display:swap;font-weight:400;font-style:italic;size-adjust:95.7%;ascent-override:107.0%;descent-override:41.8%;line-gap-override:0%}`,
-
-].join('');
+  `@font-face{font-family:"Syne";src:url("${fonts['syne-800']}") format("woff2");font-weight:800;font-style:normal;font-display:swap}`,
+  `@font-face{font-family:"Syne";src:url("${fonts['syne-700']}") format("woff2");font-weight:700;font-style:normal;font-display:swap}`,
+  `@font-face{font-family:"Figtree";src:url("${fonts['figtree-400']}") format("woff2");font-weight:400;font-style:normal;font-display:swap}`,
+  `@font-face{font-family:"Figtree";src:url("${fonts['figtree-500']}") format("woff2");font-weight:500;font-style:normal;font-display:swap}`,
+  `@font-face{font-family:"Figtree";src:url("${fonts['figtree-600']}") format("woff2");font-weight:600;font-style:normal;font-display:swap}`,
+  `@font-face{font-family:"Figtree";src:url("${fonts['figtree-700']}") format("woff2");font-weight:700;font-style:normal;font-display:swap}`,
+  fonts['figtree-italic'] ? `@font-face{font-family:"Figtree";src:url("${fonts['figtree-italic']}") format("woff2");font-weight:400;font-style:italic;font-display:swap}` : '',
+  fonts['newsreader-italic'] ? `@font-face{font-family:"Newsreader";src:url("${fonts['newsreader-italic']}") format("woff2");font-weight:500;font-style:italic;font-display:swap}` : '',
+].filter(Boolean).join('');
 
 async function minjs(src, outStem) {
   const r = await esbuild.transform(readFileSync(join(ROOT, src), 'utf8'), { minify: true });
@@ -91,12 +84,14 @@ for (const f of readdirSync(join(ROOT, 'js'))) {
 const GATAG = `<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag('js',new Date());gtag('config','G-38F7LJZ8ST');gtag('config','AW-18497426447');</script>
 <script>(function(){var u='https://www.googletagmanager.com/gtag/js?id=G-38F7LJZ8ST';var done=false;function load(){if(done)return;done=true;var s=document.createElement('script');s.async=true;s.src=u;document.head.appendChild(s)}if('requestIdleCallback' in window)requestIdleCallback(load,{timeout:3500});else window.setTimeout(load,3500);['pointerdown','keydown','scroll'].forEach(function(e){window.addEventListener(e,load,{once:true,passive:true,capture:true})})})();</script>`;
 
-const FONT_PRELOAD = `<link rel="preload" as="font" type="font/woff2" href="${fonts['sourcesans3-400']}" crossorigin><link rel="preload" as="font" type="font/woff2" href="${fonts['merriweather-900']}" crossorigin><link rel="preload" as="font" type="font/woff2" href="${fonts['merriweather-700']}" crossorigin>`;
+const FONT_PRELOAD = `<link rel="preload" as="font" type="font/woff2" href="${fonts['figtree-400']}" crossorigin><link rel="preload" as="font" type="font/woff2" href="${fonts['syne-800']}" crossorigin><link rel="preload" as="font" type="font/woff2" href="${fonts['syne-700']}" crossorigin>`;
 
 function rewriteFamilies(css) {
   return css
-    .replace(/(["']?)Merriweather\1\s*,\s*Georgia\s*,\s*serif/g, '"Merriweather","Merriweather Fallback",Georgia,serif')
-    .replace(/(["']?)Source Sans 3\1\s*,\s*sans-serif/g, '"Source Sans 3","Source Sans 3 Fallback",sans-serif');
+    .replace(/(["']?)Syne\1\s*,\s*"Segoe UI"\s*,\s*sans-serif/g, '"Syne","Segoe UI",sans-serif')
+    .replace(/(["']?)Figtree\1\s*,\s*"Segoe UI"\s*,\s*sans-serif/g, '"Figtree","Segoe UI",sans-serif')
+    .replace(/(["']?)Merriweather\1\s*,\s*Georgia\s*,\s*serif/g, '"Syne","Segoe UI",sans-serif')
+    .replace(/(["']?)Source Sans 3\1\s*,\s*sans-serif/g, '"Figtree","Segoe UI",sans-serif');
 }
 
 const baseSrc = (src) => {
@@ -122,10 +117,10 @@ const report = [];
 const ldData = JSON.parse(readFileSync(join(ROOT, 'tools/ld.json')));
 
 const BASE = 'https://flashforwardfoundation.org';
-const LD_ORG = {"@type":"NGO","@id":BASE+"/#org","name":"Flash Forward Foundation","alternateName":"Flash Forward","url":BASE+"/","logo":{"@type":"ImageObject","url":BASE+"/images/brand/mark-green.png"},"description":"Student-run 501(c)(3) nonprofit in Bellevue, Washington that builds $5.17 solar study lights for students without electricity.","foundingDate":"2024","foundingLocation":{"@type":"Place","name":"Bellevue, Washington"},"nonprofitStatus":"https://schema.org/Nonprofit501c3","taxID":"39-3605570","email":"about@flashforwardfoundation.org","address":{"@type":"PostalAddress","streetAddress":"1402 153rd Pl SE","addressLocality":"Bellevue","addressRegion":"WA","postalCode":"98007","addressCountry":"US"},"areaServed":["Haiti","India","Democratic Republic of the Congo"],"sameAs":["https://www.instagram.com/flashforwardfoundation/"]};
+const LD_ORG = {"@type":"NGO","@id":BASE+"/#org","name":"Flash Forward Foundation","alternateName":"Flash Forward","url":BASE+"/","logo":{"@type":"ImageObject","url":BASE+"/images/brand/mark-green.png"},"description":"Student-led 501(c)(3) nonprofit that designs solar study lights with assembly partners and places them through distribution partners so students without reliable electricity can study after dark.","foundingDate":"2024","foundingLocation":{"@type":"Place","name":"Bellevue, Washington"},"nonprofitStatus":"https://schema.org/Nonprofit501c3","taxID":"39-3605570","email":"about@flashforwardfoundation.org","address":{"@type":"PostalAddress","streetAddress":"1402 153rd Pl SE","addressLocality":"Bellevue","addressRegion":"WA","postalCode":"98007","addressCountry":"US"},"areaServed":["Haiti","India","Democratic Republic of the Congo"],"sameAs":["https://www.instagram.com/flashforwardfoundation/"]};
 const LD_SITE = {"@type":"WebSite","@id":BASE+"/#website","name":"Flash Forward Foundation","url":BASE+"/","publisher":{"@id":BASE+"/#org"},"inLanguage":"en","potentialAction":{"@type":"SearchAction","target":{"@type":"EntryPoint","urlTemplate":BASE+"/search/?q={search_term_string}"},"query-input":"required name=search_term_string"}};
-const CRUMB_LABELS = {'/our-work/':'Our Work','/get-involved/':'Get Involved','/about/':'Our Story','/news/':'News & Notes','/guides/':'Student Guides'};
-const FAQ_PAGES = new Set(['/faq/','/donate/','/get-involved/','/get-involved/internship/','/news/why-study-lights/']);
+const CRUMB_LABELS = {'/our-model/':'Our Model','/our-work/':'Our Model','/impact/':'Impact','/impact-stories/':'Impact Stories','/join/':'Join','/get-involved/':'Get Involved','/about/':'About','/news/':'News','/guides/':'Student Guides'};
+const FAQ_PAGES = new Set(['/faq/','/donate/','/get-involved/','/join/','/join/apply/','/get-involved/internship/','/news/why-study-lights/']);
 const unent = (t) => t.replace(/&amp;/g,'&').replace(/&rsquo;/g,'\u2019').replace(/&lsquo;/g,'\u2018').replace(/&ldquo;/g,'\u201c').replace(/&rdquo;/g,'\u201d').replace(/&ndash;/g,'\u2013').replace(/&mdash;/g,'\u2014').replace(/&nbsp;/g,'\xa0').replace(/&#039;/g,"'").replace(/<[^>]+>/g,'').trim();
 
 for (const file of pages.sort()) {

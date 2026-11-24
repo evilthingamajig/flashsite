@@ -24,32 +24,32 @@
     },
     {
       "source": "/news/how-a-light-is-built",
-      "destination": "/our-work/how-we-build/",
+      "destination": "/our-model/made-and-delivered/",
       "permanent": true
     },
     {
       "source": "/news/how-a-light-is-built/",
-      "destination": "/our-work/how-we-build/",
+      "destination": "/our-model/made-and-delivered/",
       "permanent": true
     },
     {
       "source": "/news/light-cost",
-      "destination": "/our-work/the-light/",
+      "destination": "/our-model/the-study-light/",
       "permanent": true
     },
     {
       "source": "/news/light-cost/",
-      "destination": "/our-work/the-light/",
+      "destination": "/our-model/the-study-light/",
       "permanent": true
     },
     {
       "source": "/news/internship-note",
-      "destination": "/get-involved/internship/",
+      "destination": "/join/internships/",
       "permanent": true
     },
     {
       "source": "/news/internship-note/",
-      "destination": "/get-involved/internship/",
+      "destination": "/join/internships/",
       "permanent": true
     },
     {
@@ -90,36 +90,6 @@
     {
       "source": "/archived-members.html",
       "destination": "/about/team/",
-      "permanent": true
-    },
-    {
-      "source": "/volunteering",
-      "destination": "/get-involved/internship/",
-      "permanent": true
-    },
-    {
-      "source": "/volunteering.html",
-      "destination": "/get-involved/internship/",
-      "permanent": true
-    },
-    {
-      "source": "/volunteer-adventures",
-      "destination": "/get-involved/internship/",
-      "permanent": true
-    },
-    {
-      "source": "/volunteer-adventures.html",
-      "destination": "/get-involved/internship/",
-      "permanent": true
-    },
-    {
-      "source": "/volunteer",
-      "destination": "/get-involved/internship/",
-      "permanent": true
-    },
-    {
-      "source": "/volunteer.html",
-      "destination": "/get-involved/internship/",
       "permanent": true
     },
     {
@@ -234,12 +204,12 @@
     },
     {
       "source": "/donate/choose/stories/:slug",
-      "destination": "/our-work/partners/:slug/",
+      "destination": "/impact-stories/:slug/",
       "permanent": true
     },
     {
       "source": "/impact/:slug",
-      "destination": "/our-work/partners/:slug/",
+      "destination": "/impact-stories/:slug/",
       "permanent": true
     },
     {
@@ -249,27 +219,137 @@
     },
     {
       "source": "/donate/choose/stories/:slug/",
-      "destination": "/our-work/partners/:slug/",
+      "destination": "/impact-stories/:slug/",
       "permanent": true
     },
     {
       "source": "/get-involved/volunteer",
-      "destination": "/get-involved/internship/",
+      "destination": "/get-involved/",
       "permanent": true
     },
     {
       "source": "/get-involved/volunteer/",
-      "destination": "/get-involved/internship/",
+      "destination": "/get-involved/",
       "permanent": true
     },
     {
       "source": "/get-involved/apply",
-      "destination": "/get-involved/internship/",
+      "destination": "/join/apply/",
       "permanent": true
     },
     {
       "source": "/get-involved/apply/",
-      "destination": "/get-involved/internship/",
+      "destination": "/join/apply/",
+      "permanent": true
+    },
+    {
+      "source": "/our-work",
+      "destination": "/our-model/",
+      "permanent": true
+    },
+    {
+      "source": "/our-work/",
+      "destination": "/our-model/",
+      "permanent": true
+    },
+    {
+      "source": "/our-work/how-we-build",
+      "destination": "/our-model/made-and-delivered/",
+      "permanent": true
+    },
+    {
+      "source": "/our-work/how-we-build/",
+      "destination": "/our-model/made-and-delivered/",
+      "permanent": true
+    },
+    {
+      "source": "/our-work/the-light",
+      "destination": "/our-model/the-study-light/",
+      "permanent": true
+    },
+    {
+      "source": "/our-work/the-light/",
+      "destination": "/our-model/the-study-light/",
+      "permanent": true
+    },
+    {
+      "source": "/our-work/where",
+      "destination": "/impact-stories/",
+      "permanent": true
+    },
+    {
+      "source": "/our-work/where/",
+      "destination": "/impact-stories/",
+      "permanent": true
+    },
+    {
+      "source": "/our-work/partners/malaika",
+      "destination": "/impact-stories/malaika/",
+      "permanent": true
+    },
+    {
+      "source": "/our-work/partners/malaika/",
+      "destination": "/impact-stories/malaika/",
+      "permanent": true
+    },
+    {
+      "source": "/our-work/partners/brighten-haiti",
+      "destination": "/impact-stories/brighten-haiti/",
+      "permanent": true
+    },
+    {
+      "source": "/our-work/partners/brighten-haiti/",
+      "destination": "/impact-stories/brighten-haiti/",
+      "permanent": true
+    },
+    {
+      "source": "/our-work/partners/loksadhana",
+      "destination": "/impact-stories/loksadhana/",
+      "permanent": true
+    },
+    {
+      "source": "/our-work/partners/loksadhana/",
+      "destination": "/impact-stories/loksadhana/",
+      "permanent": true
+    },
+    {
+      "source": "/get-involved/internship",
+      "destination": "/join/internships/",
+      "permanent": true
+    },
+    {
+      "source": "/get-involved/internship/",
+      "destination": "/join/internships/",
+      "permanent": true
+    },
+    {
+      "source": "/volunteering",
+      "destination": "/get-involved/",
+      "permanent": true
+    },
+    {
+      "source": "/volunteering.html",
+      "destination": "/get-involved/",
+      "permanent": true
+    },
+    {
+      "source": "/volunteer",
+      "destination": "/get-involved/",
+      "permanent": true
+    },
+    {
+      "source": "/volunteer.html",
+      "destination": "/get-involved/",
+      "permanent": true
+    },
+    {
+      "source": "/volunteer-adventures",
+      "destination": "/get-involved/",
+      "permanent": true
+    },
+    {
+      "source": "/volunteer-adventures.html",
+      "destination": "/get-involved/",
       "permanent": true
     }
   ],

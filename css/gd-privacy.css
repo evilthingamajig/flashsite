@@ -128,12 +128,13 @@
   font-weight: 900;
   font-display: swap;
   src: url(https://fonts.gstatic.com/s/inter/v20/UcCO3FwrK3iLTeHuS_nVMrMxCp50SjIw2boKoduKmMEVuBWYMZg.ttf) format('truetype');
-}main{--color-base-white:#fff;--color-base-black:#000;--color-neutral-100:#f9f7f6;--color-neutral-200:#d9d9d9;--color-neutral-300:#bec2c1;--color-neutral-400:#757575;--color-neutral-500:#4d4d4d;--color-neutral-600:#262626;--color-brand-primary:#095845;--color-green-100:#e4eeec;--color-green-200:#9dbcb5;--color-green-600:#053328;--color-brown-100:#f9f7f2;--color-brown-200:#f2ede2;--color-orange-600:#b6520d;--color-red-500:#d94636;--color-accent-blue:#0589ff;--color-accent-orange:#e06a00;--color-accent-purple:#6b287a;--color-accent-yellow:#a69411;--color-accent-green:#34a853;--number-none:0px;--number-xs:4px;--number-sm:6px;--number-base:8px;--number-md:12px;--number-lg:13px;--number-xl:14px;--number-2xl:16px;--number-3xl:18px;--number-4xl:24px;--number-5xl:32px;--number-6xl:40px;--number-7xl:48px;--number-8xl:56px;--number-9xl:64px;--number-10xl:80px;--number-full:999px;--font-system:"Inter";--border-radius-none:var(--number-none);--border-color-default:var(--color-neutral-200);--border-radius-xs:var(--number-xs);--border-radius-sm:var(--number-sm);--border-radius-base:var(--number-base);--border-radius-md:var(--number-xl);--border-radius-lg:var(--number-2xl);--border-radius-full:var(--number-full);--border-color-focus:var(--color-brand-primary);--border-color-warning:var(--color-red-500);--border-color-alert:var(--color-accent-orange);--border-color-surface:var(--surface-primary);--border-color-tertiary:var(--surface-tertiary);--icon-default:var(--color-neutral-400);--icon-disabled:var(--color-neutral-300);--icon-active:var(--color-brand-primary);--icon-white:var(--color-base-white);--font-color-headline:var(--color-neutral-600);--font-color-body:var(--color-neutral-500);--font-color-placeholder:var(--color-neutral-400);--font-color-disabled:var(--color-neutral-400);--font-color-white:var(--color-base-white);--font-color-brand:var(--color-brand-primary);--font-color-accent:var(--color-green-200);--font-color-green:var(--color-accent-green);--font-color-warning:var(--color-red-500);--surface-primary:var(--color-base-white);--surface-secondary:var(--color-green-100);--surface-tertiary:var(--color-brown-100);--surface-tertiary-hover:var(--color-brown-200);--surface-dark-green:var(--color-green-600);--surface-nocturnal:var(--color-neutral-600);--surface-gray:var(--color-neutral-100);--surface-accent-green:var(--color-accent-green);--surface-accent-blue:var(--color-accent-blue);--surface-accent-orange:var(--color-accent-orange);--surface-accent-purple:var(--color-accent-purple);--button-color-default:var(--color-brand-primary);--button-color-hover-light:var(--color-green-100);--button-color-hover-dark:var(--color-green-600);--button-color-disabled:var(--color-neutral-100);--button-alert-default:var(--color-accent-orange);--button-alert-hover:var(--color-orange-600);--button-alert-disabled:var(--color-neutral-100);--spacing-sm:var(--number-xs);--spacing-base:var(--number-base);--spacing-md:var(--number-xl);--spacing-lg:var(--number-2xl);--spacing-xl:var(--number-4xl);--spacing-2xl:var(--number-5xl);--spacing-3xl:var(--number-6xl);--spacing-4xl:var(--number-7xl);--spacing-5xl:var(--number-9xl);--spacing-6xl:var(--number-10xl);--font-family-primary:var(--font-system);--font-letter-spacing-xs:-1px;--font-letter-spacing-sm:-.2px;--font-letter-spacing-md:.2px;--font-letter-spacing-lg:2px;--font-weight-regular:400;--font-weight-medium:500;--font-weight-semibold:600;--font-weight-bold:700;--font-size-xxs:var(--number-md);--font-size-xs:var(--number-lg);--font-size-sm:var(--number-xl);--font-size-base:var(--number-2xl);--font-size-md:var(--number-3xl);--font-size-lg:var(--number-4xl);--font-size-xl:var(--number-5xl);--font-size-2xl:var(--number-6xl);--font-size-3xl:var(--number-8xl);--font-line-height-xs:var(--number-2xl);--font-line-height-sm:var(--number-3xl);--font-line-height-base:var(--number-4xl);--font-line-height-md:var(--number-5xl);--font-line-height-lg:var(--number-6xl);--font-line-height-xl:var(--number-7xl);--font-line-height-2xl:var(--number-9xl)}
+}.R-gd-privacy /* source: https://www.givedirectly.org/build/assets/theme-variables-D0MRUW8Z.css */
+main{--color-base-white:#fff;--color-base-black:#000;--color-neutral-100:#f9f7f6;--color-neutral-200:#d9d9d9;--color-neutral-300:#bec2c1;--color-neutral-400:#757575;--color-neutral-500:#4d4d4d;--color-neutral-600:#262626;--color-brand-primary:#095845;--color-green-100:#e4eeec;--color-green-200:#9dbcb5;--color-green-600:#053328;--color-brown-100:#f9f7f2;--color-brown-200:#f2ede2;--color-orange-600:#b6520d;--color-red-500:#d94636;--color-accent-blue:#0589ff;--color-accent-orange:#e06a00;--color-accent-purple:#6b287a;--color-accent-yellow:#a69411;--color-accent-green:#34a853;--number-none:0px;--number-xs:4px;--number-sm:6px;--number-base:8px;--number-md:12px;--number-lg:13px;--number-xl:14px;--number-2xl:16px;--number-3xl:18px;--number-4xl:24px;--number-5xl:32px;--number-6xl:40px;--number-7xl:48px;--number-8xl:56px;--number-9xl:64px;--number-10xl:80px;--number-full:999px;--font-system:"Inter";--border-radius-none:var(--number-none);--border-color-default:var(--color-neutral-200);--border-radius-xs:var(--number-xs);--border-radius-sm:var(--number-sm);--border-radius-base:var(--number-base);--border-radius-md:var(--number-xl);--border-radius-lg:var(--number-2xl);--border-radius-full:var(--number-full);--border-color-focus:var(--color-brand-primary);--border-color-warning:var(--color-red-500);--border-color-alert:var(--color-accent-orange);--border-color-surface:var(--surface-primary);--border-color-tertiary:var(--surface-tertiary);--icon-default:var(--color-neutral-400);--icon-disabled:var(--color-neutral-300);--icon-active:var(--color-brand-primary);--icon-white:var(--color-base-white);--font-color-headline:var(--color-neutral-600);--font-color-body:var(--color-neutral-500);--font-color-placeholder:var(--color-neutral-400);--font-color-disabled:var(--color-neutral-400);--font-color-white:var(--color-base-white);--font-color-brand:var(--color-brand-primary);--font-color-accent:var(--color-green-200);--font-color-green:var(--color-accent-green);--font-color-warning:var(--color-red-500);--surface-primary:var(--color-base-white);--surface-secondary:var(--color-green-100);--surface-tertiary:var(--color-brown-100);--surface-tertiary-hover:var(--color-brown-200);--surface-dark-green:var(--color-green-600);--surface-nocturnal:var(--color-neutral-600);--surface-gray:var(--color-neutral-100);--surface-accent-green:var(--color-accent-green);--surface-accent-blue:var(--color-accent-blue);--surface-accent-orange:var(--color-accent-orange);--surface-accent-purple:var(--color-accent-purple);--button-color-default:var(--color-brand-primary);--button-color-hover-light:var(--color-green-100);--button-color-hover-dark:var(--color-green-600);--button-color-disabled:var(--color-neutral-100);--button-alert-default:var(--color-accent-orange);--button-alert-hover:var(--color-orange-600);--button-alert-disabled:var(--color-neutral-100);--spacing-sm:var(--number-xs);--spacing-base:var(--number-base);--spacing-md:var(--number-xl);--spacing-lg:var(--number-2xl);--spacing-xl:var(--number-4xl);--spacing-2xl:var(--number-5xl);--spacing-3xl:var(--number-6xl);--spacing-4xl:var(--number-7xl);--spacing-5xl:var(--number-9xl);--spacing-6xl:var(--number-10xl);--font-family-primary:var(--font-system);--font-letter-spacing-xs:-1px;--font-letter-spacing-sm:-.2px;--font-letter-spacing-md:.2px;--font-letter-spacing-lg:2px;--font-weight-regular:400;--font-weight-medium:500;--font-weight-semibold:600;--font-weight-bold:700;--font-size-xxs:var(--number-md);--font-size-xs:var(--number-lg);--font-size-sm:var(--number-xl);--font-size-base:var(--number-2xl);--font-size-md:var(--number-3xl);--font-size-lg:var(--number-4xl);--font-size-xl:var(--number-5xl);--font-size-2xl:var(--number-6xl);--font-size-3xl:var(--number-8xl);--font-line-height-xs:var(--number-2xl);--font-line-height-sm:var(--number-3xl);--font-line-height-base:var(--number-4xl);--font-line-height-md:var(--number-5xl);--font-line-height-lg:var(--number-6xl);--font-line-height-xl:var(--number-7xl);--font-line-height-2xl:var(--number-9xl)}
 @media (width<=767px){
 .R-gd-privacy main{--spacing-2xl:var(--number-4xl);--spacing-5xl:var(--number-6xl);--font-size-base:var(--number-xl);--font-size-md:var(--number-2xl);--font-size-lg:var(--number-3xl);--font-size-xl:var(--number-4xl);--font-size-2xl:var(--number-5xl);--font-size-3xl:var(--number-7xl);--font-line-height-md:var(--number-4xl);--font-line-height-lg:var(--number-5xl);--font-line-height-xl:var(--number-5xl);--font-line-height-2xl:var(--number-6xl)}
 
 }
-
+.R-gd-privacy /* source: https://www.givedirectly.org/build/assets/genesis-blocks-Dbh7c0mp.css */
 .gb-block-testimonial{color:#293038;background:#f2f2f2;border-radius:5px;margin:0 auto 1.2em;padding:5%}
 .R-gd-privacy .gb-block-testimonial .gb-testimonial-info{width:100%;min-height:55px;margin-top:15px;padding-top:5px;line-height:1.4;display:inline-block;position:relative}
 .R-gd-privacy .gb-block-testimonial .gb-testimonial-info .blocks-editable{padding-left:0}
@@ -718,7 +719,7 @@
 .R-gd-privacy ol.gpb-number-list, .R-gd-privacy .editor-styles-wrapper ol.gpb-number-list{counter-reset:gpb-list-counter;margin-left:0;padding:0;list-style:none}
 .R-gd-privacy ol.gpb-number-list li, .R-gd-privacy .editor-styles-wrapper ol.gpb-number-list li{counter-increment:gpb-list-counter;margin-bottom:1.2em;padding-left:65px;list-style-type:none;position:relative}
 .R-gd-privacy ol.gpb-number-list li:before{content:counter(gpb-list-counter) "";color:#fff;text-align:center;background:#333;border-radius:100px;width:42px;height:42px;line-height:41px;position:absolute;top:10px;left:0}
-
+.R-gd-privacy /* source: https://www.givedirectly.org/build/assets/core-blocks-BI_7p_79.css */
 img:is([sizes=auto i], .R-gd-privacy [sizes^=auto\, .R-gd-privacy i]){contain-intrinsic-size:3000px 1500px}
 .R-gd-privacy .wp-block-audio{box-sizing:border-box}
 .R-gd-privacy .wp-block-audio :where(figcaption){margin-top:.5em;margin-bottom:1em}
@@ -1128,7 +1129,7 @@ img:is([sizes=auto i], .R-gd-privacy [sizes^=auto\, .R-gd-privacy i]){contain-in
 }
 .R-gd-privacy .wp-block-video.aligncenter{text-align:center}
 .R-gd-privacy .wp-block-video :where(figcaption){margin-top:.5em;margin-bottom:1em}
-
+.R-gd-privacy /* source: https://www.givedirectly.org/build/assets/theme-blocks-C4Bvcm47.css */
 .gd-accordion-item{border-bottom:1px solid #e5e5e5;transition:height .3s;overflow:hidden}
 .R-gd-privacy .gd-accordion-item:last-child{border-bottom:0}
 .R-gd-privacy .gd-accordion-header{cursor:pointer;color:#262626;-webkit-user-select:none;user-select:none;background:#fff;justify-content:space-between;align-items:center;padding:16px 0;font-family:Inter,sans-serif;font-size:16px;font-weight:600;line-height:24px;list-style:none;transition:background-color .2s;display:flex}
@@ -1197,7 +1198,7 @@ img:is([sizes=auto i], .R-gd-privacy [sizes^=auto\, .R-gd-privacy i]){contain-in
 }
 .R-gd-privacy .wp-block-gd-youtube.is-vertical{aspect-ratio:9/16;max-width:350px;margin-left:auto;margin-right:auto;padding-bottom:0}
 .R-gd-privacy .wp-block-gd-youtube iframe{width:100%;height:100%;position:absolute;top:0;left:0}
-
+.R-gd-privacy /* source: https://www.givedirectly.org/build/assets/global-styles-CItYJlPn.css */
 :root{--wp--preset--aspect-ratio--square:1;--wp--preset--aspect-ratio--4-3:4/3;--wp--preset--aspect-ratio--3-4:3/4;--wp--preset--aspect-ratio--3-2:3/2;--wp--preset--aspect-ratio--2-3:2/3;--wp--preset--aspect-ratio--16-9:16/9;--wp--preset--aspect-ratio--9-16:9/16;--wp--preset--color--black:#000;--wp--preset--color--cyan-bluish-gray:#abb8c3;--wp--preset--color--white:#fff;--wp--preset--color--pale-pink:#f78da7;--wp--preset--color--vivid-red:#cf2e2e;--wp--preset--color--luminous-vivid-orange:#ff6900;--wp--preset--color--luminous-vivid-amber:#fcb900;--wp--preset--color--light-green-cyan:#7bdcb5;--wp--preset--color--vivid-green-cyan:#00d084;--wp--preset--color--pale-cyan-blue:#8ed1fc;--wp--preset--color--vivid-cyan-blue:#0693e3;--wp--preset--color--vivid-purple:#9b51e0;--wp--preset--gradient--vivid-cyan-blue-to-vivid-purple:linear-gradient(135deg,#0693e3 0%,#9b51e0 100%);--wp--preset--gradient--light-green-cyan-to-vivid-green-cyan:linear-gradient(135deg,#7adcb4 0%,#00d082 100%);--wp--preset--gradient--luminous-vivid-amber-to-luminous-vivid-orange:linear-gradient(135deg,#fcb900 0%,#ff6900 100%);--wp--preset--gradient--luminous-vivid-orange-to-vivid-red:linear-gradient(135deg,#ff6900 0%,#cf2e2e 100%);--wp--preset--gradient--very-light-gray-to-cyan-bluish-gray:linear-gradient(135deg,#eee 0%,#a9b8c3 100%);--wp--preset--gradient--cool-to-warm-spectrum:linear-gradient(135deg,#4aeadc 0%,#9778d1 20%,#cf2aba 40%,#ee2c82 60%,#fb6962 80%,#fef84c 100%);--wp--preset--gradient--blush-light-purple:linear-gradient(135deg,#ffceec 0%,#9896f0 100%);--wp--preset--gradient--blush-bordeaux:linear-gradient(135deg,#fecda5 0%,#fe2d2d 50%,#6b003e 100%);--wp--preset--gradient--luminous-dusk:linear-gradient(135deg,#ffcb70 0%,#c751c0 50%,#4158d0 100%);--wp--preset--gradient--pale-ocean:linear-gradient(135deg,#fff5cb 0%,#b6e3d4 50%,#33a7b5 100%);--wp--preset--gradient--electric-grass:linear-gradient(135deg,#caf880 0%,#71ce7e 100%);--wp--preset--gradient--midnight:linear-gradient(135deg,#020381 0%,#2874fc 100%);--wp--preset--font-size--small:13px;--wp--preset--font-size--medium:20px;--wp--preset--font-size--large:36px;--wp--preset--font-size--x-large:42px;--wp--preset--spacing--20:.44rem;--wp--preset--spacing--30:.67rem;--wp--preset--spacing--40:1rem;--wp--preset--spacing--50:1.5rem;--wp--preset--spacing--60:2.25rem;--wp--preset--spacing--70:3.38rem;--wp--preset--spacing--80:5.06rem;--wp--preset--shadow--natural:6px 6px 9px #0003;--wp--preset--shadow--deep:12px 12px 50px #0006;--wp--preset--shadow--sharp:6px 6px 0px #0003;--wp--preset--shadow--outlined:6px 6px 0px -3px #fff, 6px 6px #000;--wp--preset--shadow--crisp:6px 6px 0px #000}
 .R-gd-privacy .wp-block-button{--wp--preset--dimension--25:25%;--wp--preset--dimension--50:50%;--wp--preset--dimension--75:75%;--wp--preset--dimension--100:100%}
 .R-gd-privacy :where(body){margin:0}
@@ -1263,12 +1264,12 @@ img:is([sizes=auto i], .R-gd-privacy [sizes^=auto\, .R-gd-privacy i]){contain-in
 .R-gd-privacy .has-x-large-font-size{font-size:var(--wp--preset--font-size--x-large)!important}
 .R-gd-privacy :where(.wp-block-columns.is-layout-flex), .R-gd-privacy :where(.wp-block-columns.is-layout-grid){gap:2em}
 .R-gd-privacy :where(.wp-block-gallery.is-layout-flex), .R-gd-privacy :where(.wp-block-gallery.is-layout-grid){gap:var(--wp--style--gallery-gap-default,var(--gallery-block--gutter-size,var(--wp--style--block-gap,.5em)))}
-
+.R-gd-privacy /* source: https://use.typekit.net/nwb0fwu.css */
 /*
  * The Typekit service used to deliver this font or fonts for use on websites
  * is provided by Adobe and is subject to these Terms of Use
  * http://www.adobe.com/products/eulas/tou_typekit. For font license
- * information, see the list below.
+ * information, .R-gd-privacy see the list below.
  *
  * aktiv-grotesk:
  *   - http://typekit.com/eulas/00000000000000003b9b4066
@@ -1307,7 +1308,7 @@ font-family:"aktiv-grotesk";
 src:url("https://use.typekit.net/af/e604a2/00000000000000003b9b4069/27/l?primer=7cdcb44be4a7db8877ffa5c0007b8dd865b3bbc383831fe2ea177f62257a9191&fvd=n5&v=3") format("woff2"),url("https://use.typekit.net/af/e604a2/00000000000000003b9b4069/27/d?primer=7cdcb44be4a7db8877ffa5c0007b8dd865b3bbc383831fe2ea177f62257a9191&fvd=n5&v=3") format("woff"),url("https://use.typekit.net/af/e604a2/00000000000000003b9b4069/27/a?primer=7cdcb44be4a7db8877ffa5c0007b8dd865b3bbc383831fe2ea177f62257a9191&fvd=n5&v=3") format("opentype");
 font-display:auto;font-style:normal;font-weight:500;font-stretch:normal;
 }.R-gd-privacy .tk-aktiv-grotesk{ font-family: "aktiv-grotesk",sans-serif; }
-
+.R-gd-privacy /* source: https://www.givedirectly.org/build/assets/custom-css-6uKBhFm9.css */
 .custom-text-shadow{text-shadow:0 3px 8px #000}
 .R-gd-privacy .custom-d-flex{display:flex}
 .R-gd-privacy .custom-flex-column{flex-direction:column}
@@ -1345,9 +1346,9 @@ font-display:auto;font-style:normal;font-weight:500;font-stretch:normal;
 .R-gd-privacy .wp-block-cover .wp-block-cover__background.has-background-dim.has-background-dim-40, .R-gd-privacy .wp-block-cover .wp-block-cover__gradient-background.has-background-dim.has-background-dim-40{opacity:.7!important;background:linear-gradient(#fff0 0%,#000 60%)!important}
 
 }
-
+.R-gd-privacy /* source: https://www.givedirectly.org/build/assets/page-language-C3REHbER.css */
 .gd-page-language{display:contents}
-
+.R-gd-privacy /* source: https://www.givedirectly.org/build/assets/slick-carousels-CoT-cJde.css */
 .slick-carousel{position:relative}
 .R-gd-privacy .wp-block-group.slick-variable-width{overscroll-behavior-x:contain;scroll-snap-type:x mandatory;scrollbar-width:none;flex-wrap:nowrap;gap:40px;display:flex;overflow-x:auto}
 .R-gd-privacy .wp-block-group.slick-variable-width::-webkit-scrollbar{display:none}
@@ -1378,7 +1379,7 @@ font-display:auto;font-style:normal;font-weight:500;font-stretch:normal;
 .R-gd-privacy .logo-grid .wp-block-gallery.has-nested-images{--logos-shown:2}
 
 }
-
+.R-gd-privacy /* source: https://www.givedirectly.org/build/assets/tooltips-CWzLMMqc.css */
 .gd-tooltip-trigger{color:#095845;font:inherit;text-align:inherit;text-underline-offset:.15em;cursor:help;background:0 0;border:0;padding:0;font-weight:500;-webkit-text-decoration:underline dotted;text-decoration:underline dotted;display:inline}
 .R-gd-privacy .gd-tooltip-trigger:hover{color:#3a796a}
 .R-gd-privacy .gd-tooltip-trigger:focus-visible{outline-offset:2px;outline:2px solid #095845}
@@ -1387,7 +1388,7 @@ font-display:auto;font-style:normal;font-weight:500;font-stretch:normal;
 .R-gd-privacy .gd-tooltip{position-area:top;position-try-fallbacks:flip-block;margin:0 0 .375rem;inset:auto}
 
 }
-
+.R-gd-privacy /* source: https://www.givedirectly.org/build/assets/reset-B-6ZEhTG.css */
 *, .R-gd-privacy :before, .R-gd-privacy :after{box-sizing:border-box}
 .R-gd-privacy :not(dialog){margin:0}
 @media (prefers-reduced-motion:no-preference){
@@ -1399,17 +1400,17 @@ font-display:auto;font-style:normal;font-weight:500;font-stretch:normal;
 .R-gd-privacy input, .R-gd-privacy button, .R-gd-privacy textarea, .R-gd-privacy select{font:inherit}
 .R-gd-privacy p, .R-gd-privacy h1, .R-gd-privacy h2, .R-gd-privacy h3, .R-gd-privacy h4, .R-gd-privacy h5, .R-gd-privacy h6{overflow-wrap:break-word}
 .R-gd-privacy p{text-wrap:pretty}
-
+.R-gd-privacy /* source: https://www.givedirectly.org/build/assets/primitives-B9E0lZ6u.css */
 :root{--color-base-white:#fff;--color-base-black:#000;--color-neutral-100:#f9f7f6;--color-neutral-200:#d9d9d9;--color-neutral-300:#bec2c1;--color-neutral-400:#757575;--color-neutral-500:#4d4d4d;--color-neutral-600:#262626;--color-neutral-700:#1a1a1a;--color-neutral-800:#0d0d0d;--color-brand-primary:#095845;--color-green-100:#e4eeec;--color-green-200:#9dbcb5;--color-green-600:#053328;--color-brown-100:#f9f7f2;--color-red-500:#d94636;--color-red-600:#c43b2d;--color-red-700:#ae3226;--color-accent-blue:#0589ff;--number-none:0px;--number-xs:4px;--number-sm:6px;--number-base:8px;--number-md:12px;--number-lg:13px;--number-xl:14px;--number-2xl:16px;--number-3xl:18px;--number-4xl:24px;--number-5xl:32px;--number-6xl:40px;--number-7xl:48px;--number-8xl:56px;--number-9xl:64px;--number-10xl:80px;--number-full:999px}
-
+.R-gd-privacy /* source: https://www.givedirectly.org/build/assets/semantics-ifEsTTKU.css */
 :root{--border-radius-none:var(--number-none);--border-color-default:var(--color-neutral-200);--border-radius-xs:var(--number-xs);--border-radius-sm:var(--number-sm);--border-radius-base:var(--number-base);--border-radius-md:var(--number-xl);--border-radius-lg:var(--number-2xl);--border-radius-full:var(--number-full);--border-color-focus:var(--color-brand-primary);--border-color-warning:var(--color-red-500);--border-color-surface:var(--surface-primary);--icon-default:var(--color-neutral-400);--icon-disabled:var(--color-neutral-300);--icon-active:var(--color-brand-primary);--icon-white:var(--color-base-white);--font-color-headline:var(--color-neutral-600);--font-color-body:var(--color-neutral-500);--font-color-placeholder:var(--color-neutral-400);--font-color-disabled:var(--color-neutral-400);--font-color-white:var(--color-base-white);--font-color-brand:var(--color-brand-primary);--font-color-accent:var(--color-green-200);--font-color-warning:var(--color-red-500);--surface-primary:var(--color-base-white);--surface-secondary:var(--color-green-100);--surface-tertiary:var(--color-brown-100);--surface-dark:var(--color-green-600);--surface-nocturnal:var(--color-neutral-600);--surface-midnight:var(--color-neutral-700);--surface-obsidian:var(--color-neutral-800);--surface-gray:var(--color-neutral-100);--button-color-default:var(--color-brand-primary);--button-color-hover-light:var(--color-green-100);--button-color-hover-dark:var(--color-green-600);--button-color-disabled:var(--color-neutral-100);--button-warning-default:var(--color-red-500);--button-warning-hover:var(--color-red-600)}
-
+.R-gd-privacy /* source: https://www.givedirectly.org/build/assets/responsive-CjOKdT34.css */
 :root{--font-family-primary:Inter;--font-letter-spacing-xs:-1px;--font-letter-spacing-sm:-.2px;--font-letter-spacing-md:.2px;--font-letter-spacing-lg:2px;--spacing-sm:var(--number-xs);--spacing-base:var(--number-base);--spacing-md:var(--number-xl);--spacing-lg:var(--number-2xl);--spacing-xl:var(--number-4xl);--spacing-2xl:var(--number-5xl);--spacing-3xl:var(--number-6xl);--spacing-4xl:var(--number-7xl);--spacing-5xl:var(--number-9xl);--spacing-6xl:var(--number-10xl);--font-family-secondary:Inter;--font-weight-regular:400;--font-weight-medium:500;--font-weight-semibold:600;--font-weight-bold:700;--font-size-xxs:var(--number-md);--font-size-xs:var(--number-lg);--font-size-sm:var(--number-xl);--font-size-base:var(--number-2xl);--font-size-md:var(--number-3xl);--font-size-lg:var(--number-4xl);--font-size-xl:var(--number-5xl);--font-size-2xl:var(--number-6xl);--font-size-3xl:var(--number-8xl);--font-line-height-xs:var(--number-2xl);--font-line-height-sm:var(--number-3xl);--font-line-height-base:var(--number-4xl);--font-line-height-md:var(--number-5xl);--font-line-height-lg:var(--number-6xl);--font-line-height-xl:var(--number-7xl);--font-line-height-2xl:var(--number-9xl)}
 @media (width<=600px){
 .R-gd-privacy{--font-family-primary:Inter;--font-letter-spacing-xs:-1px;--font-letter-spacing-sm:-.2px;--font-letter-spacing-md:.2px;--font-letter-spacing-lg:2px;--spacing-sm:var(--number-xs);--spacing-base:var(--number-base);--spacing-md:var(--number-xl);--spacing-lg:var(--number-2xl);--spacing-xl:var(--number-4xl);--spacing-2xl:var(--number-4xl);--spacing-3xl:var(--number-6xl);--spacing-4xl:var(--number-7xl);--spacing-5xl:var(--number-9xl);--spacing-6xl:var(--number-10xl);--font-weight-regular:400;--font-weight-medium:500;--font-weight-semibold:600;--font-weight-bold:700;--font-size-xxs:var(--number-md);--font-size-xs:var(--number-lg);--font-size-sm:var(--number-xl);--font-size-base:var(--number-xl);--font-size-md:var(--number-2xl);--font-size-lg:var(--number-3xl);--font-size-xl:var(--number-4xl);--font-size-2xl:var(--number-5xl);--font-size-3xl:var(--number-7xl);--font-line-height-xs:var(--number-2xl);--font-line-height-sm:var(--number-3xl);--font-line-height-base:var(--number-4xl);--font-line-height-md:var(--number-4xl);--font-line-height-lg:var(--number-5xl);--font-line-height-xl:var(--number-5xl);--font-line-height-2xl:var(--number-6xl)}
 
 }
-
+.R-gd-privacy /* source: https://www.givedirectly.org/build/assets/gd-gutenberg-Lu-TWgCq.css */
 body{color:var(--font-color-body);font-family:var(--font-family-primary), sans-serif;font-size:var(--font-size-base);font-style:normal;font-weight:var(--font-weight-regular);line-height:var(--font-line-height-base);-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale}
 .R-gd-privacy .gd-gutenberg>:first-child{margin-top:0!important}
 .R-gd-privacy .gd-gutenberg>:last-child{margin-bottom:0!important}
@@ -1468,7 +1469,7 @@ body{color:var(--font-color-body);font-family:var(--font-family-primary), sans-s
 .R-gd-privacy .gd-gutenberg .wp-block-genesis-blocks-gb-container[style*="background-color:#e4eeec"], .R-gd-privacy .gd-gutenberg .wp-block-genesis-blocks-gb-container[style*="background-color: #e4eeec"]{background-color:#f9f7f6!important;border-radius:4px!important;padding:32px!important}
 .R-gd-privacy .gd-gutenberg .gb-container-content>:first-child{margin-top:0!important}
 .R-gd-privacy .gd-gutenberg .gb-container-content>:last-child{margin-bottom:0!important}
-
+.R-gd-privacy /* source: https://www.givedirectly.org/build/assets/gd-gutenberg-width-constraints-CEHUAlP8.css */
 .site-main{margin:var(--spacing-3xl) 0}
 @media (width>=768px){
 .R-gd-privacy .site-main{margin:var(--spacing-5xl) 0}
@@ -1480,7 +1481,7 @@ body{color:var(--font-color-body);font-family:var(--font-family-primary), sans-s
 
 }
 .R-gd-privacy .gd-gutenberg>:not(.wp-block-image):not(.wp-block-video):not(.wp-block-gd-youtube):not(.wp-block-separator):not(.wp-block-embed.is-type-video):not(.image-carousel-wrapper), .R-gd-privacy .gd-gutenberg .entry-content>:not(.wp-block-image):not(.wp-block-video):not(.wp-block-gd-youtube):not(.wp-block-separator):not(.wp-block-embed.is-type-video):not(.image-carousel-wrapper){max-width:600px;margin-left:auto;margin-right:auto}
-
+.R-gd-privacy /* source: https://www.givedirectly.org/build/assets/in-the-news-C8oOgTlP.css */
 .in-the-news{margin-top:var(--spacing-2xl);margin-bottom:var(--spacing-5xl)}
 .R-gd-privacy .in-the-news:has(.in-the-news__heading){padding-top:var(--spacing-3xl)}
 .R-gd-privacy .in-the-news .in-the-news__heading{color:var(--font-color-headline);font-size:var(--font-size-xl);font-weight:var(--font-weight-bold);line-height:var(--font-line-height-xl);margin-bottom:var(--spacing-3xl);text-align:center}
@@ -1511,7 +1512,7 @@ body{color:var(--font-color-body);font-family:var(--font-family-primary), sans-s
 
 }
 .R-gd-privacy .in-the-news .in-the-news__link:hover .in-the-news__footer .in-the-news__read-more{visibility:visible}
-
+.R-gd-privacy /* source: https://www.givedirectly.org/build/assets/ninja-form-overrides-CsKzq7jw.css */
 nf-form-cont{border-radius:4px;margin-top:30px;margin-bottom:60px;padding:1px 15px 20px;line-height:1.5}
 @media (width>=768px){
 .R-gd-privacy .nf-form-cont{max-width:608px;margin-left:auto;margin-right:auto;padding:10px 48px 30px}
@@ -1551,9 +1552,9 @@ nf-form-cont{border-radius:4px;margin-top:30px;margin-bottom:60px;padding:1px 15
 .R-gd-privacy .nf-form-cont .nf-field-element ul li label, .R-gd-privacy .nf-form-cont .list-checkbox-wrap .nf-field-element li label, .R-gd-privacy .nf-form-cont .list-radio-wrap .nf-field-element li label{font-family:var(--font-family-primary), "aktiv-grotesk", sans-serif!important;font-size:var(--font-size-sm)!important;line-height:var(--font-line-height-sm)!important;font-weight:var(--font-weight-regular)!important;color:var(--font-color-body)!important}
 .R-gd-privacy .nf-form-cont .nf-form-content input.ninja-forms-field:not([type=button]):not([type=submit]):not([type=radio]):not([type=checkbox]), .R-gd-privacy .nf-form-cont .nf-form-content textarea.ninja-forms-field, .R-gd-privacy .nf-form-cont .nf-form-content select.ninja-forms-field{background:var(--color-base-white)!important;border-color:var(--border-color-default)!important;border:1px solid var(--border-color-default)!important;width:100%!important}
 .R-gd-privacy .nf-form-cont .nf-field-container{margin-bottom:var(--spacing-base)!important}
-
+.R-gd-privacy /* source: https://www.givedirectly.org/build/assets/page-password-form-DNy91kOF.css */
 .post-password-form{gap:var(--spacing-base);padding-inline:var(--spacing-lg);padding-block:var(--spacing-4xl);text-align:center;flex-direction:column;display:flex}
-
+.R-gd-privacy /* source: https://www.givedirectly.org/build/assets/newsletterSignup-CT-Gf7gJ.css */
 .newsletter-signup-container{padding:var(--spacing-6xl,80px) 0px;background:var(--surface-tertiary,#f9f7f2);-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;flex-direction:column;align-self:stretch;align-items:center;display:flex}
 .R-gd-privacy .newsletter-signup-content-container{max-width:1140px;padding:0px var(--spacing-xl,24px);align-items:center;gap:var(--spacing-2xl,32px);flex-direction:column;display:flex}
 .R-gd-privacy .newsletter-signup-title-container{max-width:800px;padding-bottom:var(--spacing-lg,16px);align-items:flex-start;gap:var(--spacing-lg,16px);flex-direction:column;align-self:stretch;display:flex}
@@ -1587,6 +1588,7 @@ nf-form-cont{border-radius:4px;margin-top:30px;margin-bottom:60px;padding:1px 15
 
 }
 .R-gd-privacy .newsletter-signup-hp{display:none}
+.R-gd-privacy /* inline style 1 */
 
     #new-look-header{
         display: flex;
@@ -1606,7 +1608,8 @@ nf-form-cont{border-radius:4px;margin-top:30px;margin-bottom:60px;padding:1px 15
 .R-gd-privacy #new-look-header *{
         box-sizing: border-box;
     }
-
+.R-gd-privacy /* Some page templates load a global reset containing `svg{ max-width: 100% }
+.R-gd-privacy `, .R-gd-privacy which collapses the min-content grid columns holding the nav icons */
     #new-look-header svg{
         max-width: none;
     }
@@ -1628,7 +1631,7 @@ nf-form-cont{border-radius:4px;margin-top:30px;margin-bottom:60px;padding:1px 15
         display: inline-block;
         position: relative; /* for the menus */
     }
-
+.R-gd-privacy /* Style the menu trigger (first child) */
     .new-look-header-menu > div:first-child{
         display: flex;
         padding: var(--spacing-md, 14px) 0px;
@@ -1646,7 +1649,7 @@ nf-form-cont{border-radius:4px;margin-top:30px;margin-bottom:60px;padding:1px 15
 .R-gd-privacy .new-look-header-menu:hover > div:first-child svg{
         stroke: var(--icon-active, #095845);
     }
-
+.R-gd-privacy /* Position dropdown menus and hide by default */
     .new-look-header-menu > div:last-child{
         display: none;
         position: absolute;
@@ -1655,7 +1658,7 @@ nf-form-cont{border-radius:4px;margin-top:30px;margin-bottom:60px;padding:1px 15
         z-index: 1000;
         transform: translateX(-32px);
     }
-
+.R-gd-privacy /* Show dropdown menus on hover */
     .new-look-header-menu:hover > div:last-child{
         display: grid;
     }
@@ -1666,7 +1669,7 @@ nf-form-cont{border-radius:4px;margin-top:30px;margin-bottom:60px;padding:1px 15
         background: var(--button-color-hover-dark, #053328);
         text-decoration: none;
     }
-
+.R-gd-privacy /* These are the default menu styles */
     .new-look-header-menu > div:last-child{
         padding: var(--spacing-2xl, 32px);
         border-radius: var(--border-radius-base, 8px);
@@ -1688,6 +1691,7 @@ nf-form-cont{border-radius:4px;margin-top:30px;margin-bottom:60px;padding:1px 15
         color: var(--font-color-brand, #095845);
         text-decoration: underline;
     }
+.R-gd-privacy /* Now we customize the menu style for each menu */
 
     #new-look-header-gd-logo{
         display: flex;
@@ -1709,7 +1713,7 @@ nf-form-cont{border-radius:4px;margin-top:30px;margin-bottom:60px;padding:1px 15
 .R-gd-privacy #new-look-header-menu-link-to-funds a, .R-gd-privacy #new-look-header-menu-link-to-funds a:hover{
         text-decoration: none;
     }
-
+.R-gd-privacy /* Funds is a plain link, .R-gd-privacy so it has no menu items to drop down */
     #new-look-header-menu-link-to-funds > div:last-child{
         display: none;
     }
@@ -1823,7 +1827,8 @@ nf-form-cont{border-radius:4px;margin-top:30px;margin-bottom:60px;padding:1px 15
 .R-gd-privacy #new-look-header-major-gifts-programs-where-we-work .new-look-header-major-gifts-programs-subtitle{
         grid-column: 1 / -1;
     }
-
+.R-gd-privacy /* The mobile menu takes over below 1024px: the desktop row needs about 980px since
+       "Giving funds" joined it, .R-gd-privacy and overflowed sideways between that and the old 860px. */
     @media (max-width: 1023px){
 
         #new-look-header-nav > div {
@@ -2011,6 +2016,7 @@ nf-form-cont{border-radius:4px;margin-top:30px;margin-bottom:60px;padding:1px 15
         }
 
     }
+.R-gd-privacy /* inline style 2 */
 
 .gd-banner{
     width: 100%;
@@ -2052,10 +2058,12 @@ nf-form-cont{border-radius:4px;margin-top:30px;margin-bottom:60px;padding:1px 15
 .R-gd-privacy .gd-banner-blue svg{
     fill: #FFFFFF;
 }
+.R-gd-privacy /* inline style 3 */
 
-    #newsletter-signup-jcSM56zQ{
+    #newsletter-signup-E4DBCVEe{
         background: #f9f7f2;
     }
+.R-gd-privacy /* inline style 4 */
 
     footer{
         background: var(--surface-secondary, #E4EEEC);

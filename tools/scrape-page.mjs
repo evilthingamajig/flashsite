@@ -26,7 +26,7 @@ const outDir = path.join(ROOT, 'tools', 'scrapes', slug);
 fs.mkdirSync(outDir, { recursive: true });
 
 const browser = await puppeteer.launch({
-  executablePath: process.env.CHROME_PATH || '/usr/bin/google-chrome-stable',
+  executablePath: process.env.CHROME_PATH || process.env.CHROME || '/usr/local/bin/google-chrome',
   headless: true,
   args: ['--no-sandbox', '--disable-setuid-sandbox', '--disable-dev-shm-usage'],
 });

@@ -239,7 +239,7 @@
 .R-cp-claude-corps [data-aos=flip-up].aos-animate{transform:perspective(2500px) rotateX(0)}
 .R-cp-claude-corps [data-aos=flip-down]{transform:perspective(2500px) rotateX(100deg)}
 .R-cp-claude-corps [data-aos=flip-down].aos-animate{transform:perspective(2500px) rotateX(0)}
-
+.R-cp-claude-corps /* source: https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css */
 /* Slider */
 .slick-slider{
     position: relative;
@@ -336,21 +336,22 @@
 .R-cp-claude-corps .slick-arrow.slick-hidden{
     display: none;
 }
-
+.R-cp-claude-corps /* source: https://www.codepath.org/hubfs/hub_generated/template_assets/1/62324316689/1795038935184/template_main.min.css */
 /* Theme base styles */
 
 /* Tools
-Any animations, or functions used throughout the project.
+Any animations, .R-cp-claude-corps or functions used throughout the project.
 Note: _macros.css needs to be imported into each stylesheet where macros are used and not included here
 */
 
 /* Generic
-This is where reset, normalize & box-sizing styles go.
+This is where reset, .R-cp-claude-corps normalize & box-sizing styles go.
 */
 
 *, .R-cp-claude-corps *:before, .R-cp-claude-corps *:after{
   box-sizing: border-box;
 }
+.R-cp-claude-corps /*! normalize.css v8.0.1 | MIT License | github.com/necolas/normalize.css */
 
 /* Document
    ========================================================================== */
@@ -364,6 +365,8 @@ html{
   line-height: 1.15; /* 1 */
   -webkit-text-size-adjust: 100%; /* 2 */
 }
+.R-cp-claude-corps /* Sections
+   ========================================================================== */
 
 /**
  * Remove the margin in all browsers.
@@ -373,10 +376,17 @@ body{
   margin: 0;
   overflow-x: hidden;
 }
+.R-cp-claude-corps /**
+ * Render the `main` element consistently in IE.
+ */
 
 main{
   display: block;
 }
+.R-cp-claude-corps /**
+ * Correct the font size and margin on `h1` elements within `section` and
+ * `article` contexts in Chrome, .R-cp-claude-corps Firefox, .R-cp-claude-corps and Safari.
+ */
 
 /* h1{
   font-size: 2em;
@@ -397,11 +407,17 @@ hr{
   height: 0; /* 1 */
   overflow: visible; /* 2 */
 }
+.R-cp-claude-corps /**
+ * 1. Correct the inheritance and scaling of font size in all browsers.
+ * 2. Correct the odd `em` font sizing in all browsers.
+ */
 
 pre{
   font-family: monospace, monospace; /* 1 */
   font-size: 1em; /* 2 */
 }
+.R-cp-claude-corps /* Text-level semantics
+   ========================================================================== */
 
 /**
  * Remove the gray background on active links in IE 10.
@@ -410,25 +426,43 @@ pre{
 a{
   background-color: transparent;
 }
+.R-cp-claude-corps /**
+ * 1. Remove the bottom border in Chrome 57-
+ * 2. Add the correct text decoration in Chrome, .R-cp-claude-corps Edge, .R-cp-claude-corps IE, .R-cp-claude-corps Opera, .R-cp-claude-corps and Safari.
+ */
 
 abbr[title]{
   border-bottom: none; /* 1 */
   text-decoration: underline; /* 2 */
   text-decoration: underline dotted; /* 2 */
 }
+.R-cp-claude-corps /**
+ * Add the correct font weight in Chrome, .R-cp-claude-corps Edge, .R-cp-claude-corps and Safari.
+ */
 
 b, .R-cp-claude-corps strong{
   font-weight: bolder;
 }
+.R-cp-claude-corps /**
+ * 1. Correct the inheritance and scaling of font size in all browsers.
+ * 2. Correct the odd `em` font sizing in all browsers.
+ */
 
 code, .R-cp-claude-corps kbd, .R-cp-claude-corps samp{
   font-family: monospace, monospace; /* 1 */
   font-size: 1em; /* 2 */
 }
+.R-cp-claude-corps /**
+ * Add the correct font size in all browsers.
+ */
 
 small{
   font-size: 80%;
 }
+.R-cp-claude-corps /**
+ * Prevent `sub` and `sup` elements from affecting the line height in
+ * all browsers.
+ */
 
 sub, .R-cp-claude-corps sup{
   font-size: 75%;
@@ -442,6 +476,8 @@ sub, .R-cp-claude-corps sup{
 .R-cp-claude-corps sup{
   top: -0.5em;
 }
+.R-cp-claude-corps /* Embedded content
+   ========================================================================== */
 
 /**
  * Remove the border on images inside links in IE 10.
@@ -452,6 +488,8 @@ img{
   max-width: 100%;
   height: auto;
 }
+.R-cp-claude-corps /* Forms
+   ========================================================================== */
 
 /**
  * 1. Change the font styles in all browsers.
@@ -464,31 +502,57 @@ button, .R-cp-claude-corps input, .R-cp-claude-corps optgroup, .R-cp-claude-corp
   line-height: 1.15; /* 1 */
   margin: 0; /* 2 */
 }
+.R-cp-claude-corps /**
+ * Show the overflow in IE.
+ * 1. Show the overflow in Edge.
+ */
 
 button, .R-cp-claude-corps input{ /* 1 */
   overflow: visible;
 }
+.R-cp-claude-corps /**
+ * Remove the inheritance of text transform in Edge, .R-cp-claude-corps Firefox, .R-cp-claude-corps and IE.
+ * 1. Remove the inheritance of text transform in Firefox.
+ */
 
 button, .R-cp-claude-corps select{ /* 1 */
   text-transform: none;
 }
+.R-cp-claude-corps /**
+ * Correct the inability to style clickable types in iOS and Safari.
+ */
 
 button, .R-cp-claude-corps [type="button"], .R-cp-claude-corps [type="reset"], .R-cp-claude-corps [type="submit"]{
   -webkit-appearance: button;
 }
+.R-cp-claude-corps /**
+ * Remove the inner border and padding in Firefox.
+ */
 
 button::-moz-focus-inner, .R-cp-claude-corps [type="button"]::-moz-focus-inner, .R-cp-claude-corps [type="reset"]::-moz-focus-inner, .R-cp-claude-corps [type="submit"]::-moz-focus-inner{
   border-style: none;
   padding: 0;
 }
+.R-cp-claude-corps /**
+ * Restore the focus styles unset by the previous rule.
+ */
 
 button:-moz-focusring, .R-cp-claude-corps [type="button"]:-moz-focusring, .R-cp-claude-corps [type="reset"]:-moz-focusring, .R-cp-claude-corps [type="submit"]:-moz-focusring{
   outline: 1px dotted ButtonText;
 }
+.R-cp-claude-corps /**
+ * Correct the padding in Firefox.
+ */
 
 fieldset{
   padding: 0.35em 0.75em 0.625em;
 }
+.R-cp-claude-corps /**
+ * 1. Correct the text wrapping in Edge and IE.
+ * 2. Correct the color inheritance from `fieldset` elements in IE.
+ * 3. Remove the padding so developers are not caught out when they zero out
+ *    `fieldset` elements in all browsers.
+ */
 
 legend{
   box-sizing: border-box; /* 1 */
@@ -498,49 +562,80 @@ legend{
   padding: 0; /* 3 */
   white-space: normal; /* 1 */
 }
+.R-cp-claude-corps /**
+ * Add the correct vertical alignment in Chrome, .R-cp-claude-corps Firefox, .R-cp-claude-corps and Opera.
+ */
 
 progress{
   vertical-align: baseline;
 }
+.R-cp-claude-corps /**
+ * Remove the default vertical scrollbar in IE 10+.
+ */
 
 textarea{
   overflow: auto;
 }
+.R-cp-claude-corps /**
+ * 1. Add the correct box sizing in IE 10.
+ * 2. Remove the padding in IE 10.
+ */
 
 [type="checkbox"], .R-cp-claude-corps [type="radio"]{
   box-sizing: border-box; /* 1 */
   padding: 0; /* 2 */
 }
+.R-cp-claude-corps /**
+ * Correct the cursor style of increment and decrement buttons in Chrome.
+ */
 
 [type="number"]::-webkit-inner-spin-button, .R-cp-claude-corps [type="number"]::-webkit-outer-spin-button{
   height: auto;
 }
+.R-cp-claude-corps /**
+ * 1. Correct the odd appearance in Chrome and Safari.
+ * 2. Correct the outline style in Safari.
+ */
 
 [type="search"]{
   -webkit-appearance: textfield; /* 1 */
   outline-offset: -2px; /* 2 */
 }
+.R-cp-claude-corps /**
+ * Remove the inner padding in Chrome and Safari on macOS.
+ */
 
 [type="search"]::-webkit-search-decoration{
   -webkit-appearance: none;
 }
+.R-cp-claude-corps /**
+ * 1. Correct the inability to style clickable types in iOS and Safari.
+ * 2. Change font properties to `inherit` in Safari.
+ */
 
 ::-webkit-file-upload-button{
   -webkit-appearance: button; /* 1 */
   font: inherit; /* 2 */
 }
+.R-cp-claude-corps /* Interactive
+   ========================================================================== */
 
 /*
- * Add the correct display in Edge, IE 10+, and Firefox.
+ * Add the correct display in Edge, .R-cp-claude-corps IE 10+, .R-cp-claude-corps and Firefox.
  */
 
 details{
   display: block;
 }
+.R-cp-claude-corps /*
+ * Add the correct display in all browsers.
+ */
 
 summary{
   display: list-item;
 }
+.R-cp-claude-corps /* Misc
+   ========================================================================== */
 
 /**
  * Add the correct display in IE 10+.
@@ -549,15 +644,21 @@ summary{
 template{
   display: none;
 }
+.R-cp-claude-corps /**
+ * Add the correct display in IE 10.
+ */
 
 [hidden]{
   display: none;
 }
+.R-cp-claude-corps /* Objects
+Non-cosmetic design patterns including grid and layout classes)
+*/
 
 html, .R-cp-claude-corps{
   overflow-x: hidden;
 }
-
+.R-cp-claude-corps /* Responsive grid */
 .row-fluid{
   width: 100%;
 }
@@ -805,6 +906,7 @@ html, .R-cp-claude-corps{
 .R-cp-claude-corps .clearfix:after{
   clear: both;
 }
+.R-cp-claude-corps /* Visibilty classes */
 
 .hide{
   display: none;
@@ -819,6 +921,7 @@ html, .R-cp-claude-corps{
   display: none;
   visibility: hidden;
 }
+.R-cp-claude-corps /* Responsive visibilty classes */
 
 .visible-phone{
   display: none !important;
@@ -878,9 +981,19 @@ html, .R-cp-claude-corps{
 }.R-cp-claude-corps .dnd-section > .row-fluid{
   margin: 0 auto;
 }
+.R-cp-claude-corps /* .dnd-section .dnd-column{
+  padding: 0 2.5rem;
+}
+
+
+@media (max-width: 767px) {
+  .dnd-section .dnd-column {
+    padding: 0;
+  }
+}.R-cp-claude-corps */
 
 /* Elements
-Base HMTL elements are styled in this section (<body<, <h1>, <a>, <p>, <button> etc.)
+Base HMTL elements are styled in this section (<body<, .R-cp-claude-corps <h1>, .R-cp-claude-corps <a>, .R-cp-claude-corps <p>, .R-cp-claude-corps <button> etc.)
 */
 
 /* body{
@@ -892,6 +1005,7 @@ html[lang^="ja"] body, .R-cp-claude-corps[lang^="zh"] body, .R-cp-claude-corps[l
   line-break: strict;
   word-break: break-all;
 }
+.R-cp-claude-corps /* Paragraphs */
 
 p{
   /* font-size: 1rem; */
@@ -901,14 +1015,17 @@ p{
 .R-cp-claude-corps p:last-child{
   margin-bottom: 0;
 }
+.R-cp-claude-corps /* Anchors */
 
 a{
   cursor: pointer;
 }
+.R-cp-claude-corps /* Headings */
 
 h1, .R-cp-claude-corps h2, .R-cp-claude-corps h3, .R-cp-claude-corps h4, .R-cp-claude-corps h5, .R-cp-claude-corps h6{
   margin: 0 0 2.8rem; /* 0 0 1.4rem */
 }
+.R-cp-claude-corps /* Lists */
 
 ul, .R-cp-claude-corps ol{
   margin: 0 0 2.8rem; /* 0 0 1.4rem */
@@ -921,6 +1038,7 @@ ul, .R-cp-claude-corps ol{
   margin: 0;
   padding-left: 0;
 }
+.R-cp-claude-corps /* Code blocks */
 
 pre{
   overflow: auto;
@@ -928,17 +1046,20 @@ pre{
 .R-cp-claude-corps code{
   vertical-align: bottom;
 }
+.R-cp-claude-corps /* Blockquotes */
 
 blockquote{
   border-left: 2px solid;
   margin: 0 0 2.8rem; /* 1.4rem */
   padding-left: 1.4rem; /* 0.7rem */
 }
+.R-cp-claude-corps /* Horizontal rules */
 
 hr{
   border: none;
   border-bottom: 1px solid #CCC;
 }
+.R-cp-claude-corps /* Image alt text */
 
 img{
   font-size: 1.166rem; /* 0.583rem */
@@ -957,6 +1078,7 @@ img{
   border-color: #D0D0D0;
   color: #E6E6E6;
 }
+.R-cp-claude-corps /* No button */
 
 .no-button, .R-cp-claude-corps .no-button:hover, .R-cp-claude-corps .no-button:focus, .R-cp-claude-corps .no-button:active{
   background: none;
@@ -975,7 +1097,7 @@ img{
   text-decoration: none;
   transition: none;
 }
-
+.R-cp-claude-corps /****************************************/
 /* Colors                               */
 /****************************************/
 
@@ -1042,6 +1164,7 @@ button, .R-cp-claude-corps input[type="button"]{
   max-width: none !important;
   width: auto;
 }
+.R-cp-claude-corps /* Fixes */
 
 .form-panel{
   padding-right: 50px;
@@ -1089,6 +1212,7 @@ button, .R-cp-claude-corps input[type="button"]{
 .hs-form-field{
   margin-bottom: 2.8rem;
 }
+.R-cp-claude-corps /* Labels */
 
 label{
   font-weight: 700;
@@ -1110,10 +1234,12 @@ label{
   display: inline-block;
   vertical-align: top;
 }
+.R-cp-claude-corps /* Help text */
 
 legend{
   font-size: 1.6rem;
 }
+.R-cp-claude-corps /* Inputs */
 
 input[type=text], .R-cp-claude-corps input[type=email], .R-cp-claude-corps input[type=password], .R-cp-claude-corps input[type=tel], .R-cp-claude-corps input[type=number], .R-cp-claude-corps input[type=file], .R-cp-claude-corps textarea, .R-cp-claude-corps .select2{
   font-weight: 300;
@@ -1221,7 +1347,7 @@ input[type=text], .R-cp-claude-corps input[type=email], .R-cp-claude-corps input
 .R-cp-claude-corps .filter-form button svg{
   display: none;
 }
-
+.R-cp-claude-corps /* Inputs - checkbox/radio */
 .inputs-list{
   margin: 0;
   padding: 0;
@@ -1290,6 +1416,7 @@ input[type=text], .R-cp-claude-corps input[type=email], .R-cp-claude-corps input
 .R-cp-claude-corps .hs-form-booleancheckbox-display input:checked ~ span::after, .R-cp-claude-corps .hs-form-checkbox-display input:checked ~ span::after, .R-cp-claude-corps .hs-form-radio input:checked ~ span::after{
   opacity: 1;
 }
+.R-cp-claude-corps /* Inputs - date picker */
 
 .hs-dateinput{
   position: relative;
@@ -1312,12 +1439,14 @@ input[type=text], .R-cp-claude-corps input[type=email], .R-cp-claude-corps input
   border-radius: 0 !important;
   color: #FFF;
 }
+.R-cp-claude-corps /* Inputs - file picker */
 
 form input[type=file]{
   background-color: transparent;
   border: initial;
   padding: initial;
 }
+.R-cp-claude-corps /* Headings and text */
 
 form .hs-richtext, .R-cp-claude-corps form .hs-richtext p{
   font-size: 1.4rem;
@@ -1326,10 +1455,12 @@ form .hs-richtext, .R-cp-claude-corps form .hs-richtext p{
 .R-cp-claude-corps form .hs-richtext img{
   max-width: 100% !important;
 }
+.R-cp-claude-corps /* GDPR */
 
 .legal-consent-container .hs-form-booleancheckbox-display > span, .R-cp-claude-corps .legal-consent-container .hs-form-booleancheckbox-display > span p{
   margin-left: 1rem !important;
 }
+.R-cp-claude-corps /* Validation */
 
 .hs-form-required{
   color: #EE0004;
@@ -1359,6 +1490,7 @@ form .hs-richtext, .R-cp-claude-corps form .hs-richtext p{
   background-image: url("data:image/svg+xml,%3Csvg width='29' height='30' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath fill-rule='evenodd' clip-rule='evenodd' d='M14.375 29.648c7.94 0 14.375-6.436 14.375-14.375S22.314.898 14.375.898C6.435.898 0 7.334 0 15.273c0 7.94 6.436 14.375 14.375 14.375ZM12.289 7.27h4.172l-.382 11.788H12.67L12.29 7.269Zm4.247 15.073c-.017 1.194-1.02 2.156-2.157 2.156-1.195 0-2.173-.962-2.157-2.156-.016-1.178.962-2.132 2.157-2.132 1.136 0 2.14.954 2.157 2.132Z' fill='%23EE0004'/%3E%3C/svg%3E");
   background-repeat: no-repeat;
 }
+.R-cp-claude-corps /* Submit button */
 
 input[type=submit], .R-cp-claude-corps .hs-button{
   cursor: pointer;
@@ -1367,11 +1499,12 @@ input[type=submit], .R-cp-claude-corps .hs-button{
   white-space: normal;
   line-height: 1.3571;
 }
+.R-cp-claude-corps /* Captcha */
 
 .grecaptcha-badge{
   margin: 0 auto;
 }
-
+.R-cp-claude-corps /*****************************************/
 /* SEARCH FORM                           */
 /*****************************************/
 .hs-search-field{
@@ -1419,20 +1552,26 @@ input[type=submit], .R-cp-claude-corps .hs-button{
 .R-cp-claude-corps .hs-search-field .submit-field{
   margin-left: 15px;
 }
+.R-cp-claude-corps /* Table */
 
 table{
   border-collapse: collapse;
   margin-bottom: 2.8rem; /* 1.4rem  */
   overflow-wrap: break-word;
 }
+.R-cp-claude-corps /* Table cells */
 
 td, .R-cp-claude-corps th{
   vertical-align: top;
 }
+.R-cp-claude-corps /* Table header */
 
 thead th{
   vertical-align: bottom;
 }
+.R-cp-claude-corps /* Components
+Specific pieces of UI that are stylized. Typically used for global partial styling
+*/
 
 /* Top Header */
 .header a{
@@ -1495,10 +1634,12 @@ thead th{
 .R-cp-claude-corps li.menu__item.menu__item--depth-1.hs-skip-lang-url-rewrite:last-child{
   padding-right: 0;
 }
+.R-cp-claude-corps /* Header DND sections */
 
 .header .dnd-section{
   padding: 0;
 }
+.R-cp-claude-corps /* Header container */
 
 .header__container{
   padding: 20px 0px;
@@ -1558,6 +1699,7 @@ thead th{
   top: 0;
   width: auto;
 }
+.R-cp-claude-corps /* Logo */
 
 .header__logo{
   align-items: center;
@@ -1584,6 +1726,7 @@ thead th{
 .R-cp-claude-corps .header__logo--main{
   padding-top: 2rem; /* 1rem */
 }
+.R-cp-claude-corps /* Search bar */
 
 .header__search{
   padding: 0 2rem; /* 1rem */
@@ -1771,6 +1914,7 @@ thead th{
 #nav-toggle{
   display: none;
 }
+.R-cp-claude-corps /* Mobile toggles */
 
 @media (max-width: 767px){
   .header__navigation,
@@ -1939,7 +2083,7 @@ thead th{
 .R-cp-claude-corps .menu.menu--mobile{
   padding-top: 20px;
 }
-
+.R-cp-claude-corps /***************iPhone Potrait*************/
 @media only screen and (max-width: 479px) and (min-width: 319px){
   .header-top.content-wrapper{
     display: none;
@@ -2032,7 +2176,7 @@ thead th{
     transform: rotate(90deg);
   }
 }
-
+.R-cp-claude-corps /***************Small Devices*************/
 @media only screen and (max-width: 389px){
   .header__logo--main{
     margin-left: 15px;
@@ -2042,7 +2186,7 @@ thead th{
     right: 15px;
   }
 }
-
+.R-cp-claude-corps /***************iPhone Landscape*************/
 @media only screen and (max-width: 767px) and (min-width: 480px){
   .header-top.content-wrapper{
     display: none;
@@ -2137,7 +2281,7 @@ thead th{
   }
 
 }
-
+.R-cp-claude-corps /**************iPad Portrait***************/
 @media only screen and (max-width: 1024px) and (min-width: 768px){
   .top_header_navigation_mobile{
     display: none;
@@ -2248,7 +2392,7 @@ thead th{
 .R-cp-claude-corps footer.footer .copyright-mobile{
   display: none;
 }
-
+.R-cp-claude-corps /***************iPhone Potrait*************/
 @media only screen and (max-width: 767px) and (min-width: 319px){
   footer.footer .footer-inner-left,
   footer.footer .footer-inner-right{
@@ -2326,7 +2470,7 @@ thead th{
     padding-right: 32px;
   }
 }
-
+.R-cp-claude-corps /**************iPad Portrait***************/
 @media only screen and (max-width: 985px) and (min-width: 768px){
   footer.footer .footer-inner-left,
   footer.footer .footer-inner-right{
@@ -2445,6 +2589,7 @@ thead th{
   margin: 0;
   padding-left: 0;
 }
+.R-cp-claude-corps /* Horizontal menu */
 
 .hs-menu-wrapper.hs-menu-flow-horizontal .hs-menu-children-wrapper{
   flex-direction: column;
@@ -2460,6 +2605,7 @@ thead th{
 .hs-menu-wrapper.hs-menu-flow-vertical ul{
   flex-direction: column;
 }
+.R-cp-claude-corps /* Flyouts */
 
 .hs-menu-wrapper.hs-menu-flow-vertical.flyouts ul{
   display: inline-flex;
@@ -2503,12 +2649,15 @@ thead th{
     position: relative;
     top: auto;
   }
-}.R-cp-claude-corps /* CTA, logo, and rich text images */
+}.R-cp-claude-corps /* CTA, .R-cp-claude-corps logo, .R-cp-claude-corps and rich text images */
 
 .hs_cos_wrapper_type_cta img, .R-cp-claude-corps .hs_cos_wrapper_type_logo img, .R-cp-claude-corps .hs_cos_wrapper_type_rich_text img{
   height: auto;
   max-width: 100%;
 }
+.R-cp-claude-corps /* Utilities
+Helper classes with ability to override anything that comes before it
+*/
 
 /* For content that needs to be visually hidden but stay visible for screenreaders */
 
@@ -6477,7 +6626,7 @@ thead th{
     width: 30px;
     background-image: url("data:image/svg+xml,%3Csvg width='30' height='30' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M5 5h20c1.375 0 2.5 1.125 2.5 2.5v15c0 1.375-1.125 2.5-2.5 2.5H5a2.507 2.507 0 0 1-2.5-2.5v-15C2.5 6.125 3.625 5 5 5Z' stroke='%2300C98E' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'/%3E%3Cpath d='M27.5 7.5 15 16.25 2.5 7.5' stroke='%2300C98E' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
 }
-
+.R-cp-claude-corps /****************************************/
 /* Embeded Fonts                        */
 /****************************************/
 
@@ -6487,11 +6636,11 @@ thead th{
 /* Responsive breakpoints               */
 /****************************************/
 
- /* Very Small devices (landscape phones, 576px and up) */
- /* Small devices (landscape phones, 576px and up) */
- /* Medium devices (tablets, 768px and up) */
- /* Large devices (desktops, 992px and up) */
- /* Extra large devices (large desktops, 1200px and up) */
+ /* Very Small devices (landscape phones, .R-cp-claude-corps 576px and up) */
+ /* Small devices (landscape phones, .R-cp-claude-corps 576px and up) */
+ /* Medium devices (tablets, .R-cp-claude-corps 768px and up) */
+ /* Large devices (desktops, .R-cp-claude-corps 992px and up) */
+ /* Extra large devices (large desktops, .R-cp-claude-corps 1200px and up) */
 
 /****************************************/
 /* Colors                               */
@@ -6561,7 +6710,7 @@ thead th{
   outline: 1px dotted #4F5EFF;
   outline-offset: -1px;
 }
-
+.R-cp-claude-corps /*****************************************/
 /* Buttons                               */
 /*****************************************/
 
@@ -6617,7 +6766,7 @@ thead th{
   color: #ffffff;
   background: #264248
 }
-
+.R-cp-claude-corps /*****************************************/
 /* Helpers                               */
 /*****************************************/
 
@@ -6647,7 +6796,7 @@ thead th{
 .R-cp-claude-corps .fw-500{ font-weight: 500; }
 .R-cp-claude-corps .fw-600{ font-weight: 600; }
 .R-cp-claude-corps .fw-700{ font-weight: 700; }
-
+.R-cp-claude-corps /*****************************************/
 /* Reset                                 */
 /*****************************************/
 
@@ -6708,15 +6857,15 @@ html{
 .R-cp-claude-corps .border-top{
   border-top: 1px solid;
 }
-
+.R-cp-claude-corps /****************************************/
 /* Responsive breakpoints               */
 /****************************************/
 
- /* Very Small devices (landscape phones, 576px and up) */
- /* Small devices (landscape phones, 576px and up) */
- /* Medium devices (tablets, 768px and up) */
- /* Large devices (desktops, 992px and up) */
- /* Extra large devices (large desktops, 1200px and up) */
+ /* Very Small devices (landscape phones, .R-cp-claude-corps 576px and up) */
+ /* Small devices (landscape phones, .R-cp-claude-corps 576px and up) */
+ /* Medium devices (tablets, .R-cp-claude-corps 768px and up) */
+ /* Large devices (desktops, .R-cp-claude-corps 992px and up) */
+ /* Extra large devices (large desktops, .R-cp-claude-corps 1200px and up) */
 
 /****************************************/
 /* Colors                               */
@@ -6892,6 +7041,7 @@ html{
 .R-cp-claude-corps .blog-related-posts__title a:hover{
   color: #4F5EFF;
 }
+.R-cp-claude-corps /* Blog comments */
 
 .blog-comments{
   margin-left: -6px;
@@ -6976,7 +7126,7 @@ html{
   margin-right: 0.35rem;
   width: 15px;
 }
-
+.R-cp-claude-corps /* source: https://www.codepath.org/hubfs/hub_generated/template_assets/1/66007582371/1795038944943/template__select2.min.css */
 .select2 :focus{outline:none}
 .R-cp-claude-corps .select2-container{box-sizing:border-box;display:inline-block;margin:0;position:relative;vertical-align:middle}
 .R-cp-claude-corps .input .select2-container, .R-cp-claude-corps .select2-container .col-aside{display:block;width:100%!important}
@@ -7089,7 +7239,7 @@ html{
 .R-cp-claude-corps .select2-container--default .select2-results__option--highlighted[aria-selected]{background-color:#00c385}
 .R-cp-claude-corps .select2-results__option{border-top:1px solid #1b1c57}
 .R-cp-claude-corps .select2-results__option:first-child{border-top:0}
-
+.R-cp-claude-corps /* source: https://www.codepath.org/hubfs/hub_generated/template_assets/1/62324317827/1795038936564/template_theme-overrides.min.css */
 .content-wrapper{max-width:1380px}
 .R-cp-claude-corps .content-wrapper--vertical-spacing, .R-cp-claude-corps .dnd-section{padding:80px 1rem}
 .R-cp-claude-corps .dnd-section>.row-fluid{max-width:1380px}
@@ -7612,7 +7762,7 @@ html{
 .R-cp-claude-corps .header-top-wrapper{padding:0!important}
 .R-cp-claude-corps .header-top-wrapper .dnd-section>.row-fluid{max-width:100%!important}
 .R-cp-claude-corps header.header{position:relative;z-index:999}
-
+.R-cp-claude-corps /* source: https://www.codepath.org/hubfs/hub_generated/template_assets/1/213075125004/1795038939559/template_header-v3.min.css */
 #hs-web-interactives-top-anchor{position:absolute}
 @media(max-width:767px){
 .R-cp-claude-corps .header__logo--main{margin-left:30px;padding-bottom:21px!important;padding-top:20px!important}
@@ -7624,10 +7774,10 @@ html{
 .R-cp-claude-corps.hs-web-interactives-top-banner-open.mobie-menu-open #hs-web-interactives-top-anchor{display:none}
 
 }
-
+.R-cp-claude-corps /* source: https://www.codepath.org/hubfs/hub_generated/template_assets/1/212982195590/1795038935039/template_fade-in-on-scroll.min.css */
 .fade-in-on-scroll{opacity:0;transition:opacity 1s ease-in-out;will-change:opacity}
 .R-cp-claude-corps .fade-in-on-scroll.is-visible{opacity:1}
-
+.R-cp-claude-corps /* source: https://www.codepath.org/hubfs/hub_generated/template_assets/1/222142373888/1795038948895/template_dark.min.css */
 :root{--color-green-core:#008158;--color-text-accent:#008158;--color-text-eyebrow:#008158;--color-text-subtle:#707080;--a11y-brand-green-text:#008158;--a11y-secondary-grey-text:#707080;--a11y-focus-ring:#2736d7;--a11y-focus-ring-on-dark:#fff;--a11y-navy-text:#1b1c57}
 .R-cp-claude-corps .body-container .carousel-tag, .R-cp-claude-corps .body-container .course-card__name, .R-cp-claude-corps .body-container .image-collage-w-text_subheadline, .R-cp-claude-corps .body-container .logo-mod .logo-header h4, .R-cp-claude-corps .body-container .testimonial-mod .testimonial-header h4, .R-cp-claude-corps .body-container .two-col-mod .left-header .top-head h4, .R-cp-claude-corps .body-container .v3-pathways__column-caption, .R-cp-claude-corps .body-container [style*="color: #00C385"], .R-cp-claude-corps .body-container [style*="color: #00c385"], .R-cp-claude-corps .body-container [style*="color:#00C385"], .R-cp-claude-corps .body-container [style*="color:#00c385"], .R-cp-claude-corps .claude-corps-card-category, .R-cp-claude-corps .claude-corps-card-eyebrow, .R-cp-claude-corps .claude-corps-card-tag, .R-cp-claude-corps .cp-eyebrow, .R-cp-claude-corps .ehub-slide-title, .R-cp-claude-corps .ehub-top-employers-heading, .R-cp-claude-corps .header-top .top-menu ul li a, .R-cp-claude-corps .header__navigation span.nav-heading, .R-cp-claude-corps .testimonial-mod--video-enabled .testimonial-header h4, .R-cp-claude-corps .top_header_navigation_mobile ul li:nth-child(7) a, .R-cp-claude-corps .top_header_navigation_mobile ul li:nth-child(8) a, .R-cp-claude-corps a.claude-corps-card-link, .R-cp-claude-corps a.claude-corps-card-subtag, .R-cp-claude-corps button.ehub-slide-title, .R-cp-claude-corps h4.ehub-tag, .R-cp-claude-corps span.claude-corps-card-subtag, .R-cp-claude-corps table.ehub-comparison-table thead tr th>p, .R-cp-claude-corps ul.cs-ul-green li{color:var(--a11y-brand-green-text)!important}
 .R-cp-claude-corps a.claude-corps-card-subtag:hover{color:#fff!important}
@@ -7640,7 +7790,7 @@ html{
 .R-cp-claude-corps .v3-footer a:focus-visible, .R-cp-claude-corps .v3-footer button:focus-visible, .R-cp-claude-corps footer.footer a:focus-visible, .R-cp-claude-corps footer.footer button:focus-visible{outline:2px solid var(--a11y-focus-ring-on-dark)!important;outline-offset:2px}
 .R-cp-claude-corps .v3-hero__tabs-triggers button:focus-visible, .R-cp-claude-corps .v3-hero__tabs-triggers-mobile button:focus-visible{outline:2px solid var(--a11y-focus-ring)!important;outline-offset:2px}
 .R-cp-claude-corps .cp-courses-grid__logo-item{align-items:center;border-radius:8px;box-sizing:border-box;display:inline-flex;justify-content:center;padding:12px 20px;--darkreader-background-ffffff:#fff;background-color:#fff}
-
+.R-cp-claude-corps /* source: https://www.codepath.org/hubfs/hub_generated/template_assets/1/213075125009/1795038946336/template_footer-v3.min.css */
 .v3-footer{background:#062f54;width:100%}
 .R-cp-claude-corps .v3-footer__inner{width:100%}
 .R-cp-claude-corps .v3-footer__content{margin:0 auto;max-width:1400px;padding:80px 30px}
@@ -7677,7 +7827,7 @@ html{
 .R-cp-claude-corps .v3-footer__socials .social-links a:first-child{margin-left:0!important}
 
 }
-
+.R-cp-claude-corps /* source: https://www.codepath.org/hubfs/hub_generated/module_assets/1/212982273354/1783968442823/module_Announcement_bar_v3.min.css */
 body.mobie-menu-open .v3-announcement, .R-cp-claude-corps.mobie-menu-open .v3-announcement-spacer{display:none}
 .R-cp-claude-corps .v3-announcement-spacer{position:relative;width:100%}
 .R-cp-claude-corps .v3-announcement-spacer--sticky{height:var(--v3-announcement-height,auto);transition:height .4s ease}
@@ -7709,7 +7859,7 @@ body.mobie-menu-open .v3-announcement, .R-cp-claude-corps.mobie-menu-open .v3-an
 .R-cp-claude-corps .v3-announcement-spacer--sticky, .R-cp-claude-corps .v3-announcement__stage, .R-cp-claude-corps .v3-announcement__stage.is-initialized .v3-announcement__slide, .R-cp-claude-corps .v3-announcement__stage.is-initialized .v3-announcement__slide.is-active{transition-duration:0s}
 
 }
-
+.R-cp-claude-corps /* source: https://www.codepath.org/hubfs/hub_generated/module_assets/1/122538866781/1780701619619/module_menu-v2.min.css */
 .menu--desktop{display:block}
 .R-cp-claude-corps .menu--mobile{display:none}
 @media (max-width:767px){
@@ -7784,7 +7934,7 @@ body.mobie-menu-open .v3-announcement, .R-cp-claude-corps.mobie-menu-open .v3-an
 .R-cp-claude-corps .header--element.open .menu--mobile li.menu__item.featured-heading .menu__link{line-height:1.2!important;padding-top:15px!important}
 
 }
-
+.R-cp-claude-corps /* source: https://www.codepath.org/hubfs/hub_generated/template_assets/1/213369463199/1795038951243/template_claude-corps.min.css */
 /* @import stripped */[class*=Announcement], .R-cp-claude-corps [class*=announcement-bar], .R-cp-claude-corps [class*=announcement], .R-cp-claude-corps [id*=Announcement], .R-cp-claude-corps [id*=announcement]{display:none!important}
 .R-cp-claude-corps{--cc-green:#00a878;--cc-green-dark:#008c64;--cc-navy:#1a1a2e;--cc-text:#2a2a2a;--cc-muted:#4a4a4a;--cc-border:#e5e7eb;--cc-bg-light:#f8f8f8;--cc-white:#fff;--cc-radius:8px;--cc-max:1200px;--cc-space-1:8px;--cc-space-2:16px;--cc-space-3:24px;--cc-space-4:32px;--cc-space-5:48px;--cc-space-6:64px;--cc-space-7:80px;--cc-space-8:96px;--cc-section-pad:var(--cc-space-7);--cc-grid-gap:var(--cc-space-3);--cc-split-gap:var(--cc-space-6);--cc-card-pad:var(--cc-space-4);--cc-card-pad-sm:var(--cc-space-3)}
 .R-cp-claude-corps .cc-page, .R-cp-claude-corps .cc-page *{box-sizing:border-box}
@@ -8003,10 +8153,10 @@ body.mobie-menu-open .v3-announcement, .R-cp-claude-corps.mobie-menu-open .v3-an
 .R-cp-claude-corps .hs-form ::placeholder{color:hsla(0,0%,100%,.4)!important}
 .R-cp-claude-corps .cc-faq-q:focus, .R-cp-claude-corps .cc-faq-q:focus-visible{box-shadow:none!important;outline:none!important}
 .R-cp-claude-corps .cc-faq-a ul li{color:#1a1a2e!important}
-
+.R-cp-claude-corps /* source: https://www.codepath.org/hubfs/hub_generated/module_assets/1/62324318983/1742023470810/module_Linked_logo.min.css */
 .footer-logo-mod{padding-bottom:42px}
 .R-cp-claude-corps .footer-logo-mod img{width:269px}
-
+.R-cp-claude-corps /* source: https://www.codepath.org/hubfs/hub_generated/module_assets/1/213447599194/1779682649095/module_Pathways_menu_v3.min.css */
 .v3-pathways-menu{display:grid;gap:36px;grid-template-columns:1fr 1fr 1fr 1fr 1fr 1fr}
 .R-cp-claude-corps .v3-pathways-menu__col{align-items:flex-start;display:flex;flex-direction:column;gap:20px;justify-content:flex-start;opacity:.7}
 .R-cp-claude-corps .v3-pathways-menu__col a{color:#fff;font-size:14px;font-weight:400;letter-spacing:0;line-height:125%;text-decoration:none}
@@ -8019,13 +8169,13 @@ body.mobie-menu-open .v3-announcement, .R-cp-claude-corps.mobie-menu-open .v3-an
 .R-cp-claude-corps .v3-pathways-menu{grid-template-columns:1fr}
 
 }
-
+.R-cp-claude-corps /* source: https://www.codepath.org/hubfs/hub_generated/module_assets/1/62323107991/1742023465333/module_social-follow.min.css */
 .social-links{align-items:center;display:flex;flex-wrap:wrap;justify-content:flex-end;line-height:1;margin-bottom:42px;margin-left:-20px;margin-top:42px}
 .R-cp-claude-corps .social-links__icon{background:none;border-radius:50%;display:inline-flex;height:28px;margin:0;position:relative;width:28px}
 .R-cp-claude-corps .social-links__icon svg{fill:#fff;height:28px;left:50%;object-fit:contin;position:absolute;top:50%;transform:translate(-50%,-50%);width:28px;width:auto}
 .R-cp-claude-corps .social-links__link{margin:0 0 0 15px}
 .R-cp-claude-corps .social-links__link span:hover{background:none;opacity:.7}
-
+.R-cp-claude-corps /* source: https://fonts.googleapis.com/css2?family=Poppins:ital, .R-cp-claude-corps wght@0, .R-cp-claude-corps 300;0, .R-cp-claude-corps 400;0, .R-cp-claude-corps 500;0, .R-cp-claude-corps 600;0, .R-cp-claude-corps 700;1, .R-cp-claude-corps 300;1, .R-cp-claude-corps 400&display=swap */
 @font-face{
   font-family: 'Poppins';
   font-style: italic;
@@ -8075,7 +8225,8 @@ body.mobie-menu-open .v3-announcement, .R-cp-claude-corps.mobie-menu-open .v3-an
   font-weight: 700;
   font-display: swap;
   src: url(https://fonts.gstatic.com/s/poppins/v24/pxiByp8kv8JHgFVrLCz7V1s.ttf) format('truetype');
-}:root .uai, .R-cp-claude-corps .ulsti, .R-cp-claude-corps _::-webkit-full-page-media, .R-cp-claude-corps _:future{outline-offset:-10px}
+}.R-cp-claude-corps /* source: https://cdn.userway.org/styles/2026-11-24-13-11-54/widget_base.css?v=1795525914491 */
+:root .uai, .R-cp-claude-corps .ulsti, .R-cp-claude-corps _::-webkit-full-page-media, .R-cp-claude-corps _:future{outline-offset:-10px}
 .R-cp-claude-corps .uwy ol, .R-cp-claude-corps .uwy ul{margin:0;padding:0;list-style:none}
 .R-cp-claude-corps .uwy a{text-decoration:none;color:inherit}
 .R-cp-claude-corps .uwy button{border:none;padding:0;cursor:pointer;min-width:auto}
@@ -8256,6 +8407,7 @@ body.mobie-menu-open .v3-announcement, .R-cp-claude-corps.mobie-menu-open .v3-an
 .R-cp-claude-corps .uw-s12-tooltip{display:none;opacity:0;white-space:nowrap;position:absolute!important;box-sizing:border-box!important;border:solid 2px #fff!important;background:#34394d!important;color:#fff!important;font-weight:600!important;font-size:17px!important;border-radius:10px;text-align:left!important;padding:13px 18px;box-shadow:0 0 15px rgba(66,73,96,.4);height:auto!important;z-index:2147483647}
 .R-cp-claude-corps .uw-s12-tooltip.visible{opacity:1}
 .R-cp-claude-corps .userway-s12 .uw-s12-tooltip{display:inline-block}
+.R-cp-claude-corps /* inline style 1 */
 
 a.cta_button{-moz-box-sizing:content-box !important;-webkit-box-sizing:content-box !important;box-sizing:content-box !important;vertical-align:middle}
 .R-cp-claude-corps .hs-breadcrumb-menu{list-style-type:none;margin:0px 0px 0px 0px;padding:0px 0px 0px 0px}
@@ -8268,6 +8420,7 @@ a.cta_button{-moz-box-sizing:content-box !important;-webkit-box-sizing:content-b
 
 }
 .R-cp-claude-corps .hs-screen-reader-text{clip:rect(1px, 1px, 1px, 1px);height:1px;overflow:hidden;position:absolute !important;width:1px}
+.R-cp-claude-corps /* inline style 2 */
 
 @font-face{
   font-family: "Poppins";
@@ -8444,7 +8597,7 @@ a.cta_button{-moz-box-sizing:content-box !important;-webkit-box-sizing:content-b
   max-width: 100%;
   flex-shrink: 0 !important;
 }
-
+.R-cp-claude-corps /* HubSpot Non-stacked Media Query Styles */
 @media (min-width:768px){
   .claude_corps_main-row-0-vertical-alignment > .row-fluid {
     display: -ms-flexbox !important;
@@ -8464,7 +8617,7 @@ a.cta_button{-moz-box-sizing:content-box !important;-webkit-box-sizing:content-b
     flex-shrink: 0 !important;
   }
 }
-
+.R-cp-claude-corps /* HubSpot Styles (default) */
 .claude_corps_main-row-0-padding{
   padding-top: 80px !important;
   padding-bottom: 0px !important;
@@ -8508,7 +8661,7 @@ a.cta_button{-moz-box-sizing:content-box !important;-webkit-box-sizing:content-b
   padding-top: 0px !important;
   padding-bottom: 0px !important;
 }
-
+.R-cp-claude-corps /* inline style 5 */
  .go2933276541{position:fixed;display:block;width:100%;height:0px;margin:0px;padding:0px;overflow:visible;transform-style:preserve-3d;background:transparent;backface-visibility:hidden;pointer-events:none;left:0px;z-index:9998;}
 .R-cp-claude-corps .go2369186930{top:0px;z-index:9999;height:100%;width:100%;}
 .R-cp-claude-corps .go1348078617{bottom:0px;}
@@ -8540,6 +8693,7 @@ a.cta_button{-moz-box-sizing:content-box !important;-webkit-box-sizing:content-b
 .R-cp-claude-corps .go1222083472{z-index:9999;position:fixed;right:10px;bottom:10px;max-height:95vh !important;max-width:95%;visibility:hidden;}
 .R-cp-claude-corps .go26732895{cursor:pointer;}
 .R-cp-claude-corps .go2083580917{display:flex;justify-content:center;align-items:center;}
+.R-cp-claude-corps /* inline style 6 */
 
   #hs_cos_wrapper_navigation-primary .menu .menu__submenu{}
 
@@ -8548,6 +8702,7 @@ a.cta_button{-moz-box-sizing:content-box !important;-webkit-box-sizing:content-b
   #hs_cos_wrapper_navigation-primary .menu__submenu--level-2>.menu__item:first-child:before {}
 }.R-cp-claude-corps #hs_cos_wrapper_navigation-primary .menu__submenu .menu__link, .R-cp-claude-corps #hs_cos_wrapper_navigation-primary .menu__submenu .menu__link:hover, .R-cp-claude-corps #hs_cos_wrapper_navigation-primary .menu__submenu .menu__link:focus{}
 .R-cp-claude-corps #hs_cos_wrapper_navigation-primary .menu__submenu .menu__child-toggle-icon, .R-cp-claude-corps #hs_cos_wrapper_navigation-primary .menu__submenu .menu__child-toggle-icon:hover, .R-cp-claude-corps #hs_cos_wrapper_navigation-primary .menu__submenu .menu__child-toggle-icon:focus{}
+.R-cp-claude-corps /* inline style 7 */
 
   #hs_cos_wrapper_v3_footer_socials .social-links{}
 .R-cp-claude-corps #hs_cos_wrapper_v3_footer_socials .social-links__link{}

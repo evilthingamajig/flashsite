@@ -2229,7 +2229,7 @@
 .R-ns-builders #w-node-c75fe741-f750-7d36-c3ce-2cee72e8fbbe-cda65bf4, .R-ns-builders #w-node-d3127e5c-f7d9-63c3-7379-ddc80b5ab6ee-cda65bf4, .R-ns-builders #w-node-_71ccf620-2414-5a31-361e-477edf9cd904-cda65bf4{grid-template-rows:auto auto auto auto;grid-template-columns:1fr}
 
 }
-
+.R-ns-builders /* source: https://fonts.googleapis.com/css?family=Barlow:300, .R-ns-builders 400, .R-ns-builders 500, .R-ns-builders 600, .R-ns-builders 700 */
 @font-face{
   font-family: 'Barlow';
   font-style: normal;
@@ -2260,7 +2260,7 @@
   font-style: normal;
   font-weight: 700;
   src: url(https://fonts.gstatic.com/s/barlow/v13/7cHqv4kjgoGqM7E3t-4s51op.ttf) format('truetype');
-}
+}.R-ns-builders /* source: https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.css */
 /**
  * Swiper 10.3.1
  * Most modern mobile touch slider and framework with hardware accelerated transitions
@@ -2270,7 +2270,7 @@
  *
  * Released under the MIT License
  *
- * Released on: September 28, 2023
+ * Released on: September 28, .R-ns-builders 2023
  */
 
 @font-face{font-family:swiper-icons;src:url('data:application/font-woff;charset=utf-8;base64, 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');font-weight:400;font-style:normal}
@@ -2401,11 +2401,11 @@
 .R-ns-builders .swiper-creative .swiper-slide{-webkit-backface-visibility:hidden;backface-visibility:hidden;overflow:hidden;transition-property:transform,opacity,height}
 .R-ns-builders .swiper-cards{overflow:visible}
 .R-ns-builders .swiper-cards .swiper-slide{transform-origin:center bottom;-webkit-backface-visibility:hidden;backface-visibility:hidden;overflow:hidden}
-
+.R-ns-builders /* inline style 1 */
 .wf-force-outline-none[tabindex="-1"]:focus{outline:none;}
-
+.R-ns-builders /* inline style 2 */
 .tk-p22-mackinac-pro{font-family:"p22-mackinac-pro",serif;}
-
+.R-ns-builders /* inline style 3 */
 @font-face{font-family:p22-mackinac-pro;src:url(https://use.typekit.net/af/00dec1/00000000000000007735b3d4/30/l?primer=7cdcb44be4a7db8877ffa5c0007b8dd865b3bbc383831fe2ea177f62257a9191&fvd=n5&v=3) format("woff2"),url(https://use.typekit.net/af/00dec1/00000000000000007735b3d4/30/d?primer=7cdcb44be4a7db8877ffa5c0007b8dd865b3bbc383831fe2ea177f62257a9191&fvd=n5&v=3) format("woff"),url(https://use.typekit.net/af/00dec1/00000000000000007735b3d4/30/a?primer=7cdcb44be4a7db8877ffa5c0007b8dd865b3bbc383831fe2ea177f62257a9191&fvd=n5&v=3) format("opentype");font-weight:500;font-style:normal;font-stretch:normal;font-display:auto;}
 @font-face{font-family:p22-mackinac-pro;src:url(https://use.typekit.net/af/1b97fb/00000000000000007735b3d8/30/l?primer=7cdcb44be4a7db8877ffa5c0007b8dd865b3bbc383831fe2ea177f62257a9191&fvd=i5&v=3) format("woff2"),url(https://use.typekit.net/af/1b97fb/00000000000000007735b3d8/30/d?primer=7cdcb44be4a7db8877ffa5c0007b8dd865b3bbc383831fe2ea177f62257a9191&fvd=i5&v=3) format("woff"),url(https://use.typekit.net/af/1b97fb/00000000000000007735b3d8/30/a?primer=7cdcb44be4a7db8877ffa5c0007b8dd865b3bbc383831fe2ea177f62257a9191&fvd=i5&v=3) format("opentype");font-weight:500;font-style:italic;font-stretch:normal;font-display:auto;}@font-face{font-family:p22-mackinac-pro;src:url(https://use.typekit.net/af/2ea16c/00000000000000007735b3da/30/l?primer=7cdcb44be4a7db8877ffa5c0007b8dd865b3bbc383831fe2ea177f62257a9191&fvd=n4&v=3) format("woff2"),url(https://use.typekit.net/af/2ea16c/00000000000000007735b3da/30/d?primer=7cdcb44be4a7db8877ffa5c0007b8dd865b3bbc383831fe2ea177f62257a9191&fvd=n4&v=3) format("woff"),url(https://use.typekit.net/af/2ea16c/00000000000000007735b3da/30/a?primer=7cdcb44be4a7db8877ffa5c0007b8dd865b3bbc383831fe2ea177f62257a9191&fvd=n4&v=3) format("opentype");font-weight:400;font-style:normal;font-stretch:normal;font-display:auto;}@font-face{font-family:p22-mackinac-pro;src:url(https://use.typekit.net/af/880b37/00000000000000007735b3db/30/l?primer=7cdcb44be4a7db8877ffa5c0007b8dd865b3bbc383831fe2ea177f62257a9191&fvd=i4&v=3) format("woff2"),url(https://use.typekit.net/af/880b37/00000000000000007735b3db/30/d?primer=7cdcb44be4a7db8877ffa5c0007b8dd865b3bbc383831fe2ea177f62257a9191&fvd=i4&v=3) format("woff"),url(https://use.typekit.net/af/880b37/00000000000000007735b3db/30/a?primer=7cdcb44be4a7db8877ffa5c0007b8dd865b3bbc383831fe2ea177f62257a9191&fvd=i4&v=3) format("opentype");font-weight:400;font-style:italic;font-stretch:normal;font-display:auto;}.R-ns-builders /* inline style 4 */
   
@@ -2420,19 +2420,21 @@ body .load-1, .R-ns-builders .load-2, .R-ns-builders .load-3, .R-ns-builders .lo
   width: 100%;
   overflow-y:scroll 
 }
+.R-ns-builders /* inline style 5 */
 
 /* FLUID TYPE */
 html{ font-size: calc(0.625rem + 0.41666666666666663vw); }
 
 @media screen and (max-width:1920px) { html { font-size: calc(0.625rem + 0.41666666666666674vw); } }
 @media screen and (max-width:1440px) { html { font-size: calc(0.8126951092611863rem + 0.20811654526534862vw); } }
-@media screen and (max-width:479px) { html { font-size: calc(0.7494769874476988rem + 0.8368200836820083vw); } }
+@media screen and (max-width:479px) { html { font-size: calc(0.7494769874476988rem + 0.8368200836820083vw); } }.R-ns-builders /* LAUNCH FRAME DEFAULT CUSTOM STYLES */
+
 /* Enhance text rendering */
 body{
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
 }
-
+.R-ns-builders /* Shadows */
 [shadow="tiny"]{
 box-shadow: -1px 1px 2px 0px rgba(0, 0, 0, 0.07), -2px 2px 4px 0px rgba(0, 0, 0, 0.07), -3px 3px 6px 0px rgba(0, 0, 0, 0.07);
 }
@@ -2445,20 +2447,20 @@ box-shadow: -1px 1px 2px 0px rgba(0, 0, 0, 0.07), -2px 2px 4px 0px rgba(0, 0, 0,
 .R-ns-builders [shadow="large"]{
 box-shadow: -2px 2px 4px 0px rgba(0, 0, 0, 0.07), -4px 4px 8px 0px rgba(0, 0, 0, 0.07), -8px 8px 16px 0px rgba(0, 0, 0, 0.07), -32px 32px 64px 0px rgba(0, 0, 0, 0.07), -48px 48px 96px 0px rgba(0, 0, 0, 0.07), -72px 72px 144px 0px rgba(0, 0, 0, 0.07);
 }
-
+.R-ns-builders /* Blur */
 [blur="normal"]{
 backdrop-filter: blur(4px);
 background-image: linear-gradient(to right, rgba(0, 0, 0, 0.01)), rgba(255, 255, 255, 0));
 }
-
+.R-ns-builders /* Index */
 [index="1"]{
 z-index: 1;
 }
-
+.R-ns-builders /* Reset link styles */
 a, .R-ns-builders .brand-wrap, .R-ns-builders .w-nav-link, .R-ns-builders .w-nav-link.w--current, .R-ns-builders .w-dropdown-toggle{
   color: inherit;
 }
-
+.R-ns-builders /* Aspect Ratios */
 .ratio-2x3, .R-ns-builders [aspect-ratio="2x3"]{aspect-ratio: 2 / 3;}
 .R-ns-builders .ratio-3x4, .R-ns-builders [aspect-ratio="3x4"]{aspect-ratio: 3 / 4;}
 .R-ns-builders .ratio-4x5, .R-ns-builders [aspect-ratio="4x5"]{aspect-ratio: 4 / 5;}
@@ -2467,17 +2469,17 @@ a, .R-ns-builders .brand-wrap, .R-ns-builders .w-nav-link, .R-ns-builders .w-nav
 .R-ns-builders .ratio-3x2, .R-ns-builders [aspect-ratio="3x2"]{aspect-ratio: 3 / 2;}
 .R-ns-builders .ratio-16x9, .R-ns-builders [aspect-ratio="16x9"]{aspect-ratio: 16 / 9;}
 .R-ns-builders .article-ratio-image{ aspect-ratio: 235 / 100; }
-
+.R-ns-builders /* Remove default input styles */
 input[type="text"], .R-ns-builders input[type="email"], .R-ns-builders textarea, .R-ns-builders select{
   -webkit-appearance: none; /* webkit browsers */
   -moz-appearance: none; /* firefox browser */
   appearance: none;
 }
-
+.R-ns-builders /* Custom form accent color */
 input{
 	accent-color: var(--cyan);
 }
-
+.R-ns-builders /* Display ... after 2 lines of text */
 .line-clamp{
   display: -webkit-box;
   -webkit-line-clamp: 2;
@@ -2485,10 +2487,10 @@ input{
   overflow: hidden;
 }
 .R-ns-builders .line-balance{text-wrap: balance;}
-
+.R-ns-builders /* Prevent click and hover interactions on overlays and other items*/
 .overlay, .R-ns-builders .cursor-none, .R-ns-builders .testimonial-slider-arrows{ pointer-events: none; }
 .R-ns-builders .testimonial-slider-arrows *{ pointer-events: auto; }
-
+.R-ns-builders /* Style Webflow default slider dots */
 .w-slider-dot{
   width: 10px;
   height: 10px;
@@ -2501,7 +2503,7 @@ input{
 .R-ns-builders .w-slider-dot.w-active{
   background-color: rgba(0,188,212,1);
 }
-
+.R-ns-builders /* Get rid of top margin on the first and last elements insdie of Rich Text */  
 .w-richtext>:first-child{
   margin-top: 0;
 }
@@ -2517,7 +2519,7 @@ input{
   margin-left: -1em; /* Also needed for space (tweak if needed) */
 }
 .R-ns-builders .w-richtext p strong{color: var(--color--black);}
-
+.R-ns-builders /* Animated underscore link */  
 @media only screen and (min-width: 992px){  
 
 	[shadow="callout"] {
@@ -2552,7 +2554,7 @@ input{
 		width: 100%;
   }    
 }
-
+.R-ns-builders /* Alternate direction of 2 Col Flex Boxes */
 .alternating-blocks ._2-column-flex:nth-child(even){
     flex-direction: row-reverse;
 }
@@ -2603,7 +2605,7 @@ mask-image: linear-gradient(to bottom, rgba(0, 0, 0, 0.7) 0%, rgba(0, 0, 0, 0) 1
     overflow: hidden;
 }
 .R-ns-builders .gray-wrapper.is-black:after{background-color: var(--color--rich-black);}
-
+.R-ns-builders /* Controls the width of the comparison chart on the strategy page*/
 .comparison-chart-gray{width: calc(37.5% - 1.5rem);}
 
 @media screen and (max-width: 991px) {
@@ -2611,12 +2613,12 @@ mask-image: linear-gradient(to bottom, rgba(0, 0, 0, 0.7) 0%, rgba(0, 0, 0, 0) 1
 .gray-wrapper:after {left: 0rem; right: 0rem;}
 }.R-ns-builders /* Controls the color of the faq icon when it's open or hovered on */
 .faq-trigger:hover .faq-icon-wrap, .R-ns-builders .faq-trigger.w--open .faq-icon-wrap{background-color: #333; color: white;}
-
+.R-ns-builders /* Changes the color of the small button when hovering on the parent */
 .press-block:hover .small-button{background-color: var(--color--black);; color: white;}
 .R-ns-builders .story-card:hover .small-button{background-color: white; color: var(--color--black);;}
 .R-ns-builders .border-card:hover .small-button, .R-ns-builders .footer-cta:hover .small-button{background-color: white; color: var(--color--black);}
 .R-ns-builders .border-card:hover .border-card-border{border: 1px solid white;}
-
+.R-ns-builders /* Animated the button with an outline */
 .animated-button::before, .R-ns-builders .animated-button::after{
 	content: "";
   position: absolute;
@@ -2649,6 +2651,7 @@ mask-image: linear-gradient(to bottom, rgba(0, 0, 0, 0.7) 0%, rgba(0, 0, 0, 0) 1
   border: 1px solid var(--color--black);
   border-left: none;  
 }
+.R-ns-builders /* inline style 6 */
 
 h1, .R-ns-builders h2, .R-ns-builders h3, .R-ns-builders h5, .R-ns-builders .heading-1, .R-ns-builders .heading-2, .R-ns-builders .heading-3, .R-ns-builders .heading-5{
   font-family: var(--font--builders);
@@ -2681,12 +2684,13 @@ line-height: 150%; /* 42px */
 	.heading-2, h2 {font-size: 2.375rem;}
 	.heading-3, h3 {font-size: 1.875rem;}    
 }.R-ns-builders .callout-bar{background-color: var(--color--navy);}
+.R-ns-builders /* inline style 7 */
 
-  /* Neutralize the old Webflow dropdown + its height interaction for this section only, so the page can grow */
+  /* Neutralize the old Webflow dropdown + its height interaction for this section only, .R-ns-builders so the page can grow */
   .w-dropdown:has(.accordion_content .animated-partners){ display: block !important; width: 100%; z-index: auto; height: auto !important; max-height: none !important; overflow: visible !important; }
 .R-ns-builders .w-dropdown:has(.accordion_content .animated-partners) > .w-dropdown-toggle{ display: none !important; }
 .R-ns-builders .w-dropdown:has(.accordion_content .animated-partners) > .w-dropdown-list{ display: block !important; position: static !important; background: transparent; height: auto !important; max-height: none !important; overflow: visible !important; transform: none !important; }
-
+.R-ns-builders /* The wrapper has no padding (so it can fully close); the spacing lives on the row inside it and never changes, .R-ns-builders so only height animates */
   .accordion_content.ns-sup-acc{ overflow: hidden !important; height: 0; max-height: none !important; opacity: 0; padding-top: 0 !important; padding-bottom: 0 !important;
     transition: height 0.6s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.4s ease; }
 .R-ns-builders .accordion_content.ns-sup-acc > .animated-content{ margin-top: 1rem; margin-bottom: 3rem; }

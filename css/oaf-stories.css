@@ -75,7 +75,7 @@
 .R-oaf-stories .bef-exposed-form .form--inline .bef--secondary{clear:left;}
 .R-oaf-stories .bef-exposed-form .noUi-vertical{height:150px;}
 .R-oaf-stories .paragraph--unpublished{background-color:#fff4f4;}
-
+.R-oaf-stories /* source: https://oneacrefund.org/sites/default/files/css/css_Y8TyENOCVbyB34e5MEUGHkRJWWgAhkBhvEXzarXLTxs.css?delta=1&language=en&theme=oaf&include=eJxFi1sKwyAUBTdk45LCNZ4Yy_WBR9uY1be0lP4MzMA49I624qyF8Ose9a20ARlN1DiVa9qNNJsKOW0CKQFvLw3Wt1FFF7nL-Q25tCQaL5giuw1anOiNfWrMwVRpEprUg7_xX5aR63AaecAbTnYk64Qwj4gn7YdLKn4oXqIGRfE */
 /* @license MIT https://github.com/necolas/normalize.css/blob/3.0.3/LICENSE.md */
 html{font-family:sans-serif;-ms-text-size-adjust:100%;-webkit-text-size-adjust:100%;}
 .R-oaf-stories{margin:0;}
@@ -4723,8 +4723,8 @@ html{font-family:sans-serif;-ms-text-size-adjust:100%;-webkit-text-size-adjust:1
 .R-oaf-stories .u-hidden{display:none}
 .R-oaf-stories .u-clear{clear:both}
 .R-oaf-stories .page-node-type-homepage .field--name-field-statistic-icon .field-multiple-table, .R-oaf-stories .page-node-type-homepage .field--name-field-statistic-text-reference .field-multiple-table{display:none}
-
-/*! api - Thu, 19 Nov 2026 20:32:47 GMT */
+.R-oaf-stories /* source: https://a.omappapi.com/app/js/api.min.css */
+/*! api - Tue, .R-oaf-stories 24 Nov 2026 21:05:33 GMT */
 @keyframes omBounce{from,20%,53%,to{animation-timing-function:cubic-bezier(0.215, 0.61, 0.355, 1);transform:translate3d(0, 0, 0)}40%,43%{animation-timing-function:cubic-bezier(0.755, 0.05, 0.855, 0.06);transform:translate3d(0, -30px, 0) scaleY(1.1)}70%{animation-timing-function:cubic-bezier(0.755, 0.05, 0.855, 0.06);transform:translate3d(0, -15px, 0) scaleY(1.05)}80%{transition-timing-function:cubic-bezier(0.215, 0.61, 0.355, 1);transform:translate3d(0, 0, 0) scaleY(0.95)}90%{transform:translate3d(0, -4px, 0) scaleY(1.02)}}
 .R-oaf-stories .om-animation-bounce{animation-name:omBounce;transform-origin:center bottom}
 @keyframes omBounceIn{from,20%,40%,60%,80%,to{animation-timing-function:cubic-bezier(0.215, 0.61, 0.355, 1)}0%{opacity:0;transform:scale3d(0.3, 0.3, 0.3)}20%{transform:scale3d(1.1, 1.1, 1.1)}40%{transform:scale3d(0.9, 0.9, 0.9)}60%{opacity:1;transform:scale3d(1.03, 1.03, 1.03)}80%{transform:scale3d(0.97, 0.97, 0.97)}to{opacity:1;transform:scale3d(1, 1, 1)}}.R-oaf-stories .om-animation-bounce-in{animation-duration:.75s;animation-name:omBounceIn}
@@ -4766,7 +4766,7 @@ html{font-family:sans-serif;-ms-text-size-adjust:100%;-webkit-text-size-adjust:1
 .R-oaf-stories.om-position-floating-bottom{transition:padding-bottom .5s ease !important}
 .R-oaf-stories.om-reset-dimensions{height:100% !important;width:100% !important}
 .R-oaf-stories .om-verification-confirmation{font-family:"Lato",Arial,Helvetica,sans-serif;position:fixed;border-radius:10px;bottom:20px;left:20px;padding:10px 20px;opacity:0;transition:opacity .3s ease-in;background:#85bf31;color:#fff;font-size:18px;font-weight:bold;z-index:9999}
-
+.R-oaf-stories /* inline style 1 */
 .cky-overlay{background:#000;opacity:.4;position:fixed;top:0;left:0;width:100%;height:100%;z-index:9999999}
 .R-oaf-stories .cky-hide{display:none}
 .R-oaf-stories .cky-btn-revisit-wrapper{display:flex;align-items:center;justify-content:center;background:#0056a7;width:45px;height:45px;border-radius:50%;position:fixed;z-index:999999;cursor:pointer}
