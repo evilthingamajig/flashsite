@@ -1,9 +1,9 @@
 #!/usr/bin/env node
-/** Replace nav + footer on every index.html with tools/v1/chrome.mjs chrome. */
+/** Replace nav + footer on every index.html with tools/v1/chrome.mjs (CW-structure chrome). */
 import fs from 'node:fs';
 import path from 'node:path';
-import { fileURLToPath, pathToFileURL } from 'node:url';
-import { nav, footer } from './chrome.mjs';
+import { fileURLToPath } from 'node:url';
+import { nav, footer, CSS } from './chrome.mjs';
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '../..');
 
@@ -27,31 +27,63 @@ function activeFor(rel) {
   return '';
 }
 
+function stripFooterScripts(html) {
+  return html
+    .replace(/<script src="\/site\.js" defer><\/script>\s*<\/body>\s*<\/html>\s*$/i, '')
+    .trim();
+}
+
 let n = 0;
 for (const file of walk(ROOT)) {
   let html = fs.readFileSync(file, 'utf8');
-  if (!html.includes('class="ff-nav"') && !html.includes("class='ff-nav'")) continue;
   const rel = path.relative(ROOT, file).replace(/\\/g, '/').replace(/\/index\.html$/, '').replace(/^index\.html$/, '');
   const active = activeFor(rel === 'index.html' ? '' : rel + '/');
-  const nextNav = nav(active);
-  const nextFoot = footer();
-  // Replace nav block
-  html = html.replace(/<nav class="ff-nav"[\s\S]*?<\/nav>/i, nextNav.trim());
-  // Replace footer through closing body scripts belonging to footer helper
-  if (/<footer class="ff-footer"[\s\S]*?<\/footer>/i.test(html)) {
-    html = html.replace(/<footer class="ff-footer"[\s\S]*?<\/footer>/i, () => {
-      // footer() includes scripts + closing body/html — strip those when injecting into existing page
-      return nextFoot
-        .replace(/<script src="\/site\.js" defer><\/script>\s*<\/body>\s*<\/html>\s*$/i, '')
-        .trim();
-    });
+  const nextNav = nav(active).trim();
+  const nextFoot = stripFooterScripts(footer());
+
+  // Replace existing chrome (old ff-nav OR new CW markers OR bare nav-bar)
+  if (/<!--ff:chrome-nav-->[\s\S]*?<!--\/ff:chrome-nav-->/i.test(html)) {
+    html = html.replace(/<!--ff:chrome-nav-->[\s\S]*?<!--\/ff:chrome-nav-->/i, nextNav);
+  } else if (/<nav class="ff-nav"[\s\S]*?<\/nav>/i.test(html)) {
+    html = html.replace(/<nav class="ff-nav"[\s\S]*?<\/nav>/i, nextNav);
+  } else if (/<nav class="nav-bar"[\s\S]*?<\/nav>/i.test(html)) {
+    // replace nav-bar + following offcanvas if present
+    html = html.replace(
+      /<nav class="nav-bar"[\s\S]*?<\/nav>\s*(?:<nav class="right-off-canvas-menu"[\s\S]*?<\/nav>)?/i,
+      nextNav,
+    );
+  } else {
+    continue;
   }
-  // Ensure site.js once before </body>
-  if (!html.includes('src="/site.js"')) {
-    html = html.replace(/<\/body>/i, '<script src="/site.js" defer></script>\n</body>');
+
+  if (/<!--ff:chrome-footer-->[\s\S]*?<!--\/ff:chrome-footer-->/i.test(html)) {
+    html = html.replace(/<!--ff:chrome-footer-->[\s\S]*?<!--\/ff:chrome-footer-->/i, nextFoot);
+  } else if (/<footer class="ff-footer"[\s\S]*?<\/footer>/i.test(html)) {
+    html = html.replace(/<footer class="ff-footer"[\s\S]*?<\/footer>/i, nextFoot);
+  } else if (/<footer class="cw-footer"[\s\S]*?<\/footer>/i.test(html)) {
+    html = html.replace(/<footer class="cw-footer"[\s\S]*?<\/footer>/i, nextFoot);
   }
-  // Force ff.css marker
-  html = html.replace(/<!--ff:css [^>]+-->/g, '<!--ff:css ff.css-->');
+
+  // Ensure body has R-cw-chrome
+  html = html.replace(/<body([^>]*)class="([^"]*)"/i, (m, pre, cls) => {
+    const parts = new Set(cls.split(/\s+/).filter(Boolean));
+    parts.add('ff');
+    parts.add('R-cw-chrome');
+    return `<body${pre}class="${[...parts].join(' ')}"`;
+  });
+  if (!/<body[^>]*class=/i.test(html)) {
+    html = html.replace(/<body([^>]*)>/i, '<body$1 class="ff R-cw-chrome">');
+  }
+
+  // Force css marker
+  if (/<!--ff:css [^>]+-->/i.test(html)) {
+    html = html.replace(/<!--ff:css [^>]+-->/g, `<!--ff:css ${CSS}-->`);
+  }
+
+  // Ensure exactly one site.js before </body> (build rewrites to hashed path)
+  html = html.replace(/\s*<script src="(?:\/js\/site\.[^"]+\.js|\/site\.js)" defer><\/script>/g, '');
+  html = html.replace(/<\/body>/i, '<script src="/site.js" defer></script>\n</body>');
+
   fs.writeFileSync(file, html);
   n++;
 }

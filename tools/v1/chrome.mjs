@@ -1,12 +1,24 @@
-/** Shared v1 chrome — WCK-style mega-nav + charity: water–inspired footer. */
-export const CSS = 'ff.css';
+/** Shared v1 chrome — real charity:water nav/footer DOM structure + FF labels. */
+export const CSS = 'ff.css,cw-chrome.css';
 
-const IG = `<svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor" aria-hidden="true"><path d="M12 2.2c3.2 0 3.6 0 4.9.1 1.2.1 1.8.2 2.2.4.6.2 1 .5 1.5 1 .4.4.8.8 1 1.4.2.4.4 1 .4 2.2.1 1.3.1 1.7.1 4.9s0 3.6-.1 4.9c-.1 1.2-.2 1.8-.4 2.2-.2.6-.5 1-1 1.5-.4.4-.8.8-1.4 1-.4.2-1 .4-2.2.4-1.3.1-1.7.1-4.9.1s-3.6 0-4.9-.1c-1.2-.1-1.8-.2-2.2-.4-.6-.2-1-.5-1.5-1-.4-.4-.8-.8-1-1.4-.2-.4-.4-1-.4-2.2C2.2 15.6 2.2 15.2 2.2 12s0-3.6.1-4.9c.1-1.2.2-1.8.4-2.2.2-.6.5-1 1-1.5.4-.4.8-.8 1.4-1 .4-.2 1-.4 2.2-.4C8.4 2.2 8.8 2.2 12 2.2Zm0 3.1a6.7 6.7 0 1 0 0 13.4 6.7 6.7 0 0 0 0-13.4Zm0 11a4.3 4.3 0 1 1 0-8.7 4.3 4.3 0 0 1 0 8.7Zm7-8.9a1.6 1.6 0 1 0-3.1 0 1.6 1.6 0 0 0 3.1 0Z"/></svg>`;
+const ARROW = `<img class="ml-3" width="20" height="20" alt="" src="data:image/svg+xml,%3csvg fill='none' height='20' viewBox='0 0 20 20' width='20' xmlns='http://www.w3.org/2000/svg'%3e%3ccircle cx='10' cy='10' fill='%232f8f5b' r='9.5' stroke='%23383b36'/%3e%3cpath clip-rule='evenodd' d='m11.2144 7.16746c-.2635-.27559-.2537-.7126.0219-.97609s.7126-.25367.9761.02192l3.0962 3.23849c.2596.27149.2545.70072-.0115.96592l-3.0962 3.0879c-.27.2692-.7071.2686-.9763-.0014-.2693-.2699-.2687-.7071.0013-.9763l2.006-2.0006h-7.04151c-.38129 0-.69038-.3091-.69038-.69035 0-.38129.30909-.69038.69038-.69038h6.91621z' fill='%231a1a1a' fill-rule='evenodd'/%3e%3c/svg%3e">`;
 
-const DI = `<svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor" aria-hidden="true"><path d="M20.3 4.4A19.8 19.8 0 0 0 15.4 3c-.2.4-.5.9-.6 1.3a18 18 0 0 0-5.5 0C9.1 3.9 8.8 3.4 8.6 3a19.8 19.8 0 0 0-4.9 1.5A20.4 20.4 0 0 0 .1 18.1a19.9 19.9 0 0 0 6 3c.5-.7 1-1.4 1.3-2.1a13 13 0 0 1-2.1-1c.2-.1.4-.3.6-.4a14.2 14.2 0 0 0 12.2 0c.2.2.4.3.6.4-.7.4-1.4.8-2.1 1 .4.7.9 1.4 1.3 2.1a19.9 19.9 0 0 0 6-3A20.4 20.4 0 0 0 20.3 4.4ZM8.7 14.6c-1.1 0-2-1-2-2.3s.9-2.3 2-2.3 2.1 1 2 2.3c0 1.3-.9 2.3-2 2.3Zm6.6 0c-1.1 0-2-1-2-2.3s.9-2.3 2-2.3 2 1 2 2.3-.9 2.3-2 2.3Z"/></svg>`;
+const ARROW_LG = `<img width="20" height="20" alt="" src="data:image/svg+xml,%3csvg fill='none' height='20' viewBox='0 0 20 20' width='20' xmlns='http://www.w3.org/2000/svg'%3e%3ccircle cx='10' cy='10' fill='%232f8f5b' r='9.5' stroke='%23383b36'/%3e%3cpath clip-rule='evenodd' d='m11.2144 7.16746c-.2635-.27559-.2537-.7126.0219-.97609s.7126-.25367.9761.02192l3.0962 3.23849c.2596.27149.2545.70072-.0115.96592l-3.0962 3.0879c-.27.2692-.7071.2686-.9763-.0014-.2693-.2699-.2687-.7071.0013-.9763l2.006-2.0006h-7.04151c-.38129 0-.69038-.3091-.69038-.69035 0-.38129.30909-.69038.69038-.69038h6.91621z' fill='%231a1a1a' fill-rule='evenodd'/%3e%3c/svg%3e">`;
 
-function megaLink(href, title, desc) {
-  return `<a class="ff-mega__link" href="${href}"><span class="ff-mega__link-title">${title}</span><span class="ff-mega__link-desc">${desc}</span></a>`;
+function dropChild(href, title, desc) {
+  return `<div class="dropdown-child"><a class="text-cw-brand-grey-900 no-underline" href="${href}"><div class="px-3 py-5"><div class="header flex items-center"><div class="text-sm font-medium">${title}</div>${ARROW}</div><div class="dropdown-child-description body-s mt-2 font-normal">${desc}</div></div></a></div>`;
+}
+
+function subnavItem(href, title, desc) {
+  return `<a class="subnav-item bg-cw-brand-yellow-300 flex items-center justify-between p-2 my-5" href="${href}"><div class="mr-2"><div class="heading-m mb-1">${title}</div><div class="body-m">${desc}</div></div>${ARROW_LG}</a>`;
+}
+
+function hasDropdown(href, label, childrenHtml) {
+  return `<li class="has-dropdown"><span class="nav-hover-extender absolute bg-transparent z-10"></span><span class="flex items-center dropdown-parent-link"><a class="heading-xs relative z-20 mr-4" href="${href}">${label}</a><span class="h80 icn cw-icon-chevron-down"></span></span><span class="dropdown leading-normal left-0 rounded">${childrenHtml}</span></li>`;
+}
+
+function offSection(label, childrenHtml) {
+  return `<li class="nav-section p-6 border-b border-solid border-grey-50"><div class="nav-section-header flex items-center justify-between cursor-pointer"><div class="heading-xs">${label}</div><span class="icn cw-icon-plus-sm bg-cw-white border border-cw-brand-grey-800 rounded-full flex items-center justify-center"></span></div><div class="subnav mt-8">${childrenHtml}</div></li>`;
 }
 
 export function head({ title, description, canonical, extraHead = '', bodyClass = '' }) {
@@ -23,164 +35,233 @@ export function head({ title, description, canonical, extraHead = '', bodyClass 
 <!--ff:css ${CSS}--><style></style><!--/ff:css-->
 ${extraHead}
 </head>
-<body class="ff ${bodyClass}">
+<body class="ff R-cw-chrome ${bodyClass}">
 <a class="ff-skip" href="#main">Skip to content</a>
 `;
 }
 
 export function nav(active = '') {
-  const a = (key) => (active === key ? ' is-active' : '');
-  return `<nav class="ff-nav" id="site-nav" aria-label="Main">
-<div class="ff-wrap ff-nav__row">
-<a href="/" class="ff-logo"><img src="/images/brand/mark-green-104.png" alt="" width="71" height="104"><span class="ff-logo-text">Flash Forward<br>Foundation</span></a>
-<button type="button" class="ff-nav__toggle" aria-controls="site-nav" aria-expanded="false" aria-label="Open menu"><i class="fa-solid fa-bars" aria-hidden="true"></i></button>
-<ul class="ff-nav__list">
-<li class="ff-nav__item${a('model')} has-mega">
-<a href="/our-model/" aria-haspopup="true">Our Model</a>
-<div class="ff-mega" role="region" aria-label="Our Model">
-<p class="ff-mega__intro">Design → Assemble → Deliver → Unlock. Students lead. Partners build and place Study Lights.</p>
-<div class="ff-mega__grid">
-${megaLink('/our-model/', 'Our Model hub', 'How study light becomes study time')}
-${megaLink('/our-model/why-light/', 'Why Light &amp; Learning', 'Darkness cuts study short — light unlocks hours')}
-${megaLink('/our-model/study-unlock-pathway/', 'Study Unlock Pathway', 'The four verbs behind every light')}
-${megaLink('/our-model/the-study-light/', 'The Study Light', '≈ $5.17 in parts — solar charged')}
-${megaLink('/our-model/made-and-delivered/', 'Made &amp; Delivered', 'Assembly and distribution partners')}
-${megaLink('/our-model/for-students/', 'For Students, By Students', 'Unpaid student leadership of the org')}
-</div>
-</div>
-</li>
-<li class="ff-nav__item${a('impact')} has-mega">
-<a href="/impact/" aria-haspopup="true">Impact</a>
-<div class="ff-mega" role="region" aria-label="Impact">
-<p class="ff-mega__intro">We lead with study hours unlocked — with a method note, not inflated claims.</p>
-<div class="ff-mega__grid">
-${megaLink('/impact/', 'Impact hub', 'Proof with honesty')}
-${megaLink('/impact/outcomes/', 'Outcomes &amp; method', 'How we estimate study hours')}
-${megaLink('/impact/reports/', 'Reports &amp; Financials', '990s, letters, and transparency')}
-${megaLink('/impact-stories/', 'Impact Stories', 'Prefer a school, community, or region')}
-</div>
-</div>
-</li>
-<li class="ff-nav__item${a('stories')}"><a href="/impact-stories/">Impact Stories</a></li>
-<li class="ff-nav__item${a('join')} has-mega">
-<a href="/join/" aria-haspopup="true">Join</a>
-<div class="ff-mega" role="region" aria-label="Join">
-<p class="ff-mega__intro">Every seat is unpaid — including leadership. Interns run pipelines; partners build lights.</p>
-<div class="ff-mega__grid">
-${megaLink('/join/', 'Join hub', 'Work with us')}
-${megaLink('/join/internships/', 'Internships', 'Marketing · Partnerships · Fundraising')}
-${megaLink('/join/open-roles/', 'Open roles', 'Unpaid student leadership seats')}
-${megaLink('/join/apply/', 'Apply', 'Start an application')}
-</div>
-</div>
-</li>
-<li class="ff-nav__item${a('involved')} has-mega">
-<a href="/get-involved/" aria-haspopup="true">Get Involved</a>
-<div class="ff-mega" role="region" aria-label="Get Involved">
-<p class="ff-mega__intro">Donate, join Study Circle, prefer a story, or partner on assembly and delivery.</p>
-<div class="ff-mega__grid">
-${megaLink('/donate/', 'Donate', 'Give in flashlight units (~$5.17)')}
-${megaLink('/donate/#study-circle', 'Study Circle', 'Monthly giving that keeps the pathway funded')}
-${megaLink('/impact-stories/', 'Impact Stories', 'Preference-based giving — best effort')}
-${megaLink('/get-involved/ambassadors/', 'Ambassadors', 'Soft campus and community voice')}
-${megaLink('/get-involved/partners/', 'Partner with us', 'Assemble or place Study Lights')}
-${megaLink('/get-involved/legacy-giving/', 'Legacy giving', 'Leave study hours in your estate plan')}
-</div>
-</div>
-</li>
-<li class="ff-nav__item${a('about')} has-mega">
-<a href="/about/" aria-haspopup="true">About</a>
-<div class="ff-mega" role="region" aria-label="About">
-<p class="ff-mega__intro">A Bellevue, WA 501(c)(3). Student-run. EIN 39-3605570.</p>
-<div class="ff-mega__grid">
-${megaLink('/about/', 'Our Story', 'How Flash Forward started')}
-${megaLink('/about/team/', 'Leadership', 'Board and open unpaid seats')}
-${megaLink('/nonprofit-status/', 'Nonprofit Status', 'Determination letter and trust cues')}
-${megaLink('/faq/', 'FAQs', 'Straight answers')}
-${megaLink('/news/', 'News', 'Updates from the pathway')}
-${megaLink('/contact/', 'Contact', 'Reach the team')}
-</div>
-</div>
-</li>
-</ul>
-<a class="ff-nav__donate" href="/donate/">Donate</a>
-<a class="ff-nav__search" href="/search/" aria-label="Search"><i class="fa-solid fa-magnifying-glass" aria-hidden="true"></i></a>
-</div>
+  const modelKids = [
+    dropChild('/our-model/', 'Our Model hub', 'How study light becomes study time'),
+    dropChild('/our-model/why-light/', 'Why Light &amp; Learning', 'Darkness cuts study short — light unlocks hours'),
+    dropChild('/our-model/study-unlock-pathway/', 'Study Unlock Pathway', 'The four verbs behind every light'),
+    dropChild('/our-model/the-study-light/', 'The Study Light', '≈ $5.17 in parts — solar charged'),
+    dropChild('/our-model/made-and-delivered/', 'Made &amp; Delivered', 'Assembly and distribution partners'),
+    dropChild('/our-model/for-students/', 'For Students, By Students', 'Unpaid student leadership of the org'),
+  ].join('');
+
+  const impactKids = [
+    dropChild('/impact/', 'Impact hub', 'Proof with honesty'),
+    dropChild('/impact/outcomes/', 'Outcomes &amp; method', 'How we estimate study hours'),
+    dropChild('/impact/reports/', 'Reports &amp; Financials', '990s, letters, and transparency'),
+    dropChild('/impact-stories/', 'Impact Stories', 'Prefer a school, community, or region'),
+  ].join('');
+
+  const joinKids = [
+    dropChild('/join/', 'Join hub', 'Work with us'),
+    dropChild('/join/internships/', 'Internships', 'Marketing · Partnerships · Fundraising'),
+    dropChild('/join/open-roles/', 'Open roles', 'Unpaid student leadership seats'),
+    dropChild('/join/apply/', 'Apply', 'Start an application'),
+  ].join('');
+
+  const involvedKids = [
+    dropChild('/donate/', 'Donate', 'Give in flashlight units (~$5.17)'),
+    dropChild('/donate/#study-circle', 'Study Circle', 'Monthly giving that keeps the pathway funded'),
+    dropChild('/impact-stories/', 'Impact Stories', 'Preference-based giving — best effort'),
+    dropChild('/get-involved/ambassadors/', 'Ambassadors', 'Soft campus and community voice'),
+    dropChild('/get-involved/partners/', 'Partner with us', 'Assemble or place Study Lights'),
+    dropChild('/get-involved/legacy-giving/', 'Legacy giving', 'Leave study hours in your estate plan'),
+  ].join('');
+
+  const aboutKids = [
+    dropChild('/about/', 'Our Story', 'How Flash Forward started'),
+    dropChild('/about/team/', 'Leadership', 'Board and open unpaid seats'),
+    dropChild('/nonprofit-status/', 'Nonprofit Status', 'Determination letter and trust cues'),
+    dropChild('/faq/', 'FAQs', 'Straight answers'),
+    dropChild('/news/', 'News', 'Updates from the pathway'),
+    dropChild('/contact/', 'Contact', 'Reach the team'),
+  ].join('');
+
+  const offModel = [
+    `<a class="cw-link--primary" href="/our-model/">Explore our model</a>`,
+    subnavItem('/our-model/why-light/', 'Why Light &amp; Learning', 'Darkness cuts study short — light unlocks hours.'),
+    subnavItem('/our-model/the-study-light/', 'The Study Light', '≈ $5.17 in parts — solar charged.'),
+    subnavItem('/our-model/study-unlock-pathway/', 'Study Unlock Pathway', 'Design → Assemble → Deliver → Unlock.'),
+  ].join('');
+
+  const offImpact = [
+    `<a class="cw-link--primary" href="/impact/">Explore impact</a>`,
+    subnavItem('/impact/outcomes/', 'Outcomes &amp; method', 'How we estimate study hours.'),
+    subnavItem('/impact/reports/', 'Reports &amp; Financials', '990s, letters, and transparency.'),
+    subnavItem('/impact-stories/', 'Impact Stories', 'Prefer a school, community, or region.'),
+  ].join('');
+
+  const offJoin = [
+    `<a class="cw-link--primary" href="/join/">Explore joining</a>`,
+    subnavItem('/join/internships/', 'Internships', 'Marketing · Partnerships · Fundraising.'),
+    subnavItem('/join/open-roles/', 'Open roles', 'Unpaid student leadership seats.'),
+    subnavItem('/join/apply/', 'Apply', 'Start an application.'),
+  ].join('');
+
+  const offInvolved = [
+    `<a class="cw-link--primary" href="/get-involved/">Get involved</a>`,
+    subnavItem('/donate/', 'Donate', 'Give in flashlight units (~$5.17).'),
+    subnavItem('/donate/#study-circle', 'Study Circle', 'Monthly giving that keeps the pathway funded.'),
+    subnavItem('/get-involved/partners/', 'Partner with us', 'Assemble or place Study Lights.'),
+  ].join('');
+
+  const offAbout = [
+    `<a class="cw-link--primary" href="/about/">About Flash Forward</a>`,
+    subnavItem('/about/team/', 'Leadership', 'Board and open unpaid seats.'),
+    subnavItem('/nonprofit-status/', 'Nonprofit Status', 'EIN 39-3605570.'),
+    subnavItem('/faq/', 'FAQs', 'Straight answers.'),
+  ].join('');
+
+  return `<!--ff:chrome-nav-->
+<nav class="nav-bar" id="site-nav" data-off-canvas="" aria-label="Main">
+  <div data-component="Nav/NavBar"><span>
+    <section class="theme-design-system-v1 nav-bar-section flex justify-between items-center">
+      <div class="left-side flex">
+        <ul class="mobile-nav-items flex items-center lg-hidden">
+          <a class="offcanvas-open-link off-canvas-toggle icn mr-6 cw-icon-reorder-thin" href="#" role="button" aria-label="Open menu" aria-controls="ff-offcanvas" aria-expanded="false"></a>
+          <a href="/"><img class="md-hidden" src="/images/brand/mark-green-104.png" alt="Flash Forward Foundation" width="26" height="34"></a>
+        </ul>
+        <ul class="logo-area md-block">
+          <a href="/" aria-label="Flash Forward Foundation home">
+            <li class="logo"></li>
+            <span class="ff-logo-wordmark">Flash Forward<br>Foundation</span>
+          </a>
+        </ul>
+        <ul class="nav-items">
+          ${hasDropdown('/our-model/', 'Our Model', modelKids)}
+          ${hasDropdown('/impact/', 'Impact', impactKids)}
+          ${hasDropdown('/join/', 'Join', joinKids)}
+          ${hasDropdown('/get-involved/', 'Get Involved', involvedKids)}
+          ${hasDropdown('/about/', 'About', aboutKids)}
+        </ul>
+      </div>
+      <div class="right-side items-center ml-2">
+        <div class="mycw-nav theme-design-system-v1">
+          <div class="has-form user-access">
+            <a class="log-in" href="/contact/">Contact</a>
+          </div>
+        </div>
+        <a class="donate-link button cw-button items-center px-4 py-2 ml-4 md-ml-10" href="/donate/">
+          <div class="heading-xs">Donate</div>
+        </a>
+      </div>
+    </section>
+  </span></div>
 </nav>
+<nav class="right-off-canvas-menu theme-design-system-v1 bg-cw-brand-yellow-100" id="ff-offcanvas" aria-label="Mobile">
+  <ul class="off-canvas-list">
+    ${offSection('Our Model', offModel)}
+    ${offSection('Impact', offImpact)}
+    ${offSection('Join', offJoin)}
+    ${offSection('Get Involved', offInvolved)}
+    ${offSection('About', offAbout)}
+    <div class="p-6 pt-8">
+      <a class="flex items-center mb-5" href="/contact/"><div class="icon cw-icon-mail-outline mr-2"></div><div class="heading-s">Contact us</div></a>
+      <a class="flex items-center" href="/donate/"><div class="icon cw-icon-user-outline mr-2"></div><div class="heading-s">Donate</div></a>
+    </div>
+  </ul>
+</nav>
+<!--/ff:chrome-nav-->
 `;
 }
 
 export function footer() {
-  return `<footer class="ff-footer">
-<div class="ff-footer__mail">
-<div class="ff-wrap ff-footer__mail-inner">
-<div>
-<h2 class="ff-footer__mail-title">Add impact to your inbox</h2>
-<p class="ff-footer__mail-text">Occasional updates on Study Lights, partners, and study hours unlocked — no spam.</p>
-</div>
-<a class="ff-btn ff-btn--inverse" href="/contact/">Get updates</a>
-</div>
-</div>
-<div class="ff-wrap ff-footer__inner">
-<div class="ff-footer__top">
-<div class="ff-footer__brand">
-<a class="ff-logo" href="/"><img src="/images/brand/mark-paper-88.png" alt="" width="60" height="88" class="ff-footer__mark"><span class="ff-logo-text">Flash Forward<br>Foundation</span></a>
-<p class="ff-footer__mission">Student-led 501(c)(3). We design solar study lights, work with assembly and distribution partners, and unlock study hours for learners without reliable electricity.</p>
-<div class="ff-footer__cta">
-<a class="ff-btn ff-btn--inverse" href="/donate/">Donate</a>
-<a class="ff-btn ff-btn--ghost-inv" href="/join/">Join</a>
-</div>
-</div>
-<div class="ff-footer__social">
-<p>Follow along</p>
-<a class="ff-footer__icon" href="https://www.instagram.com/flashforwardfoundation/" target="_blank" rel="noopener" aria-label="Instagram">${IG}</a>
-<a class="ff-footer__icon" href="https://discord.gg/UnyvyxMYE" target="_blank" rel="noopener" aria-label="Discord">${DI}</a>
-</div>
-</div>
-<nav class="ff-footer__cols" aria-label="Footer">
-<div class="ff-footer__col">
-<h3>Our Model</h3>
-<a href="/our-model/why-light/">Why Light &amp; Learning</a>
-<a href="/our-model/study-unlock-pathway/">Study Unlock Pathway</a>
-<a href="/our-model/the-study-light/">The Study Light</a>
-<a href="/our-model/made-and-delivered/">Made &amp; Delivered</a>
-</div>
-<div class="ff-footer__col">
-<h3>Impact</h3>
-<a href="/impact/outcomes/">Outcomes</a>
-<a href="/impact/reports/">Reports</a>
-<a href="/impact-stories/">Impact Stories</a>
-<a href="/news/">News</a>
-</div>
-<div class="ff-footer__col">
-<h3>Join</h3>
-<a href="/join/internships/">Internships</a>
-<a href="/join/open-roles/">Open roles</a>
-<a href="/join/apply/">Apply</a>
-</div>
-<div class="ff-footer__col">
-<h3>Get Involved</h3>
-<a href="/donate/">Donate</a>
-<a href="/donate/#study-circle">Study Circle</a>
-<a href="/get-involved/ambassadors/">Ambassadors</a>
-<a href="/get-involved/partners/">Partners</a>
-<a href="/get-involved/legacy-giving/">Legacy giving</a>
-</div>
-<div class="ff-footer__col">
-<h3>About</h3>
-<a href="/about/">Our Story</a>
-<a href="/about/team/">Leadership</a>
-<a href="/nonprofit-status/">Nonprofit Status</a>
-<a href="/faq/">FAQs</a>
-<a href="/contact/">Contact</a>
-</div>
-</nav>
-</div>
-<div class="ff-footer__bar"><div class="ff-wrap ff-footer__barrow">
-<p><a href="/privacy/">Privacy</a> · <a href="/terms/">Terms</a> · <a href="/accessibility/">Accessibility</a> · <a href="/site-map/">Site map</a> · <a href="/guides/">Student Guides</a></p>
-<p class="ff-footer__ein">EIN 39-3605570 · Bellevue, WA</p>
-</div></div>
+  return `<!--ff:chrome-footer-->
+<footer class="cw-footer no-top-border">
+  <div class="mailing-list-and-info w-full bg-grey-5 text-center flex flex-col border-b border-r border-l border-solid border-0 border-grey-30 rounded-b items-center theme-maji">
+    <div class="optional-text normal-case pb-2 text-cw-black">
+      <h6 class="h70">Add impact to your inbox</h6>
+      <p class="p40">Occasional updates on Study Lights, partners, and study hours unlocked — no spam.</p>
+    </div>
+    <div class="lead-form-wrapper theme-maji" style="line-height:0">
+      <div class="m-auto text-center w-full" style="padding-top:12px">
+        <a class="button button--expand mailing-list-sign-up-button max-w-xs mx-auto mt-2" href="/contact/">Get updates</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="cw-footer-top-row border-b border-solid border-0 border-grey-30 my-3">
+    <ul class="mt-0 mb-4 pr-2 w-1/2 md-w-1/4">
+      <li class="cw-footer-header">Our Model</li>
+      <li><a href="/our-model/why-light/">Why Light &amp; Learning</a></li>
+      <li><a href="/our-model/study-unlock-pathway/">Study Unlock Pathway</a></li>
+      <li><a href="/our-model/the-study-light/">The Study Light</a></li>
+      <li><a href="/our-model/made-and-delivered/">Made &amp; Delivered</a></li>
+    </ul>
+    <ul class="mt-0 mb-2 pr-2 w-1/2 md-w-1/4">
+      <li class="cw-footer-header">Impact</li>
+      <li><a href="/impact/outcomes/">Outcomes</a></li>
+      <li><a href="/impact/reports/">Reports</a></li>
+      <li><a href="/impact-stories/">Impact Stories</a></li>
+      <li><a href="/news/">News</a></li>
+    </ul>
+    <ul class="mt-0 mb-4 pr-2 w-1/2 md-w-1/4">
+      <li class="cw-footer-header">Join</li>
+      <li><a href="/join/internships/">Internships</a></li>
+      <li><a href="/join/open-roles/">Open roles</a></li>
+      <li><a href="/join/apply/">Apply</a></li>
+      <li><a href="/get-involved/partners/">Partners</a></li>
+    </ul>
+    <ul class="mt-0 mb-4 pr-2 w-1/2 md-w-1/4">
+      <li class="cw-footer-header">About</li>
+      <li><a href="/about/">Our Story</a></li>
+      <li><a href="/about/team/">Leadership</a></li>
+      <li><a href="/nonprofit-status/">Nonprofit Status</a></li>
+      <li><a href="/faq/">FAQs</a></li>
+      <li><a href="/contact/">Contact</a></li>
+      <li><a href="/donate/">Donate</a></li>
+    </ul>
+  </div>
+
+  <div class="max-w-xl mx-auto flex flex-col lg-flex-row mt-0">
+    <div class="w-full lg-w-3/4">
+      <div class="row">
+        <ul class="mx-auto justify-center lg-justify-start flex">
+          <li class="cw-footer-social-instagram mr-2">
+            <a class="text-base" href="https://www.instagram.com/flashforwardfoundation/" target="_blank" rel="noopener" aria-label="Instagram">
+              <span class="cw-icon-instagram icn"><span class="for-screen-readers-only">Instagram</span></span>
+            </a>
+          </li>
+          <li class="cw-footer-social-linkedin">
+            <a href="https://discord.gg/UnyvyxMYE" target="_blank" rel="noopener" aria-label="Discord">
+              <span class="cw-icon-linkedin icn"><span class="for-screen-readers-only">Discord</span></span>
+            </a>
+          </li>
+        </ul>
+      </div>
+      <div class="row mt-1">
+        <ul class="my-0 mt-0 flex justify-center lg-justify-start flex-col md-flex-row text-center cw-footer-secondary-links">
+          <li class="pl-0"><a class="cw-footer-emph" href="/privacy/">Privacy policy</a></li>
+          <li><a class="cw-footer-emph" href="/terms/">Terms</a></li>
+          <li><a class="cw-footer-emph" href="/accessibility/">Accessibility</a></li>
+          <li><a class="cw-footer-emph" href="/site-map/">Site map</a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="max-w-xl mx-auto text-center lg-text-left mt-2 flex flex-col lg-flex-row lg-justify-between items-center">
+    <div class="lg-mt-0">
+      <p class="h80 text-grey-50 normal-case">Flash Forward Foundation is a student-led 501(c)(3) nonprofit organization.</p>
+      <ul class="my-0 mt-1 flex justify-center lg-justify-start flex-col md-flex-row text-center cw-footer-secondary-links">
+        <li><a class="cw-footer-emph" href="/nonprofit-status/">EIN 39-3605570 · Bellevue, WA</a></li>
+        <li class="footer-email-signup-link"><a class="cw-footer-emph" href="/contact/">Get our emails</a></li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="max-w-xl mx-auto text-center lg-text-left mt-2">
+    <p class="h80 mt-1 text-grey-50 normal-case">
+      <span>© ${new Date().getFullYear()} Flash Forward Foundation. Student-run. Study lights → study hours.</span>
+    </p>
+  </div>
 </footer>
+<!--/ff:chrome-footer-->
 <script src="/site.js" defer></script>
 </body>
 </html>
