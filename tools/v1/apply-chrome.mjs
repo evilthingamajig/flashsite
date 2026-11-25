@@ -75,9 +75,14 @@ for (const file of walk(ROOT)) {
     html = html.replace(/<body([^>]*)>/i, '<body$1 class="ff R-cw-chrome">');
   }
 
-  // Force css marker
+  // Keep page-specific stylesheets. Only make sure shared chrome CSS is listed.
   if (/<!--ff:css [^>]+-->/i.test(html)) {
-    html = html.replace(/<!--ff:css [^>]+-->/g, `<!--ff:css ${CSS}-->`);
+    html = html.replace(/<!--ff:css ([^>]+)-->/g, (m, list) => {
+      const parts = list.split(',').map((s) => s.trim()).filter(Boolean);
+      if (!parts.includes('ff.css')) parts.unshift('ff.css');
+      if (!parts.includes('cw-chrome.css')) parts.splice(Math.min(1, parts.length), 0, 'cw-chrome.css');
+      return `<!--ff:css ${[...new Set(parts)].join(',')}-->`;
+    });
   }
 
   // Ensure exactly one site.js before </body> (build rewrites to hashed path)

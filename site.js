@@ -316,6 +316,42 @@
   });
 })();
 
+// Team directory filters (Opportunity Green card layout, FF departments)
+(function(){
+  var root=document.querySelector('[data-team-filter]');
+  if(!root)return;
+  var tabs=root.querySelectorAll('[data-team]');
+  var cards=root.querySelectorAll('[data-teams]');
+  var empty=root.querySelector('[data-team-empty]');
+  function apply(tag){
+    var n=0;
+    cards.forEach(function(card){
+      var teams=(card.getAttribute('data-teams')||'').split(/\s+/);
+      var ok=tag==='all'||teams.indexOf(tag)!==-1;
+      card.hidden=!ok;
+      if(ok)n++;
+    });
+    if(empty) empty.hidden=n>0;
+  }
+  tabs.forEach(function(tab){
+    tab.addEventListener('click',function(){
+      tabs.forEach(function(t){
+        var on=t===tab;
+        t.classList.toggle('active', on);
+        t.setAttribute('aria-selected', String(on));
+      });
+      apply(tab.getAttribute('data-team'));
+    });
+  });
+  root.querySelectorAll('[data-readmore]').forEach(function(btn){
+    btn.addEventListener('click',function(){
+      var card=btn.closest('.expert-card');
+      var open=card.classList.toggle('is-open');
+      btn.textContent=open?'Show less':'Read more';
+    });
+  });
+})();
+
 // Count-up animation for [data-countup] figures
 (function(){
   var els=[].slice.call(document.querySelectorAll('[data-countup]'));
