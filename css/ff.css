@@ -160,40 +160,76 @@ a:hover { color: var(--ff-green-900); }
   color: var(--ff-green-900);
 }
 .ff-nav__item.is-active > a {
-  box-shadow: inset 0 -2px 0 var(--ff-amber-500);
+  box-shadow: inset 0 -2px 0 var(--ff-green-700);
 }
-.ff-nav__item:has(> ul) > a::after {
+.ff-nav__item.has-mega > a::after {
   content: "▾";
   font-size: 0.7rem;
   opacity: 0.7;
 }
-.ff-nav__item > ul {
+.ff-nav__item.has-mega:hover > a::after,
+.ff-nav__item.has-mega:focus-within > a::after {
+  content: "▴";
+}
+
+/* Mega panel — WCK / charity: water pattern: intro + title/desc grid */
+.ff-mega {
   display: none;
   position: absolute;
   top: 100%;
-  left: 0;
-  min-width: 240px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: min(920px, calc(100vw - 48px));
   margin: 0;
-  padding: 8px 0;
-  list-style: none;
+  padding: 28px 32px 32px;
   background: var(--ff-paper);
   border: 1px solid var(--ff-line);
-  box-shadow: 0 12px 28px rgba(10, 42, 28, 0.08);
-  z-index: 700;
+  border-radius: 4px;
+  box-shadow: 0 18px 40px rgba(6, 32, 22, 0.12);
+  z-index: 750;
+  grid-template-columns: minmax(0, 0.9fr) minmax(0, 2.1fr);
+  gap: 28px 36px;
+  align-items: start;
 }
-.ff-nav__item:hover > ul,
-.ff-nav__item:focus-within > ul { display: block; }
-.ff-nav__item > ul a {
+.ff-nav__item.has-mega:hover > .ff-mega,
+.ff-nav__item.has-mega:focus-within > .ff-mega,
+.ff-nav__item.has-mega.is-open > .ff-mega {
+  display: grid;
+}
+.ff-mega__intro {
+  margin: 0;
+  font-size: var(--ff-text-small);
+  line-height: 1.55;
+  color: var(--ff-muted);
+  max-width: 16rem;
+}
+.ff-mega__grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 6px 20px;
+}
+.ff-mega__link {
   display: block;
-  padding: 10px 16px;
-  color: var(--ff-ink);
-  font-size: 0.9375rem;
-  font-weight: 500;
-  text-decoration: none;
+  padding: 10px 8px;
+  border-radius: 4px;
+  text-decoration: none !important;
+  color: inherit;
 }
-.ff-nav__item > ul a:hover {
+.ff-mega__link:hover {
   background: var(--ff-green-50);
-  box-shadow: inset 3px 0 0 var(--ff-amber-500);
+}
+.ff-mega__link-title {
+  display: block;
+  font-weight: 700;
+  font-size: 0.95rem;
+  color: var(--ff-green-900);
+  margin-bottom: 2px;
+}
+.ff-mega__link-desc {
+  display: block;
+  font-size: 0.8125rem;
+  line-height: 1.4;
+  color: var(--ff-muted);
 }
 .ff-nav__donate {
   display: inline-flex;
@@ -211,6 +247,18 @@ a:hover { color: var(--ff-green-900); }
   transition: background-color 120ms ease;
 }
 .ff-nav__donate:hover { background: var(--ff-green-900); color: #fff !important; }
+.ff-nav__search {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  margin-left: 4px;
+  color: var(--ff-green-900);
+  text-decoration: none !important;
+  border-radius: 4px;
+}
+.ff-nav__search:hover { background: var(--ff-green-50); }
 .ff-nav__toggle {
   display: none;
   width: 44px;
@@ -226,6 +274,7 @@ a:hover { color: var(--ff-green-900); }
 @media (max-width: 1023px) {
   .ff-nav__toggle { display: inline-flex; align-items: center; justify-content: center; }
   .ff-nav__donate { margin-left: 0; order: 2; }
+  .ff-nav__search { order: 2; }
   .ff-nav__toggle { order: 3; }
   .ff-nav__list {
     display: none;
@@ -240,25 +289,62 @@ a:hover { color: var(--ff-green-900); }
     background: var(--ff-paper);
     border-bottom: 1px solid var(--ff-line);
     box-shadow: 0 12px 24px rgba(0,0,0,0.08);
+    max-height: calc(100vh - 72px);
+    overflow: auto;
   }
   .ff-nav.is-open .ff-nav__list { display: flex; }
   .ff-nav__item > a { padding: 0 var(--ff-gutter); min-height: 48px; }
-  .ff-nav__item:has(> ul) > a::after { display: none; }
-  .ff-nav__item > ul {
+  .ff-nav__item.has-mega > a::after { display: none; }
+  .ff-mega {
     position: static;
-    display: block;
-    min-width: 0;
+    transform: none;
+    width: auto;
+    display: none;
+    grid-template-columns: 1fr;
     border: 0;
     box-shadow: none;
-    padding: 0 0 8px;
+    padding: 0 var(--ff-gutter) 12px;
   }
-  .ff-nav__item > ul a { padding: 8px calc(var(--ff-gutter) + 12px); color: var(--ff-muted); }
+  .ff-nav__item.has-mega.is-open > .ff-mega { display: grid; }
+  .ff-mega__intro { max-width: none; margin-bottom: 8px; }
+  .ff-mega__grid { grid-template-columns: 1fr; }
 }
 
-/* —— Footer —— */
+/* —— Footer (charity: water–inspired mail strip + columns) —— */
 .ff-footer {
   background: var(--ff-green-950);
   color: var(--ff-text-on-inverse);
+}
+.ff-footer__mail {
+  background: var(--ff-green-100);
+  color: var(--ff-ink);
+  border-bottom: 1px solid var(--ff-line);
+}
+.ff-footer__mail-inner {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  padding: 36px 0;
+}
+.ff-footer__mail-title {
+  margin: 0 0 6px;
+  font-family: var(--ff-display);
+  font-size: 1.35rem;
+  font-weight: 800;
+  color: var(--ff-green-900);
+}
+.ff-footer__mail-text {
+  margin: 0;
+  color: var(--ff-muted);
+  max-width: 36rem;
+  font-size: var(--ff-text-small);
+}
+.ff-footer__mail .ff-btn--inverse {
+  background: var(--ff-green-900);
+  color: #fff !important;
+  border-color: var(--ff-green-900);
 }
 .ff-footer a { color: var(--ff-text-on-inverse); text-decoration: none; }
 .ff-footer a:hover {
@@ -1333,3 +1419,29 @@ a:hover { color: var(--ff-green-900); }
 .fft-field.is-invalid input,
 .fft-field.is-invalid select,
 .fft-field.is-invalid textarea { border-color: var(--ff-danger); }
+
+
+/* Accordion (FAQ) */
+.ff-acc { border-bottom: 1px solid var(--ff-line); }
+.ff-acc__btn {
+  width: 100%;
+  text-align: left;
+  background: none;
+  border: 0;
+  padding: 1.1rem 0;
+  font: inherit;
+  font-weight: 700;
+  font-size: 1.05rem;
+  color: var(--ff-green-900);
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+}
+.ff-acc__btn::after { content: "+"; font-weight: 400; color: var(--ff-muted); }
+.ff-acc.is-open .ff-acc__btn::after { content: "–"; }
+.ff-acc__panel { display: none; padding: 0 0 1.15rem; color: var(--ff-muted); }
+.ff-acc.is-open .ff-acc__panel { display: block; }
+.ff-acc__panel p { margin: 0; line-height: 1.6; }
+.ff-list { color: var(--ff-muted); line-height: 1.65; padding-left: 1.2rem; }
+.ff-list li { margin-bottom: 0.55rem; }
