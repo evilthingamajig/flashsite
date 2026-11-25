@@ -3477,9 +3477,7 @@
 .R-cw-sponsorship .ub-emb-iframe-wrapper .ub-emb-iframe{border:0;max-height:100%;max-width:100%}
 .R-cw-sponsorship .ub-emb-overlay .ub-emb-iframe-wrapper .ub-emb-iframe{box-shadow:0 0 12px rgba(0,0,0,.3),0 1px 5px rgba(0,0,0,.2)}
 .R-cw-sponsorship .ub-emb-overlay .ub-emb-iframe-wrapper.ub-emb-mobile{max-width:100vw}
-.R-cw-sponsorship 
-
-/* inline style 4 */
+.R-cw-sponsorship /* inline style 4 */
 .ub-emb-overlay{transition:visibility .3s step-end;visibility:hidden}
 .R-cw-sponsorship .ub-emb-overlay.ub-emb-visible{transition:none;visibility:visible}
 .R-cw-sponsorship .ub-emb-overlay .ub-emb-backdrop, .R-cw-sponsorship .ub-emb-overlay .ub-emb-scroll-wrapper{opacity:0;position:fixed;transition:opacity .3s ease,z-index .3s step-end;z-index:-1}
@@ -3488,9 +3486,7 @@
 .R-cw-sponsorship .ub-emb-overlay .ub-emb-scroll-wrapper:before{content:"";display:inline-block;height:100%;vertical-align:middle}
 .R-cw-sponsorship .ub-emb-overlay.ub-emb-mobile .ub-emb-scroll-wrapper{padding:30px 0}
 .R-cw-sponsorship .ub-emb-overlay.ub-emb-visible .ub-emb-backdrop, .R-cw-sponsorship .ub-emb-overlay.ub-emb-visible .ub-emb-scroll-wrapper{opacity:1;transition:opacity .4s ease;z-index:2147483647}
-.R-cw-sponsorship 
-
-/* inline style 5 */
+.R-cw-sponsorship /* inline style 5 */
 .ub-emb-bar{transition:visibility .2s step-end;visibility:hidden}
 .R-cw-sponsorship .ub-emb-bar.ub-emb-visible{transition:none;visibility:visible}
 .R-cw-sponsorship .ub-emb-bar .ub-emb-bar-frame{left:0;position:fixed;right:0;text-align:center;transition:bottom .2s ease-in-out,top .2s ease-in-out,z-index .2s step-end;z-index:-1}
@@ -3498,9 +3494,7 @@
 .R-cw-sponsorship .ub-emb-bar.ub-emb-visible .ub-emb-bar-frame{transition:bottom .3s ease-in-out,top .3s ease-in-out;z-index:2147483646}
 .R-cw-sponsorship .ub-emb-bar .ub-emb-close{bottom:0;margin:auto 0;top:0}
 .R-cw-sponsorship .ub-emb-bar:not(.ub-emb-mobile) .ub-emb-close{right:20px}
-.R-cw-sponsorship 
-
-/* inline style 6 */
+.R-cw-sponsorship /* inline style 6 */
 :root{ --ds-v1-background-light-primary: #FEFBF5 !important; --ds-v1-background-light-secondary: #E5E9E9 !important; --ds-v1-background-dark: #32446B !important; }
 .R-cw-sponsorship .builder-tab-active:after{ border-bottom-color: var(--ds-v1-background-light-secondary); }
 .R-cw-sponsorship .sponsor-button{ background-color: white !important; }

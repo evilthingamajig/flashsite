@@ -40,7 +40,7 @@ const cssList = arg(
   'css-list',
   `ff.css,${slug}.css,ff-peer-green.css`,
 );
-const bodyClass = arg('body-class', `ff ff-page-${slug}`);
+const bodyClass = arg('body-class', `ff R-cw-chrome ff-page-${slug}`);
 const canonical = arg('canonical', '');
 
 if (!slug || !targetRel || !title) {
@@ -103,10 +103,11 @@ if (mainMatch) mainHtml = mainMatch[1];
 
 // Strip peer chrome that duplicates FF header/footer when present inside fragment
 mainHtml = mainHtml
-  .replace(/<header[\s\S]*?<\/header>/gi, (m) =>
-    /sqs-header|w-nav|navbar|site-header|Header/i.test(m) ? '<!-- peer header stripped -->' : m,
-  )
-  .replace(/<footer[\s\S]*?<\/footer>/gi, '<!-- peer footer stripped -->');
+  .replace(/<header[\s\S]*?<\/header>/gi, '<!-- peer header stripped -->')
+  .replace(/<footer[\s\S]*?<\/footer>/gi, '<!-- peer footer stripped -->')
+  .replace(/<nav[^>]*class="[^"]*nav-bar[^"]*"[\s\S]*?<\/nav>/gi, '<!-- peer nav stripped -->')
+  .replace(/<nav[^>]*class="[^"]*right-off-canvas-menu[^"]*"[\s\S]*?<\/nav>/gi, '<!-- peer offcanvas stripped -->')
+  .replace(/<div[^>]*class="[^"]*(?:sqs-cookie-banner|cookie-banner|w-nav)[^"]*"[\s\S]*?<\/div>/gi, '<!-- peer chrome stripped -->');
 
 // Generic peer → FF text replacements (safe-ish brand swaps)
 const repls = [
@@ -148,7 +149,7 @@ const hidePeerChrome = `
 .R-${slug} .footer-wrapper,
 .R-${slug} #footer,
 .R-${slug} .site-footer { display:none!important }
-.R-${slug} .w-slide, .R-${slug} [style*="opacity: 0"] { opacity:1!important; visibility:visible!important }
+.R-${slug} .w-slide, .R-${slug} [style*="opacity: 0"], .R-${slug} [style*="opacity:0"] { opacity:1!important; visibility:visible!important; transform:none!important }
 </style>`;
 
 const stitchedMain = `<main id="main" class="R-${slug} ff-main" data-ref="${slug}"><div class="content-body">
