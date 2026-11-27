@@ -2,3 +2,4 @@
 .env*
 tools/node_modules/
 tools/font-raw/
+tools/scrapes/

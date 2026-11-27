@@ -63,37 +63,115 @@
   });});
 })();
 
-// Gift builder (donate page)
+// Donate: One-time | Study Circle + amount chips + destination → Givebutter widget
 (function(){
   var LIGHT=5.17;
-  var labels={'greatest-need':"Where it's needed most",haiti:'Haiti (Brighten Haiti)',india:'India (Loksadhana)',drc:'DR Congo (Malaika)'};
-  document.querySelectorAll('[data-gift-builder]').forEach(function(b){
-    var qty=1,dest=b.dataset.destination||document.body.dataset.destination||'greatest-need';
-    var btns=[].slice.call(b.querySelectorAll('[data-quantity]'));
-    var custom=b.querySelector('[data-custom-quantity]');
-    var freqs=[].slice.call(b.querySelectorAll('input[type=radio][name=frequency]'));
-    function freq(){var c=freqs.find(function(i){return i.checked});return c?c.value:'once'}
-    function render(){
-      var recurring=freq()==='monthly';
-      var amt=(LIGHT*qty).toFixed(2);
-      var name=labels[dest]||labels['greatest-need'];
-      var line=(recurring?'Monthly':'One time')+' · '+qty+' '+(qty===1?'light':'lights');
-      var gl=document.getElementById('gift-line');if(gl)gl.textContent=line;
-      var gt=document.getElementById('gift-total');if(gt)gt.textContent='$'+amt+(recurring?'/mo':'');
-      var pref=document.getElementById('dest-pref');if(pref)pref.textContent=name;
-      var note=document.getElementById('dest-pref-note');if(note)note.textContent=name;
-    }
-    function pick(btn){qty=Number(btn.dataset.quantity);if(custom)custom.value='';
-      btns.forEach(function(i){i.classList.toggle('is-active',i===btn);i.setAttribute('aria-pressed',String(i===btn))});render()}
-    btns.forEach(function(i){i.addEventListener('click',function(){pick(i)})});
-    freqs.forEach(function(i){i.addEventListener('change',render)});
-    if(custom)custom.addEventListener('input',function(){
-      if(custom.value==='')return;qty=Math.max(1,Math.min(100,Math.floor(Number(custom.value)||1)));custom.value=String(qty);
-      btns.forEach(function(i){i.classList.remove('is-active');i.setAttribute('aria-pressed','false')});render()});
-    document.addEventListener('flash:destinationchange',function(e){
-      if(e.detail&&labels[e.detail.destination]){dest=e.detail.destination;render()}});
-    render();
+  var FUNDS={'greatest-need':'73949',haiti:'73950',india:'73951',drc:'73952'};
+  var LABELS={'greatest-need':'Greatest need',haiti:'Haiti (Brighten Haiti)',india:'India (Loksadhana)',drc:'DR Congo (Malaika)'};
+  var slot=document.getElementById('givebutter-embed');
+  if(!slot&&!document.querySelector('[data-donate-freq]'))return;
+  var qty=1,freq='once',dest='greatest-need';
+  var params=new URLSearchParams(location.search);
+  if(params.get('destination')&&FUNDS[params.get('destination')])dest=params.get('destination');
+  if(location.hash==='#study-circle')freq='monthly';
+
+  function mountWidget(){
+    if(!slot)return;
+    var w=document.createElement('givebutter-widget');
+    w.setAttribute('id','L0ywAo');
+    w.setAttribute('align','center');
+    w.setAttribute('frequency',freq);
+    w.setAttribute('amount',(LIGHT*qty).toFixed(2));
+    w.setAttribute('fund',FUNDS[dest]||FUNDS['greatest-need']);
+    var old=slot.querySelector('givebutter-widget');
+    if(old)old.replaceWith(w);else slot.prepend(w);
+  }
+  function render(){
+    var amt=(LIGHT*qty).toFixed(2);
+    var gt=document.getElementById('gift-total');
+    if(gt)gt.textContent='$'+amt+(freq==='monthly'?'/mo':'');
+    var note=document.getElementById('dest-pref-note');
+    if(note)note.textContent=LABELS[dest]||LABELS['greatest-need'];
+    var fl=document.querySelector('[data-freq-label]');
+    if(fl)fl.textContent=freq==='monthly'?'Study Circle':'One-time';
+    document.querySelectorAll('[data-donate-freq] [data-freq]').forEach(function(b){
+      b.classList.toggle('is-active',b.getAttribute('data-freq')===freq);
+    });
+    document.querySelectorAll('[data-donate-amounts] [data-qty]').forEach(function(b){
+      b.classList.toggle('is-active',Number(b.getAttribute('data-qty'))===qty);
+    });
+    document.querySelectorAll('[data-destination-card]').forEach(function(b){
+      b.classList.toggle('is-selected',b.getAttribute('data-destination-card')===dest);
+    });
+    mountWidget();
+  }
+  document.querySelectorAll('[data-donate-freq] [data-freq]').forEach(function(b){
+    b.addEventListener('click',function(){freq=b.getAttribute('data-freq');render()});
   });
+  document.querySelectorAll('[data-donate-amounts] [data-qty]').forEach(function(b){
+    b.addEventListener('click',function(){qty=Number(b.getAttribute('data-qty'))||1;render()});
+  });
+  document.querySelectorAll('[data-destination-card]').forEach(function(b){
+    b.addEventListener('click',function(){
+      dest=b.getAttribute('data-destination-card');
+      document.dispatchEvent(new CustomEvent('flash:destinationchange',{detail:{destination:dest}}));
+      render();
+    });
+  });
+  document.addEventListener('flash:destinationchange',function(e){
+    if(e.detail&&FUNDS[e.detail.destination]){dest=e.detail.destination;render()}
+  });
+  // Legacy gift-builder hooks (if present)
+  document.querySelectorAll('[data-gift-builder]').forEach(function(b){
+    b.querySelectorAll('[data-quantity]').forEach(function(btn){
+      btn.addEventListener('click',function(){qty=Number(btn.dataset.quantity)||1;render()});
+    });
+  });
+  render();
+})();
+
+// Pathway step reveal on scroll
+(function(){
+  var steps=[].slice.call(document.querySelectorAll('[data-pathway-step]'));
+  if(!steps.length)return;
+  if(window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches){
+    steps.forEach(function(s){s.classList.add('is-in','is-active')});return;
+  }
+  if(!('IntersectionObserver' in window)){steps.forEach(function(s){s.classList.add('is-in','is-active')});return}
+  var io=new IntersectionObserver(function(entries){
+    entries.forEach(function(en){
+      if(!en.isIntersecting)return;
+      var list=en.target.parentElement?[].slice.call(en.target.parentElement.querySelectorAll('[data-pathway-step]')):steps;
+      list.forEach(function(step,i){
+        window.setTimeout(function(){
+          step.classList.add('is-in');
+          if(i===0)step.classList.add('is-active');
+        },i*80);
+      });
+      io.disconnect();
+    });
+  },{threshold:0.25});
+  io.observe(steps[0]);
+})();
+
+// Impact Stories filter chips
+(function(){
+  var grid=document.getElementById('ff-storygrid');if(!grid)return;
+  var chips=document.querySelectorAll('[data-story-filters] .ff-filter');
+  chips.forEach(function(c){c.addEventListener('click',function(){
+    chips.forEach(function(x){x.classList.remove('is-active')});c.classList.add('is-active');
+    var t=c.getAttribute('data-filter');
+    grid.querySelectorAll('[data-type]').forEach(function(row){
+      row.style.display=(t==='all'||row.getAttribute('data-type')===t)?'':'none';
+    });
+  });});
+})();
+
+// Sticky nav border on scroll
+(function(){
+  var nav=document.querySelector('.ff-nav');if(!nav)return;
+  var on=function(){nav.classList.toggle('is-scrolled',window.scrollY>8)};
+  on();window.addEventListener('scroll',on,{passive:true});
 })();
 
 // Scroll-scrubbed CAD assembly (the-light page)
@@ -174,14 +252,106 @@
   draw(1);onScroll();
 })();
 
-// Mobile menu toggle for the site header
+// charity:water–style chrome: underline dropdowns (CSS) + full-screen off-canvas
 (function(){
-  var t=document.querySelector('.ff-nav__toggle');
-  if(!t)return;
-  t.addEventListener('click',function(){
-    var nav=document.getElementById(t.getAttribute('aria-controls'));
-    var open=nav.classList.toggle('is-open');
-    t.setAttribute('aria-expanded',String(open));
+  var body=document.body;
+  if(!body||!body.classList.contains('R-cw-chrome')){
+    // legacy ff-nav mega fallback
+    var legacy=document.getElementById('site-nav');
+    if(!legacy||legacy.dataset.ffNavBound)return;
+    legacy.dataset.ffNavBound='1';
+    var t=legacy.querySelector('.ff-nav__toggle');
+    if(t){
+      t.addEventListener('click',function(){
+        var open=legacy.classList.toggle('is-open');
+        t.setAttribute('aria-expanded',String(open));
+      });
+    }
+    return;
+  }
+  if(body.dataset.ffCwChromeBound)return;
+  body.dataset.ffCwChromeBound='1';
+
+  var toggle=document.querySelector('.off-canvas-toggle, .offcanvas-open-link');
+  var panel=document.getElementById('ff-offcanvas')||document.querySelector('.right-off-canvas-menu');
+
+  var scrim=document.querySelector('.ff-drawer-scrim');
+  var back=panel&&panel.querySelector('.ff-drawer-back');
+
+  // Drill-down: show one panel at a time; Back returns to the top level.
+  function showPanel(name){
+    if(!panel)return;
+    panel.querySelectorAll('.ff-drawer-panel').forEach(function(p){
+      var on=p.getAttribute('data-panel')===name;
+      p.classList.toggle('is-active',on); p.inert=!on;
+    });
+    if(back)back.hidden=(name==='root');
+    panel.scrollTop=0;
+  }
+
+  function setOpen(open){
+    body.classList.toggle('off-canvas-open', open);
+    if(toggle)toggle.setAttribute('aria-expanded', String(open));
+    if(panel)panel.setAttribute('aria-hidden', String(!open));
+    if(scrim)scrim.hidden=false;
+    if(!open)showPanel('root');
+  }
+
+  if(toggle){
+    toggle.addEventListener('click',function(e){
+      e.preventDefault();
+      setOpen(!body.classList.contains('off-canvas-open'));
+    });
+  }
+  if(scrim)scrim.addEventListener('click',function(){ setOpen(false); });
+  if(panel){
+    panel.addEventListener('click',function(e){
+      var t=e.target.closest('[data-open], .ff-drawer-back, .ff-drawer-close');
+      if(!t)return;
+      if(t.hasAttribute('data-open'))showPanel(t.getAttribute('data-open'));
+      else if(t.classList.contains('ff-drawer-back'))showPanel('root');
+      else setOpen(false);
+    });
+  }
+
+  document.addEventListener('keydown',function(e){
+    if(e.key==='Escape' && body.classList.contains('off-canvas-open')) setOpen(false);
+  });
+})();
+
+// Team directory filters (Opportunity Green card layout, FF departments)
+(function(){
+  var root=document.querySelector('[data-team-filter]');
+  if(!root)return;
+  var tabs=root.querySelectorAll('[data-team]');
+  var cards=root.querySelectorAll('[data-teams]');
+  var empty=root.querySelector('[data-team-empty]');
+  function apply(tag){
+    var n=0;
+    cards.forEach(function(card){
+      var teams=(card.getAttribute('data-teams')||'').split(/\s+/);
+      var ok=tag==='all'||teams.indexOf(tag)!==-1;
+      card.hidden=!ok;
+      if(ok)n++;
+    });
+    if(empty) empty.hidden=n>0;
+  }
+  tabs.forEach(function(tab){
+    tab.addEventListener('click',function(){
+      tabs.forEach(function(t){
+        var on=t===tab;
+        t.classList.toggle('active', on);
+        t.setAttribute('aria-selected', String(on));
+      });
+      apply(tab.getAttribute('data-team'));
+    });
+  });
+  root.querySelectorAll('[data-readmore]').forEach(function(btn){
+    btn.addEventListener('click',function(){
+      var card=btn.closest('.expert-card');
+      var open=card.classList.toggle('is-open');
+      btn.textContent=open?'Show less':'Read more';
+    });
   });
 })();
 
@@ -436,4 +606,30 @@
       orig('event','conversion',c);
     }else orig('event','conversion',{send_to:ADS.begin_checkout});
   };
+})();
+
+// Our Story timeline: show the slide whose scroll trigger has reached mid-screen; year links jump to it.
+(function(){
+  var c=document.querySelector('[tr-scroll-toggle="component"]');
+  if(!c) return;
+  var slides=c.querySelectorAll('.sticky-flex'), dates=c.querySelectorAll('.sticky-date-item'), trig=c.querySelectorAll('.sticky-trigger');
+  function set(i){
+    slides.forEach(function(s,k){ s.classList.toggle('is-active',k===i); });
+    dates.forEach(function(d,k){ d.classList.toggle('is-active',k===i); });
+  }
+  function onScroll(){
+    var mid=window.innerHeight/2, i=0;
+    trig.forEach(function(t,k){ if(t.getBoundingClientRect().top<=mid) i=k; });
+    set(i);
+  }
+  dates.forEach(function(d,k){
+    var a=d.querySelector('a');
+    if(a) a.addEventListener('click',function(e){
+      e.preventDefault();
+      window.scrollTo({top:trig[k].getBoundingClientRect().top+window.scrollY+2,behavior:'smooth'});
+    });
+  });
+  window.addEventListener('scroll',onScroll,{passive:true});
+  window.addEventListener('resize',onScroll);
+  onScroll();
 })();

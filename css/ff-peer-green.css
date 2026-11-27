@@ -1,0 +1,16 @@
+/* Remap stitched peer accents toward FF forest green; kill ultra-pill AI chrome */
+.ff-main {
+  --ns-cyan: #1E6B45;
+  --ns-navy: #0F3D2A;
+  --brand-primary: #1E6B45;
+}
+.ff-main a[class*="button"],
+.ff-main .w-button,
+.ff-main .btn,
+.ff-main button:not(.ff-nav__toggle) {
+  border-radius: 4px !important;
+}
+.ff-main [style*="border-radius: 999"],
+.ff-main [style*="border-radius:999"] {
+  border-radius: 4px !important;
+}

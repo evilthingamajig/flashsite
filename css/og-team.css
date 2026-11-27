@@ -1,0 +1,83 @@
+/* Team cards from opportunitygreen.org/our-team — color photos, FF accent. */
+.R-og-team {
+  background: #e7e2d6;
+  padding: 56px 24px 80px;
+}
+.R-og-team .ourteams-header { margin-bottom: 28px; max-width: 1200px; margin-left: auto; margin-right: auto; }
+.R-og-team .ourteams-small-title { margin: 0 0 8px; color: #1c3b38; font-size: 14px; }
+.R-og-team .ourteams-large-title { margin: 0; color: #1c3b38; font-size: 48px; font-weight: 600; line-height: 1.05; }
+.R-og-team .ourteams-filter-tabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 22px;
+  margin: 28px auto 36px;
+  max-width: 1200px;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.12);
+}
+.R-og-team .ourteams-tab {
+  background: none;
+  border: 0;
+  border-bottom: 3px solid transparent;
+  padding: 12px 0;
+  font-size: 15px;
+  font-weight: 600;
+  color: rgba(28, 59, 56, 0.6);
+  cursor: pointer;
+  position: relative;
+  bottom: -1px;
+}
+.R-og-team .ourteams-tab.active { color: #1c3b38; border-bottom-color: #1c3b38; }
+.R-og-team .ourteams-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 28px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+.R-og-team .expert-card { display: flex; flex-direction: column; height: 100%; }
+.R-og-team .expert-card[hidden] { display: none !important; }
+.R-og-team .expert-social svg { width: 22px; height: 22px; }
+.R-og-team .expert-photo { border-radius: 22px; overflow: hidden; background: #d5d0c4; aspect-ratio: 1 / 1; }
+.R-og-team .expert-photo img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: none;
+  border-radius: 22px;
+  display: block;
+}
+.R-og-team .expert-content { display: flex; flex-direction: column; flex: 1; padding: 18px 4px 0; }
+.R-og-team .expert-name { margin: 0 0 4px; color: #1c3b38; font-size: 22px; line-height: 1.15; }
+.R-og-team .expert-title { margin: 0 0 10px; color: #1c3b38; font-size: 14px; }
+.R-og-team .expert-bio p { margin: 0 0 8px; color: #1c3b38; font-size: 15px; line-height: 1.4; }
+.R-og-team .expert-more { display: none; }
+.R-og-team .expert-card.is-open .expert-more { display: block; }
+.R-og-team .expert-readmore {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin: 8px 0 0;
+  padding: 0;
+  background: none;
+  border: 0;
+  color: #1c3b38;
+  font-size: 15px;
+  cursor: pointer;
+}
+.R-og-team .expert-social { display: flex; gap: 12px; margin-top: 12px; }
+.R-og-team .expert-social a { color: #1c3b38; display: inline-flex; }
+.R-og-team .expert-social svg { width: 18px; height: 18px; fill: currentColor; }
+.R-og-team .ourteams-empty,
+.R-og-team .ourteams-careers {
+  max-width: 1200px;
+  margin: 28px auto 0;
+  color: #1c3b38;
+}
+.R-og-team .ourteams-careers a { color: #1c3b38; font-weight: 600; }
+@media (max-width: 1100px) {
+  .R-og-team .ourteams-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (max-width: 640px) {
+  .R-og-team .ourteams-large-title { font-size: 36px; }
+  .R-og-team .ourteams-grid { grid-template-columns: 1fr; }
+}
