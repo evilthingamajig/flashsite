@@ -130,3 +130,11 @@
 .ffi-hero-photo .ffi-record { color: #fff; margin-top: 18px !important; }
 
 .ff-page-involved #main :is(.ffi-band,.ffi-hero-photo) :is(a,button):focus-visible { outline-color: #fff; }
+
+/* Leadership applications use the same introduction and actions as our other ways to help. */
+.ffi-leadership-roles { padding-bottom: 64px; }
+.ffi-leadership-roles .ffr { margin: 0; max-width: none; padding: 40px 0; }
+.ffi-leadership-roles .ffr h2 { font-size: clamp(2rem,3.6vw,3.1rem); line-height: 1.15; }
+.ffi-leadership-roles .ffr-intro { max-width: 780px; }
+
+.ffi-sponsor-photo { position: static; display: block; width: 100%; height: auto; aspect-ratio: 4/3; object-fit: cover; border-radius: 12px; margin-bottom: 24px; }
