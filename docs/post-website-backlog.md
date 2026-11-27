@@ -3,24 +3,18 @@
 Things to build or decide after the website touch-up. Source: Sree's answers to the
 structure plan (2026-11-24) and the cleanup of PR #2 (2026-11-26).
 
-## Still to fix on the site before it goes live
+## Before the site goes live
 
-- **Sponsor a project page** (`/get-involved/sponsor-a-project/`): has a card form that
-  does not take payments, lists Check / Stock / Wire / Crypto / DAF that Flash Forward
-  does not offer, and says one light unlocks ~5,000 study hours (that figure is for all
-  72). Point it at the GiveButter form and cut the invented project types.
-- **Copy polish**: the restored pages are accurate but some read like internal notes
-  ("Primary KPI", "we route you to a named path"). Needs one plain-language pass.
-- **Retire "interns build the lights"**: still in older news articles and guides
-  (for example the Brighten Haiti essays article). Assembly partners build; interns run
-  the organization. Workshops are discontinued.
-- **Fonts and leftover peer CSS**: pages still load fonts from New Story's and Watts of
-  Love's accounts and reference a charity: water logo file. Self-host licensed fonts and
-  delete the unused `css/*` and `ref/*` peer files.
-- **Team page**: photo placeholders for people without photos; spelling is Romir.
-- **Layouts**: 27 pages now use the plain Flash Forward layout. If a peer-inspired layout
-  is wanted on any of them, rebuild it with Flash Forward copy and photos, as done for
-  the homepage and donate.
+Pages currently carry placeholder boilerplate from the reference sites (charity: water,
+Watts of Love, New Story, One Acre Fund, GiveDirectly) on purpose, while layouts are
+being settled. Before merging to the live site:
+
+- Swap the boilerplate copy, photos, logos, numbers and contact details for Flash
+  Forward's own.
+- Replace the reference sites' forms, fonts and tracking scripts with our own.
+- Retire "interns build the lights" in older news articles and guides. Assembly partners
+  build; workshops are discontinued.
+- Team page: photo placeholders where photos are missing; spelling is Romir.
 
 ## Needs a decision from Sree or the board
 
