@@ -1157,6 +1157,34 @@
    }
   ]
  },
+ "/images/team/justin-shannon.png": {
+  "nw": 800,
+  "nh": 800,
+  "v": [
+   {
+    "w": 480,
+    "src": "/images/opt/team/justin-shannon.w480.8a18e6f5.webp"
+   },
+   {
+    "w": 800,
+    "src": "/images/opt/team/justin-shannon.w800.a7279c77.webp"
+   }
+  ]
+ },
+ "/images/team/leslie-talmadge.png": {
+  "nw": 800,
+  "nh": 800,
+  "v": [
+   {
+    "w": 480,
+    "src": "/images/opt/team/leslie-talmadge.w480.f15e0ecc.webp"
+   },
+   {
+    "w": 800,
+    "src": "/images/opt/team/leslie-talmadge.w800.9d62f12c.webp"
+   }
+  ]
+ },
  "/images/team/romirchekuri.webp": {
   "nw": 660,
   "nh": 660,

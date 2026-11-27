@@ -46,6 +46,16 @@
   border-radius: 22px;
   display: block;
 }
+.R-og-team .expert-initials {
+  display: grid;
+  place-items: center;
+  width: 100%;
+  aspect-ratio: 1;
+  background: #d5d0c4;
+  color: #1c3b38;
+  font: 600 4.5rem/1 Figtree, "Segoe UI", sans-serif;
+  letter-spacing: 0.06em;
+}
 .R-og-team .expert-content { display: flex; flex-direction: column; flex: 1; padding: 18px 4px 0; }
 .R-og-team .expert-name { margin: 0 0 4px; color: #1c3b38; font-size: 22px; line-height: 1.15; }
 .R-og-team .expert-title { margin: 0 0 10px; color: #1c3b38; font-size: 14px; }
