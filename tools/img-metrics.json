@@ -46,10 +46,10 @@
  {
   "page": "/about/",
   "idx": 2,
-  "src": "/images/students/student-with-flashlight-3.jpg",
-  "orig": "/images/students/student-with-flashlight-3.jpg",
-  "nw": 1200,
-  "nh": 1600,
+  "src": "/images/students/student-with-flashlight-8.webp",
+  "orig": "/images/students/student-with-flashlight-8.webp",
+  "nw": 960,
+  "nh": 1280,
   "w": {
    "1440x900": 510,
    "1024x768": 399,
@@ -668,10 +668,10 @@
  {
   "page": "/impact/",
   "idx": 5,
-  "src": "/images/students/student-with-flashlight-3.jpg",
-  "orig": "/images/students/student-with-flashlight-3.jpg",
-  "nw": 1200,
-  "nh": 1600,
+  "src": "/images/students/student-with-flashlight-9.webp",
+  "orig": "/images/students/student-with-flashlight-9.webp",
+  "nw": 960,
+  "nh": 1280,
   "w": {
    "1440x900": 268,
    "1024x768": 215,
@@ -824,10 +824,10 @@
  {
   "page": "/",
   "idx": 1,
-  "src": "/images/opt/students/student-with-flashlight-3.w800.d053dee0.webp",
-  "orig": "/images/opt/students/student-with-flashlight-3.w800.d053dee0.webp",
-  "nw": 446,
-  "nh": 595,
+  "src": "/images/students/student-with-flashlight-1.jpg",
+  "orig": "/images/students/student-with-flashlight-1.jpg",
+  "nw": 1151,
+  "nh": 1094,
   "par": "ff-home-hero__photo",
   "cls": "",
   "w": {
@@ -1520,10 +1520,10 @@
  {
   "page": "/news/brighten-haiti-student-essays/",
   "idx": 9,
-  "src": "/images/opt/students/student-with-flashlight-3.w800.d053dee0.webp",
-  "orig": "/images/opt/students/student-with-flashlight-3.w800.d053dee0.webp",
-  "nw": 417,
-  "nh": 556,
+  "src": "/images/students/student-with-flashlight-5.webp",
+  "orig": "/images/students/student-with-flashlight-5.webp",
+  "nw": 960,
+  "nh": 1280,
   "par": "fft-card__media",
   "cls": "",
   "w": {
@@ -1736,10 +1736,10 @@
  {
   "page": "/news/hand-delivered-in-india/",
   "idx": 3,
-  "src": "/images/opt/students/student-with-flashlight-2.w768.a5424da9.webp",
-  "orig": "/images/opt/students/student-with-flashlight-2.w768.a5424da9.webp",
-  "nw": 604,
-  "nh": 806,
+  "src": "/images/students/student-with-flashlight-2.jpg",
+  "orig": "/images/students/student-with-flashlight-2.jpg",
+  "nw": 1152,
+  "nh": 1536,
   "par": "",
   "cls": "",
   "w": {
@@ -1944,10 +1944,10 @@
  {
   "page": "/news/",
   "idx": 4,
-  "src": "/images/students/student-with-flashlight-3.jpg",
-  "orig": "/images/students/student-with-flashlight-3.jpg",
-  "nw": 1200,
-  "nh": 1600,
+  "src": "/images/students/student-with-flashlight-6.webp",
+  "orig": "/images/students/student-with-flashlight-6.webp",
+  "nw": 960,
+  "nh": 1280,
   "w": {
    "1440x900": 604,
    "1024x768": 464,
@@ -2120,10 +2120,10 @@
  {
   "page": "/news/",
   "idx": 12,
-  "src": "/images/students/student-with-flashlight-3.jpg",
-  "orig": "/images/students/student-with-flashlight-3.jpg",
-  "nw": 1200,
-  "nh": 1600,
+  "src": "/images/students/student-with-flashlight-8.webp",
+  "orig": "/images/students/student-with-flashlight-8.webp",
+  "nw": 960,
+  "nh": 1280,
   "w": {
    "1440x900": 604,
    "1024x768": 464,
@@ -2286,10 +2286,10 @@
  {
   "page": "/news/loksadhana-15-lights/",
   "idx": 3,
-  "src": "/images/opt/students/student-with-flashlight-2.w768.a5424da9.webp",
-  "orig": "/images/opt/students/student-with-flashlight-2.w768.a5424da9.webp",
-  "nw": 417,
-  "nh": 556,
+  "src": "/images/students/student-with-flashlight-2.jpg",
+  "orig": "/images/students/student-with-flashlight-2.jpg",
+  "nw": 1152,
+  "nh": 1536,
   "par": "fft-card__media",
   "cls": "",
   "w": {
@@ -3654,10 +3654,10 @@
  {
   "page": "/our-work/partners/loksadhana/",
   "idx": 10,
-  "src": "/images/opt/students/student-with-flashlight-2.w768.a5424da9.webp",
-  "orig": "/images/opt/students/student-with-flashlight-2.w768.a5424da9.webp",
-  "nw": 417,
-  "nh": 556,
+  "src": "/images/students/student-with-flashlight-2.jpg",
+  "orig": "/images/students/student-with-flashlight-2.jpg",
+  "nw": 1152,
+  "nh": 1536,
   "par": "fft-card__media",
   "cls": "",
   "w": {
@@ -4326,10 +4326,10 @@
  {
   "page": "/our-work/photos-and-videos/",
   "idx": 9,
-  "src": "/images/opt/students/student-with-flashlight-2.w768.a5424da9.webp",
-  "orig": "/images/opt/students/student-with-flashlight-2.w768.a5424da9.webp",
-  "nw": 475,
-  "nh": 633,
+  "src": "/images/students/student-with-flashlight-2.jpg",
+  "orig": "/images/students/student-with-flashlight-2.jpg",
+  "nw": 1152,
+  "nh": 1536,
   "par": "",
   "cls": "",
   "w": {
@@ -5254,10 +5254,10 @@
  {
   "page": "/impact-stories/",
   "idx": 1,
-  "src": "/images/students/student-with-flashlight-3.jpg",
-  "orig": "/images/students/student-with-flashlight-3.jpg",
-  "nw": 1200,
-  "nh": 1600,
+  "src": "/images/students/student-with-flashlight-2.jpg",
+  "orig": "/images/students/student-with-flashlight-2.jpg",
+  "nw": 1152,
+  "nh": 1536,
   "w": {
    "1440x900": 240,
    "1024x768": 180,
@@ -5474,10 +5474,10 @@
  {
   "page": "/get-involved/ambassadors/",
   "idx": 0,
-  "src": "/images/students/student-with-flashlight-3.jpg",
-  "orig": "/images/students/student-with-flashlight-3.jpg",
-  "nw": 1200,
-  "nh": 1600,
+  "src": "/images/students/student-with-flashlight-7.webp",
+  "orig": "/images/students/student-with-flashlight-7.webp",
+  "nw": 960,
+  "nh": 1280,
   "w": {
    "1440x900": 580,
    "1024x768": 456,
@@ -5782,10 +5782,10 @@
  {
   "page": "/get-involved/sponsor-a-project/",
   "idx": 0,
-  "src": "/images/students/student-with-flashlight-3.jpg",
-  "orig": "/images/students/student-with-flashlight-3.jpg",
-  "nw": 1200,
-  "nh": 1600,
+  "src": "/images/students/student-with-flashlight-4.webp",
+  "orig": "/images/students/student-with-flashlight-4.webp",
+  "nw": 960,
+  "nh": 1280,
   "w": {
    "1440x900": 580,
    "1024x768": 456,
