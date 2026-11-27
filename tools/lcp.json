@@ -7,14 +7,6 @@
   "t": 224,
   "vp": "1440x900"
  },
- "/about/": {
-  "el": "P.ff-lede",
-  "img": null,
-  "text": "Flash Forward Foundation is a student-ru",
-  "size": 80131,
-  "t": 124,
-  "vp": "390x844"
- },
  "/about/team/": {
   "el": "P.ff-lede",
   "img": null,
@@ -31,14 +23,6 @@
   "t": 140,
   "vp": "390x844"
  },
- "/contact/": {
-  "el": "P.",
-  "img": null,
-  "text": "Have a question about the lights, the in",
-  "size": 24225,
-  "t": 232,
-  "vp": "390x844"
- },
  "/donate/": {
   "el": "P.ff-lede",
   "img": null,
@@ -53,38 +37,6 @@
   "text": "Flash Forward Foundation is a student-ru",
   "size": 68112,
   "t": 116,
-  "vp": "390x844"
- },
- "/get-involved/": {
-  "el": "IMG.",
-  "img": "/images/opt/build/packagedlights.w600.e0c41ddb.webp",
-  "text": "",
-  "size": 69635,
-  "t": 120,
-  "vp": "390x844"
- },
- "/get-involved/internship/": {
-  "el": "IMG.",
-  "img": "/images/opt/build/soldering-electronics.w638.ec2eb488.webp",
-  "text": "",
-  "size": 172800,
-  "t": 144,
-  "vp": "1440x900"
- },
- "/impact/": {
-  "el": "IMG.",
-  "img": "/images/opt/students/student-with-flashlight-1.w800.85ac48ab.webp",
-  "text": "",
-  "size": 86022,
-  "t": 164,
-  "vp": "390x844"
- },
- "/news/": {
-  "el": "IMG.",
-  "img": "/images/opt/partners/brighten-haiti/photo-1.w800.c22ad59a.webp",
-  "text": "",
-  "size": 93987,
-  "t": 136,
   "vp": "390x844"
  },
  "/news/brighten-haiti-42-lights/": {
@@ -278,30 +230,6 @@
   "size": 14120,
   "t": 156,
   "vp": "390x844"
- },
- "/internships/marketing/": {
-  "el": "IMG.",
-  "img": "/images/opt/build/flashfinishedworkshop.w800.8f267722.webp",
-  "text": "",
-  "size": 172800,
-  "t": 144,
-  "vp": "1440x900"
- },
- "/internships/partnerships-operations/": {
-  "el": "IMG.",
-  "img": "/images/opt/build/packagedlights.w600.e0c41ddb.webp",
-  "text": "",
-  "size": 172800,
-  "t": 144,
-  "vp": "1440x900"
- },
- "/internships/fundraising/": {
-  "el": "IMG.",
-  "img": "/images/opt/students/student-with-flashlight-1.w800.85ac48ab.webp",
-  "text": "",
-  "size": 172800,
-  "t": 144,
-  "vp": "1440x900"
  },
  "/internships/remote/": {
   "el": "IMG.",

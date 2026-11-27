@@ -129,7 +129,7 @@
   font-display: swap;
   src: url(https://fonts.gstatic.com/s/inter/v20/UcCO3FwrK3iLTeHuS_nVMrMxCp50SjIw2boKoduKmMEVuBWYMZg.ttf) format('truetype');
 }.R-gd-terms /* source: https://www.givedirectly.org/build/assets/theme-variables-D0MRUW8Z.css */
-main{--color-base-white:#fff;--color-base-black:#000;--color-neutral-100:#f9f7f6;--color-neutral-200:#d9d9d9;--color-neutral-300:#bec2c1;--color-neutral-400:#757575;--color-neutral-500:#4d4d4d;--color-neutral-600:#262626;--color-brand-primary:#095845;--color-green-100:#e4eeec;--color-green-200:#9dbcb5;--color-green-600:#053328;--color-brown-100:#f9f7f2;--color-brown-200:#f2ede2;--color-orange-600:#b6520d;--color-red-500:#d94636;--color-accent-blue:#0589ff;--color-accent-orange:#e06a00;--color-accent-purple:#6b287a;--color-accent-yellow:#a69411;--color-accent-green:#34a853;--number-none:0px;--number-xs:4px;--number-sm:6px;--number-base:8px;--number-md:12px;--number-lg:13px;--number-xl:14px;--number-2xl:16px;--number-3xl:18px;--number-4xl:24px;--number-5xl:32px;--number-6xl:40px;--number-7xl:48px;--number-8xl:56px;--number-9xl:64px;--number-10xl:80px;--number-full:999px;--font-system:"Inter";--border-radius-none:var(--number-none);--border-color-default:var(--color-neutral-200);--border-radius-xs:var(--number-xs);--border-radius-sm:var(--number-sm);--border-radius-base:var(--number-base);--border-radius-md:var(--number-xl);--border-radius-lg:var(--number-2xl);--border-radius-full:var(--number-full);--border-color-focus:var(--color-brand-primary);--border-color-warning:var(--color-red-500);--border-color-alert:var(--color-accent-orange);--border-color-surface:var(--surface-primary);--border-color-tertiary:var(--surface-tertiary);--icon-default:var(--color-neutral-400);--icon-disabled:var(--color-neutral-300);--icon-active:var(--color-brand-primary);--icon-white:var(--color-base-white);--font-color-headline:var(--color-neutral-600);--font-color-body:var(--color-neutral-500);--font-color-placeholder:var(--color-neutral-400);--font-color-disabled:var(--color-neutral-400);--font-color-white:var(--color-base-white);--font-color-brand:var(--color-brand-primary);--font-color-accent:var(--color-green-200);--font-color-green:var(--color-accent-green);--font-color-warning:var(--color-red-500);--surface-primary:var(--color-base-white);--surface-secondary:var(--color-green-100);--surface-tertiary:var(--color-brown-100);--surface-tertiary-hover:var(--color-brown-200);--surface-dark-green:var(--color-green-600);--surface-nocturnal:var(--color-neutral-600);--surface-gray:var(--color-neutral-100);--surface-accent-green:var(--color-accent-green);--surface-accent-blue:var(--color-accent-blue);--surface-accent-orange:var(--color-accent-orange);--surface-accent-purple:var(--color-accent-purple);--button-color-default:var(--color-brand-primary);--button-color-hover-light:var(--color-green-100);--button-color-hover-dark:var(--color-green-600);--button-color-disabled:var(--color-neutral-100);--button-alert-default:var(--color-accent-orange);--button-alert-hover:var(--color-orange-600);--button-alert-disabled:var(--color-neutral-100);--spacing-sm:var(--number-xs);--spacing-base:var(--number-base);--spacing-md:var(--number-xl);--spacing-lg:var(--number-2xl);--spacing-xl:var(--number-4xl);--spacing-2xl:var(--number-5xl);--spacing-3xl:var(--number-6xl);--spacing-4xl:var(--number-7xl);--spacing-5xl:var(--number-9xl);--spacing-6xl:var(--number-10xl);--font-family-primary:var(--font-system);--font-letter-spacing-xs:-1px;--font-letter-spacing-sm:-.2px;--font-letter-spacing-md:.2px;--font-letter-spacing-lg:2px;--font-weight-regular:400;--font-weight-medium:500;--font-weight-semibold:600;--font-weight-bold:700;--font-size-xxs:var(--number-md);--font-size-xs:var(--number-lg);--font-size-sm:var(--number-xl);--font-size-base:var(--number-2xl);--font-size-md:var(--number-3xl);--font-size-lg:var(--number-4xl);--font-size-xl:var(--number-5xl);--font-size-2xl:var(--number-6xl);--font-size-3xl:var(--number-8xl);--font-line-height-xs:var(--number-2xl);--font-line-height-sm:var(--number-3xl);--font-line-height-base:var(--number-4xl);--font-line-height-md:var(--number-5xl);--font-line-height-lg:var(--number-6xl);--font-line-height-xl:var(--number-7xl);--font-line-height-2xl:var(--number-9xl)}
+main{--color-base-white:#fff;--color-base-black:#000;--color-neutral-100:#f9f7f6;--color-neutral-200:#d9d9d9;--color-neutral-300:#bec2c1;--color-neutral-400:#757575;--color-neutral-500:#4d4d4d;--color-neutral-600:#262626;--color-brand-primary:#095845;--color-green-100:#eeeeee;--color-green-200:#9dbcb5;--color-green-600:#053328;--color-brown-100:#f7f7f7;--color-brown-200:#eeeeee;--color-orange-600:#b6520d;--color-red-500:#d94636;--color-accent-blue:#0589ff;--color-accent-orange:#e06a00;--color-accent-purple:#6b287a;--color-accent-yellow:#a69411;--color-accent-green:#34a853;--number-none:0px;--number-xs:4px;--number-sm:6px;--number-base:8px;--number-md:12px;--number-lg:13px;--number-xl:14px;--number-2xl:16px;--number-3xl:18px;--number-4xl:24px;--number-5xl:32px;--number-6xl:40px;--number-7xl:48px;--number-8xl:56px;--number-9xl:64px;--number-10xl:80px;--number-full:999px;--font-system:"Inter";--border-radius-none:var(--number-none);--border-color-default:var(--color-neutral-200);--border-radius-xs:var(--number-xs);--border-radius-sm:var(--number-sm);--border-radius-base:var(--number-base);--border-radius-md:var(--number-xl);--border-radius-lg:var(--number-2xl);--border-radius-full:var(--number-full);--border-color-focus:var(--color-brand-primary);--border-color-warning:var(--color-red-500);--border-color-alert:var(--color-accent-orange);--border-color-surface:var(--surface-primary);--border-color-tertiary:var(--surface-tertiary);--icon-default:var(--color-neutral-400);--icon-disabled:var(--color-neutral-300);--icon-active:var(--color-brand-primary);--icon-white:var(--color-base-white);--font-color-headline:var(--color-neutral-600);--font-color-body:var(--color-neutral-500);--font-color-placeholder:var(--color-neutral-400);--font-color-disabled:var(--color-neutral-400);--font-color-white:var(--color-base-white);--font-color-brand:var(--color-brand-primary);--font-color-accent:var(--color-green-200);--font-color-green:var(--color-accent-green);--font-color-warning:var(--color-red-500);--surface-primary:var(--color-base-white);--surface-secondary:var(--color-green-100);--surface-tertiary:var(--color-brown-100);--surface-tertiary-hover:var(--color-brown-200);--surface-dark-green:var(--color-green-600);--surface-nocturnal:var(--color-neutral-600);--surface-gray:var(--color-neutral-100);--surface-accent-green:var(--color-accent-green);--surface-accent-blue:var(--color-accent-blue);--surface-accent-orange:var(--color-accent-orange);--surface-accent-purple:var(--color-accent-purple);--button-color-default:var(--color-brand-primary);--button-color-hover-light:var(--color-green-100);--button-color-hover-dark:var(--color-green-600);--button-color-disabled:var(--color-neutral-100);--button-alert-default:var(--color-accent-orange);--button-alert-hover:var(--color-orange-600);--button-alert-disabled:var(--color-neutral-100);--spacing-sm:var(--number-xs);--spacing-base:var(--number-base);--spacing-md:var(--number-xl);--spacing-lg:var(--number-2xl);--spacing-xl:var(--number-4xl);--spacing-2xl:var(--number-5xl);--spacing-3xl:var(--number-6xl);--spacing-4xl:var(--number-7xl);--spacing-5xl:var(--number-9xl);--spacing-6xl:var(--number-10xl);--font-family-primary:var(--font-system);--font-letter-spacing-xs:-1px;--font-letter-spacing-sm:-.2px;--font-letter-spacing-md:.2px;--font-letter-spacing-lg:2px;--font-weight-regular:400;--font-weight-medium:500;--font-weight-semibold:600;--font-weight-bold:700;--font-size-xxs:var(--number-md);--font-size-xs:var(--number-lg);--font-size-sm:var(--number-xl);--font-size-base:var(--number-2xl);--font-size-md:var(--number-3xl);--font-size-lg:var(--number-4xl);--font-size-xl:var(--number-5xl);--font-size-2xl:var(--number-6xl);--font-size-3xl:var(--number-8xl);--font-line-height-xs:var(--number-2xl);--font-line-height-sm:var(--number-3xl);--font-line-height-base:var(--number-4xl);--font-line-height-md:var(--number-5xl);--font-line-height-lg:var(--number-6xl);--font-line-height-xl:var(--number-7xl);--font-line-height-2xl:var(--number-9xl)}
 @media (width<=767px){
 .R-gd-terms main{--spacing-2xl:var(--number-4xl);--spacing-5xl:var(--number-6xl);--font-size-base:var(--number-xl);--font-size-md:var(--number-2xl);--font-size-lg:var(--number-3xl);--font-size-xl:var(--number-4xl);--font-size-2xl:var(--number-5xl);--font-size-3xl:var(--number-7xl);--font-line-height-md:var(--number-4xl);--font-line-height-lg:var(--number-5xl);--font-line-height-xl:var(--number-5xl);--font-line-height-2xl:var(--number-6xl)}
 
@@ -1149,7 +1149,7 @@ img:is([sizes=auto i], .R-gd-terms [sizes^=auto\, .R-gd-terms i]){contain-intrin
 .R-gd-terms .gd-accordion-content-editor .block-editor-block-list__block{margin-top:0;margin-bottom:12px}
 .R-gd-terms .gd-accordion-content-editor .block-editor-block-list__block:last-child{margin-bottom:0!important}
 .R-gd-terms .gd-accordion{flex-direction:column;gap:0;display:flex}
-.R-gd-terms .gd-avatar-quote{background-color:#f9f7f2;border-radius:8px;width:100%;margin-bottom:32px;padding:40px}
+.R-gd-terms .gd-avatar-quote{background-color:#f7f7f7;border-radius:8px;width:100%;margin-bottom:32px;padding:40px}
 @media (width>=768px){
 .R-gd-terms .gd-avatar-quote{margin-bottom:48px;padding:64px}
 
@@ -1171,7 +1171,7 @@ img:is([sizes=auto i], .R-gd-terms [sizes^=auto\, .R-gd-terms i]){contain-intrin
 .R-gd-terms .gd-avatar-quote-name{color:#262626;font-size:1rem;font-weight:600}
 .R-gd-terms .gd-avatar-quote-title{color:#4d4d4d;font-size:1rem;font-weight:400}
 .R-gd-terms .gd-avatar-quote>:last-child, .R-gd-terms .gd-avatar-quote .block-editor-block-list__layout>:last-child, .R-gd-terms .gd-avatar-quote-text:last-child{margin-bottom:0}
-.R-gd-terms .gd-container{background-color:#f9f7f2;border-radius:8px;width:100%;margin-bottom:14px;padding:40px}
+.R-gd-terms .gd-container{background-color:#f7f7f7;border-radius:8px;width:100%;margin-bottom:14px;padding:40px}
 @media (width>=768px){
 .R-gd-terms .gd-container{padding:64px}
 
@@ -1401,7 +1401,7 @@ font-display:auto;font-style:normal;font-weight:500;font-stretch:normal;
 .R-gd-terms p, .R-gd-terms h1, .R-gd-terms h2, .R-gd-terms h3, .R-gd-terms h4, .R-gd-terms h5, .R-gd-terms h6{overflow-wrap:break-word}
 .R-gd-terms p{text-wrap:pretty}
 .R-gd-terms /* source: https://www.givedirectly.org/build/assets/primitives-B9E0lZ6u.css */
-:root{--color-base-white:#fff;--color-base-black:#000;--color-neutral-100:#f9f7f6;--color-neutral-200:#d9d9d9;--color-neutral-300:#bec2c1;--color-neutral-400:#757575;--color-neutral-500:#4d4d4d;--color-neutral-600:#262626;--color-neutral-700:#1a1a1a;--color-neutral-800:#0d0d0d;--color-brand-primary:#095845;--color-green-100:#e4eeec;--color-green-200:#9dbcb5;--color-green-600:#053328;--color-brown-100:#f9f7f2;--color-red-500:#d94636;--color-red-600:#c43b2d;--color-red-700:#ae3226;--color-accent-blue:#0589ff;--number-none:0px;--number-xs:4px;--number-sm:6px;--number-base:8px;--number-md:12px;--number-lg:13px;--number-xl:14px;--number-2xl:16px;--number-3xl:18px;--number-4xl:24px;--number-5xl:32px;--number-6xl:40px;--number-7xl:48px;--number-8xl:56px;--number-9xl:64px;--number-10xl:80px;--number-full:999px}
+:root{--color-base-white:#fff;--color-base-black:#000;--color-neutral-100:#f9f7f6;--color-neutral-200:#d9d9d9;--color-neutral-300:#bec2c1;--color-neutral-400:#757575;--color-neutral-500:#4d4d4d;--color-neutral-600:#262626;--color-neutral-700:#1a1a1a;--color-neutral-800:#0d0d0d;--color-brand-primary:#095845;--color-green-100:#eeeeee;--color-green-200:#9dbcb5;--color-green-600:#053328;--color-brown-100:#f7f7f7;--color-red-500:#d94636;--color-red-600:#c43b2d;--color-red-700:#ae3226;--color-accent-blue:#0589ff;--number-none:0px;--number-xs:4px;--number-sm:6px;--number-base:8px;--number-md:12px;--number-lg:13px;--number-xl:14px;--number-2xl:16px;--number-3xl:18px;--number-4xl:24px;--number-5xl:32px;--number-6xl:40px;--number-7xl:48px;--number-8xl:56px;--number-9xl:64px;--number-10xl:80px;--number-full:999px}
 .R-gd-terms /* source: https://www.givedirectly.org/build/assets/semantics-ifEsTTKU.css */
 :root{--border-radius-none:var(--number-none);--border-color-default:var(--color-neutral-200);--border-radius-xs:var(--number-xs);--border-radius-sm:var(--number-sm);--border-radius-base:var(--number-base);--border-radius-md:var(--number-xl);--border-radius-lg:var(--number-2xl);--border-radius-full:var(--number-full);--border-color-focus:var(--color-brand-primary);--border-color-warning:var(--color-red-500);--border-color-surface:var(--surface-primary);--icon-default:var(--color-neutral-400);--icon-disabled:var(--color-neutral-300);--icon-active:var(--color-brand-primary);--icon-white:var(--color-base-white);--font-color-headline:var(--color-neutral-600);--font-color-body:var(--color-neutral-500);--font-color-placeholder:var(--color-neutral-400);--font-color-disabled:var(--color-neutral-400);--font-color-white:var(--color-base-white);--font-color-brand:var(--color-brand-primary);--font-color-accent:var(--color-green-200);--font-color-warning:var(--color-red-500);--surface-primary:var(--color-base-white);--surface-secondary:var(--color-green-100);--surface-tertiary:var(--color-brown-100);--surface-dark:var(--color-green-600);--surface-nocturnal:var(--color-neutral-600);--surface-midnight:var(--color-neutral-700);--surface-obsidian:var(--color-neutral-800);--surface-gray:var(--color-neutral-100);--button-color-default:var(--color-brand-primary);--button-color-hover-light:var(--color-green-100);--button-color-hover-dark:var(--color-green-600);--button-color-disabled:var(--color-neutral-100);--button-warning-default:var(--color-red-500);--button-warning-hover:var(--color-red-600)}
 .R-gd-terms /* source: https://www.givedirectly.org/build/assets/responsive-CjOKdT34.css */
@@ -1466,7 +1466,7 @@ body{color:var(--font-color-body);font-family:var(--font-family-primary), sans-s
 .R-gd-terms .gd-gutenberg .wp-block-accordion-item.is-open .wp-block-accordion-heading__toggle-icon, .R-gd-terms .gd-gutenberg .wp-block-accordion-item[aria-expanded=true] .wp-block-accordion-heading__toggle-icon{transform:rotate(45deg)}
 .R-gd-terms .gd-gutenberg .wp-block-accordion-panel{margin:0 0 var(--spacing-lg) 0;padding:0}
 .R-gd-terms .gd-gutenberg .wp-block-gd-avatar-quote, .R-gd-terms .gd-gutenberg .wp-block-gd-container, .R-gd-terms .gd-gutenberg .wp-block-video, .R-gd-terms .gd-gutenberg .wp-block-gd-youtube{margin-top:var(--spacing-5xl);margin-bottom:var(--spacing-5xl)}
-.R-gd-terms .gd-gutenberg .wp-block-genesis-blocks-gb-container[style*="background-color:#e4eeec"], .R-gd-terms .gd-gutenberg .wp-block-genesis-blocks-gb-container[style*="background-color: #e4eeec"]{background-color:#f9f7f6!important;border-radius:4px!important;padding:32px!important}
+.R-gd-terms .gd-gutenberg .wp-block-genesis-blocks-gb-container[style*="background-color:#eeeeee"], .R-gd-terms .gd-gutenberg .wp-block-genesis-blocks-gb-container[style*="background-color: #eeeeee"]{background-color:#f9f7f6!important;border-radius:4px!important;padding:32px!important}
 .R-gd-terms .gd-gutenberg .gb-container-content>:first-child{margin-top:0!important}
 .R-gd-terms .gd-gutenberg .gb-container-content>:last-child{margin-bottom:0!important}
 .R-gd-terms /* source: https://www.givedirectly.org/build/assets/gd-gutenberg-width-constraints-CEHUAlP8.css */
@@ -1545,7 +1545,7 @@ nf-form-cont{border-radius:4px;margin-top:30px;margin-bottom:60px;padding:1px 15
 .R-gd-terms .nf-field-description li{line-height:1.3em!important}
 .R-gd-terms .nf-field-element h3{margin-top:0!important;font-size:1.3rem!important}
 .R-gd-terms .nf-field-element h3 b{font-weight:500}
-.R-gd-terms .nf-response-msg{background:#e6eeec;border-radius:4px;margin-top:36px;padding:20px 20px 8px}
+.R-gd-terms .nf-response-msg{background:#eeeeee;border-radius:4px;margin-top:36px;padding:20px 20px 8px}
 .R-gd-terms .nf-form-cont{margin-top:var(--spacing-2xl);margin-bottom:var(--spacing-5xl);box-shadow:none;padding:0}
 .R-gd-terms .nf-form-content button, .R-gd-terms .nf-form-content input[type=button], .R-gd-terms .nf-form-content input[type=submit]{width:100%}
 .R-gd-terms .nf-form-cont .nf-field-label label, .R-gd-terms .nf-form-cont .nf-label-span{font-family:var(--font-family-primary), "aktiv-grotesk", sans-serif!important;font-size:var(--font-size-xs)!important;line-height:var(--font-line-height-xs)!important;font-weight:var(--font-weight-medium)!important;color:var(--font-color-headline)!important;text-transform:none!important;letter-spacing:0!important}
@@ -1555,7 +1555,7 @@ nf-form-cont{border-radius:4px;margin-top:30px;margin-bottom:60px;padding:1px 15
 .R-gd-terms /* source: https://www.givedirectly.org/build/assets/page-password-form-DNy91kOF.css */
 .post-password-form{gap:var(--spacing-base);padding-inline:var(--spacing-lg);padding-block:var(--spacing-4xl);text-align:center;flex-direction:column;display:flex}
 .R-gd-terms /* source: https://www.givedirectly.org/build/assets/newsletterSignup-CT-Gf7gJ.css */
-.newsletter-signup-container{padding:var(--spacing-6xl,80px) 0px;background:var(--surface-tertiary,#f9f7f2);-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;flex-direction:column;align-self:stretch;align-items:center;display:flex}
+.newsletter-signup-container{padding:var(--spacing-6xl,80px) 0px;background:var(--surface-tertiary,#f7f7f7);-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;flex-direction:column;align-self:stretch;align-items:center;display:flex}
 .R-gd-terms .newsletter-signup-content-container{max-width:1140px;padding:0px var(--spacing-xl,24px);align-items:center;gap:var(--spacing-2xl,32px);flex-direction:column;display:flex}
 .R-gd-terms .newsletter-signup-title-container{max-width:800px;padding-bottom:var(--spacing-lg,16px);align-items:flex-start;gap:var(--spacing-lg,16px);flex-direction:column;align-self:stretch;display:flex}
 .R-gd-terms .newsletter-signup-title-headline{color:var(--font-color-headline,#262626);text-align:center;font-family:var(--font-family-primary);font-size:var(--font-size-xl,32px);font-style:normal;font-weight:var(--font-weight-bold,700);line-height:var(--font-line-height-lg,40px);letter-spacing:var(--font-letter-spacing-xs,-1px);align-self:stretch}
@@ -1572,7 +1572,7 @@ nf-form-cont{border-radius:4px;margin-top:30px;margin-bottom:60px;padding:1px 15
 .R-gd-terms .newsletter-signup-button:hover{background:var(--button-color-hover-dark,#053328)}
 .R-gd-terms .newsletter-signup-button:disabled{opacity:.6;cursor:not-allowed}
 .R-gd-terms .newsletter-signup-message{padding:var(--spacing-lg,16px);border-radius:var(--border-radius-base,8px);font-family:var(--font-family-secondary,Inter);font-size:var(--font-size-sm,14px);line-height:var(--font-line-height-sm,18px);display:none}
-.R-gd-terms .newsletter-signup-message.success{color:var(--font-color-body,#4d4d4d);background:#e6eeec}
+.R-gd-terms .newsletter-signup-message.success{color:var(--font-color-body,#4d4d4d);background:#eeeeee}
 .R-gd-terms .newsletter-signup-message.error{color:var(--font-color-error,#d94636);border-left:3px solid var(--font-color-error,#d94636);background:#fef2f2}
 @media (width<=768px){
 .R-gd-terms .newsletter-signup-container{padding:var(--spacing-6xl,80px) var(--spacing-xl,24px)}
@@ -1793,8 +1793,8 @@ margin-top:1em;
         padding: 0;
     }
 .R-gd-terms .new-look-header-major-gifts-icon-link:hover > svg{
-        background: var(--surface-secondary, #E4EEEC);
-        border: 1px solid var(--surface-secondary, #E4EEEC);
+        background: var(--surface-secondary, #eeeeee);
+        border: 1px solid var(--surface-secondary, #eeeeee);
         fill: var(--icon-active, #095845);
         color: var(--icon-active, #095845);
     }
@@ -2056,7 +2056,7 @@ margin-top:1em;
     fill: #FFFFFF;
 }
 .R-gd-terms .gd-banner-green{
-    background-color: #E4EEEC;
+    background-color: #eeeeee;
     color: #262626;
     font-weight: 500;
 }
@@ -2074,12 +2074,12 @@ margin-top:1em;
 .R-gd-terms /* inline style 4 */
 
     #newsletter-signup-ak7UXnVB{
-        background: #f9f7f2;
+        background: #f7f7f7;
     }
 .R-gd-terms /* inline style 5 */
 
     footer{
-        background: var(--surface-secondary, #E4EEEC);
+        background: var(--surface-secondary, #eeeeee);
         -webkit-font-smoothing: antialiased;
         -moz-osx-font-smoothing: grayscale;
         font-family: var(--font-family-primary, Inter);
@@ -2443,7 +2443,7 @@ margin-top:1em;
         border: 2px solid #095845;
     }
 .R-gd-terms #donor-consent-necessary-only:hover{
-        background: #E4EEEC;
+        background: #eeeeee;
     }
 .R-gd-terms #donor-consent-accept-all{
         background-color: #095845;
@@ -2589,7 +2589,7 @@ margin-top:1em;
         border: 2px solid #095845;
     }
 .R-gd-terms #donor-consent-save-selection:hover{
-        background: #E4EEEC;
+        background: #eeeeee;
         cursor: pointer;
     }
 

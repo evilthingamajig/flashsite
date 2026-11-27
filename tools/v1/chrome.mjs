@@ -1,5 +1,5 @@
 /** Shared v1 chrome — real charity:water nav/footer DOM structure + FF labels. */
-export const CSS = 'ff.css,cw-chrome.css';
+export const CSS = 'ff.css,cw-chrome.css,ff-site-chrome.css';
 
 const ARROW = `<img class="ml-3" width="20" height="20" alt="" src="data:image/svg+xml,%3csvg fill='none' height='20' viewBox='0 0 20 20' width='20' xmlns='http://www.w3.org/2000/svg'%3e%3ccircle cx='10' cy='10' fill='%232f8f5b' r='9.5' stroke='%23383b36'/%3e%3cpath clip-rule='evenodd' d='m11.2144 7.16746c-.2635-.27559-.2537-.7126.0219-.97609s.7126-.25367.9761.02192l3.0962 3.23849c.2596.27149.2545.70072-.0115.96592l-3.0962 3.0879c-.27.2692-.7071.2686-.9763-.0014-.2693-.2699-.2687-.7071.0013-.9763l2.006-2.0006h-7.04151c-.38129 0-.69038-.3091-.69038-.69035 0-.38129.30909-.69038.69038-.69038h6.91621z' fill='%231a1a1a' fill-rule='evenodd'/%3e%3c/svg%3e">`;
 
@@ -10,7 +10,8 @@ function megaItem(href, title) {
 }
 
 function hasDropdown(label, childrenHtml) {
-  return `<li class="has-dropdown masthead__item masthead__item--dropdown-mega"><span class="nav-hover-extender absolute bg-transparent z-10"></span><span class="flex items-center dropdown-parent-link"><button type="button" class="heading-xs relative z-20 mr-4" aria-expanded="false">${label}</button><span class="h80 icn cw-icon-chevron-down"></span></span><div class="dropdown masthead__dropdown masthead__dropdown--mega"><div class="ff-mega-cols"><ul class="masthead__items ff-mega-grid">${childrenHtml}</ul></div></div></li>`;
+  const id = `ff-menu-${label.toLowerCase().replace(/\s+/g, '-')}`;
+  return `<li class="has-dropdown masthead__item masthead__item--dropdown-mega"><span class="flex items-center dropdown-parent-link"><button type="button" class="heading-xs relative z-20 mr-4" aria-expanded="false" aria-controls="${id}">${label}</button><span class="h80 icn cw-icon-chevron-down" aria-hidden="true"></span></span><div id="${id}" class="dropdown masthead__dropdown masthead__dropdown--mega" aria-hidden="true" inert><div class="ff-mega-cols"><ul class="masthead__items ff-mega-grid">${childrenHtml}</ul></div></div></li>`;
 }
 
 export function head({ title, description, canonical, extraHead = '', bodyClass = '' }) {
@@ -42,7 +43,9 @@ const WHO = [
 const INVOLVED = [
   ['/join/internships/', 'Internships'],
   ['/get-involved/ambassadors/', 'Ambassadors'],
+  ['/get-involved/builders/', 'Builders'],
   ['/get-involved/partners/', 'Partner with us'],
+  ['/get-involved/corporate-sponsors/', 'Corporate sponsors'],
   ['/get-involved/sponsor-a-project/', 'Sponsor a project'],
 ];
 const footLink = (href, label) => `<a href="${href}">${label}</a>`;
@@ -65,9 +68,6 @@ export function nav(active = '') {
   <div data-component="Nav/NavBar"><span>
     <section class="theme-design-system-v1 nav-bar-section flex justify-between items-center">
       <div class="left-side flex">
-        <ul class="mobile-nav-items flex items-center lg-hidden">
-          <a class="offcanvas-open-link off-canvas-toggle icn mr-6 cw-icon-reorder-thin" href="#" role="button" aria-label="Open menu" aria-controls="ff-offcanvas" aria-expanded="false"></a>
-        </ul>
         <a class="ff-lockup" href="/" aria-label="Flash Forward Foundation">
           <img class="ff-lockup-mark" src="/images/brand/mark-green.png" alt="" width="44" height="44">
           <span class="ff-lockup-name">
@@ -78,19 +78,20 @@ export function nav(active = '') {
         <ul class="nav-items">
           ${hasDropdown('Who we are', whoKids)}
           ${hasDropdown('Get involved', involvedKids)}
-          ${topLink('/news/', 'News')}
-          ${topLink('/contact/', 'Contact')}
+          ${topLink('/news/', 'Stories')}
         </ul>
       </div>
       <div class="right-side items-center ml-2">
+        <a class="ff-nav-contact heading-xs" href="/contact/">Contact</a>
         <a class="donate-link button cw-button items-center px-4 py-2" href="/donate/">
           <div class="heading-xs">Donate</div>
         </a>
+        <button type="button" class="off-canvas-toggle ff-menu-toggle" aria-label="Open menu" aria-controls="ff-offcanvas" aria-expanded="false">${svg('M3 5h18M3 12h18M3 19h18')}</button>
       </div>
     </section>
   </span></div>
 </nav>
-<nav class="right-off-canvas-menu ff-drawer" id="ff-offcanvas" aria-label="Mobile" aria-hidden="true">
+<nav class="right-off-canvas-menu ff-drawer" id="ff-offcanvas" aria-label="Mobile" aria-hidden="true" inert>
   <div class="ff-drawer-top">
     <button type="button" class="ff-drawer-back" hidden>${CHEV_L}<span>Back</span></button>
     <a class="ff-drawer-donate" href="/donate/">Donate</a>
@@ -99,7 +100,7 @@ export function nav(active = '') {
   <ul class="ff-drawer-panel is-active" data-panel="root">
     <li><button type="button" data-open="who"><span>Who we are</span>${CHEV_R}</button></li>
     <li><button type="button" data-open="involved"><span>Get involved</span>${CHEV_R}</button></li>
-    <li><a href="/news/">News</a></li>
+    <li><a href="/news/">Stories</a></li>
     <li><a href="/contact/">Contact</a></li>
   </ul>
   <ul class="ff-drawer-panel" data-panel="who" inert>
@@ -144,14 +145,18 @@ export function footer() {
           ${each(INVOLVED, footLink)}
         </div>
         <div>
-          <h2>News</h2>
-          <a href="/news/">News</a>
+          <h2>Stories</h2>
+          <a href="/news/">News &amp; updates</a>
+          <a href="/impact-stories/">Community stories</a>
+          <a href="/impact-stories/share/">Share your story</a>
           <a href="/contact/">Contact</a>
         </div>
       </div>
       <aside class="ff-bbg-sub">
         <h2>Subscribe to our newsletter</h2>
-        <form action="/contact/" method="get">
+        <form action="https://formspree.io/f/xdegjjor" method="post">
+          <input type="hidden" name="_subject" value="Flash Forward Foundation — Newsletter signup">
+          <input type="hidden" name="topic" value="Newsletter signup">
           <label for="ff-bbg-email">Email</label>
           <input id="ff-bbg-email" name="email" type="email" placeholder="Email address" autocomplete="email" required>
           <button type="submit">Sign up</button>

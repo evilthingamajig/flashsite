@@ -1,13 +1,13 @@
 [
   {
     "url": "/about/",
-    "title": "About Us: A Student-Run Nonprofit in Bellevue, WA | Flash Forward",
-    "description": "Founded by Bellevue students in 2024 and recognized as a 501(c)(3) in August 2025, Flash Forward builds solar study lights for students who study after dark."
+    "title": "Our story — Flash Forward Foundation",
+    "description": "Founded by students in Bellevue, Flash Forward brings students and partners together to build solar study lights for learning after dark."
   },
   {
     "url": "/about/team/",
-    "title": "Our Team",
-    "description": "The six student interns who lead Flash Forward Foundation, with their roles."
+    "title": "Our teams — Flash Forward Foundation",
+    "description": "Flash Forward is a student-led nonprofit. Through the Study Unlock Pathway, assembly and distribution partners place solar study lights that unlock ~5,000 modeled study hours a year."
   },
   {
     "url": "/accessibility/",
@@ -16,143 +16,248 @@
   },
   {
     "url": "/contact/",
-    "title": "Contact",
-    "description": "Contact Flash Forward Foundation in Bellevue, WA by email, Instagram or Discord, or send a message through the contact form."
+    "title": "Contact Us",
+    "description": "Contact Flash Forward Foundation about partnerships, internships, donations, press, or a story from your community."
   },
   {
     "url": "/donate/",
-    "title": "Sponsor a Solar Study Light for $5.17 | Flash Forward Foundation",
-    "description": "$5.17 buys the parts for one solar study light for a student with no electricity. Choose Haiti, India or DR Congo. Tax-deductible, EIN 39-3605570."
+    "title": "Donate",
+    "description": "Support Flash Forward’s solar study light work, from affordable components and assembly to local distribution."
+  },
+  {
+    "url": "/donate/study-circle/",
+    "title": "Study Circle",
+    "description": "Support the ongoing work behind Flash Forward’s solar study lights. Review monthly giving options on Givebutter."
   },
   {
     "url": "/faq/",
-    "title": "FAQ: Solar Study Lights, Donations & Internships | Flash Forward",
-    "description": "How long a light lasts, who receives one, whether gifts are tax-deductible and how internships work. Answers from the Flash Forward Foundation team."
+    "title": "FAQ — Flash Forward Foundation",
+    "description": "Flash Forward is a student-led nonprofit. Through the Study Unlock Pathway, assembly and distribution partners place solar study lights that unlock ~5,000 modeled study hours a year."
+  },
+  {
+    "url": "/get-involved/ambassadors/",
+    "title": "Ambassadors",
+    "description": "Share Flash Forward’s mission, connect your community, and help students study after dark as an ambassador."
+  },
+  {
+    "url": "/get-involved/builders/",
+    "title": "Builders",
+    "description": "Become a Flash Forward Builder: bring your school, club, or organization together to assemble solar study lights."
+  },
+  {
+    "url": "/get-involved/corporate-sponsors/",
+    "title": "Corporate sponsors",
+    "description": "Support Flash Forward through corporate giving, employee fundraising, or practical in-kind support."
   },
   {
     "url": "/get-involved/",
-    "title": "Get Involved: Student Internships in Bellevue | Flash Forward",
-    "description": "Sponsor a $5.17 solar study light, join our student internship in Bellevue, WA, or partner with us to request lights. Three ways students and families can help."
+    "title": "Get involved",
+    "description": "Find your way to contribute to Flash Forward: internships, ambassadors, Builders, distribution partnerships, corporate sponsorships, and project support."
   },
   {
-    "url": "/get-involved/internship/",
-    "title": "Student Nonprofit Internship in Bellevue, WA | Flash Forward",
-    "description": "Unpaid internship for high school and college students at a Bellevue 501(c)(3): pick a department track, learn from experienced executives and apply online."
+    "url": "/get-involved/legacy-giving/",
+    "title": "Legacy giving — Flash Forward",
+    "description": "Leave a lasting gift of study hours. Include Flash Forward in your estate plans — EIN 39-3605570."
+  },
+  {
+    "url": "/get-involved/partners/",
+    "title": "Partner with us",
+    "description": "Distribution partnerships with Flash Forward: connect solar study lights with students in your school or community."
+  },
+  {
+    "url": "/get-involved/sponsor-a-project/",
+    "title": "Sponsor a project",
+    "description": "Help fund Flash Forward’s solar study light work through a donation or a conversation about project support."
+  },
+  {
+    "url": "/guides/community-service-ideas-for-high-school-students/",
+    "title": "Community Service Ideas for High School Students",
+    "description": "25+ community service ideas for high school students, at school, in your neighborhood, online and skills-based, plus how to log and verify your hours."
+  },
+  {
+    "url": "/guides/extracurriculars-for-college-applications/",
+    "title": "Extracurriculars for College Applications",
+    "description": "What admissions readers tend to look for in extracurriculars for college applications, how to choose activities, and how to describe your impact clearly."
+  },
+  {
+    "url": "/guides/free-summer-programs-for-high-school-students/",
+    "title": "Free Summer Programs for High School Students",
+    "description": "How to find free summer programs for high school students, judge their quality, spot pay-to-play red flags, and build a summer of your own that counts."
+  },
+  {
+    "url": "/guides/grant-writing-for-students/",
+    "title": "Grant Writing for Students: A Beginner's Guide",
+    "description": "Grant writing for students, step by step: what a grant is, how funders decide, the parts of a proposal, a worked need statement and mistakes to avoid."
+  },
+  {
+    "url": "/guides/high-school-resume-with-no-experience/",
+    "title": "High School Resume With No Experience",
+    "description": "How to write a high school resume with no experience: the sections to use, before-and-after bullet lines, formatting tips, and a full sample resume."
+  },
+  {
+    "url": "/guides/how-to-get-an-internship-in-high-school/",
+    "title": "How to Get an Internship in High School",
+    "description": "Learn how to get an internship in high school: what kinds exist, where to look, a sample outreach email, how to follow up, and how to prepare to start."
+  },
+  {
+    "url": "/guides/how-to-put-volunteer-work-on-a-resume/",
+    "title": "How to Put Volunteer Work and Internships on a Resume",
+    "description": "How to put volunteer work on a resume: where it goes, how to format it, before-and-after bullets, unpaid and remote internships, and quantifying honestly."
+  },
+  {
+    "url": "/guides/how-to-start-a-nonprofit-as-a-student/",
+    "title": "How to Start a Nonprofit as a Student",
+    "description": "How to start a nonprofit as a student: begin with a project or club, build a team and advisors, consider a fiscal sponsor, then incorporate and apply."
+  },
+  {
+    "url": "/guides/",
+    "title": "Student Guides",
+    "description": "Practical guides for high school and college students on internships, resumes, service hours, college applications and projects."
+  },
+  {
+    "url": "/guides/internship-with-no-experience/",
+    "title": "How to Get an Internship With No Experience",
+    "description": "How to get an internship with no experience: find transferable skills, build small projects first, write a strong application and start at nonprofits."
+  },
+  {
+    "url": "/guides/leadership-experience-in-high-school/",
+    "title": "How to Get Leadership Experience in High School",
+    "description": "How to get leadership experience in high school without a title: step up in clubs, start something, lead real projects and describe it on applications."
+  },
+  {
+    "url": "/guides/nonprofit-careers-for-students/",
+    "title": "Nonprofit Careers for Students: Marketing, Ops, Fundraising",
+    "description": "Nonprofit careers for students explained: what marketing, operations and fundraising roles do day to day, the skills involved and how to try each now."
+  },
+  {
+    "url": "/guides/online-volunteer-opportunities-for-students/",
+    "title": "Online Volunteer Opportunities for Students",
+    "description": "An honest list of online volunteer opportunities for students, from citizen science to remote nonprofit work, plus how to log and verify your hours."
+  },
+  {
+    "url": "/guides/passion-project-ideas-for-high-school-students/",
+    "title": "Passion Project Ideas for High School Students",
+    "description": "30+ passion project ideas for high school students, grouped by interest, plus how to scope a project, document your work and show real impact honestly."
+  },
+  {
+    "url": "/guides/solar-study-light-stem-project/",
+    "title": "Solar Study Light STEM Project",
+    "description": "A solar light STEM project for a classroom or club: how a small solar study light works, a safe conceptual build walk-through and what students learn."
+  },
+  {
+    "url": "/impact-stories/brighten-haiti/",
+    "title": "Brighten Haiti community story — Flash Forward Foundation",
+    "description": "Brighten Haiti and Flash Forward: 42 solar study lights delivered through a local education partner."
+  },
+  {
+    "url": "/impact-stories/",
+    "title": "Community stories — Flash Forward Foundation",
+    "description": "Meet the students and partners behind Flash Forward. Explore community stories and share your own experience with our team."
+  },
+  {
+    "url": "/impact-stories/loksadhana/",
+    "title": "Loksadhana community story — Flash Forward Foundation",
+    "description": "Loksadhana and Flash Forward: 15 solar study lights delivered through a local education partner."
+  },
+  {
+    "url": "/impact-stories/malaika/",
+    "title": "Malaika community story — Flash Forward Foundation",
+    "description": "Malaika and Flash Forward: 15 solar study lights delivered through a local education partner."
+  },
+  {
+    "url": "/impact-stories/share/",
+    "title": "Share your story — Flash Forward Foundation",
+    "description": "Share a student, school, organization, or volunteer story with Flash Forward. Prepare an email for our team to review before publication."
   },
   {
     "url": "/impact/",
-    "title": "Our Impact: 72 Solar Lights, 3 Countries | Flash Forward",
-    "description": "72 study lights delivered through Brighten Haiti, Loksadhana and Malaika, an estimated 432 study hours a day, and about 100 students in our solar workshops."
+    "title": "Our impact — Flash Forward Foundation",
+    "description": "Student-built ideas, solar study lights, and local partnerships. Explore Flash Forward’s deliveries and the people behind the work."
+  },
+  {
+    "url": "/impact/outcomes/",
+    "title": "Tracking Our Work",
+    "description": "Understand Flash Forward’s delivery records, partner updates, and the distinction between lights delivered and student outcomes."
+  },
+  {
+    "url": "/impact/reports/",
+    "title": "Nonprofit Status & Reporting",
+    "description": "Flash Forward Foundation’s nonprofit information, IRS documents, program records, and reporting contacts."
   },
   {
     "url": "/",
-    "title": "Solar Study Lights for Students | Flash Forward Foundation",
-    "description": "Student-run 501(c)(3) in Bellevue, WA. Our student interns build $5.17 solar study lights for students without electricity: 72 delivered to Haiti, India and DR Congo."
+    "title": "Solar Study Lights, Built by Students",
+    "description": "Flash Forward Foundation connects student-led engineering, volunteer Builders, and distribution partners to bring solar study lights to students."
   },
   {
-    "url": "/news/founded/",
-    "title": "Founded by students in Bellevue",
-    "description": "The organization began in 2024 as a student project and built its first solar study light prototype that year."
+    "url": "/internships/engineering/",
+    "title": "Engineering",
+    "description": "An unpaid Engineering internship with Flash Forward Foundation."
   },
   {
-    "url": "/news/",
-    "title": "News and notes",
-    "description": "News from Flash Forward Foundation: study light deliveries to Haiti, India and DR Congo, student solar workshops, partner stories and nonprofit updates."
+    "url": "/internships/fundraising/",
+    "title": "Fundraising & Growth",
+    "description": "An unpaid Fundraising & Growth internship with Flash Forward Foundation."
   },
   {
-    "url": "/news/irs-recognition/",
-    "title": "IRS Recognizes Flash Forward as a 501(c)(3) Public Charity",
-    "description": "Flash Forward Foundation is a 501(c)(3) public charity effective August 5, 2025 (EIN 39-3605570). What recognition means for donors and partners."
+    "url": "/internships/marketing/",
+    "title": "Marketing & Communications",
+    "description": "An unpaid Marketing & Communications internship with Flash Forward Foundation."
   },
   {
-    "url": "/news/program-record/",
-    "title": "72 Study Lights Delivered to Haiti, India and DR Congo",
-    "description": "As of October 2026, student interns built and delivered 72 solar study lights: 42 to Brighten Haiti, 15 to Loksadhana and 15 to Malaika."
+    "url": "/internships/partnerships-operations/",
+    "title": "Partnerships & Operations",
+    "description": "An unpaid Partnerships & Operations internship with Flash Forward Foundation."
   },
   {
-    "url": "/nonprofit-status/",
-    "title": "501(c)(3) Status & EIN 39-3605570 | Flash Forward Foundation",
-    "description": "Flash Forward Foundation is an IRS-recognized 501(c)(3) public charity (509(a)(2)), effective August 5, 2025. EIN, determination letter and Form 990 status."
+    "url": "/internships/remote/",
+    "title": "Remote internships",
+    "description": "Explore four remote-friendly internship tracks with Flash Forward Foundation."
   },
   {
-    "url": "/our-work/how-we-build/",
-    "title": "How to Build a Solar Study Light, Step by Step | Flash Forward",
-    "description": "How our student interns solder, assemble, test and pack each solar study light in Bellevue, WA, with photos of the workshop. Apply to join the internship."
+    "url": "/join/apply/",
+    "title": "Apply for an internship",
+    "description": "Apply to contribute to Flash Forward’s student-led work through one of four internship tracks."
   },
   {
-    "url": "/our-work/",
-    "title": "Our Work",
-    "description": "How Flash Forward Foundation builds solar study lights and sends them through partner organizations."
+    "url": "/join/internships/",
+    "title": "Internships",
+    "description": "Explore four unpaid internship tracks at Flash Forward: Partnerships & Operations, Fundraising & Growth, Marketing & Communications, and Engineering."
   },
   {
-    "url": "/our-work/partners/brighten-haiti/",
-    "title": "Brighten Haiti Partnership: Solar Study Lights | Flash Forward",
-    "description": "How 42 Flash Forward solar study lights reach students in Haiti through Brighten Haiti, which brings solar power to schools through Solar4Schools."
+    "url": "/join/open-roles/cfo/",
+    "title": "Chief Financial Officer | Open Role",
+    "description": "Chief Financial Officer — unpaid open leadership seat at Flash Forward Foundation. Own books hygiene, GiveButter reconciliation notes, and basic nonprofit finance hygiene with the Treasurer."
   },
   {
-    "url": "/our-work/partners/loksadhana/",
-    "title": "Loksadhana: Solar Study Lights in Maharashtra | Flash Forward",
-    "description": "Loksadhana (India): 15 lights delivered. A charitable trust in Maharashtra advancing rural education, women\u2019s empowerment and health."
+    "url": "/join/open-roles/coo/",
+    "title": "Chief Operating Officer | Open Role",
+    "description": "Chief Operating Officer — unpaid open leadership seat at Flash Forward Foundation. Own weekly ops rhythm, internship pipeline health, and delivery between board priorities and day-to-day work."
   },
   {
-    "url": "/our-work/partners/malaika/",
-    "title": "Malaika: Solar Study Lights in Kalebuka, DR Congo | Flash Forward",
-    "description": "Malaika (DR Congo): 15 lights delivered. Empowers girls and communities in the Democratic Republic of the Congo through education, health and clean water."
+    "url": "/join/open-roles/cpo/",
+    "title": "Chief Partnerships Officer | Open Role",
+    "description": "Chief Partnerships Officer — unpaid open leadership seat at Flash Forward Foundation. Own assembly and distribution partner strategy — from first email to lights placed."
   },
   {
-    "url": "/our-work/photos-and-videos/",
-    "title": "Photos and Videos",
-    "description": "Photos and videos from the Flash Forward workshop: printing, assembly, finished lights, and students with their lights."
+    "url": "/join/open-roles/director-fundraising/",
+    "title": "Director of Fundraising | Open Role",
+    "description": "Director of Fundraising — unpaid open leadership seat at Flash Forward Foundation. Lead Study Circle growth, sponsor asks, and grant research under board oversight."
   },
   {
-    "url": "/our-work/the-light/",
-    "title": "The $5.17 Solar Study Lamp: Parts, Cost & Specs | Flash Forward",
-    "description": "A ~500 mAh battery, a solar panel and two LEDs: about 7 hours of sun gives up to ~12 hours of light. See what each part of our $5.17 study light costs."
+    "url": "/join/open-roles/director-marketing/",
+    "title": "Director of Marketing | Open Role",
+    "description": "Director of Marketing — unpaid open leadership seat at Flash Forward Foundation. Lead brand voice, channel plan, and Marketing intern quality bar."
   },
   {
-    "url": "/our-work/where/",
-    "title": "Where the Lights Go",
-    "description": "Flash Forward's partner record: 72 solar study lights delivered to three partners in Haiti, India and the DR Congo."
+    "url": "/join/open-roles/director-partnerships/",
+    "title": "Director of Partnerships | Open Role",
+    "description": "Director of Partnerships — unpaid open leadership seat at Flash Forward Foundation. Lead day-to-day partner pipeline under CPO/board — assembly clubs and distribution orgs."
   },
   {
-    "url": "/privacy/",
-    "title": "Privacy Policy",
-    "description": "How Flash Forward Foundation collects, uses, and protects information from donors, interns, partners, applicants, and website visitors."
-  },
-  {
-    "url": "/search/",
-    "title": "Search",
-    "description": "Find a Flash Forward Foundation page by words in its title or summary."
-  },
-  {
-    "url": "/site-map/",
-    "title": "Site Map",
-    "description": "Every page on the Flash Forward Foundation website in one list: our work, the study light, partners, giving, the team, news, policies and contact."
-  },
-  {
-    "url": "/terms/",
-    "title": "Terms and Conditions",
-    "description": "Terms governing the Flash Forward Foundation website, donations, internship participation, and programs."
-  },
-  {
-    "url": "/news/why-study-lights/",
-    "title": "Energy Poverty and Education: Why a Solar Study Light",
-    "description": "655 million people lacked electricity in 2024 (Tracking SDG7 2026). Here is why studying stops at sunset and how a $5.17 solar light buys back hours."
-  },
-  {
-    "url": "/news/solar-workshops/",
-    "title": "Teaching solar energy: four student workshops",
-    "description": "About 100 students across 4 hands-on workshops where the team teaches how solar charging works and how the light is assembled."
-  },
-  {
-    "url": "/news/start-a-fundraiser/",
-    "title": "Start a fundraiser for study lights",
-    "description": "How to run a group fundraiser for Flash Forward study lights: $5.17 covers the parts for one light, and student interns build them for free."
-  },
-  {
-    "url": "/news/brighten-haiti-student-essays/",
-    "title": "In their own words: students in Dumas, Haiti, on solar power",
-    "description": "26 students at a school in Dumas, Haiti served by Brighten Haiti wrote essays about school before and after solar power."
+    "url": "/join/open-roles/",
+    "title": "Volunteer Leadership",
+    "description": "Explore unpaid volunteer leadership and the work behind Flash Forward’s student-led solar study light program."
   },
   {
     "url": "/news/brighten-haiti-42-lights/",
@@ -160,113 +265,148 @@
     "description": "Flash Forward delivered 42 solar study lights to Haiti through Brighten Haiti, adding an estimated 252 learning hours each day."
   },
   {
-    "url": "/news/loksadhana-15-lights/",
-    "title": "15 study lights for rural Maharashtra",
-    "description": "Fifteen Flash Forward study lights support Loksadhana\u2019s work across rural Maharashtra."
+    "url": "/news/brighten-haiti-student-essays/",
+    "title": "Students in Dumas, Haiti, on solar power",
+    "description": "Students in Dumas, Haiti wrote essays about school before and after solar power. Flash Forward study lights extend learning to home study after dark."
   },
   {
-    "url": "/news/malaika-15-lights/",
-    "title": "15 study lights for Malaika\u2019s school in Kalebuka",
-    "description": "Fifteen Flash Forward study lights support Malaika\u2019s education work in Kalebuka, DR Congo."
+    "url": "/news/founded/",
+    "title": "Founded by students in Bellevue",
+    "description": "The organization began in 2024 as a student project and built its first solar study light prototype that year."
   },
   {
     "url": "/news/hand-delivered-in-india/",
-    "title": "Hand-delivered: lights for students in India",
+    "title": "Hand-delivered lights for students in India",
     "description": "Sanjay Gopi hand-delivered Flash Forward study lights to students during a trip to India."
   },
   {
-    "url": "/internships/fundraising/",
-    "title": "Fundraising & Grant Writing Internship for Students | Flash Forward",
-    "description": "Remote, unpaid fundraising and grant writing internship for high school and college students: draft grant proposals and run sponsor and donor campaigns."
+    "url": "/news/",
+    "title": "Stories & News",
+    "description": "Stories and news from Flash Forward Foundation: solar study light deliveries, student voices, and updates from our student-led team."
   },
   {
-    "url": "/internships/marketing/",
-    "title": "Marketing Internship for High School & College Students | Flash Forward",
-    "description": "Remote, unpaid marketing and communications internship for high school and college students: run social campaigns, write, design and make video for a nonprofit."
+    "url": "/news/irs-recognition/",
+    "title": "IRS Recognizes Flash Forward as a 501(c)(3) Public Charity",
+    "description": "Flash Forward Foundation is a 501(c)(3) public charity effective August 5, 2025 (EIN 39-3605570). What recognition means for donors and partners."
   },
   {
-    "url": "/internships/partnerships-operations/",
-    "title": "Nonprofit Operations & Partnerships Internship for Students | Flash Forward",
-    "description": "Remote, unpaid partnerships and operations internship for high school and college students: work with partner organizations and keep solar light delivery running."
+    "url": "/news/loksadhana-15-lights/",
+    "title": "15 study lights for rural Maharashtra",
+    "description": "Fifteen Flash Forward study lights support Loksadhana’s work across rural Maharashtra, adding an estimated 90 learning hours each day."
   },
   {
-    "url": "/internships/remote/",
-    "title": "Remote Internships for High School & College Students | Flash Forward",
-    "description": "A fully remote, unpaid nonprofit internship for high school and college students. Pick marketing, partnerships or fundraising and complete two real projects."
+    "url": "/news/malaika-15-lights/",
+    "title": "15 study lights for Malaika in Kalebuka",
+    "description": "Fifteen Flash Forward study lights support Malaika’s education work in Kalebuka, DR Congo, adding an estimated 90 learning hours each day."
   },
   {
-    "url": "/guides/",
-    "title": "Student Guides: Internships, Resumes and Service Hours | Flash Forward",
-    "description": "Free guides for high school and college students on getting an internship, writing a resume, earning service hours and building extracurriculars."
+    "url": "/news/program-record/",
+    "title": "72 Study Lights Delivered to Haiti, India and DR Congo",
+    "description": "As of October 2026, student interns built and delivered 72 solar study lights: 42 to Brighten Haiti, 15 to Loksadhana and 15 to Malaika."
   },
   {
-    "url": "/guides/community-service-ideas-for-high-school-students/",
-    "title": "Community Service Ideas for High School Students | Flash Forward",
-    "description": "25+ community service ideas for high school students, at school, in your neighborhood, online and skills-based, plus how to log and verify your hours."
+    "url": "/news/solar-workshops/",
+    "title": "Note on past workshops",
+    "description": "Flash Forward’s K–5 renewable workshops were discontinued and are not part of the Study Unlock Pathway assembly model."
   },
   {
-    "url": "/guides/extracurriculars-for-college-applications/",
-    "title": "Extracurriculars for College Applications | Flash Forward",
-    "description": "What admissions readers tend to look for in extracurriculars for college applications, how to choose activities, and how to describe your impact clearly."
+    "url": "/news/start-a-fundraiser/",
+    "title": "Start a fundraiser for study lights",
+    "description": "A group fundraiser can cover the $5.17 parts cost of many study lights and introduce the program to new people. How to start one."
   },
   {
-    "url": "/guides/free-summer-programs-for-high-school-students/",
-    "title": "Free Summer Programs for High School Students | Flash Forward",
-    "description": "How to find free summer programs for high school students, judge their quality, spot pay-to-play red flags, and build a summer of your own that counts."
+    "url": "/news/why-study-lights/",
+    "title": "Energy Poverty and Education: Why a Solar Study Light",
+    "description": "655 million people lacked electricity in 2024 (Tracking SDG7 2026). Here is why studying stops at sunset and how a $5.17 solar light buys back hours."
   },
   {
-    "url": "/guides/grant-writing-for-students/",
-    "title": "Grant Writing for Students: A Beginner's Guide | Flash Forward",
-    "description": "Grant writing for students, step by step: what a grant is, how funders decide, the parts of a proposal, a worked need statement and mistakes to avoid."
+    "url": "/nonprofit-status/",
+    "title": "Nonprofit Status & Reporting",
+    "description": "Flash Forward Foundation’s nonprofit information, IRS documents, program records, and reporting contacts."
   },
   {
-    "url": "/guides/high-school-resume-with-no-experience/",
-    "title": "High School Resume With No Experience | Flash Forward",
-    "description": "How to write a high school resume with no experience: the sections to use, before-and-after bullet lines, formatting tips, and a full sample resume."
+    "url": "/nonprofit-status/trust/",
+    "title": "How We Use Gifts",
+    "description": "Understand the work behind a Flash Forward study light, the parts-only estimate, and ways to discuss a contribution."
   },
   {
-    "url": "/guides/how-to-get-an-internship-in-high-school/",
-    "title": "How to Get an Internship in High School | Flash Forward",
-    "description": "Learn how to get an internship in high school: what kinds exist, where to look, a sample outreach email, how to follow up, and how to prepare to start."
+    "url": "/our-model/for-students/",
+    "title": "For Students, By Students",
+    "description": "Join is half of Flash Forward’s brand: unpaid student interns run pipelines and partnerships. Assembly partners build the lights."
   },
   {
-    "url": "/guides/how-to-put-volunteer-work-on-a-resume/",
-    "title": "How to Put Volunteer Work and Internships on a Resume | Flash Forward",
-    "description": "How to put volunteer work on a resume: where it goes, how to format it, before-and-after bullets, unpaid and remote internships, and quantifying honestly."
+    "url": "/our-model/",
+    "title": "Our Model",
+    "description": "How Flash Forward designs, assembles, and delivers solar study lights with students, Builders, and local distribution partners."
   },
   {
-    "url": "/guides/how-to-start-a-nonprofit-as-a-student/",
-    "title": "How to Start a Nonprofit as a Student | Flash Forward",
-    "description": "How to start a nonprofit as a student: begin with a project or club, build a team and advisors, consider a fiscal sponsor, then incorporate and apply."
+    "url": "/our-model/made-and-delivered/",
+    "title": "Made and Delivered",
+    "description": "Follow a Flash Forward study light from components and assembly to delivery through local distribution partners."
   },
   {
-    "url": "/guides/internship-with-no-experience/",
-    "title": "How to Get an Internship With No Experience | Flash Forward",
-    "description": "How to get an internship with no experience: find transferable skills, build small projects first, write a strong application and start at nonprofits."
+    "url": "/our-model/study-unlock-pathway/",
+    "title": "Our Model",
+    "description": "How Flash Forward designs, assembles, and delivers solar study lights with students, Builders, and local distribution partners."
   },
   {
-    "url": "/guides/leadership-experience-in-high-school/",
-    "title": "How to Get Leadership Experience in High School | Flash Forward",
-    "description": "How to get leadership experience in high school without a title: step up in clubs, start something, lead real projects and describe it on applications."
+    "url": "/our-model/the-study-light/",
+    "title": "The Study Light",
+    "description": "Meet Flash Forward’s student-built solar study light and the people who help design, assemble, and deliver it."
   },
   {
-    "url": "/guides/nonprofit-careers-for-students/",
-    "title": "Nonprofit Careers for Students: Marketing, Ops, Fundraising | Flash Forward",
-    "description": "Nonprofit careers for students explained: what marketing, operations and fundraising roles do day to day, the skills involved and how to try each now."
+    "url": "/our-model/why-light/",
+    "title": "Why Light",
+    "description": "Why Flash Forward focuses on a solar-powered study light and the people who help make and deliver it."
   },
   {
-    "url": "/guides/online-volunteer-opportunities-for-students/",
-    "title": "Online Volunteer Opportunities for Students | Flash Forward",
-    "description": "An honest list of online volunteer opportunities for students, from citizen science to remote nonprofit work, plus how to log and verify your hours."
+    "url": "/our-work/how-we-build/",
+    "title": "How Lights Are Made & Delivered",
+    "description": "Assembly partners build Flash Forward lights."
   },
   {
-    "url": "/guides/passion-project-ideas-for-high-school-students/",
-    "title": "Passion Project Ideas for High School Students | Flash Forward",
-    "description": "30+ passion project ideas for high school students, grouped by interest, plus how to scope a project, document your work and show real impact honestly."
+    "url": "/our-work/",
+    "title": "Our Model",
+    "description": "Our Work is now Our Model — Study Unlock Pathway."
   },
   {
-    "url": "/guides/solar-study-light-stem-project/",
-    "title": "Solar Study Light STEM Project | Flash Forward",
-    "description": "A solar light STEM project for a classroom or club: how a small solar study light works, a safe conceptual build walk-through and what students learn."
+    "url": "/our-work/partners/brighten-haiti/",
+    "title": "Brighten Haiti | Impact Stories",
+    "description": "Brighten Haiti story moved."
+  },
+  {
+    "url": "/our-work/partners/loksadhana/",
+    "title": "Loksadhana | Impact Stories",
+    "description": "Loksadhana story moved."
+  },
+  {
+    "url": "/our-work/partners/malaika/",
+    "title": "Malaika | Impact Stories",
+    "description": "Malaika story moved."
+  },
+  {
+    "url": "/our-work/photos-and-videos/",
+    "title": "Photos & Videos",
+    "description": "Media from Flash Forward field partners and operations — not Bellevue workshop builds."
+  },
+  {
+    "url": "/our-work/the-light/",
+    "title": "The Study Light",
+    "description": "The study light page moved under Our Model."
+  },
+  {
+    "url": "/our-work/where/",
+    "title": "Impact Stories",
+    "description": "Partner destinations are now Impact Stories."
+  },
+  {
+    "url": "/privacy/",
+    "title": "Privacy — Flash Forward Foundation",
+    "description": "Flash Forward is a student-led nonprofit. Through the Study Unlock Pathway, assembly and distribution partners place solar study lights that unlock ~5,000 modeled study hours a year."
+  },
+  {
+    "url": "/terms/",
+    "title": "Terms — Flash Forward Foundation",
+    "description": "Flash Forward is a student-led nonprofit. Through the Study Unlock Pathway, assembly and distribution partners place solar study lights that unlock ~5,000 modeled study hours a year."
   }
 ]

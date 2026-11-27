@@ -5,12 +5,12 @@
   --ff-green-900: #0F3D2A;
   --ff-green-700: #1E6B45;
   --ff-green-500: #2F8F5B;
-  --ff-green-100: #E3F0E8;
-  --ff-green-50: #F3F8F5;
+  --ff-green-100: #eeeeee;
+  --ff-green-50: #f7f7f7;
   /* Sky accent replaces amber/yellow — peer-nonprofit calm, not filament gold */
   --ff-sky-600: #1E6B45;
   --ff-sky-500: #2F8F5B;
-  --ff-sky-100: #E3F0E8;
+  --ff-sky-100: #eeeeee;
   --ff-amber-500: var(--ff-sky-500); /* legacy alias — do not reintroduce yellow */
   --ff-amber-400: #3D9A68;
   --ff-amber-100: var(--ff-sky-100);
