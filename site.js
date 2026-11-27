@@ -730,3 +730,19 @@
     }else orig('event','conversion',{send_to:ADS.begin_checkout});
   };
 })();
+
+// Keep sponsorship inquiries in the main contact form.
+(function () {
+  var topic = document.getElementById('contact-topic');
+  if (!topic) return;
+  var requested = new URLSearchParams(window.location.search).get('topic');
+  var topics = {
+    sponsorship: 'Project sponsorship',
+    corporate: 'Project sponsorship',
+    builders: 'Builders — assembling lights',
+    ambassadors: 'Ambassadors',
+    internships: 'Internships',
+    partners: 'Distribution partnerships'
+  };
+  if (topics[requested]) topic.value = topics[requested];
+})();

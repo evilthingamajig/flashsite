@@ -45,7 +45,7 @@ const INVOLVED = [
   ['/get-involved/ambassadors/', 'Ambassadors'],
   ['/get-involved/builders/', 'Builders'],
   ['/get-involved/partners/', 'Partner with us'],
-  ['/get-involved/corporate-sponsors/', 'Corporate sponsors'],
+  ['/join/open-roles/', 'Leadership'],
   ['/get-involved/sponsor-a-project/', 'Sponsor a project'],
 ];
 const footLink = (href, label) => `<a href="${href}">${label}</a>`;
@@ -167,7 +167,6 @@ export function footer() {
     <div class="ff-bbg-legal">
       <div class="ff-bbg-legal-row">
         <p>© ${year} Flash Forward Foundation, 1402 153rd Pl SE, Bellevue, WA 98007. A US 501(c)(3) public charity, EIN 39-3605570.</p>
-        <p>Gifts are preference-based. Placement is best effort.</p>
       </div>
       <div class="ff-bbg-legal-row ff-bbg-legal-row--sub">
         <a href="/nonprofit-status/">Nonprofit Status</a>

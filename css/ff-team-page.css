@@ -55,3 +55,5 @@ body.ff-page-gd-team { background: #fff; }
 }
 
 .ff-team-join-link:focus-visible { outline-color: #fff; outline-offset: 5px; }
+
+.ff-team-join-actions { display: flex; flex-direction: column; gap: 16px; align-items: flex-start; }

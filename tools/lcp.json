@@ -96,12 +96,9 @@
   "vp": "390x844"
  },
  "/news/program-record/": {
-  "el": "IMG.",
-  "img": "/images/opt/build/packagedlights.w600.e0c41ddb.webp",
-  "text": "",
-  "size": 78234,
-  "t": 148,
-  "vp": "390x844"
+  "el": "IMG",
+  "img": "/images/opt/build/flashfinishedworkshop.w800.8f267722.webp",
+  "text": ""
  },
  "/news/solar-workshops/": {
   "el": "IMG.",
@@ -112,12 +109,9 @@
   "vp": "390x844"
  },
  "/news/start-a-fundraiser/": {
-  "el": "IMG.",
-  "img": "/images/opt/build/packagedlights.w600.e0c41ddb.webp",
-  "text": "",
-  "size": 78167,
-  "t": 148,
-  "vp": "390x844"
+  "el": "IMG",
+  "img": "/images/opt/build/flashfinishedworkshop.w800.8f267722.webp",
+  "text": ""
  },
  "/news/why-study-lights/": {
   "el": "IMG.",

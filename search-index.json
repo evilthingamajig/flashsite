@@ -17,7 +17,7 @@
   {
     "url": "/contact/",
     "title": "Contact Flash Forward Foundation",
-    "description": "Contact Flash Forward Foundation at about@flashforwardfoundation.org about a donation, an unpaid internship, a partnership, or a press question."
+    "description": "Get in touch with Flash Forward Foundation about our work, partnerships, or ways to get involved."
   },
   {
     "url": "/donate/",
@@ -36,23 +36,18 @@
   },
   {
     "url": "/get-involved/ambassadors/",
-    "title": "Ambassador Program",
-    "description": "Ambassadors share Flash Forward’s solar study light work with a school or community. The role is unpaid. Start with the interest form on this page."
+    "title": "Become an Ambassador",
+    "description": "Share our story and bring Flash Forward to your school, campus, or community. Apply to become an ambassador."
   },
   {
     "url": "/get-involved/builders/",
-    "title": "Become a Builder of Solar Study Lights",
-    "description": "Builders are schools, robotics clubs, and makerspaces that assemble Flash Forward solar study lights so students can study after dark."
-  },
-  {
-    "url": "/get-involved/corporate-sponsors/",
-    "title": "Corporate Support",
-    "description": "Businesses can support Flash Forward Foundation’s solar study lights with a gift, a fundraiser, or practical in-kind help. Contact the team to talk."
+    "title": "Become a Builder",
+    "description": "Help build solar study lights. Schools, clubs, makerspaces, workplace teams, and individuals are welcome to apply."
   },
   {
     "url": "/get-involved/",
-    "title": "Donate, Intern, or Partner",
-    "description": "Donate, apply for an unpaid internship, or partner with Flash Forward Foundation so more students can study after dark with a solar study light."
+    "title": "Get Involved",
+    "description": "Bring your skills, your community, or your support. Explore ways to help more students study after dark."
   },
   {
     "url": "/get-involved/legacy-giving/",
@@ -66,8 +61,8 @@
   },
   {
     "url": "/get-involved/sponsor-a-project/",
-    "title": "Sponsor Solar Study Light Work",
-    "description": "Sponsor Flash Forward’s solar study light work, from components and assembly through a coordinated delivery. Donate, or contact the team about a project."
+    "title": "Sponsor a Project",
+    "description": "Sponsor solar study lights as an individual, family, school, or business. Explore project support, team involvement, and company recognition."
   },
   {
     "url": "/guides/community-service-ideas-for-high-school-students/",
@@ -186,43 +181,43 @@
   },
   {
     "url": "/internships/engineering/",
-    "title": "Unpaid Engineering Internship",
-    "description": "An unpaid, remote-friendly Engineering internship with Flash Forward Foundation. Work on solar study light design, tests, and build guidance for Builders."
+    "title": "Engineering Internship",
+    "description": "A remote Engineering internship with Flash Forward Foundation. Work on solar study light design, tests, and build guidance for Builders."
   },
   {
     "url": "/internships/fundraising/",
-    "title": "Unpaid Fundraising Internship",
-    "description": "An unpaid, remote-friendly Fundraising and Growth internship with Flash Forward Foundation, a student-led 501(c)(3) that designs solar study lights."
+    "title": "Fundraising Internship",
+    "description": "A remote Fundraising and Growth internship with Flash Forward Foundation, a student-led 501(c)(3) that designs solar study lights."
   },
   {
     "url": "/internships/marketing/",
-    "title": "Unpaid Marketing Internship",
-    "description": "An unpaid, remote-friendly Marketing and Communications internship with Flash Forward Foundation. Help explain solar study lights and student stories."
+    "title": "Marketing Internship",
+    "description": "A remote Marketing and Communications internship with Flash Forward Foundation. Help explain solar study lights and student stories."
   },
   {
     "url": "/internships/partnerships-operations/",
-    "title": "Unpaid Partnerships Internship",
-    "description": "An unpaid, remote-friendly Partnerships and Operations internship with Flash Forward Foundation. Help find Builders and distribution partners for solar study lights."
+    "title": "Partnerships Internship",
+    "description": "A remote Partnerships and Operations internship with Flash Forward Foundation. Help find Builders and distribution partners for solar study lights."
   },
   {
     "url": "/internships/remote/",
-    "title": "Remote Unpaid Internships",
-    "description": "Four remote-friendly, unpaid internship tracks at Flash Forward Foundation: Engineering, Fundraising, Marketing, and Partnerships and Operations."
+    "title": "Remote Internships",
+    "description": "Four remote-friendly, internship tracks at Flash Forward Foundation: Engineering, Fundraising, Marketing, and Partnerships and Operations."
   },
   {
     "url": "/join/apply/",
-    "title": "Apply for an Unpaid Internship",
-    "description": "Apply for an unpaid, remote-friendly internship with Flash Forward Foundation. One Google Form covers Partnerships, Fundraising, Marketing, and Engineering."
+    "title": "Apply for an Internship",
+    "description": "Join the Flash Forward team. Explore internships in partnerships, fundraising, communications, and engineering."
   },
   {
     "url": "/join/internships/",
-    "title": "Unpaid Student Internships",
-    "description": "Flash Forward internships are unpaid and remote-friendly. Apply to help a student-led 501(c)(3) get solar study lights to students who need light after dark."
+    "title": "Student Internships",
+    "description": "Explore internships in partnerships, fundraising, communications, and engineering. Put your skills to work helping students study after dark."
   },
   {
     "url": "/join/open-roles/",
-    "title": "Unpaid Leadership Roles",
-    "description": "Flash Forward Foundation leadership roles are unpaid. Directors of Partnerships, Marketing, and Fundraising help a student-led team deliver solar study lights."
+    "title": "Leadership Opportunities",
+    "description": "Explore leadership opportunities in partnerships, marketing, and fundraising. Help guide a student-led team bringing light to learning."
   },
   {
     "url": "/news/brighten-haiti-42-lights/",
