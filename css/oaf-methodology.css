@@ -102,7 +102,7 @@ html{font-family:sans-serif;-ms-text-size-adjust:100%;-webkit-text-size-adjust:1
 .R-oaf-methodology [dir="rtl"] .messages--error{border-color:#f9c9bf transparent #f9c9bf #f9c9bf;box-shadow:8px 0 0 #e62600;}
 .R-oaf-methodology .messages--error p.error{color:#a51b00;}
 .R-oaf-methodology .progress__track{border-color:#b3b3b3;border-radius:10em;background-color:#f2f2f2;background-image:-webkit-linear-gradient(#e7e7df,#f0f0f0);background-image:linear-gradient(#e7e7df,#f0f0f0);box-shadow:inset 0 1px 3px hsl(0,0%,0%,0.16);}
-.R-oaf-methodology .progress__bar{height:16px;margin-top:-1px;margin-left:-1px;padding:0 1px;-webkit-transition:width 0.5s ease-out;transition:width 0.5s ease-out;-webkit-animation:animate-stripes 3s linear infinite;-moz-animation:animate-stripes 3s linear infinite;border:1px #07629a solid;border-radius:10em;background:#057ec9;background-image:-webkit-linear-gradient(top,rgb(0,0,0,0),rgb(0,0,0,0.15)),-webkit-linear-gradient(left top,#0094f0 0%,#0094f0 25%,#007ecc 25%,#007ecc 50%,#0094f0 50%,#0094f0 75%,#0094f0 100%);background-image:linear-gradient(to bottom,rgb(0,0,0,0),rgb(0,0,0,0.15)),linear-gradient(to right bottom,#0094f0 0%,#0094f0 25%,#007ecc 25%,#007ecc 50%,#0094f0 50%,#0094f0 75%,#0094f0 100%);background-size:40px 40px;}
+.R-oaf-methodology .progress__bar{height:16px;margin-top:-1px;margin-left:-1px;padding:0 1px;-webkit-transition:width 0.5s ease-out;transition:width 0.5s ease-out;-webkit-animation:animate-stripes 3s linear infinite;-moz-animation:animate-stripes 3s linear infinite;border:1px #1e6b45 solid;border-radius:10em;background:#1e6b45;background-image:-webkit-linear-gradient(top,rgb(0,0,0,0),rgb(0,0,0,0.15)),-webkit-linear-gradient(left top,#1e6b45 0%,#1e6b45 25%,#1e6b45 25%,#1e6b45 50%,#1e6b45 50%,#1e6b45 75%,#1e6b45 100%);background-image:linear-gradient(to bottom,rgb(0,0,0,0),rgb(0,0,0,0.15)),linear-gradient(to right bottom,#1e6b45 0%,#1e6b45 25%,#1e6b45 25%,#1e6b45 50%,#1e6b45 50%,#1e6b45 75%,#1e6b45 100%);background-size:40px 40px;}
 .R-oaf-methodology [dir="rtl"] .progress__bar{margin-right:-1px;margin-left:0;-webkit-animation-direction:reverse;-moz-animation-direction:reverse;animation-direction:reverse;}
 @media screen and (prefers-reduced-motion:reduce){
 .R-oaf-methodology .progress__bar{-webkit-transition:none;transition:none;-webkit-animation:none;-moz-animation:none;}
@@ -126,12 +126,12 @@ html{font-family:sans-serif;-ms-text-size-adjust:100%;-webkit-text-size-adjust:1
 .R-oaf-methodology{--space-xs:0.5rem;--space-s:1rem;--space-m:1.5rem;--space-l:2.5rem;--space-xl:2.5rem;--space-xxl:4.5rem}
 
 }
-.R-oaf-methodology{--primary-dark:#1a4c3e;--primary-mid:#2b7f68;--primary-light:#2b7f68;--secondary-dark:#264d52;--secondary-mid:#598085;--secondary-light:#306067;--theme-specific:#e8b757;--footer-title:#2b7f68;--footer-newsletter:#1a4c3e;--menu-light:#2b7f68;--menu-dark:#1a4c3e}
-.R-oaf-methodology .blue-theme{--primary-dark:#141635;--primary-mid:#212558;--primary-light:#212558;--secondary-dark:#264d52;--secondary-mid:#598085;--secondary-light:#306067;--theme-specific:#00b3b6;--footer-title:#2b7f68;--footer-newsletter:#1a4c3e;--menu-light:#2b7f68;--menu-dark:#1a4c3e}
-.R-oaf-methodology .purple-theme{--primary-dark:#431837;--primary-mid:#6f285b;--primary-light:#6f285b;--secondary-dark:#264d52;--secondary-mid:#598085;--secondary-light:#306067;--theme-specific:#c565a9;--footer-title:#2b7f68;--footer-newsletter:#1a4c3e;--menu-light:#2b7f68;--menu-dark:#1a4c3e}
-.R-oaf-methodology .orange-theme{--primary-dark:#f47b20;--primary-mid:#1a5026;--primary-light:#f47b20;--secondary-dark:#264d52;--secondary-mid:#598085;--secondary-light:#306067;--theme-specific:#f47b20;--footer-title:#2b7f68;--footer-newsletter:#1a4c3e;--menu-light:#2b7f68;--menu-dark:#1a4c3e}
-.R-oaf-methodology .green-theme{--primary-dark:#8f9a36;--primary-mid:#1a5026;--primary-light:#8f9a36;--secondary-dark:#264d52;--secondary-mid:#598085;--secondary-light:#306067;--theme-specific:#8f9a36;--footer-title:#2b7f68;--footer-newsletter:#1a4c3e;--menu-light:#2b7f68;--menu-dark:#1a4c3e}
-.R-oaf-methodology .careers-theme{--primary-dark:#264d52;--primary-mid:#598085;--primary-light:#306067;--secondary-dark:#1a4c3e;--secondary-mid:#2b7f68;--secondary-light:#2b7f68;--theme-specific:#e8b757;--footer-title:#306067;--footer-newsletter:#264d52;--menu-light:#306067;--menu-dark:#264d52}
+.R-oaf-methodology{--primary-dark:#1a4c3e;--primary-mid:#2b7f68;--primary-light:#2b7f68;--secondary-dark:#173f2e;--secondary-mid:#1e6b45;--secondary-light:#1e6b45;--theme-specific:#e8b757;--footer-title:#2b7f68;--footer-newsletter:#1a4c3e;--menu-light:#2b7f68;--menu-dark:#1a4c3e}
+.R-oaf-methodology .blue-theme{--primary-dark:#173f2e;--primary-mid:#173f2e;--primary-light:#173f2e;--secondary-dark:#173f2e;--secondary-mid:#1e6b45;--secondary-light:#1e6b45;--theme-specific:#1e6b45;--footer-title:#2b7f68;--footer-newsletter:#1a4c3e;--menu-light:#2b7f68;--menu-dark:#1a4c3e}
+.R-oaf-methodology .purple-theme{--primary-dark:#431837;--primary-mid:#6f285b;--primary-light:#6f285b;--secondary-dark:#173f2e;--secondary-mid:#1e6b45;--secondary-light:#1e6b45;--theme-specific:#c565a9;--footer-title:#2b7f68;--footer-newsletter:#1a4c3e;--menu-light:#2b7f68;--menu-dark:#1a4c3e}
+.R-oaf-methodology .orange-theme{--primary-dark:#f47b20;--primary-mid:#1a5026;--primary-light:#f47b20;--secondary-dark:#173f2e;--secondary-mid:#1e6b45;--secondary-light:#1e6b45;--theme-specific:#f47b20;--footer-title:#2b7f68;--footer-newsletter:#1a4c3e;--menu-light:#2b7f68;--menu-dark:#1a4c3e}
+.R-oaf-methodology .green-theme{--primary-dark:#8f9a36;--primary-mid:#1a5026;--primary-light:#8f9a36;--secondary-dark:#173f2e;--secondary-mid:#1e6b45;--secondary-light:#1e6b45;--theme-specific:#8f9a36;--footer-title:#2b7f68;--footer-newsletter:#1a4c3e;--menu-light:#2b7f68;--menu-dark:#1a4c3e}
+.R-oaf-methodology .careers-theme{--primary-dark:#173f2e;--primary-mid:#1e6b45;--primary-light:#1e6b45;--secondary-dark:#1a4c3e;--secondary-mid:#2b7f68;--secondary-light:#2b7f68;--theme-specific:#e8b757;--footer-title:#1e6b45;--footer-newsletter:#173f2e;--menu-light:#1e6b45;--menu-dark:#173f2e}
 .R-oaf-methodology a, .R-oaf-methodology abbr, .R-oaf-methodology acronym, .R-oaf-methodology address, .R-oaf-methodology applet, .R-oaf-methodology article, .R-oaf-methodology aside, .R-oaf-methodology audio, .R-oaf-methodology b, .R-oaf-methodology big, .R-oaf-methodology blockquote, .R-oaf-methodology, .R-oaf-methodology canvas, .R-oaf-methodology caption, .R-oaf-methodology center, .R-oaf-methodology cite, .R-oaf-methodology code, .R-oaf-methodology dd, .R-oaf-methodology del, .R-oaf-methodology details, .R-oaf-methodology dfn, .R-oaf-methodology div, .R-oaf-methodology dl, .R-oaf-methodology dt, .R-oaf-methodology em, .R-oaf-methodology embed, .R-oaf-methodology fieldset, .R-oaf-methodology figcaption, .R-oaf-methodology figure, .R-oaf-methodology footer, .R-oaf-methodology form, .R-oaf-methodology h1, .R-oaf-methodology h2, .R-oaf-methodology h3, .R-oaf-methodology h4, .R-oaf-methodology h5, .R-oaf-methodology h6, .R-oaf-methodology header, .R-oaf-methodology hgroup, .R-oaf-methodology, .R-oaf-methodology i, .R-oaf-methodology iframe, .R-oaf-methodology img, .R-oaf-methodology ins, .R-oaf-methodology kbd, .R-oaf-methodology label, .R-oaf-methodology legend, .R-oaf-methodology li, .R-oaf-methodology mark, .R-oaf-methodology menu, .R-oaf-methodology nav, .R-oaf-methodology object, .R-oaf-methodology ol, .R-oaf-methodology output, .R-oaf-methodology p, .R-oaf-methodology pre, .R-oaf-methodology q, .R-oaf-methodology ruby, .R-oaf-methodology s, .R-oaf-methodology samp, .R-oaf-methodology section, .R-oaf-methodology small, .R-oaf-methodology span, .R-oaf-methodology strike, .R-oaf-methodology strong, .R-oaf-methodology sub, .R-oaf-methodology summary, .R-oaf-methodology sup, .R-oaf-methodology table, .R-oaf-methodology tbody, .R-oaf-methodology td, .R-oaf-methodology tfoot, .R-oaf-methodology th, .R-oaf-methodology thead, .R-oaf-methodology time, .R-oaf-methodology tr, .R-oaf-methodology tt, .R-oaf-methodology u, .R-oaf-methodology ul, .R-oaf-methodology var, .R-oaf-methodology video{border:0;font-size:100%;font:inherit;margin:0;padding:0;vertical-align:baseline}
 .R-oaf-methodology article, .R-oaf-methodology aside, .R-oaf-methodology details, .R-oaf-methodology figcaption, .R-oaf-methodology figure, .R-oaf-methodology footer, .R-oaf-methodology header, .R-oaf-methodology hgroup, .R-oaf-methodology main, .R-oaf-methodology menu, .R-oaf-methodology nav, .R-oaf-methodology section{display:block}
 .R-oaf-methodology{line-height:1}
@@ -540,7 +540,7 @@ html{font-family:sans-serif;-ms-text-size-adjust:100%;-webkit-text-size-adjust:1
 .R-oaf-methodology .o-content-from-editor cite{font-weight:700}
 .R-oaf-methodology .o-content-from-editor q{font-style:italic}
 .R-oaf-methodology .o-content-from-editor code, .R-oaf-methodology .o-content-from-editor var{font-family:Consolas,monospace}
-.R-oaf-methodology .o-featured-page-link{border-top:1px solid #598085;padding-top:var(--space-m)}
+.R-oaf-methodology .o-featured-page-link{border-top:1px solid #1e6b45;padding-top:var(--space-m)}
 @media (max-width:740px){
 .R-oaf-methodology .o-featured-page-link:first-child{border-top:0;padding-top:0}
 
@@ -570,13 +570,13 @@ html{font-family:sans-serif;-ms-text-size-adjust:100%;-webkit-text-size-adjust:1
 }
 .R-oaf-methodology .has-over-three .o-featured-page-link:nth-child(-n+3){border-top:0;padding-top:0}
 @media (max-width:740px){
-.R-oaf-methodology .has-over-three .o-featured-page-link:nth-child(-n+3){border-top:1px solid #598085;padding-top:var(--space-m)}
+.R-oaf-methodology .has-over-three .o-featured-page-link:nth-child(-n+3){border-top:1px solid #1e6b45;padding-top:var(--space-m)}
 .R-oaf-methodology .has-over-three .o-featured-page-link:first-child{border-top:0;padding-top:0}
 
 }
 .R-oaf-methodology .two-per-row .o-featured-page-link:nth-child(-n+2){border-top:0}
 @media (max-width:740px){
-.R-oaf-methodology .two-per-row .o-featured-page-link:nth-child(2){border-top:1px solid #598085}
+.R-oaf-methodology .two-per-row .o-featured-page-link:nth-child(2){border-top:1px solid #1e6b45}
 
 }
 .R-oaf-methodology .o-featured-page-link--options{border-top:1px solid #ded6c0;margin-top:var(--space-s);padding-top:var(--space-s)}
@@ -634,7 +634,7 @@ html{font-family:sans-serif;-ms-text-size-adjust:100%;-webkit-text-size-adjust:1
 .R-oaf-methodology .o-heading--stone{--heading-bg-colour:#ded6c0}
 .R-oaf-methodology .o-heading--yellow{--heading-bg-colour:var(--theme-specific)}
 .R-oaf-methodology .green-theme .o-heading--yellow, .R-oaf-methodology .orange-theme .o-heading--yellow{color:#fff}
-.R-oaf-methodology .o-heading--teal{--heading-bg-colour:#598085}
+.R-oaf-methodology .o-heading--teal{--heading-bg-colour:#1e6b45}
 .R-oaf-methodology .o-heading--footer{--heading-bg-colour:var(--footer-title)}
 .R-oaf-methodology .o-layout{grid-column-gap:var(--gutter);display:grid;grid-template-columns:repeat(12,1fr)}
 @media (max-width:740px){
@@ -1447,7 +1447,7 @@ html{font-family:sans-serif;-ms-text-size-adjust:100%;-webkit-text-size-adjust:1
 }
 .R-oaf-methodology .c-featured-careers__text-wrapper{grid-column:1/9;position:relative}
 @media (max-width:1040px){
-.R-oaf-methodology .c-featured-careers__text-wrapper{grid-column-gap:var(--gutter);background-color:#598085;display:grid;grid-column:1/-1;grid-template-columns:repeat(12,1fr);inline-size:100vw;margin-inline-start:-1rem}
+.R-oaf-methodology .c-featured-careers__text-wrapper{grid-column-gap:var(--gutter);background-color:#1e6b45;display:grid;grid-column:1/-1;grid-template-columns:repeat(12,1fr);inline-size:100vw;margin-inline-start:-1rem}
 
 }
 @media (max-width:1040px) and (max-width:740px){
@@ -1479,7 +1479,7 @@ html{font-family:sans-serif;-ms-text-size-adjust:100%;-webkit-text-size-adjust:1
 .R-oaf-methodology .c-featured-careers__section-heading{grid-column:1/-1;margin-block-start:-2.125rem}
 
 }
-.R-oaf-methodology .c-featured-careers__section-summary{background-color:#598085;color:#fff;font-size:1.75rem;font-weight:500;line-height:1.57;margin-block-start:.1875rem;padding:1rem 1.5rem 1.125rem}
+.R-oaf-methodology .c-featured-careers__section-summary{background-color:#1e6b45;color:#fff;font-size:1.75rem;font-weight:500;line-height:1.57;margin-block-start:.1875rem;padding:1rem 1.5rem 1.125rem}
 @media (max-width:1800px){
 .R-oaf-methodology .c-featured-careers__section-summary{font-size:1.25rem;line-height:1.6}
 
@@ -2697,7 +2697,7 @@ html{font-family:sans-serif;-ms-text-size-adjust:100%;-webkit-text-size-adjust:1
 .R-oaf-methodology .c-header__primary-menu{display:block;order:1;width:100%}
 
 }
-.R-oaf-methodology .c-header__secondary-menu{align-items:center;color:#598085;display:flex;font-family:Whitney SC A,Whitney SC B,Arial,Helvetica,sans-serif;font-size:1.75rem;font-weight:700;justify-content:flex-end;letter-spacing:.1rem;line-height:.92;margin-bottom:var(--space-m);text-transform:lowercase}
+.R-oaf-methodology .c-header__secondary-menu{align-items:center;color:#1e6b45;display:flex;font-family:Whitney SC A,Whitney SC B,Arial,Helvetica,sans-serif;font-size:1.75rem;font-weight:700;justify-content:flex-end;letter-spacing:.1rem;line-height:.92;margin-bottom:var(--space-m);text-transform:lowercase}
 @media (max-width:1800px){
 .R-oaf-methodology .c-header__secondary-menu{font-size:1.438rem;line-height:1}
 
@@ -2757,13 +2757,13 @@ html{font-family:sans-serif;-ms-text-size-adjust:100%;-webkit-text-size-adjust:1
 .R-oaf-methodology .c-header__donate-button-mobile{display:flex;font-size:1.125rem}
 
 }
-.R-oaf-methodology .c-header__search{color:#264d52}
+.R-oaf-methodology .c-header__search{color:#173f2e}
 @media (max-width:1040px){
 .R-oaf-methodology .c-header__search{background-color:#e8e8e8;color:var(--primary-mid);padding:.375rem .75rem}
 .R-oaf-methodology .c-header__search:focus, .R-oaf-methodology .c-header__search:hover{background-color:#ded6c0;color:var(--primary-dark)}
 
 }
-.R-oaf-methodology .c-header__secondary-menu-item{color:#264d52;margin-left:var(--space-s)}
+.R-oaf-methodology .c-header__secondary-menu-item{color:#173f2e;margin-left:var(--space-s)}
 @media (max-width:1040px){
 .R-oaf-methodology .c-header__secondary-menu-item{background-color:#e8e8e8;color:var(--primary-mid);margin-left:0;padding:.375rem .75rem}
 .R-oaf-methodology .c-header__secondary-menu-item:focus, .R-oaf-methodology .c-header__secondary-menu-item:hover{background-color:#ded6c0;color:var(--primary-dark)}
@@ -3185,7 +3185,7 @@ html{font-family:sans-serif;-ms-text-size-adjust:100%;-webkit-text-size-adjust:1
 .R-oaf-methodology .c-language-switcher{margin-left:0}
 
 }
-.R-oaf-methodology .c-language-switcher a{color:#264d52;position:relative}
+.R-oaf-methodology .c-language-switcher a{color:#173f2e;position:relative}
 @media (max-width:1040px){
 .R-oaf-methodology .c-language-switcher a{align-items:center;background-color:#e8e8e8;color:var(--primary-mid);display:flex;margin-left:0;padding:.375rem .75rem .375rem 1.063rem}
 .R-oaf-methodology .c-language-switcher a:focus, .R-oaf-methodology .c-language-switcher a:hover{background-color:#ded6c0;color:var(--primary-dark)}
@@ -3348,8 +3348,8 @@ html{font-family:sans-serif;-ms-text-size-adjust:100%;-webkit-text-size-adjust:1
 .R-oaf-methodology .block-local-tasks-block .tabs{display:block;margin:0}
 .R-oaf-methodology .block-local-tasks-block .tabs li{display:block;float:left;margin-right:0}
 .R-oaf-methodology .block-local-tasks-block .tabs li a{display:block;padding:1em 2em}
-.R-oaf-methodology .block-local-tasks-block .tabs li a.is-active{background:#0084d7;color:#fff}
-.R-oaf-methodology .block-local-tasks-block .tabs li a:focus, .R-oaf-methodology .block-local-tasks-block .tabs li a:hover{background:#0084d7;color:#fff;text-decoration:none}
+.R-oaf-methodology .block-local-tasks-block .tabs li a.is-active{background:#1e6b45;color:#fff}
+.R-oaf-methodology .block-local-tasks-block .tabs li a:focus, .R-oaf-methodology .block-local-tasks-block .tabs li a:hover{background:#1e6b45;color:#fff;text-decoration:none}
 .R-oaf-methodology .c-logos__container{box-sizing:border-box;margin-left:auto;margin-right:auto;max-width:calc(1736px + var(--gutter)*2);padding-left:var(--gutter);padding-right:var(--gutter);width:100%}
 .R-oaf-methodology .c-logos__top{grid-column-gap:var(--gutter);display:grid;grid-template-columns:repeat(12,1fr)}
 @media (max-width:740px){
@@ -4739,15 +4739,15 @@ html{font-family:sans-serif;-ms-text-size-adjust:100%;-webkit-text-size-adjust:1
 .R-oaf-methodology /* inline style 1 */
 .cky-overlay{background:#000;opacity:.4;position:fixed;top:0;left:0;width:100%;height:100%;z-index:9999999}
 .R-oaf-methodology .cky-hide{display:none}
-.R-oaf-methodology .cky-btn-revisit-wrapper{display:flex;align-items:center;justify-content:center;background:#0056a7;width:45px;height:45px;border-radius:50%;position:fixed;z-index:999999;cursor:pointer}
+.R-oaf-methodology .cky-btn-revisit-wrapper{display:flex;align-items:center;justify-content:center;background:#1e6b45;width:45px;height:45px;border-radius:50%;position:fixed;z-index:999999;cursor:pointer}
 .R-oaf-methodology .cky-revisit-bottom-left{bottom:15px;left:15px}
 .R-oaf-methodology .cky-revisit-bottom-right{bottom:15px;right:15px}
 .R-oaf-methodology .cky-btn-revisit-wrapper .cky-btn-revisit{display:flex;align-items:center;justify-content:center;background:none;border:none;cursor:pointer;position:relative;margin:0;padding:0}
 .R-oaf-methodology .cky-btn-revisit-wrapper .cky-btn-revisit img{max-width:fit-content;margin:0;height:30px;width:30px}
-.R-oaf-methodology .cky-revisit-bottom-left:hover::before{content:attr(data-tooltip);position:absolute;background:#4e4b66;color:#fff;left:calc(100% + 7px);font-size:12px;line-height:16px;width:max-content;padding:4px 8px;border-radius:4px}
-.R-oaf-methodology .cky-revisit-bottom-left:hover::after{position:absolute;content:"";border:5px solid #fff0;left:calc(100% + 2px);border-left-width:0;border-right-color:#4e4b66}
-.R-oaf-methodology .cky-revisit-bottom-right:hover::before{content:attr(data-tooltip);position:absolute;background:#4e4b66;color:#fff;right:calc(100% + 7px);font-size:12px;line-height:16px;width:max-content;padding:4px 8px;border-radius:4px}
-.R-oaf-methodology .cky-revisit-bottom-right:hover::after{position:absolute;content:"";border:5px solid #fff0;right:calc(100% + 2px);border-right-width:0;border-left-color:#4e4b66}
+.R-oaf-methodology .cky-revisit-bottom-left:hover::before{content:attr(data-tooltip);position:absolute;background:#1e6b45;color:#fff;left:calc(100% + 7px);font-size:12px;line-height:16px;width:max-content;padding:4px 8px;border-radius:4px}
+.R-oaf-methodology .cky-revisit-bottom-left:hover::after{position:absolute;content:"";border:5px solid #fff0;left:calc(100% + 2px);border-left-width:0;border-right-color:#1e6b45}
+.R-oaf-methodology .cky-revisit-bottom-right:hover::before{content:attr(data-tooltip);position:absolute;background:#1e6b45;color:#fff;right:calc(100% + 7px);font-size:12px;line-height:16px;width:max-content;padding:4px 8px;border-radius:4px}
+.R-oaf-methodology .cky-revisit-bottom-right:hover::after{position:absolute;content:"";border:5px solid #fff0;right:calc(100% + 2px);border-right-width:0;border-left-color:#1e6b45}
 .R-oaf-methodology .cky-revisit-hide{display:none}
 .R-oaf-methodology .cky-consent-container{position:fixed;width:440px;box-sizing:border-box;z-index:99999999;transform:translate(-50%,-50%);border-radius:6px}
 .R-oaf-methodology .cky-consent-container .cky-consent-bar{background:#fff;border:1px solid;padding:20px 26px;border-radius:6px;box-shadow:0 -1px 10px 0 #acabab4d}
@@ -4761,22 +4761,22 @@ html{font-family:sans-serif;-ms-text-size-adjust:100%;-webkit-text-size-adjust:1
 .R-oaf-methodology .cky-notice-des img{min-height:25px;min-width:25px}
 .R-oaf-methodology .cky-consent-bar .cky-notice-des p{color:inherit;margin-top:0;word-break:break-word}
 .R-oaf-methodology .cky-notice-des p:last-child{margin-bottom:0}
-.R-oaf-methodology .cky-notice-des a.cky-policy, .R-oaf-methodology .cky-notice-des button.cky-policy, .R-oaf-methodology .cky-notice-des a.cky-link-default, .R-oaf-methodology .cky-dma-content-wrapper a.cky-policy, .R-oaf-methodology .cky-dma-content-wrapper button.cky-policy{font-size:14px;color:#1863dc;white-space:nowrap;cursor:pointer;background:#fff0}
+.R-oaf-methodology .cky-notice-des a.cky-policy, .R-oaf-methodology .cky-notice-des button.cky-policy, .R-oaf-methodology .cky-notice-des a.cky-link-default, .R-oaf-methodology .cky-dma-content-wrapper a.cky-policy, .R-oaf-methodology .cky-dma-content-wrapper button.cky-policy{font-size:14px;color:#1e6b45;white-space:nowrap;cursor:pointer;background:#fff0}
 .R-oaf-methodology .cky-notice-des a.cky-policy, .R-oaf-methodology .cky-notice-des button.cky-policy, .R-oaf-methodology .cky-dma-content-wrapper a.cky-policy, .R-oaf-methodology .cky-dma-content-wrapper button.cky-policy{text-decoration:underline;border:1px solid}
 .R-oaf-methodology .cky-notice-des a.cky-link-default{text-decoration:underline}
 .R-oaf-methodology .cky-notice-des button.cky-policy, .R-oaf-methodology .cky-dma-content-wrapper button.cky-policy{padding:0}
-.R-oaf-methodology .cky-notice-des a.cky-policy:focus-visible, .R-oaf-methodology .cky-consent-bar .cky-banner-btn-close:focus-visible, .R-oaf-methodology .cky-dma-content-wrapper a.cky-policy:focus-visible, .R-oaf-methodology .cky-dma-content-wrapper button.cky-policy:focus-visible, .R-oaf-methodology .cky-notice-des button.cky-policy:focus-visible, .R-oaf-methodology .cky-preference-content-wrapper .cky-show-desc-btn:focus-visible, .R-oaf-methodology .cky-accordion-header .cky-accordion-btn:focus-visible, .R-oaf-methodology .cky-preference-header .cky-btn-close:focus-visible, .R-oaf-methodology .cky-switch input[type="checkbox"]:focus-visible, .R-oaf-methodology .cky-btn:focus-visible{outline:2px solid #1863dc;outline-offset:2px}
+.R-oaf-methodology .cky-notice-des a.cky-policy:focus-visible, .R-oaf-methodology .cky-consent-bar .cky-banner-btn-close:focus-visible, .R-oaf-methodology .cky-dma-content-wrapper a.cky-policy:focus-visible, .R-oaf-methodology .cky-dma-content-wrapper button.cky-policy:focus-visible, .R-oaf-methodology .cky-notice-des button.cky-policy:focus-visible, .R-oaf-methodology .cky-preference-content-wrapper .cky-show-desc-btn:focus-visible, .R-oaf-methodology .cky-accordion-header .cky-accordion-btn:focus-visible, .R-oaf-methodology .cky-preference-header .cky-btn-close:focus-visible, .R-oaf-methodology .cky-switch input[type="checkbox"]:focus-visible, .R-oaf-methodology .cky-btn:focus-visible{outline:2px solid #1e6b45;outline-offset:2px}
 .R-oaf-methodology .cky-btn:focus:not(:focus-visible), .R-oaf-methodology .cky-accordion-header .cky-accordion-btn:focus:not(:focus-visible), .R-oaf-methodology .cky-preference-content-wrapper .cky-show-desc-btn:focus:not(:focus-visible), .R-oaf-methodology .cky-btn-revisit-wrapper .cky-btn-revisit:focus:not(:focus-visible), .R-oaf-methodology .cky-preference-header .cky-btn-close:focus:not(:focus-visible), .R-oaf-methodology .cky-consent-bar .cky-banner-btn-close:focus:not(:focus-visible){outline:0}
-.R-oaf-methodology button.cky-show-desc-btn:not(:hover):not(:active){color:#1863dc;background:#fff0}
+.R-oaf-methodology button.cky-show-desc-btn:not(:hover):not(:active){color:#1e6b45;background:#fff0}
 .R-oaf-methodology button.cky-accordion-btn:not(:hover):not(:active), .R-oaf-methodology button.cky-banner-btn-close:not(:hover):not(:active), .R-oaf-methodology button.cky-btn-close:not(:hover):not(:active), .R-oaf-methodology button.cky-btn-revisit:not(:hover):not(:active){background:#fff0}
 .R-oaf-methodology .cky-consent-bar button:hover, .R-oaf-methodology .cky-modal.cky-modal-open button:hover, .R-oaf-methodology .cky-consent-bar button:focus, .R-oaf-methodology .cky-modal.cky-modal-open button:focus{text-decoration:none}
 .R-oaf-methodology .cky-notice-btn-wrapper{display:flex;justify-content:center;align-items:center;flex-wrap:wrap;gap:8px;margin-top:16px}
 .R-oaf-methodology .cky-notice-btn-wrapper .cky-btn{text-shadow:none;box-shadow:none}
 .R-oaf-methodology .cky-btn{flex:auto;max-width:100%;font-size:14px;font-family:inherit;line-height:24px;padding:8px;font-weight:500;border-radius:2px;cursor:pointer;text-align:center;text-transform:none;min-height:0;overflow-wrap:break-word}
 .R-oaf-methodology .cky-btn:hover{opacity:.8}
-.R-oaf-methodology .cky-btn-customize{color:#1863dc;background:#fff0;border:2px solid #1863dc}
-.R-oaf-methodology .cky-btn-reject{color:#1863dc;background:#fff0;border:2px solid #1863dc}
-.R-oaf-methodology .cky-btn-accept{background:#1863dc;color:#fff;border:2px solid #1863dc}
+.R-oaf-methodology .cky-btn-customize{color:#1e6b45;background:#fff0;border:2px solid #1e6b45}
+.R-oaf-methodology .cky-btn-reject{color:#1e6b45;background:#fff0;border:2px solid #1e6b45}
+.R-oaf-methodology .cky-btn-accept{background:#1e6b45;color:#fff;border:2px solid #1e6b45}
 .R-oaf-methodology .cky-btn:last-child{margin-right:0}
 @media (max-width:576px){
 .R-oaf-methodology .cky-box-bottom-left{bottom:0;left:0}
@@ -4828,7 +4828,7 @@ html{font-family:sans-serif;-ms-text-size-adjust:100%;-webkit-text-size-adjust:1
 .R-oaf-methodology .cky-preference-content-wrapper *{font-size:14px}
 .R-oaf-methodology .cky-preference-content-wrapper{font-size:14px;line-height:24px;font-weight:400;padding:12px 0}
 .R-oaf-methodology .cky-preference-content-wrapper img{min-height:25px;min-width:25px}
-.R-oaf-methodology .cky-preference-content-wrapper .cky-show-desc-btn{font-size:14px;font-family:inherit;color:#1863dc;text-decoration:none;line-height:24px;padding:0;margin:0;white-space:nowrap;cursor:pointer;background:#fff0;border-color:#fff0;text-transform:none;min-height:0;text-shadow:none;box-shadow:none}
+.R-oaf-methodology .cky-preference-content-wrapper .cky-show-desc-btn{font-size:14px;font-family:inherit;color:#1e6b45;text-decoration:none;line-height:24px;padding:0;margin:0;white-space:nowrap;cursor:pointer;background:#fff0;border-color:#fff0;text-transform:none;min-height:0;text-shadow:none;box-shadow:none}
 .R-oaf-methodology .cky-preference-body-wrapper .cky-preference-content-wrapper p{color:inherit;margin-top:0}
 .R-oaf-methodology .cky-preference-content-wrapper p:last-child{margin-bottom:0}
 .R-oaf-methodology .cky-accordion-wrapper{margin-bottom:10px}
@@ -4862,7 +4862,7 @@ html{font-family:sans-serif;-ms-text-size-adjust:100%;-webkit-text-size-adjust:1
 .R-oaf-methodology .cky-footer-wrapper{position:relative}
 .R-oaf-methodology .cky-prefrence-btn-wrapper{display:flex;flex-wrap:wrap;gap:8px;align-items:center;justify-content:center;padding:22px 24px;border-top:1px solid}
 .R-oaf-methodology .cky-prefrence-btn-wrapper .cky-btn{text-shadow:none;box-shadow:none}
-.R-oaf-methodology .cky-btn-preferences{color:#1863dc;background:#fff0;border:2px solid #1863dc}
+.R-oaf-methodology .cky-btn-preferences{color:#1e6b45;background:#fff0;border:2px solid #1e6b45}
 .R-oaf-methodology .cky-preference-header, .R-oaf-methodology .cky-preference-body-wrapper, .R-oaf-methodology .cky-accordion-wrapper, .R-oaf-methodology .cky-accordion, .R-oaf-methodology .cky-accordion-wrapper, .R-oaf-methodology .cky-footer-wrapper, .R-oaf-methodology .cky-prefrence-btn-wrapper{border-color:inherit}
 .R-oaf-methodology .cky-preference-body-wrapper .cky-dma-content-wrapper{font-size:14px;line-height:24px;font-weight:400;padding:4px 0 12px}
 .R-oaf-methodology .cky-preference-body-wrapper .cky-dma-content-wrapper p{color:inherit;word-break:break-word}
@@ -4899,7 +4899,7 @@ html{font-family:sans-serif;-ms-text-size-adjust:100%;-webkit-text-size-adjust:1
 }
 .R-oaf-methodology .cky-switch{display:flex}
 .R-oaf-methodology .cky-switch input[type="checkbox"]{position:relative;width:44px;height:24px;margin:0;background:#d0d5d2;-webkit-appearance:none;border-radius:50px;cursor:pointer;outline:0;border:none;top:0}
-.R-oaf-methodology .cky-switch input[type="checkbox"]:checked{background:#1863dc}
+.R-oaf-methodology .cky-switch input[type="checkbox"]:checked{background:#1e6b45}
 .R-oaf-methodology .cky-switch input[type="checkbox"]:before{position:absolute;content:"";height:20px;width:20px;left:2px;bottom:2px;border-radius:50%;background-color:#fff;-webkit-transition:0.4s;transition:0.4s;margin:0}
 .R-oaf-methodology .cky-switch input[type="checkbox"]:after{display:none}
 .R-oaf-methodology .cky-switch input[type="checkbox"]:checked:before{-webkit-transform:translateX(20px);-ms-transform:translateX(20px);transform:translateX(20px)}

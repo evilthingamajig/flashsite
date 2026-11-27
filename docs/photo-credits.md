@@ -14,3 +14,18 @@ Kept here so the source of each file is on record.
 | images/stock/wiring-electronics.jpg | https://unsplash.com/photos/hands-wiring-electronics-with-tools-and-laptop-nearby-y25LI38cd9w |
 
 Fonts: Jost (SIL Open Font License) replaces Futura PT; Figtree replaces Proxima Nova, Aktiv Grotesk and Mint Grotesk.
+
+## Illustrative placeholders added in the site consistency audit
+
+These stock images illustrate the type of activity described. They do not document Flash Forward deliveries or identify program participants. Replace them with approved program photography when available. Images are stored locally, with responsive WebP versions, so page rendering does not depend on a stock site's CDN.
+
+| File | Photographer and source |
+| --- | --- |
+| images/stock/delivery-volunteers.webp | RDNE Stock project, [A person taking out a box of supplies in a van](https://www.pexels.com/photo/a-person-taking-out-a-box-of-supplies-in-a-van-6646876/) |
+| images/stock/students-learning.webp | Bilal Gültekin, [Students studying intently in a modern library](https://www.pexels.com/photo/students-studying-intently-in-a-modern-library-35545154/) |
+| images/stock/volunteers-packing.webp | Gustavo Fring, [Volunteers packing up goods](https://www.pexels.com/photo/volunteers-packing-up-goods-7156179/) |
+| images/stock/solar-light-donate.webp | Donation-page placeholder restored from the preferred photograph supplied by the site owner. Original photographer/source not established; retain as a temporary placeholder pending replacement or source confirmation. |
+
+The Pexels images are provided under the [Pexels license](https://www.pexels.com/license/). No affiliation with or endorsement of Flash Forward is implied.
+
+The four internship track icons are from [Lucide](https://lucide.dev/). Their upstream license is preserved in `images/icons/LUCIDE-LICENSE.txt`; the SVG sources are in the same folder. They are embedded directly in the track cards so all four share the site's green accent.
