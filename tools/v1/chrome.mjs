@@ -41,79 +41,51 @@ ${extraHead}
 }
 
 export function nav(active = '') {
-  const modelKids = [
+  const whoKids = [
+    megaItem('/about/', 'Our Story'),
     megaItem('/our-model/', 'Our Model'),
-    megaItem('/our-model/the-study-light/', 'The Study Light'),
-    megaItem('/our-model/why-light/', 'Why Light'),
-    megaItem('/our-model/made-and-delivered/', 'How It\'s Made'),
-    megaItem('/our-model/study-unlock-pathway/', 'Study Unlock Pathway'),
-    megaItem('/our-model/for-students/', 'For Students'),
+    megaItem('/about/team/', 'Our Team'),
+    megaItem('/nonprofit-status/', 'Nonprofit Status'),
   ].join('');
 
-  const impactKids = [
-    megaItem('/impact/', 'Impact'),
-    megaItem('/impact/outcomes/', 'Outcomes'),
-    megaItem('/impact/reports/', 'Reports'),
+  const workKids = [
+    megaItem('/our-model/why-light/', 'Why Light'),
+    megaItem('/our-model/the-study-light/', 'The Study Light'),
+    megaItem('/our-model/study-unlock-pathway/', 'Study Unlock Pathway'),
+    megaItem('/impact/', 'Our Impact'),
     megaItem('/impact-stories/', 'Impact Stories'),
   ].join('');
 
   const involvedKids = [
     megaItem('/join/internships/', 'Internships'),
-    megaItem('/join/open-roles/', 'Open Roles'),
-    megaItem('/join/apply/', 'Apply'),
-    megaItem('/donate/', 'Donate'),
-    megaItem('/donate/study-circle/', 'Study Circle'),
     megaItem('/get-involved/ambassadors/', 'Ambassadors'),
-    megaItem('/get-involved/partners/', 'Partners'),
-    megaItem('/get-involved/partners/assembly/', 'Assembly Partners'),
-    megaItem('/get-involved/partners/distribution/', 'Distribution Partners'),
+    megaItem('/get-involved/partners/', 'Partnerships'),
+    megaItem('/get-involved/sponsor-a-project/', 'Sponsor a project'),
   ].join('');
 
-  const aboutKids = [
-    megaItem('/about/', 'Our Story'),
-    megaItem('/about/team/', 'Our Team'),
-    megaItem('/nonprofit-status/', 'Nonprofit Status'),
-    megaItem('/faq/', 'FAQs'),
-    megaItem('/news/', 'News'),
-    megaItem('/contact/', 'Contact'),
+  const topLink = (href, label) =>
+    `<li class="ff-nav-link"><a class="heading-xs" href="${href}">${label}</a></li>`;
+
+  const offWho = [
+    subnavItem('/about/', 'Our Story'),
+    subnavItem('/our-model/', 'Our Model'),
+    subnavItem('/about/team/', 'Our Team'),
+    subnavItem('/nonprofit-status/', 'Nonprofit Status'),
   ].join('');
 
-  const offModel = [
-    `<a class="cw-link--primary" href="/our-model/">Our Model</a>`,
-    subnavItem('/our-model/the-study-light/', 'The Study Light'),
+  const offWork = [
     subnavItem('/our-model/why-light/', 'Why Light'),
-    subnavItem('/our-model/made-and-delivered/', 'How It\'s Made'),
+    subnavItem('/our-model/the-study-light/', 'The Study Light'),
     subnavItem('/our-model/study-unlock-pathway/', 'Study Unlock Pathway'),
-    subnavItem('/our-model/for-students/', 'For Students'),
-  ].join('');
-
-  const offImpact = [
-    `<a class="cw-link--primary" href="/impact/">Impact</a>`,
-    subnavItem('/impact/outcomes/', 'Outcomes'),
-    subnavItem('/impact/reports/', 'Reports'),
+    subnavItem('/impact/', 'Our Impact'),
     subnavItem('/impact-stories/', 'Impact Stories'),
   ].join('');
 
   const offInvolved = [
-    `<a class="cw-link--primary" href="/get-involved/">Get Involved</a>`,
     subnavItem('/join/internships/', 'Internships'),
-    subnavItem('/join/open-roles/', 'Open Roles'),
-    subnavItem('/join/apply/', 'Apply'),
-    subnavItem('/donate/', 'Donate'),
-    subnavItem('/donate/study-circle/', 'Study Circle'),
     subnavItem('/get-involved/ambassadors/', 'Ambassadors'),
-    subnavItem('/get-involved/partners/', 'Partners'),
-    subnavItem('/get-involved/partners/assembly/', 'Assembly Partners'),
-    subnavItem('/get-involved/partners/distribution/', 'Distribution Partners'),
-  ].join('');
-
-  const offAbout = [
-    `<a class="cw-link--primary" href="/about/">Our Story</a>`,
-    subnavItem('/about/team/', 'Our Team'),
-    subnavItem('/nonprofit-status/', 'Nonprofit Status'),
-    subnavItem('/faq/', 'FAQs'),
-    subnavItem('/news/', 'News'),
-    subnavItem('/contact/', 'Contact'),
+    subnavItem('/get-involved/partners/', 'Partnerships'),
+    subnavItem('/get-involved/sponsor-a-project/', 'Sponsor a project'),
   ].join('');
 
   return `<!--ff:chrome-nav-->
@@ -132,19 +104,15 @@ export function nav(active = '') {
           </span>
         </a>
         <ul class="nav-items">
-          ${hasDropdown('Our Model', modelKids)}
-          ${hasDropdown('Impact', impactKids)}
-          ${hasDropdown('Get Involved', involvedKids)}
-          ${hasDropdown('About', aboutKids)}
+          ${hasDropdown('Who we are', whoKids)}
+          ${hasDropdown('Our work', workKids)}
+          ${hasDropdown('Get involved', involvedKids)}
+          ${topLink('/news/', 'News')}
+          ${topLink('/contact/', 'Contact')}
         </ul>
       </div>
       <div class="right-side items-center ml-2">
-        <div class="mycw-nav theme-design-system-v1">
-          <div class="has-form user-access">
-            <a class="log-in" href="/contact/">Contact</a>
-          </div>
-        </div>
-        <a class="donate-link button cw-button items-center px-4 py-2 ml-4 md-ml-10" href="/donate/">
+        <a class="donate-link button cw-button items-center px-4 py-2" href="/donate/">
           <div class="heading-xs">Donate</div>
         </a>
       </div>
@@ -153,13 +121,13 @@ export function nav(active = '') {
 </nav>
 <nav class="right-off-canvas-menu theme-design-system-v1 bg-cw-brand-yellow-100" id="ff-offcanvas" aria-label="Mobile">
   <ul class="off-canvas-list">
-    ${offSection('Our Model', offModel)}
-    ${offSection('Impact', offImpact)}
-    ${offSection('Get Involved', offInvolved)}
-    ${offSection('About', offAbout)}
+    ${offSection('Who we are', offWho)}
+    ${offSection('Our work', offWork)}
+    ${offSection('Get involved', offInvolved)}
     <div class="p-6 pt-8">
-      <a class="flex items-center mb-5" href="/contact/"><div class="icon cw-icon-mail-outline mr-2"></div><div class="heading-s">Contact us</div></a>
-      <a class="flex items-center" href="/donate/"><div class="icon cw-icon-user-outline mr-2"></div><div class="heading-s">Donate</div></a>
+      <a class="flex items-center mb-5" href="/news/"><div class="heading-s">News</div></a>
+      <a class="flex items-center mb-5" href="/contact/"><div class="heading-s">Contact</div></a>
+      <a class="flex items-center" href="/donate/"><div class="heading-s">Donate</div></a>
     </div>
   </ul>
 </nav>
@@ -170,122 +138,72 @@ export function nav(active = '') {
 export function footer() {
   const year = new Date().getFullYear();
   return `<!--ff:chrome-footer-->
-<footer class="cw-footer no-top-border">
-  <div class="mailing-list-and-info w-full bg-grey-5 text-center flex flex-col border-b border-r border-l border-solid border-0 border-grey-30 rounded-b items-center theme-maji">
-    <div class="optional-text normal-case pb-2 text-cw-black">
-      <h6 class="h70">Add impact to your inbox</h6>
-      <p class="p40">Get our emails to stay in the know.</p>
-    </div>
-    <div class="lead-form-wrapper theme-maji" style="line-height:0">
-      <form class="m-auto text-center w-full" action="/contact/" method="get">
-        <div class="md-flex">
-          <div class="mailing-input-names md-flex md-justify-center max-w-xs mx-auto">
-            <div class="mailing-input-wrapper name first md-flex-1">
-              <label class="for-screen-readers-only" for="ff-foot-name">First name</label>
-              <input id="ff-foot-name" name="name" placeholder="First Name" type="text">
-            </div>
-            <div class="mailing-input-wrapper surname mt-2 md-mt-0 md-flex-1">
-              <label class="for-screen-readers-only" for="ff-foot-surname">Last name</label>
-              <input id="ff-foot-surname" name="surname" placeholder="Last Name" type="text">
-            </div>
-          </div>
-          <div class="mailing-input-wrapper email max-w-xs mt-2 mx-auto md-mt-0 second">
-            <label class="for-screen-readers-only" for="ff-foot-email">Email</label>
-            <input id="ff-foot-email" name="email" placeholder="Email" type="email">
-          </div>
-          <button class="button button--expand mailing-list-sign-up-button max-w-xs mx-auto mt-2 md-mt-0" type="submit">Sign up</button>
-        </div>
-      </form>
-    </div>
-  </div>
-
-  <div class="cw-footer-top-row border-b border-solid border-0 border-grey-30 my-3">
-    <ul class="mt-0 mb-4 pr-2 w-1/2 md-w-1/4">
-      <li class="cw-footer-header">Our model</li>
-      <li><a href="/our-model/why-light/">Why Light</a></li>
-      <li><a href="/our-model/study-unlock-pathway/">Study Unlock Pathway</a></li>
-      <li><a href="/our-model/the-study-light/">The Study Light</a></li>
-      <li><a href="/our-model/made-and-delivered/">How It's Made</a></li>
-      <li><a href="/our-model/for-students/">For Students</a></li>
-    </ul>
-    <ul class="mt-0 mb-4 pr-2 w-1/2 md-w-1/4">
-      <li class="cw-footer-header">Impact</li>
-      <li><a href="/impact/outcomes/">Outcomes</a></li>
-      <li><a href="/impact/reports/">Reports</a></li>
-      <li><a href="/impact-stories/">Impact Stories</a></li>
-      <li><a href="/impact-stories/sponsor/">Sponsor a story</a></li>
-    </ul>
-    <ul class="mt-0 mb-2 pr-2 w-1/2 md-w-1/4">
-      <li class="cw-footer-header">Get involved</li>
-      <li><a href="/join/internships/">Internships</a></li>
-      <li><a href="/join/open-roles/">Open Roles</a></li>
-      <li><a href="/join/apply/">Apply</a></li>
-      <li><a href="/donate/">Donate</a></li>
-      <li><a href="/donate/study-circle/">Study Circle</a></li>
-      <li><a href="/get-involved/ambassadors/">Ambassadors</a></li>
-      <li><a href="/get-involved/partners/">Partners</a></li>
-    </ul>
-    <ul class="mt-0 mb-4 pr-2 w-1/2 md-w-1/4">
-      <li class="cw-footer-header">About</li>
-      <li><a href="/about/">Our Story</a></li>
-      <li><a href="/about/team/">Our Team</a></li>
-      <li><a href="/nonprofit-status/">Nonprofit Status</a></li>
-      <li><a href="/faq/">FAQs</a></li>
-      <li><a href="/news/">News</a></li>
-      <li><a href="/contact/">Contact</a></li>
-    </ul>
-  </div>
-
-  <div class="max-w-xl mx-auto flex flex-col lg-flex-row mt-0">
-    <div class="w-full lg-w-3/4">
-      <div class="row">
-        <ul class="mx-auto justify-center lg-justify-start flex">
-          <li class="cw-footer-social-instagram mr-2">
-            <a class="text-base" href="https://www.instagram.com/flashforwardfoundation/" target="_blank" rel="noopener" aria-label="Instagram">
-              <svg width="22" height="22" viewBox="0 0 24 24" aria-hidden="true"><path fill="#036" d="M7 3h10a4 4 0 0 1 4 4v10a4 4 0 0 1-4 4H7a4 4 0 0 1-4-4V7a4 4 0 0 1 4-4zm5 4.5A4.5 4.5 0 1 0 16.5 12 4.5 4.5 0 0 0 12 7.5zm6.2-.9a1.1 1.1 0 1 0 1.1 1.1 1.1 1.1 0 0 0-1.1-1.1zM12 9.2A2.8 2.8 0 1 1 9.2 12 2.8 2.8 0 0 1 12 9.2z"/></svg>
-            </a>
-          </li>
-          <li class="cw-footer-social-linkedin">
-            <a href="https://discord.gg/UnyvyxMYE" target="_blank" rel="noopener" aria-label="Discord">
-              <svg width="22" height="22" viewBox="0 0 24 24" aria-hidden="true"><path fill="#036" d="M19.3 5.2A16 16 0 0 0 15.1 4l-.4.8a14.6 14.6 0 0 1 3.7 1.1 12.8 12.8 0 0 0-11 0A14 14 0 0 1 11.2 4.8L10.8 4a16 16 0 0 0-4.2 1.2C3.4 9.3 2.6 13.3 3 17.2a16.4 16.4 0 0 0 5 2.5l.6-1a10.7 10.7 0 0 1-1.7-.8l.4-.3a11.7 11.7 0 0 0 10.2 0l.4.3a10.7 10.7 0 0 1-1.7.8l.6 1a16.4 16.4 0 0 0 5-2.5c.5-4.5-.8-8.5-3.5-12zM9.2 15.1c-1 0-1.8-.9-1.8-2s.8-2 1.8-2 1.8.9 1.8 2-.8 2-1.8 2zm5.6 0c-1 0-1.8-.9-1.8-2s.8-2 1.8-2 1.8.9 1.8 2-.8 2-1.8 2z"/></svg>
-            </a>
-          </li>
-        </ul>
-      </div>
-      <div class="row mt-1">
-        <ul class="my-0 mt-0 flex justify-center lg-justify-start flex-col md-flex-row text-center cw-footer-secondary-links">
-          <li class="pl-0"><a class="cw-footer-emph" href="/privacy/">Privacy policy</a></li>
-          <li><a class="cw-footer-emph" href="/terms/">Terms</a></li>
-          <li><a class="cw-footer-emph" href="/accessibility/">Accessibility</a></li>
-        </ul>
-      </div>
-    </div>
-    <div class="mx-auto mt-2 lg-mt-0 w-full max-w-xs footer-country-container lg-w-1/4">
-      <div class="input-wrapper country-f mb-0 theme-maji">
-        <div>
-          <span class="bg-center bg-no-repeat bg-contain preinput ml-1 w-4 h-4" style="background-image:url(https://www.charitywater.org/vite/assets/us-flag-BM09-wqq.svg)"></span>
-          <select class="country-footer pl-3" name="country" aria-label="Currency">
-            <option value="us">United States dollar</option>
-          </select>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <div class="max-w-xl mx-auto text-center lg-text-left mt-2 flex flex-col lg-flex-row lg-justify-between items-center">
-    <div class="lg-mt-0">
-      <p class="h80 text-grey-50 normal-case">Flash Forward Foundation is a student-led 501(c)(3) nonprofit organization.</p>
-      <ul class="my-0 mt-1 flex justify-center lg-justify-start flex-col md-flex-row text-center cw-footer-secondary-links">
-        <li><a class="cw-footer-emph" href="/nonprofit-status/trust/">Gifts are preference-based. Placement is best effort.</a></li>
-        <li class="footer-email-signup-link"><a class="cw-footer-emph" href="/contact/">Get our emails</a></li>
+<footer class="ff-bbg">
+  <div class="ff-bbg-inner">
+    <div class="ff-bbg-top">
+      <a class="ff-lockup" href="/" aria-label="Flash Forward Foundation">
+        <img class="ff-lockup-mark" src="/images/brand/mark-green.png" alt="" width="44" height="44">
+        <span class="ff-lockup-name">
+          <span class="ff-lockup-line">Flash Forward</span>
+          <span class="ff-lockup-line ff-lockup-line--sub">Foundation</span>
+        </span>
+      </a>
+      <ul class="ff-bbg-social">
+        <li><a href="https://www.instagram.com/flashforwardfoundation/" target="_blank" rel="noopener" aria-label="Instagram"><svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><rect x="3.5" y="3.5" width="17" height="17" rx="4" fill="none" stroke="currentColor" stroke-width="1.6"/><circle cx="12" cy="12" r="4" fill="none" stroke="currentColor" stroke-width="1.6"/><circle cx="17.2" cy="6.8" r="0.9" fill="currentColor"/></svg></a></li>
+        <li><a href="https://discord.gg/UnyvyxMYE" target="_blank" rel="noopener" aria-label="Discord"><svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path fill="currentColor" d="M18.6 5.2A15 15 0 0 0 14.9 4l-.4.8a13.5 13.5 0 0 1 3.4 1.4 12 12 0 0 0-10 0A13 13 0 0 1 11.4 4.8L11 4a15 15 0 0 0-3.7 1.2C4.4 8.8 3.7 12.4 4 16a15 15 0 0 0 4.6 2.3l.7-1.1a10 10 0 0 1-1.6-.8l.4-.3a11 11 0 0 0 9.4 0l.4.3a10 10 0 0 1-1.6.8l.7 1.1A15 15 0 0 0 22 16c.4-4.1-.7-7.7-3.4-10.8zM9.3 14.6c-.9 0-1.6-.8-1.6-1.8s.7-1.8 1.6-1.8 1.6.8 1.6 1.8-.7 1.8-1.6 1.8zm5.4 0c-.9 0-1.6-.8-1.6-1.8s.7-1.8 1.6-1.8 1.6.8 1.6 1.8-.7 1.8-1.6 1.8z"/></svg></a></li>
+        <li><a href="mailto:about@flashforwardfoundation.org" aria-label="Email"><svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><rect x="3" y="5.5" width="18" height="13" rx="1.5" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M4 7l8 6 8-6" fill="none" stroke="currentColor" stroke-width="1.6"/></svg></a></li>
       </ul>
     </div>
-  </div>
-
-  <div class="max-w-xl mx-auto text-center lg-text-left mt-2">
-    <p class="h80 mt-1 text-grey-50 normal-case">
-      <span>© ${year} Flash Forward Foundation, 1402 153rd Pl SE, Bellevue, WA 98007. A US 501(c)(3) public charity, EIN 39-3605570. about@flashforwardfoundation.org</span>
-    </p>
+    <div class="ff-bbg-mid">
+      <div class="ff-bbg-cols">
+        <div>
+          <h2>Who we are</h2>
+          <a href="/about/">Our Story</a>
+          <a href="/our-model/">Our Model</a>
+          <a href="/about/team/">Our Team</a>
+          <a href="/nonprofit-status/">Nonprofit Status</a>
+        </div>
+        <div>
+          <h2>Our work</h2>
+          <a href="/our-model/why-light/">Why Light</a>
+          <a href="/our-model/the-study-light/">The Study Light</a>
+          <a href="/our-model/study-unlock-pathway/">Study Unlock Pathway</a>
+          <a href="/impact/">Our Impact</a>
+          <a href="/impact-stories/">Impact Stories</a>
+        </div>
+        <div>
+          <h2>Get involved</h2>
+          <a href="/join/internships/">Internships</a>
+          <a href="/get-involved/ambassadors/">Ambassadors</a>
+          <a href="/get-involved/partners/">Partnerships</a>
+          <a href="/get-involved/sponsor-a-project/">Sponsor a project</a>
+        </div>
+        <div>
+          <h2>News</h2>
+          <a href="/news/">News</a>
+          <a href="/contact/">Contact</a>
+        </div>
+      </div>
+      <aside class="ff-bbg-sub">
+        <h2>Subscribe to our newsletter</h2>
+        <form action="/contact/" method="get">
+          <label for="ff-bbg-email">Email</label>
+          <input id="ff-bbg-email" name="email" type="email" placeholder="Email address" autocomplete="email" required>
+          <button type="submit">Sign up</button>
+          <p>By submitting your email, you agree to the <a href="/privacy/">Flash Forward privacy policy</a>. You can unsubscribe at any time.</p>
+        </form>
+      </aside>
+    </div>
+    <div class="ff-bbg-legal">
+      <div class="ff-bbg-legal-row">
+        <p>© ${year} Flash Forward Foundation, 1402 153rd Pl SE, Bellevue, WA 98007. A US 501(c)(3) public charity, EIN 39-3605570.</p>
+        <p>Gifts are preference-based. Placement is best effort.</p>
+      </div>
+      <div class="ff-bbg-legal-row ff-bbg-legal-row--sub">
+        <a href="/privacy/">Privacy</a>
+        <a href="/terms/">Terms of Use</a>
+      </div>
+    </div>
   </div>
 </footer>
 <!--/ff:chrome-footer-->
