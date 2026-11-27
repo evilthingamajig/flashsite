@@ -115,14 +115,14 @@ export function nav(active = '') {
       <div class="left-side flex">
         <ul class="mobile-nav-items flex items-center lg-hidden">
           <a class="offcanvas-open-link off-canvas-toggle icn mr-6 cw-icon-reorder-thin" href="#" role="button" aria-label="Open menu" aria-controls="ff-offcanvas" aria-expanded="false"></a>
-          <a href="/"><img class="md-hidden" src="/images/brand/mark-green-104.png" alt="Flash Forward Foundation" width="26" height="34"></a>
         </ul>
-        <ul class="logo-area md-block">
-          <a href="/" aria-label="Flash Forward Foundation home">
-            <li class="logo"></li>
-            <span class="ff-logo-wordmark">Flash Forward<br>Foundation</span>
-          </a>
-        </ul>
+        <a class="ff-lockup" href="/" aria-label="Flash Forward Foundation">
+          <img class="ff-lockup-mark" src="/images/brand/mark-green.png" alt="" width="44" height="44">
+          <span class="ff-lockup-name">
+            <span class="ff-lockup-line">Flash Forward</span>
+            <span class="ff-lockup-line ff-lockup-line--sub">Foundation</span>
+          </span>
+        </a>
         <ul class="nav-items">
           ${hasDropdown('Our Model', 'Study lights become study hours. Design, assemble, deliver, unlock.', modelKids)}
           ${hasDropdown('Impact', 'Proof with honesty — study hours, stories, and the reports behind them.', impactKids)}

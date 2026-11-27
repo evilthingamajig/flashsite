@@ -787,22 +787,63 @@
   justify-content: center;
   background: #fff;
 }
-/* Logo */
-.R-cw-chrome .nav-bar-section .logo-area a {
-  display: flex !important;
-  align-items: center;
-  gap: 10px;
-  text-decoration: none !important;
+/* Brand lockup: original mark + HTML name. One link home. */
+.R-cw-chrome .nav-bar {
+  background: #fff !important;
+  border-bottom: 1px solid #E7ECE8 !important;
 }
-.R-cw-chrome .nav-bar-section .logo {
-  list-style: none;
+.R-cw-chrome .nav-bar-section {
+  display: flex !important;
+  align-items: center !important;
+  height: 80px;
+  padding: 0 40px !important;
+  max-width: none;
+  box-sizing: border-box;
+}
+.R-cw-chrome .nav-bar-section .left-side {
+  display: flex !important;
+  align-items: center !important;
+  min-width: 0;
+}
+.R-cw-chrome .ff-lockup {
+  display: inline-flex !important;
+  align-items: center;
+  gap: 13px;
+  text-decoration: none !important;
+  color: #18231D;
+  flex-shrink: 0;
+}
+.R-cw-chrome .ff-lockup-mark {
   width: 44px;
   height: 44px;
-  background-image: url(/images/brand/mark-green-104.png) !important;
-  background-size: contain;
-  background-repeat: no-repeat;
-  background-position: center;
-  margin: 0;
+  object-fit: contain;
+  display: block;
+  flex-shrink: 0;
+}
+.R-cw-chrome .ff-lockup-name {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  text-align: left;
+}
+.R-cw-chrome .ff-lockup-line {
+  display: block;
+  font-family: Manrope, "Segoe UI", sans-serif;
+  font-weight: 600;
+  font-size: 19px;
+  line-height: 1.05;
+  letter-spacing: 0;
+  color: #18231D;
+  white-space: nowrap;
+}
+.R-cw-chrome .ff-lockup-line--sub {
+  font-weight: 500;
+  font-size: 15px;
+}
+.R-cw-chrome .nav-bar-section .logo {
+  background-image: none !important;
+  width: auto;
+  height: auto;
 }
 .R-cw-chrome .off-canvas-toggle {
   display: inline-flex !important;
@@ -853,13 +894,19 @@
   padding: 30px;
 }
 
-.R-cw-chrome .ff-logo-wordmark {
-  font-family: Syne, "Segoe UI", sans-serif;
-  font-weight: 700;
-  font-size: 0.85rem;
-  line-height: 1.15;
-  color: #0f3d2a;
-  letter-spacing: -0.01em;
+@media only screen and (max-width: 1024px) {
+  .R-cw-chrome .nav-bar-section {
+    height: 68px;
+    padding: 0 20px !important;
+  }
+  .R-cw-chrome .ff-lockup { gap: 13px; }
+  .R-cw-chrome .ff-lockup-mark { width: 38px; height: 38px; }
+  .R-cw-chrome .ff-lockup-line { font-size: 15px; }
+  .R-cw-chrome .ff-lockup-line--sub { font-size: 12px; }
+  .R-cw-chrome.off-canvas-open .right-off-canvas-menu {
+    top: 68px !important;
+    height: calc(100vh - 68px) !important;
+  }
 }
 .R-cw-chrome .cw-footer {
   background: #fff;

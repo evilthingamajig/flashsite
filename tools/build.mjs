@@ -66,6 +66,7 @@ const FONT_CSS = [
   `@font-face{font-family:"Figtree";src:url("${fonts['figtree-700']}") format("woff2");font-weight:700;font-style:normal;font-display:swap}`,
   fonts['figtree-italic'] ? `@font-face{font-family:"Figtree";src:url("${fonts['figtree-italic']}") format("woff2");font-weight:400;font-style:italic;font-display:swap}` : '',
   fonts['newsreader-italic'] ? `@font-face{font-family:"Newsreader";src:url("${fonts['newsreader-italic']}") format("woff2");font-weight:500;font-style:italic;font-display:swap}` : '',
+  fonts['manrope-latin'] ? `@font-face{font-family:"Manrope";src:url("${fonts['manrope-latin']}") format("woff2");font-weight:200 800;font-style:normal;font-display:swap}` : '',
 ].filter(Boolean).join('');
 
 async function minjs(src, outStem) {

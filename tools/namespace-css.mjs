@@ -27,9 +27,35 @@ css = css.replace(/@import\s+url\([^)]+\)\s*;/gi, '/* @import stripped */');
 css = css.replace(/\/\*# sourceMappingURL=[\s\S]*?\*\//g, '');
 css = css.replace(/\/\/# sourceMappingURL=.*/g, '');
 
+function splitSelectors(selectors) {
+  const parts = [];
+  let inStr = null;
+  let inCom = false;
+  let start = 0;
+  for (let i = 0; i < selectors.length; i++) {
+    const c = selectors[i];
+    if (inCom) {
+      if (selectors.startsWith('*/', i)) { inCom = false; i++; }
+      continue;
+    }
+    if (inStr) {
+      if (c === '\\') { i++; continue; }
+      if (c === inStr) inStr = null;
+      continue;
+    }
+    if (selectors.startsWith('/*', i)) { inCom = true; i++; continue; }
+    if (c === '"' || c === "'") { inStr = c; continue; }
+    if (c === ',') {
+      parts.push(selectors.slice(start, i));
+      start = i + 1;
+    }
+  }
+  parts.push(selectors.slice(start));
+  return parts;
+}
+
 function prefixSelectorList(selectors) {
-  return selectors
-    .split(',')
+  return splitSelectors(selectors)
     .map((s) => s.trim())
     .filter(Boolean)
     .map((sel) => {
@@ -45,43 +71,80 @@ function prefixSelectorList(selectors) {
     .join(', ');
 }
 
+// Next `{` that is not inside a string or comment.
+function nextCodeBrace(input, from) {
+  let inStr = null;
+  let inCom = false;
+  for (let i = from; i < input.length; i++) {
+    const c = input[i];
+    if (inCom) {
+      if (input.startsWith('*/', i)) { inCom = false; i++; }
+      continue;
+    }
+    if (inStr) {
+      if (c === '\\') { i++; continue; }
+      if (c === inStr) inStr = null;
+      continue;
+    }
+    if (input.startsWith('/*', i)) { inCom = true; i++; continue; }
+    if (c === '"' || c === "'") { inStr = c; continue; }
+    if (c === '{') return i;
+  }
+  return -1;
+}
+
+// Index just after the `}` that closes the `{` at open.
+function closeBlock(input, open) {
+  let depth = 0;
+  let inStr = null;
+  let inCom = false;
+  for (let i = open; i < input.length; i++) {
+    const c = input[i];
+    if (inCom) {
+      if (input.startsWith('*/', i)) { inCom = false; i++; }
+      continue;
+    }
+    if (inStr) {
+      if (c === '\\') { i++; continue; }
+      if (c === inStr) inStr = null;
+      continue;
+    }
+    if (input.startsWith('/*', i)) { inCom = true; i++; continue; }
+    if (c === '"' || c === "'") { inStr = c; continue; }
+    if (c === '{') depth++;
+    else if (c === '}') {
+      depth--;
+      if (depth === 0) return i + 1;
+    }
+  }
+  return input.length;
+}
+
 // Walk CSS and prefix rule selectors. Handle nested @media / @supports / @layer.
 function transform(input) {
   let out = '';
   let i = 0;
   while (i < input.length) {
-    // comments
+    if (/\s/.test(input[i])) {
+      out += input[i];
+      i++;
+      continue;
+    }
     if (input.startsWith('/*', i)) {
       const end = input.indexOf('*/', i + 2);
       out += input.slice(i, end === -1 ? input.length : end + 2);
       i = end === -1 ? input.length : end + 2;
       continue;
     }
-    // at-rules
     if (input[i] === '@') {
-      const brace = input.indexOf('{', i);
+      const brace = nextCodeBrace(input, i);
       const semi = input.indexOf(';', i);
       if (brace !== -1 && (semi === -1 || brace < semi)) {
         const header = input.slice(i, brace).trim();
-        // find matching close
-        let depth = 0;
-        let j = brace;
-        for (; j < input.length; j++) {
-          if (input[j] === '{') depth++;
-          else if (input[j] === '}') {
-            depth--;
-            if (depth === 0) {
-              j++;
-              break;
-            }
-          }
-        }
+        const j = closeBlock(input, brace);
         const inner = input.slice(brace + 1, j - 1);
         const name = header.split(/\s+/)[0].toLowerCase();
-        if (['@media', '@supports', '@layer', '@container'].includes(name) || name.startsWith('@media') || name.startsWith('@supports') || name.startsWith('@layer') || name.startsWith('@container')) {
-          out += `${header}{\n${transform(inner)}\n}\n`;
-        } else if (name === '@keyframes' || name === '@-webkit-keyframes' || name === '@font-face' || name === '@property') {
-          // leave untouched
+        if (name === '@keyframes' || name === '@-webkit-keyframes' || name === '@font-face' || name === '@property') {
           out += input.slice(i, j);
         } else {
           out += `${header}{\n${transform(inner)}\n}\n`;
@@ -89,32 +152,19 @@ function transform(input) {
         i = j;
         continue;
       }
-      // @import etc ending with ;
       if (semi !== -1) {
         out += input.slice(i, semi + 1);
         i = semi + 1;
         continue;
       }
     }
-    // normal rule
-    const brace = input.indexOf('{', i);
+    const brace = nextCodeBrace(input, i);
     if (brace === -1) {
       out += input.slice(i);
       break;
     }
     const selectors = input.slice(i, brace).trim();
-    let depth = 0;
-    let j = brace;
-    for (; j < input.length; j++) {
-      if (input[j] === '{') depth++;
-      else if (input[j] === '}') {
-        depth--;
-        if (depth === 0) {
-          j++;
-          break;
-        }
-      }
-    }
+    const j = closeBlock(input, brace);
     const body = input.slice(brace, j);
     if (selectors && !selectors.startsWith('@')) {
       out += `${prefixSelectorList(selectors)}${body}\n`;

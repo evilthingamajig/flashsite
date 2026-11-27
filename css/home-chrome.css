@@ -31,7 +31,7 @@
 
 
 /* White band under the nav, then a rounded hero. Smaller than New Story's 92.5pt (no promo bar). */
-body.ff-page-ns-home .nav-bar { border-bottom: 0 !important; }
+body.ff-page-ns-home .nav-bar { border-bottom: 1px solid #E7ECE8 !important; }
 body.ff-page-ns-home .ff-main,
 body.ff-page-ns-home .content-body,
 body.ff-page-ns-home .container.cc-large { margin-top: 0 !important; padding-top: 0 !important; }
@@ -549,7 +549,10 @@ body.ff-page-ns-home .nav-bar {
   z-index: 100002 !important;
   background: #fff !important;
 }
-body.ff-page-ns-home { padding-top: 81px; }
+body.ff-page-ns-home { padding-top: 80px; }
+@media (max-width: 1024px) {
+  body.ff-page-ns-home { padding-top: 68px; }
+}
 
 /* Click opens the panel. Hover only draws the streak.
    The sheet slides down empty. Link text is painted only after the slide ends. */
@@ -561,7 +564,7 @@ body.ff-page-ns-home { padding-top: 81px; }
     transform: none !important;
     clip-path: inset(0 0 100% 0);
     pointer-events: none;
-    top: 81px !important;
+    top: 80px !important;
     background: #fff !important;
     transition: clip-path .45s cubic-bezier(0.77, 0, 0.175, 1), visibility 0s linear .45s;
   }
