@@ -7,14 +7,6 @@
   "t": 224,
   "vp": "1440x900"
  },
- "/about/": {
-  "el": "P.ff-lede",
-  "img": null,
-  "text": "Flash Forward Foundation is a student-ru",
-  "size": 80131,
-  "t": 124,
-  "vp": "390x844"
- },
  "/about/team/": {
   "el": "P.ff-lede",
   "img": null,
@@ -70,14 +62,6 @@
   "size": 172800,
   "t": 144,
   "vp": "1440x900"
- },
- "/impact/": {
-  "el": "IMG.",
-  "img": "/images/opt/students/student-with-flashlight-1.w800.85ac48ab.webp",
-  "text": "",
-  "size": 86022,
-  "t": 164,
-  "vp": "390x844"
  },
  "/news/": {
   "el": "IMG.",

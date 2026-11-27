@@ -78,8 +78,9 @@ async function minjs(src, outStem) {
 const jsSite = await minjs('site.js', 'site');
 const jsScript = await minjs('js/script.js', 'script');
 const jsMap = await minjs('js/ff-map.js', 'ff-map');
+const jsStories = await minjs('js/ff-stories.js', 'ff-stories');
 for (const f of readdirSync(join(ROOT, 'js'))) {
-  if (/(site|script|ff-map)\.[0-9a-f]{8}\.js$/.test(f) && ![jsSite, jsScript, jsMap].includes(`/js/${f}`)) rmSync(join(ROOT, 'js', f));
+  if (/(site|script|ff-map|ff-stories)\.[0-9a-f]{8}\.js$/.test(f) && ![jsSite, jsScript, jsMap, jsStories].includes(`/js/${f}`)) rmSync(join(ROOT, 'js', f));
 }
 
 const GATAG = `<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag('js',new Date());gtag('config','G-38F7LJZ8ST');gtag('config','AW-18497426447');</script>
@@ -274,6 +275,7 @@ for (const file of pages.sort()) {
   html = html.replace(/<script src="\/site\.js" defer><\/script>|<script defer src="\/site\.js"><\/script>/g, `<script src="${jsSite}" defer></script>`);
   html = html.replace(/<script defer data-domain="([^"]+)" src="\/js\/script\.js"><\/script>/g, `<script defer data-domain="$1" src="${jsScript}"></script>`);
   html = html.replace(/<script defer src="\/js\/ff-map\.js"><\/script>/g, `<script defer src="${jsMap}"></script>`);
+  html = html.replace(/src="\/js\/ff-stories(?:\.[0-9a-f]{8})?\.js"/g, `src="${jsStories}"`);
   html = html.replace(/src="\/js\/site\.[0-9a-f]{8}\.js"/g, `src="${jsSite}"`).replace(/src="\/js\/script\.[0-9a-f]{8}\.js"/g, `src="${jsScript}"`).replace(/src="\/js\/ff-map\.[0-9a-f]{8}\.js"/g, `src="${jsMap}"`);
 
   const canon = (html.match(/rel="canonical" href="([^"]+)"/) || [])[1];

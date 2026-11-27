@@ -29,10 +29,14 @@ being settled. Before merging to the live site:
 
 ## Programs to design and build later
 
-1. **Impact stories, self-serve**: a way for a student, school or community to submit
-   their own story page, with or without a distribution partner. Needs a submission
-   flow, review step, and the UN child consent form the distribution partner signs.
-   Giving is a preference, counted in lights ($5.17 each), never a binding designation.
+1. **Community stories, review operations**: the November 26 preview adds a searchable
+   Stories feed, three partner profiles, and `/impact-stories/share/`. Sree selected
+   email submissions for review. The form prepares a local email draft to
+   `about@flashforwardfoundation.org`; it does not send, store, or publish a story.
+   Review incoming stories, confirm details and permissions (including the child
+   consent process where applicable), then add approved content to the site.
+   Profile donation links support the general study-light program. Dedicated partner
+   funds remain pending the Givebutter fund IDs above; no person-level gifts are promised.
 2. **Ambassadors** (one umbrella for awareness, introductions to organizations, content
    creation and local fundraising): anyone can apply, unpaid, no hour limit, cannot also
    be an intern. Needs a pipeline, an apply track, and a brand kit.

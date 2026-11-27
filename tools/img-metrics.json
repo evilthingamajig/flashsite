@@ -2,97 +2,89 @@
  {
   "page": "/about/",
   "idx": 0,
-  "src": "/images/brand/mark-green-104.png",
-  "orig": "/images/brand/mark-green-104.png",
-  "nw": 71,
-  "nh": 104,
-  "par": "ff-logo",
-  "cls": "",
+  "src": "/images/build/peopleworkingonflash.webp",
+  "orig": "/images/build/peopleworkingonflash.webp",
+  "nw": 1068,
+  "nh": 801,
   "w": {
-   "1440x900": 36,
-   "1024x768": 36,
-   "900x900": 36,
-   "768x1024": 36,
-   "390x844": 27
+   "1440x900": 1426,
+   "1024x768": 1010,
+   "900x900": 886,
+   "768x1024": 755,
+   "390x844": 376
   },
   "t": {
-   "1440x900": 16,
-   "1024x768": 16,
-   "900x900": 16,
-   "768x1024": 16,
-   "390x844": 22
+   "1440x900": 81,
+   "1024x768": 69,
+   "900x900": 69,
+   "768x1024": 69,
+   "390x844": 69
   }
  },
  {
   "page": "/about/",
   "idx": 1,
-  "src": "/images/opt/students/student-with-flashlight-1.w800.85ac48ab.webp",
-  "orig": "/images/opt/students/student-with-flashlight-1.w800.85ac48ab.webp",
-  "nw": 590,
-  "nh": 560,
-  "par": "fft-row__media",
-  "cls": "",
+  "src": "/images/build/assembling-screwing-lights.webp",
+  "orig": "/images/build/assembling-screwing-lights.webp",
+  "nw": 450,
+  "nh": 800,
   "w": {
-   "1440x900": 520,
-   "1024x768": 456,
-   "900x900": 394,
-   "768x1024": 328,
-   "390x844": 354
+   "1440x900": 662,
+   "1024x768": 519,
+   "900x900": 449,
+   "768x1024": 388,
+   "390x844": 336
   },
   "t": {
-   "1440x900": 1263,
-   "1024x768": 1252,
-   "900x900": 1252,
-   "768x1024": 1275,
-   "390x844": 1554
+   "1440x900": 2525,
+   "1024x768": 2446,
+   "900x900": 2507,
+   "768x1024": 2634,
+   "390x844": 3042
   }
  },
  {
   "page": "/about/",
   "idx": 2,
-  "src": "/images/opt/build/soldering-electronics.w638.ec2eb488.webp",
-  "orig": "/images/opt/build/soldering-electronics.w638.ec2eb488.webp",
-  "nw": 590,
-  "nh": 333,
-  "par": "fft-row__media",
-  "cls": "",
+  "src": "/images/students/student-with-flashlight-3.jpg",
+  "orig": "/images/students/student-with-flashlight-3.jpg",
+  "nw": 1200,
+  "nh": 1600,
   "w": {
-   "1440x900": 520,
-   "1024x768": 456,
-   "900x900": 394,
-   "768x1024": 328,
-   "390x844": 354
+   "1440x900": 510,
+   "1024x768": 399,
+   "900x900": 345,
+   "768x1024": 298,
+   "390x844": 336
   },
   "t": {
-   "1440x900": 1725,
-   "1024x768": 1666,
-   "900x900": 1620,
-   "768x1024": 1595,
-   "390x844": 2117
+   "1440x900": 2525,
+   "1024x768": 2446,
+   "900x900": 2507,
+   "768x1024": 2634,
+   "390x844": 3465
   }
  },
  {
   "page": "/about/",
   "idx": 3,
-  "src": "/images/brand/mark-paper-88.png",
-  "orig": "/images/brand/mark-paper-88.png",
-  "nw": 60,
-  "nh": 88,
-  "par": "ff-logo",
-  "cls": "ff-footer__mark",
+  "src": "/images/partners/malaika/school-1.webp",
+  "orig": "/images/partners/malaika/school-1.webp",
+  "nw": 1024,
+  "nh": 683,
   "w": {
-   "1440x900": 35,
-   "1024x768": 35,
-   "900x900": 35,
-   "768x1024": 35,
-   "390x844": 27
+   "1440x900": 560,
+   "1024x768": 449,
+   "900x900": 387,
+   "768x1024": 715,
+   "390x844": 336
   },
   "t": {
-   "1440x900": 4256,
-   "1024x768": 4134,
-   "900x900": 4097,
-   "768x1024": 4075,
-   "390x844": 5326
+   "1440x900": 3198,
+   "1024x768": 3142,
+   "900x900": 3203,
+   "768x1024": 3654,
+   "390x844": 4548
   }
  },
  {
@@ -674,265 +666,243 @@
  {
   "page": "/impact/",
   "idx": 0,
-  "src": "/images/brand/mark-green-104.png",
-  "orig": "/images/brand/mark-green-104.png",
-  "nw": 71,
-  "nh": 104,
-  "par": "ff-logo",
-  "cls": "",
+  "src": "/images/partners/brighten-haiti/photo-2.webp",
+  "orig": "/images/partners/brighten-haiti/photo-2.webp",
+  "nw": 1600,
+  "nh": 1200,
   "w": {
-   "1440x900": 36,
-   "1024x768": 36,
-   "900x900": 36,
-   "768x1024": 36,
-   "390x844": 27
+   "1440x900": 1378,
+   "1024x768": 962,
+   "900x900": 838,
+   "768x1024": 707,
+   "390x844": 352
   },
   "t": {
-   "1440x900": 16,
-   "1024x768": 16,
-   "900x900": 16,
-   "768x1024": 16,
-   "390x844": 22
+   "1440x900": 105,
+   "1024x768": 93,
+   "900x900": 93,
+   "768x1024": 93,
+   "390x844": 85
   }
  },
  {
   "page": "/impact/",
   "idx": 1,
-  "src": "/images/opt/students/student-with-flashlight-1.w800.85ac48ab.webp",
-  "orig": "/images/opt/students/student-with-flashlight-1.w800.85ac48ab.webp",
-  "nw": 532,
-  "nh": 506,
-  "par": "ff-impopen__photo",
-  "cls": "",
+  "src": "/images/build/flashlight-units-group.webp",
+  "orig": "/images/build/flashlight-units-group.webp",
+  "nw": 502,
+  "nh": 502,
   "w": {
-   "1440x900": 475,
-   "1024x768": 418,
-   "900x900": 852,
-   "768x1024": 720,
-   "390x844": 354
+   "1440x900": 379,
+   "1024x768": 294,
+   "900x900": 253,
+   "768x1024": 225,
+   "390x844": 336
   },
   "t": {
-   "1440x900": 209,
-   "1024x768": 209,
-   "900x900": 484,
-   "768x1024": 484,
-   "390x844": 601
+   "1440x900": 976,
+   "1024x768": 890,
+   "900x900": 885,
+   "768x1024": 829,
+   "390x844": 824
   }
  },
  {
   "page": "/impact/",
   "idx": 2,
-  "src": "/images/opt/partners/brighten-haiti/photo-2.w800.04a59a8d.webp",
-  "orig": "/images/opt/partners/brighten-haiti/photo-2.w800.04a59a8d.webp",
-  "nw": 590,
-  "nh": 442,
-  "par": "fft-card__media",
-  "cls": "",
+  "src": "/images/partners/malaika/school-1.webp",
+  "orig": "/images/partners/malaika/school-1.webp",
+  "nw": 1024,
+  "nh": 683,
   "w": {
-   "1440x900": 350,
-   "1024x768": 307,
-   "900x900": 266,
-   "768x1024": 222,
-   "390x844": 352
+   "1440x900": 379,
+   "1024x768": 294,
+   "900x900": 253,
+   "768x1024": 225,
+   "390x844": 336
   },
   "t": {
-   "1440x900": 1915,
-   "1024x768": 1794,
-   "900x900": 2846,
-   "768x1024": 2684,
-   "390x844": 2440
+   "1440x900": 976,
+   "1024x768": 890,
+   "900x900": 885,
+   "768x1024": 829,
+   "390x844": 1204
   }
  },
  {
   "page": "/impact/",
   "idx": 3,
-  "src": "/images/opt/partners/loksadhana/class-1.w800.15fbc8d4.webp",
-  "orig": "/images/opt/partners/loksadhana/class-1.w800.15fbc8d4.webp",
-  "nw": 590,
-  "nh": 324,
-  "par": "fft-card__media",
-  "cls": "",
+  "src": "/images/light/assembled-anchor.webp",
+  "orig": "/images/light/assembled-anchor.webp",
+  "nw": 1254,
+  "nh": 1254,
   "w": {
-   "1440x900": 350,
-   "1024x768": 307,
-   "900x900": 266,
-   "768x1024": 222,
-   "390x844": 352
+   "1440x900": 379,
+   "1024x768": 294,
+   "900x900": 253,
+   "768x1024": 225,
+   "390x844": 336
   },
   "t": {
-   "1440x900": 1915,
-   "1024x768": 1794,
-   "900x900": 2846,
-   "768x1024": 2684,
-   "390x844": 3006
+   "1440x900": 976,
+   "1024x768": 890,
+   "900x900": 885,
+   "768x1024": 829,
+   "390x844": 1584
   }
  },
  {
   "page": "/impact/",
   "idx": 4,
-  "src": "/images/opt/partners/malaika/school-2.w800.bd47db9f.webp",
-  "orig": "/images/opt/partners/malaika/school-2.w800.bd47db9f.webp",
-  "nw": 590,
-  "nh": 392,
-  "par": "fft-card__media",
-  "cls": "",
+  "src": "/images/build/assembling-screwing-lights.webp",
+  "orig": "/images/build/assembling-screwing-lights.webp",
+  "nw": 450,
+  "nh": 800,
   "w": {
-   "1440x900": 350,
-   "1024x768": 307,
-   "900x900": 266,
-   "768x1024": 222,
-   "390x844": 352
+   "1440x900": 268,
+   "1024x768": 214,
+   "900x900": 184,
+   "768x1024": 290,
+   "390x844": 162
   },
   "t": {
-   "1440x900": 1915,
-   "1024x768": 1794,
-   "900x900": 2846,
-   "768x1024": 2684,
-   "390x844": 3598
+   "1440x900": 1760,
+   "1024x768": 1674,
+   "900x900": 1670,
+   "768x1024": 2053,
+   "390x844": 3111
   }
  },
  {
   "page": "/impact/",
   "idx": 5,
-  "src": "/images/opt/partners/coec-nigeria.w800.dc25ec94.webp",
-  "orig": "/images/opt/partners/coec-nigeria.w800.dc25ec94.webp",
-  "nw": 187,
-  "nh": 186,
-  "par": "ff-logotile",
-  "cls": "",
+  "src": "/images/students/student-with-flashlight-3.jpg",
+  "orig": "/images/students/student-with-flashlight-3.jpg",
+  "nw": 1200,
+  "nh": 1600,
   "w": {
-   "1440x900": 122,
-   "1024x768": 122,
-   "900x900": 122,
-   "768x1024": 122,
-   "390x844": 122
+   "1440x900": 268,
+   "1024x768": 215,
+   "900x900": 184,
+   "768x1024": 290,
+   "390x844": 162
   },
   "t": {
-   "1440x900": 2597,
-   "1024x768": 2468,
-   "900x900": 3527,
-   "768x1024": 3359,
-   "390x844": 4215
+   "1440x900": 1670,
+   "1024x768": 1584,
+   "900x900": 1580,
+   "768x1024": 2008,
+   "390x844": 3066
   }
  },
  {
   "page": "/impact/",
   "idx": 6,
-  "src": "/images/opt/partners/rethread.w141.90a81f8d.webp",
-  "orig": "/images/opt/partners/rethread.w141.90a81f8d.webp",
-  "nw": 187,
-  "nh": 82,
-  "par": "ff-logotile",
-  "cls": "",
+  "src": "/images/build/solar-panel-tops.webp",
+  "orig": "/images/build/solar-panel-tops.webp",
+  "nw": 736,
+  "nh": 1600,
   "w": {
-   "1440x900": 122,
-   "1024x768": 122,
-   "900x900": 122,
-   "768x1024": 122,
-   "390x844": 122
+   "1440x900": 268,
+   "1024x768": 214,
+   "900x900": 184,
+   "768x1024": 290,
+   "390x844": 162
   },
   "t": {
-   "1440x900": 2597,
-   "1024x768": 2468,
-   "900x900": 3527,
-   "768x1024": 3359,
-   "390x844": 4313
+   "1440x900": 2120,
+   "1024x768": 2034,
+   "900x900": 2030,
+   "768x1024": 2353,
+   "390x844": 3363
   }
  },
  {
   "page": "/impact/",
   "idx": 7,
-  "src": "/images/opt/partners/bsrea.w464.45cb5bff.webp",
-  "orig": "/images/opt/partners/bsrea.w464.45cb5bff.webp",
-  "nw": 187,
-  "nh": 145,
-  "par": "ff-logotile",
-  "cls": "",
+  "src": "/images/partners/loksadhana/class-4.webp",
+  "orig": "/images/partners/loksadhana/class-4.webp",
+  "nw": 676,
+  "nh": 472,
   "w": {
-   "1440x900": 122,
-   "1024x768": 122,
-   "900x900": 122,
-   "768x1024": 122,
-   "390x844": 122
+   "1440x900": 268,
+   "1024x768": 215,
+   "900x900": 184,
+   "768x1024": 290,
+   "390x844": 162
   },
   "t": {
-   "1440x900": 2597,
-   "1024x768": 2468,
-   "900x900": 3527,
-   "768x1024": 3359,
-   "390x844": 4411
+   "1440x900": 2050,
+   "1024x768": 1964,
+   "900x900": 1960,
+   "768x1024": 2283,
+   "390x844": 3333
   }
  },
  {
   "page": "/impact/",
   "idx": 8,
-  "src": "/images/opt/partners/brighten-haiti/photo-1.w800.c22ad59a.webp",
-  "orig": "/images/opt/partners/brighten-haiti/photo-1.w800.c22ad59a.webp",
-  "nw": 1440,
-  "nh": 1080,
-  "par": "fft-feature__photo",
-  "cls": "",
+  "src": "/images/partners/brighten-haiti/photo-1.webp",
+  "orig": "/images/partners/brighten-haiti/photo-1.webp",
+  "nw": 1600,
+  "nh": 1200,
   "w": {
-   "1440x900": 1104,
-   "1024x768": 976,
-   "900x900": 852,
-   "768x1024": 720,
-   "390x844": 354
+   "1440x900": 556,
+   "1024x768": 449,
+   "900x900": 387,
+   "768x1024": 715,
+   "390x844": 336
   },
   "t": {
-   "1440x900": 3046,
-   "1024x768": 2906,
-   "900x900": 3966,
-   "768x1024": 3797,
-   "390x844": 4842
+   "1440x900": 2678,
+   "1024x768": 2591,
+   "900x900": 2598,
+   "768x1024": 2777,
+   "390x844": 3747
   }
  },
  {
   "page": "/impact/",
   "idx": 9,
-  "src": "/images/opt/build/flashfinishedworkshop.w800.8f267722.webp",
-  "orig": "/images/opt/build/flashfinishedworkshop.w800.8f267722.webp",
-  "nw": 590,
-  "nh": 442,
-  "par": "ff-wrap ff-teaser",
-  "cls": "",
+  "src": "/images/partners/loksadhana/class-1.webp",
+  "orig": "/images/partners/loksadhana/class-1.webp",
+  "nw": 918,
+  "nh": 505,
   "w": {
-   "1440x900": 528,
-   "1024x768": 464,
-   "900x900": 852,
-   "768x1024": 720,
-   "390x844": 354
+   "1440x900": 379,
+   "1024x768": 294,
+   "900x900": 253,
+   "768x1024": 225,
+   "390x844": 336
   },
   "t": {
-   "1440x900": 4167,
-   "1024x768": 3955,
-   "900x900": 4945,
-   "768x1024": 4728,
-   "390x844": 5750
+   "1440x900": 3689,
+   "1024x768": 3568,
+   "900x900": 3576,
+   "768x1024": 4220,
+   "390x844": 5823
   }
  },
  {
   "page": "/impact/",
   "idx": 10,
-  "src": "/images/brand/mark-paper-88.png",
-  "orig": "/images/brand/mark-paper-88.png",
-  "nw": 60,
-  "nh": 88,
-  "par": "ff-logo",
-  "cls": "ff-footer__mark",
+  "src": "/images/partners/malaika/students-3.webp",
+  "orig": "/images/partners/malaika/students-3.webp",
+  "nw": 1068,
+  "nh": 1600,
   "w": {
-   "1440x900": 35,
-   "1024x768": 35,
-   "900x900": 35,
-   "768x1024": 35,
-   "390x844": 27
+   "1440x900": 379,
+   "1024x768": 294,
+   "900x900": 253,
+   "768x1024": 225,
+   "390x844": 336
   },
   "t": {
-   "1440x900": 5985,
-   "1024x768": 5716,
-   "900x900": 7355,
-   "768x1024": 7117,
-   "390x844": 8168
+   "1440x900": 3689,
+   "1024x768": 3568,
+   "900x900": 3576,
+   "768x1024": 4220,
+   "390x844": 6440
   }
  },
  {
@@ -5469,6 +5439,182 @@
    "900x900": 3188,
    "768x1024": 3560,
    "390x844": 3960
+  }
+ },
+ {
+  "page": "/impact-stories/",
+  "idx": 0,
+  "src": "/images/partners/brighten-haiti/photo-2.webp",
+  "orig": "/images/partners/brighten-haiti/photo-2.webp",
+  "nw": 1600,
+  "nh": 1200,
+  "w": {
+   "1440x900": 240,
+   "1024x768": 180,
+   "900x900": 180,
+   "768x1024": 180,
+   "390x844": 335
+  },
+  "t": {
+   "1440x900": 835,
+   "1024x768": 779,
+   "900x900": 766,
+   "768x1024": 1014,
+   "390x844": 1315
+  }
+ },
+ {
+  "page": "/impact-stories/",
+  "idx": 1,
+  "src": "/images/students/student-with-flashlight-3.jpg",
+  "orig": "/images/students/student-with-flashlight-3.jpg",
+  "nw": 1200,
+  "nh": 1600,
+  "w": {
+   "1440x900": 240,
+   "1024x768": 180,
+   "900x900": 180,
+   "768x1024": 180,
+   "390x844": 335
+  },
+  "t": {
+   "1440x900": 1173,
+   "1024x768": 1117,
+   "900x900": 1104,
+   "768x1024": 1352,
+   "390x844": 1973
+  }
+ },
+ {
+  "page": "/impact-stories/",
+  "idx": 2,
+  "src": "/images/partners/malaika/students-3.webp",
+  "orig": "/images/partners/malaika/students-3.webp",
+  "nw": 1068,
+  "nh": 1600,
+  "w": {
+   "1440x900": 240,
+   "1024x768": 180,
+   "900x900": 180,
+   "768x1024": 180,
+   "390x844": 335
+  },
+  "t": {
+   "1440x900": 1521,
+   "1024x768": 1455,
+   "900x900": 1450,
+   "768x1024": 1690,
+   "390x844": 2629
+  }
+ },
+ {
+  "page": "/impact-stories/",
+  "idx": 3,
+  "src": "/images/partners/loksadhana/class-1.webp",
+  "orig": "/images/partners/loksadhana/class-1.webp",
+  "nw": 918,
+  "nh": 505,
+  "w": {
+   "1440x900": 240,
+   "1024x768": 180,
+   "900x900": 180,
+   "768x1024": 180,
+   "390x844": 335
+  },
+  "t": {
+   "1440x900": 1908,
+   "1024x768": 1793,
+   "900x900": 1787,
+   "768x1024": 2028,
+   "390x844": 3259
+  }
+ },
+ {
+  "page": "/impact-stories/",
+  "idx": 4,
+  "src": "/images/partners/brighten-haiti/photo-1.webp",
+  "orig": "/images/partners/brighten-haiti/photo-1.webp",
+  "nw": 1600,
+  "nh": 1200,
+  "w": {
+   "1440x900": 240,
+   "1024x768": 180,
+   "900x900": 180,
+   "768x1024": 180,
+   "390x844": 335
+  },
+  "t": {
+   "1440x900": 2246,
+   "1024x768": 2130,
+   "900x900": 2125,
+   "768x1024": 2366,
+   "390x844": 3888
+  }
+ },
+ {
+  "page": "/impact-stories/brighten-haiti/",
+  "idx": 0,
+  "src": "/images/partners/brighten-haiti/photo-2.webp",
+  "orig": "/images/partners/brighten-haiti/photo-2.webp",
+  "nw": 1600,
+  "nh": 1200,
+  "w": {
+   "1440x900": 1426,
+   "1024x768": 1010,
+   "900x900": 886,
+   "768x1024": 755,
+   "390x844": 376
+  },
+  "t": {
+   "1440x900": 461,
+   "1024x768": 424,
+   "900x900": 417,
+   "768x1024": 414,
+   "390x844": 375
+  }
+ },
+ {
+  "page": "/impact-stories/loksadhana/",
+  "idx": 0,
+  "src": "/images/partners/loksadhana/class-1.webp",
+  "orig": "/images/partners/loksadhana/class-1.webp",
+  "nw": 918,
+  "nh": 505,
+  "w": {
+   "1440x900": 1426,
+   "1024x768": 1010,
+   "900x900": 886,
+   "768x1024": 755,
+   "390x844": 376
+  },
+  "t": {
+   "1440x900": 461,
+   "1024x768": 424,
+   "900x900": 417,
+   "768x1024": 414,
+   "390x844": 408
+  }
+ },
+ {
+  "page": "/impact-stories/malaika/",
+  "idx": 0,
+  "src": "/images/partners/malaika/school-1.webp",
+  "orig": "/images/partners/malaika/school-1.webp",
+  "nw": 1024,
+  "nh": 683,
+  "w": {
+   "1440x900": 1426,
+   "1024x768": 1010,
+   "900x900": 886,
+   "768x1024": 755,
+   "390x844": 376
+  },
+  "t": {
+   "1440x900": 461,
+   "1024x768": 424,
+   "900x900": 417,
+   "768x1024": 414,
+   "390x844": 375
   }
  }
 ]
