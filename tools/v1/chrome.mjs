@@ -5,16 +5,16 @@ const ARROW = `<img class="ml-3" width="20" height="20" alt="" src="data:image/s
 
 const ARROW_LG = `<img width="20" height="20" alt="" src="data:image/svg+xml,%3csvg fill='none' height='20' viewBox='0 0 20 20' width='20' xmlns='http://www.w3.org/2000/svg'%3e%3ccircle cx='10' cy='10' fill='%232f8f5b' r='9.5' stroke='%23383b36'/%3e%3cpath clip-rule='evenodd' d='m11.2144 7.16746c-.2635-.27559-.2537-.7126.0219-.97609s.7126-.25367.9761.02192l3.0962 3.23849c.2596.27149.2545.70072-.0115.96592l-3.0962 3.0879c-.27.2692-.7071.2686-.9763-.0014-.2693-.2699-.2687-.7071.0013-.9763l2.006-2.0006h-7.04151c-.38129 0-.69038-.3091-.69038-.69035 0-.38129.30909-.69038.69038-.69038h6.91621z' fill='%231a1a1a' fill-rule='evenodd'/%3e%3c/svg%3e">`;
 
-function megaItem(href, title, desc) {
-  return `<li class="masthead__item masthead__item--depth-1"><a class="masthead__link masthead__link--depth-1" href="${href}"><span class="masthead__item-text">${title}</span><span class="masthead__item-description">${desc}</span></a></li>`;
+function megaItem(href, title) {
+  return `<li class="masthead__item masthead__item--depth-1"><a class="masthead__link masthead__link--depth-1" href="${href}"><span class="masthead__item-text">${title}</span></a></li>`;
 }
 
-function subnavItem(href, title, desc) {
-  return `<a class="subnav-item bg-cw-brand-yellow-300 flex items-center justify-between p-2 my-5" href="${href}"><div class="mr-2"><div class="heading-m mb-1">${title}</div><div class="body-m">${desc}</div></div>${ARROW_LG}</a>`;
+function subnavItem(href, title) {
+  return `<a class="subnav-item bg-cw-brand-yellow-300 flex items-center justify-between p-2 my-5" href="${href}"><div class="mr-2"><div class="heading-m mb-1">${title}</div></div>${ARROW_LG}</a>`;
 }
 
-function hasDropdown(label, blurb, childrenHtml) {
-  return `<li class="has-dropdown masthead__item masthead__item--dropdown-mega"><span class="nav-hover-extender absolute bg-transparent z-10"></span><span class="flex items-center dropdown-parent-link"><button type="button" class="heading-xs relative z-20 mr-4" aria-expanded="false">${label}</button><span class="h80 icn cw-icon-chevron-down"></span></span><div class="dropdown masthead__dropdown masthead__dropdown--mega"><div class="ff-mega-cols"><p class="ff-mega-blurb">${blurb}</p><ul class="masthead__items ff-mega-grid">${childrenHtml}</ul></div></div></li>`;
+function hasDropdown(label, childrenHtml) {
+  return `<li class="has-dropdown masthead__item masthead__item--dropdown-mega"><span class="nav-hover-extender absolute bg-transparent z-10"></span><span class="flex items-center dropdown-parent-link"><button type="button" class="heading-xs relative z-20 mr-4" aria-expanded="false">${label}</button><span class="h80 icn cw-icon-chevron-down"></span></span><div class="dropdown masthead__dropdown masthead__dropdown--mega"><div class="ff-mega-cols"><ul class="masthead__items ff-mega-grid">${childrenHtml}</ul></div></div></li>`;
 }
 
 function offSection(label, childrenHtml) {
@@ -42,70 +42,78 @@ ${extraHead}
 
 export function nav(active = '') {
   const modelKids = [
-    megaItem('/our-model/', 'Our Model hub', 'How study light becomes study time'),
-    megaItem('/our-model/why-light/', 'Why Light &amp; Learning', 'Darkness cuts study short — light unlocks hours'),
-    megaItem('/our-model/study-unlock-pathway/', 'Study Unlock Pathway', 'The four verbs behind every light'),
-    megaItem('/our-model/the-study-light/', 'The Study Light', '≈ $5.17 in parts — solar charged'),
-    megaItem('/our-model/made-and-delivered/', 'Made &amp; Delivered', 'Assembly and distribution partners'),
-    megaItem('/our-model/for-students/', 'For Students, By Students', 'Unpaid student leadership of the org'),
+    megaItem('/our-model/', 'Our Model'),
+    megaItem('/our-model/the-study-light/', 'The Study Light'),
+    megaItem('/our-model/why-light/', 'Why Light'),
+    megaItem('/our-model/made-and-delivered/', 'How It\'s Made'),
+    megaItem('/our-model/study-unlock-pathway/', 'Study Unlock Pathway'),
+    megaItem('/our-model/for-students/', 'For Students'),
   ].join('');
 
   const impactKids = [
-    megaItem('/impact/', 'Impact hub', 'Proof with honesty'),
-    megaItem('/impact/outcomes/', 'Outcomes &amp; method', 'How we estimate study hours'),
-    megaItem('/impact/reports/', 'Reports &amp; Financials', '990s, letters, and transparency'),
-    megaItem('/impact-stories/', 'Impact Stories', 'Prefer a school, community, or region'),
+    megaItem('/impact/', 'Impact'),
+    megaItem('/impact/outcomes/', 'Outcomes'),
+    megaItem('/impact/reports/', 'Reports'),
+    megaItem('/impact-stories/', 'Impact Stories'),
   ].join('');
 
   const involvedKids = [
-    megaItem('/join/internships/', 'Internships', 'Marketing · Partnerships · Fundraising'),
-    megaItem('/join/open-roles/', 'Open roles', 'Unpaid student leadership seats'),
-    megaItem('/join/apply/', 'Apply', 'Start an application'),
-    megaItem('/donate/', 'Donate', 'Give in flashlight units (~$5.17)'),
-    megaItem('/donate/study-circle/', 'Study Circle', 'Monthly giving that keeps the pathway funded'),
-    megaItem('/get-involved/ambassadors/', 'Ambassadors', 'Soft campus and community voice'),
-    megaItem('/get-involved/partners/', 'Partner with us', 'Assemble or place Study Lights'),
-    megaItem('/get-involved/partners/assembly/', 'Assembly partners', 'Print, solder, and ship a batch'),
-    megaItem('/get-involved/partners/distribution/', 'Distribution partners', 'Place lights with students you serve'),
+    megaItem('/join/internships/', 'Internships'),
+    megaItem('/join/open-roles/', 'Open Roles'),
+    megaItem('/join/apply/', 'Apply'),
+    megaItem('/donate/', 'Donate'),
+    megaItem('/donate/study-circle/', 'Study Circle'),
+    megaItem('/get-involved/ambassadors/', 'Ambassadors'),
+    megaItem('/get-involved/partners/', 'Partners'),
+    megaItem('/get-involved/partners/assembly/', 'Assembly Partners'),
+    megaItem('/get-involved/partners/distribution/', 'Distribution Partners'),
   ].join('');
 
   const aboutKids = [
-    megaItem('/about/', 'Our Story', 'How Flash Forward started'),
-    megaItem('/about/team/', 'Leadership', 'Board and open unpaid seats'),
-    megaItem('/nonprofit-status/', 'Nonprofit Status', 'Determination letter and trust cues'),
-    megaItem('/faq/', 'FAQs', 'Straight answers'),
-    megaItem('/news/', 'News', 'Updates from the pathway'),
-    megaItem('/contact/', 'Contact', 'Reach the team'),
+    megaItem('/about/', 'Our Story'),
+    megaItem('/about/team/', 'Our Team'),
+    megaItem('/nonprofit-status/', 'Nonprofit Status'),
+    megaItem('/faq/', 'FAQs'),
+    megaItem('/news/', 'News'),
+    megaItem('/contact/', 'Contact'),
   ].join('');
 
   const offModel = [
-    `<a class="cw-link--primary" href="/our-model/">Explore our model</a>`,
-    subnavItem('/our-model/why-light/', 'Why Light &amp; Learning', 'Darkness cuts study short — light unlocks hours.'),
-    subnavItem('/our-model/the-study-light/', 'The Study Light', '≈ $5.17 in parts — solar charged.'),
-    subnavItem('/our-model/study-unlock-pathway/', 'Study Unlock Pathway', 'Design → Assemble → Deliver → Unlock.'),
+    `<a class="cw-link--primary" href="/our-model/">Our Model</a>`,
+    subnavItem('/our-model/the-study-light/', 'The Study Light'),
+    subnavItem('/our-model/why-light/', 'Why Light'),
+    subnavItem('/our-model/made-and-delivered/', 'How It\'s Made'),
+    subnavItem('/our-model/study-unlock-pathway/', 'Study Unlock Pathway'),
+    subnavItem('/our-model/for-students/', 'For Students'),
   ].join('');
 
   const offImpact = [
-    `<a class="cw-link--primary" href="/impact/">Explore impact</a>`,
-    subnavItem('/impact/outcomes/', 'Outcomes &amp; method', 'How we estimate study hours.'),
-    subnavItem('/impact/reports/', 'Reports &amp; Financials', '990s, letters, and transparency.'),
-    subnavItem('/impact-stories/', 'Impact Stories', 'Prefer a school, community, or region.'),
+    `<a class="cw-link--primary" href="/impact/">Impact</a>`,
+    subnavItem('/impact/outcomes/', 'Outcomes'),
+    subnavItem('/impact/reports/', 'Reports'),
+    subnavItem('/impact-stories/', 'Impact Stories'),
   ].join('');
 
   const offInvolved = [
-    `<a class="cw-link--primary" href="/get-involved/">Get involved</a>`,
-    subnavItem('/join/internships/', 'Internships', 'Marketing · Partnerships · Fundraising.'),
-    subnavItem('/join/apply/', 'Apply', 'Start an application.'),
-    subnavItem('/donate/', 'Donate', 'Give in flashlight units (~$5.17).'),
-    subnavItem('/donate/study-circle/', 'Study Circle', 'Monthly giving that keeps the pathway funded.'),
-    subnavItem('/get-involved/partners/', 'Partner with us', 'Assemble or place Study Lights.'),
+    `<a class="cw-link--primary" href="/get-involved/">Get Involved</a>`,
+    subnavItem('/join/internships/', 'Internships'),
+    subnavItem('/join/open-roles/', 'Open Roles'),
+    subnavItem('/join/apply/', 'Apply'),
+    subnavItem('/donate/', 'Donate'),
+    subnavItem('/donate/study-circle/', 'Study Circle'),
+    subnavItem('/get-involved/ambassadors/', 'Ambassadors'),
+    subnavItem('/get-involved/partners/', 'Partners'),
+    subnavItem('/get-involved/partners/assembly/', 'Assembly Partners'),
+    subnavItem('/get-involved/partners/distribution/', 'Distribution Partners'),
   ].join('');
 
   const offAbout = [
-    `<a class="cw-link--primary" href="/about/">About Flash Forward</a>`,
-    subnavItem('/about/team/', 'Leadership', 'Board and open unpaid seats.'),
-    subnavItem('/nonprofit-status/', 'Nonprofit Status', 'EIN 39-3605570.'),
-    subnavItem('/faq/', 'FAQs', 'Straight answers.'),
+    `<a class="cw-link--primary" href="/about/">Our Story</a>`,
+    subnavItem('/about/team/', 'Our Team'),
+    subnavItem('/nonprofit-status/', 'Nonprofit Status'),
+    subnavItem('/faq/', 'FAQs'),
+    subnavItem('/news/', 'News'),
+    subnavItem('/contact/', 'Contact'),
   ].join('');
 
   return `<!--ff:chrome-nav-->
@@ -124,10 +132,10 @@ export function nav(active = '') {
           </span>
         </a>
         <ul class="nav-items">
-          ${hasDropdown('Our Model', 'Study lights become study hours. Design, assemble, deliver, unlock.', modelKids)}
-          ${hasDropdown('Impact', 'Proof with honesty — study hours, stories, and the reports behind them.', impactKids)}
-          ${hasDropdown('Get Involved', 'Join the team, give, or partner on assembly and delivery.', involvedKids)}
-          ${hasDropdown('About', 'A student-led 501(c)(3) in Bellevue. The people, the status, and the answers.', aboutKids)}
+          ${hasDropdown('Our Model', modelKids)}
+          ${hasDropdown('Impact', impactKids)}
+          ${hasDropdown('Get Involved', involvedKids)}
+          ${hasDropdown('About', aboutKids)}
         </ul>
       </div>
       <div class="right-side items-center ml-2">
@@ -194,34 +202,34 @@ export function footer() {
   <div class="cw-footer-top-row border-b border-solid border-0 border-grey-30 my-3">
     <ul class="mt-0 mb-4 pr-2 w-1/2 md-w-1/4">
       <li class="cw-footer-header">Our model</li>
-      <li><a href="/our-model/why-light/">Why light &amp; learning</a></li>
+      <li><a href="/our-model/why-light/">Why Light</a></li>
       <li><a href="/our-model/study-unlock-pathway/">Study Unlock Pathway</a></li>
-      <li><a href="/our-model/the-study-light/">The study light</a></li>
-      <li><a href="/our-model/made-and-delivered/">Made &amp; delivered</a></li>
-      <li><a href="/our-model/for-students/">For students, by students</a></li>
+      <li><a href="/our-model/the-study-light/">The Study Light</a></li>
+      <li><a href="/our-model/made-and-delivered/">How It's Made</a></li>
+      <li><a href="/our-model/for-students/">For Students</a></li>
     </ul>
     <ul class="mt-0 mb-4 pr-2 w-1/2 md-w-1/4">
       <li class="cw-footer-header">Impact</li>
-      <li><a href="/impact/outcomes/">Outcomes &amp; how we measure</a></li>
-      <li><a href="/impact/reports/">Reports &amp; financials</a></li>
-      <li><a href="/impact-stories/">Impact stories</a></li>
+      <li><a href="/impact/outcomes/">Outcomes</a></li>
+      <li><a href="/impact/reports/">Reports</a></li>
+      <li><a href="/impact-stories/">Impact Stories</a></li>
       <li><a href="/impact-stories/sponsor/">Sponsor a story</a></li>
     </ul>
     <ul class="mt-0 mb-2 pr-2 w-1/2 md-w-1/4">
       <li class="cw-footer-header">Get involved</li>
       <li><a href="/join/internships/">Internships</a></li>
-      <li><a href="/join/open-roles/">Open roles</a></li>
+      <li><a href="/join/open-roles/">Open Roles</a></li>
       <li><a href="/join/apply/">Apply</a></li>
       <li><a href="/donate/">Donate</a></li>
       <li><a href="/donate/study-circle/">Study Circle</a></li>
       <li><a href="/get-involved/ambassadors/">Ambassadors</a></li>
-      <li><a href="/get-involved/partners/">Partner with us</a></li>
+      <li><a href="/get-involved/partners/">Partners</a></li>
     </ul>
     <ul class="mt-0 mb-4 pr-2 w-1/2 md-w-1/4">
       <li class="cw-footer-header">About</li>
-      <li><a href="/about/">Our story</a></li>
-      <li><a href="/about/team/">Leadership</a></li>
-      <li><a href="/nonprofit-status/">Nonprofit status</a></li>
+      <li><a href="/about/">Our Story</a></li>
+      <li><a href="/about/team/">Our Team</a></li>
+      <li><a href="/nonprofit-status/">Nonprofit Status</a></li>
       <li><a href="/faq/">FAQs</a></li>
       <li><a href="/news/">News</a></li>
       <li><a href="/contact/">Contact</a></li>
