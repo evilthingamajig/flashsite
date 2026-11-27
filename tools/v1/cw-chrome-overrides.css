@@ -625,7 +625,6 @@
   display: inline-flex; background: none; border: 0; padding: 8px; margin-right: -8px; cursor: pointer; color: #18231D;
 }
 .R-cw-chrome .ff-drawer-panel { list-style: none !important; margin: 0 !important; padding: 12px 0 40px !important; }
-.R-cw-chrome .ff-drawer-panel[hidden] { display: none; }
 .R-cw-chrome .ff-drawer-panel > li { margin: 0; padding: 0; border-bottom: 1px solid #b9d3c5; }
 .R-cw-chrome .ff-drawer-panel > li:last-child { border-bottom: 0; }
 .R-cw-chrome .ff-drawer-panel > li > a,
@@ -638,3 +637,20 @@
 .R-cw-chrome .ff-drawer-panel > li > a:hover,
 .R-cw-chrome .ff-drawer-panel > li > button:hover { color: #1e6b45 !important; }
 .R-cw-chrome .ff-drawer-panel:not([data-panel="root"]) > li > a { font-size: 22px; }
+
+/* Drawer panels slide: the sub-menu comes in from the right while the top level leaves to the left. */
+.R-cw-chrome .right-off-canvas-menu.ff-drawer { overflow: hidden !important; }
+.R-cw-chrome .ff-drawer-panel {
+  position: absolute; top: 80px; right: 0; bottom: 0; left: 0;
+  overflow-y: auto; background: #fff;
+  transform: translateX(100%); visibility: hidden;
+  transition: transform .4s cubic-bezier(.4,0,.2,1), visibility 0s linear .4s;
+}
+.R-cw-chrome .ff-drawer-panel.is-active {
+  transform: none; visibility: visible;
+  transition: transform .4s cubic-bezier(.4,0,.2,1);
+}
+.R-cw-chrome .ff-drawer-panel[data-panel="root"]:not(.is-active) { transform: translateX(-100%); }
+@media (prefers-reduced-motion: reduce) {
+  .R-cw-chrome .ff-drawer-panel, .R-cw-chrome .right-off-canvas-menu.ff-drawer { transition: none !important; }
+}

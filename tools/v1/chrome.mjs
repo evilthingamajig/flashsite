@@ -102,10 +102,10 @@ export function nav(active = '') {
     <li><a href="/news/">News</a></li>
     <li><a href="/contact/">Contact</a></li>
   </ul>
-  <ul class="ff-drawer-panel" data-panel="who" hidden>
+  <ul class="ff-drawer-panel" data-panel="who" inert>
     ${each(WHO, drawerLink)}
   </ul>
-  <ul class="ff-drawer-panel" data-panel="involved" hidden>
+  <ul class="ff-drawer-panel" data-panel="involved" inert>
     ${each(INVOLVED, drawerLink)}
   </ul>
 </nav>

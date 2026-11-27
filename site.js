@@ -283,7 +283,7 @@
     if(!panel)return;
     panel.querySelectorAll('.ff-drawer-panel').forEach(function(p){
       var on=p.getAttribute('data-panel')===name;
-      p.hidden=!on; p.classList.toggle('is-active',on);
+      p.classList.toggle('is-active',on); p.inert=!on;
     });
     if(back)back.hidden=(name==='root');
     panel.scrollTop=0;
