@@ -40,53 +40,31 @@ ${extraHead}
 `;
 }
 
+// One list per menu, shared by the desktop bar, the mobile menu and the footer.
+const WHO = [
+  ['/about/', 'Our Story'],
+  ['/our-model/', 'Our Model'],
+  ['/impact/', 'Our Impact'],
+  ['/about/team/', 'Our Team'],
+];
+const INVOLVED = [
+  ['/join/internships/', 'Internships'],
+  ['/get-involved/ambassadors/', 'Ambassadors'],
+  ['/get-involved/partners/', 'Partner with us'],
+  ['/get-involved/sponsor-a-project/', 'Sponsor a project'],
+];
+const footLink = (href, label) => `<a href="${href}">${label}</a>`;
+const each = (list, fn) => list.map(([href, label]) => fn(href, label)).join('');
+
 export function nav(active = '') {
-  const whoKids = [
-    megaItem('/about/', 'Our Story'),
-    megaItem('/our-model/', 'Our Model'),
-    megaItem('/about/team/', 'Our Team'),
-    megaItem('/nonprofit-status/', 'Nonprofit Status'),
-  ].join('');
-
-  const workKids = [
-    megaItem('/our-model/why-light/', 'Why Light'),
-    megaItem('/our-model/the-study-light/', 'The Study Light'),
-    megaItem('/our-model/study-unlock-pathway/', 'Study Unlock Pathway'),
-    megaItem('/impact/', 'Our Impact'),
-    megaItem('/impact-stories/', 'Impact Stories'),
-  ].join('');
-
-  const involvedKids = [
-    megaItem('/join/internships/', 'Internships'),
-    megaItem('/get-involved/ambassadors/', 'Ambassadors'),
-    megaItem('/get-involved/partners/', 'Partnerships'),
-    megaItem('/get-involved/sponsor-a-project/', 'Sponsor a project'),
-  ].join('');
+  const whoKids = each(WHO, megaItem);
+  const involvedKids = each(INVOLVED, megaItem);
 
   const topLink = (href, label) =>
     `<li class="ff-nav-link"><a class="heading-xs" href="${href}">${label}</a></li>`;
 
-  const offWho = [
-    subnavItem('/about/', 'Our Story'),
-    subnavItem('/our-model/', 'Our Model'),
-    subnavItem('/about/team/', 'Our Team'),
-    subnavItem('/nonprofit-status/', 'Nonprofit Status'),
-  ].join('');
-
-  const offWork = [
-    subnavItem('/our-model/why-light/', 'Why Light'),
-    subnavItem('/our-model/the-study-light/', 'The Study Light'),
-    subnavItem('/our-model/study-unlock-pathway/', 'Study Unlock Pathway'),
-    subnavItem('/impact/', 'Our Impact'),
-    subnavItem('/impact-stories/', 'Impact Stories'),
-  ].join('');
-
-  const offInvolved = [
-    subnavItem('/join/internships/', 'Internships'),
-    subnavItem('/get-involved/ambassadors/', 'Ambassadors'),
-    subnavItem('/get-involved/partners/', 'Partnerships'),
-    subnavItem('/get-involved/sponsor-a-project/', 'Sponsor a project'),
-  ].join('');
+  const offWho = each(WHO, subnavItem);
+  const offInvolved = each(INVOLVED, subnavItem);
 
   return `<!--ff:chrome-nav-->
 <nav class="nav-bar" id="site-nav" data-off-canvas="" aria-label="Main">
@@ -105,7 +83,6 @@ export function nav(active = '') {
         </a>
         <ul class="nav-items">
           ${hasDropdown('Who we are', whoKids)}
-          ${hasDropdown('Our work', workKids)}
           ${hasDropdown('Get involved', involvedKids)}
           ${topLink('/news/', 'News')}
           ${topLink('/contact/', 'Contact')}
@@ -122,7 +99,6 @@ export function nav(active = '') {
 <nav class="right-off-canvas-menu theme-design-system-v1 bg-cw-brand-yellow-100" id="ff-offcanvas" aria-label="Mobile">
   <ul class="off-canvas-list">
     ${offSection('Who we are', offWho)}
-    ${offSection('Our work', offWork)}
     ${offSection('Get involved', offInvolved)}
     <div class="p-6 pt-8">
       <a class="flex items-center mb-5" href="/news/"><div class="heading-s">News</div></a>
@@ -158,25 +134,11 @@ export function footer() {
       <div class="ff-bbg-cols">
         <div>
           <h2>Who we are</h2>
-          <a href="/about/">Our Story</a>
-          <a href="/our-model/">Our Model</a>
-          <a href="/about/team/">Our Team</a>
-          <a href="/nonprofit-status/">Nonprofit Status</a>
-        </div>
-        <div>
-          <h2>Our work</h2>
-          <a href="/our-model/why-light/">Why Light</a>
-          <a href="/our-model/the-study-light/">The Study Light</a>
-          <a href="/our-model/study-unlock-pathway/">Study Unlock Pathway</a>
-          <a href="/impact/">Our Impact</a>
-          <a href="/impact-stories/">Impact Stories</a>
+          ${each(WHO, footLink)}
         </div>
         <div>
           <h2>Get involved</h2>
-          <a href="/join/internships/">Internships</a>
-          <a href="/get-involved/ambassadors/">Ambassadors</a>
-          <a href="/get-involved/partners/">Partnerships</a>
-          <a href="/get-involved/sponsor-a-project/">Sponsor a project</a>
+          ${each(INVOLVED, footLink)}
         </div>
         <div>
           <h2>News</h2>
@@ -200,6 +162,8 @@ export function footer() {
         <p>Gifts are preference-based. Placement is best effort.</p>
       </div>
       <div class="ff-bbg-legal-row ff-bbg-legal-row--sub">
+        <a href="/nonprofit-status/">Nonprofit Status</a>
+        <a href="/faq/">FAQ</a>
         <a href="/privacy/">Privacy</a>
         <a href="/terms/">Terms of Use</a>
       </div>
