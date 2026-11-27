@@ -328,54 +328,6 @@
   }
  },
  {
-  "page": "/contact/",
-  "idx": 0,
-  "src": "/images/brand/mark-green-104.png",
-  "orig": "/images/brand/mark-green-104.png",
-  "nw": 71,
-  "nh": 104,
-  "par": "ff-logo",
-  "cls": "",
-  "w": {
-   "1440x900": 36,
-   "1024x768": 36,
-   "900x900": 36,
-   "768x1024": 36,
-   "390x844": 27
-  },
-  "t": {
-   "1440x900": 16,
-   "1024x768": 16,
-   "900x900": 16,
-   "768x1024": 16,
-   "390x844": 22
-  }
- },
- {
-  "page": "/contact/",
-  "idx": 1,
-  "src": "/images/brand/mark-paper-88.png",
-  "orig": "/images/brand/mark-paper-88.png",
-  "nw": 60,
-  "nh": 88,
-  "par": "ff-logo",
-  "cls": "ff-footer__mark",
-  "w": {
-   "1440x900": 35,
-   "1024x768": 35,
-   "900x900": 35,
-   "768x1024": 35,
-   "390x844": 27
-  },
-  "t": {
-   "1440x900": 1300,
-   "1024x768": 1300,
-   "900x900": 1300,
-   "768x1024": 1300,
-   "390x844": 1637
-  }
- },
- {
   "page": "/donate/",
   "idx": 0,
   "src": "/images/brand/mark-green-104.png",
@@ -1964,241 +1916,265 @@
  {
   "page": "/news/",
   "idx": 0,
-  "src": "/images/brand/mark-green-104.png",
-  "orig": "/images/brand/mark-green-104.png",
-  "nw": 71,
-  "nh": 104,
-  "par": "ff-logo",
-  "cls": "",
+  "src": "/images/build/packagedlights.webp",
+  "orig": "/images/build/packagedlights.webp",
+  "nw": 600,
+  "nh": 801,
   "w": {
-   "1440x900": 36,
-   "1024x768": 36,
-   "900x900": 36,
-   "768x1024": 36,
-   "390x844": 27
+   "1440x900": 580,
+   "1024x768": 456,
+   "900x900": 394,
+   "768x1024": 328,
+   "390x844": 342
   },
   "t": {
-   "1440x900": 16,
-   "1024x768": 16,
-   "900x900": 16,
-   "768x1024": 16,
-   "390x844": 22
+   "1440x900": 111,
+   "1024x768": 106,
+   "900x900": 127,
+   "768x1024": 181,
+   "390x844": 91
   }
  },
  {
   "page": "/news/",
   "idx": 1,
-  "src": "/images/opt/partners/brighten-haiti/photo-1.w800.c22ad59a.webp",
-  "orig": "/images/opt/partners/brighten-haiti/photo-1.w800.c22ad59a.webp",
-  "nw": 691,
-  "nh": 518,
-  "par": "ff-feature__img",
-  "cls": "",
+  "src": "/images/build/assembly-lights.webp",
+  "orig": "/images/build/assembly-lights.webp",
+  "nw": 450,
+  "nh": 800,
   "w": {
-   "1440x900": 621,
-   "1024x768": 546,
-   "900x900": 474,
-   "768x1024": 720,
-   "390x844": 354
+   "1440x900": 580,
+   "1024x768": 456,
+   "900x900": 394,
+   "768x1024": 328,
+   "390x844": 342
   },
   "t": {
-   "1440x900": 540,
-   "1024x768": 540,
-   "900x900": 540,
-   "768x1024": 540,
-   "390x844": 506
+   "1440x900": 749,
+   "1024x768": 669,
+   "900x900": 669,
+   "768x1024": 792,
+   "390x844": 992
   }
  },
  {
   "page": "/news/",
   "idx": 2,
-  "src": "/images/opt/build/packagedlights.w600.e0c41ddb.webp",
-  "orig": "/images/opt/build/packagedlights.w600.e0c41ddb.webp",
-  "nw": 316,
-  "nh": 423,
-  "par": "fft-card__media",
-  "cls": "",
+  "src": "/images/partners/loksadhana/class-3.webp",
+  "orig": "/images/partners/loksadhana/class-3.webp",
+  "nw": 757,
+  "nh": 421,
   "w": {
-   "1440x900": 256,
-   "1024x768": 474,
-   "900x900": 412,
-   "768x1024": 346,
-   "390x844": 352
+   "1440x900": 580,
+   "1024x768": 456,
+   "900x900": 394,
+   "768x1024": 328,
+   "390x844": 342
   },
   "t": {
-   "1440x900": 1272,
-   "1024x768": 1205,
-   "900x900": 1151,
-   "768x1024": 1514,
-   "390x844": 1262
+   "1440x900": 749,
+   "1024x768": 669,
+   "900x900": 669,
+   "768x1024": 792,
+   "390x844": 1475
   }
  },
  {
   "page": "/news/",
   "idx": 3,
-  "src": "/images/opt/partners/loksadhana/class-4.w676.2674bed8.webp",
-  "orig": "/images/opt/partners/loksadhana/class-4.w676.2674bed8.webp",
-  "nw": 316,
-  "nh": 221,
-  "par": "fft-card__media",
-  "cls": "",
+  "src": "/images/partners/malaika/school-1.webp",
+  "orig": "/images/partners/malaika/school-1.webp",
+  "nw": 1024,
+  "nh": 683,
   "w": {
-   "1440x900": 256,
-   "1024x768": 474,
-   "900x900": 412,
-   "768x1024": 346,
-   "390x844": 352
+   "1440x900": 580,
+   "1024x768": 456,
+   "900x900": 394,
+   "768x1024": 328,
+   "390x844": 342
   },
   "t": {
-   "1440x900": 1272,
-   "1024x768": 1205,
-   "900x900": 1151,
-   "768x1024": 1514,
-   "390x844": 1691
+   "1440x900": 1370,
+   "1024x768": 1215,
+   "900x900": 1203,
+   "768x1024": 1283,
+   "390x844": 1959
   }
  },
  {
   "page": "/news/",
   "idx": 4,
-  "src": "/images/opt/partners/malaika/students-3.w800.e56f14b9.webp",
-  "orig": "/images/opt/partners/malaika/students-3.w800.e56f14b9.webp",
-  "nw": 316,
-  "nh": 474,
-  "par": "fft-card__media",
-  "cls": "",
+  "src": "/images/students/student-with-flashlight-3.jpg",
+  "orig": "/images/students/student-with-flashlight-3.jpg",
+  "nw": 1200,
+  "nh": 1600,
   "w": {
-   "1440x900": 256,
-   "1024x768": 474,
-   "900x900": 412,
-   "768x1024": 346,
-   "390x844": 352
+   "1440x900": 604,
+   "1024x768": 464,
+   "900x900": 402,
+   "768x1024": 336,
+   "390x844": 342
   },
   "t": {
-   "1440x900": 1272,
-   "1024x768": 1725,
-   "900x900": 1624,
-   "768x1024": 1963,
-   "390x844": 2144
+   "1440x900": 1370,
+   "1024x768": 1215,
+   "900x900": 1203,
+   "768x1024": 1283,
+   "390x844": 2442
   }
  },
  {
   "page": "/news/",
   "idx": 5,
-  "src": "/images/opt/students/student-with-flashlight-1.w800.85ac48ab.webp",
-  "orig": "/images/opt/students/student-with-flashlight-1.w800.85ac48ab.webp",
-  "nw": 316,
-  "nh": 300,
-  "par": "fft-card__media",
-  "cls": "",
+  "src": "/images/light/assembled-anchor.webp",
+  "orig": "/images/light/assembled-anchor.webp",
+  "nw": 1254,
+  "nh": 1254,
   "w": {
-   "1440x900": 256,
-   "1024x768": 474,
-   "900x900": 412,
-   "768x1024": 346,
-   "390x844": 352
+   "1440x900": 580,
+   "1024x768": 456,
+   "900x900": 394,
+   "768x1024": 328,
+   "390x844": 342
   },
   "t": {
-   "1440x900": 1272,
-   "1024x768": 1725,
-   "900x900": 1624,
-   "768x1024": 1963,
-   "390x844": 2597
+   "1440x900": 1990,
+   "1024x768": 1791,
+   "900x900": 1738,
+   "768x1024": 1773,
+   "390x844": 2898
   }
  },
  {
   "page": "/news/",
   "idx": 6,
-  "src": "/images/opt/build/solar-panel-tops.w736.2751c9b8.webp",
-  "orig": "/images/opt/build/solar-panel-tops.w736.2751c9b8.webp",
-  "nw": 417,
-  "nh": 907,
-  "par": "fft-card__media",
-  "cls": "",
+  "src": "/images/build/flashlight-units-group.webp",
+  "orig": "/images/build/flashlight-units-group.webp",
+  "nw": 502,
+  "nh": 502,
   "w": {
-   "1440x900": 350,
-   "1024x768": 307,
-   "900x900": 266,
-   "768x1024": 222,
-   "390x844": 352
+   "1440x900": 580,
+   "1024x768": 456,
+   "900x900": 394,
+   "768x1024": 328,
+   "390x844": 342
   },
   "t": {
-   "1440x900": 1918,
-   "1024x768": 2476,
-   "900x900": 2353,
-   "768x1024": 2642,
-   "390x844": 3248
+   "1440x900": 1990,
+   "1024x768": 1791,
+   "900x900": 1738,
+   "768x1024": 1773,
+   "390x844": 3353
   }
  },
  {
   "page": "/news/",
   "idx": 7,
-  "src": "/images/opt/build/peopleworkingonflash.w800.71b99741.webp",
-  "orig": "/images/opt/build/peopleworkingonflash.w800.71b99741.webp",
-  "nw": 1440,
-  "nh": 1080,
-  "par": "fft-card__media",
-  "cls": "",
+  "src": "/images/partners/brighten-haiti/photo-1.webp",
+  "orig": "/images/partners/brighten-haiti/photo-1.webp",
+  "nw": 1600,
+  "nh": 1200,
   "w": {
-   "1440x900": 350,
-   "1024x768": 307,
-   "900x900": 266,
-   "768x1024": 222,
-   "390x844": 352
+   "1440x900": 580,
+   "1024x768": 456,
+   "900x900": 394,
+   "768x1024": 328,
+   "390x844": 342
   },
   "t": {
-   "1440x900": 1918,
-   "1024x768": 2476,
-   "900x900": 2353,
-   "768x1024": 2642,
-   "390x844": 3679
+   "1440x900": 749,
+   "1024x768": 669,
+   "900x900": 669,
+   "768x1024": 792,
+   "390x844": 992
   }
  },
  {
   "page": "/news/",
   "idx": 8,
-  "src": "/images/opt/build/bubble-wrapped-units.w360.dae7ddb8.webp",
-  "orig": "/images/opt/build/bubble-wrapped-units.w360.dae7ddb8.webp",
-  "nw": 417,
-  "nh": 556,
-  "par": "fft-card__media",
-  "cls": "",
+  "src": "/images/brand/og-image.jpg",
+  "orig": "/images/brand/og-image.jpg",
+  "nw": 1200,
+  "nh": 630,
   "w": {
-   "1440x900": 350,
-   "1024x768": 307,
-   "900x900": 266,
-   "768x1024": 222,
-   "390x844": 352
+   "1440x900": 580,
+   "1024x768": 456,
+   "900x900": 394,
+   "768x1024": 328,
+   "390x844": 342
   },
   "t": {
-   "1440x900": 1918,
-   "1024x768": 2476,
-   "900x900": 2353,
-   "768x1024": 2642,
-   "390x844": 4111
+   "1440x900": 749,
+   "1024x768": 669,
+   "900x900": 669,
+   "768x1024": 792,
+   "390x844": 1504
   }
  },
  {
   "page": "/news/",
   "idx": 9,
-  "src": "/images/brand/mark-paper-88.png",
-  "orig": "/images/brand/mark-paper-88.png",
-  "nw": 60,
-  "nh": 88,
-  "par": "ff-logo",
-  "cls": "ff-footer__mark",
+  "src": "/images/build/flashfinishedworkshop.webp",
+  "orig": "/images/build/flashfinishedworkshop.webp",
+  "nw": 1068,
+  "nh": 801,
   "w": {
-   "1440x900": 35,
-   "1024x768": 35,
-   "900x900": 35,
-   "768x1024": 35,
-   "390x844": 27
+   "1440x900": 580,
+   "1024x768": 456,
+   "900x900": 394,
+   "768x1024": 328,
+   "390x844": 342
   },
   "t": {
-   "1440x900": 2939,
-   "1024x768": 3454,
-   "900x900": 3300,
-   "768x1024": 3610,
-   "390x844": 5389
+   "1440x900": 1400,
+   "1024x768": 1245,
+   "900x900": 1203,
+   "768x1024": 1313,
+   "390x844": 1988
+  }
+ },
+ {
+  "page": "/news/",
+  "idx": 10,
+  "src": "/images/partners/brighten-haiti/photo-2.webp",
+  "orig": "/images/partners/brighten-haiti/photo-2.webp",
+  "nw": 1600,
+  "nh": 1200,
+  "w": {
+   "1440x900": 596,
+   "1024x768": 456,
+   "900x900": 394,
+   "768x1024": 328,
+   "390x844": 342
+  },
+  "t": {
+   "1440x900": 2236,
+   "1024x768": 1998,
+   "900x900": 1915,
+   "768x1024": 2072,
+   "390x844": 2693
+  }
+ },
+ {
+  "page": "/news/",
+  "idx": 11,
+  "src": "/images/build/peopleworkingonflash.webp",
+  "orig": "/images/build/peopleworkingonflash.webp",
+  "nw": 1068,
+  "nh": 801,
+  "w": {
+   "1440x900": 604,
+   "1024x768": 464,
+   "900x900": 402,
+   "768x1024": 336,
+   "390x844": 342
+  },
+  "t": {
+   "1440x900": 2733,
+   "1024x768": 2402,
+   "900x900": 2278,
+   "768x1024": 2423,
+   "390x844": 3282
   }
  },
  {

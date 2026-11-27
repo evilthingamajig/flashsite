@@ -23,14 +23,6 @@
   "t": 140,
   "vp": "390x844"
  },
- "/contact/": {
-  "el": "P.",
-  "img": null,
-  "text": "Have a question about the lights, the in",
-  "size": 24225,
-  "t": 232,
-  "vp": "390x844"
- },
  "/donate/": {
   "el": "P.ff-lede",
   "img": null,
@@ -62,14 +54,6 @@
   "size": 172800,
   "t": 144,
   "vp": "1440x900"
- },
- "/news/": {
-  "el": "IMG.",
-  "img": "/images/opt/partners/brighten-haiti/photo-1.w800.c22ad59a.webp",
-  "text": "",
-  "size": 93987,
-  "t": 136,
-  "vp": "390x844"
  },
  "/news/brighten-haiti-42-lights/": {
   "el": "IMG.",
