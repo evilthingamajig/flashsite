@@ -351,6 +351,106 @@
       "source": "/volunteer-adventures.html",
       "destination": "/get-involved/",
       "permanent": true
+    },
+    {
+      "source": "/join/open-roles/coo",
+      "destination": "/join/open-roles/",
+      "permanent": true
+    },
+    {
+      "source": "/join/open-roles/coo/",
+      "destination": "/join/open-roles/",
+      "permanent": true
+    },
+    {
+      "source": "/join/open-roles/cpo",
+      "destination": "/join/open-roles/",
+      "permanent": true
+    },
+    {
+      "source": "/join/open-roles/cpo/",
+      "destination": "/join/open-roles/",
+      "permanent": true
+    },
+    {
+      "source": "/join/open-roles/cfo",
+      "destination": "/join/open-roles/",
+      "permanent": true
+    },
+    {
+      "source": "/join/open-roles/cfo/",
+      "destination": "/join/open-roles/",
+      "permanent": true
+    },
+    {
+      "source": "/join/open-roles/director-fundraising",
+      "destination": "/join/open-roles/",
+      "permanent": true
+    },
+    {
+      "source": "/join/open-roles/director-fundraising/",
+      "destination": "/join/open-roles/",
+      "permanent": true
+    },
+    {
+      "source": "/join/open-roles/director-marketing",
+      "destination": "/join/open-roles/",
+      "permanent": true
+    },
+    {
+      "source": "/join/open-roles/director-marketing/",
+      "destination": "/join/open-roles/",
+      "permanent": true
+    },
+    {
+      "source": "/join/open-roles/director-partnerships",
+      "destination": "/join/open-roles/",
+      "permanent": true
+    },
+    {
+      "source": "/join/open-roles/director-partnerships/",
+      "destination": "/join/open-roles/",
+      "permanent": true
+    },
+    {
+      "source": "/our-model/for-students",
+      "destination": "/join/internships/",
+      "permanent": true
+    },
+    {
+      "source": "/our-model/for-students/",
+      "destination": "/join/internships/",
+      "permanent": true
+    },
+    {
+      "source": "/news/solar-workshops",
+      "destination": "/news/",
+      "permanent": true
+    },
+    {
+      "source": "/news/solar-workshops/",
+      "destination": "/news/",
+      "permanent": true
+    },
+    {
+      "source": "/our-model/study-unlock-pathway",
+      "destination": "/our-model/",
+      "permanent": true
+    },
+    {
+      "source": "/our-model/study-unlock-pathway/",
+      "destination": "/our-model/",
+      "permanent": true
+    },
+    {
+      "source": "/impact/reports",
+      "destination": "/nonprofit-status/",
+      "permanent": true
+    },
+    {
+      "source": "/impact/reports/",
+      "destination": "/nonprofit-status/",
+      "permanent": true
     }
   ],
   "headers": [
