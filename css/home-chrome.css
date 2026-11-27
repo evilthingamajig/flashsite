@@ -30,16 +30,26 @@
 }
 
 
-/* Homepage only: photo flush under the nav. No border, no top radius. */
+/* White band under the nav, then a rounded hero. Smaller than New Story's 92.5pt (no promo bar). */
 body.ff-page-ns-home .nav-bar { border-bottom: 0 !important; }
 body.ff-page-ns-home .ff-main,
 body.ff-page-ns-home .content-body,
 body.ff-page-ns-home .container.cc-large { margin-top: 0 !important; padding-top: 0 !important; }
 body.ff-page-ns-home .full-width-card,
 body.ff-page-ns-home .full-width-card.cc-medium {
-  margin-top: 0 !important;
-  border-top-left-radius: 0 !important;
-  border-top-right-radius: 0 !important;
+  margin-top: 48px !important;
+  border-top-left-radius: 1.5rem !important;
+  border-top-right-radius: 1.5rem !important;
+}
+body.ff-page-ns-home .header-card-content .button-wrapper {
+  align-items: center !important;
+}
+body.ff-page-ns-home .header-card-content .button.animated-button {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  line-height: 1 !important;
+  padding: 0.9rem 2rem !important;
 }
 
 /* WCK nav streak: scaleX from the right edge, 0.4s ease-out-quart. Forest green. */
@@ -541,22 +551,33 @@ body.ff-page-ns-home .nav-bar {
 }
 body.ff-page-ns-home { padding-top: 81px; }
 
-/* Click opens the panel. Hover only draws the streak. */
+/* Click opens the panel. Hover only draws the streak.
+   The sheet slides down empty. Link text is painted only after the slide ends. */
 @media (min-width: 1025px) {
   body.ff-page-ns-home .nav-bar-section .has-dropdown > .dropdown.masthead__dropdown--mega {
     display: block !important;
     visibility: hidden;
-    opacity: 0;
-    transform: translateY(-12px);
+    opacity: 1 !important;
+    transform: none !important;
+    clip-path: inset(0 0 100% 0);
     pointer-events: none;
     top: 81px !important;
-    transition: transform .4s cubic-bezier(0.165, 0.84, 0.44, 1), opacity .28s linear, visibility .4s;
+    background: #fff !important;
+    transition: clip-path .45s cubic-bezier(0.77, 0, 0.175, 1), visibility 0s linear .45s;
   }
   body.ff-page-ns-home .nav-bar-section .has-dropdown.is-open > .dropdown.masthead__dropdown--mega {
     visibility: visible !important;
     opacity: 1 !important;
-    transform: translateY(0) !important;
+    transform: none !important;
+    clip-path: inset(0 0 0 0);
     pointer-events: auto !important;
+    transition: clip-path .45s cubic-bezier(0.77, 0, 0.175, 1), visibility 0s linear 0s;
+  }
+  body.ff-page-ns-home .nav-bar-section .has-dropdown > .dropdown.masthead__dropdown--mega > * {
+    visibility: hidden;
+  }
+  body.ff-page-ns-home .nav-bar-section .has-dropdown.is-revealed > .dropdown.masthead__dropdown--mega > * {
+    visibility: visible;
   }
   body.ff-page-ns-home .ff-mega-grid .masthead__link:hover .masthead__item-text {
     text-decoration: none !important;
@@ -583,4 +604,50 @@ body.ff-page-ns-home { padding-top: 81px; }
     transform-origin: 0 0;
     transform: scaleX(1);
   }
+}
+
+/* Supporters: same page color, a sliding logo row between two rules. */
+body.ff-page-ns-home .animated-partners {
+  border-top: 1px solid rgba(23, 23, 23, 0.18);
+  border-bottom: 1px solid rgba(23, 23, 23, 0.18);
+  padding-top: 1.25rem;
+  padding-bottom: 1.25rem;
+}
+body.ff-page-ns-home .animated-partners .partners-wrapper {
+  overflow: hidden;
+  min-width: 0;
+  flex: 1;
+}
+body.ff-page-ns-home .partners-list.ff-logo-marquee {
+  display: flex !important;
+  flex-wrap: nowrap !important;
+  width: max-content !important;
+  align-items: center !important;
+  gap: 4.5rem;
+  animation: ff-logo-marquee 36s linear infinite;
+}
+body.ff-page-ns-home .partners-list.ff-logo-marquee .animated-partner-logo-wrap {
+  flex: none;
+  width: auto;
+  max-width: none;
+  height: 2.75rem;
+  display: flex;
+  align-items: center;
+}
+body.ff-page-ns-home .partners-list.ff-logo-marquee .partner-logo {
+  width: auto;
+  max-width: 8.5rem;
+  max-height: 2.5rem;
+  height: auto;
+}
+body.ff-page-ns-home .ns-sup-toggle,
+body.ff-page-ns-home .w-dropdown:has(.accordion_content.ns-sup-acc) {
+  display: none !important;
+}
+@keyframes ff-logo-marquee {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+@media (prefers-reduced-motion: reduce) {
+  body.ff-page-ns-home .partners-list.ff-logo-marquee { animation: none; }
 }
