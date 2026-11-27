@@ -14,13 +14,13 @@
 .ff-contact-form :is(input:not([type="hidden"]),select,textarea) { display: block; width: 100%; min-width: 0; min-height: 58px; border: 1px solid #8b8e88; border-radius: 14px; background: #f4f4f4; color: #171914; padding: 14px 18px; font: inherit; box-shadow: none; margin: 0; }
 .ff-contact-form select { padding-right: 40px; }
 .ff-contact-form textarea { min-height: 150px; resize: vertical; }
-.ff-contact-form :is(input,select,textarea):focus-visible { outline: 2px solid #1e6b45; outline-offset: 3px; }
+.ff-contact-form :is(input,select,textarea):focus-visible { outline: 2px solid var(--ff-green-700); outline-offset: 3px; }
 .ff-contact-form .ff-contact-trap { position: absolute; left: -10000px; width: 1px; height: 1px; overflow: hidden; }
 .ff-contact-form .ff-contact-privacy { font-size: 15px; line-height: 1.55; margin: 0; }
 .ff-page-contact #main p a, .ff-contact-email { color: inherit; text-underline-offset: 4px; text-decoration: underline; }
-.ff-contact-button { display: inline-flex; align-items: center; justify-content: center; justify-self: start; min-height: 48px; padding: 13px 28px; border: 1px solid #1e6b45; border-radius: 4px; background: #1e6b45; color: #fff !important; font: 600 16px/1.3 Figtree, sans-serif; letter-spacing: 0; text-decoration: none !important; cursor: pointer; }
-.ff-contact-button:hover { background: #134b30; border-color: #134b30; }
-.ff-contact-button:focus-visible, .ff-contact-text-link:focus-visible { outline: 2px solid #1e6b45; outline-offset: 5px; }
+.ff-contact-button { display: inline-flex; align-items: center; justify-content: center; justify-self: start; min-height: 48px; padding: 13px 28px; border: 1px solid var(--ff-green-700); border-radius: 4px; background: var(--ff-green-700); color: #fff !important; font: 600 16px/1.3 Figtree, sans-serif; letter-spacing: 0; text-decoration: none !important; cursor: pointer; }
+.ff-contact-button:hover { background: #fff; color: var(--ff-green-700) !important; border-color: var(--ff-green-700); }
+.ff-contact-button:focus-visible, .ff-contact-text-link:focus-visible { outline: 2px solid var(--ff-green-700); outline-offset: 5px; }
 .ff-contact-aside { padding-top: 33px; }
 .ff-page-contact #main .ff-contact-aside h2 { font: 500 34px/1.2 Figtree, sans-serif; letter-spacing: -.02em; color: #171914; margin: 0 0 28px; }
 .ff-contact-aside p { margin: 0 0 22px; font-size: 19px; }
@@ -39,15 +39,15 @@
 .ff-contact-questions summary { display: flex; align-items: center; justify-content: space-between; gap: 22px; padding: 17px 22px; list-style: none; cursor: pointer; font: 500 18px/1.4 Figtree, sans-serif; }
 .ff-contact-questions summary::-webkit-details-marker { display: none; }
 .ff-contact-questions summary::marker { content: ""; }
-.ff-contact-questions summary svg { color: #1e6b45; flex-shrink: 0; transition: transform .2s; }
+.ff-contact-questions summary svg { color: var(--ff-green-700); flex-shrink: 0; transition: transform .2s; }
 .ff-contact-questions details[open] summary svg { transform: rotate(180deg); }
-.ff-contact-questions summary:focus-visible { outline: 2px solid #1e6b45; outline-offset: -3px; }
+.ff-contact-questions summary:focus-visible { outline: 2px solid var(--ff-green-700); outline-offset: -3px; }
 .ff-contact-answer { padding: 0 52px 20px 22px; font-size: 16px; line-height: 1.6; color: #555d55; }
 .ff-contact-answer p { margin: 0; }
 .ff-contact-next { display: grid; grid-template-columns: 1fr 1fr; gap: 64px; text-align: center; padding-block: 80px 140px; }
 .ff-page-contact #main .ff-contact-next h2 { font: 700 clamp(38px, 4.2vw, 60px)/1.1 Figtree, sans-serif; color: #2c2b29; letter-spacing: -.025em; margin: 0 0 24px; }
 .ff-contact-next p { font-size: 18px; max-width: 350px; margin: 0 auto 28px; }
-.ff-contact-small-link { display: flex; justify-content: center; align-items: center; gap: 8px; font-size: 15px; color: #1e6b45; text-underline-offset: 4px; margin-top: 20px; }
+.ff-contact-small-link { display: flex; justify-content: center; align-items: center; gap: 8px; font-size: 15px; color: var(--ff-green-700); text-underline-offset: 4px; margin-top: 20px; }
 .ff-contact-small-link svg { width: 19px; height: 19px; }
 @media (max-width: 1024px) {
   .ff-contact-wrap { width: calc(100% - 64px); }

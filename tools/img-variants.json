@@ -1376,5 +1376,27 @@
     "src": "/images/opt/students/student-with-flashlight-9.w960.87d53d7f.webp"
    }
   ]
+ },
+ "/images/students/studying-after-dark.webp": {
+  "nw": 1250,
+  "nh": 866,
+  "v": [
+   {
+    "w": 480,
+    "src": "/images/opt/students/studying-after-dark.w480.836734c2.webp"
+   },
+   {
+    "w": 800,
+    "src": "/images/opt/students/studying-after-dark.w800.d999fc51.webp"
+   },
+   {
+    "w": 1200,
+    "src": "/images/opt/students/studying-after-dark.w1200.de921aab.webp"
+   },
+   {
+    "w": 1250,
+    "src": "/images/opt/students/studying-after-dark.w1250.e992bb8e.webp"
+   }
+  ]
  }
 }

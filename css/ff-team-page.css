@@ -12,7 +12,7 @@ body.ff-page-gd-team { background: #fff; }
   margin: 24px auto 0;
   overflow: hidden;
   border-radius: 28px;
-  background: #183e30;
+  background: var(--ff-green-700);
 }
 .ff-team-hero > img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: center 58%; }
 .ff-team-hero::after { content: ""; position: absolute; inset: 0; background: linear-gradient(180deg, transparent 10%, rgba(8, 24, 17, .25) 40%, rgba(8, 24, 17, .88)); }
@@ -30,12 +30,12 @@ body.ff-page-gd-team { background: #fff; }
 .ff-team-values p { margin: 0; color: #526158; font: 400 1rem/1.65 Figtree, sans-serif; }
 .ff-page-gd-team .R-og-team { padding-top: 96px; padding-bottom: 32px; scroll-margin-top: 32px; }
 .ff-page-gd-team .ourteams-header .ff-team-directory-description { max-width: 620px; margin: 18px 0 0; color: #526158; font: 400 1.0625rem/1.6 Figtree, sans-serif; }
-.ff-team-join { display: flex; align-items: center; justify-content: space-between; gap: 56px; max-width: 1200px; margin: 64px auto 96px; padding: 64px; border-radius: 28px; color: #fff; background: #153f31; }
+.ff-team-join { display: flex; align-items: center; justify-content: space-between; gap: 56px; max-width: 1200px; margin: 64px auto 96px; padding: 64px; border-radius: 28px; color: #fff; background: var(--ff-green-700); }
 .ff-team-join h2 { margin: 0 0 18px; max-width: 660px; color: #fff; font: 650 clamp(2.25rem, 3.8vw, 3.75rem)/1.08 Figtree, sans-serif; letter-spacing: -.035em; }
 .ff-team-join p { max-width: 550px; margin: 0; color: #eeeeee; font: 400 1.0625rem/1.6 Figtree, sans-serif; }
-.ff-team-join .ff-team-eyebrow { margin-bottom: 18px; color: #c8dfd0; }
-.ff-team-join-link { display: inline-flex; align-items: center; justify-content: center; flex-shrink: 0; min-height: 52px; padding: 14px 24px; border-radius: 6px; background: #fff; color: #153f31; font: 600 1rem/1.3 Figtree, sans-serif; text-decoration: none; }
-.ff-team-join-link:hover { background: #eeeeee; }
+.ff-team-join .ff-team-eyebrow { margin-bottom: 18px; color: #fff; }
+.ff-team-join-link { display: inline-flex; align-items: center; justify-content: center; flex-shrink: 0; min-height: 52px; padding: 14px 24px; border-radius: 6px; background: #fff; color: var(--ff-green-700); font: 600 1rem/1.3 Figtree, sans-serif; text-decoration: none; }
+.ff-team-join-link:hover { background: #eeeeee; color: var(--ff-green-700); }
 @media (max-width: 1250px) { .ff-team-join { margin-left: 24px; margin-right: 24px; } }
 @media (max-width: 800px) {
   .ff-team-hero { min-height: 460px; }
@@ -53,3 +53,5 @@ body.ff-page-gd-team { background: #fff; }
   .ff-page-gd-team .R-og-team { padding-top: 56px; }
   .ff-team-join { margin: 32px 16px 56px; padding: 36px 24px; border-radius: 20px; }
 }
+
+.ff-team-join-link:focus-visible { outline-color: #fff; outline-offset: 5px; }

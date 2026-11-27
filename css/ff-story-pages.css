@@ -1,5 +1,5 @@
 /* Flash Forward's impact, origin story, and community stories. */
-.ff-editorial { --ffe-forest: #173e30; --ffe-ink: #20372d; --ffe-muted: #526159; --ffe-pale: #f3f3f3; color: var(--ffe-ink); background: #fff; }
+.ff-editorial { --ffe-forest: var(--ff-green-700); --ffe-ink: #20372d; --ffe-muted: #526159; --ffe-pale: #f3f3f3; color: var(--ffe-ink); background: #fff; }
 .ff-editorial :is(h1,h2,h3) { font-family: Figtree, sans-serif; color: inherit; font-weight: 700; letter-spacing: -.035em; line-height: 1.08; }
 .ff-editorial h1 { font-size: clamp(2.65rem, 5.8vw, 5.5rem); margin: 0 0 24px; }
 .ff-editorial h2 { font-size: clamp(2.1rem, 3.7vw, 3.5rem); margin: 0 0 28px; }
@@ -17,7 +17,7 @@
 .ffe-link::after { content: "↗"; }
 .ffe-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 18px 28px; margin-top: 30px; }
 .ffe-button { appearance: none; display: inline-flex; align-items: center; justify-content: center; min-height: 50px; padding: 13px 25px; border: 1px solid var(--ffe-forest); border-radius: 4px; background: var(--ffe-forest); color: #fff !important; font: 600 1rem/1.4 Figtree, sans-serif; text-decoration: none; cursor: pointer; }
-.ffe-button:hover { background: #245d45; border-color: #245d45; }
+.ffe-button:hover { background: #fff; color: var(--ffe-forest) !important; border-color: var(--ffe-forest); }
 .ffe-button--light { background: #fff; color: var(--ffe-forest) !important; border-color: #fff; }
 .ffe-button--light:hover { background: #eeeeee; border-color: #eeeeee; }
 .ffe-button--outline { background: transparent; color: var(--ffe-forest) !important; }
@@ -265,3 +265,6 @@
   .ffe-profile-head h1 { font-size: 3rem; }
   .ffe-profile-image { height: 340px; }
 }
+
+/* Keep keyboard focus visible on the shared green accent panels. */
+.ff-editorial :is(.ffe-cta,.ffe-origin-feature,.ffe-stories-hero) :is(a,button):focus-visible { outline-color: #fff; }
