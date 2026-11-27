@@ -565,18 +565,22 @@ body.ff-page-ns-home { padding-top: 0; }
 @media (max-width: 1024px) {
   body.ff-page-ns-home { padding-top: 0; }
 }
-body.ff-page-ns-home:not(.is-scrolled) .nav-bar .ff-lockup,
-body.ff-page-ns-home:not(.is-scrolled) .nav-bar .ff-lockup-line,
-body.ff-page-ns-home:not(.is-scrolled) .nav-items .heading-xs,
-body.ff-page-ns-home:not(.is-scrolled) .nav-items .ff-nav-link > a,
-body.ff-page-ns-home:not(.is-scrolled) .cw-icon-chevron-down,
+body.ff-page-ns-home:not(.is-scrolled) .nav-bar:not(:has(.has-dropdown.is-open)) .ff-lockup,
+body.ff-page-ns-home:not(.is-scrolled) .nav-bar:not(:has(.has-dropdown.is-open)) .ff-lockup-line,
+body.ff-page-ns-home:not(.is-scrolled) .nav-bar:not(:has(.has-dropdown.is-open)) .nav-items .heading-xs,
+body.ff-page-ns-home:not(.is-scrolled) .nav-bar:not(:has(.has-dropdown.is-open)) .nav-items .ff-nav-link > a,
+body.ff-page-ns-home:not(.is-scrolled) .nav-bar:not(:has(.has-dropdown.is-open)) .cw-icon-chevron-down,
 body.ff-page-ns-home:not(.is-scrolled) .off-canvas-toggle {
   color: #fff !important;
 }
 
 /* Click opens the panel. Hover only draws the streak.
-   The sheet slides down empty. Link text is painted only after the slide ends. */
+   The sheet starts at the page's top edge, behind the navigation.
+   Link text is painted only after the slide ends. */
 @media (min-width: 1025px) {
+  body.ff-page-ns-home .nav-bar:has(.has-dropdown.is-open) {
+    background: #fff !important;
+  }
   body.ff-page-ns-home .nav-bar-section .has-dropdown > .dropdown.masthead__dropdown--mega {
     display: block !important;
     visibility: hidden;
@@ -584,7 +588,9 @@ body.ff-page-ns-home:not(.is-scrolled) .off-canvas-toggle {
     transform: none !important;
     clip-path: inset(0 0 100% 0);
     pointer-events: none;
-    top: 80px !important;
+    top: 0 !important;
+    padding-top: 128px !important;
+    z-index: -1;
     background: #fff !important;
     transition: clip-path .45s cubic-bezier(0.77, 0, 0.175, 1), visibility 0s linear .45s;
   }
