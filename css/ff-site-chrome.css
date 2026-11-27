@@ -17,7 +17,7 @@ body.R-cw-chrome #site-nav .ff-lockup-mark { filter: none !important; }
 body.R-cw-chrome #site-nav .ff-lockup { position: relative; z-index: 2; pointer-events: auto; }
 body.R-cw-chrome #site-nav .right-side { display: flex !important; gap: 28px; margin-left: auto !important; }
 body.R-cw-chrome #site-nav .ff-nav-contact { position: relative; text-decoration: none; }
-body.R-cw-chrome #site-nav .donate-link { position: relative; background: #1e6b45 !important; color: #fff !important; }
+body.R-cw-chrome #site-nav .donate-link { position: relative; background: var(--ff-green-700) !important; color: #fff !important; }
 body.R-cw-chrome #site-nav .donate-link .heading-xs { color: #fff !important; }
 body.R-cw-chrome #site-nav .donate-link .heading-xs { position: relative; }
 body.R-cw-chrome #site-nav .donate-link .heading-xs::after {
@@ -40,9 +40,13 @@ body.R-cw-chrome #site-nav :is(.dropdown-parent-link:hover > button,.dropdown-pa
 body.R-cw-chrome #site-nav :is(a,button):focus-visible, body.R-cw-chrome .ff-drawer :is(a,button):focus-visible, body.R-cw-chrome .ff-bbg :is(a,button,input):focus-visible { outline: 2px solid #2f8f5b; outline-offset: 5px; }
 body.R-cw-chrome.ff-page-ns-home { padding-top: 0; }
 body.R-cw-chrome.ff-page-ns-home:not(.is-scrolled) #site-nav:not(:has(.is-open)) { background: transparent !important; }
-body.R-cw-chrome.ff-page-news:not(.is-scrolled) #site-nav:not(:has(.is-open)) { background: #173f2e !important; }
+body.R-cw-chrome.ff-page-news:not(.is-scrolled) #site-nav:not(:has(.is-open)) { background: var(--ff-green-700) !important; }
 body.R-cw-chrome:is(.ff-page-ns-home,.ff-page-news):not(.is-scrolled) #site-nav:not(:has(.is-open)) :is(.ff-lockup,.ff-lockup-name,.ff-lockup-line,.dropdown-parent-link > button,.ff-nav-link > a,.ff-nav-contact,.cw-icon-chevron-down,.off-canvas-toggle) { color: #fff !important; }
 body.R-cw-chrome.ff-page-news:not(.is-scrolled) #site-nav:not(:has(.is-open)) .ff-lockup-mark { filter: brightness(0) invert(1) !important; }
+/* The News masthead shares the accent background, so its Donate action is inverse. */
+body.R-cw-chrome.ff-page-news:not(.is-scrolled) #site-nav:not(:has(.is-open)) .donate-link { background: #fff !important; color: var(--ff-green-700) !important; }
+body.R-cw-chrome.ff-page-news:not(.is-scrolled) #site-nav:not(:has(.is-open)) .donate-link .heading-xs { color: var(--ff-green-700) !important; }
+body.R-cw-chrome.ff-page-news:not(.is-scrolled) #site-nav:not(:has(.is-open)) :is(a,button):focus-visible { outline-color: #fff; }
 @media (min-width: 1025px) {
   body.R-cw-chrome #site-nav .off-canvas-toggle { display: none !important; }
   body.R-cw-chrome #site-nav .has-dropdown > .dropdown.masthead__dropdown--mega {
@@ -105,7 +109,7 @@ body.R-cw-chrome footer.ff-bbg .ff-bbg-legal-row--sub { display: flex; justify-c
 /* Two views of one Stories hub. */
 .ff-stories-nav { display: flex; justify-content: center; flex-wrap: wrap; gap: 12px 32px; padding: 22px 24px; background: #f4f4f4; border-bottom: 1px solid #dedede; font: 600 15px/1.5 Figtree,sans-serif; }
 .ff-stories-nav a { color: #365249; text-decoration: none; padding-block: 4px; border-bottom: 2px solid transparent; }
-.ff-stories-nav a:is(:hover,:focus-visible,[aria-current="page"]) { color: #1e6b45; border-bottom-color: #2f8f5b; }
+.ff-stories-nav a:is(:hover,:focus-visible,[aria-current="page"]) { color: var(--ff-green-700); border-bottom-color: #2f8f5b; }
 /* Keep the existing FAQ appearance while making its answers keyboard accessible. */
 .R-gd-faq .faqs-section .accordion-panel[hidden] { display: none; }
 .R-gd-faq .faqs-section .accordion-panel:not([hidden]) { display: block; }

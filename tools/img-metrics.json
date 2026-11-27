@@ -824,25 +824,25 @@
  {
   "page": "/",
   "idx": 1,
-  "src": "/images/students/student-with-flashlight-1.jpg",
-  "orig": "/images/students/student-with-flashlight-1.jpg",
-  "nw": 1151,
-  "nh": 1094,
-  "par": "ff-home-hero__photo",
-  "cls": "",
+  "src": "/images/students/studying-after-dark.webp",
+  "orig": "/images/students/studying-after-dark.webp",
+  "nw": 1250,
+  "nh": 866,
+  "par": "full-width-card cc-medium",
+  "cls": "image-cover parallax-hero",
   "w": {
-   "1440x900": 388,
-   "1024x768": 370,
-   "900x900": 370,
-   "768x1024": 720,
-   "390x844": 342
+   "1440x900": 1440,
+   "1024x768": 1024,
+   "900x900": 900,
+   "768x1024": 768,
+   "390x844": 390
   },
   "t": {
-   "1440x900": 185,
-   "1024x768": 185,
-   "900x900": 185,
-   "768x1024": 574,
-   "390x844": 758
+   "1440x900": 0,
+   "1024x768": 0,
+   "900x900": 0,
+   "768x1024": 0,
+   "390x844": 0
   }
  },
  {

@@ -24,3 +24,19 @@
   .ffi-track-grid .ffi-track-icon { width: 64px; height: 64px; }
   .R-wol-lighthouse .list-item-content__description { font-size: 17px; }
 }
+
+/* Our Model uses the same accent as Get Involved, with white inverse actions. */
+.R-wol-lighthouse .page-section[data-section-theme="black"] {
+  --siteBackgroundColor: var(--ff-green-700);
+  --primaryButtonBackgroundColor: #fff;
+  --primaryButtonTextColor: var(--ff-green-700);
+}
+.R-wol-lighthouse .page-section[data-section-theme="black"] .section-background { background-color: var(--ff-green-700); }
+.R-wol-lighthouse .page-section[data-section-theme="black"] .section-background-overlay { background: transparent; }
+.R-wol-lighthouse .page-section[data-section-theme="black"] .sqs-block-button-element {
+  background: #fff;
+  color: var(--ff-green-700) !important;
+  border: 1px solid #fff;
+}
+.R-wol-lighthouse .page-section[data-section-theme="black"] .sqs-block-button-element:hover { background: #eeeeee; opacity: 1; }
+.R-wol-lighthouse .page-section[data-section-theme="black"] a:focus-visible { outline-color: #fff; outline-offset: 5px; }

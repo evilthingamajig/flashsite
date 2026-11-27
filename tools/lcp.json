@@ -1,7 +1,7 @@
 {
  "/": {
-  "el": "IMG.",
-  "img": "/images/students/student-with-flashlight-1.jpg",
+  "el": "IMG.image-cover.parallax-hero",
+  "img": "/images/students/studying-after-dark.webp",
   "text": "",
   "size": 200596,
   "t": 224,
