@@ -1111,6 +1111,24 @@
    }
   ]
  },
+ "/images/team/alexander-dauche.jpg": {
+  "nw": 896,
+  "nh": 1088,
+  "v": [
+   {
+    "w": 480,
+    "src": "/images/opt/team/alexander-dauche.w480.afef65be.webp"
+   },
+   {
+    "w": 800,
+    "src": "/images/opt/team/alexander-dauche.w800.4f09f863.webp"
+   },
+   {
+    "w": 896,
+    "src": "/images/opt/team/alexander-dauche.w896.749e780b.webp"
+   }
+  ]
+ },
  "/images/team/andy-v2.webp": {
   "nw": 535,
   "nh": 660,
@@ -1122,6 +1140,20 @@
    {
     "w": 535,
     "src": "/images/opt/team/andy-v2.w535.eba0222a.webp"
+   }
+  ]
+ },
+ "/images/team/joshua-bloom.png": {
+  "nw": 800,
+  "nh": 800,
+  "v": [
+   {
+    "w": 480,
+    "src": "/images/opt/team/joshua-bloom.w480.358372a6.webp"
+   },
+   {
+    "w": 800,
+    "src": "/images/opt/team/joshua-bloom.w800.ffc8a071.webp"
    }
   ]
  },
