@@ -675,8 +675,6 @@ body.ff-page-ns-home .w-dropdown:has(.accordion_content.ns-sup-acc) {
   body.ff-page-ns-home .partners-list.ff-logo-marquee { animation: none; }
 }
 
-/* Homepage: when the mobile menu is open the bar turns white, so the logo text and close button must go dark. */
-body.ff-page-ns-home.off-canvas-open .nav-bar { background: #fff !important; }
-body.ff-page-ns-home.off-canvas-open .nav-bar .ff-lockup,
-body.ff-page-ns-home.off-canvas-open .nav-bar .ff-lockup-line,
-body.ff-page-ns-home.off-canvas-open .off-canvas-toggle { color: #18231D !important; }
+/* Keep the logo marquee from widening the page on phones (it pushed the layout to ~3000px). */
+body.ff-page-ns-home .animated-partners,
+body.ff-page-ns-home .animated-partners .partners-wrapper { max-width: 100%; overflow: hidden; }

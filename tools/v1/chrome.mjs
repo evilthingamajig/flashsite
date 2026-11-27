@@ -9,16 +9,8 @@ function megaItem(href, title) {
   return `<li class="masthead__item masthead__item--depth-1"><a class="masthead__link masthead__link--depth-1" href="${href}"><span class="masthead__item-text">${title}</span></a></li>`;
 }
 
-function subnavItem(href, title) {
-  return `<a class="subnav-item bg-cw-brand-yellow-300 flex items-center justify-between p-2 my-5" href="${href}"><div class="mr-2"><div class="heading-m mb-1">${title}</div></div>${ARROW_LG}</a>`;
-}
-
 function hasDropdown(label, childrenHtml) {
   return `<li class="has-dropdown masthead__item masthead__item--dropdown-mega"><span class="nav-hover-extender absolute bg-transparent z-10"></span><span class="flex items-center dropdown-parent-link"><button type="button" class="heading-xs relative z-20 mr-4" aria-expanded="false">${label}</button><span class="h80 icn cw-icon-chevron-down"></span></span><div class="dropdown masthead__dropdown masthead__dropdown--mega"><div class="ff-mega-cols"><ul class="masthead__items ff-mega-grid">${childrenHtml}</ul></div></div></li>`;
-}
-
-function offSection(label, childrenHtml) {
-  return `<li class="nav-section p-6 border-b border-solid border-grey-50"><div class="nav-section-header flex items-center justify-between cursor-pointer"><div class="heading-xs">${label}</div><span class="icn cw-icon-plus-sm bg-cw-white border border-cw-brand-grey-800 rounded-full flex items-center justify-center"></span></div><div class="subnav mt-8">${childrenHtml}</div></li>`;
 }
 
 export function head({ title, description, canonical, extraHead = '', bodyClass = '' }) {
@@ -54,6 +46,11 @@ const INVOLVED = [
   ['/get-involved/sponsor-a-project/', 'Sponsor a project'],
 ];
 const footLink = (href, label) => `<a href="${href}">${label}</a>`;
+const drawerLink = (href, label) => `<li><a href="${href}">${label}</a></li>`;
+const svg = (d) => `<svg viewBox="0 0 24 24" width="24" height="24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="${d}"/></svg>`;
+const CHEV_R = svg('M9 5l7 7-7 7');
+const CHEV_L = svg('M15 5l-7 7 7 7');
+const CLOSE = svg('M5 5l14 14M19 5L5 19');
 const each = (list, fn) => list.map(([href, label]) => fn(href, label)).join('');
 
 export function nav(active = '') {
@@ -62,9 +59,6 @@ export function nav(active = '') {
 
   const topLink = (href, label) =>
     `<li class="ff-nav-link"><a class="heading-xs" href="${href}">${label}</a></li>`;
-
-  const offWho = each(WHO, subnavItem);
-  const offInvolved = each(INVOLVED, subnavItem);
 
   return `<!--ff:chrome-nav-->
 <nav class="nav-bar" id="site-nav" data-off-canvas="" aria-label="Main">
@@ -96,17 +90,26 @@ export function nav(active = '') {
     </section>
   </span></div>
 </nav>
-<nav class="right-off-canvas-menu theme-design-system-v1 bg-cw-brand-yellow-100" id="ff-offcanvas" aria-label="Mobile">
-  <ul class="off-canvas-list">
-    ${offSection('Who we are', offWho)}
-    ${offSection('Get involved', offInvolved)}
-    <div class="p-6 pt-8">
-      <a class="flex items-center mb-5" href="/news/"><div class="heading-s">News</div></a>
-      <a class="flex items-center mb-5" href="/contact/"><div class="heading-s">Contact</div></a>
-      <a class="flex items-center" href="/donate/"><div class="heading-s">Donate</div></a>
-    </div>
+<nav class="right-off-canvas-menu ff-drawer" id="ff-offcanvas" aria-label="Mobile" aria-hidden="true">
+  <div class="ff-drawer-top">
+    <button type="button" class="ff-drawer-back" hidden>${CHEV_L}<span>Back</span></button>
+    <a class="ff-drawer-donate" href="/donate/">Donate</a>
+    <button type="button" class="ff-drawer-close" aria-label="Close menu">${CLOSE}</button>
+  </div>
+  <ul class="ff-drawer-panel is-active" data-panel="root">
+    <li><button type="button" data-open="who"><span>Who we are</span>${CHEV_R}</button></li>
+    <li><button type="button" data-open="involved"><span>Get involved</span>${CHEV_R}</button></li>
+    <li><a href="/news/">News</a></li>
+    <li><a href="/contact/">Contact</a></li>
+  </ul>
+  <ul class="ff-drawer-panel" data-panel="who" hidden>
+    ${each(WHO, drawerLink)}
+  </ul>
+  <ul class="ff-drawer-panel" data-panel="involved" hidden>
+    ${each(INVOLVED, drawerLink)}
   </ul>
 </nav>
+<div class="ff-drawer-scrim" hidden></div>
 <!--/ff:chrome-nav-->
 `;
 }

@@ -275,15 +275,26 @@
   var toggle=document.querySelector('.off-canvas-toggle, .offcanvas-open-link');
   var panel=document.getElementById('ff-offcanvas')||document.querySelector('.right-off-canvas-menu');
 
+  var scrim=document.querySelector('.ff-drawer-scrim');
+  var back=panel&&panel.querySelector('.ff-drawer-back');
+
+  // Drill-down: show one panel at a time; Back returns to the top level.
+  function showPanel(name){
+    if(!panel)return;
+    panel.querySelectorAll('.ff-drawer-panel').forEach(function(p){
+      var on=p.getAttribute('data-panel')===name;
+      p.hidden=!on; p.classList.toggle('is-active',on);
+    });
+    if(back)back.hidden=(name==='root');
+    panel.scrollTop=0;
+  }
+
   function setOpen(open){
     body.classList.toggle('off-canvas-open', open);
-    body.classList.remove('off-canvas-animate-then-close');
-    if(toggle){
-      toggle.setAttribute('aria-expanded', String(open));
-      toggle.classList.toggle('cw-icon-reorder-thin', !open);
-      toggle.classList.toggle('cw-icon-angle-close', open);
-      toggle.classList.toggle('cw-icon-x', open);
-    }
+    if(toggle)toggle.setAttribute('aria-expanded', String(open));
+    if(panel)panel.setAttribute('aria-hidden', String(!open));
+    if(scrim)scrim.hidden=false;
+    if(!open)showPanel('root');
   }
 
   if(toggle){
@@ -292,22 +303,14 @@
       setOpen(!body.classList.contains('off-canvas-open'));
     });
   }
-
-  // Accordion sections inside off-canvas (CW .nav-section.active)
+  if(scrim)scrim.addEventListener('click',function(){ setOpen(false); });
   if(panel){
-    panel.querySelectorAll('.nav-section-header').forEach(function(hdr){
-      hdr.addEventListener('click',function(e){
-        // allow plain links in header to navigate
-        if(hdr.tagName==='A' && hdr.getAttribute('href') && hdr.getAttribute('href')!=='#')return;
-        e.preventDefault();
-        var section=hdr.closest('.nav-section');
-        if(!section)return;
-        var open=!section.classList.contains('active');
-        panel.querySelectorAll('.nav-section.active').forEach(function(other){
-          if(other!==section)other.classList.remove('active');
-        });
-        section.classList.toggle('active', open);
-      });
+    panel.addEventListener('click',function(e){
+      var t=e.target.closest('[data-open], .ff-drawer-back, .ff-drawer-close');
+      if(!t)return;
+      if(t.hasAttribute('data-open'))showPanel(t.getAttribute('data-open'));
+      else if(t.classList.contains('ff-drawer-back'))showPanel('root');
+      else setOpen(false);
     });
   }
 
