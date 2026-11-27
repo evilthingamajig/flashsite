@@ -5,12 +5,6 @@
 .ff-page-news #main *, .ff-page-news #main *::before, .ff-page-news #main *::after { box-sizing: border-box; }
 .ff-page-news #main :is(h1,h2,h3,p) { padding: 0; }
 .ff-news-wrap { width: calc(100% - 96px); max-width: 1240px; margin-inline: auto; }
-.ff-page-news .nav-bar, .ff-page-news .nav-bar-section { background: #152e49 !important; border-color: transparent !important; }
-.ff-page-news .nav-bar-section :is(.ff-lockup-name,.ff-lockup-line,.dropdown-parent-link > button,.ff-nav-link > a,.ff-nav-contact,.off-canvas-toggle,.cw-icon-chevron-down) { color: #fff !important; }
-.ff-page-news .nav-bar .ff-lockup-mark { filter: brightness(0) invert(1); }
-.ff-page-news .nav-bar:has(.has-dropdown:hover,.has-dropdown:focus-within), .ff-page-news .nav-bar:has(.has-dropdown:hover,.has-dropdown:focus-within) .nav-bar-section { background: #fff !important; }
-.ff-page-news .nav-bar:has(.has-dropdown:hover,.has-dropdown:focus-within) :is(.ff-lockup-name,.ff-lockup-line,.dropdown-parent-link > button,.ff-nav-link > a,.ff-nav-contact,.cw-icon-chevron-down) { color: #18231d !important; }
-.ff-page-news .nav-bar:has(.has-dropdown:hover,.has-dropdown:focus-within) .ff-lockup-mark { filter: none; }
 .ff-news-feature { background: #152e49; color: #fff; padding: 30px 0 100px; }
 .ff-news-feature-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center; }
 .ff-news-feature-image, .ff-news-card-image { display: block; overflow: hidden; border-radius: 3px; }

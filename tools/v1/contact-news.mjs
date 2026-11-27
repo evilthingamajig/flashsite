@@ -8,7 +8,7 @@ const unesc = (s) => s.replace(/&amp;/g, '&').replace(/&#39;|&#039;|&apos;/g, "'
 const arrow = '<svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M4 12h16m-6-6 6 6-6 6"/></svg>';
 function page(path, title, description, bodyClass, css, main, script = '') {
   let html = head({ title: `${title} | Flash Forward Foundation`, description, canonical: path, bodyClass });
-  html = html.replace('ff.css,cw-chrome.css', `ff.css,cw-chrome.css,${css}`);
+  html = html.replace(/<!--ff:css [^>]+-->/, `<!--ff:css ff.css,cw-chrome.css,${css},ff-site-chrome.css-->`);
   html += nav() + `<main id="main" class="ff-main">${main}</main>` + footer();
   if (script) html = html.replace('</body>', `<script src="${script}" defer></script>\n</body>`);
   writeFileSync(`.${path}index.html`, html);
@@ -16,7 +16,7 @@ function page(path, title, description, bodyClass, css, main, script = '') {
 
 const faqs = [
   ['What does Flash Forward Foundation do?', 'We are a student-led nonprofit working to help students study after dark. We design solar study lights, work with assembly partners to build them, and place them through local distribution partners. <a href="/impact/">See our impact</a>.'],
-  ['How can my organization partner with you?', 'We work with organizations that can help build lights or place them with students. Tell us about your organization, location, and the kind of partnership you have in mind. You can also read about <a href="/get-involved/partners/assembly/">assembly partnerships</a> and <a href="/get-involved/partners/distribution/">distribution partnerships</a>.'],
+  ['How can my organization get involved?', 'Groups that want to assemble lights can explore <a href="/get-involved/builders/">Builders</a>. Schools and nonprofits that help place lights with students can explore <a href="/get-involved/partners/">distribution partnerships</a>. Businesses can visit <a href="/get-involved/corporate-sponsors/">Corporate sponsors</a>.'],
   ['How do I apply for an internship?', 'Use our <a href="/join/apply/">internship application</a> to tell us about your interests and experience. Internship applications have their own form, so you do not need to submit your application through this contact page.'],
   ['Who decides which students receive the lights?', 'Our distribution partners know the schools and communities they serve. Each partner decides who receives a light. Flash Forward provides the lights to partners free of charge.'],
   ['How can I support the work?', 'You can <a href="/donate/">make a donation</a>, <a href="/news/start-a-fundraiser/">start a fundraiser</a>, or help us connect with a potential assembly or distribution partner.'],
@@ -38,7 +38,7 @@ page('/contact/', 'Contact Us', 'Contact Flash Forward Foundation about partners
           <div><label for="contact-last-name">Last name</label><input id="contact-last-name" name="last_name" autocomplete="family-name" maxlength="100" required></div>
         </div>
         <div><label for="contact-email">Email</label><input id="contact-email" name="email" type="email" autocomplete="email" maxlength="254" required></div>
-        <div><label for="contact-topic">What would you like to talk about?</label><select id="contact-topic" name="topic" required><option value="" selected disabled>Select a topic</option><option>Partnerships</option><option>Internships</option><option>Donations and fundraising</option><option>Press and media</option><option>Sharing a story</option><option>Something else</option></select></div>
+        <div><label for="contact-topic">What would you like to talk about?</label><select id="contact-topic" name="topic" required><option value="" selected disabled>Select a topic</option><option>Builders — assembling lights</option><option>Distribution partnerships</option><option>Corporate sponsorships</option><option>Ambassadors</option><option>Internships</option><option>Donations and fundraising</option><option>Press and media</option><option>Sharing a story</option><option>Something else</option></select></div>
         <div><label for="contact-message">Message</label><textarea id="contact-message" name="message" rows="5" maxlength="10000" required></textarea></div>
         <p class="ff-contact-privacy">By submitting this form, you agree that we may use your information to respond to your message in accordance with our <a href="/privacy/">Privacy Policy</a>.</p>
         <button class="ff-contact-button" type="submit">Send message</button>
@@ -54,7 +54,7 @@ page('/contact/', 'Contact Us', 'Contact Flash Forward Foundation about partners
     <div class="ff-contact-questions">${faqs.map(([q, a]) => `<details><summary>${q}<svg viewBox="0 0 20 20" width="20" height="20" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8"><path d="m5 8 5 5 5-5"/></svg></summary><div class="ff-contact-answer"><p>${a}</p></div></details>`).join('')}</div>
   </section>
   <section class="ff-contact-next ff-contact-wrap" aria-label="Get involved">
-    <div><h2>Interested in<br>partnering?</h2><p>Bring your school, club, or organization into the work.</p><a class="ff-contact-button" href="/get-involved/partners/assembly/">Build lights with us</a><a class="ff-contact-small-link" href="/get-involved/partners/distribution/">Explore distribution partnerships ${arrow}</a></div>
+    <div><h2>Interested in<br>building?</h2><p>Bring your school, club, or organization together to build solar study lights.</p><a class="ff-contact-button" href="/get-involved/builders/">Explore Builders</a></div>
     <div><h2>Ready for<br>an internship?</h2><p>Put your skills to work with a student-led team.</p><a class="ff-contact-button" href="/join/apply/">Apply for an internship</a></div>
   </section>`);
 
@@ -78,10 +78,11 @@ const featuredHtml = readFileSync('news/program-record/index.html', 'utf8');
 const featuredTitle = unesc(featuredHtml.match(/<h1[^>]*>([\s\S]*?)<\/h1>/)[1]);
 const cards = news.map(n => `<article class="ff-news-card" data-news-category="${n.category}"><a class="ff-news-card-image" href="/news/${n.slug}/" tabindex="-1" aria-hidden="true"><img src="${n.image}" alt="${esc(n.alt)}" loading="lazy" decoding="async"></a><h3><a href="/news/${n.slug}/">${esc(n.title)}</a></h3><p>${esc(n.description)}</p>${n.date ? `<time datetime="${n.date}">${n.label}</time>` : '<span class="ff-news-date">Fundraising guide</span>'}</article>`).join('');
 
-page('/news/', 'News', 'The latest news from Flash Forward Foundation: solar study light deliveries, student voices, and updates from our student-led team.', 'ff-page-news', 'ff-news.css', `
+page('/news/', 'Stories & News', 'Stories and news from Flash Forward Foundation: solar study light deliveries, student voices, and updates from our student-led team.', 'ff-page-news', 'ff-news.css', `
+  <nav class="ff-stories-nav" aria-label="Stories"><a href="/news/" aria-current="page">News &amp; updates</a><a href="/impact-stories/">Community stories</a><a href="/impact-stories/share/">Share your story</a></nav>
   <section class="ff-news-feature" aria-labelledby="latest-news-heading"><div class="ff-news-wrap ff-news-feature-grid">
     <a class="ff-news-feature-image" href="/news/program-record/" tabindex="-1" aria-hidden="true"><img src="/images/build/packagedlights.webp" alt="Packaged Flash Forward solar study lights ready for delivery" fetchpriority="high" decoding="sync"></a>
-    <div class="ff-news-feature-copy"><h1 id="latest-news-heading">Latest news</h1><h2><a href="/news/program-record/">${esc(featuredTitle)}</a></h2><p>All 72 solar study lights built by student interns have been delivered to three partners: Brighten Haiti, Loksadhana in India and Malaika in the DR Congo.</p><a class="ff-news-outline" href="/news/program-record/">Read more</a></div>
+    <div class="ff-news-feature-copy"><h1 id="latest-news-heading">Stories &amp; news</h1><h2><a href="/news/program-record/">${esc(featuredTitle)}</a></h2><p>All 72 solar study lights built by student interns have been delivered to three partners: Brighten Haiti, Loksadhana in India and Malaika in the DR Congo.</p><a class="ff-news-outline" href="/news/program-record/">Read more</a></div>
   </div></section>
   <section class="ff-news-latest ff-news-wrap" aria-labelledby="news-latest-heading">
     <div class="ff-news-toolbar"><h2 id="news-latest-heading" tabindex="-1">Latest from Flash Forward</h2><div class="ff-news-filters" role="group" aria-label="Filter news by topic" hidden>${[['all','All'],['deliveries','Deliveries'],['student-voices','Student voices'],['our-work','Our work'],['foundation','Foundation']].map(([key,label]) => `<button type="button" data-news-filter="${key}" aria-pressed="${key === 'all'}">${label}</button>`).join('')}</div></div>

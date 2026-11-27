@@ -1045,8 +1045,7 @@
     box-shadow: 0 28px 48px rgba(0, 0, 0, 0.08);
     z-index: 100000;
   }
-  .R-cw-chrome .nav-bar-section .has-dropdown:hover > .dropdown.masthead__dropdown--mega,
-  .R-cw-chrome .nav-bar-section .has-dropdown:focus-within > .dropdown.masthead__dropdown--mega {
+  .R-cw-chrome .nav-bar-section .has-dropdown.is-open > .dropdown.masthead__dropdown--mega {
     display: block;
   }
   .R-cw-chrome .ff-mega-cols {

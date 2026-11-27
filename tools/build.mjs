@@ -1,5 +1,6 @@
 // Flash Forward build: per-page CSS inline, fonts, icons, images, JS, SEO.
 // Idempotent — re-runnable. Run: cd tools && node build.mjs
+import './v1/sync-site-chrome.mjs';
 import { readFileSync, writeFileSync, readdirSync, statSync, existsSync } from 'node:fs';
 import { join, dirname, basename, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';

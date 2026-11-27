@@ -252,71 +252,129 @@
   draw(1);onScroll();
 })();
 
-// charity:water–style chrome: underline dropdowns (CSS) + full-screen off-canvas
+// Shared sticky navigation: click-only desktop panels and the mobile drawer.
 (function(){
   var body=document.body;
-  if(!body||!body.classList.contains('R-cw-chrome')){
-    // legacy ff-nav mega fallback
-    var legacy=document.getElementById('site-nav');
-    if(!legacy||legacy.dataset.ffNavBound)return;
-    legacy.dataset.ffNavBound='1';
-    var t=legacy.querySelector('.ff-nav__toggle');
-    if(t){
-      t.addEventListener('click',function(){
-        var open=legacy.classList.toggle('is-open');
-        t.setAttribute('aria-expanded',String(open));
-      });
-    }
-    return;
-  }
-  if(body.dataset.ffCwChromeBound)return;
-  body.dataset.ffCwChromeBound='1';
-
-  var toggle=document.querySelector('.off-canvas-toggle, .offcanvas-open-link');
-  var panel=document.getElementById('ff-offcanvas')||document.querySelector('.right-off-canvas-menu');
-
+  var nav=document.getElementById('site-nav');
+  if(!body||!nav||!body.classList.contains('R-cw-chrome')||nav.dataset.ffClickNav)return;
+  nav.dataset.ffClickNav='1';
+  var desktop=window.matchMedia('(min-width: 1025px)');
+  var reduced=window.matchMedia('(prefers-reduced-motion: reduce)');
+  var items=Array.from(nav.querySelectorAll('.has-dropdown'));
+  var toggle=nav.querySelector('.off-canvas-toggle');
+  var drawer=document.getElementById('ff-offcanvas');
   var scrim=document.querySelector('.ff-drawer-scrim');
-  var back=panel&&panel.querySelector('.ff-drawer-back');
+  var back=drawer&&drawer.querySelector('.ff-drawer-back');
+  var lastDesktopButton=null;
+  var background=Array.from(document.querySelectorAll('main,footer'));
+  var previousInert=[];
 
-  // Drill-down: show one panel at a time; Back returns to the top level.
-  function showPanel(name){
-    if(!panel)return;
-    panel.querySelectorAll('.ff-drawer-panel').forEach(function(p){
-      var on=p.getAttribute('data-panel')===name;
-      p.classList.toggle('is-active',on); p.inert=!on;
-    });
-    if(back)back.hidden=(name==='root');
-    panel.scrollTop=0;
+  function closeItem(item){
+    clearTimeout(item.ffRevealTimer);
+    var panel=item.querySelector('.dropdown');
+    item.classList.remove('is-revealed');
+    panel.style.transition='none';
+    item.classList.remove('is-open');
+    item.querySelector('button').setAttribute('aria-expanded','false');
+    panel.setAttribute('aria-hidden','true');
+    panel.inert=true;
+    void panel.offsetWidth;
+    panel.style.transition='';
   }
-
-  function setOpen(open){
-    body.classList.toggle('off-canvas-open', open);
-    if(toggle)toggle.setAttribute('aria-expanded', String(open));
-    if(panel)panel.setAttribute('aria-hidden', String(!open));
-    if(scrim)scrim.hidden=false;
-    if(!open)showPanel('root');
+  function closeDesktop(restore){
+    items.forEach(closeItem);
+    if(restore&&lastDesktopButton)lastDesktopButton.focus();
   }
-
-  if(toggle){
-    toggle.addEventListener('click',function(e){
-      e.preventDefault();
-      setOpen(!body.classList.contains('off-canvas-open'));
-    });
+  function openItem(item){
+    closeDesktop(false);
+    lastDesktopButton=item.querySelector('button');
+    item.classList.add('is-open');
+    lastDesktopButton.setAttribute('aria-expanded','true');
+    var panel=item.querySelector('.dropdown');
+    panel.setAttribute('aria-hidden','false');
+    function reveal(){
+      if(!item.classList.contains('is-open'))return;
+      item.classList.add('is-revealed');
+      panel.inert=false;
+    }
+    item.ffRevealTimer=window.setTimeout(reveal,reduced.matches?0:450);
   }
-  if(scrim)scrim.addEventListener('click',function(){ setOpen(false); });
-  if(panel){
-    panel.addEventListener('click',function(e){
-      var t=e.target.closest('[data-open], .ff-drawer-back, .ff-drawer-close');
-      if(!t)return;
-      if(t.hasAttribute('data-open'))showPanel(t.getAttribute('data-open'));
-      else if(t.classList.contains('ff-drawer-back'))showPanel('root');
-      else setOpen(false);
-    });
-  }
-
-  document.addEventListener('keydown',function(e){
-    if(e.key==='Escape' && body.classList.contains('off-canvas-open')) setOpen(false);
+  nav.addEventListener('click',function(e){
+    var trigger=e.target.closest('.dropdown-parent-link');
+    if(!trigger||!desktop.matches)return;
+    e.preventDefault();
+    var item=trigger.closest('.has-dropdown');
+    if(item.classList.contains('is-open'))closeDesktop(false);
+    else openItem(item);
   });
+  document.addEventListener('click',function(e){
+    if(!nav.contains(e.target))closeDesktop(false);
+  });
+
+  function showPanel(name,focus){
+    if(!drawer)return;
+    drawer.querySelectorAll('.ff-drawer-panel').forEach(function(panel){
+      var on=panel.dataset.panel===name;
+      panel.classList.toggle('is-active',on);
+      panel.inert=!on;
+      if(on){
+        panel.scrollTop=0;
+        if(focus)panel.querySelector('a,button').focus();
+      }
+    });
+    if(back)back.hidden=name==='root';
+  }
+  function setDrawer(open,restore){
+    if(!drawer)return;
+    var wasOpen=body.classList.contains('off-canvas-open');
+    body.classList.toggle('off-canvas-open',open);
+    toggle.setAttribute('aria-expanded',String(open));
+    drawer.setAttribute('aria-hidden',String(!open));
+    drawer.inert=!open;
+    if(scrim)scrim.hidden=false;
+    if(open){
+      closeDesktop(false);
+      if(!wasOpen){
+        previousInert=background.map(function(el){return el.inert;});
+        background.forEach(function(el){el.inert=true;});
+      }
+      showPanel('root',false);
+      drawer.querySelector('.ff-drawer-close').focus();
+    }else{
+      if(wasOpen)background.forEach(function(el,i){el.inert=previousInert[i];});
+      showPanel('root',false);
+      if(restore&&wasOpen)toggle.focus();
+    }
+  }
+  if(toggle)toggle.addEventListener('click',function(){setDrawer(!body.classList.contains('off-canvas-open'),true);});
+  if(scrim)scrim.addEventListener('click',function(){setDrawer(false,true);});
+  if(drawer)drawer.addEventListener('click',function(e){
+    var t=e.target.closest('[data-open],.ff-drawer-back,.ff-drawer-close,a');
+    if(!t)return;
+    if(t.hasAttribute('data-open'))showPanel(t.dataset.open,true);
+    else if(t.classList.contains('ff-drawer-back'))showPanel('root',true);
+    else setDrawer(false,!t.matches('a'));
+  });
+  document.addEventListener('keydown',function(e){
+    var drawerOpen=body.classList.contains('off-canvas-open');
+    if(e.key==='Escape'){
+      if(drawerOpen)setDrawer(false,true);
+      else if(nav.querySelector('.is-open'))closeDesktop(true);
+    }
+    if(e.key==='Tab'&&drawerOpen){
+      var focusable=Array.from(drawer.querySelectorAll('a,button')).filter(function(el){return !el.closest('[inert]')&&!el.hidden&&el.getClientRects().length;});
+      var first=focusable[0],last=focusable[focusable.length-1];
+      if(e.shiftKey&&document.activeElement===first){e.preventDefault();last.focus();}
+      else if(!e.shiftKey&&document.activeElement===last){e.preventDefault();first.focus();}
+    }
+  });
+  nav.addEventListener('focusout',function(){
+    window.setTimeout(function(){if(!nav.contains(document.activeElement))closeDesktop(false);},0);
+  });
+  desktop.addEventListener('change',function(){closeDesktop(false);setDrawer(false,false);});
+  function syncBar(){body.classList.toggle('is-scrolled',window.scrollY>12);}
+  syncBar();
+  window.addEventListener('scroll',syncBar,{passive:true});
 })();
 
 // Team directory filters (Opportunity Green card layout, FF departments)

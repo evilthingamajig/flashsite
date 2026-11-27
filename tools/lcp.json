@@ -39,22 +39,6 @@
   "t": 116,
   "vp": "390x844"
  },
- "/get-involved/": {
-  "el": "IMG.",
-  "img": "/images/opt/build/packagedlights.w600.e0c41ddb.webp",
-  "text": "",
-  "size": 69635,
-  "t": 120,
-  "vp": "390x844"
- },
- "/get-involved/internship/": {
-  "el": "IMG.",
-  "img": "/images/opt/build/soldering-electronics.w638.ec2eb488.webp",
-  "text": "",
-  "size": 172800,
-  "t": 144,
-  "vp": "1440x900"
- },
  "/news/brighten-haiti-42-lights/": {
   "el": "IMG.",
   "img": "/images/opt/build/assembly-lights.w450.1e836158.webp",
@@ -246,30 +230,6 @@
   "size": 14120,
   "t": 156,
   "vp": "390x844"
- },
- "/internships/marketing/": {
-  "el": "IMG.",
-  "img": "/images/opt/build/flashfinishedworkshop.w800.8f267722.webp",
-  "text": "",
-  "size": 172800,
-  "t": 144,
-  "vp": "1440x900"
- },
- "/internships/partnerships-operations/": {
-  "el": "IMG.",
-  "img": "/images/opt/build/packagedlights.w600.e0c41ddb.webp",
-  "text": "",
-  "size": 172800,
-  "t": 144,
-  "vp": "1440x900"
- },
- "/internships/fundraising/": {
-  "el": "IMG.",
-  "img": "/images/opt/students/student-with-flashlight-1.w800.85ac48ab.webp",
-  "text": "",
-  "size": 172800,
-  "t": 144,
-  "vp": "1440x900"
  },
  "/internships/remote/": {
   "el": "IMG.",
