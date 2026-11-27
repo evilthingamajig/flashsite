@@ -384,32 +384,32 @@
     },
     {
       "source": "/join/open-roles/director-fundraising",
-      "destination": "/join/open-roles/",
+      "destination": "/join/open-roles/#director-of-fundraising",
       "permanent": true
     },
     {
       "source": "/join/open-roles/director-fundraising/",
-      "destination": "/join/open-roles/",
+      "destination": "/join/open-roles/#director-of-fundraising",
       "permanent": true
     },
     {
       "source": "/join/open-roles/director-marketing",
-      "destination": "/join/open-roles/",
+      "destination": "/join/open-roles/#director-of-marketing",
       "permanent": true
     },
     {
       "source": "/join/open-roles/director-marketing/",
-      "destination": "/join/open-roles/",
+      "destination": "/join/open-roles/#director-of-marketing",
       "permanent": true
     },
     {
       "source": "/join/open-roles/director-partnerships",
-      "destination": "/join/open-roles/",
+      "destination": "/join/open-roles/#director-of-partnerships",
       "permanent": true
     },
     {
       "source": "/join/open-roles/director-partnerships/",
-      "destination": "/join/open-roles/",
+      "destination": "/join/open-roles/#director-of-partnerships",
       "permanent": true
     },
     {
