@@ -12,6 +12,11 @@
   ],
   "redirects": [
     {
+      "source": "/get-involved/corporate-sponsors/",
+      "destination": "/get-involved/sponsor-a-project/",
+      "permanent": true
+    },
+    {
       "source": "/get-involved/corporate-sponsors/:path*",
       "destination": "/get-involved/sponsor-a-project/",
       "permanent": true
