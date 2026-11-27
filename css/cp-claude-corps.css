@@ -8181,50 +8181,50 @@ body.mobie-menu-open .v3-announcement, .R-cp-claude-corps.mobie-menu-open .v3-an
   font-style: italic;
   font-weight: 300;
   font-display: swap;
-  src: url(https://fonts.gstatic.com/s/poppins/v24/pxiDyp8kv8JHgFVrJJLm21llEA.ttf) format('truetype');
+  src:url(/fonts/figtree-400.0942e874.woff2) format("woff2");
 }
 
-@font-face {
+@font-face{
   font-family: 'Poppins';
   font-style: italic;
   font-weight: 400;
   font-display: swap;
-  src: url(https://fonts.gstatic.com/s/poppins/v24/pxiGyp8kv8JHgFVrJJLedw.ttf) format('truetype');
+  src:url(/fonts/figtree-400.0942e874.woff2) format("woff2");
 }
-@font-face {
+@font-face{
   font-family: 'Poppins';
   font-style: normal;
   font-weight: 300;
   font-display: swap;
-  src: url(https://fonts.gstatic.com/s/poppins/v24/pxiByp8kv8JHgFVrLDz8V1s.ttf) format('truetype');
+  src:url(/fonts/figtree-400.0942e874.woff2) format("woff2");
 }
-@font-face {
+@font-face{
   font-family: 'Poppins';
   font-style: normal;
   font-weight: 400;
   font-display: swap;
-  src: url(https://fonts.gstatic.com/s/poppins/v24/pxiEyp8kv8JHgFVrFJA.ttf) format('truetype');
+  src:url(/fonts/figtree-400.0942e874.woff2) format("woff2");
 }
-@font-face {
+@font-face{
   font-family: 'Poppins';
   font-style: normal;
   font-weight: 500;
   font-display: swap;
-  src: url(https://fonts.gstatic.com/s/poppins/v24/pxiByp8kv8JHgFVrLGT9V1s.ttf) format('truetype');
+  src:url(/fonts/figtree-500.8366e802.woff2) format("woff2");
 }
-@font-face {
+@font-face{
   font-family: 'Poppins';
   font-style: normal;
   font-weight: 600;
   font-display: swap;
-  src: url(https://fonts.gstatic.com/s/poppins/v24/pxiByp8kv8JHgFVrLEj6V1s.ttf) format('truetype');
+  src:url(/fonts/figtree-600.3d3403c5.woff2) format("woff2");
 }
-@font-face {
+@font-face{
   font-family: 'Poppins';
   font-style: normal;
   font-weight: 700;
   font-display: swap;
-  src: url(https://fonts.gstatic.com/s/poppins/v24/pxiByp8kv8JHgFVrLCz7V1s.ttf) format('truetype');
+  src:url(/fonts/figtree-700.37372592.woff2) format("woff2");
 }.R-cp-claude-corps /* source: https://cdn.userway.org/styles/2026-11-24-13-11-54/widget_base.css?v=1795525914491 */
 :root .uai, .R-cp-claude-corps .ulsti, .R-cp-claude-corps _::-webkit-full-page-media, .R-cp-claude-corps _:future{outline-offset:-10px}
 .R-cp-claude-corps .uwy ol, .R-cp-claude-corps .uwy ul{margin:0;padding:0;list-style:none}

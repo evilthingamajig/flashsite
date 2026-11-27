@@ -34,7 +34,7 @@ function remapColors(s) {
     .replace(/(--ds-v1-button-primary-bg-hover:\s*)#[0-9a-fA-F]+/g, '$1#0f3d2a')
     .replace(/(--ds-v1-link-primary-underline:\s*)#[0-9a-fA-F]+/g, '$1#2f8f5b')
     .replace(/(--ds-v1-link-primary-underline-hover:\s*)#[0-9a-fA-F]+/g, '$1#1e6b45')
-    .replace(/url\(\/vite\/assets\//g, 'url(https://www.charitywater.org/vite/assets/');
+    .replace(/url\(\/vite\/assets\/[^)]*\)/g, 'none');
 }
 
 /** Walk top-level CSS rules (handles @media nesting one level). */

@@ -451,6 +451,16 @@
       "source": "/impact/reports/",
       "destination": "/nonprofit-status/",
       "permanent": true
+    },
+    {
+      "source": "/our-work/photos-and-videos",
+      "destination": "/impact-stories/",
+      "permanent": true
+    },
+    {
+      "source": "/our-work/photos-and-videos/",
+      "destination": "/impact-stories/",
+      "permanent": true
     }
   ],
   "headers": [
