@@ -5,10 +5,6 @@ structure plan (2026-11-24) and the cleanup of PR #2 (2026-11-26).
 
 ## Still to fix on the site before it goes live
 
-- **Sponsor a project page** (`/get-involved/sponsor-a-project/`): has a card form that
-  does not take payments, lists Check / Stock / Wire / Crypto / DAF that Flash Forward
-  does not offer, and says one light unlocks ~5,000 study hours (that figure is for all
-  72). Point it at the GiveButter form and cut the invented project types.
 - **Copy polish**: the restored pages are accurate but some read like internal notes
   ("Primary KPI", "we route you to a named path"). Needs one plain-language pass.
 - **Retire "interns build the lights"**: still in older news articles and guides
@@ -18,7 +14,7 @@ structure plan (2026-11-24) and the cleanup of PR #2 (2026-11-26).
   Love's accounts and reference a charity: water logo file. Self-host licensed fonts and
   delete the unused `css/*` and `ref/*` peer files.
 - **Team page**: photo placeholders for people without photos; spelling is Romir.
-- **Layouts**: 27 pages now use the plain Flash Forward layout. If a peer-inspired layout
+- **Layouts**: 28 pages (including Sponsor a project) now use the plain Flash Forward layout. If a peer-inspired layout
   is wanted on any of them, rebuild it with Flash Forward copy and photos, as done for
   the homepage and donate.
 
@@ -27,7 +23,8 @@ structure plan (2026-11-24) and the cleanup of PR #2 (2026-11-26).
 - Sign off the study-hours figure (~5,000 modeled hours a year) and its method note.
 - Rename "Study Unlock Pathway" and "Study Circle", or keep them.
 - Study Circle: where monthly gifts go by default (general fund or a rotating story).
-- GiveButter fund IDs for each impact story (Andy, Treasurer).
+- GiveButter fund IDs for each impact story (Andy, Treasurer). The sponsor page tells
+  donors to pick a partner fund on the form, so each partner needs one.
 - Which leadership seats show as open at launch: COO, CPO, CFO, and Directors of
   Partnerships, Marketing and Fundraising.
 - One-line wording on shipping costs for the donate FAQ (case by case, sometimes
