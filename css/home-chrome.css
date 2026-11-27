@@ -598,3 +598,72 @@ body.ff-page-ns-home .w-dropdown:has(.accordion_content.ns-sup-acc) {
 /* Keep the logo marquee from widening the page on phones (it pushed the layout to ~3000px). */
 body.ff-page-ns-home .animated-partners,
 body.ff-page-ns-home .animated-partners .partners-wrapper { max-width: 100%; overflow: hidden; }
+
+/* Homepage actions use the brand green and keep button labels centered. */
+body.ff-page-ns-home .callout-block-wrapper {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1rem;
+  align-items: stretch;
+}
+body.ff-page-ns-home .callout-bar-block {
+  min-width: 0;
+  gap: 1.5rem;
+  aspect-ratio: auto;
+  background: #1e6b45;
+}
+body.ff-page-ns-home .callout-bar-block > div { flex: 1; min-width: 0; }
+body.ff-page-ns-home .callout-bar-block h2 { margin-bottom: .5rem; }
+body.ff-page-ns-home .callout-bar-block .button,
+body.ff-page-ns-home #partner-with-us .small-button {
+  display: inline-flex !important;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  min-height: 48px;
+  height: auto;
+  margin: 0;
+  padding: .875rem 1.5rem !important;
+  border: 1px solid #fff;
+  background: #fff !important;
+  color: #1e6b45 !important;
+  font-size: 1rem;
+  line-height: 1.25 !important;
+  letter-spacing: 0;
+  text-transform: none;
+  text-align: center;
+  white-space: normal;
+}
+body.ff-page-ns-home .callout-bar-block .button {
+  flex: none;
+  min-width: 12rem;
+}
+body.ff-page-ns-home .callout-bar-block .button::before,
+body.ff-page-ns-home .callout-bar-block .button::after { border-color: #fff; }
+body.ff-page-ns-home .callout-bar-block .button:hover,
+body.ff-page-ns-home #partner-with-us .border-card:hover .small-button {
+  background: transparent !important;
+  color: #fff !important;
+}
+body.ff-page-ns-home .callout-bar-block .button:focus-visible,
+body.ff-page-ns-home #partner-with-us .border-card:focus-visible {
+  outline: 2px solid #fff;
+  outline-offset: 6px;
+}
+body.ff-page-ns-home #partner-with-us { background: #1e6b45; }
+body.ff-page-ns-home #partner-with-us .border-card-border { border-color: #ffffff80; }
+body.ff-page-ns-home #partner-with-us .border-card-content { width: 100%; }
+body.ff-page-ns-home #partner-with-us :is(h3, p) { color: #fff; }
+@media (max-width: 1100px) {
+  body.ff-page-ns-home .callout-bar-block {
+    flex-direction: column;
+    align-items: flex-start;
+    text-align: left;
+  }
+  body.ff-page-ns-home .callout-bar-block .button { align-self: flex-start; }
+}
+@media (max-width: 767px) {
+  body.ff-page-ns-home .callout-block-wrapper { grid-template-columns: 1fr; }
+  body.ff-page-ns-home .callout-bar-block { padding: 1.75rem; }
+  body.ff-page-ns-home .callout-bar-block .button { width: 100%; min-width: 0; }
+}
