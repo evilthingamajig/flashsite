@@ -1,74 +1,49 @@
+# Flash Forward Foundation
+# Allow search engines and answer-engine crawlers that can send people to this site.
+# A named group does not inherit rules from User-agent: *. Each group below allows the whole site.
+# Training crawlers are not disallowed. Google Search, including AI Overviews and AI Mode, uses Googlebot.
+
 User-agent: *
 Allow: /
 
-# Explicitly allow AI and LLM crawlers for AIO (Artificial Intelligence Optimization)
-User-agent: GPTBot
-Allow: /
-
-User-agent: ChatGPT-User
-Allow: /
-
-User-agent: Google-Extended
-Allow: /
-
-User-agent: Claude-Web
-Allow: /
-
-User-agent: anthropic-ai
-Allow: /
-
-User-agent: ClaudeBot
-Allow: /
-
-User-agent: PerplexityBot
-Allow: /
-
-User-agent: Omgilibot
-Allow: /
-
-User-agent: Omgili
-Allow: /
-
-User-agent: FacebookBot
-Allow: /
-
+# Google Search, including AI Overviews and AI Mode.
 User-agent: Googlebot
 Allow: /
 
+# Gemini model improvement. This is not the Search crawler, and it is not blocked.
+User-agent: Google-Extended
+Allow: /
+
+# Bing Search. Copilot answers that cite the web use Bing's index.
 User-agent: Bingbot
 Allow: /
 
+# ChatGPT search answers. OpenAI's control for appearing in those answers.
 User-agent: OAI-SearchBot
 Allow: /
 
+# User-initiated fetches from ChatGPT. OpenAI says robots.txt may not apply to this agent.
+User-agent: ChatGPT-User
+Allow: /
+
+# Perplexity search results. Perplexity says this bot is not used to train foundation models.
+User-agent: PerplexityBot
+Allow: /
+
+# User-initiated fetches from Perplexity. Perplexity says this agent generally ignores robots.txt.
 User-agent: Perplexity-User
 Allow: /
 
-User-agent: CCBot
+# Claude search index.
+User-agent: Claude-SearchBot
 Allow: /
 
+# User-initiated fetches from Claude.
+User-agent: Claude-User
+Allow: /
+
+# Apple Search, including results that can link out to the site.
 User-agent: Applebot
-Allow: /
-
-User-agent: Applebot-Extended
-Allow: /
-
-User-agent: DuckDuckBot
-Allow: /
-
-User-agent: YandexBot
-Allow: /
-
-User-agent: Meta-ExternalAgent
-Allow: /
-
-User-agent: Amazonbot
-Allow: /
-
-User-agent: cohere-ai
-Allow: /
-
-User-agent: Bytespider
 Allow: /
 
 Sitemap: https://flashforwardfoundation.org/sitemap.xml

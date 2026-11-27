@@ -461,6 +461,76 @@
       "source": "/our-work/photos-and-videos/",
       "destination": "/impact-stories/",
       "permanent": true
+    },
+    {
+      "source": "/why-light",
+      "destination": "/our-model/why-light/",
+      "permanent": true
+    },
+    {
+      "source": "/why-light/",
+      "destination": "/our-model/why-light/",
+      "permanent": true
+    },
+    {
+      "source": "/impact/methodology",
+      "destination": "/impact/outcomes/",
+      "permanent": true
+    },
+    {
+      "source": "/impact/methodology/",
+      "destination": "/impact/outcomes/",
+      "permanent": true
+    },
+    {
+      "source": "/impact-stories/sponsor",
+      "destination": "/get-involved/sponsor-a-project/",
+      "permanent": true
+    },
+    {
+      "source": "/impact-stories/sponsor/",
+      "destination": "/get-involved/sponsor-a-project/",
+      "permanent": true
+    },
+    {
+      "source": "/join/ambassadors",
+      "destination": "/get-involved/ambassadors/",
+      "permanent": true
+    },
+    {
+      "source": "/join/ambassadors/",
+      "destination": "/get-involved/ambassadors/",
+      "permanent": true
+    },
+    {
+      "source": "/join",
+      "destination": "/join/internships/",
+      "permanent": true
+    },
+    {
+      "source": "/join/",
+      "destination": "/join/internships/",
+      "permanent": true
+    },
+    {
+      "source": "/get-involved/partners/assembly",
+      "destination": "/get-involved/builders/",
+      "permanent": true
+    },
+    {
+      "source": "/get-involved/partners/assembly/",
+      "destination": "/get-involved/builders/",
+      "permanent": true
+    },
+    {
+      "source": "/get-involved/partners/distribution",
+      "destination": "/get-involved/partners/",
+      "permanent": true
+    },
+    {
+      "source": "/get-involved/partners/distribution/",
+      "destination": "/get-involved/partners/",
+      "permanent": true
     }
   ],
   "headers": [
