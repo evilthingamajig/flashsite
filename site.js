@@ -604,3 +604,29 @@
     }else orig('event','conversion',{send_to:ADS.begin_checkout});
   };
 })();
+
+// Our Story timeline: show the slide whose scroll trigger has reached mid-screen; year links jump to it.
+(function(){
+  var c=document.querySelector('[tr-scroll-toggle="component"]');
+  if(!c) return;
+  var slides=c.querySelectorAll('.sticky-flex'), dates=c.querySelectorAll('.sticky-date-item'), trig=c.querySelectorAll('.sticky-trigger');
+  function set(i){
+    slides.forEach(function(s,k){ s.classList.toggle('is-active',k===i); });
+    dates.forEach(function(d,k){ d.classList.toggle('is-active',k===i); });
+  }
+  function onScroll(){
+    var mid=window.innerHeight/2, i=0;
+    trig.forEach(function(t,k){ if(t.getBoundingClientRect().top<=mid) i=k; });
+    set(i);
+  }
+  dates.forEach(function(d,k){
+    var a=d.querySelector('a');
+    if(a) a.addEventListener('click',function(e){
+      e.preventDefault();
+      window.scrollTo({top:trig[k].getBoundingClientRect().top+window.scrollY+2,behavior:'smooth'});
+    });
+  });
+  window.addEventListener('scroll',onScroll,{passive:true});
+  window.addEventListener('resize',onScroll);
+  onScroll();
+})();
