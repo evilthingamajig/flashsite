@@ -13,8 +13,8 @@ function subnavItem(href, title, desc) {
   return `<a class="subnav-item bg-cw-brand-yellow-300 flex items-center justify-between p-2 my-5" href="${href}"><div class="mr-2"><div class="heading-m mb-1">${title}</div><div class="body-m">${desc}</div></div>${ARROW_LG}</a>`;
 }
 
-function hasDropdown(href, label, blurb, childrenHtml) {
-  return `<li class="has-dropdown masthead__item masthead__item--dropdown-mega"><span class="nav-hover-extender absolute bg-transparent z-10"></span><span class="flex items-center dropdown-parent-link"><a class="heading-xs relative z-20 mr-4" href="${href}">${label}</a><span class="h80 icn cw-icon-chevron-down"></span></span><div class="dropdown masthead__dropdown masthead__dropdown--mega"><div class="ff-mega-cols"><p class="ff-mega-blurb">${blurb}</p><ul class="masthead__items ff-mega-grid">${childrenHtml}</ul></div></div></li>`;
+function hasDropdown(label, blurb, childrenHtml) {
+  return `<li class="has-dropdown masthead__item masthead__item--dropdown-mega"><span class="nav-hover-extender absolute bg-transparent z-10"></span><span class="flex items-center dropdown-parent-link"><button type="button" class="heading-xs relative z-20 mr-4" aria-expanded="false">${label}</button><span class="h80 icn cw-icon-chevron-down"></span></span><div class="dropdown masthead__dropdown masthead__dropdown--mega"><div class="ff-mega-cols"><p class="ff-mega-blurb">${blurb}</p><ul class="masthead__items ff-mega-grid">${childrenHtml}</ul></div></div></li>`;
 }
 
 function offSection(label, childrenHtml) {
@@ -57,20 +57,16 @@ export function nav(active = '') {
     megaItem('/impact-stories/', 'Impact Stories', 'Prefer a school, community, or region'),
   ].join('');
 
-  const joinKids = [
-    megaItem('/join/', 'Join hub', 'Work with us'),
+  const involvedKids = [
     megaItem('/join/internships/', 'Internships', 'Marketing · Partnerships · Fundraising'),
     megaItem('/join/open-roles/', 'Open roles', 'Unpaid student leadership seats'),
     megaItem('/join/apply/', 'Apply', 'Start an application'),
-  ].join('');
-
-  const involvedKids = [
     megaItem('/donate/', 'Donate', 'Give in flashlight units (~$5.17)'),
     megaItem('/donate/study-circle/', 'Study Circle', 'Monthly giving that keeps the pathway funded'),
-    megaItem('/impact-stories/', 'Impact Stories', 'Preference-based giving — best effort'),
     megaItem('/get-involved/ambassadors/', 'Ambassadors', 'Soft campus and community voice'),
     megaItem('/get-involved/partners/', 'Partner with us', 'Assemble or place Study Lights'),
-    megaItem('/get-involved/legacy-giving/', 'Legacy giving', 'Leave study hours in your estate plan'),
+    megaItem('/get-involved/partners/assembly/', 'Assembly partners', 'Print, solder, and ship a batch'),
+    megaItem('/get-involved/partners/distribution/', 'Distribution partners', 'Place lights with students you serve'),
   ].join('');
 
   const aboutKids = [
@@ -96,17 +92,12 @@ export function nav(active = '') {
     subnavItem('/impact-stories/', 'Impact Stories', 'Prefer a school, community, or region.'),
   ].join('');
 
-  const offJoin = [
-    `<a class="cw-link--primary" href="/join/">Explore joining</a>`,
-    subnavItem('/join/internships/', 'Internships', 'Marketing · Partnerships · Fundraising.'),
-    subnavItem('/join/open-roles/', 'Open roles', 'Unpaid student leadership seats.'),
-    subnavItem('/join/apply/', 'Apply', 'Start an application.'),
-  ].join('');
-
   const offInvolved = [
     `<a class="cw-link--primary" href="/get-involved/">Get involved</a>`,
+    subnavItem('/join/internships/', 'Internships', 'Marketing · Partnerships · Fundraising.'),
+    subnavItem('/join/apply/', 'Apply', 'Start an application.'),
     subnavItem('/donate/', 'Donate', 'Give in flashlight units (~$5.17).'),
-    subnavItem('/donate/#study-circle', 'Study Circle', 'Monthly giving that keeps the pathway funded.'),
+    subnavItem('/donate/study-circle/', 'Study Circle', 'Monthly giving that keeps the pathway funded.'),
     subnavItem('/get-involved/partners/', 'Partner with us', 'Assemble or place Study Lights.'),
   ].join('');
 
@@ -133,11 +124,10 @@ export function nav(active = '') {
           </a>
         </ul>
         <ul class="nav-items">
-          ${hasDropdown('/our-model/', 'Our Model', 'Study lights become study hours. Design, assemble, deliver, unlock.', modelKids)}
-          ${hasDropdown('/impact/', 'Impact', 'Proof with honesty — study hours, stories, and the reports behind them.', impactKids)}
-          ${hasDropdown('/join/', 'Join', 'Unpaid student seats across marketing, partnerships, fundraising, and leadership.', joinKids)}
-          ${hasDropdown('/get-involved/', 'Get Involved', 'Give, sponsor a story, or partner on assembly and delivery.', involvedKids)}
-          ${hasDropdown('/about/', 'About', 'A student-led 501(c)(3) in Bellevue. The people, the status, and the answers.', aboutKids)}
+          ${hasDropdown('Our Model', 'Study lights become study hours. Design, assemble, deliver, unlock.', modelKids)}
+          ${hasDropdown('Impact', 'Proof with honesty — study hours, stories, and the reports behind them.', impactKids)}
+          ${hasDropdown('Get Involved', 'Join the team, give, or partner on assembly and delivery.', involvedKids)}
+          ${hasDropdown('About', 'A student-led 501(c)(3) in Bellevue. The people, the status, and the answers.', aboutKids)}
         </ul>
       </div>
       <div class="right-side items-center ml-2">
@@ -157,7 +147,6 @@ export function nav(active = '') {
   <ul class="off-canvas-list">
     ${offSection('Our Model', offModel)}
     ${offSection('Impact', offImpact)}
-    ${offSection('Join', offJoin)}
     ${offSection('Get Involved', offInvolved)}
     ${offSection('About', offAbout)}
     <div class="p-6 pt-8">
@@ -204,39 +193,38 @@ export function footer() {
 
   <div class="cw-footer-top-row border-b border-solid border-0 border-grey-30 my-3">
     <ul class="mt-0 mb-4 pr-2 w-1/2 md-w-1/4">
-      <li class="cw-footer-header">Take Action</li>
-      <li><a href="/donate/">Give</a></li>
-      <li><a href="/donate/study-circle/">Join the Study Circle</a></li>
-      <li><a href="/news/start-a-fundraiser/">Give to a fundraiser</a></li>
-      <li><a href="/donate/">Give in someone's honor</a></li>
+      <li class="cw-footer-header">Our model</li>
+      <li><a href="/our-model/why-light/">Why light &amp; learning</a></li>
+      <li><a href="/our-model/study-unlock-pathway/">Study Unlock Pathway</a></li>
+      <li><a href="/our-model/the-study-light/">The study light</a></li>
+      <li><a href="/our-model/made-and-delivered/">Made &amp; delivered</a></li>
+      <li><a href="/our-model/for-students/">For students, by students</a></li>
+    </ul>
+    <ul class="mt-0 mb-4 pr-2 w-1/2 md-w-1/4">
+      <li class="cw-footer-header">Impact</li>
+      <li><a href="/impact/outcomes/">Outcomes &amp; how we measure</a></li>
+      <li><a href="/impact/reports/">Reports &amp; financials</a></li>
+      <li><a href="/impact-stories/">Impact stories</a></li>
       <li><a href="/impact-stories/sponsor/">Sponsor a story</a></li>
-      <li><a href="/get-involved/legacy-giving/">Legacy &amp; asset giving</a></li>
     </ul>
     <ul class="mt-0 mb-2 pr-2 w-1/2 md-w-1/4">
-      <li class="cw-footer-header">Get Involved</li>
-      <li><a href="/join/">Join the team</a></li>
-      <li><a href="/news/start-a-fundraiser/">Fundraise</a></li>
+      <li class="cw-footer-header">Get involved</li>
+      <li><a href="/join/internships/">Internships</a></li>
+      <li><a href="/join/open-roles/">Open roles</a></li>
+      <li><a href="/join/apply/">Apply</a></li>
+      <li><a href="/donate/">Donate</a></li>
+      <li><a href="/donate/study-circle/">Study Circle</a></li>
       <li><a href="/get-involved/ambassadors/">Ambassadors</a></li>
-      <li><a href="/our-model/for-students/">Students</a></li>
-      <li><a href="/about/team/">Advisors</a></li>
-      <li><a href="/get-involved/partners/">Partners</a></li>
+      <li><a href="/get-involved/partners/">Partner with us</a></li>
     </ul>
     <ul class="mt-0 mb-4 pr-2 w-1/2 md-w-1/4">
-      <li class="cw-footer-header">Get to know us</li>
-      <li><a href="/our-model/">Our model</a></li>
-      <li><a href="/nonprofit-status/trust/">How we use gifts</a></li>
-      <li><a href="/impact/reports/">See our financials</a></li>
+      <li class="cw-footer-header">About</li>
       <li><a href="/about/">Our story</a></li>
-      <li><a href="/about/team/">Meet the team</a></li>
-      <li><a href="/join/">Careers</a></li>
-    </ul>
-    <ul class="mt-0 mb-4 pr-2 w-1/2 md-w-1/4">
-      <li class="cw-footer-header">Connect</li>
-      <li><a href="/contact/">Contact us</a></li>
-      <li><a href="/faq/">Help center</a></li>
-      <li><a href="/contact/">Request a speaker</a></li>
-      <li><a href="/get-involved/partners/">Partnerships</a></li>
+      <li><a href="/about/team/">Leadership</a></li>
+      <li><a href="/nonprofit-status/">Nonprofit status</a></li>
+      <li><a href="/faq/">FAQs</a></li>
       <li><a href="/news/">News</a></li>
+      <li><a href="/contact/">Contact</a></li>
     </ul>
   </div>
 

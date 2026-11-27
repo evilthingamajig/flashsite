@@ -70,11 +70,21 @@
   }
 }
 /* Underline hover — scraped ::after, force visible accent */
-.R-cw-chrome .nav-bar-section .nav-items li .dropdown-parent-link a,
+.R-cw-chrome .nav-bar-section .nav-items li .dropdown-parent-link :is(a, button),
 .R-cw-chrome .nav-bar-section .nav-items li .header a {
   position: relative !important;
 }
-.R-cw-chrome .nav-bar-section .nav-items li .dropdown-parent-link a:after,
+.R-cw-chrome .dropdown-parent-link button {
+  appearance: none;
+  background: none;
+  border: 0;
+  padding: 0;
+  margin: 0;
+  font: inherit;
+  color: inherit;
+  cursor: pointer;
+}
+.R-cw-chrome .nav-bar-section .nav-items li .dropdown-parent-link :is(a, button):after,
 .R-cw-chrome .nav-bar-section .nav-items li .header a:after {
   background-color: transparent;
   transition: background-color .15s ease-in-out;
@@ -87,7 +97,7 @@
   left: 0;
   border-radius: 2px;
 }
-.R-cw-chrome .nav-bar-section .nav-items li:hover .dropdown-parent-link a:after,
+.R-cw-chrome .nav-bar-section .nav-items li:hover .dropdown-parent-link :is(a, button):after,
 .R-cw-chrome .nav-bar-section .nav-items li:hover .header a:after {
   background-color: #2f8f5b !important;
 }

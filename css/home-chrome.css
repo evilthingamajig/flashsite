@@ -43,7 +43,7 @@ body.ff-page-ns-home .full-width-card.cc-medium {
 }
 
 /* WCK nav streak: scaleX from the right edge, 0.4s ease-out-quart. Forest green. */
-body.ff-page-ns-home .nav-bar-section .nav-items li .dropdown-parent-link a:after,
+body.ff-page-ns-home .nav-bar-section .nav-items li .dropdown-parent-link :is(a, button):after,
 body.ff-page-ns-home .nav-bar-section .nav-items li .header a:after {
   background-color: #2f8f5b !important;
   height: 2px !important;
@@ -57,8 +57,8 @@ body.ff-page-ns-home .nav-bar-section .nav-items li .header a:after {
   transition: transform 0.4s cubic-bezier(0.165, 0.84, 0.44, 1) !important;
   will-change: transform;
 }
-body.ff-page-ns-home .nav-bar-section .nav-items li:hover .dropdown-parent-link a:after,
-body.ff-page-ns-home .nav-bar-section .nav-items li:focus-within .dropdown-parent-link a:after,
+body.ff-page-ns-home .nav-bar-section .nav-items li:hover .dropdown-parent-link :is(a, button):after,
+body.ff-page-ns-home .nav-bar-section .nav-items li:focus-within .dropdown-parent-link :is(a, button):after,
 body.ff-page-ns-home .nav-bar-section .nav-items li:hover .header a:after,
 body.ff-page-ns-home .nav-bar-section .nav-items li:focus-within .header a:after {
   background-color: #2f8f5b !important;
