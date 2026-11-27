@@ -126,3 +126,5 @@
   .ffi-wide-photo { margin-top: 40px; border-radius: 20px; }
   .ffi-article { padding-block: 60px; }
 }
+
+.ffi-hero-photo .ffi-record { color: #fff; margin-top: 18px !important; }

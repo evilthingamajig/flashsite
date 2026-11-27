@@ -7,7 +7,7 @@
   {
     "url": "/about/team/",
     "title": "Our teams — Flash Forward Foundation",
-    "description": "Flash Forward is a student-led nonprofit. Through the Study Unlock Pathway, assembly and distribution partners place solar study lights that unlock ~5,000 modeled study hours a year."
+    "description": "Meet the students and mentors behind Flash Forward Foundation, a student-led nonprofit building solar study lights."
   },
   {
     "url": "/accessibility/",
@@ -27,12 +27,12 @@
   {
     "url": "/donate/study-circle/",
     "title": "Study Circle",
-    "description": "Support the ongoing work behind Flash Forward’s solar study lights. Review monthly giving options on Givebutter."
+    "description": "Give monthly to support the ongoing work behind Flash Forward’s solar study lights."
   },
   {
     "url": "/faq/",
     "title": "FAQ — Flash Forward Foundation",
-    "description": "Flash Forward is a student-led nonprofit. Through the Study Unlock Pathway, assembly and distribution partners place solar study lights that unlock ~5,000 modeled study hours a year."
+    "description": "Answers to common questions about Flash Forward Foundation: the study light, giving, internships, Builders, and partnerships."
   },
   {
     "url": "/get-involved/ambassadors/",
@@ -56,8 +56,8 @@
   },
   {
     "url": "/get-involved/legacy-giving/",
-    "title": "Legacy giving — Flash Forward",
-    "description": "Leave a lasting gift of study hours. Include Flash Forward in your estate plans — EIN 39-3605570."
+    "title": "Planned giving",
+    "description": "Include Flash Forward Foundation in your will or estate plan. EIN 39-3605570."
   },
   {
     "url": "/get-involved/partners/",
@@ -180,11 +180,6 @@
     "description": "Understand Flash Forward’s delivery records, partner updates, and the distinction between lights delivered and student outcomes."
   },
   {
-    "url": "/impact/reports/",
-    "title": "Nonprofit Status & Reporting",
-    "description": "Flash Forward Foundation’s nonprofit information, IRS documents, program records, and reporting contacts."
-  },
-  {
     "url": "/",
     "title": "Solar Study Lights, Built by Students",
     "description": "Flash Forward Foundation connects student-led engineering, volunteer Builders, and distribution partners to bring solar study lights to students."
@@ -225,36 +220,6 @@
     "description": "Explore four unpaid internship tracks at Flash Forward: Partnerships & Operations, Fundraising & Growth, Marketing & Communications, and Engineering."
   },
   {
-    "url": "/join/open-roles/cfo/",
-    "title": "Chief Financial Officer | Open Role",
-    "description": "Chief Financial Officer — unpaid open leadership seat at Flash Forward Foundation. Own books hygiene, GiveButter reconciliation notes, and basic nonprofit finance hygiene with the Treasurer."
-  },
-  {
-    "url": "/join/open-roles/coo/",
-    "title": "Chief Operating Officer | Open Role",
-    "description": "Chief Operating Officer — unpaid open leadership seat at Flash Forward Foundation. Own weekly ops rhythm, internship pipeline health, and delivery between board priorities and day-to-day work."
-  },
-  {
-    "url": "/join/open-roles/cpo/",
-    "title": "Chief Partnerships Officer | Open Role",
-    "description": "Chief Partnerships Officer — unpaid open leadership seat at Flash Forward Foundation. Own assembly and distribution partner strategy — from first email to lights placed."
-  },
-  {
-    "url": "/join/open-roles/director-fundraising/",
-    "title": "Director of Fundraising | Open Role",
-    "description": "Director of Fundraising — unpaid open leadership seat at Flash Forward Foundation. Lead Study Circle growth, sponsor asks, and grant research under board oversight."
-  },
-  {
-    "url": "/join/open-roles/director-marketing/",
-    "title": "Director of Marketing | Open Role",
-    "description": "Director of Marketing — unpaid open leadership seat at Flash Forward Foundation. Lead brand voice, channel plan, and Marketing intern quality bar."
-  },
-  {
-    "url": "/join/open-roles/director-partnerships/",
-    "title": "Director of Partnerships | Open Role",
-    "description": "Director of Partnerships — unpaid open leadership seat at Flash Forward Foundation. Lead day-to-day partner pipeline under CPO/board — assembly clubs and distribution orgs."
-  },
-  {
     "url": "/join/open-roles/",
     "title": "Volunteer Leadership",
     "description": "Explore unpaid volunteer leadership and the work behind Flash Forward’s student-led solar study light program."
@@ -262,7 +227,7 @@
   {
     "url": "/news/brighten-haiti-42-lights/",
     "title": "42 study lights for Brighten Haiti",
-    "description": "Flash Forward delivered 42 solar study lights to Haiti through Brighten Haiti, adding an estimated 252 learning hours each day."
+    "description": "Flash Forward delivered 42 solar study lights to Haiti through Brighten Haiti."
   },
   {
     "url": "/news/brighten-haiti-student-essays/",
@@ -292,22 +257,17 @@
   {
     "url": "/news/loksadhana-15-lights/",
     "title": "15 study lights for rural Maharashtra",
-    "description": "Fifteen Flash Forward study lights support Loksadhana’s work across rural Maharashtra, adding an estimated 90 learning hours each day."
+    "description": "Fifteen Flash Forward study lights support Loksadhana’s work across rural Maharashtra."
   },
   {
     "url": "/news/malaika-15-lights/",
     "title": "15 study lights for Malaika in Kalebuka",
-    "description": "Fifteen Flash Forward study lights support Malaika’s education work in Kalebuka, DR Congo, adding an estimated 90 learning hours each day."
+    "description": "Fifteen Flash Forward study lights support Malaika’s education work in Kalebuka, DR Congo."
   },
   {
     "url": "/news/program-record/",
     "title": "72 Study Lights Delivered to Haiti, India and DR Congo",
-    "description": "As of October 2026, student interns built and delivered 72 solar study lights: 42 to Brighten Haiti, 15 to Loksadhana and 15 to Malaika."
-  },
-  {
-    "url": "/news/solar-workshops/",
-    "title": "Note on past workshops",
-    "description": "Flash Forward’s K–5 renewable workshops were discontinued and are not part of the Study Unlock Pathway assembly model."
+    "description": "As of October 2026, 72 solar study lights had been delivered: 42 to Brighten Haiti, 15 to Loksadhana and 15 to Malaika."
   },
   {
     "url": "/news/start-a-fundraiser/",
@@ -317,22 +277,17 @@
   {
     "url": "/news/why-study-lights/",
     "title": "Energy Poverty and Education: Why a Solar Study Light",
-    "description": "655 million people lacked electricity in 2024 (Tracking SDG7 2026). Here is why studying stops at sunset and how a $5.17 solar light buys back hours."
+    "description": "655 million people lacked electricity in 2024 (Tracking SDG7 2026). Here is why studying stops at sunset and what a $5.17 solar light is for."
   },
   {
     "url": "/nonprofit-status/",
-    "title": "Nonprofit Status & Reporting",
+    "title": "Nonprofit Status",
     "description": "Flash Forward Foundation’s nonprofit information, IRS documents, program records, and reporting contacts."
   },
   {
     "url": "/nonprofit-status/trust/",
     "title": "How We Use Gifts",
     "description": "Understand the work behind a Flash Forward study light, the parts-only estimate, and ways to discuss a contribution."
-  },
-  {
-    "url": "/our-model/for-students/",
-    "title": "For Students, By Students",
-    "description": "Join is half of Flash Forward’s brand: unpaid student interns run pipelines and partnerships. Assembly partners build the lights."
   },
   {
     "url": "/our-model/",
@@ -345,19 +300,14 @@
     "description": "Follow a Flash Forward study light from components and assembly to delivery through local distribution partners."
   },
   {
-    "url": "/our-model/study-unlock-pathway/",
-    "title": "Our Model",
-    "description": "How Flash Forward designs, assembles, and delivers solar study lights with students, Builders, and local distribution partners."
-  },
-  {
     "url": "/our-model/the-study-light/",
     "title": "The Study Light",
-    "description": "Meet Flash Forward’s student-built solar study light and the people who help design, assemble, and deliver it."
+    "description": "Meet Flash Forward’s solar study light and the people who help design, assemble, and deliver it."
   },
   {
     "url": "/our-model/why-light/",
     "title": "Why Light",
-    "description": "Why Flash Forward focuses on a solar-powered study light and the people who help make and deliver it."
+    "description": "Why Flash Forward focuses on a solar study light for students without reliable electricity after dark."
   },
   {
     "url": "/our-work/how-we-build/",
@@ -383,11 +333,6 @@
     "url": "/our-work/partners/malaika/",
     "title": "Malaika | Impact Stories",
     "description": "Malaika story moved."
-  },
-  {
-    "url": "/our-work/photos-and-videos/",
-    "title": "Photos & Videos",
-    "description": "Media from Flash Forward field partners and operations — not Bellevue workshop builds."
   },
   {
     "url": "/our-work/the-light/",
