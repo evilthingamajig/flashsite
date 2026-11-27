@@ -1256,19 +1256,21 @@
     height: 100% !important;
     background: #fff !important;
     z-index: 100010 !important;
-    overflow-y: auto !important;
+    /* Clipping, unlike hidden/auto, cannot scroll when a panel receives focus. */
+    overflow: clip !important;
     transform: translateX(100%);
     visibility: hidden;
-    transition: transform .3s ease, visibility 0s linear .3s;
+    animation: none !important;
+    transition: transform .4s ease-out, visibility 0s linear .4s;
     box-shadow: -24px 0 48px rgba(0,0,0,.18);
     padding: 0 !important; margin: 0 !important;
   }
   .R-cw-chrome.off-canvas-open .right-off-canvas-menu.ff-drawer {
-    transform: none; visibility: visible; transition: transform .3s ease;
+    transform: none; visibility: visible; transition: transform .4s ease-out;
   }
   .R-cw-chrome .ff-drawer-scrim {
     display: block; position: fixed; inset: 0; z-index: 100005;
-    background: rgba(0,0,0,.45); opacity: 0; pointer-events: none; transition: opacity .3s ease;
+    background: rgba(0,0,0,.45); opacity: 0; pointer-events: none; transition: opacity .4s ease-out;
   }
   .R-cw-chrome.off-canvas-open .ff-drawer-scrim { opacity: 1; pointer-events: auto; }
   .R-cw-chrome.off-canvas-open .ff-main,
@@ -1297,7 +1299,8 @@
 }
 .R-cw-chrome .ff-drawer-donate:hover { background: var(--ff-green-700); }
 .R-cw-chrome .ff-drawer-close {
-  display: inline-flex; background: none; border: 0; padding: 8px; margin-right: -8px; cursor: pointer; color: #18231D;
+  display: inline-flex; align-items: center; justify-content: center; min-width: 44px; min-height: 44px;
+  background: none; border: 0; padding: 8px; margin-right: -8px; cursor: pointer; color: #18231D;
 }
 .R-cw-chrome .ff-drawer-panel { list-style: none !important; margin: 0 !important; padding: 12px 0 40px !important; }
 .R-cw-chrome .ff-drawer-panel > li { margin: 0; padding: 0; border-bottom: 1px solid #b9d3c5; }
@@ -1314,18 +1317,18 @@
 .R-cw-chrome .ff-drawer-panel:not([data-panel="root"]) > li > a { font-size: 22px; }
 
 /* Drawer panels slide: the sub-menu comes in from the right while the top level leaves to the left. */
-.R-cw-chrome .right-off-canvas-menu.ff-drawer { overflow: hidden !important; }
 .R-cw-chrome .ff-drawer-panel {
   position: absolute; top: 80px; right: 0; bottom: 0; left: 0;
-  overflow-y: auto; background: #fff;
+  overflow-x: hidden; overflow-y: auto; overscroll-behavior: contain; background: #fff;
   transform: translateX(100%); visibility: hidden;
-  transition: transform .4s cubic-bezier(.4,0,.2,1), visibility 0s linear .4s;
+  transition: transform .4s ease-out, visibility 0s linear .4s;
 }
 .R-cw-chrome .ff-drawer-panel.is-active {
   transform: none; visibility: visible;
-  transition: transform .4s cubic-bezier(.4,0,.2,1);
+  transition: transform .4s ease-out;
 }
 .R-cw-chrome .ff-drawer-panel[data-panel="root"]:not(.is-active) { transform: translateX(-100%); }
 @media (prefers-reduced-motion: reduce) {
-  .R-cw-chrome .ff-drawer-panel, .R-cw-chrome .right-off-canvas-menu.ff-drawer { transition: none !important; }
+  .R-cw-chrome .ff-drawer-panel, .R-cw-chrome .right-off-canvas-menu.ff-drawer,
+  .R-cw-chrome .ff-drawer-scrim { transition: none !important; }
 }
