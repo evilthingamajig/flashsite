@@ -124,7 +124,7 @@ const ldData = JSON.parse(readFileSync(join(ROOT, 'tools/ld.json')));
 const BASE = 'https://flashforwardfoundation.org';
 const LD_ORG = {"@type":"NGO","@id":BASE+"/#org","name":"Flash Forward Foundation","alternateName":"Flash Forward","url":BASE+"/","logo":{"@type":"ImageObject","url":BASE+"/images/brand/mark-green.png"},"description":"Student-led 501(c)(3) nonprofit that designs solar study lights with assembly partners and places them through distribution partners so students without reliable electricity can study after dark.","foundingDate":"2024","foundingLocation":{"@type":"Place","name":"Bellevue, Washington"},"nonprofitStatus":"https://schema.org/Nonprofit501c3","taxID":"39-3605570","email":"about@flashforwardfoundation.org","address":{"@type":"PostalAddress","streetAddress":"1402 153rd Pl SE","addressLocality":"Bellevue","addressRegion":"WA","postalCode":"98007","addressCountry":"US"},"areaServed":["Haiti","India","Democratic Republic of the Congo"],"sameAs":["https://www.instagram.com/flashforwardfoundation/"]};
 const LD_SITE = {"@type":"WebSite","@id":BASE+"/#website","name":"Flash Forward Foundation","url":BASE+"/","publisher":{"@id":BASE+"/#org"},"inLanguage":"en","potentialAction":{"@type":"SearchAction","target":{"@type":"EntryPoint","urlTemplate":BASE+"/search/?q={search_term_string}"},"query-input":"required name=search_term_string"}};
-const CRUMB_LABELS = {'/our-model/':'Our Model','/our-work/':'Our Model','/impact/':'Impact','/impact-stories/':'Community Stories','/join/':'Join','/get-involved/':'Get Involved','/about/':'About','/news/':'Stories','/guides/':'Student Guides','/nonprofit-status/':'Nonprofit Status'};
+const CRUMB_LABELS = {'/our-model/':'Our Model','/our-work/':'Our Model','/impact/':'Impact','/impact-stories/':'Community Stories','/join/':'Join','/get-involved/':'Get Involved','/about/':'About','/news/':'News','/guides/':'Student Guides','/nonprofit-status/':'Nonprofit Status'};
 const FAQ_PAGES = new Set(['/faq/','/donate/','/get-involved/','/join/','/join/apply/','/get-involved/internship/','/news/why-study-lights/']);
 const unent = (t) => t.replace(/&amp;/g,'&').replace(/&rsquo;/g,'\u2019').replace(/&lsquo;/g,'\u2018').replace(/&ldquo;/g,'\u201c').replace(/&rdquo;/g,'\u201d').replace(/&ndash;/g,'\u2013').replace(/&mdash;/g,'\u2014').replace(/&nbsp;/g,'\xa0').replace(/&#039;/g,"'").replace(/<[^>]+>/g,'').trim();
 
@@ -152,8 +152,10 @@ for (const file of pages.sort()) {
   const pc = await new PurgeCSS().purge({
     content,
     css: [{ raw }],
-    fontFace: true,
-    safelist: { standard: [/^is-/, /^has-/, /^mobile-map/], greedy: [/^src$/] },
+    // Squarespace themes select media and fonts through data attributes and CSS
+    // variables. Preserve those rules when bringing their old inline CSS here.
+    fontFace: !list.some(c => c === 'wol-lighthouse.css' || c === 'ff-donate-template.css'),
+    safelist: { standard: [/^is-/, /^has-/, /^mobile-map/], greedy: [/^src$/, /R-wol-/] },
   });
   const merged = FONT_CSS + rewriteFamilies(pc[0].css);
   let min = lightningcss.transform({ filename: 'inline.css', code: Buffer.from(merged), minify: true, errorRecovery: true }).code.toString();

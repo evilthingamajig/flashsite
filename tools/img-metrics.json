@@ -5450,94 +5450,6 @@
   }
  },
  {
-  "page": "/join/internships/",
-  "idx": 2,
-  "src": "/images/build/peopleworkingonflash.webp",
-  "orig": "/images/build/peopleworkingonflash.webp",
-  "nw": 1068,
-  "nh": 801,
-  "w": {
-   "1440x900": 1440,
-   "1024x768": 1024,
-   "900x900": 900,
-   "768x1024": 768,
-   "390x844": 390
-  },
-  "t": {
-   "1440x900": 80,
-   "1024x768": 68,
-   "900x900": 68,
-   "768x1024": 68,
-   "390x844": 68
-  }
- },
- {
-  "page": "/join/internships/",
-  "idx": 3,
-  "src": "/images/build/flashlight-units-group.webp",
-  "orig": "/images/build/flashlight-units-group.webp",
-  "nw": 502,
-  "nh": 502,
-  "w": {
-   "1440x900": 596,
-   "1024x768": 456,
-   "900x900": 394,
-   "768x1024": 328,
-   "390x844": 342
-  },
-  "t": {
-   "1440x900": 1556,
-   "1024x768": 1502,
-   "900x900": 1519,
-   "768x1024": 1582,
-   "390x844": 2221
-  }
- },
- {
-  "page": "/join/internships/",
-  "idx": 4,
-  "src": "/images/build/robotics-event-booth.webp",
-  "orig": "/images/build/robotics-event-booth.webp",
-  "nw": 360,
-  "nh": 640,
-  "w": {
-   "1440x900": 596,
-   "1024x768": 456,
-   "900x900": 394,
-   "768x1024": 328,
-   "390x844": 342
-  },
-  "t": {
-   "1440x900": 2159,
-   "1024x768": 2029,
-   "900x900": 2070,
-   "768x1024": 2126,
-   "390x844": 2683
-  }
- },
- {
-  "page": "/join/internships/",
-  "idx": 5,
-  "src": "/images/build/soldering-electronics.jpg",
-  "orig": "/images/build/soldering-electronics.jpg",
-  "nw": 638,
-  "nh": 360,
-  "w": {
-   "1440x900": 596,
-   "1024x768": 456,
-   "900x900": 394,
-   "768x1024": 328,
-   "390x844": 342
-  },
-  "t": {
-   "1440x900": 2159,
-   "1024x768": 2029,
-   "900x900": 2070,
-   "768x1024": 2126,
-   "390x844": 3145
-  }
- },
- {
   "page": "/internships/engineering/",
   "idx": 0,
   "src": "/images/build/soldering-electronics.jpg",
@@ -5953,6 +5865,94 @@
    "900x900": 1752,
    "768x1024": 1838,
    "390x844": 3378
+  }
+ },
+ {
+  "page": "/our-model/",
+  "idx": 6,
+  "src": "/images/stock/delivery-volunteers.webp",
+  "orig": "/images/stock/delivery-volunteers.webp",
+  "nw": 1600,
+  "nh": 1067,
+  "w": {
+   "390x844": 367,
+   "768x1024": 331,
+   "900x900": 393,
+   "1024x768": 451,
+   "1440x900": 627
+  },
+  "t": {
+   "390x844": 4473,
+   "768x1024": 3654,
+   "900x900": 3641,
+   "1024x768": 3737,
+   "1440x900": 4213
+  }
+ },
+ {
+  "page": "/our-model/",
+  "idx": 7,
+  "src": "/images/stock/students-learning.webp",
+  "orig": "/images/stock/students-learning.webp",
+  "nw": 1600,
+  "nh": 899,
+  "w": {
+   "390x844": 367,
+   "768x1024": 331,
+   "900x900": 393,
+   "1024x768": 451,
+   "1440x900": 627
+  },
+  "t": {
+   "390x844": 4964,
+   "768x1024": 3654,
+   "900x900": 3641,
+   "1024x768": 3737,
+   "1440x900": 4213
+  }
+ },
+ {
+  "page": "/donate/",
+  "idx": 1,
+  "src": "/images/stock/solar-light-donate.webp",
+  "orig": "/images/stock/solar-light-donate.webp",
+  "nw": 1600,
+  "nh": 1067,
+  "w": {
+   "390x844": 390,
+   "768x1024": 768,
+   "900x900": 900,
+   "1024x768": 1024,
+   "1440x900": 1440
+  },
+  "t": {
+   "390x844": 512,
+   "768x1024": 68,
+   "900x900": 68,
+   "1024x768": 68,
+   "1440x900": 80
+  }
+ },
+ {
+  "page": "/news/",
+  "idx": 1,
+  "src": "/images/stock/volunteers-packing.webp",
+  "orig": "/images/stock/volunteers-packing.webp",
+  "nw": 1600,
+  "nh": 1067,
+  "w": {
+   "390x844": 342,
+   "768x1024": 328,
+   "900x900": 394,
+   "1024x768": 456,
+   "1440x900": 580
+  },
+  "t": {
+   "390x844": 212,
+   "768x1024": 243,
+   "900x900": 189,
+   "1024x768": 176,
+   "1440x900": 188
   }
  }
 ]

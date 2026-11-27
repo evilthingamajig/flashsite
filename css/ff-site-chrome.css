@@ -37,7 +37,7 @@ body.R-cw-chrome #site-nav :is(.dropdown-parent-link:hover > button,.dropdown-pa
 body.R-cw-chrome #site-nav :is(a,button):focus-visible, body.R-cw-chrome .ff-drawer :is(a,button):focus-visible, body.R-cw-chrome .ff-bbg :is(a,button,input):focus-visible { outline: 2px solid #2f8f5b; outline-offset: 5px; }
 body.R-cw-chrome.ff-page-ns-home { padding-top: 0; }
 body.R-cw-chrome.ff-page-ns-home:not(.is-scrolled) #site-nav:not(:has(.is-open)) { background: transparent !important; }
-body.R-cw-chrome.ff-page-news:not(.is-scrolled) #site-nav:not(:has(.is-open)) { background: #152e49 !important; }
+body.R-cw-chrome.ff-page-news:not(.is-scrolled) #site-nav:not(:has(.is-open)) { background: #173f2e !important; }
 body.R-cw-chrome:is(.ff-page-ns-home,.ff-page-news):not(.is-scrolled) #site-nav:not(:has(.is-open)) :is(.ff-lockup,.ff-lockup-name,.ff-lockup-line,.dropdown-parent-link > button,.ff-nav-link > a,.ff-nav-contact,.cw-icon-chevron-down,.off-canvas-toggle) { color: #fff !important; }
 body.R-cw-chrome.ff-page-news:not(.is-scrolled) #site-nav:not(:has(.is-open)) .ff-lockup-mark { filter: brightness(0) invert(1) !important; }
 @media (min-width: 1025px) {

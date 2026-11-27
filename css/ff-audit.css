@@ -1,0 +1,26 @@
+/* Shared palette and media/card refinements for the current site audit. */
+.ff-model-video { width: 100%; }
+.ff-model-video video { display: block; width: 100%; height: auto; aspect-ratio: 16 / 9; background: #171717; object-fit: contain; border-radius: 4px; }
+.ff-model-video p { margin: 12px 0 0; font: 400 15px/1.5 Figtree, sans-serif; color: inherit; }
+.R-wol-lighthouse .TextShape-node, .R-wol-donate-live .TextShape-node { --stroke: #2f8f5b !important; }
+.R-wol-lighthouse .list-item-content { text-align: left; }
+.R-wol-lighthouse .list-item-content__text-wrapper { width: 100%; max-width: 640px; margin-inline: auto; text-align: left; }
+.R-wol-lighthouse .list-item-content__title { text-align: left; font-size: clamp(28px, 3vw, 38px); line-height: 1.15; margin: 0 0 22px; }
+.R-wol-lighthouse .list-item-content__description { text-align: left; font-size: 18px; line-height: 1.6; margin-top: 0 !important; }
+.R-wol-lighthouse .list-item-content__description p { margin: 0 0 18px; white-space: normal !important; }
+.R-wol-lighthouse .list-item-media-inner { overflow: hidden; border-radius: 8px; }
+.R-wol-lighthouse .list-image { width: 100%; height: 100%; object-fit: cover; object-position: center; }
+.ffi-track-grid .ffi-card { display: flex; flex-direction: column; min-width: 0; }
+.ffi-track-grid .ffi-track-heading { display: flex; flex-direction: column; justify-content: space-between; align-items: flex-start; gap: 32px; padding: 32px; aspect-ratio: auto; min-height: 252px; background: #f4f4f4; color: #1e6b45; border: 1px solid #e5e5e5; border-radius: 20px; }
+.ffi-track-grid .ffi-track-icon { display: block; width: 76px; height: 76px; flex-shrink: 0; stroke-width: 1.5; }
+.ff-page-involved #main .ffi-track-heading .position-relative { position: static; }
+.ff-page-involved #main .ffi-card .ffi-track-heading h3 { position: static; color: #233d35; font-size: clamp(24px, 2.2vw, 29px); line-height: 1.15; margin: 0; overflow-wrap: normal; }
+.ffi-track-grid .step-card-content { display: flex; flex-direction: column; flex: 1; align-items: flex-start; }
+.ffi-track-grid .step-card-content p { flex: 1; }
+.ffi-track-grid .ffi-link { margin-top: auto; }
+.ff-news-photo-credit { color: #fff; opacity: .8; font: 400 13px/1.5 Figtree, sans-serif; margin: 10px 0 0; }
+@media (max-width: 767px) {
+  .ffi-track-grid .ffi-track-heading { min-height: 230px; padding: 28px; gap: 28px; }
+  .ffi-track-grid .ffi-track-icon { width: 64px; height: 64px; }
+  .R-wol-lighthouse .list-item-content__description { font-size: 17px; }
+}

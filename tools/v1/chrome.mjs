@@ -78,7 +78,7 @@ export function nav(active = '') {
         <ul class="nav-items">
           ${hasDropdown('Who we are', whoKids)}
           ${hasDropdown('Get involved', involvedKids)}
-          ${topLink('/news/', 'Stories')}
+          ${topLink('/news/', 'News')}
         </ul>
       </div>
       <div class="right-side items-center ml-2">
@@ -100,7 +100,7 @@ export function nav(active = '') {
   <ul class="ff-drawer-panel is-active" data-panel="root">
     <li><button type="button" data-open="who"><span>Who we are</span>${CHEV_R}</button></li>
     <li><button type="button" data-open="involved"><span>Get involved</span>${CHEV_R}</button></li>
-    <li><a href="/news/">Stories</a></li>
+    <li><a href="/news/">News</a></li>
     <li><a href="/contact/">Contact</a></li>
   </ul>
   <ul class="ff-drawer-panel" data-panel="who" inert>
@@ -145,7 +145,7 @@ export function footer() {
           ${each(INVOLVED, footLink)}
         </div>
         <div>
-          <h2>Stories</h2>
+          <h2>News</h2>
           <a href="/news/">News &amp; updates</a>
           <a href="/impact-stories/">Community stories</a>
           <a href="/impact-stories/share/">Share your story</a>
