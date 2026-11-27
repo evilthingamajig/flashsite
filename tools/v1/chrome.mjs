@@ -65,9 +65,6 @@ export function nav(active = '') {
   <div data-component="Nav/NavBar"><span>
     <section class="theme-design-system-v1 nav-bar-section flex justify-between items-center">
       <div class="left-side flex">
-        <ul class="mobile-nav-items flex items-center lg-hidden">
-          <a class="offcanvas-open-link off-canvas-toggle icn mr-6 cw-icon-reorder-thin" href="#" role="button" aria-label="Open menu" aria-controls="ff-offcanvas" aria-expanded="false"></a>
-        </ul>
         <a class="ff-lockup" href="/" aria-label="Flash Forward Foundation">
           <img class="ff-lockup-mark" src="/images/brand/mark-green.png" alt="" width="44" height="44">
           <span class="ff-lockup-name">
@@ -79,13 +76,14 @@ export function nav(active = '') {
           ${hasDropdown('Who we are', whoKids)}
           ${hasDropdown('Get involved', involvedKids)}
           ${topLink('/news/', 'News')}
-          ${topLink('/contact/', 'Contact')}
         </ul>
       </div>
       <div class="right-side items-center ml-2">
+        <a class="ff-nav-contact heading-xs" href="/contact/">Contact</a>
         <a class="donate-link button cw-button items-center px-4 py-2" href="/donate/">
           <div class="heading-xs">Donate</div>
         </a>
+        <button type="button" class="off-canvas-toggle ff-menu-toggle" aria-label="Open menu" aria-controls="ff-offcanvas" aria-expanded="false">${svg('M3 5h18M3 12h18M3 19h18')}</button>
       </div>
     </section>
   </span></div>

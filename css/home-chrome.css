@@ -569,6 +569,7 @@ body.ff-page-ns-home:not(.is-scrolled) .nav-bar:not(:has(.has-dropdown.is-open))
 body.ff-page-ns-home:not(.is-scrolled) .nav-bar:not(:has(.has-dropdown.is-open)) .ff-lockup-line,
 body.ff-page-ns-home:not(.is-scrolled) .nav-bar:not(:has(.has-dropdown.is-open)) .nav-items .heading-xs,
 body.ff-page-ns-home:not(.is-scrolled) .nav-bar:not(:has(.has-dropdown.is-open)) .nav-items .ff-nav-link > a,
+body.ff-page-ns-home:not(.is-scrolled) .nav-bar:not(:has(.has-dropdown.is-open)) .ff-nav-contact,
 body.ff-page-ns-home:not(.is-scrolled) .nav-bar:not(:has(.has-dropdown.is-open)) .cw-icon-chevron-down,
 body.ff-page-ns-home:not(.is-scrolled) .off-canvas-toggle {
   color: #fff !important;

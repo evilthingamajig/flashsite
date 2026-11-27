@@ -735,9 +735,55 @@
 .R-cw-chrome .nav-bar-section .right-side {
   display: flex !important;
   align-items: center;
-  gap: 12px;
+  gap: 32px;
   flex-shrink: 0;
-  margin-left: 8px;
+  margin-left: auto !important;
+}
+.R-cw-chrome .ff-nav-contact {
+  position: relative;
+  color: #222520;
+  text-decoration: none;
+  white-space: nowrap;
+}
+.R-cw-chrome .ff-nav-contact::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -4px;
+  height: 2px;
+  background: #2f8f5b;
+  transform: scaleX(0);
+  transform-origin: right;
+  transition: transform .4s cubic-bezier(.165, .84, .44, 1);
+}
+.R-cw-chrome .ff-nav-contact:hover::after,
+.R-cw-chrome .ff-nav-contact:focus-visible::after {
+  transform: scaleX(1);
+  transform-origin: left;
+}
+.R-cw-chrome .off-canvas-toggle.ff-menu-toggle {
+  display: none !important;
+  appearance: none;
+  background: none;
+  border: 0;
+  margin: 0;
+  padding: 8px;
+  width: 44px;
+  height: 44px;
+  flex-shrink: 0;
+}
+.R-cw-chrome .ff-menu-toggle svg { display: block; width: 28px; height: 28px; }
+@media only screen and (max-width: 1024px) {
+  .R-cw-chrome .nav-bar-section .right-side { gap: 16px; }
+  .R-cw-chrome .ff-nav-contact { display: none; }
+  .R-cw-chrome .off-canvas-toggle.ff-menu-toggle { display: inline-flex !important; }
+}
+@media only screen and (max-width: 380px) {
+  .R-cw-chrome .nav-bar-section { padding: 0 12px !important; }
+  .R-cw-chrome .nav-bar-section .right-side { gap: 6px; }
+  .R-cw-chrome .ff-lockup { gap: 8px; }
+  .R-cw-chrome .nav-bar-section a.donate-link { padding: 0 14px !important; }
 }
 .R-cw-chrome .nav-bar-section .right-side .mycw-nav .log-in {
   white-space: nowrap;
@@ -1057,6 +1103,7 @@
 /* Charity: Water nav metrics: 14px / 500 / 0.9px, 52px gaps, 80px bar. Do not shrink to fit. */
 .R-cw-chrome .nav-bar-section .dropdown-parent-link button.heading-xs,
 .R-cw-chrome .nav-bar-section .nav-items .ff-nav-link > a,
+.R-cw-chrome .nav-bar-section .ff-nav-contact,
 .R-cw-chrome .donate-link .heading-xs {
   font-family: "Proxima Nova", Manrope, "Segoe UI", sans-serif !important;
   font-size: 14px !important;
