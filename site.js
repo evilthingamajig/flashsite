@@ -35,6 +35,59 @@
   const sent = document.getElementById('ff-sent');
   if (sent && new URLSearchParams(location.search).has('sent')) { sent.hidden = false; sent.scrollIntoView({ block: 'center' }); }
 
+  // The existing FAQ markup uses headings as its disclosure controls.
+  document.querySelectorAll('.R-gd-faq .faqs-section .accordion-item').forEach((item, i) => {
+    const trigger = item.querySelector('.accordion-trigger');
+    const panel = item.querySelector('.accordion-panel');
+    if (!trigger || !panel) return;
+    panel.id = `ff-faq-answer-${i}`;
+    panel.hidden = true;
+    trigger.setAttribute('role', 'button');
+    trigger.setAttribute('tabindex', '0');
+    trigger.setAttribute('aria-controls', panel.id);
+    trigger.setAttribute('aria-expanded', 'false');
+    const toggleAnswer = () => {
+      panel.hidden = !panel.hidden;
+      trigger.classList.toggle('active', !panel.hidden);
+      trigger.setAttribute('aria-expanded', String(!panel.hidden));
+    };
+    trigger.addEventListener('click', toggleAnswer);
+    trigger.addEventListener('keydown', (event) => {
+      if (event.key !== 'Enter' && event.key !== ' ') return;
+      event.preventDefault();
+      toggleAnswer();
+    });
+  });
+
+  // Keep the monthly-giving card, and let Givebutter handle the secure checkout.
+  const circleForm = document.getElementById('the-spring_form');
+  if (circleForm) {
+    const amountInput = circleForm.querySelector('input[name="amount"]');
+    circleForm.querySelectorAll('.amount-button:not(.wps-amount-button),.other-amount-button').forEach((choice) => {
+      choice.setAttribute('role', 'button');
+      choice.setAttribute('tabindex', '0');
+      const chooseAmount = () => {
+        circleForm.querySelectorAll('.amount-button,.other-amount-button').forEach((button) => button.classList.toggle('selected', button === choice));
+        const custom = choice.classList.contains('other-amount-button');
+        circleForm.querySelector('.input-wrapper.donate-amount')?.classList.toggle('hidden', !custom);
+        if (custom) amountInput?.focus();
+        else if (amountInput) amountInput.value = choice.textContent.match(/\d+/)?.[0] || '20';
+      };
+      choice.addEventListener('click', chooseAmount);
+      choice.addEventListener('keydown', (event) => {
+        if (event.key === 'Enter' || event.key === ' ') { event.preventDefault(); chooseAmount(); }
+      });
+    });
+    circleForm.addEventListener('submit', (event) => {
+      event.preventDefault();
+      if (!amountInput?.reportValidity()) return;
+      const checkout = new URL(circleForm.action);
+      checkout.searchParams.set('amount', amountInput.value);
+      checkout.searchParams.set('frequency', 'monthly');
+      location.assign(checkout.href);
+    });
+  }
+
   const results = document.getElementById('ff-search-results');
   if (results) {
     const q = new URLSearchParams(location.search).get('q') || '';

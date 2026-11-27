@@ -32,10 +32,10 @@ body.ff-page-gd-team { background: #fff; }
 .ff-page-gd-team .ourteams-header .ff-team-directory-description { max-width: 620px; margin: 18px 0 0; color: #526158; font: 400 1.0625rem/1.6 Figtree, sans-serif; }
 .ff-team-join { display: flex; align-items: center; justify-content: space-between; gap: 56px; max-width: 1200px; margin: 64px auto 96px; padding: 64px; border-radius: 28px; color: #fff; background: #153f31; }
 .ff-team-join h2 { margin: 0 0 18px; max-width: 660px; color: #fff; font: 650 clamp(2.25rem, 3.8vw, 3.75rem)/1.08 Figtree, sans-serif; letter-spacing: -.035em; }
-.ff-team-join p { max-width: 550px; margin: 0; color: #e1eee6; font: 400 1.0625rem/1.6 Figtree, sans-serif; }
+.ff-team-join p { max-width: 550px; margin: 0; color: #eeeeee; font: 400 1.0625rem/1.6 Figtree, sans-serif; }
 .ff-team-join .ff-team-eyebrow { margin-bottom: 18px; color: #c8dfd0; }
 .ff-team-join-link { display: inline-flex; align-items: center; justify-content: center; flex-shrink: 0; min-height: 52px; padding: 14px 24px; border-radius: 6px; background: #fff; color: #153f31; font: 600 1rem/1.3 Figtree, sans-serif; text-decoration: none; }
-.ff-team-join-link:hover { background: #e1eee6; }
+.ff-team-join-link:hover { background: #eeeeee; }
 @media (max-width: 1250px) { .ff-team-join { margin-left: 24px; margin-right: 24px; } }
 @media (max-width: 800px) {
   .ff-team-hero { min-height: 460px; }

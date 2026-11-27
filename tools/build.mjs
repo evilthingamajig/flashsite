@@ -118,12 +118,13 @@ const unopt = (src) => {
 };
 
 const report = [];
+const searchEntries = [];
 const ldData = JSON.parse(readFileSync(join(ROOT, 'tools/ld.json')));
 
 const BASE = 'https://flashforwardfoundation.org';
 const LD_ORG = {"@type":"NGO","@id":BASE+"/#org","name":"Flash Forward Foundation","alternateName":"Flash Forward","url":BASE+"/","logo":{"@type":"ImageObject","url":BASE+"/images/brand/mark-green.png"},"description":"Student-led 501(c)(3) nonprofit that designs solar study lights with assembly partners and places them through distribution partners so students without reliable electricity can study after dark.","foundingDate":"2024","foundingLocation":{"@type":"Place","name":"Bellevue, Washington"},"nonprofitStatus":"https://schema.org/Nonprofit501c3","taxID":"39-3605570","email":"about@flashforwardfoundation.org","address":{"@type":"PostalAddress","streetAddress":"1402 153rd Pl SE","addressLocality":"Bellevue","addressRegion":"WA","postalCode":"98007","addressCountry":"US"},"areaServed":["Haiti","India","Democratic Republic of the Congo"],"sameAs":["https://www.instagram.com/flashforwardfoundation/"]};
 const LD_SITE = {"@type":"WebSite","@id":BASE+"/#website","name":"Flash Forward Foundation","url":BASE+"/","publisher":{"@id":BASE+"/#org"},"inLanguage":"en","potentialAction":{"@type":"SearchAction","target":{"@type":"EntryPoint","urlTemplate":BASE+"/search/?q={search_term_string}"},"query-input":"required name=search_term_string"}};
-const CRUMB_LABELS = {'/our-model/':'Our Model','/our-work/':'Our Model','/impact/':'Impact','/impact-stories/':'Impact Stories','/join/':'Join','/get-involved/':'Get Involved','/about/':'About','/news/':'News','/guides/':'Student Guides'};
+const CRUMB_LABELS = {'/our-model/':'Our Model','/our-work/':'Our Model','/impact/':'Impact','/impact-stories/':'Community Stories','/join/':'Join','/get-involved/':'Get Involved','/about/':'About','/news/':'Stories','/guides/':'Student Guides','/nonprofit-status/':'Nonprofit Status'};
 const FAQ_PAGES = new Set(['/faq/','/donate/','/get-involved/','/join/','/join/apply/','/get-involved/internship/','/news/why-study-lights/']);
 const unent = (t) => t.replace(/&amp;/g,'&').replace(/&rsquo;/g,'\u2019').replace(/&lsquo;/g,'\u2018').replace(/&ldquo;/g,'\u201c').replace(/&rdquo;/g,'\u201d').replace(/&ndash;/g,'\u2013').replace(/&mdash;/g,'\u2014').replace(/&nbsp;/g,'\xa0').replace(/&#039;/g,"'").replace(/<[^>]+>/g,'').trim();
 
@@ -354,8 +355,13 @@ for (const file of pages.sort()) {
   const ldDoc = {"@context":"https://schema.org","@graph":graph};
   html = html.replace('</head>', `<!--ff:ld--><script type="application/ld+json">${JSON.stringify(ldDoc)}</script><!--/ff:ld-->\n</head>`);
   writeFileSync(file, html);
+  if (/<main\b/.test(html) && rel !== '/search/' && rel !== '/site-map/') {
+    searchEntries.push({ url: rel, title: unent(ogTitle), description: unent(desc) });
+  }
   report.push({ page: rel, cssBytes: Buffer.byteLength(min) });
 }
 
+// Keep search results in sync with the page copy on every build.
+writeFileSync(join(ROOT, 'search-index.json'), JSON.stringify(searchEntries, null, 2) + '\n');
 for (const r of report) console.log(r.page, r.cssBytes);
 console.log('done', report.length);

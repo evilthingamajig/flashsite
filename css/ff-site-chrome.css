@@ -16,6 +16,13 @@ body.R-cw-chrome #site-nav .right-side { display: flex !important; gap: 28px; ma
 body.R-cw-chrome #site-nav .ff-nav-contact { position: relative; text-decoration: none; }
 body.R-cw-chrome #site-nav .donate-link { position: relative; background: #1e6b45 !important; color: #fff !important; }
 body.R-cw-chrome #site-nav .donate-link .heading-xs { color: #fff !important; }
+body.R-cw-chrome #site-nav .donate-link .heading-xs { position: relative; }
+body.R-cw-chrome #site-nav .donate-link .heading-xs::after {
+  content: ""; position: absolute; left: 0; right: 0; bottom: -4px; height: 2px; background: #2f8f5b;
+  transform: scaleX(0); transform-origin: 100% 100%; transition: transform .4s cubic-bezier(.165,.84,.44,1);
+}
+body.R-cw-chrome #site-nav .donate-link:hover .heading-xs::after,
+body.R-cw-chrome #site-nav .donate-link:focus-visible .heading-xs::after { transform: scaleX(1); transform-origin: 0 0; }
 body.R-cw-chrome #site-nav .dropdown-parent-link { cursor: pointer; position: relative; }
 body.R-cw-chrome #site-nav .dropdown-parent-link > button { cursor: pointer; background: none; border: 0; margin: 0; padding: 8px 0; position: relative; }
 body.R-cw-chrome #site-nav .nav-hover-extender { display: none !important; }
@@ -56,7 +63,8 @@ body.R-cw-chrome.ff-page-news:not(.is-scrolled) #site-nav:not(:has(.is-open)) .f
     content: ""; position: absolute; left: 0; right: 0; bottom: -3px; height: 2px; background: #2f8f5b;
     transform: scaleX(0); transform-origin: 100% 100%; transition: transform .4s cubic-bezier(.165,.84,.44,1);
   }
-  body.R-cw-chrome #site-nav .ff-mega-grid .masthead__link:is(:hover,:focus-visible) .masthead__item-text::after { transform: scaleX(1); transform-origin: 0 0; }
+  body.R-cw-chrome #site-nav .ff-mega-grid .masthead__link:hover .masthead__item-text::after,
+  body.R-cw-chrome #site-nav .ff-mega-grid .masthead__link:focus-visible .masthead__item-text::after { transform: scaleX(1); transform-origin: 0 0; }
 }
 @media (max-width: 1024px) {
   html { scroll-padding-top: 84px; }
@@ -92,9 +100,13 @@ body.R-cw-chrome footer.ff-bbg .ff-bbg-legal-row--sub { display: flex; justify-c
   body.R-cw-chrome footer.ff-bbg .ff-bbg-legal-row--sub { flex-direction: row; flex-wrap: wrap; gap: 20px 28px; justify-content: flex-start; }
 }
 /* Two views of one Stories hub. */
-.ff-stories-nav { display: flex; justify-content: center; flex-wrap: wrap; gap: 12px 32px; padding: 22px 24px; background: #f5f4ee; border-bottom: 1px solid #dedfd5; font: 600 15px/1.5 Figtree,sans-serif; }
+.ff-stories-nav { display: flex; justify-content: center; flex-wrap: wrap; gap: 12px 32px; padding: 22px 24px; background: #f4f4f4; border-bottom: 1px solid #dedede; font: 600 15px/1.5 Figtree,sans-serif; }
 .ff-stories-nav a { color: #365249; text-decoration: none; padding-block: 4px; border-bottom: 2px solid transparent; }
 .ff-stories-nav a:is(:hover,:focus-visible,[aria-current="page"]) { color: #1e6b45; border-bottom-color: #2f8f5b; }
+/* Keep the existing FAQ appearance while making its answers keyboard accessible. */
+.R-gd-faq .faqs-section .accordion-panel[hidden] { display: none; }
+.R-gd-faq .faqs-section .accordion-panel:not([hidden]) { display: block; }
+.R-gd-faq .accordion-trigger:focus-visible { outline: 2px solid #2f8f5b !important; outline-offset: 4px; }
 @media (prefers-reduced-motion: reduce) {
   body.R-cw-chrome #site-nav *, body.R-cw-chrome #site-nav *::after { transition: none !important; }
 }
