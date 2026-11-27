@@ -98,15 +98,15 @@ export function nav(active = '') {
     <button type="button" class="ff-drawer-close" aria-label="Close menu">${CLOSE}</button>
   </div>
   <ul class="ff-drawer-panel is-active" data-panel="root">
-    <li><button type="button" data-open="who"><span>Who we are</span>${CHEV_R}</button></li>
-    <li><button type="button" data-open="involved"><span>Get involved</span>${CHEV_R}</button></li>
+    <li><button type="button" data-open="who" aria-expanded="false" aria-controls="ff-mobile-who"><span>Who we are</span>${CHEV_R}</button></li>
+    <li><button type="button" data-open="involved" aria-expanded="false" aria-controls="ff-mobile-involved"><span>Get involved</span>${CHEV_R}</button></li>
     <li><a href="/news/">News</a></li>
     <li><a href="/contact/">Contact</a></li>
   </ul>
-  <ul class="ff-drawer-panel" data-panel="who" inert>
+  <ul class="ff-drawer-panel" id="ff-mobile-who" data-panel="who" aria-label="Who we are" aria-hidden="true" inert>
     ${each(WHO, drawerLink)}
   </ul>
-  <ul class="ff-drawer-panel" data-panel="involved" inert>
+  <ul class="ff-drawer-panel" id="ff-mobile-involved" data-panel="involved" aria-label="Get involved" aria-hidden="true" inert>
     ${each(INVOLVED, drawerLink)}
   </ul>
 </nav>

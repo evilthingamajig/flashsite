@@ -366,16 +366,29 @@
 
   function showPanel(name,focus){
     if(!drawer)return;
-    drawer.querySelectorAll('.ff-drawer-panel').forEach(function(panel){
-      var on=panel.dataset.panel===name;
+    var panels=Array.from(drawer.querySelectorAll('.ff-drawer-panel'));
+    var next=panels.find(function(panel){return panel.dataset.panel===name;});
+    if(!next)return;
+    var previous=panels.find(function(panel){return panel.classList.contains('is-active');});
+    panels.forEach(function(panel){
+      var on=panel===next;
       panel.classList.toggle('is-active',on);
       panel.inert=!on;
-      if(on){
-        panel.scrollTop=0;
-        if(focus)panel.querySelector('a,button').focus();
-      }
+      panel.setAttribute('aria-hidden',String(!on));
     });
+    drawer.querySelectorAll('[data-open]').forEach(function(trigger){
+      trigger.setAttribute('aria-expanded',String(trigger.dataset.open===name));
+    });
+    next.scrollTop=0;
     if(back)back.hidden=name==='root';
+    if(focus){
+      var target=name==='root'&&previous
+        ? drawer.querySelector('[data-open="'+previous.dataset.panel+'"]')
+        : null;
+      // The incoming panel is still translated offscreen. Native focus scrolling
+      // must not move the drawer (or the page) to that temporary position.
+      (target||next.querySelector('a,button')).focus({preventScroll:true});
+    }
   }
   function setDrawer(open,restore){
     if(!drawer)return;
@@ -392,11 +405,10 @@
         background.forEach(function(el){el.inert=true;});
       }
       showPanel('root',false);
-      drawer.querySelector('.ff-drawer-close').focus();
+      drawer.querySelector('.ff-drawer-close').focus({preventScroll:true});
     }else{
       if(wasOpen)background.forEach(function(el,i){el.inert=previousInert[i];});
-      showPanel('root',false);
-      if(restore&&wasOpen)toggle.focus();
+      if(restore&&wasOpen)toggle.focus({preventScroll:true});
     }
   }
   if(toggle)toggle.addEventListener('click',function(){setDrawer(!body.classList.contains('off-canvas-open'),true);});
