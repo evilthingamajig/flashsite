@@ -8,6 +8,9 @@ body.R-cw-chrome #site-nav {
   transition: background-color .2s ease, box-shadow .2s ease;
 }
 body.R-cw-chrome #site-nav .nav-bar-section { height: 80px !important; background: transparent !important; border: 0 !important; }
+/* Preserve the normal casing of navigation labels on every page. */
+body.R-cw-chrome #site-nav :is(a,button,.heading-xs),
+body.R-cw-chrome .ff-drawer :is(a,button) { text-transform: none !important; }
 body.R-cw-chrome.is-scrolled #site-nav { box-shadow: 0 1px 0 #18231d1a; }
 body.R-cw-chrome #site-nav :is(.ff-lockup,.ff-lockup-name,.ff-lockup-line,.dropdown-parent-link > button,.ff-nav-link > a,.ff-nav-contact,.cw-icon-chevron-down,.off-canvas-toggle) { color: #18231d !important; }
 body.R-cw-chrome #site-nav .ff-lockup-mark { filter: none !important; }

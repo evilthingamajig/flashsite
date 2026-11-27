@@ -1062,16 +1062,20 @@
   ]
  },
  "/images/students/student-with-flashlight-2.jpg": {
-  "nw": 768,
-  "nh": 1024,
+  "nw": 1152,
+  "nh": 1536,
   "v": [
    {
     "w": 480,
-    "src": "/images/opt/students/student-with-flashlight-2.w480.2a509e6c.webp"
+    "src": "/images/opt/students/student-with-flashlight-2.w480.6d767ed5.webp"
    },
    {
-    "w": 768,
-    "src": "/images/opt/students/student-with-flashlight-2.w768.a5424da9.webp"
+    "w": 800,
+    "src": "/images/opt/students/student-with-flashlight-2.w800.a6230486.webp"
+   },
+   {
+    "w": 1152,
+    "src": "/images/opt/students/student-with-flashlight-2.w1152.870db207.webp"
    }
   ]
  },
@@ -1262,6 +1266,114 @@
    {
     "w": 1600,
     "src": "/images/opt/stock/solar-light-donate.w1600.b419f17a.webp"
+   }
+  ]
+ },
+ "/images/students/student-with-flashlight-4.webp": {
+  "nw": 960,
+  "nh": 1280,
+  "v": [
+   {
+    "w": 480,
+    "src": "/images/opt/students/student-with-flashlight-4.w480.e36fe248.webp"
+   },
+   {
+    "w": 800,
+    "src": "/images/opt/students/student-with-flashlight-4.w800.938b7fbc.webp"
+   },
+   {
+    "w": 960,
+    "src": "/images/opt/students/student-with-flashlight-4.w960.bcf899e0.webp"
+   }
+  ]
+ },
+ "/images/students/student-with-flashlight-5.webp": {
+  "nw": 960,
+  "nh": 1280,
+  "v": [
+   {
+    "w": 480,
+    "src": "/images/opt/students/student-with-flashlight-5.w480.3e54b3b8.webp"
+   },
+   {
+    "w": 800,
+    "src": "/images/opt/students/student-with-flashlight-5.w800.ef0a64a3.webp"
+   },
+   {
+    "w": 960,
+    "src": "/images/opt/students/student-with-flashlight-5.w960.43968a28.webp"
+   }
+  ]
+ },
+ "/images/students/student-with-flashlight-6.webp": {
+  "nw": 960,
+  "nh": 1280,
+  "v": [
+   {
+    "w": 480,
+    "src": "/images/opt/students/student-with-flashlight-6.w480.ee530479.webp"
+   },
+   {
+    "w": 800,
+    "src": "/images/opt/students/student-with-flashlight-6.w800.f5fb907c.webp"
+   },
+   {
+    "w": 960,
+    "src": "/images/opt/students/student-with-flashlight-6.w960.df00a7c7.webp"
+   }
+  ]
+ },
+ "/images/students/student-with-flashlight-7.webp": {
+  "nw": 960,
+  "nh": 1280,
+  "v": [
+   {
+    "w": 480,
+    "src": "/images/opt/students/student-with-flashlight-7.w480.9cfbdfa1.webp"
+   },
+   {
+    "w": 800,
+    "src": "/images/opt/students/student-with-flashlight-7.w800.7925599a.webp"
+   },
+   {
+    "w": 960,
+    "src": "/images/opt/students/student-with-flashlight-7.w960.d0251f46.webp"
+   }
+  ]
+ },
+ "/images/students/student-with-flashlight-8.webp": {
+  "nw": 960,
+  "nh": 1280,
+  "v": [
+   {
+    "w": 480,
+    "src": "/images/opt/students/student-with-flashlight-8.w480.986d4223.webp"
+   },
+   {
+    "w": 800,
+    "src": "/images/opt/students/student-with-flashlight-8.w800.4154d1ab.webp"
+   },
+   {
+    "w": 960,
+    "src": "/images/opt/students/student-with-flashlight-8.w960.78aec9b7.webp"
+   }
+  ]
+ },
+ "/images/students/student-with-flashlight-9.webp": {
+  "nw": 960,
+  "nh": 1280,
+  "v": [
+   {
+    "w": 480,
+    "src": "/images/opt/students/student-with-flashlight-9.w480.bc7acbc5.webp"
+   },
+   {
+    "w": 800,
+    "src": "/images/opt/students/student-with-flashlight-9.w800.98e04cd4.webp"
+   },
+   {
+    "w": 960,
+    "src": "/images/opt/students/student-with-flashlight-9.w960.87d53d7f.webp"
    }
   ]
  }

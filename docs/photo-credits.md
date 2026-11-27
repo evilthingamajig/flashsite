@@ -29,3 +29,9 @@ These stock images illustrate the type of activity described. They do not docume
 The Pexels images are provided under the [Pexels license](https://www.pexels.com/license/). No affiliation with or endorsement of Flash Forward is implied.
 
 The four internship track icons are from [Lucide](https://lucide.dev/). Their upstream license is preserved in `images/icons/LUCIDE-LICENSE.txt`; the SVG sources are in the same folder. They are embedded directly in the track cards so all four share the site's green accent.
+
+## Student photographs supplied by the site owner
+
+`images/students/student-with-flashlight-4.webp` through `student-with-flashlight-9.webp` were supplied by the site owner for the November 2026 photo update. The supplied higher-resolution version of `student-with-flashlight-2.jpg` replaces its smaller copy. The other supplied photograph already exists as `student-with-flashlight-1.jpg`.
+
+The original `student-with-flashlight-3.jpg` portrait is intentionally displayed only on the India hand-delivery article. Other public image placements use an explicit selection from the owner's photos, with focal points chosen for their existing frames. The images retain their original appearance; local WebP variants provide responsive delivery.
